@@ -1,5 +1,5 @@
 import { FileImageOutlined } from '@ant-design/icons';
-import { DocumentTextIcon, PhotoIcon } from '@heroicons/react/24/outline';
+import { CameraIcon, DocumentTextIcon, PhotoIcon, StopCircleIcon, VideoCameraIcon } from '@heroicons/react/24/outline';
 import React, { useState } from 'react';
 
 export default function CeoAnnouncementCardSection() {
@@ -16,7 +16,7 @@ export default function CeoAnnouncementCardSection() {
     <div>
       <form onSubmit={handleSubmit}>
         <div className="space-y-12 mt-6">
-          <div className="border-b border-gray-900/10 pb-12">
+          <div className="border-b border-gray-900/10 pb-6">
             <h2 className="text-base font-semibold leading-7 text-gray-900">CEO Announcement</h2>
             <p className="mt-1 text-sm leading-6 text-gray-600">This information will be displayed publicly so be careful what you share.</p>
 
@@ -71,23 +71,20 @@ export default function CeoAnnouncementCardSection() {
                     value={announcement}
                     onChange={(e) => setAnnouncement(e.target.value)}
                   ></textarea>
-                  <div className="flex items-center mt-2">
+                  <div className="flex flex-wrap items-center mt-2">
                     <label htmlFor="image-upload" className="flex items-center mr-4 cursor-pointer text-gray-600 hover:text-gray-900">
                       <PhotoIcon className='h-6'/>
                       <span>Upload Image</span>
                       <input id="image-upload" name="image-upload" type="file" className="sr-only"/>
                     </label>
                     <label htmlFor="video-upload" className="flex mr-4  items-center cursor-pointer text-gray-600 hover:text-gray-900">
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 15c-1.268 1.83-3.165 3-5.25 3H8.25A5.25 5.25 0 013 12.75v-1.5A5.25 5.25 0 018.25 6h7.5A5.25 5.25 0 0121 11.25v3.75z" />
-                      </svg>
+                      <CameraIcon className='h-6'/>
                       <span>Upload Video</span>
                       <input id="video-upload" name="video-upload" type="file" className="sr-only"/>
                     </label>
                     <label htmlFor="image-upload" className="flex items-center mr-4 cursor-pointer text-gray-600 hover:text-gray-900">
                       <DocumentTextIcon className='h-6'/>
-                      <span>Upload PDFssss File</span>
+                      <span>Upload PDF File</span>
                       <input id="image-upload" name="image-upload" type="file" className="sr-only"/>
                     </label>
                   </div>

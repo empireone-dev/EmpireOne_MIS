@@ -87,7 +87,7 @@ export default function CeoAnnouncementCardSection() {
                     </label>
                     <label htmlFor="image-upload" className="flex items-center mr-4 cursor-pointer text-gray-600 hover:text-gray-900">
                       <DocumentTextIcon className='h-6'/>
-                      <span>Upload PDF File</span>
+                      <span>Upload PDFssss File</span>
                       <input id="image-upload" name="image-upload" type="file" className="sr-only"/>
                     </label>
                   </div>

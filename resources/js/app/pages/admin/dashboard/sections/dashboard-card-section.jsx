@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ArchiveBoxXMarkIcon, ArrowRightStartOnRectangleIcon, ArrowTopRightOnSquareIcon, BookOpenIcon, BriefcaseIcon, CalendarDaysIcon, ChatBubbleLeftRightIcon, ChatBubbleOvalLeftEllipsisIcon, CheckBadgeIcon, CheckCircleIcon, CheckIcon, ClipboardDocumentIcon, ClipboardDocumentListIcon, CursorArrowRaysIcon, CursorArrowRippleIcon, DocumentArrowDownIcon, DocumentChartBarIcon, DocumentCheckIcon, DocumentMagnifyingGlassIcon, DocumentMinusIcon, DocumentPlusIcon, ExclamationCircleIcon, HandThumbDownIcon, PencilSquareIcon, ReceiptRefundIcon, RectangleGroupIcon, UserGroupIcon, UserIcon, UserMinusIcon, XCircleIcon } from '@heroicons/react/24/outline'
 import DashboardCardComponents from '../components/dashboard-card-components';
+import { administrator_dashboard_service } from '@/app/pages/services/dashboard-service';
 
 export default function DashboardCardSection() {
+
+  const [data, setData] = useState({});
+    useEffect(() => {
+        async function get_tile(params) {
+            const res = await administrator_dashboard_service();
+            setData(res);
+        }
+        get_tile();
+    }, []);
+
   const currentDate = new Date().toDateString();
   const currentHour = new Date().getHours();
   let greeting;
@@ -32,27 +43,27 @@ export default function DashboardCardSection() {
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
               name="Pending ERF"
-              number="0"
+              number={data?.pending ?? 0}
               icon={<ReceiptRefundIcon />}
             />
             <DashboardCardComponents
               name="On-going ERF"
-              number="0"
+               number={data?.status ?? 0}
               icon={<ArrowTopRightOnSquareIcon />}
             />
             <DashboardCardComponents
               name="Active ERF"
-              number="0"
+               number={data?.active ?? 0}
               icon={<RectangleGroupIcon />}
             />
             <DashboardCardComponents
               name="Completed ERF"
-              number="0"
+               number={data?.active ?? 0}
               icon={<CheckCircleIcon />}
             />
             <DashboardCardComponents
               name="Declined ERF"
-              number="0"
+               number={data?.status ?? 0}
               icon={<ArchiveBoxXMarkIcon />}
             />
           </div>
@@ -65,27 +76,27 @@ export default function DashboardCardSection() {
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
               name="Pending Application"
-              number="0"
+               number={data?.status ?? 0}
               icon={<UserGroupIcon />}
             />
             <DashboardCardComponents
               name="Initial Phase Application"
-              number="0"
+               number={data?.status ?? 0}
               icon={<CursorArrowRaysIcon />}
             />
             <DashboardCardComponents
               name="Final Phase Application"
-              number="0"
+               number={data?.status ?? 0}
               icon={<CursorArrowRippleIcon />}
             />
             <DashboardCardComponents
               name="Passed Application"
-              number="0"
+               number={data?.status ?? 0}
               icon={<CheckCircleIcon />}
             />
             <DashboardCardComponents
               name="Failed Application"
-              number="0"
+               number={data?.status ?? 0}
               icon={<XCircleIcon />}
             />
           </div>
@@ -98,27 +109,27 @@ export default function DashboardCardSection() {
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
               name="Pending Offer"
-              number="0"
+               number={data?.status ?? 0}
               icon={<DocumentChartBarIcon />}
             />
             <DashboardCardComponents
               name="Declined Offer"
-              number="0"
+               number={data?.status ?? 0}
               icon={<DocumentMinusIcon />}
             />
             <DashboardCardComponents
               name="Accepted Offer"
-              number="0"
+               number={data?.status ?? 0}
               icon={<DocumentCheckIcon />}
             />
             <DashboardCardComponents
               name="Pre-Employment Completed"
-              number="0"
+               number={data?.status ?? 0}
               icon={<CheckCircleIcon />}
             />
             <DashboardCardComponents
               name="Contract Signing"
-              number="0"
+               number={data?.status ?? 0}
               icon={<PencilSquareIcon />}
             />
           </div>
@@ -130,12 +141,12 @@ export default function DashboardCardSection() {
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
               name="Onboarding Documents"
-              number="0"
+               number={data?.status ?? 0}
               icon={<ClipboardDocumentListIcon />}
             />
             <DashboardCardComponents
               name="Onboarded Applicants"
-              number="0"
+               number={data?.status ?? 0}
               icon={<BriefcaseIcon />}
             />
           </div>
@@ -147,22 +158,22 @@ export default function DashboardCardSection() {
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
               name="Total Employee"
-              number="0"
+               number={data?.status ?? 0}
               icon={<UserGroupIcon />}
             />
             <DashboardCardComponents
               name="Incident Report"
-              number="0"
+               number={data?.status ?? 0}
               icon={<ExclamationCircleIcon />}
             />
             <DashboardCardComponents
               name="NTE"
-              number="0"
+               number={data?.status ?? 0}
               icon={<ChatBubbleOvalLeftEllipsisIcon />}
             />
             <DashboardCardComponents
               name="NDA"
-              number="0"
+               number={data?.status ?? 0}
               icon={<ChatBubbleLeftRightIcon />}
             />
           </div>
@@ -174,22 +185,22 @@ export default function DashboardCardSection() {
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
               name="Resignation"
-              number="0"
+               number={data?.status ?? 0}
               icon={<UserMinusIcon />}
             />
             <DashboardCardComponents
               name="End of Probationary Employment"
-              number="0"
+               number={data?.status ?? 0}
               icon={<DocumentArrowDownIcon />}
             />
             <DashboardCardComponents
               name="Dismissal"
-              number="0"
+               number={data?.status ?? 0}
               icon={<HandThumbDownIcon />}
             />
             <DashboardCardComponents
               name="AWOL"
-              number="0"
+               number={data?.status ?? 0}
               icon={<ArrowRightStartOnRectangleIcon />}
             />
           </div>

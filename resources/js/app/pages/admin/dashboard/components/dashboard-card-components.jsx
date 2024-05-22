@@ -1,7 +1,7 @@
 import { GiftIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 
-export default function DashboardCardComponents({name,number,icon}) {
+export default function DashboardCardComponents({name,number,icon, }) {
   return (
     <div>
         <div class="bg-blue-500 shadow-lg rounded-md flex items-center justify-between p-3 border-b-4 border-blue-700 text-white font-medium group">

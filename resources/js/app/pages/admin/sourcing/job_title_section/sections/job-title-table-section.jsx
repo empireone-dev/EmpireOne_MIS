@@ -2,11 +2,15 @@ import React, { useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
+import { useSelector } from "react-redux";
+import moment from "moment";
 
 export default function JobTitleTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
+    const { job_positions } = useSelector((state) => state.job_positions)
+
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -128,37 +132,11 @@ export default function JobTitleTableSection() {
                 text
             ),
     });
-
-    const data = [
-        {
-            key: "1",
-            emp_id: 32,
-            position: "HR Manager",
-            fullname: "John Brown",
-        },
-        {
-            key: "2",
-            emp_id: 32,
-            position: "HR Manager",
-            fullname: "John Brown",
-        },
-        {
-            key: "3",
-            emp_id: 32,
-            position: "HR Manager",
-            fullname: "John Brown",
-        },
-        {
-            key: "4",
-            emp_id: 32,
-            position: "HR Manager",
-            fullname: "John Brown",
-        },
-    ];
+    
     const columns = [
         {
             title: "Job Title(s) Name",
-            dataIndex: "emp_id",
+            dataIndex: "jPosition",
             key: "emp_id",
             ...getColumnSearchProps("emp_id"),
         },
@@ -166,7 +144,13 @@ export default function JobTitleTableSection() {
             title: "Date Created",
             dataIndex: "fullname",
             key: "fullname",
-            ...getColumnSearchProps("fullname"),
+            render: (_, record) => {
+                return (
+                    <div className="gap-1.5 flex">
+                      {moment(record.created).format('LLL')}
+                    </div>
+                );
+            },
         },
         {
             title: "Action",
@@ -201,7 +185,7 @@ export default function JobTitleTableSection() {
                     </h2>
                 </div>
             </div>
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={job_positions} />;
         </div>
     );
 }

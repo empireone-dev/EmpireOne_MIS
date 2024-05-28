@@ -33,6 +33,10 @@ Route::get('/', function () {
     return Inertia::render('login/page');
 });
 
+Route::get('/online_application', function () {
+    return Inertia::render('online_application/page');
+});
+
 
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function () {

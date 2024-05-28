@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\JobPositionController;
 use App\Http\Controllers\OutSourcingErfController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('outsourcing_erf',OutSourcingErfController::class);
 Route::get('/get_outsourcing_dashboard', [OutSourcingErfController::class, 'get_outsourcing_dashboard']);
+
+Route::resource('job_position',JobPositionController::class);

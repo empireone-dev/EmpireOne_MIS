@@ -18,19 +18,7 @@ export default function ApplicationFormSection() {
     setShowWorkingExperience(false);
   };
 
-  const displayUploadedFileName = (files) => {
-    const displayArea = document.getElementById('display-area');
-    if (files.length > 0) {
-      const file = files[0];
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setUploadedFile(e.target.result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      setUploadedFile(null);
-    }
-  };
+
 
   return (
     <div className="h-screen overflow-hidden ">
@@ -243,22 +231,8 @@ export default function ApplicationFormSection() {
                   <input type="number" placeholder="Contact No." className="border p-2 rounded w-full " />
                 </div>
               </div>
-              <div>
-                <div className="flex items-center mr-4 text-gray-600 hover:text-gray-900">
-                  <button className="flex items-center" onClick={(e) => { e.preventDefault(); document.getElementById('pdf-upload').click(); }}>
-                    <FilePdfOutlined className='text-2xl mr-1' />
-                    <span>Upload CV File</span>
-                  </button>
-                  <input id="pdf-upload" name="pdf-upload" type="file" style={{ display: 'none' }} accept=".pdf" onChange={(e) => displayUploadedFileName(e.target.files)} />
-                </div>
-                {uploadedFile && (
-                  <div id="display-area" className='mt-4 mb-4'>
-                    <iframe src={uploadedFile} width="100%" height="1200px" title="Uploaded PDF File" />
-                  </div>
-                )}
-              </div>
               <UploadResumeSection />
-              <div className="flex justify-end">
+              <div className="flex justify-end mt-2.5">
                 <button type="button" id="theme-toggle" className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
                   SUBMIT
                 </button>

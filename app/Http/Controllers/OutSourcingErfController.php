@@ -15,4 +15,11 @@ class OutSourcingErfController extends Controller
         'pending' =>$pending,
     ], 200);
    }
+
+   public function index(){
+    $erfrec = OutSourcingErf::with('user')->get();
+    return response()->json([
+        'data' => $erfrec
+    ], 200);
+}
 }

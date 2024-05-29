@@ -1,5 +1,5 @@
 import React from 'react';
-import { DownOutlined, EditOutlined, FolderOpenOutlined, UsergroupAddOutlined, PrinterOutlined, QrcodeOutlined } from '@ant-design/icons';
+import { DownOutlined, EditOutlined, FolderOpenOutlined, UsergroupAddOutlined, PrinterOutlined, QrcodeOutlined, FileOutlined, FileTextOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Tooltip } from 'antd';
 const handleButtonClick = (e) => {
   message.info('Click on left button.');
@@ -11,29 +11,19 @@ const handleMenuClick = (e) => {
 };
 const items = [
   {
-    label: 'Update Employee',
+    label: 'Update Status',
     key: '1',
     icon: <EditOutlined />,
   },
   {
-    label: '201 File',
+    label: ' Job Analysis',
     key: '2',
-    icon: <FolderOpenOutlined />,
+    icon: <FileOutlined/>
   },
   {
-    label: 'Employment Status',
+    label: 'Job Description',
     key: '3',
-    icon: <UsergroupAddOutlined />,
-  },
-  {
-    label: 'Print COE',
-    key: '4',
-    icon: <PrinterOutlined />,
-  },
-  {
-    label: 'Generate QR Code',
-    key: '5',
-    icon: <QrcodeOutlined />,
+    icon: <FileTextOutlined/>
   },
 ];
 const menuProps = {
@@ -43,7 +33,7 @@ const menuProps = {
 const ButtonComponents = () => (
   <Space wrap>
     <Dropdown menu={menuProps}>
-      <Button className='text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300  font-medium rounded-lg text-sm px-5 items-center text-center me-2 mb-2'>
+      <Button type="primary" >
         <Space>
           Menu
           <DownOutlined />

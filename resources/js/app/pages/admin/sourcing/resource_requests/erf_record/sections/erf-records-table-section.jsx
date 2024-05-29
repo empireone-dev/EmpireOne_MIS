@@ -5,10 +5,14 @@ import { Button, Input, Space, Table, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
 import ButtonComponents from '../components/button-components';
 import ErfDropdownFilterComponents from '@/app/pages/admin/sourcing/resource_requests/erf_record/components/erf-dropdown-filter-components';
+import { useSelector } from 'react-redux';
 
 export default function ErfRecordsTableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
+    const { erf_records } = useSelector((state) => state.erf_records)
+    console.log('erf', erf_records)
+
     const searchInput = useRef(null);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -115,84 +119,63 @@ export default function ErfRecordsTableSection() {
             ),
     });
 
-    const data = [
-        {
-            key: '1',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '2',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '3',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '4',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-    ];
     const columns = [
         {
-            title: 'Employee #',
-            dataIndex: 'emp_id',
+            title: 'Ref #',
+            dataIndex: 'id',
             key: 'emp_id',
             ...getColumnSearchProps('emp_id'),
         },
         {
-            title: 'Fullname',
+            title: 'Requesting Manager',
             dataIndex: 'fullname',
             key: 'fullname',
             ...getColumnSearchProps('fullname'),
+            render: (_, record, i) => {
+                console.log('record', record)
+
+                return (
+                    <div key={i}>
+                        {record.user.employee_fname} {record.user.employee_lname}
+                    </div>
+                )
+            }
         },
         {
-            title: 'Position',
-            dataIndex: 'position',
+            title: 'Job Title',
+            dataIndex: 'jobTitle',
             key: 'position',
             ...getColumnSearchProps('position'),
         },
         {
-            title: 'Department',
-            dataIndex: 'dept',
+            title: 'Job Type',
+            dataIndex: 'jobType',
             key: 'dept',
             ...getColumnSearchProps('dept'),
         },
         {
-            title: 'Email Address',
-            dataIndex: 'eogs',
+            title: 'Position Status',
+            dataIndex: 'positionStatus',
             key: 'eogs',
             ...getColumnSearchProps('eogs'),
         },
         {
-            title: 'Contact',
-            dataIndex: 'contact',
+            title: 'Date Needed',
+            dataIndex: 'dateNeed',
             key: 'contact',
             ...getColumnSearchProps('contact'),
+        },
+        {
+            title: 'Budget/Cost',
+            dataIndex: 'budgetCost',
+            key: 'eogs',
+            ...getColumnSearchProps('eogs'),
+        },
+        {
+            title: 'Date Submitted',
+            dataIndex: 'submitted',
+            key: 'eogs',
+            ...getColumnSearchProps('eogs'),
         },
         {
             title: 'Status',
@@ -202,10 +185,24 @@ export default function ErfRecordsTableSection() {
                 console.log('record', record)
 
                 return (
-                    <Tag color={'orange'} key={i}>
+                    <Tag
+                        color={
+                            record.status == 'Approved' ? 'green' :
+                                record.status == 'Pending' ? 'orange' :
+                                    record.status == 'Declined' ? 'red' :
+                                        record.status == 'In Review' ? 'blue' :
+                                        'blue'
+                        }
+                        key={i}
+                    >
                         {record.status}
                     </Tag>
+
                 )
+
+
+
+
             }
         },
         {
@@ -231,7 +228,7 @@ export default function ErfRecordsTableSection() {
                     <ErfDropdownFilterComponents />
                 </div>
             </div>
-            <Table columns={columns} dataSource={data} className='mt-4' />;
+            <Table columns={columns} dataSource={erf_records} className='mt-4' />;
         </div>
     );
 };

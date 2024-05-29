@@ -291,7 +291,7 @@ const AdminLayout = ({ children }) => {
                   ref={dropdownRef}
                   id="dropdown"
                   className={`z-10 ${isOpen ? 'block' : 'hidden'
-                    } absolute w-auto p-3 bg-white rounded-lg shadow  mt-4`}
+                    } absolute w-auto p-3 px-5 bg-white rounded-lg shadow-lg  mt-4`}
                 >
                   <h6 className="mb-3 text-sm font-medium ">
                     Account Controls
@@ -299,21 +299,21 @@ const AdminLayout = ({ children }) => {
                   <ul className="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                     <li class="flex items-center text-lg  px-2">
                       <button>
-                        <h6 className='text-xl '><UserOutlined className='text-xl mr-2' />Update Profile</h6>
+                        <h6 className='text-lg font-medium '><UserOutlined className='text-lg mr-2' />Update Profile</h6>
                       </button>
                     </li>
                     <li class="flex items-center text-lg  px-2">
                       <button className='flex flex-1'>
                         <KeyIcon className='h-5 mt-1 mr-2' />
-                        <h6 className='text-xl '>
+                        <h6 className='text-lg font-medium'>
                           Change Password
                         </h6>
                       </button>
                     </li>
 
-                    <hr class=" h-0.5 border-t-0 bg-neutral-100" />
-                    <li class="flex justify-center items-center text-lg">
-                      <button className=' w-full pb-1 bg-slate-300 rounded-md hover:bg-slate-400 hover:text-white '><h6 className='text-lg font-medium'><PoweroffOutlined className='text-xl mr-1 mt-2' />Log out</h6></button>
+                    <hr class=" h-0.5 w-full border-t-0 bg-neutral-200" />
+                    <li class="flex justify-center items-center text-lg mt-2.5">
+                      <button className=' w-full pb-1 bg-slate-300 rounded-md hover:bg-slate-400 hover:text-white '><h6 className='text-lg font-medium'><PoweroffOutlined className='text-sm mr-1 mt-2' />Log out</h6></button>
                     </li>
                   </ul>
                 </div>

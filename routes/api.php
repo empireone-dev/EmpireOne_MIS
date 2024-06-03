@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\GuideQuestionController;
+use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\JobPositionController;
 use App\Http\Controllers\OutSourcingErfController;
 use Illuminate\Http\Request;
@@ -27,3 +30,7 @@ Route::get('/get_outsourcing_dashboard', [OutSourcingErfController::class, 'get_
 
 Route::resource('job_position',JobPositionController::class);
 Route::resource('guideq',GuideQuestionController::class);
+Route::resource('applicant',ApplicantController::class);
+Route::resource('checklist',ChecklistController::class);
+Route::resource('joboffer',JobOfferController::class);
+

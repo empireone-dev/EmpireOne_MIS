@@ -2,11 +2,15 @@ import React, { useRef, useState } from 'react';
 import { FolderOpenFilled, SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
+import { useSelector } from 'react-redux';
 
 export default function HiringTableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+    const { joboffers } = useSelector((state) => state.joboffers)
+    console.log('job', joboffers)
+
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -112,40 +116,7 @@ export default function HiringTableSection() {
             ),
     });
 
-    const data = [
-        {
-            key: '1',
-            app_id: 32,
-            position: 'HR Manager',
-            app_name: 'John Brown',
-            salary: '20,000.00',
-            status: 'Regular',
-        },
-        {
-            key: '2',
-            app_id: 32,
-            position: 'HR Manager',
-            app_name: 'John Brown',
-            salary: '20,000.00',
-            status: 'Regular',
-        },
-        {
-            key: '3',
-            app_id: 32,
-            position: 'HR Manager',
-            app_name: 'John Brown',
-            salary: '20,000.00',
-            status: 'Regular',
-        },
-        {
-            key: '4',
-            app_id: 32,
-            position: 'HR Manager',
-            app_name: 'John Brown',
-            salary: '20,000.00',
-            status: 'Regular',
-        },
-    ];
+
     const columns = [
         {
             title: 'Applicant #',
@@ -158,10 +129,19 @@ export default function HiringTableSection() {
             dataIndex: 'app_name',
             key: 'app_name',
             ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                console.log('record', record)
+
+                return (
+                    <div key={i}>
+                        {record.fname}
+                    </div>
+                )
+            }
         },
         {
             title: 'Position',
-            dataIndex: 'position',
+            dataIndex: 'jobPos',
             key: 'position',
             ...getColumnSearchProps('position'),
         },
@@ -177,9 +157,18 @@ export default function HiringTableSection() {
             key: 'status',
             render: (_, record, i) => {
                 console.log('record', record)
+                let color = '';
+                switch (record.status) {
+                    case 'Contract Signing':
+                        color = 'green';
+                        break;
+                    case 'Accepted':
+                        color = 'blue';
+                        break;
+                }
 
                 return (
-                    <Tag color={'orange'} key={i}>
+                    <Tag color={color} key={record.key}>
                         {record.status}
                     </Tag>
                 )
@@ -210,7 +199,7 @@ export default function HiringTableSection() {
                     </h2>
                 </div>
             </div>
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={joboffers} />;
         </div>
     )
 };

@@ -4,11 +4,14 @@ import { Button, Input, Space, Table, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
 import ButtonComponents from '../components/button-components';
 import ApplicantsDropdownFilterComponents from '../components/applicants-dropdown-filter-components';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 export default function ApplicantsTableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+    const { applicants } = useSelector((state) => state.applicants)
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -114,60 +117,10 @@ export default function ApplicantsTableSection() {
             ),
     });
 
-    const data = [
-        {
-            key: '1',
-            emp_id: 32,
-            dob: 'Jan 01, 1990',
-            fullname: 'John Brown',
-            gender: 'Male',
-            mstatus: 'single',
-            eogs: 'dawdwa@gmail.com',
-            submitted: 'May 16,2024',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '2',
-            emp_id: 32,
-            dob: 'Jan 01, 1990',
-            fullname: 'John Brown',
-            gender: 'Male',
-            mstatus: 'single',
-            eogs: 'dawdwa@gmail.com',
-            submitted: 'May 16,2024',
-            status: 'Pending',
-            contact: '09123456789',
-        },
-        {
-            key: '3',
-            emp_id: 32,
-            dob: 'Jan 01, 1990',
-            fullname: 'John Brown',
-            gender: 'Male',
-            mstatus: 'single',
-            eogs: 'dawdwa@gmail.com',
-            submitted: 'May 16,2024',
-            status: 'Passed',
-            contact: '09123456789',
-        },
-        {
-            key: '4',
-            emp_id: 32,
-            dob: 'Jan 01, 1990',
-            fullname: 'John Brown',
-            gender: 'Male',
-            mstatus: 'single',
-            eogs: 'dawdwa@gmail.com',
-            submitted: 'May 16,2024',
-            status: 'Failed',
-            contact: '09123456789',
-        },
-    ];
     const columns = [
         {
             title: 'Application #',
-            dataIndex: 'emp_id',
+            dataIndex: 'app_id',
             key: 'emp_id',
             ...getColumnSearchProps('emp_id'),
         },
@@ -176,12 +129,28 @@ export default function ApplicantsTableSection() {
             dataIndex: 'fullname',
             key: 'fullname',
             ...getColumnSearchProps('fullname'),
+            render: (_, record, i) => {
+                console.log('record', record)
+
+                return (
+                    <div key={i}>
+                        {record.lname}, {record.fname}
+                    </div>
+                )
+            }
         },
         {
             title: 'Date of Birth',
             dataIndex: 'dob',
             key: 'dob',
             ...getColumnSearchProps('dob'),
+            render: (_, record) => {
+                return (
+                    <div className="gap-1.5 flex">
+                        {moment(record.dob).format('LL')}
+                    </div>
+                );
+            },
         },
         {
             title: 'Gender',
@@ -191,19 +160,19 @@ export default function ApplicantsTableSection() {
         },
         {
             title: 'Marital Status',
-            dataIndex: 'mstatus',
+            dataIndex: 'marital',
             key: 'mstatus',
             ...getColumnSearchProps('mstatus'),
         },
         {
             title: 'Email Address',
-            dataIndex: 'eogs',
+            dataIndex: 'email',
             key: 'eogs',
             ...getColumnSearchProps('eogs'),
         },
         {
             title: 'Contact',
-            dataIndex: 'contact',
+            dataIndex: 'phone',
             key: 'contact',
             ...getColumnSearchProps('contact'),
         },
@@ -221,13 +190,29 @@ export default function ApplicantsTableSection() {
                 let color = '';
                 switch (record.status) {
                     case 'Failed':
+                    case 'Dismissal':
+                    case 'Resignation':
+                    case 'EOPE':
+                    case 'AWOL':
                         color = 'red';
                         break;
                     case 'Passed':
+                    case 'Hired':
+                    case 'Regular':
                         color = 'green';
                         break;
-                    default:
+                    case 'Pending':
+                        color = 'yellow';
+                        break;
+                    case 'Initial Phase':
                         color = 'orange';
+                        break;
+                    case 'Final Phase':
+                        color = 'blue';
+                        break;
+                    case 'Pooling':
+                        color = 'purple';
+                        break;
                 }
                 return (
                     <Tag color={color} key={record.key}>
@@ -260,7 +245,7 @@ export default function ApplicantsTableSection() {
                     <ApplicantsDropdownFilterComponents />
                 </div>
             </div>
-            <Table columns={columns} dataSource={data} className='mt-4' />
+            <Table columns={columns} dataSource={applicants} className='mt-4' />
         </div>
     );
 };

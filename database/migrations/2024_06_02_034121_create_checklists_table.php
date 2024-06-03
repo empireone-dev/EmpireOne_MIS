@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('job_positions', function (Blueprint $table) {
+        Schema::create('checklists', function (Blueprint $table) {
             $table->id();
-            $table->string('jPosition')->nullable();
-            $table->string('salary')->nullable();
-            $table->string('status')->nullable();
+            $table->string('reqs')->nullable();
+            $table->string('remarks')->nullable();
             $table->string('site')->nullable();
-            $table->bigInteger('ref_id')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('job_positions');
+        Schema::dropIfExists('checklists');
     }
 };

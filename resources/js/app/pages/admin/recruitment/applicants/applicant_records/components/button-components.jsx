@@ -1,6 +1,7 @@
 import React from 'react';
-import { DownOutlined, EditOutlined, FolderOpenOutlined, UsergroupAddOutlined, PrinterOutlined, QrcodeOutlined } from '@ant-design/icons';
+import { DownOutlined, EditOutlined, FolderOpenOutlined, UsergroupAddOutlined, PrinterOutlined, QrcodeOutlined, CalendarOutlined, ExceptionOutlined, InfoCircleOutlined, BarChartOutlined, ScheduleOutlined, DotChartOutlined, RiseOutlined, AuditOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Tooltip } from 'antd';
+import { BriefcaseIcon } from '@heroicons/react/24/outline';
 const handleButtonClick = (e) => {
   message.info('Click on left button.');
   console.log('click left button', e);
@@ -11,30 +12,51 @@ const handleMenuClick = (e) => {
 };
 const items = [
   {
-    label: 'Update Employee',
+    label: 'Application Details',
     key: '1',
-    icon: <EditOutlined />,
+    icon: <AuditOutlined />,
   },
   {
-    label: '201 File',
+    label: 'Proceed to Initial Phase',
     key: '2',
-    icon: <FolderOpenOutlined />,
+    icon: <RiseOutlined />,
   },
   {
-    label: 'Employment Status',
+    label: 'Initial Rating Scale',
     key: '3',
-    icon: <UsergroupAddOutlined />,
+    icon: <DotChartOutlined />,
   },
   {
-    label: 'Print COE',
+    label: 'Initial Phase Result',
     key: '4',
-    icon: <PrinterOutlined />,
+    icon: <InfoCircleOutlined />,
   },
   {
-    label: 'Generate QR Code',
+    label: 'Final Rating Scale',
     key: '5',
-    icon: <QrcodeOutlined />,
+    icon: <DotChartOutlined />,
   },
+  {
+    label: 'Set Schedule Final Phase',
+    key: '6',
+    icon: <CalendarOutlined />,
+  },
+  {
+    label: 'Check Schedule of Interviewer',
+    key: '7',
+    icon: <ScheduleOutlined />,
+  },
+  {
+    label: 'Application Results',
+    key: '8',
+    icon: <InfoCircleOutlined />,
+  },
+  {
+    label: 'Job Offer',
+    key: '9',
+    icon: <BriefcaseIcon className='h-4 mr-0.5' />,
+  },
+
 ];
 const menuProps = {
   items,
@@ -43,7 +65,7 @@ const menuProps = {
 const ButtonComponents = () => (
   <Space wrap>
     <Dropdown menu={menuProps}>
-      <Button className='text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300  font-medium rounded-lg text-sm px-5 items-center text-center me-2 mb-2'>
+      <Button type='primary'>
         <Space>
           Menu
           <DownOutlined />

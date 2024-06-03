@@ -4,11 +4,14 @@ import { Button, Input, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
 import ButtonComponents from "../components/button-components";
 import AddPreEmploymentSection from "./add-pre-employment-section";
+import { useSelector } from "react-redux";
+import moment from "moment";
 
 export default function PreEmploymentTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
+    const { checklists } = useSelector((state) => state.checklists) 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -131,42 +134,17 @@ export default function PreEmploymentTableSection() {
             ),
     });
 
-    const data = [
-        {
-            key: "1",
-            reqname: "Birth Certificate",
-            req: "Yes",
-            created: "05/09/2024",
-        },
-        {
-            key: "2",
-            reqname: "SSS Form E1/SSS ID",
-            req: "Yes",
-            created: "05/09/2024",
-        },
-        {
-            key: "3",
-            reqname: "Certificate of Employment from the previous employer",
-            req: "Only If Applicable",
-            created: "05/09/2024",
-        },
-        {
-            key: "4",
-            reqname: "Barangay Clearance with the purpose of bank application",
-            req: "Yes",
-            created: "05/09/2024",
-        },
-    ];
+
     const columns = [
         {
             title: "Requirement Name",
-            dataIndex: "reqname",
+            dataIndex: "reqs",
             key: "reqname",
             ...getColumnSearchProps("reqname"),
         },
         {
             title: "Required",
-            dataIndex: "req",
+            dataIndex: "remarks",
             key: "req",
             ...getColumnSearchProps("req"),
         },
@@ -175,6 +153,13 @@ export default function PreEmploymentTableSection() {
             dataIndex: "created",
             key: "created",
             ...getColumnSearchProps("created"),
+            render: (_, record) => {
+                return (
+                    <div className="gap-1.5 flex">
+                      {moment(record.created).format('LLL')}
+                    </div>
+                );
+            },
         },
     ];
 
@@ -188,7 +173,7 @@ export default function PreEmploymentTableSection() {
                 </div>
             </div>
             <AddPreEmploymentSection/>
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={checklists} />;
         </div>
     );
 }

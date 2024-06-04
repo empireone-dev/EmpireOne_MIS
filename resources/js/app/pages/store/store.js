@@ -7,6 +7,8 @@ import guideQuestionSlice from '../admin/recruitment/guide_question/redux/guide-
 import applicantSlice from '../admin/recruitment/applicants/applicant_records/redux/applicant-slice';
 import checklistSlice from '../admin/hiring/pre_employment/redux/pre-employment-slice';
 import jobOfferSlice from '../admin/hiring/hiring_section/redux/hiring-slice';
+import onboardingDocuSlice from '../admin/onboarding/onboarding_docu/redux/onboarding-docu-slice';
+import employeeSlice from '../admin/employee_relation/employee_section/redux/employee-section-slice';
 const store = configureStore({
     reducer: {
         dashboard: dashboardSlice,
@@ -16,6 +18,8 @@ const store = configureStore({
         applicants: applicantSlice,
         checklists: checklistSlice,
         joboffers: jobOfferSlice,
+        onboarding_docs: onboardingDocuSlice,
+        employees: employeeSlice,
     },
 });
 

@@ -4,10 +4,13 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
 import ButtonComponents from '../components/button-components';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 export default function OnboardingDocuTableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
+    const { onboarding_docs } = useSelector((state) => state.onboarding_docs)
     const searchInput = useRef(null);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -114,40 +117,10 @@ export default function OnboardingDocuTableSection() {
             ),
     });
 
-    const data = [
-        {
-            key: '1',
-            emp_id: 32,
-            doc_name: 'Attendance Policy',
-            fullname: 'John Brown',
-            created: 'December 22, 2023'
-        },
-        {
-            key: '2',
-            emp_id: 32,
-            doc_name: 'Code of Conduct and Discipline',
-            fullname: 'John Brown',
-            created: 'December 22, 2023'
-        },
-        {
-            key: '3',
-            emp_id: 32,
-            doc_name: 'Confidentiality and Non-Competition Agreement',
-            fullname: 'John Brown',
-            created: 'December 22, 2023'
-        },
-        {
-            key: '4',
-            emp_id: 32,
-            doc_name: 'Fraud Policy',
-            fullname: 'John Brown',
-            created: 'December 22, 2023'
-        },
-    ];
     const columns = [
         {
             title: 'ID #',
-            dataIndex: 'emp_id',
+            dataIndex: 'id',
             key: 'emp_id',
             ...getColumnSearchProps('emp_id'),
         },
@@ -162,6 +135,14 @@ export default function OnboardingDocuTableSection() {
             dataIndex: 'created',
             key: 'created',
             ...getColumnSearchProps('created'),
+            render: (_, record) => {
+                return (
+                    <div className="gap-1.5 flex">
+                      {moment(record.created).format('LLL')}
+                    </div>
+                );
+            },
+
         },
         {
             title: 'Action',
@@ -183,7 +164,7 @@ export default function OnboardingDocuTableSection() {
                     </h2>
                 </div>
             </div>
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={onboarding_docs} />;
         </div>
     );
 };

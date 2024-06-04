@@ -1,12 +1,14 @@
 import React, { useRef, useState } from 'react';
-import { FolderOpenFilled, SearchOutlined } from '@ant-design/icons';
+import { ExclamationCircleFilled, FolderOpenFilled, SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
+import { useSelector } from 'react-redux';
 
 export default function AcknowledgementTableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+    const { joboffers } = useSelector((state) => state.joboffers)
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -112,40 +114,6 @@ export default function AcknowledgementTableSection() {
             ),
     });
 
-    const data = [
-        {
-            key: '1',
-            app_id: 32,
-            position: 'HR Manager',
-            app_name: 'John Brown',
-            salary: '20,000.00',
-            status: 'Regular',
-        },
-        {
-            key: '2',
-            app_id: 32,
-            position: 'HR Manager',
-            app_name: 'John Brown',
-            salary: '20,000.00',
-            status: 'Regular',
-        },
-        {
-            key: '3',
-            app_id: 32,
-            position: 'HR Manager',
-            app_name: 'John Brown',
-            salary: '20,000.00',
-            status: 'Regular',
-        },
-        {
-            key: '4',
-            app_id: 32,
-            position: 'HR Manager',
-            app_name: 'John Brown',
-            salary: '20,000.00',
-            status: 'Regular',
-        },
-    ];
     const columns = [
         {
             title: 'Applicant #',
@@ -158,10 +126,20 @@ export default function AcknowledgementTableSection() {
             dataIndex: 'app_name',
             key: 'app_name',
             ...getColumnSearchProps('app_name'),
+            render: (_, record, i) => {
+                console.log('record', record)
+
+                return (
+                    <div key={i}>
+                        {record?.applicant?.fname} {record?.applicant?.mname} {record?.applicant?.lname}
+                    </div>
+                    
+                )
+            }
         },
         {
             title: 'Position',
-            dataIndex: 'position',
+            dataIndex: 'jobPos',
             key: 'position',
             ...getColumnSearchProps('position'),
         },
@@ -190,12 +168,23 @@ export default function AcknowledgementTableSection() {
             dataIndex: 'action',
             render: (_, record) => {
                 return (
-                    <button
-                        type="button"
-                        className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300  shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
-                    >
-                        <FolderOpenFilled />
-                    </button>
+                    <div className='flex flex-1 gap-1'>
+                        <button
+                            type="button"
+                            className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300  shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
+                        >
+                            <FolderOpenFilled />
+                        </button>
+                        <button
+                            type="button"
+                            className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300  shadow-lg shadow-red-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
+                        >
+                            <ExclamationCircleFilled />
+                        </button>
+                    </div>
+
+
+
                 )
             }
         },
@@ -210,7 +199,7 @@ export default function AcknowledgementTableSection() {
                     </h2>
                 </div>
             </div>
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={joboffers} />;
         </div>
     )
 };

@@ -4,11 +4,13 @@ import { Button, Input, Space, Table, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
 import DropdownButton from '../components/button-components';
 import ButtonComponents from '../components/button-components';
+import { useSelector } from 'react-redux';
 
 export default function EmployeeTableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+    const { employees } = useSelector((state) => state.employees)
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -114,48 +116,6 @@ export default function EmployeeTableSection() {
             ),
     });
 
-    const data = [
-        {
-            key: '1',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '2',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '3',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '4',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-    ];
     const columns = [
         {
             title: 'Employee #',
@@ -168,6 +128,16 @@ export default function EmployeeTableSection() {
             dataIndex: 'fullname',
             key: 'fullname',
             ...getColumnSearchProps('fullname'),
+            render: (_, record, i) => {
+                console.log('record', record)
+
+                return (
+                    <div key={i}>
+                        {record?.applicant?.fname} {record?.applicant?.mname} {record?.applicant?.lname}
+                    </div>
+
+                )
+            }
         },
         {
             title: 'Position',
@@ -192,31 +162,48 @@ export default function EmployeeTableSection() {
             dataIndex: 'contact',
             key: 'contact',
             ...getColumnSearchProps('contact'),
+            render: (_, record, i) => {
+                console.log('record', record)
+
+                return (
+                    <div key={i}>
+                        {record?.applicant?.phone}
+                    </div>
+
+                )
+            }
         },
         {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            render: (_, record, i) => {
-                console.log('record', record)
-
+            render: (_, record) => {
+                let color = '';
+                switch (record.status) {
+                    case 'Probationary':
+                        color = 'green';
+                        break;
+                    case 'Regular':
+                        color = 'blue';
+                        break;
+                }
                 return (
-                    <Tag color={'orange'} key={i}>
+                    <Tag color={color} key={record.key}>
                         {record.status}
                     </Tag>
-                )
-            }
+                );
+            },
         },
         {
             title: 'Action',
             dataIndex: 'action',
             render: (_, record) => {
                 return (
-                    <ButtonComponents/>
+                    <ButtonComponents />
                 )
             }
         },
     ];
 
-    return <Table columns={columns} dataSource={data} />;
+    return <Table columns={columns} dataSource={employees} />;
 };

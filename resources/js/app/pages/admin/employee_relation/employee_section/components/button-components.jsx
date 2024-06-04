@@ -43,7 +43,7 @@ const menuProps = {
 const ButtonComponents = () => (
   <Space wrap>
     <Dropdown menu={menuProps}>
-      <Button className='text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300  font-medium rounded-lg text-sm px-5 items-center text-center me-2 mb-2'>
+      <Button type='primary'>
         <Space>
           Menu
           <DownOutlined />

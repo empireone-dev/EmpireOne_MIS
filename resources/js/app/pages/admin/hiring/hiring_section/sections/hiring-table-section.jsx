@@ -9,7 +9,7 @@ export default function HiringTableSection() {
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
     const { joboffers } = useSelector((state) => state.joboffers)
-    console.log('job', joboffers)
+    console.log('joboffers', joboffers)
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -134,8 +134,9 @@ export default function HiringTableSection() {
 
                 return (
                     <div key={i}>
-                        {record.fname}
+                        {record?.applicant?.fname} {record?.applicant?.mname} {record?.applicant?.lname}
                     </div>
+                    
                 )
             }
         },

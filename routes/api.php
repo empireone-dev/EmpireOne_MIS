@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\ChecklistController;
+use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\GuideQuestionController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\JobPositionController;
+use App\Http\Controllers\OnboardingDocController;
 use App\Http\Controllers\OutSourcingErfController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -33,4 +35,6 @@ Route::resource('guideq',GuideQuestionController::class);
 Route::resource('applicant',ApplicantController::class);
 Route::resource('checklist',ChecklistController::class);
 Route::resource('joboffer',JobOfferController::class);
+Route::resource('onboarding_doc',OnboardingDocController::class);
+Route::resource('employee',EmployeeController::class);
 

@@ -1,5 +1,5 @@
 import { get_job_offer_service } from "@/app/pages/services/job-offer-service";
-import { jobOfferSlice } from "./hiring-slice";
+import { jobOfferSlice } from "./acknowledgement-slice";
 
 export function get_job_offer_thunk() {
   return async function (dispatch, getState) {

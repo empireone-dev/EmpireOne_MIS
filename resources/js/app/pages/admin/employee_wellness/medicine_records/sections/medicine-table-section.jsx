@@ -4,11 +4,13 @@ import { Button, Input, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
 import ButtonComponents from "../components/button-components";
 import AddMedicineSection from "./add-medicine-section";
+import { useSelector } from "react-redux";
 
 export default function MedicineTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
+    const { medicine_records } = useSelector((state) => state.medicine_records)
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -131,38 +133,12 @@ export default function MedicineTableSection() {
             ),
     });
 
-    const data = [
-        {
-            key: "1",
-            meds: 'Biogesic',
-            med_type: 'Paracetamol', 
-            med_desc: "Explain how your experience and skills align with the job and contribute to the company.",
-        },
-        {
-            key: "2",
-            meds: 'Cetirizine',
-            med_type: 'Anti-hestamine	', 
-            med_desc: "Used in the treatment of allergic rhinitis and urticaria",
-        },
-        {
-            key: "3",
-            meds: 'Biogesic',
-            med_type: 'Paracetamol', 
-            med_desc: "Explain how your experience and skills align with the job and contribute to the company.",
-        },
-        {
-            key: "4",
-            meds: 'Biogesic',
-            med_type: 'Paracetamol', 
-            med_desc: "Explain how your experience and skills align with the job and contribute to the company.",
-        },
-    ];
     const columns = [
         {
             title: "Medicine",
-            dataIndex: "meds",
-            key: "meds",
-            ...getColumnSearchProps("meds"),
+            dataIndex: "medicine",
+            key: "medicine",
+            ...getColumnSearchProps("medicine"),
         },
         {
             title: "Medicine Type",
@@ -197,7 +173,7 @@ export default function MedicineTableSection() {
                 </div>
             </div>
             <AddMedicineSection/>
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={medicine_records} />;
         </div>
     );
 }

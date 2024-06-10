@@ -2,14 +2,15 @@ import React, { useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
-import DropdownButton from '../components/button-components';
-import ButtonComponents from '../components/button-components';
 import AddAttritionSection from './add-attrition-section';
+import { useSelector } from 'react-redux';
 
 export default function AttritionTableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+    const {employee_attritions} = useSelector((state) => state.employee_attritions)
+    console.log('attrition' , employee_attritions)
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -115,48 +116,6 @@ export default function AttritionTableSection() {
             ),
     });
 
-    const data = [
-        {
-            key: '1',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '2',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '3',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '4',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-    ];
     const columns = [
         {
             title: 'Employee #',
@@ -243,7 +202,7 @@ export default function AttritionTableSection() {
                 </div>
             </div>
             <AddAttritionSection/>
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={employee_attritions} />;
         </div>
     );
 };

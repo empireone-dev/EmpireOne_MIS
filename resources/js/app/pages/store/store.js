@@ -9,6 +9,9 @@ import checklistSlice from '../admin/hiring/pre_employment/redux/pre-employment-
 import jobOfferSlice from '../admin/hiring/hiring_section/redux/hiring-slice';
 import onboardingDocuSlice from '../admin/onboarding/onboarding_docu/redux/onboarding-docu-slice';
 import employeeSlice from '../admin/employee_relation/employee_section/redux/employee-section-slice';
+import medicineRecordSlice from '../admin/employee_wellness/medicine_records/redux/medicine-record-slice';
+import employeeHealthDataSlice from '../admin/employee_wellness/employee_health_data/redux/employee-health-data-slice';
+import employeeAttritionSlice from '../admin/attrition/attrition_section/redux/employee-attrition-slice';
 const store = configureStore({
     reducer: {
         dashboard: dashboardSlice,
@@ -20,6 +23,9 @@ const store = configureStore({
         joboffers: jobOfferSlice,
         onboarding_docs: onboardingDocuSlice,
         employees: employeeSlice,
+        medicine_records: medicineRecordSlice,
+        employee_healths: employeeHealthDataSlice,
+        employee_attritions: employeeAttritionSlice,
     },
 });
 

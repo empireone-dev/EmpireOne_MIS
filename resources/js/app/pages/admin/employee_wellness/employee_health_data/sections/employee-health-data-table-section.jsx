@@ -2,11 +2,13 @@ import React, { useRef, useState } from 'react';
 import { FileAddOutlined, MedicineBoxOutlined, SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
+import { useSelector } from 'react-redux';
 
-export default function EmployeeHealthDataSection() {
+export default function EmployeeHealthDataTableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+    const { employees } = useSelector((state) => state.employees)
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -112,48 +114,6 @@ export default function EmployeeHealthDataSection() {
             ),
     });
 
-    const data = [
-        {
-            key: '1',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '2',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '3',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-        {
-            key: '4',
-            emp_id: 32,
-            position: 'HR Manager',
-            fullname: 'John Brown',
-            dept: 'Human Resource',
-            eogs: 'dawdwa@gmail.com',
-            status: 'Regular',
-            contact: '09123456789',
-        },
-    ];
     const columns = [
         {
             title: 'Employee #',
@@ -166,6 +126,16 @@ export default function EmployeeHealthDataSection() {
             dataIndex: 'fullname',
             key: 'fullname',
             ...getColumnSearchProps('fullname'),
+            render: (_, record, i) => {
+                console.log('record', record)
+
+                return (
+                    <div key={i}>
+                        {record?.applicant?.fname} {record?.applicant?.mname} {record?.applicant?.lname}
+                    </div>
+
+                )
+            }
         },
         {
             title: 'Position',
@@ -190,6 +160,16 @@ export default function EmployeeHealthDataSection() {
             dataIndex: 'contact',
             key: 'contact',
             ...getColumnSearchProps('contact'),
+            render: (_, record, i) => {
+                console.log('record', record)
+
+                return (
+                    <div key={i}>
+                        {record?.applicant?.phone}
+                    </div>
+
+                )
+            }
         },
         {
             title: 'Status',
@@ -238,7 +218,7 @@ export default function EmployeeHealthDataSection() {
                     </h2>
                 </div>
             </div>
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={employees} />;
         </div>
     );
 };

@@ -2,10 +2,13 @@
 
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\ChecklistController;
+use App\Http\Controllers\EmployeeAttritionController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeHealthController;
 use App\Http\Controllers\GuideQuestionController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\JobPositionController;
+use App\Http\Controllers\MedicineRecordController;
 use App\Http\Controllers\OnboardingDocController;
 use App\Http\Controllers\OutSourcingErfController;
 use Illuminate\Http\Request;
@@ -37,4 +40,7 @@ Route::resource('checklist',ChecklistController::class);
 Route::resource('joboffer',JobOfferController::class);
 Route::resource('onboarding_doc',OnboardingDocController::class);
 Route::resource('employee',EmployeeController::class);
+Route::resource('medicine_record',MedicineRecordController::class);
+Route::resource('employee_health',EmployeeHealthController::class);
+Route::resource('employee_attrition',EmployeeAttritionController::class);
 

@@ -6,12 +6,44 @@ import ButtonComponents from '../components/button-components';
 import ApplicantsDropdownFilterComponents from '../components/applicants-dropdown-filter-components';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import { useEffect } from 'react';
+import { router } from '@inertiajs/react';
 
 export default function ApplicantsTableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
-    const searchInput = useRef(null);
+    // const [filteredDatas, setFilteredDatas] = useState([]);
+    const [current, setCurrent] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
     const { applicants } = useSelector((state) => state.applicants)
+
+const filteredDatas = applicants.data
+    // const filterDatas = (selectedStats) => {
+    //     if (selectedStats.length === 0) {
+    //         setFilteredDatas(applicants);
+    //     } else {
+    //         const filtered = applicants.filter(record => selectedStats.includes(record.status));
+    //         setFilteredDatas(filtered);
+    //     }
+    // };
+
+    useEffect(() => {
+        // const storedDatas = localStorage.getItem('filteredDatas');
+        // if (storedDatas) {
+        //     setFilteredDatas(JSON.parse(storedDatas));
+        // } else {
+        //     filterDatas([]);
+        // }
+    }, []);
+
+    useEffect(() => {
+        // localStorage.setItem('filteredDatas', JSON.stringify(filteredDatas));
+        // localStorage.clear()
+        // setFilteredDatas(applicants);
+    }, [applicants]);
+console.log('filteredDatas',filteredDatas)
+    const searchInput = useRef(null);
+
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -233,6 +265,27 @@ export default function ApplicantsTableSection() {
         },
     ];
 
+    const url = window.location.pathname + window.location.search;
+
+    const getQueryParam = (url, paramName) => {
+        const searchParams = new URLSearchParams(url.split("?")[1]);
+        return searchParams.get(paramName);
+    };
+
+    const page = getQueryParam(url, "page");
+    const categories = getQueryParam(url, "categories");
+
+    const paginationConfig = {
+        current: page,
+        pageSize: pageSize,
+        total:applicants.last_page * pageSize,
+        onChange: (page, pageSize) => {
+            router.visit(window.location.pathname + `?page=${page}`);
+            setCurrent(page);
+            setPageSize(pageSize);
+        },
+    };
+
     return (
         <div>
             <div className='flex justify-between items-center '>
@@ -241,11 +294,14 @@ export default function ApplicantsTableSection() {
                         <b>Applicant(s) Records</b>
                     </h2>
                 </div>
-                <div className='mr-8'>
-                    <ApplicantsDropdownFilterComponents />
-                </div>
+                {/* <div className='mr-8'>
+                    <ApplicantsDropdownFilterComponents filterDatas={filterDatas} />
+                </div> */}
             </div>
-            <Table columns={columns} dataSource={applicants} className='mt-4' />
+            <Table
+            
+            pagination={paginationConfig}
+            columns={columns} dataSource={filteredDatas} className='mt-4' />
         </div>
     );
 };

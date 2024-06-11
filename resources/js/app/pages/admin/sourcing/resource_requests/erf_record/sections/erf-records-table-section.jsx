@@ -1,4 +1,3 @@
-
 import React, { useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag } from 'antd';
@@ -6,12 +5,35 @@ import Highlighter from 'react-highlight-words';
 import ButtonComponents from '../components/button-components';
 import ErfDropdownFilterComponents from '@/app/pages/admin/sourcing/resource_requests/erf_record/components/erf-dropdown-filter-components';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 export default function ErfRecordsTableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
-    const { erf_records } = useSelector((state) => state.erf_records)
-    console.log('erf', erf_records)
+    const [filteredData, setFilteredData] = useState([]);
+    const { erf_records } = useSelector((state) => state.erf_records);
+
+    const filterData = (selectedStatus) => {
+        if (selectedStatus.length === 0) {
+            setFilteredData(erf_records);
+        } else {
+            const filtered = erf_records.filter(record => selectedStatus.includes(record.status));
+            setFilteredData(filtered);
+        }
+    };
+
+    useEffect(() => {
+        const storedData = localStorage.getItem('filteredData');
+        if (storedData) {
+            setFilteredData(JSON.parse(storedData));
+        } else {
+            filterData([]);
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('filteredData', JSON.stringify(filteredData));
+    }, [filteredData]);
 
     const searchInput = useRef(null);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -136,7 +158,7 @@ export default function ErfRecordsTableSection() {
 
                 return (
                     <div key={i}>
-                        {record.user.employee_fname} {record.user.employee_lname}
+                        {record.user?.employee_fname} {record.user?.employee_lname}
                     </div>
                 )
             }
@@ -225,10 +247,10 @@ export default function ErfRecordsTableSection() {
                     </h2>
                 </div>
                 <div className='mr-8'>
-                    <ErfDropdownFilterComponents />
+                    <ErfDropdownFilterComponents filterData={filterData} />
                 </div>
             </div>
-            <Table columns={columns} dataSource={erf_records} className='mt-4' />;
+            <Table columns={columns} dataSource={filteredData} className='mt-4' />
         </div>
     );
-};
+}

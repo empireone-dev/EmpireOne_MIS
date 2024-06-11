@@ -1,11 +1,28 @@
+import { router } from '@inertiajs/react';
 import React, { useEffect, useState } from 'react';
 
-export default function ApplicantsDropdownFilterComponents() {
+export default function ApplicantsDropdownFilterComponents({filterDatas}) {
     const [isOpen, setIsOpen] = useState(false);
+    const [selectedStats, setSelectedStats] = useState([]);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
+
+    const handleStatusChanges = (e) => {
+        const { value, checked } = e.target;
+        router.visit(window.location.pathname +window.location.search+ `&categories=${[...selectedStats, value]}`);
+        // if (checked) {
+        //     setSelectedStats([...selectedStats, value]);
+        // } else {
+        //     setSelectedStats(selectedStats.filter(status => status !== value));
+        // }
+    };
+
+    useEffect(() => {
+        filterDatas(selectedStats);
+    }, [selectedStats]);
+
     return (
         <div>
             <div className="relative">
@@ -38,16 +55,20 @@ export default function ApplicantsDropdownFilterComponents() {
                     </h6>
                     <ul className="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                         <li class="flex items-center">
-                            <input id="apple" type="checkbox" value=""
+                            <input id="Pending" type="checkbox" value="Pending"
+                                checked={selectedStats.includes("Pending")}
+                                onChange={handleStatusChanges}
                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500   focus:ring-2  " />
 
-                            <label for="apple" class="ml-2 text-sm font-medium text-gray-900 ">
+                            <label for="Pending" class="ml-2 text-sm font-medium text-gray-900 ">
                                 Pending
                             </label>
                         </li>
 
                         <li class="flex items-center">
-                            <input id="fitbit" type="checkbox" value=""
+                            <input id="Initial Phase" type="checkbox" value="Initial Phase"
+                            checked={selectedStats.includes("Initial Phase")}
+                            onChange={handleStatusChanges}
                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500   focus:ring-2  " />
 
                             <label for="fitbit" class="ml-2 text-sm font-medium text-gray-900 ">
@@ -56,29 +77,46 @@ export default function ApplicantsDropdownFilterComponents() {
                         </li>
 
                         <li class="flex items-center">
-                            <input id="dell" type="checkbox" value=""
+                            <input id="Final Phase" type="checkbox" value="Final Phase"
+                            checked={selectedStats.includes("Final Phase")}
+                            onChange={handleStatusChanges}
                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500   focus:ring-2  " />
 
-                            <label for="dell" class="ml-2 text-sm font-medium text-gray-900 ">
+                            <label for="Final Phase" class="ml-2 text-sm font-medium text-gray-900 ">
                                 Final Phase
                             </label>
                         </li>
 
                         <li class="flex items-center">
-                            <input id="asus" type="checkbox" value="" 
+                            <input id="Passed" type="checkbox" value="Passed"
+                            checked={selectedStats.includes("Passed")}
+                            onChange={handleStatusChanges}
                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500   focus:ring-2  " />
 
-                            <label for="asus" class="ml-2 text-sm font-medium text-gray-900 ">
+                            <label for="Passed" class="ml-2 text-sm font-medium text-gray-900 ">
                                 Passed
                             </label>
                         </li>
 
                         <li class="flex items-center">
-                            <input id="asus" type="checkbox" value="" 
+                            <input id="Failed" type="checkbox" value="Failed"
+                            checked={selectedStats.includes("Failed")}
+                            onChange={handleStatusChanges}
                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500   focus:ring-2  " />
 
-                            <label for="asus" class="ml-2 text-sm font-medium text-gray-900 ">
+                            <label for="Failed" class="ml-2 text-sm font-medium text-gray-900 ">
                                 Failed
+                            </label>
+                        </li>
+
+                        <li class="flex items-center">
+                            <input id="Probationary" type="checkbox" value="Probationary"
+                            checked={selectedStats.includes("Probationary")}
+                            onChange={handleStatusChanges}
+                                class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500   focus:ring-2  " />
+
+                            <label for="Probationary" class="ml-2 text-sm font-medium text-gray-900 ">
+                                Probationary
                             </label>
                         </li>
                     </ul>

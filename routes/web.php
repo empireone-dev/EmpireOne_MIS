@@ -37,6 +37,10 @@ Route::get('/online_application', function () {
     return Inertia::render('online_application/page');
 });
 
+Route::get('/onboarding-documents', function () {
+    return Inertia::render('onboarding-documents/page');
+});
+
 
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function () {

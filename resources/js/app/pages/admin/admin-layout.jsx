@@ -84,7 +84,7 @@ const AdminLayout = ({ children }) => {
               key: 'applicant_records',
               icon: <MoreOutlined />,
               label: 'Application Records',
-              onClick: () => router.visit('/admin/recruitment/applicants/applicant_records')
+              onClick: () => router.visit('/admin/recruitment/applicants/applicant_records?page=1')
             }
           ],
         },

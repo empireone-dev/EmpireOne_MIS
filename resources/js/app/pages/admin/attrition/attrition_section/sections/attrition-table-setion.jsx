@@ -9,8 +9,9 @@ export default function AttritionTableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
-    const {employee_attritions} = useSelector((state) => state.employee_attritions)
-    console.log('attrition' , employee_attritions)
+    const { employee_attritions } = useSelector((state) => state.employee_attritions)
+    console.log('attrition', employee_attritions)
+    
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -128,6 +129,13 @@ export default function AttritionTableSection() {
             dataIndex: 'fullname',
             key: 'fullname',
             ...getColumnSearchProps('fullname'),
+            render: (_, record, i) => {
+                return (
+                    <div key={i}>
+                        {record?.applicant?.fname} {record?.applicant?.mname} {record?.applicant?.lname}
+                    </div>
+                )
+            }
         },
         {
             title: 'Position',
@@ -201,7 +209,7 @@ export default function AttritionTableSection() {
                     </h2>
                 </div>
             </div>
-            <AddAttritionSection/>
+            <AddAttritionSection />
             <Table columns={columns} dataSource={employee_attritions} />;
         </div>
     );

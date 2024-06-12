@@ -41,6 +41,10 @@ Route::get('/onboarding-documents', function () {
     return Inertia::render('onboarding-documents/page');
 });
 
+Route::get('/pre-employment', function () {
+    return Inertia::render('pre-employment/page');
+});
+
 
 Route::prefix('admin')->group(function () {
     Route::get('/dashboard', function () {

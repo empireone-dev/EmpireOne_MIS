@@ -44,6 +44,9 @@ Route::get('/onboarding-documents', function () {
 Route::get('/pre-employment', function () {
     return Inertia::render('pre-employment/page');
 });
+Route::get('/virtual-contract', function () {
+    return Inertia::render('virtual-contract/page');
+});
 
 
 Route::prefix('admin')->group(function () {

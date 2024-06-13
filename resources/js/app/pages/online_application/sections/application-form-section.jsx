@@ -22,7 +22,7 @@ export default function ApplicationFormSection() {
 
   return (
     <div className="h-screen overflow-hidden ">
-      <div className="bg-gray-200 transition-colors duration-300 h-full overflow-y-scroll">
+      <div className="bg-cover bg-[url('/images/SCemp.jpg')] transition-colors duration-300 h-full overflow-y-scroll">
         <div className="container mx-auto flex justify-center">
           <div className="bg-white shadow-2xl shadow-black rounded-lg p-6 mt-12 w-full">
             <div className="flex items-center justify-center p-3">

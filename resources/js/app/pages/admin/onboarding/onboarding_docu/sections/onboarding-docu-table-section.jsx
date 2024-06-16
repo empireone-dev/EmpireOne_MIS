@@ -6,6 +6,7 @@ import Highlighter from 'react-highlight-words';
 import ButtonComponents from '../components/button-components';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
+import AddOnboardingDocuSection from './add-onboarding-docu-section';
 
 export default function OnboardingDocuTableSection() {
     const [searchText, setSearchText] = useState('');
@@ -161,6 +162,7 @@ export default function OnboardingDocuTableSection() {
                 <div className="flex items-center gap-x-3 mb-4">
                     <h2 className="text-lg font-medium text-gray-800">
                         <b>Onboarding Documents</b>
+                        <AddOnboardingDocuSection/>
                     </h2>
                 </div>
             </div>

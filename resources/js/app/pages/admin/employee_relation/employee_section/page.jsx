@@ -1,7 +1,6 @@
 import React from 'react'
 import EmployeeTableSection from './sections/employee-table-section'
 import AdminLayout from '../../admin-layout'
-import AddEmployeeButtonSection from './sections/add-employee-button-section'
 import store from '@/app/pages/store/store';
 import { get_employee_thunk } from './redux/employee-section-thunk';
 import { useEffect } from 'react';
@@ -12,7 +11,6 @@ export default function EmployeeRelationPage() {
   }, []);
   return (
     <AdminLayout>
-        <AddEmployeeButtonSection/>
         <EmployeeTableSection/>
     </AdminLayout>
   )

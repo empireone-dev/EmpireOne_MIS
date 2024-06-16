@@ -5,6 +5,7 @@ import Highlighter from 'react-highlight-words';
 import DropdownButton from '../components/button-components';
 import ButtonComponents from '../components/button-components';
 import { useSelector } from 'react-redux';
+import AddEmployeeButtonSection from './add-employee-button-section';
 
 export default function EmployeeTableSection() {
     const [searchText, setSearchText] = useState('');
@@ -205,5 +206,18 @@ export default function EmployeeTableSection() {
         },
     ];
 
-    return <Table columns={columns} dataSource={employees} />;
+    return (
+        <div>
+            <div>
+                <div className="flex items-center gap-x-3">
+                    <h2 className="text-lg font-medium text-gray-800">
+                        <b>Employee Section</b>
+                    </h2>
+                </div>
+                <AddEmployeeButtonSection/>
+            </div>
+            <Table columns={columns} dataSource={employees} />;
+        </div>
+    );
+
 };

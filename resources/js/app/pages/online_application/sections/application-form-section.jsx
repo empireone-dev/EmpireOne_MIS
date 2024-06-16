@@ -42,7 +42,7 @@ export default function ApplicationFormSection() {
                   </select>
                 </div>
               </div>
-              <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-6">Personal Information</h1>
+              <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-6 text-center">Personal Information</h1>
               <div className='flex flex-1 gap-4'>
                 <div className='flex flex-col w-full mb-4'>
                   <label htmlFor=""><b>Full Name</b></label>
@@ -63,7 +63,6 @@ export default function ApplicationFormSection() {
                 </div>
               </div>
               <div className='flex flex-1 gap-4'>
-
                 <div className='flex w-full'>
                   <div className="flex flex-col gap-4 mb-4 w-full">
                     <div className='flex flex-col w-full'>

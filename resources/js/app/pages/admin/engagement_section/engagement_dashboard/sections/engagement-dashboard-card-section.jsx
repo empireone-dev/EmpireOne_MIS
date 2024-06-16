@@ -10,7 +10,7 @@ export default function EngagementDashboardCardSection() {
                     <div class="mx-auto ">
                         <div class="text-center">
                             <h2 class="text-3xl text-gray-950  font-semibold">ENGAGEMENT ACTIVITIES</h2>
-                            <p class="mt-6 text-gray-700 ">Unlocking Insights, Elevating Engagement: Your Dashboard to User Interaction Mastery</p>
+                            <p class="mt-6  ">Unlocking Insights, Elevating Engagement: Your Dashboard to User Interaction Mastery</p>
                         </div>
                         <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
                             <div class="relative group overflow-hidden p-8 rounded-xl bg-white border border-gray-200  ">
@@ -21,7 +21,7 @@ export default function EngagementDashboardCardSection() {
                                     </div>
 
                                     <div class="mt-6 pb-6 rounded-b-[--card-border-radius]">
-                                        <p class="text-gray-700 ">Events For Today</p>
+                                        <p class=" ">Events For Today</p>
                                     </div>
 
                                     <div class="flex gap-3 -mb-8 py-4 border-t border-gray-200 ">
@@ -37,7 +37,7 @@ export default function EngagementDashboardCardSection() {
                                     </div>
 
                                     <div class="mt-6 pb-6 rounded-b-[--card-border-radius]">
-                                        <p class="text-gray-700 ">Upcoming Events</p>
+                                        <p class=" ">Upcoming Events</p>
                                     </div>
 
                                     <div class="flex gap-3 -mb-8 py-4 border-t border-gray-200 ">
@@ -53,7 +53,7 @@ export default function EngagementDashboardCardSection() {
                                     </div>
 
                                     <div class="mt-6 pb-6 rounded-b-[--card-border-radius]">
-                                        <p class="text-gray-700 ">Lists of Memo</p>
+                                        <p class=" ">Lists of Memo</p>
                                     </div>
                                     <div class="flex gap-3 -mb-8 py-4 border-t border-gray-200 ">
                                         <div>CONTENT</div>
@@ -68,7 +68,7 @@ export default function EngagementDashboardCardSection() {
                                     </div>
 
                                     <div class="mt-6 pb-6 rounded-b-[--card-border-radius]">
-                                        <p class="text-gray-700 ">Birthday(s) of the month of May</p>
+                                        <p class=" ">Birthday(s) of the month of May</p>
                                     </div>
                                     <div class="flex gap-3 -mb-8 py-4 border-t border-gray-200 ">
                                         <div>CONTENT</div>
@@ -83,7 +83,7 @@ export default function EngagementDashboardCardSection() {
                                     </div>
 
                                     <div class="mt-6 pb-6 rounded-b-[--card-border-radius]">
-                                        <p class="text-gray-700 ">(TITLE)</p>
+                                        <p class=" ">(TITLE)</p>
                                     </div>
                                     <div class="flex gap-3 -mb-8 py-4 border-t border-gray-200 ">
                                         <div>CONTENT</div>

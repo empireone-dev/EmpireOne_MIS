@@ -215,28 +215,28 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         Laravel's robust library of first-party tools and libraries, such as{' '}
                                         <a
                                             href="https://forge.laravel.com"
-                                            className="underline hover:text-gray-700  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                            className="underline hover:  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                         >
                                             Forge
                                         </a>
                                         ,{' '}
                                         <a
                                             href="https://vapor.laravel.com"
-                                            className="underline hover:text-gray-700  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                            className="underline hover:  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                         >
                                             Vapor
                                         </a>
                                         ,{' '}
                                         <a
                                             href="https://nova.laravel.com"
-                                            className="underline hover:text-gray-700  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                            className="underline hover:  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                         >
                                             Nova
                                         </a>
                                         , and{' '}
                                         <a
                                             href="https://envoyer.io"
-                                            className="underline hover:text-gray-700  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                            className="underline hover:  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                         >
                                             Envoyer
                                         </a>{' '}
@@ -244,42 +244,42 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                                         source libraries like{' '}
                                         <a
                                             href="https://laravel.com/docs/billing"
-                                            className="underline hover:text-gray-700  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                            className="underline hover:  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                         >
                                             Cashier
                                         </a>
                                         ,{' '}
                                         <a
                                             href="https://laravel.com/docs/dusk"
-                                            className="underline hover:text-gray-700  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                            className="underline hover:  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                         >
                                             Dusk
                                         </a>
                                         ,{' '}
                                         <a
                                             href="https://laravel.com/docs/broadcasting"
-                                            className="underline hover:text-gray-700  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                            className="underline hover:  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                         >
                                             Echo
                                         </a>
                                         ,{' '}
                                         <a
                                             href="https://laravel.com/docs/horizon"
-                                            className="underline hover:text-gray-700  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                            className="underline hover:  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                         >
                                             Horizon
                                         </a>
                                         ,{' '}
                                         <a
                                             href="https://laravel.com/docs/sanctum"
-                                            className="underline hover:text-gray-700  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                            className="underline hover:  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                         >
                                             Sanctum
                                         </a>
                                         ,{' '}
                                         <a
                                             href="https://laravel.com/docs/telescope"
-                                            className="underline hover:text-gray-700  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
+                                            className="underline hover:  focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500"
                                         >
                                             Telescope
                                         </a>

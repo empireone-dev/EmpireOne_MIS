@@ -6,6 +6,7 @@ import ButtonComponents from '../components/button-components';
 import ErfDropdownFilterComponents from '@/app/pages/admin/sourcing/resource_requests/erf_record/components/erf-dropdown-filter-components';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
+import AddPositionButtonSection from './add-position-button-section';
 
 export default function ErfRecordsTableSection() {
     const [searchText, setSearchText] = useState('');
@@ -213,7 +214,7 @@ export default function ErfRecordsTableSection() {
                                 record.status == 'Pending' ? 'orange' :
                                     record.status == 'Declined' ? 'red' :
                                         record.status == 'In Review' ? 'blue' :
-                                        'blue'
+                                            'blue'
                         }
                         key={i}
                     >
@@ -240,17 +241,21 @@ export default function ErfRecordsTableSection() {
 
     return (
         <div>
-            <div className='flex justify-between items-center '>
-                <div className="flex items-center gap-x-3 mb-4">
+            <div>
+                <div className="flex items-center gap-x-3">
                     <h2 className="text-lg font-medium text-gray-800">
-                        <b>ERF Records</b>
+                        <b>Employee Section</b>
                     </h2>
                 </div>
-                <div className='mr-8'>
-                    <ErfDropdownFilterComponents filterData={filterData} />
+                <div className='flex flex-1 justify-between'>
+                        <AddPositionButtonSection />
+                    <div className='mr-8'>
+                        <ErfDropdownFilterComponents filterData={filterData} />
+                    </div>
                 </div>
+
             </div>
-            <Table columns={columns} dataSource={filteredData} className='mt-4' />
+            <Table columns={columns} dataSource={filteredData} className='mt-1' />
         </div>
     );
 }

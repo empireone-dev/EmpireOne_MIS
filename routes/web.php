@@ -62,11 +62,11 @@ Route::prefix('admin')->group(function () {
             Route::get('/erf_record', function () {
                 return Inertia::render('admin/sourcing/resource_requests/erf_record/page');
             });
-            Route::get('/pending_erf', function () {
-                return Inertia::render('admin/sourcing/resource_requests/pending_erf/page');
+            Route::get('/new_position', function () {
+                return Inertia::render('admin/sourcing/resource_requests/new_position/page');
             });
-            Route::get('/in_review', function () {
-                return Inertia::render('admin/sourcing/resource_requests/in_review/page');
+            Route::get('/existing_position', function () {
+                return Inertia::render('admin/sourcing/resource_requests/existing_position/page');
             });
             Route::get('/approved_erf', function () {
                 return Inertia::render('admin/sourcing/resource_requests/approved_erf/page');

@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { useEffect } from 'react';
 import { router } from '@inertiajs/react';
+import AddApplicantsSection from './add-applicants-section';
 
 export default function ApplicantsTableSection() {
     const [searchText, setSearchText] = useState('');
@@ -292,6 +293,7 @@ console.log('filteredDatas',filteredDatas)
                 <div className="flex items-center gap-x-3 mb-4">
                     <h2 className="text-lg font-medium text-gray-800">
                         <b>Applicant(s) Records</b>
+                        <AddApplicantsSection/>
                     </h2>
                 </div>
                 {/* <div className='mr-8'>

@@ -71,12 +71,16 @@ export function OnboardingDocsStepper() {
                     activeStep={activeStep}
                     isLastStep={(value) => setIsLastStep(value)}
                     isFirstStep={(value) => setIsFirstStep(value)}
+                    lineClassName="bg-gray-300"
+                    activeLineClassName="bg-blue-600"
                 >
                     {forms.map((form, index) => (
                         <Step
                             key={index}
                             onClick={() => handleStepClick(index)}
-                            className="p-2 w-10 items-center justify-center"
+                            className="p-2 w-10 !bg-blue-gray-50 cursor-pointer items-center justify-center"
+                            activeClassName="ring-0 !bg-blue-600 text-white"
+                            completedClassName="!bg-blue-600 text-white"
                         >
                             {index + 1}
                         </Step>
@@ -90,15 +94,15 @@ export function OnboardingDocsStepper() {
                     </div>
                 </div>
                 <div className="mt-10 flex justify-between">
-                    <Button onClick={handlePrev} disabled={isFirstStep} className={isFirstStep ? "disabledPrevButton bg-slate-400" : ""}>
+                    <Button onClick={handlePrev} disabled={isFirstStep} className={isFirstStep ? "disabledPrevButton bg-blue-400" : "bg-blue-600 hover:bg-blue-700" }>
                         Prev
                     </Button>
                     {isLastStep ? (
-                        <Button onClick={handleNext}>
+                        <Button onClick={handleNext} className="bg-blue-600 hover:bg-blue-700">
                             Finish
                         </Button>
                     ) : (
-                        <Button onClick={handleNext}>
+                        <Button onClick={handleNext} className="bg-blue-600 hover:bg-blue-700">
                             Next
                         </Button>
                     )}

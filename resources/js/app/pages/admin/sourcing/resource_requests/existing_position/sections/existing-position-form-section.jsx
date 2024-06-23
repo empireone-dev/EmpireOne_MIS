@@ -69,7 +69,7 @@ export default function ExistingPositionFormSection() {
                     </div>
                 </div>
                 <div className='flex flex-1 gap-2 justify-end items-center'>
-                    <button className="rounded-md hover:bg-blue-600 hover:text-white w-32 h-10 mt-2"
+                    <button className="rounded-md hover:bg-blue-100 w-32 h-10 mt-2"
                         type="button"
                         onClick={() => router.visit('/admin/sourcing/resource_requests/erf_record')}>
                         Back

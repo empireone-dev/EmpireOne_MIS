@@ -11,6 +11,7 @@ use App\Http\Controllers\JobPositionController;
 use App\Http\Controllers\MedicineRecordController;
 use App\Http\Controllers\OnboardingDocController;
 use App\Http\Controllers\OutSourcingErfController;
+use App\Http\Controllers\UploadMemoController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,4 +44,5 @@ Route::resource('employee',EmployeeController::class);
 Route::resource('medicine_record',MedicineRecordController::class);
 Route::resource('employee_health',EmployeeHealthController::class);
 Route::resource('employee_attrition',EmployeeAttritionController::class);
+Route::resource('emp_memo',UploadMemoController::class);
 

@@ -1,6 +1,7 @@
 import React from 'react';
-import { DownOutlined, EditOutlined, FolderOpenOutlined, UsergroupAddOutlined, PrinterOutlined, QrcodeOutlined } from '@ant-design/icons';
-import { Button, Dropdown, message, Space, Tooltip } from 'antd';
+import { DownOutlined, EditOutlined, EyeOutlined, FolderViewOutlined, } from '@ant-design/icons';
+import { Button, Dropdown, message, Space, } from 'antd';
+import { TrashIcon } from '@heroicons/react/24/outline';
 const handleButtonClick = (e) => {
   message.info('Click on left button.');
   console.log('click left button', e);
@@ -11,29 +12,24 @@ const handleMenuClick = (e) => {
 };
 const items = [
   {
-    label: 'Update Employee',
+    label: 'View Memo',
     key: '1',
+    icon: <FolderViewOutlined />,
+  },
+  {
+    label: 'Update Memo',
+    key: '2',
     icon: <EditOutlined />,
   },
   {
-    label: '201 File',
-    key: '2',
-    icon: <FolderOpenOutlined />,
-  },
-  {
-    label: 'Employment Status',
+    label: 'List of Viewers',
     key: '3',
-    icon: <UsergroupAddOutlined />,
+    icon: <EyeOutlined />,
   },
   {
-    label: 'Print COE',
+    label: 'Delete Memo',
     key: '4',
-    icon: <PrinterOutlined />,
-  },
-  {
-    label: 'Generate QR Code',
-    key: '5',
-    icon: <QrcodeOutlined />,
+    icon: <TrashIcon className='h-3' />,
   },
 ];
 const menuProps = {
@@ -43,7 +39,7 @@ const menuProps = {
 const ButtonComponents = () => (
   <Space wrap>
     <Dropdown menu={menuProps}>
-      <Button className='text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300  font-medium rounded-lg text-sm px-5 items-center text-center me-2 mb-2'>
+      <Button type='primary'>
         <Space>
           Menu
           <DownOutlined />

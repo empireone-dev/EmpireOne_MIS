@@ -33,6 +33,8 @@ Route::get('/', function () {
     return Inertia::render('login/page');
 });
 
+
+
 Route::get('/online_application', function () {
     return Inertia::render('online_application/page');
 });
@@ -54,10 +56,68 @@ Route::prefix('admin')->group(function () {
         return Inertia::render('admin/dashboard/page');
     });
 
+    Route::get('/file_201', function () {
+        return Inertia::render('admin/file_201/page');
+    });
+
     Route::prefix('sourcing')->group(function () {
-        Route::get('/job_title_section', function () {
-            return Inertia::render('admin/sourcing/job_title_section/page');
+
+        Route::prefix('job_title_section')->group(function () {
+            Route::get('/', function () {
+                return Inertia::render('admin/sourcing/job_title_section/page');
+            });
+            Route::get('/job_analysis', function () {
+                return Inertia::render('admin/sourcing/job_title_section/job_analysis/page');
+            });
+            Route::get('/job_description', function () {
+                return Inertia::render('admin/sourcing/job_title_section/job_description/page');
+            });
         });
+
+        Route::prefix('resource_requests')->group(function () {
+            Route::prefix('erf_record')->group(function () {
+                Route::get('/', function () {
+                    return Inertia::render('admin/sourcing/resource_requests/page');
+                });
+                Route::get('/erf_job_analysis', function () {
+                    return Inertia::render('admin/sourcing/resource_requests/erf_record/erf_job_analysis/page');
+                });
+                Route::get('/erf_job_description', function () {
+                    return Inertia::render('admin/sourcing/resource_requests/erf_record/erf_job_description/page');
+                });
+            });
+            Route::get('/new_position', function () {
+                return Inertia::render('admin/sourcing/resource_requests/new_position/page');
+            });
+            Route::get('/existing_position', function () {
+                return Inertia::render('admin/sourcing/resource_requests/existing_position/page');
+            });
+            Route::get('/approved_erf', function () {
+                return Inertia::render('admin/sourcing/resource_requests/approved_erf/page');
+            });
+            Route::get('/declined_erf', function () {
+                return Inertia::render('admin/sourcing/resource_requests/declined_erf/page');
+            });
+        });
+
+        Route::prefix('resource_requests')->group(function () {
+            Route::get('/erf_record', function () {
+                return Inertia::render('admin/sourcing/resource_requests/erf_record/page');
+            });
+            Route::get('/new_position', function () {
+                return Inertia::render('admin/sourcing/resource_requests/new_position/page');
+            });
+            Route::get('/existing_position', function () {
+                return Inertia::render('admin/sourcing/resource_requests/existing_position/page');
+            });
+            Route::get('/approved_erf', function () {
+                return Inertia::render('admin/sourcing/resource_requests/approved_erf/page');
+            });
+            Route::get('/declined_erf', function () {
+                return Inertia::render('admin/sourcing/resource_requests/declined_erf/page');
+            });
+        });
+
         Route::prefix('resource_requests')->group(function () {
             Route::get('/erf_record', function () {
                 return Inertia::render('admin/sourcing/resource_requests/erf_record/page');

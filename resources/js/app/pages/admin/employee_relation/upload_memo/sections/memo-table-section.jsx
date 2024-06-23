@@ -2,11 +2,17 @@ import React, { useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
+import { useSelector } from "react-redux";
+import moment from "moment";
+import ButtonComponents from "../components/button-components";
 
 export default function MemoTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
+    const { emp_memos } = useSelector((state) => state.emp_memos)
+    console.log('emp_memos',emp_memos)
+
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -129,36 +135,6 @@ export default function MemoTableSection() {
             ),
     });
 
-    const data = [
-        {
-            key: "1",
-            emp_id: '(MEMO TITLE)',
-            position: "HR Manager",
-            fullname: "John Brown",
-            site: 'San Carlos'
-        },
-        {
-            key: "2",
-            emp_id: '(MEMO TITLE)',
-            position: "HR Manager",
-            fullname: "John Brown",
-            site: 'San Carlos'
-        },
-        {
-            key: "3",
-            emp_id: '(MEMO TITLE)',
-            position: "HR Manager",
-            fullname: "John Brown",
-            site: 'San Carlos'
-        },
-        {
-            key: "4",
-            emp_id: '(MEMO TITLE)',
-            position: "HR Manager",
-            fullname: "John Brown",
-            site: 'Carcar'
-        },
-    ];
     const columns = [
         {
             title: "Site",
@@ -168,29 +144,45 @@ export default function MemoTableSection() {
         },
         {
             title: "Memo Title",
-            dataIndex: "emp_id",
-            key: "emp_id",
-            ...getColumnSearchProps("emp_id"),
+            dataIndex: "memo_title",
+            key: "memo_title",
+            ...getColumnSearchProps("memo_title"),
         },
         {
             title: "Date",
-            dataIndex: "fullname",
-            key: "fullname",
-            ...getColumnSearchProps("fullname"),
+            dataIndex: "created",
+            key: "created",
+            ...getColumnSearchProps("created"),
+            render: (_, record) => {
+                return (
+                    <div className="gap-1.5 flex">
+                      {moment(record.created).format('LLL')}
+                    </div>
+                );
+            },
         },
         {
             title: "Action",
             dataIndex: "action",
             render: (_, record) => {
                 return (
-                    <div className="gap-1.5 flex">
-                        <h1>ACTION</h1>
-                    </div>
+                    <ButtonComponents />
                 );
             },
         },
     ];
 
-    return <Table columns={columns} dataSource={data} />;
+    return (
+        <div>
+            <div>
+                <div className="flex items-center gap-x-3 mb-4">
+                    <h2 className="text-lg font-medium text-gray-800">
+                        <b>Memo Lists Table</b>
+                    </h2>
+                </div>
+            </div>
+            <Table columns={columns} dataSource={emp_memos} />;
+        </div>
+    );
        
 }

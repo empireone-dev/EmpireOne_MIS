@@ -4,6 +4,7 @@ import { Button, Input, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { router } from "@inertiajs/react";
 
 export default function JobTitleTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -160,12 +161,14 @@ export default function JobTitleTableSection() {
                     <div className="gap-1.5 flex">
                         <button
                             type="button"
+                            onClick={() => router.visit('/admin/sourcing/job_title_section/job_analysis')}
                             className="text-white bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300  shadow-lg shadow-blue-500/50 font-medium rounded-lg text-sm px-3 py-2 text-center"
                         >
                             <i>JA</i>
                         </button>
                         <button
                             type="button"
+                            onClick={() => router.visit('/admin/sourcing/job_title_section/job_description')}
                             className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-sm px-3 py-2 text-center"
                         >
                             <i>JD</i>

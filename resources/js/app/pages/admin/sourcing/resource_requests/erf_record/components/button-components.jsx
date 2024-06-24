@@ -60,7 +60,7 @@ const ButtonComponents = () => {
       </Dropdown>
 
       <Modal
-        title="Update Request"
+        title="Update Request Status"
         centered
         visible={modalOpen}
         onOk={() => setModalOpen(false)}

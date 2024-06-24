@@ -248,7 +248,7 @@ export default function ErfRecordsTableSection() {
                     </h2>
                 </div>
                 <div className='flex flex-1 justify-between'>
-                        <AddPositionButtonSection />
+                    <AddPositionButtonSection />
                     <div className='mr-8'>
                         <ErfDropdownFilterComponents filterData={filterData} />
                     </div>

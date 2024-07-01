@@ -49,6 +49,12 @@ Route::get('/pre-employment', function () {
 Route::get('/virtual-contract', function () {
     return Inertia::render('virtual-contract/page');
 });
+Route::get('/exit_interview', function () {
+    return Inertia::render('exit_interview/page');
+});
+Route::get('/exit_clearance', function () {
+    return Inertia::render('exit_clearance/page');
+});
 
 
 Route::prefix('admin')->group(function () {

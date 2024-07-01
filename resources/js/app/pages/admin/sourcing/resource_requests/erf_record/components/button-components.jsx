@@ -50,6 +50,7 @@ const ButtonComponents = () => {
             ))}
           </Menu>
         }
+        trigger={['click']}
       >
         <Button type="primary">
           <Space>

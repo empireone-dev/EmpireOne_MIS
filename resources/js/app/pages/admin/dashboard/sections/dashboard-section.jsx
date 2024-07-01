@@ -3,7 +3,7 @@ import { ArchiveBoxXMarkIcon, ArrowRightStartOnRectangleIcon, ArrowTopRightOnSqu
 import DashboardCardComponents from '../components/dashboard-card-components';
 import { administrator_dashboard_service } from '@/app/pages/services/dashboard-service';
 
-export default function DashboardCardSection() {
+export default function DashboardSection() {
 
   const [data, setData] = useState({});
   useEffect(() => {
@@ -37,31 +37,36 @@ export default function DashboardCardSection() {
       </div>
       <div className='flex flex-col gap-9 mt-7'>
         <div>
-          <h2 className="text-xl font-medium text-gray-800 ml-6">
-            <b>Sourcing</b>
+          <h2 className="text-xl font-medium text-gray-800 ml-1">
+            <img src="/images/Outsourcing.webp" alt="Outsourcing.png" className='h-20' />
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
+              bgColor="green"
               name="Pending ERF"
               number={data?.pending ?? 0}
               icon={<ReceiptRefundIcon />}
             />
             <DashboardCardComponents
+              bgColor="green"
               name="On-going ERF"
               number={data?.status ?? 0}
               icon={<ArrowTopRightOnSquareIcon />}
             />
             <DashboardCardComponents
+              bgColor="green"
               name="Active ERF"
               number={data?.active ?? 0}
               icon={<RectangleGroupIcon />}
             />
             <DashboardCardComponents
+              bgColor="green"
               name="Completed ERF"
               number={data?.active ?? 0}
               icon={<CheckCircleIcon />}
             />
             <DashboardCardComponents
+              bgColor="green"
               name="Declined ERF"
               number={data?.status ?? 0}
               icon={<ArchiveBoxXMarkIcon />}
@@ -71,63 +76,73 @@ export default function DashboardCardSection() {
 
         <div>
           <h2 className="text-xl font-medium text-gray-800 ml-6">
-            <b>Recruitment</b>
+          <img src="/images/Recruitment.webp" alt="Outsourcing.png" className='h-20' />
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
+              bgColor="orange"
               name="Pending Application"
               number={data?.status ?? 0}
               icon={<UserGroupIcon />}
             />
             <DashboardCardComponents
+              bgColor="orange"
               name="Initial Phase Application"
               number={data?.status ?? 0}
               icon={<CursorArrowRaysIcon />}
             />
             <DashboardCardComponents
+              bgColor="orange"
               name="Final Phase Application"
               number={data?.status ?? 0}
               icon={<CursorArrowRippleIcon />}
             />
             <DashboardCardComponents
+              bgColor="orange"
               name="Passed Application"
               number={data?.status ?? 0}
               icon={<CheckCircleIcon />}
             />
             <DashboardCardComponents
+              bgColor="orange"
               name="Failed Application"
               number={data?.status ?? 0}
               icon={<XCircleIcon />}
             />
           </div>
         </div>
-        
+
         <div>
           <h2 className="text-xl font-medium text-gray-800 ml-6">
-            <b>Hiring</b>
+          <img src="/images/Hiring.webp" alt="Outsourcing.png" className='h-20' />
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
+              bgColor="sky"
               name="Pending Offer"
               number={data?.status ?? 0}
               icon={<DocumentChartBarIcon />}
             />
             <DashboardCardComponents
+              bgColor="sky"
               name="Declined Offer"
               number={data?.status ?? 0}
               icon={<DocumentMinusIcon />}
             />
             <DashboardCardComponents
+              bgColor="sky"
               name="Accepted Offer"
               number={data?.status ?? 0}
               icon={<DocumentCheckIcon />}
             />
             <DashboardCardComponents
+              bgColor="sky"
               name="Pre-Employment Completed"
               number={data?.status ?? 0}
               icon={<CheckCircleIcon />}
             />
             <DashboardCardComponents
+              bgColor="sky"
               name="Contract Signing"
               number={data?.status ?? 0}
               icon={<PencilSquareIcon />}
@@ -136,15 +151,17 @@ export default function DashboardCardSection() {
         </div>
         <div>
           <h2 className="text-xl font-medium text-gray-800 ml-6">
-            <b>Onboarding</b>
+          <img src="/images/Onboarding.webp" alt="Outsourcing.png" className='h-20' />
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
+              bgColor="violet"
               name="Onboarding Documents"
               number={data?.status ?? 0}
               icon={<ClipboardDocumentListIcon />}
             />
             <DashboardCardComponents
+              bgColor="violet"
               name="Onboarded Applicants"
               number={data?.status ?? 0}
               icon={<BriefcaseIcon />}
@@ -153,25 +170,29 @@ export default function DashboardCardSection() {
         </div>
         <div>
           <h2 className="text-xl font-medium text-gray-800 ml-6">
-            <b>Employee Relation</b>
+          <img src="/images/ER.webp" alt="Outsourcing.png" className='h-20' />
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
+              bgColor="cyan"
               name="Total Employee"
               number={data?.status ?? 0}
               icon={<UserGroupIcon />}
             />
             <DashboardCardComponents
+              bgColor="cyan"
               name="Incident Report"
               number={data?.status ?? 0}
               icon={<ExclamationCircleIcon />}
             />
             <DashboardCardComponents
+              bgColor="cyan"
               name="NTE"
               number={data?.status ?? 0}
               icon={<ChatBubbleOvalLeftEllipsisIcon />}
             />
             <DashboardCardComponents
+              bgColor="cyan"
               name="NDA"
               number={data?.status ?? 0}
               icon={<ChatBubbleLeftRightIcon />}
@@ -180,25 +201,29 @@ export default function DashboardCardSection() {
         </div>
         <div>
           <h2 className="text-xl font-medium text-gray-800 ml-6">
-            <b>Attrition</b>
+          <img src="/images/Attrition.webp" alt="Outsourcing.png" className='h-20' />
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
+              bgColor="pink"
               name="Resignation"
               number={data?.status ?? 0}
               icon={<UserMinusIcon />}
             />
             <DashboardCardComponents
+              bgColor="pink"
               name="End of Probationary Employment"
               number={data?.status ?? 0}
               icon={<DocumentArrowDownIcon />}
             />
             <DashboardCardComponents
+              bgColor="pink"
               name="Dismissal"
               number={data?.status ?? 0}
               icon={<HandThumbDownIcon />}
             />
             <DashboardCardComponents
+              bgColor="pink"
               name="AWOL"
               number={data?.status ?? 0}
               icon={<ArrowRightStartOnRectangleIcon />}

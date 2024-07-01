@@ -27,7 +27,7 @@ const menuProps = {
 };
 const ButtonComponents = () => (
   <Space wrap>
-    <Dropdown menu={menuProps}>
+    <Dropdown menu={menuProps} trigger={['click']}>
       <Button type='primary'>
         <Space>
           Menu

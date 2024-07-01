@@ -1,19 +1,23 @@
 import React from 'react';
-import { DownOutlined, EditOutlined, FolderOpenOutlined, UsergroupAddOutlined, PrinterOutlined, QrcodeOutlined } from '@ant-design/icons';
+import { DownOutlined,  FolderOpenOutlined, FileSearchOutlined, DeliveredProcedureOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Tooltip } from 'antd';
+import { router } from '@inertiajs/react';
 const handleButtonClick = (e) => {
   message.info('Click on left button.');
   console.log('click left button', e);
 };
-const handleMenuClick = (e) => {
-  message.info('Click on menu item.');
-  console.log('click', e);
+
+const handleMenuClick = (item) => {
+  if (item.onClick) item.onClick();
+  if (item.key === '1') setModalOpen(true);
+  if (item.key === '2') router.visit('/admin/file_201');
+  if (item.key === '3') router.visit('/exit_interview');
 };
 const items = [
   {
-    label: 'Update Employee',
+    label: 'View Reason',
     key: '1',
-    icon: <EditOutlined />,
+    icon: <FileSearchOutlined />,
   },
   {
     label: '201 File',
@@ -21,19 +25,10 @@ const items = [
     icon: <FolderOpenOutlined />,
   },
   {
-    label: 'Employment Status',
+    label: 'Process Exit Interview & Clearance',
     key: '3',
-    icon: <UsergroupAddOutlined />,
-  },
-  {
-    label: 'Print COE',
-    key: '4',
-    icon: <PrinterOutlined />,
-  },
-  {
-    label: 'Generate QR Code',
-    key: '5',
-    icon: <QrcodeOutlined />,
+    icon: <DeliveredProcedureOutlined />,
+    onClick: () => router.visit('/exit_interview')
   },
 ];
 const menuProps = {
@@ -42,8 +37,8 @@ const menuProps = {
 };
 const ButtonComponents = () => (
   <Space wrap>
-    <Dropdown menu={menuProps}>
-      <Button className='text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300  font-medium rounded-lg text-sm px-5 items-center text-center me-2 mb-2'>
+    <Dropdown menu={menuProps} trigger={['click']}>
+      <Button type='primary'>
         <Space>
           Menu
           <DownOutlined />

@@ -4,6 +4,7 @@ import { Button, Input, Space, Table, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
 import AddAttritionSection from './add-attrition-section';
 import { useSelector } from 'react-redux';
+import ButtonComponents from '../components/button-components';
 
 export default function AttritionTableSection() {
     const [searchText, setSearchText] = useState('');
@@ -194,7 +195,9 @@ export default function AttritionTableSection() {
             dataIndex: 'action',
             render: (_, record) => {
                 return (
-                    <h1>ACTION</h1>
+                    <h1>
+                        <ButtonComponents/>
+                    </h1>
                 )
             }
         },

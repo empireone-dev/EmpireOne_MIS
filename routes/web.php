@@ -201,8 +201,16 @@ Route::prefix('admin')->group(function () {
         Route::get('/medicine_records', function () {
             return Inertia::render('admin/employee_wellness/medicine_records/page');
         });
-        Route::get('/employee_health_data', function () {
-            return Inertia::render('admin/employee_wellness/employee_health_data/page');
+        Route::prefix('employee_health_data')->group(function () {
+            Route::get('/', function () {
+                return Inertia::render('admin/employee_wellness/employee_health_data/page');
+            });
+            Route::get('/employee_med_form', function () {
+                return Inertia::render('admin/employee_wellness/employee_health_data/employee_med_form/page');
+            });
+            Route::get('/employee_acquire_medicine', function () {
+                return Inertia::render('admin/employee_wellness/employee_health_data/employee_acquire_medicine/page');
+            });
         });
     });
 

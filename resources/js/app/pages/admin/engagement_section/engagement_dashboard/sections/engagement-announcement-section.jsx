@@ -25,17 +25,6 @@ export default function EngagementAnnouncementSection() {
                 </h2>
             </div>
             <AddEngagementAnnouncementSection/>
-            <div class="text-sm font-medium text-center  border-b border-gray-200 ">
-                <ul class="flex flex-wrap -mb-px">
-
-                    <li class="me-2">
-                        <a href="#" class="inline-block p-4 text-blue-600 border-b-2 border-blue-600 rounded-t-lg active  " aria-current="page">San Carlos Site</a>
-                    </li>
-                    <li class="me-2">
-                        <a href="#" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 ">Carcar Site</a>
-                    </li>
-                </ul>
-            </div>
         </div>
     )
 }

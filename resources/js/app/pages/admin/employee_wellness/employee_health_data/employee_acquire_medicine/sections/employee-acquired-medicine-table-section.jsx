@@ -3,6 +3,7 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
+import AddEmployeeAcquiredMedicineSection from "./add-employee-acquired-medicine-section";
 
 export default function EmployeeAcquireMedicineTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -161,7 +162,7 @@ export default function EmployeeAcquireMedicineTableSection() {
                     </h2>
                 </div>
             </div>
-            {/* <AddEmployeeHealthDataFormSection/> */}
+            <AddEmployeeAcquiredMedicineSection />
             <Table columns={columns} dataSource={medicine_records} />;
         </div>
     );

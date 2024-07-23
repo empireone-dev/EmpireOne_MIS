@@ -9,7 +9,7 @@ export default function EmployeeAcquireMedicineTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
-    const { medicine_records } = useSelector((state) => state.medicine_records)
+    // const { medicine_acquired_records } = useSelector((state) => state.medicine_acquired_records)
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -163,7 +163,9 @@ export default function EmployeeAcquireMedicineTableSection() {
                 </div>
             </div>
             <AddEmployeeAcquiredMedicineSection />
-            <Table columns={columns} dataSource={medicine_records} />;
+            <Table columns={columns} 
+            // dataSource={medicine_acquired_records}
+             />;
         </div>
     );
 }

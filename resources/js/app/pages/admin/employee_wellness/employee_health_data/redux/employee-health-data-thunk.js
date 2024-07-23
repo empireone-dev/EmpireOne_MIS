@@ -1,10 +1,10 @@
 import { get_employee_service } from "@/app/pages/services/employee-service";
-import employeeHealthDataSlice from "./employee-health-data-slice";
+import { employeeSlice } from "../../../employee_relation/employee_section/redux/employee-section-slice";
 
 export function get_employee_thunk() {
     return async function (dispatch, getState) {
         const result = (await get_employee_service()).data
         console.log('result', result)
-        dispatch(employeeHealthDataSlice.actions.setEmployees(result));
+        dispatch(employeeSlice.actions.setEmployees(result));
     };
 }

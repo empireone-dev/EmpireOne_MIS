@@ -1,7 +1,7 @@
 import React from 'react'
 import AdminLayout from '../../admin-layout'
 import PreEmploymentTableSection from './sections/pre-employment-table-section'
-import store from '@/app/pages/store/store';
+import store from '@/app/store/store';
 import { get_checklist_thunk } from './redux/pre-employment-thunk';
 import { useEffect } from 'react';
 

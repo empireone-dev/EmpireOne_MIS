@@ -1,7 +1,7 @@
 import React from 'react'
 import AdminLayout from '../../admin-layout'
 import MedicineTableSection from './sections/medicine-table-section'
-import store from '@/app/pages/store/store';
+import store from '@/app/store/store';
 import { get_medicine_record_thunk } from './redux/medicine-record-thunk';
 import { useEffect } from 'react';
 

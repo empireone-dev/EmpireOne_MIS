@@ -2,7 +2,7 @@ import React from 'react'
 import AdminLayout from '../../admin-layout'
 import CreatedMemoSection from './sections/create-memo-section'
 import MemoTableSection from './sections/memo-table-section'
-import store from '@/app/pages/store/store';
+import store from '@/app/store/store';
 import { get_emp_memo_thunk } from './redux/emp-memo-thunk';
 import { useEffect } from 'react';
 

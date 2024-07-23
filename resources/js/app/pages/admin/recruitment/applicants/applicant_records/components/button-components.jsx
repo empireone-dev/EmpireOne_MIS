@@ -1,16 +1,26 @@
 
 import React, { useState } from 'react';
-import { AuditOutlined, CalendarOutlined, DotChartOutlined, DownOutlined, InfoCircleOutlined, MedicineBoxOutlined, RiseOutlined, ScheduleOutlined } from '@ant-design/icons';
+import { AuditOutlined, CalendarOutlined, CheckCircleFilled, DotChartOutlined, DownOutlined, InfoCircleOutlined, MedicineBoxOutlined, RiseOutlined, ScheduleOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Modal, Menu } from 'antd';
 import { BriefcaseIcon } from '@heroicons/react/24/outline';
 
 const ButtonComponents = () => {
   const [applicationDetailsModalOpen, setApplicationDetailsModalOpen] = useState(false);
   const [initialPhaseModalOpen, setInitialPhaseModalOpen] = useState(false);
+  const [faceToFaceInterviewModalOpen, setFaceToFaceInterviewModalOpen] = useState(false);
+  const [virtualInterviewModalOpen, setVirtualInterviewModalOpen] = useState(false);
+
 
   const handleButtonClick = () => {
-    message.info('Click on left button.');
     console.log('click left button');
+    setInitialPhaseModalOpen(false);
+    setFaceToFaceInterviewModalOpen(true);
+  };
+
+  const handleButtonClick1 = () => {
+    console.log('click left button');
+    setInitialPhaseModalOpen(false);
+    setVirtualInterviewModalOpen(true);
   };
 
   const handleMenuClick = (item) => {
@@ -97,11 +107,13 @@ const ButtonComponents = () => {
         onOk={() => setApplicationDetailsModalOpen(false)}
         onCancel={() => setApplicationDetailsModalOpen(false)}
         width={1200}
-        okText="Update"
-        cancelText="Cancel"
+        footer={null}
       >
-         <div className='flex text-2xl items-center justify-center'>
+        <div className='flex text-2xl items-center justify-center'>
           <h1><b>Personal Information</b></h1>
+        </div>
+        <div className='flex justify-end'>
+          <h1 className='text-lg mb-2'><b>Status:</b> (Pending)</h1>
         </div>
         <form className='border rounded-lg p-3.5'>
           <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 text-center"></h1>
@@ -210,7 +222,7 @@ const ButtonComponents = () => {
           <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Address Information</h1>
           <div className="mb-4">
             <label htmlFor=""><b>House/Lot No. , Street , Purok/Sitio , Barangay , City/Municipality , Province</b></label>
-            <input type="text" placeholder="  " className="border p-2 rounded w-full" readOnly/>
+            <input type="text" placeholder="  " className="border p-2 rounded w-full" readOnly />
           </div>
           <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Government ID Information</h1>
           <div className='flex flex-1 gap-4 mb-4'>
@@ -256,17 +268,164 @@ const ButtonComponents = () => {
       </Modal>
 
       <Modal
-        title="Confirm Delete"
+        title="Initial Phase Interview"
         centered
         visible={initialPhaseModalOpen}
         onOk={() => {
           setInitialPhaseModalOpen(false);
         }}
         onCancel={() => setInitialPhaseModalOpen(false)}
-        okText="Delete"
-        cancelText="Cancel"
+        footer={null}
       >
-        <p>Are you sure you want to delete <b>(Medicine)</b> ?</p>
+        <div className='flex flex-1 gap-2 w-full'>
+          <Button type='primary' className='w-full' onClick={handleButtonClick}>
+            Face to face Interview
+          </Button>
+          <Button type='primary' className='w-full' onClick={handleButtonClick1} >
+            Virtual Interview
+          </Button>
+        </div>
+      </Modal>
+
+      <Modal
+        title="Schedule for Initial Phase Interview (Face to face Interview)"
+        centered
+        visible={faceToFaceInterviewModalOpen}
+        width={900}
+        onOk={() => {
+          setFaceToFaceInterviewModalOpen(false);
+        }}
+        onCancel={() => setFaceToFaceInterviewModalOpen(false)}
+        footer={null}
+      >
+        <li className='bg-gray-300 h-0.5' ></li>
+        <div className='flex justify-end mt-1.5'>
+          <h1><b>Status:</b> (Pending)</h1>
+        </div>
+        <form class="w-full h-full">
+          <div class="flex flex-col -mx-3 mb-3">
+            <div class="w-full px-3">
+              <label class="block uppercase tracking-wide  text-xs font-bold mb-1" for="grid-text">
+                Application No.
+              </label>
+              <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="number" placeholder="" readOnly />
+            </div>
+
+            <div className='flex flex-1'>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Applicant's Name
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Email Address
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="email" placeholder="" readOnly />
+              </div>
+            </div>
+
+            <div className='flex flex-1 '>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Contact No.
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Schedule date for Initial Interview
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
+              </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Schedule time for Initial Interview
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
+              </div>
+            </div>
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full">
+            <CheckCircleFilled /> CONFIRM
+          </button>
+        </form>
+      </Modal>
+
+      <Modal
+        title="Schedule for Initial Phase Interview (Virtual Interview)"
+        centered
+        visible={virtualInterviewModalOpen}
+        width={900}
+        onOk={() => {
+          setVirtualInterviewModalOpen(false);
+        }}
+        onCancel={() => setVirtualInterviewModalOpen(false)}
+        footer={null}
+      >
+        <li className='bg-gray-300 h-0.5' ></li>
+        <div className='flex justify-end mt-1.5'>
+          <h1><b>Status:</b> (Pending)</h1>
+        </div>
+        <form class="w-full h-full">
+          <div class="flex flex-col -mx-3 mb-3">
+            <div class="w-full px-3">
+              <label class="block uppercase tracking-wide  text-xs font-bold mb-1" for="grid-text">
+                Application No.
+              </label>
+              <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="number" placeholder="" readOnly />
+            </div>
+
+            <div className='flex flex-1'>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Applicant's Name
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Email Address
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="email" placeholder="" readOnly />
+              </div>
+            </div>
+
+            <div className='flex flex-1'>
+              <div class="w-3/5 px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Contact No.
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Meeting Link
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+            </div>
+
+            <div className='flex flex-1 '>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Schedule date for Initial Interview
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
+              </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Schedule time for Initial Interview
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
+              </div>
+            </div>
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full">
+            <CheckCircleFilled /> CONFIRM
+          </button>
+        </form>
       </Modal>
     </Space>
   );

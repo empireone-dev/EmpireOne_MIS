@@ -1,7 +1,7 @@
 import React from 'react'
 import EmployeeTableSection from './sections/employee-table-section'
 import AdminLayout from '../../admin-layout'
-import store from '@/app/pages/store/store';
+import store from '@/app/store/store';
 import { get_employee_thunk } from './redux/employee-section-thunk';
 import { useEffect } from 'react';
 

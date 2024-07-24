@@ -58,6 +58,10 @@ Route::get('/exit_clearance', function () {
 
 
 Route::prefix('admin')->group(function () {
+    Route::get('/initial_rate', function () {
+        return Inertia::render('admin/initial_rate/page');
+    });
+
     Route::get('/dashboard', function () {
         return Inertia::render('admin/dashboard/page');
     });

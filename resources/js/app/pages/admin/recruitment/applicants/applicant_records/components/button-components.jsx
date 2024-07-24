@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { AuditOutlined, CalendarOutlined, CheckCircleFilled, DotChartOutlined, DownOutlined, InfoCircleOutlined, MedicineBoxOutlined, RiseOutlined, ScheduleOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Modal, Menu } from 'antd';
 import { BriefcaseIcon } from '@heroicons/react/24/outline';
+import { router } from '@inertiajs/react';
 
 const ButtonComponents = () => {
   const [applicationDetailsModalOpen, setApplicationDetailsModalOpen] = useState(false);
@@ -27,6 +28,7 @@ const ButtonComponents = () => {
     if (item.onClick) item.onClick();
     if (item.key === '1') setApplicationDetailsModalOpen(true);
     if (item.key === '2') setInitialPhaseModalOpen(true);
+    if (item.key === '3') router.visit('/admin/initial_rate');
   };
 
   const items = [

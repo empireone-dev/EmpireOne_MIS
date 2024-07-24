@@ -13,6 +13,7 @@ export default function ErfRecordsTableSection() {
     const [searchedColumn, setSearchedColumn] = useState('');
     const [filteredData, setFilteredData] = useState([]);
     const { erf_records } = useSelector((state) => state.erf_records);
+    console.log("erf_records",erf_records)
 
     const filterData = (selectedStatus) => {
         if (selectedStatus.length === 0) {

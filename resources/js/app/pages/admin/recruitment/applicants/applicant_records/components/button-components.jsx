@@ -630,17 +630,18 @@ const ButtonComponents = () => {
         title="Final Phase Interviewers"
         centered
         visible={finalInterviewerModalOpen}
+        width={600}
         onOk={() => {
           setFinalInterviewerModalOpen(false);
         }}
         onCancel={() => setFinalInterviewerModalOpen(false)}
         footer={null}
       >
-        <div className='flex flex-1 mb-2'>
+        <div className='flex flex-1 mb-3'>
           <CalendarIcon className='h-6' />
           <h1>Check Interviewers Schedule</h1>
         </div>
-        <div className='flex flex-col gap-2'>
+        <div className='flex flex-col gap-2.5'>
         <Button type='primary' className='w-full' onClick={handleButtonClick2} >
           CUPTA, CIELO - DIRECTOR
         </Button>

@@ -2,33 +2,51 @@
 import React, { useState } from 'react';
 import { AuditOutlined, CalendarOutlined, CheckCircleFilled, DotChartOutlined, DownOutlined, InfoCircleOutlined, MedicineBoxOutlined, RiseOutlined, ScheduleOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Modal, Menu } from 'antd';
-import { BriefcaseIcon } from '@heroicons/react/24/outline';
-import { router } from '@inertiajs/react';
+import { BriefcaseIcon, CalendarIcon } from '@heroicons/react/24/outline';
 
 const ButtonComponents = () => {
   const [applicationDetailsModalOpen, setApplicationDetailsModalOpen] = useState(false);
   const [initialPhaseModalOpen, setInitialPhaseModalOpen] = useState(false);
-  const [faceToFaceInterviewModalOpen, setFaceToFaceInterviewModalOpen] = useState(false);
-  const [virtualInterviewModalOpen, setVirtualInterviewModalOpen] = useState(false);
-
+  const [faceToFaceInitialModalOpen, setFaceToFaceInitialModalOpen] = useState(false);
+  const [virtualInitialModalOpen, setVirtualInitialModalOpen] = useState(false);
+  const [finalPhaseModalOpen, setFinalPhaseModalOpen] = useState(false);
+  const [faceToFaceFinalModalOpen, setFaceToFaceFinalModalOpen] = useState(false);
+  const [virtualFinalModalOpen, setVirtualFinalModalOpen] = useState(false);
+  const [finalInterviewerModalOpen, setFinalInterviewerModalOpen] = useState(false);
 
   const handleButtonClick = () => {
     console.log('click left button');
     setInitialPhaseModalOpen(false);
-    setFaceToFaceInterviewModalOpen(true);
+    setFaceToFaceInitialModalOpen(true);
   };
 
   const handleButtonClick1 = () => {
     console.log('click left button');
     setInitialPhaseModalOpen(false);
-    setVirtualInterviewModalOpen(true);
+    setVirtualInitialModalOpen(true);
+  };
+
+  const handleButtonClick2 = () => {
+    console.log('click left button');
+    setFinalPhaseModalOpen(false);
+    setFaceToFaceFinalModalOpen(true);
+  };
+
+  const handleButtonClick3 = () => {
+    console.log('click left button');
+    setFinalPhaseModalOpen(false);
+    setVirtualFinalModalOpen(true);
   };
 
   const handleMenuClick = (item) => {
     if (item.onClick) item.onClick();
     if (item.key === '1') setApplicationDetailsModalOpen(true);
     if (item.key === '2') setInitialPhaseModalOpen(true);
-    if (item.key === '3') router.visit('/admin/initial_rate');
+    if (item.key === '3') { window.open('/admin/initial_rate', '_blank'); }
+    if (item.key === '4') { window.open('/admin/initial_result', '_blank'); }
+    if (item.key === '5') { window.open('/admin/final_rate', '_blank'); }
+    if (item.key === '6') setFinalPhaseModalOpen(true);
+    if (item.key === '7') setFinalInterviewerModalOpen(true);
   };
 
   const items = [
@@ -292,12 +310,12 @@ const ButtonComponents = () => {
       <Modal
         title="Schedule for Initial Phase Interview (Face to face Interview)"
         centered
-        visible={faceToFaceInterviewModalOpen}
+        visible={faceToFaceInitialModalOpen}
         width={900}
         onOk={() => {
-          setFaceToFaceInterviewModalOpen(false);
+          setFaceToFaceInitialModalOpen(false);
         }}
-        onCancel={() => setFaceToFaceInterviewModalOpen(false)}
+        onCancel={() => setFaceToFaceInitialModalOpen(false)}
         footer={null}
       >
         <li className='bg-gray-300 h-0.5' ></li>
@@ -358,12 +376,12 @@ const ButtonComponents = () => {
       <Modal
         title="Schedule for Initial Phase Interview (Virtual Interview)"
         centered
-        visible={virtualInterviewModalOpen}
+        visible={virtualInitialModalOpen}
         width={900}
         onOk={() => {
-          setVirtualInterviewModalOpen(false);
+          setVirtualInitialModalOpen(false);
         }}
-        onCancel={() => setVirtualInterviewModalOpen(false)}
+        onCancel={() => setVirtualInitialModalOpen(false)}
         footer={null}
       >
         <li className='bg-gray-300 h-0.5' ></li>
@@ -428,6 +446,217 @@ const ButtonComponents = () => {
             <CheckCircleFilled /> CONFIRM
           </button>
         </form>
+      </Modal>
+
+      <Modal
+        title="Final Phase Interview"
+        centered
+        visible={finalPhaseModalOpen}
+        onOk={() => {
+          setFinalPhaseModalOpen(false);
+        }}
+        onCancel={() => setFinalPhaseModalOpen(false)}
+        footer={null}
+      >
+        <div className='flex flex-1 gap-2 w-full'>
+          <Button type='primary' className='w-full' onClick={handleButtonClick2}>
+            Face to face Interview
+          </Button>
+          <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+            Virtual Interview
+          </Button>
+        </div>
+      </Modal>
+
+
+      <Modal
+        title="Schedule for Final Phase Interview (Face to face Interview)"
+        centered
+        visible={faceToFaceFinalModalOpen}
+        width={900}
+        onOk={() => {
+          setFaceToFaceFinalModalOpen(false);
+        }}
+        onCancel={() => setFaceToFaceFinalModalOpen(false)}
+        footer={null}
+      >
+        <li className='bg-gray-300 h-0.5' ></li>
+        <div className='flex justify-end mt-1.5'>
+          <h1><b>Status:</b> (Final Phase)</h1>
+        </div>
+        <form class="w-full h-full">
+          <div class="flex flex-col -mx-3 mb-3">
+            <div class="w-full px-3">
+              <label class="block uppercase tracking-wide  text-xs font-bold mb-1" for="grid-text">
+                Application No.
+              </label>
+              <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="number" placeholder="" readOnly />
+            </div>
+
+            <div className='flex flex-1'>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Applicant's Name
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Email Address
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="email" placeholder="" readOnly />
+              </div>
+            </div>
+
+            <div className='flex flex-1 '>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Contact No.
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Schedule date for Initial Interview
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
+              </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Schedule time for Initial Interview
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
+              </div>
+            </div>
+            <div class="w-full px-3">
+              <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                Final Phase Interviewer
+              </label>
+              <select className='appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' name="" id="">
+                <option value=""></option>
+              </select>
+            </div>
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full">
+            <CheckCircleFilled /> CONFIRM
+          </button>
+        </form>
+      </Modal>
+
+      <Modal
+        title="Schedule for Final Phase Interview (Virtual Interview)"
+        centered
+        visible={virtualFinalModalOpen}
+        width={900}
+        onOk={() => {
+          setVirtualFinalModalOpen(false);
+        }}
+        onCancel={() => setVirtualFinalModalOpen(false)}
+        footer={null}
+      >
+        <li className='bg-gray-300 h-0.5' ></li>
+        <div className='flex justify-end mt-1.5'>
+          <h1><b>Status:</b> (Final Phase)</h1>
+        </div>
+        <form class="w-full h-full">
+          <div class="flex flex-col -mx-3 mb-3">
+            <div class="w-full px-3">
+              <label class="block uppercase tracking-wide  text-xs font-bold mb-1" for="grid-text">
+                Application No.
+              </label>
+              <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="number" placeholder="" readOnly />
+            </div>
+
+            <div className='flex flex-1'>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Applicant's Name
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Email Address
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="email" placeholder="" readOnly />
+              </div>
+            </div>
+
+            <div className='flex flex-1'>
+              <div class="w-3/5 px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Contact No.
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Meeting Link
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+            </div>
+
+            <div className='flex flex-1 '>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Schedule date for Initial Interview
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
+              </div>
+              <div class="w-full px-3">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Schedule time for Initial Interview
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
+              </div>
+            </div>
+            <div class="w-full px-3">
+              <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                Final Phase Interviewer
+              </label>
+              <select className='appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' name="" id="">
+                <option value=""></option>
+              </select>
+            </div>
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full">
+            <CheckCircleFilled /> CONFIRM
+          </button>
+        </form>
+      </Modal>
+
+      <Modal
+        title="Final Phase Interviewers"
+        centered
+        visible={finalInterviewerModalOpen}
+        onOk={() => {
+          setFinalInterviewerModalOpen(false);
+        }}
+        onCancel={() => setFinalInterviewerModalOpen(false)}
+        footer={null}
+      >
+        <div className='flex flex-1 mb-2'>
+          <CalendarIcon className='h-6' />
+          <h1>Check Interviewers Schedule</h1>
+        </div>
+        <div className='flex flex-col gap-2'>
+        <Button type='primary' className='w-full' onClick={handleButtonClick2} >
+          CUPTA, CIELO - DIRECTOR
+        </Button>
+        <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+          ADMINISTRATOR, SYSTEM - MANAGER
+        </Button>
+        <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+          DETALLA, MARIA TERESA - MANAGER
+        </Button>
+        <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+          GAY, MARICAR - MANAGER
+        </Button>
+        <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+          SORIANO, ALEJANDRO II - MANAGER
+        </Button>
+        </div>
       </Modal>
     </Space>
   );

@@ -106,6 +106,7 @@ export default function ErfDropdownFilterComponents({ filterData }) {
                 onOpenChange={toggleDropdown}
                 placement="bottomLeft"
                 arrow
+                trigger={['click']}
             >
                 <Button type='primary' size='large'>Filter by category</Button>
             </Dropdown>

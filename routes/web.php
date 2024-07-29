@@ -67,6 +67,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/final_rate', function () {
         return Inertia::render('admin/final_rate/page');
     });
+    Route::get('/overall_result', function () {
+        return Inertia::render('admin/overall_result/page');
+    });
 
     Route::get('/dashboard', function () {
         return Inertia::render('admin/dashboard/page');

@@ -47,6 +47,7 @@ const ButtonComponents = () => {
     if (item.key === '5') { window.open('/admin/final_rate', '_blank'); }
     if (item.key === '6') setFinalPhaseModalOpen(true);
     if (item.key === '7') setFinalInterviewerModalOpen(true);
+    if (item.key === '8') { window.open('/admin/overall_result', '_blank'); }
   };
 
   const items = [

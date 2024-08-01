@@ -28,7 +28,7 @@ export default function OverallResultPageSection() {
     return (
         <div>
             <section>
-                <div className="bg-red-400">
+                <div className="">
                     <div className="text-sm font-medium text-center border-b border-gray-200">
                         <ul className="flex flex-wrap -mb-px">
                             <li className="me-2">

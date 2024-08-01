@@ -13,6 +13,7 @@ const ButtonComponents = () => {
   const [faceToFaceFinalModalOpen, setFaceToFaceFinalModalOpen] = useState(false);
   const [virtualFinalModalOpen, setVirtualFinalModalOpen] = useState(false);
   const [finalInterviewerModalOpen, setFinalInterviewerModalOpen] = useState(false);
+  const [jobOfferModalOpen, setJobOfferModalOpen] = useState(false);
 
   const handleButtonClick = () => {
     console.log('click left button');
@@ -48,6 +49,7 @@ const ButtonComponents = () => {
     if (item.key === '6') setFinalPhaseModalOpen(true);
     if (item.key === '7') setFinalInterviewerModalOpen(true);
     if (item.key === '8') { window.open('/admin/overall_result', '_blank'); }
+    if (item.key === '9') setJobOfferModalOpen(true);
   };
 
   const items = [
@@ -325,7 +327,7 @@ const ButtonComponents = () => {
         </div>
         <form class="w-full h-full">
           <div class="flex flex-col -mx-3 mb-3">
-            <div class="w-full px-3">
+            <div class="w-full px-2.5">
               <label class="block uppercase tracking-wide  text-xs font-bold mb-1" for="grid-text">
                 Application No.
               </label>
@@ -333,13 +335,13 @@ const ButtonComponents = () => {
             </div>
 
             <div className='flex flex-1'>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Applicant's Name
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
               </div>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Email Address
                 </label>
@@ -348,19 +350,19 @@ const ButtonComponents = () => {
             </div>
 
             <div className='flex flex-1 '>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Contact No.
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
               </div>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule date for Initial Interview
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
               </div>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule time for Initial Interview
                 </label>
@@ -391,7 +393,7 @@ const ButtonComponents = () => {
         </div>
         <form class="w-full h-full">
           <div class="flex flex-col -mx-3 mb-3">
-            <div class="w-full px-3">
+            <div class="w-full px-2.5">
               <label class="block uppercase tracking-wide  text-xs font-bold mb-1" for="grid-text">
                 Application No.
               </label>
@@ -399,13 +401,13 @@ const ButtonComponents = () => {
             </div>
 
             <div className='flex flex-1'>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Applicant's Name
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
               </div>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Email Address
                 </label>
@@ -414,13 +416,13 @@ const ButtonComponents = () => {
             </div>
 
             <div className='flex flex-1'>
-              <div class="w-3/5 px-3">
+              <div class="w-3/5 px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Contact No.
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
               </div>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Meeting Link
                 </label>
@@ -429,13 +431,13 @@ const ButtonComponents = () => {
             </div>
 
             <div className='flex flex-1 '>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule date for Initial Interview
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
               </div>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule time for Initial Interview
                 </label>
@@ -487,7 +489,7 @@ const ButtonComponents = () => {
         </div>
         <form class="w-full h-full">
           <div class="flex flex-col -mx-3 mb-3">
-            <div class="w-full px-3">
+            <div class="w-full px-2.5">
               <label class="block uppercase tracking-wide  text-xs font-bold mb-1" for="grid-text">
                 Application No.
               </label>
@@ -495,13 +497,13 @@ const ButtonComponents = () => {
             </div>
 
             <div className='flex flex-1'>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Applicant's Name
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
               </div>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Email Address
                 </label>
@@ -510,26 +512,26 @@ const ButtonComponents = () => {
             </div>
 
             <div className='flex flex-1 '>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Contact No.
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
               </div>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule date for Initial Interview
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
               </div>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule time for Initial Interview
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
               </div>
             </div>
-            <div class="w-full px-3">
+            <div class="w-full px-2.5">
               <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                 Final Phase Interviewer
               </label>
@@ -561,7 +563,7 @@ const ButtonComponents = () => {
         </div>
         <form class="w-full h-full">
           <div class="flex flex-col -mx-3 mb-3">
-            <div class="w-full px-3">
+            <div class="w-full px-2.5">
               <label class="block uppercase tracking-wide  text-xs font-bold mb-1" for="grid-text">
                 Application No.
               </label>
@@ -569,13 +571,13 @@ const ButtonComponents = () => {
             </div>
 
             <div className='flex flex-1'>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Applicant's Name
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
               </div>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Email Address
                 </label>
@@ -584,13 +586,13 @@ const ButtonComponents = () => {
             </div>
 
             <div className='flex flex-1'>
-              <div class="w-3/5 px-3">
+              <div class="w-3/5 px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Contact No.
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
               </div>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Meeting Link
                 </label>
@@ -599,20 +601,20 @@ const ButtonComponents = () => {
             </div>
 
             <div className='flex flex-1 '>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule date for Initial Interview
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
               </div>
-              <div class="w-full px-3">
+              <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule time for Initial Interview
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
               </div>
             </div>
-            <div class="w-full px-3">
+            <div class="w-full px-2.5">
               <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                 Final Phase Interviewer
               </label>
@@ -643,22 +645,104 @@ const ButtonComponents = () => {
           <h1>Check Interviewers Schedule</h1>
         </div>
         <div className='flex flex-col gap-2.5'>
-        <Button type='primary' className='w-full' onClick={handleButtonClick2} >
-          CUPTA, CIELO - DIRECTOR
-        </Button>
-        <Button type='primary' className='w-full' onClick={handleButtonClick3} >
-          ADMINISTRATOR, SYSTEM - MANAGER
-        </Button>
-        <Button type='primary' className='w-full' onClick={handleButtonClick3} >
-          DETALLA, MARIA TERESA - MANAGER
-        </Button>
-        <Button type='primary' className='w-full' onClick={handleButtonClick3} >
-          GAY, MARICAR - MANAGER
-        </Button>
-        <Button type='primary' className='w-full' onClick={handleButtonClick3} >
-          SORIANO, ALEJANDRO II - MANAGER
-        </Button>
+          <Button type='primary' className='w-full' onClick={handleButtonClick2} >
+            CUPTA, CIELO - DIRECTOR
+          </Button>
+          <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+            ADMINISTRATOR, SYSTEM - MANAGER
+          </Button>
+          <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+            DETALLA, MARIA TERESA - MANAGER
+          </Button>
+          <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+            GAY, MARICAR - MANAGER
+          </Button>
+          <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+            SORIANO, ALEJANDRO II - MANAGER
+          </Button>
         </div>
+      </Modal>
+
+      <Modal
+        title="Job Offer"
+        centered
+        visible={jobOfferModalOpen}
+        width={900}
+        onOk={() => {
+          setJobOfferModalOpen(false);
+        }}
+        onCancel={() => setJobOfferModalOpen(false)}
+        footer={null}
+      >
+        <li className='bg-gray-300 h-0.5' ></li>
+        <form class="w-full h-full mt-3.5">
+          <div class="flex flex-col -mx-3 mb-3">
+            <div class="w-full px-2.5">
+              <label class="block uppercase tracking-wide  text-xs font-bold mb-1" for="grid-text">
+                Application No.
+              </label>
+              <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="number" placeholder="" readOnly />
+            </div>
+
+            <div className='flex flex-1'>
+              <div class="w-full px-2.5">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Firstname
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+              <div class="w-full px-2.5">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Middlename
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+              <div class="w-full px-2.5">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Lastname
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+            </div>
+
+            <div className='flex flex-1'>
+              <div class="w-full px-2.5">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Job Position
+                </label>
+                <select className='appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' name="" id="">
+                  <option value=""></option>
+                </select>
+              </div>
+              <div class="w-3/5 px-2.5">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Salary Offer
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+              </div>
+              <div class="w-3/5 px-2.5">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Allowance
+                </label>
+                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" />
+              </div>
+              <div class="w-full px-2.5">
+                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                  Type of Allowance
+                </label>
+                <select className='appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500' name="" id="">
+                  <option value=""></option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full">
+            <div className='flex flex-1 items-center justify-center'>
+            <BriefcaseIcon className='h-6 mr-1' />
+            SEND JOB OFFER
+            </div>
+          </button>
+        </form>
       </Modal>
     </Space>
   );

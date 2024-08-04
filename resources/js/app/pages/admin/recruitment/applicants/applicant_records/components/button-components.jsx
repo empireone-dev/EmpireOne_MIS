@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { AuditOutlined, CalendarOutlined, CheckCircleFilled, DotChartOutlined, DownOutlined, InfoCircleOutlined, MedicineBoxOutlined, RiseOutlined, ScheduleOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Modal, Menu } from 'antd';
 import { BriefcaseIcon, CalendarIcon } from '@heroicons/react/24/outline';
+import { router } from '@inertiajs/react';
 
 const ButtonComponents = () => {
   const [applicationDetailsModalOpen, setApplicationDetailsModalOpen] = useState(false);
@@ -37,6 +38,11 @@ const ButtonComponents = () => {
     console.log('click left button');
     setFinalPhaseModalOpen(false);
     setVirtualFinalModalOpen(true);
+  };
+
+  const handleButtonClick4 = () => {
+    console.log('click left button');
+    window.open('/admin/interviewer_sched', '_blank')
   };
 
   const handleMenuClick = (item) => {
@@ -645,19 +651,19 @@ const ButtonComponents = () => {
           <h1>Check Interviewers Schedule</h1>
         </div>
         <div className='flex flex-col gap-2.5'>
-          <Button type='primary' className='w-full' onClick={handleButtonClick2} >
+          <Button type='primary' className='w-full' onClick={handleButtonClick4} >
             CUPTA, CIELO - DIRECTOR
           </Button>
-          <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+          <Button type='primary' className='w-full' onClick={handleButtonClick4} >
             ADMINISTRATOR, SYSTEM - MANAGER
           </Button>
-          <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+          <Button type='primary' className='w-full' onClick={handleButtonClick4} >
             DETALLA, MARIA TERESA - MANAGER
           </Button>
-          <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+          <Button type='primary' className='w-full' onClick={handleButtonClick4} >
             GAY, MARICAR - MANAGER
           </Button>
-          <Button type='primary' className='w-full' onClick={handleButtonClick3} >
+          <Button type='primary' className='w-full' onClick={handleButtonClick4} >
             SORIANO, ALEJANDRO II - MANAGER
           </Button>
         </div>

@@ -29,7 +29,7 @@ function BothTab() {
 }
 
 export default function EngagementCalendarSection() {
-  const [activeTab, setActiveTab] = useState('SanCarlos');
+  const [activeTab, setActiveTab] = useState('Calendar');
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);

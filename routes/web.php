@@ -70,6 +70,9 @@ Route::prefix('admin')->group(function () {
     Route::get('/overall_result', function () {
         return Inertia::render('admin/overall_result/page');
     });
+    Route::get('/interviewer_sched', function () {
+        return Inertia::render('admin/interviewer_sched/page');
+    });
 
     Route::get('/dashboard', function () {
         return Inertia::render('admin/dashboard/page');

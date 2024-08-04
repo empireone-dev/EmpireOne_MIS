@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+    import React, { useState } from 'react';
 import InitialPhaseResultSection from './initial-phase-result-section';
 import FinalPhaseResultSection from './final-phase-result-section';
 

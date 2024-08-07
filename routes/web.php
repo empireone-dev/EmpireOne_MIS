@@ -240,8 +240,13 @@ Route::prefix('admin')->group(function () {
         Route::get('/engagement_dashboard', function () {
             return Inertia::render('admin/engagement_section/engagement_dashboard/page');
         });
-        Route::get('/calendar_activities', function () {
-            return Inertia::render('admin/engagement_section/calendar_activities/page');
+        Route::prefix('calendar_activities')->group(function () {
+            Route::get('/', function () {
+                return Inertia::render('admin/engagement_section/calendar_activities/page');
+            });
+            Route::get('/all_events_rate', function () {
+                return Inertia::render('admin/engagement_section/calendar_activities/all_events_rate/page');
+            });
         });
     });
 

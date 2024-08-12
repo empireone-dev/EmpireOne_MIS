@@ -299,13 +299,13 @@ const AdminLayout = ({ children }) => {
                   <ul className="space-y-2 text-sm" aria-labelledby="dropdownDefault">
                     <li class="flex items-center text-lg  px-2">
                       <button>
-                        <h6 className='text-lg font-medium '><UserOutlined className='text-lg mr-2' />Update Profile</h6>
+                        <h6 className='text-lg'><UserOutlined className='text-lg mr-2' />Update Profile</h6>
                       </button>
                     </li>
                     <li class="flex items-center text-lg  px-2">
                       <button className='flex flex-1'>
                         <KeyIcon className='h-5 mt-1 mr-2' />
-                        <h6 className='text-lg font-medium'>
+                        <h6 className='text-lg'>
                           Change Password
                         </h6>
                       </button>

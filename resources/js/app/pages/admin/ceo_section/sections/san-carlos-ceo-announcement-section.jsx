@@ -6,16 +6,18 @@ export default function SanCarlosCeoAnnouncementSection() {
         <div className='mt-4'>
             <div>
                 <div className='flex flex-1'>
-                    <img src="/images/ITlogo.png" alt="" className='h-10' />
-                    <h1 className='text-lg'><b>(CEO) System Administrator</b></h1>
+                    <img src="/images/ITlogo.png" alt="" className='h-14' />
+                    <div className='flex flex-col w-full ml-1'>
+                        <h1 className='text-lg'><b>(CEO) System Administrator</b></h1>
+                        <div><i>• 4hrs ago</i></div>
+                    </div>
+                    <div className='p-3'>
+                        <button className='text-xl hover:text-blue-500'><DeleteOutlined /></button>
+                    </div>
                 </div>
                 <div className='flex flex-1'>
                     <div className='w-full'>
-                        <div><i>4hrs ago</i></div>
                         <div>Aug. 11, 2024| 06:24 PM</div>
-                    </div>
-                    <div>
-                        <button className='text-xl hover:text-blue-500'><DeleteOutlined /></button>
                     </div>
                 </div>
                 <div>

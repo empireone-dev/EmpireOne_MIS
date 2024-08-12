@@ -13,4 +13,15 @@ class GuideQuestionController extends Controller
             'data' => $guideq
         ], 200);
     }
+
+    public function store(Request $request)
+    {
+        GuideQuestion::create($request->validate([
+            'name' => 'required|unique:guideq',
+        ]));
+        return response()->json([
+            'status' => 'success',
+           'data'=>$this->index()->original['data']
+        ], 200);
+    }
 }

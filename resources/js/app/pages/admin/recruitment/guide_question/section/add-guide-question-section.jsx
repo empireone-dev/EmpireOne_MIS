@@ -1,9 +1,41 @@
 import { PlusSquareFilled, PlusSquareTwoTone } from '@ant-design/icons'
 import { Modal } from 'antd';
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { store_guide_question_thunk } from '../redux/guide-question-thunk';
+import store from '@/app/store/store';
 
 export default function AddGuideQuestionSection() {
     const [open, setOpen] = useState(false);
+
+    const { guideqForm } = useSelector((state) => state.guideq)
+    console.log("guideq", guideqForm)
+    const dispatch = useDispatch()
+    const closeModal = () => {
+        setOpen(false);
+    };
+
+    function changeHandler(e) {
+        const data = e.target.name
+        if (data == 'image') {
+            dispatch(setGuideQuestionForm({
+                ...guideqForm,
+                [data]: e.target.files
+            }))
+        } else {
+            dispatch(setGuideQuestionForm({
+                ...guideqForm,
+                [data]: e.target.value
+            }))
+        }
+
+    }
+
+    function submitGuideQuestion(e) {
+        e.preventDefault()
+        store.dispatch(store_guide_question_thunk(guideqForm))
+        closeModal();
+    }
     return (
         <div className="my-2">
             <div class="inline-flex rounded-md shadow-sm" role="group">
@@ -26,13 +58,13 @@ export default function AddGuideQuestionSection() {
                 okText="Save"
                 cancelText="Cancel"
             >
-                <form class="w-full">
+                <form class="w-full" onSubmit={submitGuideQuestion}>
                     <div class="flex flex-wrap -mx-3 mb-6">
                         <div class="w-full px-3">
                             <label class="block uppercase tracking-wide  text-xs font-bold mb-2" for="grid-text">
                                 Guide Question
                             </label>
-                            <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" />
+                            <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" onChange={changeHandler}/>
                         </div>
                     </div>
                 </form>

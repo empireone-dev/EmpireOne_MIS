@@ -323,7 +323,7 @@ const AdminLayout = ({ children }) => {
           <Content
             className='overflow-auto'
             style={{
-              margin: '24px 16px',
+              // margin: '24px 16px',
               padding: 24,
               minHeight: 280,
               background: colorBgContainer,

@@ -4,11 +4,12 @@ import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { store_guide_question_thunk } from '../redux/guide-question-thunk';
 import store from '@/app/store/store';
+import { setGuideQuestionForm } from '../redux/guide-question-slice';
 
 export default function AddGuideQuestionSection() {
     const [open, setOpen] = useState(false);
 
-    const { guideqForm } = useSelector((state) => state.guideq)
+    const { guideqForm } = useSelector((state) => state.guideqs)
     console.log("guideq", guideqForm)
     const dispatch = useDispatch()
     const closeModal = () => {
@@ -34,6 +35,7 @@ export default function AddGuideQuestionSection() {
     function submitGuideQuestion(e) {
         e.preventDefault()
         store.dispatch(store_guide_question_thunk(guideqForm))
+        setOpen(false)
         closeModal();
     }
     return (
@@ -52,7 +54,7 @@ export default function AddGuideQuestionSection() {
                 title="New Guide Question"
                 centered
                 open={open}
-                onOk={() => setOpen(false)}
+                onOk={(e) => submitGuideQuestion(e)}
                 onCancel={() => setOpen(false)}
                 width={1000}
                 okText="Save"
@@ -64,7 +66,9 @@ export default function AddGuideQuestionSection() {
                             <label class="block uppercase tracking-wide  text-xs font-bold mb-2" for="grid-text">
                                 Guide Question
                             </label>
-                            <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" onChange={changeHandler}/>
+                            <input 
+                            name="guideqs"
+                            class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" onChange={changeHandler}/>
                         </div>
                     </div>
                 </form>

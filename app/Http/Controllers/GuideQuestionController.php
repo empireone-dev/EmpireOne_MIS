@@ -17,7 +17,7 @@ class GuideQuestionController extends Controller
     public function store(Request $request)
     {
         GuideQuestion::create($request->validate([
-            'name' => 'required|unique:guideq',
+            'guideqs' => 'required|unique:guideq',
         ]));
         return response()->json([
             'status' => 'success',

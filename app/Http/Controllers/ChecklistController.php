@@ -13,4 +13,16 @@ class ChecklistController extends Controller
             'data' => $checklist
         ], 200);
     }
+
+    public function store(Request $request)
+    {
+        Checklist::create($request->validate([
+            'reqs' => 'required|unique:checklist',
+            'remarks' => 'required',
+        ]));
+        return response()->json([
+            'status' => 'success',
+           'data'=>$this->index()->original['data']
+        ], 200);
+    }
 }

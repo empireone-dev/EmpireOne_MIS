@@ -13,6 +13,7 @@ import medicineRecordSlice from '../pages/admin/employee_wellness/medicine_recor
 import employeeHealthDataSlice from '../pages/admin/employee_wellness/employee_health_data/redux/employee-health-data-slice';
 import employeeAttritionSlice from '../pages/admin/attrition/attrition_section/redux/employee-attrition-slice';
 import empMemoSlice from '../pages/admin/employee_relation/upload_memo/redux/emp-memo-slice';
+import engagementSlice from '../pages/admin/engagement_section/calendar_activities/redux/engagement-slice';
 const store = configureStore({
     reducer: {
         dashboard: dashboardSlice,
@@ -28,6 +29,7 @@ const store = configureStore({
         employee_healths: employeeHealthDataSlice,
         employee_attritions: employeeAttritionSlice,
         emp_memos: empMemoSlice,
+        engagements: engagementSlice,
     },
 });
 

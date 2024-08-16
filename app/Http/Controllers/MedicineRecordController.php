@@ -13,4 +13,15 @@ class MedicineRecordController extends Controller
             'data' => $med_rec
         ], 200);
     }
+
+    public function store(Request $request)
+    {
+        MedicineRecord::create($request->validate([
+            'medicine' => 'required|unique:medicine_records',
+        ]));
+        return response()->json([
+            'status' => 'success',
+           'data'=>$this->index()->original['data']
+        ], 200);
+    }
 }

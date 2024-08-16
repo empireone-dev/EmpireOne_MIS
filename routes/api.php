@@ -4,6 +4,7 @@ use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\EmployeeAttritionController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\EmployeeEngagementController;
 use App\Http\Controllers\EmployeeHealthController;
 use App\Http\Controllers\GuideQuestionController;
 use App\Http\Controllers\JobOfferController;
@@ -45,4 +46,5 @@ Route::resource('medicine_record',MedicineRecordController::class);
 Route::resource('employee_health',EmployeeHealthController::class);
 Route::resource('employee_attrition',EmployeeAttritionController::class);
 Route::resource('emp_memo',UploadMemoController::class);
+Route::resource('engagement',EmployeeEngagementController::class);
 

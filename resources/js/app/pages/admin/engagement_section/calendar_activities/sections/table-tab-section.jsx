@@ -9,8 +9,8 @@ import { router } from "@inertiajs/react";
 export default function TableTabSection() {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
-  const { guideqs } = useSelector((state) => state.guideqs)
-  console.log('guideq', guideqs)
+  const { engagements } = useSelector((state) => state.engagements)
+  console.log('engagement', engagements)
 
   const searchInput = useRef(null);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -138,24 +138,24 @@ export default function TableTabSection() {
   const columns = [
     {
       title: "Event Name	",
-      dataIndex: "eventname",
+      dataIndex: "EventName",
       key: "eventname",
       ...getColumnSearchProps("eventname"),
     },
     {
       title: "Time",
-      dataIndex: "time",
+      dataIndex: "TOE",
       key: "time",
       ...getColumnSearchProps("time"),
     },
     {
       title: "Date",
-      dataIndex: "date",
+      dataIndex: "DOE",
       key: "date",
       render: (_, record) => {
         return (
           <div className="gap-1.5 flex">
-            {moment(record.created).format('LLL')}
+            {moment(record.DOE).format('LL')}
           </div>
         );
       },
@@ -194,14 +194,13 @@ export default function TableTabSection() {
         </div>
         <div className="w-full flex justify-end items-center">
           <button className="hover:text-blue-500"
-            onClick={() => router.visit("/admin/engagement_section/calendar_activities/all_events_rate")}
+            onClick={() => router.visit("/admin/engagements_section/calendar_activities/all_events_rate")}
           >
             <h1 className=""><b>View Both Site Event Ratings</b></h1>
           </button>
         </div>
       </div>
-      {/* <AddGuideQuestionSection /> */}
-      <Table columns={columns} dataSource={guideqs} />;
+      <Table columns={columns} dataSource={engagements} />;
     </div>
   );
 }

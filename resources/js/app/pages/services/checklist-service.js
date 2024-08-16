@@ -5,3 +5,8 @@ export async function get_checklist_service(){
   
     return res.data
 }
+
+export async function store_checklist_service(data){
+    const res = await axios.post('/api/checklist',data)
+    return res.data
+}

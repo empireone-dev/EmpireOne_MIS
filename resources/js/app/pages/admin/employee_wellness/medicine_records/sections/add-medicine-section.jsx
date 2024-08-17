@@ -66,7 +66,7 @@ export default function AddMedicineSection() {
                             <label class="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" for="meds">
                                 Medicine
                             </label>
-                            <input name='meds'
+                            <input name='medicine'
                                 class="appearance-none block w-full  border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="meds"
                                 type="text"

@@ -16,9 +16,7 @@ class MedicineRecordController extends Controller
 
     public function store(Request $request)
     {
-        MedicineRecord::create($request->validate([
-            'medicine' => 'required|unique:medicine_records',
-        ]));
+        MedicineRecord::create($request->all());
         return response()->json([
             'status' => 'success',
            'data'=>$this->index()->original['data']

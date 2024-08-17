@@ -9,6 +9,7 @@ class Applicant extends Model
 {
     use HasFactory;
     protected $table = 'applicant';
+    public $timestamps = false;
     protected $fillable = [
         'app_id',
         'fname',

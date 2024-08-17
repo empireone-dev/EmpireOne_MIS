@@ -9,6 +9,7 @@ class UploadMemo extends Model
 {
     use HasFactory;
     protected $table = 'emp_memo';
+    public $timestamps = false;
     protected $fillable = [
         'memo_title',
         'memo_desc',

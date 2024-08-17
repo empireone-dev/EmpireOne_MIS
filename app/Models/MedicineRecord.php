@@ -9,6 +9,7 @@ class MedicineRecord extends Model
 {
     use HasFactory;
     protected $table = 'medicine_records';
+    public $timestamps = false;
     protected $fillable = [
         'medicine',
         'med_type',

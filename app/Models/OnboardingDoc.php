@@ -9,6 +9,7 @@ class OnboardingDoc extends Model
 {
     use HasFactory;
     protected $table = 'onboarding_docs';
+    public $timestamps = false;
     protected $fillable = [
         'doc_name',
         'doc_content',

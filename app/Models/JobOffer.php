@@ -10,6 +10,7 @@ class JobOffer extends Model
 {
     use HasFactory;
     protected $table = 'joboffer';
+    public $timestamps = false;
     protected $fillable = [
         'app_id',
         'jobPos',

@@ -9,6 +9,7 @@ class EmployeeHealth extends Model
 {
     use HasFactory;
     protected $table = 'emp_health_data';
+    public $timestamps = false;
     protected $fillable = [
         'emp_id',
         'comp',

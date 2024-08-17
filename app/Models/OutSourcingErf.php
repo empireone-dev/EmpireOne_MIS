@@ -10,6 +10,7 @@ class OutSourcingErf extends Model
 {
     use HasFactory;
     protected $table = 'outsourcing_erf';
+    public $timestamps = false;
     protected $fillable = [
         'user_id',
         'ref_id',

@@ -9,6 +9,7 @@ class JobPosition extends Model
 {
     use HasFactory;
     protected $table = 'job_position';
+    public $timestamps = false;
     protected $fillable = [
         'jPosition',
         'salary',

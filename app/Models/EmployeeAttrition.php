@@ -10,6 +10,7 @@ class EmployeeAttrition extends Model
 {
     use HasFactory;
     protected $table = 'emp_attrition';
+    public $timestamps = false;
     protected $fillable = [
         'app_id',
         'emp_id',

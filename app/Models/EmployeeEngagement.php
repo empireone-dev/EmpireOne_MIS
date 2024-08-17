@@ -9,6 +9,7 @@ class EmployeeEngagement extends Model
 {
     use HasFactory;
     protected $table = 'engagement';
+    public $timestamps = false;
     protected $fillable = [
         'EventName',
         'EventDesc',

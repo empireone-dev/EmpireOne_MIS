@@ -24,4 +24,13 @@ class GuideQuestionController extends Controller
            'data'=>$this->index()->original['data']
         ], 200);
     }
+
+    public function update(Request $request, $id){
+        $guideq = GuideQuestion::find($id);
+        $guideq->update($request->all());
+
+        return response()->json([
+            'data' => $this->index()->original['data']
+        ], 200);
+    }
 }

@@ -10,3 +10,8 @@ export async function store_guide_question_service(data){
     const res = await axios.post('/api/guideq',data)
     return res.data
 }
+
+export async function update_guide_question_service(data){
+    const res = await axios.put(`/api/guideq/${data.id}`, data);
+    return res.data;
+}

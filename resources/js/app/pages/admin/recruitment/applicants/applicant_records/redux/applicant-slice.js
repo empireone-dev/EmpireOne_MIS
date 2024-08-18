@@ -13,7 +13,7 @@ export const applicantSlice = createSlice({
     setApplicantForm: (state, action) => {
       state.applicantForm = action.payload
     },
-    resetAppicant: (state, action) => {
+    resetApplicant: (state, action) => {
       state.applicants = action.payload
     },
   },

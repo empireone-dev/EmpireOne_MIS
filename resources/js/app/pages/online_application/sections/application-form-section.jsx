@@ -35,7 +35,7 @@ export default function ApplicationFormSection() {
               <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100">Site Information</h1>
               <div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <select className="border p-2 rounded w-full">
+                  <select name='site' className="border p-2 rounded w-full">
                     <option disabled selected>Select Site</option>
                     <option>San Carlos </option>
                     <option>Carcar </option>
@@ -47,10 +47,10 @@ export default function ApplicationFormSection() {
                 <div className='flex flex-col w-full mb-4'>
                   <label htmlFor=""><b>Full Name</b></label>
                   <div className='flex flex-1 gap-3'>
-                    <input type="text" placeholder="First name" className="border p-2 rounded w-full" />
-                    <input type="text" placeholder="Middle name" className="border p-2 rounded w-full" />
-                    <input type="text" placeholder="Last name" className="border p-2 rounded w-full" />
-                    <select className="border p-2 rounded  w-1/5">
+                    <input name='fname' type="text" placeholder="First name" className="border p-2 rounded w-full" />
+                    <input name='mname' type="text" placeholder="Middle name" className="border p-2 rounded w-full" />
+                    <input name='lname' type="text" placeholder="Last name" className="border p-2 rounded w-full" />
+                    <select name='suffix' className="border p-2 rounded  w-1/5">
                       <option disabled selected>Suffix</option>
                       <option> Sr.</option>
                       <option> Jr.</option>
@@ -67,7 +67,7 @@ export default function ApplicationFormSection() {
                   <div className="flex flex-col gap-4 mb-4 w-full">
                     <div className='flex flex-col w-full'>
                       <label htmlFor=""><b>Gender</b></label>
-                      <select className="border p-2 rounded w-full">
+                      <select name='gender' className="border p-2 rounded w-full">
                         <option disabled selected>Sex</option>
                         <option> Male</option>
                         <option> Female</option>
@@ -75,15 +75,15 @@ export default function ApplicationFormSection() {
                     </div>
                     <div className='flex flex-col w-full'>
                       <label htmlFor=""><b>Date of Birth</b></label>
-                      <input type="date" placeholder="Date of birth" className="border p-2 rounded w-full" />
+                      <input name='dob' type="date" placeholder="Date of birth" className="border p-2 rounded w-full" />
                     </div>
                     <div className=" w-full">
                       <label htmlFor=""><b>Email</b></label>
-                      <input type="email" placeholder="Email address" className="border p-2 rounded w-full " />
+                      <input name='email' type="email" placeholder="Email address" className="border p-2 rounded w-full " />
                     </div>
                     <div className="w-full">
                       <label htmlFor=""><b>Phone Number</b></label>
-                      <input type="number" placeholder="Phone Number" className="border p-2 rounded w-full " />
+                      <input name='phone' type="number" placeholder="Phone Number" className="border p-2 rounded w-full " />
                     </div>
                   </div>
                 </div>
@@ -92,7 +92,7 @@ export default function ApplicationFormSection() {
                   <div className="flex flex-col gap-4 mb-4 w-full">
                     <div className='flex flex-col w-full'>
                       <label htmlFor=""><b>Marital Status</b></label>
-                      <select className="border p-2 rounded w-full">
+                      <select name='marital' className="border p-2 rounded w-full">
                         <option disabled selected>Select Status</option>
                         <option> Single</option>
                         <option> Married</option>
@@ -102,11 +102,11 @@ export default function ApplicationFormSection() {
                     </div>
                     <div className='flex flex-col w-full'>
                       <label htmlFor=""><b>Religion</b></label>
-                      <input type="text" placeholder="Religion" className="border p-2 rounded w-full" />
+                      <input name='religion' type="text" placeholder="Religion" className="border p-2 rounded w-full" />
                     </div>
                     <div className='flex flex-col w-full'>
                       <label htmlFor=""><b>Nationality</b></label>
-                      <input type="text" placeholder="Nationality" className="border p-2 rounded w-full" />
+                      <input name='nationality' type="text" placeholder="Nationality" className="border p-2 rounded w-full" />
                     </div>
                   </div>
                 </div>
@@ -114,16 +114,16 @@ export default function ApplicationFormSection() {
               </div>
               <div className="mb-4">
                 <label htmlFor=""><b>Mother's Maiden Name</b></label>
-                <input type="text" placeholder="Mothers maiden name" className="border p-2 rounded w-full " />
+                <input name='mmname' type="text" placeholder="Mothers maiden name" className="border p-2 rounded w-full " />
               </div>
               <div className="mb-4">
                 <label htmlFor=""><b>Father's Full Name</b></label>
-                <input type="text" placeholder="Fathers full name" className="border p-2 rounded w-full " />
+                <input name='ffname' type="text" placeholder="Fathers full name" className="border p-2 rounded w-full " />
               </div>
               <div className='flex flex-1 gap-4 mb-4'>
                 <div className="w-full">
                   <label htmlFor=""><b>Highest Educational Attainment</b></label>
-                  <select className="border p-2 rounded w-full">
+                  <select name='educ' className="border p-2 rounded w-full">
                     <option disabled selected>Select Educational Attainment</option>
                     <option> Elementary Undergraduate</option>
                     <option> Elementary Graduate</option>
@@ -138,7 +138,7 @@ export default function ApplicationFormSection() {
                 </div>
                 <div className="w-full">
                   <label htmlFor=""><b>Course Taken (Only if Applicable)</b></label>
-                  <input type="text" placeholder="Course taken" className="border p-2 rounded w-full " />
+                  <input name='courset' type="text" placeholder="Course taken" className="border p-2 rounded w-full " />
                 </div>
               </div>
               <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Address Information</h1>
@@ -170,11 +170,11 @@ export default function ApplicationFormSection() {
               <div className='flex flex-1 gap-4 mb-4'>
                 <div className="w-full">
                   <label htmlFor=""><b>SSS No.</b></label>
-                  <input type="text" placeholder="SSS No." className="border p-2 rounded w-full " />
+                  <input name='sss' type="text" placeholder="SSS No." className="border p-2 rounded w-full " />
                 </div>
                 <div className="w-full">
                   <label htmlFor=""><b>Pag-IBIG No.</b></label>
-                  <input type="text" placeholder="Pag-IBIG No." className="border p-2 rounded w-full " />
+                  <input name='pagibig' type="text" placeholder="Pag-IBIG No." className="border p-2 rounded w-full " />
                 </div>
               </div>
               <div className='flex flex-1 gap-4 mb-4'>
@@ -184,7 +184,7 @@ export default function ApplicationFormSection() {
                 </div>
                 <div className="w-full">
                   <label htmlFor=""><b>Philhealth No.</b></label>
-                  <input type="text" placeholder="Philhealth No." className="border p-2 rounded w-full " />
+                  <input name='philh' type="text" placeholder="Philhealth No." className="border p-2 rounded w-full " />
                 </div>
               </div>
               <div className="flex items-center mb-4">
@@ -214,20 +214,20 @@ export default function ApplicationFormSection() {
               <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Emergency Contact Information</h1>
               <div className="mb-4 w-full">
                 <label htmlFor=""><b>Emergency Contact Fullname</b></label>
-                <input type="text" placeholder="Emergency Contact Fullname" className="border p-2 rounded w-full " />
+                <input name='ename' type="text" placeholder="Emergency Contact Fullname" className="border p-2 rounded w-full " />
               </div>
               <div className="mb-4 w-full">
                 <label htmlFor=""><b>Address</b></label>
-                <input type="text" placeholder="Address" className="border p-2 rounded w-full " />
+                <input name='eaddress' type="text" placeholder="Address" className="border p-2 rounded w-full " />
               </div>
               <div className='flex flex-1 gap-4 mb-4'>
                 <div className="w-full">
                   <label htmlFor=""><b>Relationship</b></label>
-                  <input type="text" placeholder="Relationship" className="border p-2 rounded w-full " />
+                  <input name='relationship' type="text" placeholder="Relationship" className="border p-2 rounded w-full " />
                 </div>
                 <div className="w-full">
                   <label htmlFor=""><b>Contact No.</b></label>
-                  <input type="number" placeholder="Contact No." className="border p-2 rounded w-full " />
+                  <input name='ephone' type="number" placeholder="Contact No." className="border p-2 rounded w-full " />
                 </div>
               </div>
               <UploadResumeSection />

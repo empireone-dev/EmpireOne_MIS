@@ -14,7 +14,12 @@ export default function DashboardSection() {
     get_tile();
   }, []);
 
-  const currentDate = new Date().toDateString();
+  const currentDate = new Date().toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
   const currentHour = new Date().getHours();
   let greeting;
   if (currentHour < 12) {
@@ -27,13 +32,15 @@ export default function DashboardSection() {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-medium text-gray-800 ml-6">
+        <h2 className="text-3xl font-medium font-sans text-gray-800 ml-6">
           <b>{greeting}, Sarah Bangbang</b>
         </h2>
-        <h2 className="text-lg font-medium text-gray-800 mr-6 flex items-center">
-          <b className="mr-1"><CalendarDaysIcon className='h-6' /></b>
-          <b>{currentDate}</b>
-        </h2>
+        <div className='border border-black rounded-md shadow-xl p-1.5 px-3.5 mr-6 items-center justify-center'>
+          <h2 className="text-lg font-medium text-gray-800 flex items-center">
+            <b className="mr-1"><CalendarDaysIcon className='h-6 text-red-600' /></b>
+            <b>{currentDate}</b>
+          </h2>
+        </div>
       </div>
       <div className='flex flex-col gap-9 mt-7'>
         <div>
@@ -76,7 +83,7 @@ export default function DashboardSection() {
 
         <div>
           <h2 className="text-xl font-medium text-gray-800 ml-6">
-          <img src="/images/Recruitment.webp" alt="Outsourcing.png" className='h-20' />
+            <img src="/images/Recruitment.webp" alt="Outsourcing.png" className='h-20' />
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
@@ -114,7 +121,7 @@ export default function DashboardSection() {
 
         <div>
           <h2 className="text-xl font-medium text-gray-800 ml-6">
-          <img src="/images/Hiring.webp" alt="Outsourcing.png" className='h-20' />
+            <img src="/images/Hiring.webp" alt="Outsourcing.png" className='h-20' />
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
@@ -151,7 +158,7 @@ export default function DashboardSection() {
         </div>
         <div>
           <h2 className="text-xl font-medium text-gray-800 ml-6">
-          <img src="/images/Onboarding.webp" alt="Outsourcing.png" className='h-20' />
+            <img src="/images/Onboarding.webp" alt="Outsourcing.png" className='h-20' />
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
@@ -170,7 +177,7 @@ export default function DashboardSection() {
         </div>
         <div>
           <h2 className="text-xl font-medium text-gray-800 ml-6">
-          <img src="/images/ER.webp" alt="Outsourcing.png" className='h-20' />
+            <img src="/images/ER.webp" alt="Outsourcing.png" className='h-20' />
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents
@@ -201,7 +208,7 @@ export default function DashboardSection() {
         </div>
         <div>
           <h2 className="text-xl font-medium text-gray-800 ml-6">
-          <img src="/images/Attrition.webp" alt="Outsourcing.png" className='h-20' />
+            <img src="/images/Attrition.webp" alt="Outsourcing.png" className='h-20' />
           </h2>
           <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 p-4 gap-5">
             <DashboardCardComponents

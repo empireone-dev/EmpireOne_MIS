@@ -16,13 +16,15 @@ export default function CeoAnnouncementSection() {
     return (
         <div>
             <div className="flex justify-between items-center">
-                <h2 className="text-2xl font-medium text-gray-800">
-                    <b>{greeting}, (CEO)</b>
+                <h2 className="text-2xl font-medium font-sans">
+                    <b>{greeting}, CEO</b>
                 </h2>
-                <h2 className="text-lg font-medium text-gray-800 mr-6 flex items-center">
-                    <b className="mr-1"><CalendarDaysIcon className='h-6' /></b>
-                    <b>{currentDate}</b>
-                </h2>
+                <div className='border border-black rounded-md shadow-xl p-1.5 px-3.5 mr-6 items-center justify-center'>
+                    <h2 className="text-lg font-medium flex items-center">
+                        <b className="mr-1"><CalendarDaysIcon className='h-6 text-red-600' /></b>
+                        <b>{currentDate}</b>
+                    </h2>
+                </div>
             </div>
             {/* <AddCeoAnnouncementSection /> */}
         </div>

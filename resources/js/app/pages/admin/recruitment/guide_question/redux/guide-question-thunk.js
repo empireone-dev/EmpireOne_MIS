@@ -16,3 +16,11 @@ export function store_guide_question_thunk(data) {
     dispatch(guideQuestionSlice.actions.setGuideQuestionForm({}));
   };
 }
+
+export function update_guide_question_thunk(data) {
+  return async function (dispatch, getState) {
+
+   const result = await update_guide_question_thunk(data)
+   dispatch(guideQuestionSlice.actions.setGuideQuestions(result.data));
+  };
+}

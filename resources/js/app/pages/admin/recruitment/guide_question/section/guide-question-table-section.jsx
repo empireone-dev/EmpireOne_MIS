@@ -160,7 +160,7 @@ export default function JobTitleTableSection() {
             dataIndex: "action",
             render: (_, record) => {
                 return (
-                    <ButtonDropDownSection />
+                    <ButtonDropDownSection data={record}/>
                 );
             },
         },

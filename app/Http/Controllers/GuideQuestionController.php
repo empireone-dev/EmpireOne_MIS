@@ -33,4 +33,23 @@ class GuideQuestionController extends Controller
             'data' => $this->index()->original['data']
         ], 200);
     }
+
+    public function destroy($id)
+    {
+        $guideq = GuideQuestion::find($id);
+        if (!$guideq) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Guide question not found'
+            ], 404);
+        }
+    
+        $guideq->delete();
+    
+        $guideq = GuideQuestion::get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $guideq
+        ], 200);
+    }
 }

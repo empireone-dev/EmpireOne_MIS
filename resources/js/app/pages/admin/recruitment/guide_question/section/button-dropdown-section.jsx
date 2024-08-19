@@ -1,37 +1,45 @@
 import React, { useState } from 'react';
 import { DeleteOutlined, DownOutlined, EditOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Modal, Menu } from 'antd';
-import ButtonModalComponent from '../components/button-modal-components';
 import EditGuideQuestionSection from './edit-guide-question-section';
 import DeleteGuideQuestionSection from './delete-guide-question-section';
 
-const ButtonDropDownSection = () => {
+const ButtonDropDownSection = ({ data }) => {
 
   const items = [
     {
-      label: 'Update Guide Question',
       key: '1',
-      icon: <EditOutlined />,
-      components: <EditGuideQuestionSection />
+      components: <EditGuideQuestionSection
+        data={data}
+        label='Update Guide Question'
+        icon={<EditOutlined />}
+      />
     },
     {
-      label: 'Remove Guide Question',
       key: '2',
-      icon: <DeleteOutlined />,
-      components: <DeleteGuideQuestionSection />
+      components: <DeleteGuideQuestionSection
+      data={data}
+        label='Remove Guide Question'
+        icon={<DeleteOutlined />}
+
+      />
     },
   ];
 
   return (
     <Space wrap>
+      {Dropdown}
       <Dropdown
         overlay={
           <Menu
           >
             {items.map(item => (
-              <ButtonModalComponent data={item} title="Hello World">
+              <>
                 {item.components}
-              </ButtonModalComponent>
+              </>
+              // <ButtonModalComponent data={item} title="Hello World">
+              //   {item.components}
+              // </ButtonModalComponent>
             ))}
           </Menu>
         }

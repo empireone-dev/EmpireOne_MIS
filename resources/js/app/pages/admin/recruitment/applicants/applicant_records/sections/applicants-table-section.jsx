@@ -260,7 +260,7 @@ console.log('filteredDatas',filteredDatas)
             dataIndex: 'action',
             render: (_, record) => {
                 return (
-                    <ButtonComponents />
+                    <ButtonComponents data={record}/>
                 );
             },
         },

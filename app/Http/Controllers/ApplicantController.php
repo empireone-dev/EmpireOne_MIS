@@ -7,10 +7,13 @@ use Illuminate\Http\Request;
 
 class ApplicantController extends Controller
 {
-    public function index(){
-        $applicant = Applicant::paginate(10);
+    public function index(Request $request){
+        $applicant = Applicant::query();
+        if ($request->search) {
+            $applicant->where('status',$request->search);
+        }
         return response()->json([
-            'data' => $applicant
+            'data' => $applicant->paginate(10)
         ], 200);
     }
 

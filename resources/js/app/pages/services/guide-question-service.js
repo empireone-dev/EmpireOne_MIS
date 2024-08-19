@@ -15,3 +15,8 @@ export async function update_guide_question_service(data){
     const res = await axios.put(`/api/guideq/${data.id}`, data);
     return res.data;
 }
+
+export async function delete_guide_question_service(id){
+    const res = await axios.delete('/api/guideq/'+id)
+    return res.data
+}

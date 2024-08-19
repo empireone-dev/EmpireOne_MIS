@@ -1,4 +1,4 @@
-import { get_guide_question_service, store_guide_question_service } from "@/app/pages/services/guide-question-service";
+import { delete_guide_question_service, get_guide_question_service, store_guide_question_service, update_guide_question_service } from "@/app/pages/services/guide-question-service";
 import { guideQuestionSlice } from "./guide-question-slice";
 
 export function get_guide_question_thunk() {
@@ -20,7 +20,14 @@ export function store_guide_question_thunk(data) {
 export function update_guide_question_thunk(data) {
   return async function (dispatch, getState) {
 
-   const result = await update_guide_question_thunk(data)
+   const result = await update_guide_question_service(data)
    dispatch(guideQuestionSlice.actions.setGuideQuestions(result.data));
+  };
+}
+
+export function delete_guide_question_thunk(id) {
+  return async function (dispatch, getState) {
+    const result = await delete_guide_question_service(id)
+    dispatch(guideQuestionSlice.actions.setGuideQuestions(result.data));
   };
 }

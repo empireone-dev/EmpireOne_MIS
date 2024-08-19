@@ -5,7 +5,7 @@ import { Button, Dropdown, message, Space, Modal, Menu } from 'antd';
 import { BriefcaseIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import { router } from '@inertiajs/react';
 
-const ButtonComponents = () => {
+const ButtonComponents = ({ data }) => {
   const [applicationDetailsModalOpen, setApplicationDetailsModalOpen] = useState(false);
   const [initialPhaseModalOpen, setInitialPhaseModalOpen] = useState(false);
   const [faceToFaceInitialModalOpen, setFaceToFaceInitialModalOpen] = useState(false);
@@ -64,16 +64,16 @@ const ButtonComponents = () => {
       key: '1',
       icon: <AuditOutlined />,
     },
-    {
+    ...((data.status == 'Pending' || data.status == 'Probationary') ? [{
       label: 'Proceed to Initial Phase',
       key: '2',
       icon: <RiseOutlined />,
-    },
-    {
+    }] : []),
+    ...((data.status == 'Initial Phase') ? [{
       label: 'Initial Rating Scale',
       key: '3',
       icon: <DotChartOutlined />,
-    },
+    }] : []),
     {
       label: 'Initial Phase Result',
       key: '4',
@@ -744,8 +744,8 @@ const ButtonComponents = () => {
           </div>
           <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full">
             <div className='flex flex-1 items-center justify-center'>
-            <BriefcaseIcon className='h-6 mr-1' />
-            SEND JOB OFFER
+              <BriefcaseIcon className='h-6 mr-1' />
+              SEND JOB OFFER
             </div>
           </button>
         </form>

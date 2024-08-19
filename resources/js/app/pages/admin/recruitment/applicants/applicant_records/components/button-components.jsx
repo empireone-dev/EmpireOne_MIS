@@ -64,7 +64,7 @@ const ButtonComponents = ({ data }) => {
       key: '1',
       icon: <AuditOutlined />,
     },
-    ...((data.status == 'Pending' || data.status == 'Probationary') ? [{
+    ...((data.status == 'Pending') ? [{
       label: 'Proceed to Initial Phase',
       key: '2',
       icon: <RiseOutlined />,
@@ -74,36 +74,36 @@ const ButtonComponents = ({ data }) => {
       key: '3',
       icon: <DotChartOutlined />,
     }] : []),
-    {
+    ...((data.status == 'Final Phase') ? [{
       label: 'Initial Phase Result',
       key: '4',
       icon: <InfoCircleOutlined />,
-    },
-    {
+    }] : []),
+    ...((data.status == 'Final Phase') ? [{
       label: 'Final Rating Scale',
       key: '5',
       icon: <DotChartOutlined />,
-    },
-    {
+    }] : []),
+    ...((data.status == 'Final Phase') ? [{
       label: 'Set Schedule Final Phase',
       key: '6',
       icon: <CalendarOutlined />,
-    },
-    {
+    }] : []),
+    ...((data.status == 'Final Phase') ? [{
       label: 'Check Schedule of Interviewer',
       key: '7',
       icon: <ScheduleOutlined />,
-    },
-    {
+    }] : []),
+    ...((data.status == 'Passed' || data.status == 'Pooling' || data.status == 'Failed' || data.status == 'Dismissal' || data.status == 'Resignation' || data.status == 'EOPE' || data.status == 'AWOL' || data.status == 'Probationary' || data.status == 'Regular') ? [{
       label: 'Application Results',
       key: '8',
       icon: <InfoCircleOutlined />,
-    },
-    {
+    }] : []),
+    ...((data.status == 'Passed') ? [{
       label: 'Job Offer',
       key: '9',
       icon: <BriefcaseIcon className='h-4 mr-0.5' />,
-    },
+    }] : []),
 
   ];
 

@@ -3,9 +3,9 @@ import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
 import AddGuideQuestionSection from "./add-guide-question-section";
-import ButtonComponents from "../components/button-components";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import ButtonDropDownSection from "./button-dropdown-section";
 
 export default function JobTitleTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -160,7 +160,7 @@ export default function JobTitleTableSection() {
             dataIndex: "action",
             render: (_, record) => {
                 return (
-                    <ButtonComponents />
+                    <ButtonDropDownSection />
                 );
             },
         },

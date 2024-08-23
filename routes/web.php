@@ -252,7 +252,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 
     Route::get('/ceo_section', function () {
         return Inertia::render('admin/ceo_section/page');
-    });
+    }); 
 
 
 

@@ -1,79 +1,142 @@
-import React, { useState } from 'react';
-import { PlusOutlined, CloseOutlined } from '@ant-design/icons';
+import React, { useState } from "react";
+import { PlusOutlined, CloseOutlined } from "@ant-design/icons";
+import { useDispatch, useSelector } from "react-redux";
+import Input from "../../_components/input";
+import { setApplicantForm } from "../../admin/recruitment/applicants/applicant_records/redux/applicant-slice";
 
 export default function WorkingExperienceSection() {
-    const [workingExperiences, setWorkingExperiences] = useState([]);
+    const { applicantForm } = useSelector((state) => state.applicants);
+    const dispatch = useDispatch();
+    // const [workingExperiences, setApplicantForm] = useState([]);
 
     const addWorkingExperience = () => {
-        setWorkingExperiences([...workingExperiences, { id: Date.now() }]);
+        const newExperience = {
+            id: Date.now(), // Ensure each new experience has a unique id
+            company: "",
+            position: "",
+            started_at: "",
+            end_at: "",
+        };
+        const updatedExperiences = [
+            ...applicantForm.work_experience,
+            newExperience,
+        ];
+        dispatch(
+            setApplicantForm({
+                ...applicantForm,
+                work_experience: updatedExperiences,
+            })
+        );
     };
 
     const removeWorkingExperience = (id) => {
-        const updatedExperiences = workingExperiences.filter(experience => experience.id !== id);
-        setWorkingExperiences(updatedExperiences);
+        const updatedExperiences = applicantForm.work_experience.filter(
+            (experience) => experience.id !== id
+        );
+        dispatch(
+            setApplicantForm({
+                ...applicantForm,
+                work_experience: updatedExperiences,
+            })
+        );
     };
 
+    const handleInputChange = (index, event) => {
+        const { name, value } = event.target;
+        const updatedExperiences = [...applicantForm.work_experience];
+        updatedExperiences[index] = {
+            ...updatedExperiences[index],
+            [name]: value,
+        };
+        dispatch(
+            setApplicantForm({
+                ...applicantForm,
+                work_experience: updatedExperiences,
+            })
+        );
+    };
     return (
         <div>
-            <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-6">Working Experience</h1>
-            <div className='mb-6 border rounded-lg p-4 relative'>
-                <div className="mb-4 w-full">
-                    <label htmlFor=""><b>Company</b></label>
-                    <input type="text" placeholder="Company" className="border p-2 rounded w-full" />
-                </div>
-                <div className="mb-4 w-full">
-                    <label htmlFor=""><b>Position</b></label>
-                    <input type="text" placeholder="Position" className="border p-2 rounded w-full" />
-                </div>
-                <div className='flex flex-1 gap-4 mb-4'>
-                    <div className="w-full">
-                        <label htmlFor=""><b>Date Started</b></label>
-                        <input type="date" placeholder="Date Started" className="border p-2 rounded w-full" />
-                    </div>
-                    <div className="w-full">
-                        <label htmlFor=""><b>Date Ended</b></label>
-                        <input type="date" placeholder="Date Ended" className="border p-2 rounded w-full" />
-                    </div>
-                </div>
-            </div>
-
-            {workingExperiences.map((experience) => (
-                <div key={experience.id} className="mb-6 border rounded-lg p-4 relative">
-                    <button
-                        className="absolute top-2.5 right-3.5 bg-transparent border-0 cursor-pointer"
-                        onClick={() => removeWorkingExperience(experience.id)}
-                    >
-                        <CloseOutlined />
-                    </button>
-
+            <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-6">
+                Working Experience
+            </h1>
+            {applicantForm.work_experience.map((experience, index) => (
+                <div
+                    key={index}
+                    className="mb-6 border rounded-lg p-4 relative"
+                >
                     <div className="mb-4 w-full">
-                        <label htmlFor=""><b>Company</b></label>
-                        <input type="text" placeholder="Company" className="border p-2 rounded w-full" />
+                        <Input
+                            onChange={(event) =>
+                                handleInputChange(index, event)
+                            }
+                            value={experience.company ?? ""}
+                            required="true"
+                            name="company"
+                            label="Company"
+                            type="text"
+                        />
                     </div>
                     <div className="mb-4 w-full">
-                        <label htmlFor=""><b>Position</b></label>
-                        <input type="text" placeholder="Position" className="border p-2 rounded w-full" />
+                        <Input
+                            onChange={(event) =>
+                                handleInputChange(index, event)
+                            }
+                            value={experience.position ?? ""}
+                            required="true"
+                            name="position"
+                            label="Position"
+                            type="text"
+                        />
                     </div>
-                    <div className='flex flex-1 gap-4 mb-4'>
+                    <div className="flex flex-1 gap-4 mb-4">
                         <div className="w-full">
-                            <label htmlFor=""><b>Date Started</b></label>
-                            <input type="date" placeholder="Date Started" className="border p-2 rounded w-full" />
+                            <Input
+                                onChange={(event) =>
+                                    handleInputChange(index, event)
+                                }
+                                value={experience.started_at ?? ""}
+                                required="true"
+                                name="started_at"
+                                label="Started At"
+                                type="date"
+                            />
                         </div>
                         <div className="w-full">
-                            <label htmlFor=""><b>Date Ended</b></label>
-                            <input type="date" placeholder="Date Ended" className="border p-2 rounded w-full" />
+                            <Input
+                                onChange={(event) =>
+                                    handleInputChange(index, event)
+                                }
+                                value={experience.end_at ?? ""}
+                                required="true"
+                                name="end_at"
+                                label="End At"
+                                type="date"
+                            />
                         </div>
+                    </div>
+
+                    <div className="flex flex-1 gap-4 mb-4">
+                        <button
+                            type="button"
+                            onClick={() =>
+                                removeWorkingExperience(experience.id)
+                            }
+                            className="absolute -top-1 right-2 text-red-500 hover:text-red-700"
+                        >
+                            <CloseOutlined />
+                        </button>
                     </div>
                 </div>
             ))}
 
             <button
                 type="button"
-                onClick={addWorkingExperience}
+                onClick={()=>addWorkingExperience()}
                 className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-center inline-flex items-center me-2 mb-2 w-full"
             >
-                <PlusOutlined />&nbsp;
-                Add Another Working Experience
+                <PlusOutlined />
+                &nbsp; Add Another Working Experience
             </button>
         </div>
     );

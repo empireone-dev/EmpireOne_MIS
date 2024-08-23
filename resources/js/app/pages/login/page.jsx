@@ -7,7 +7,7 @@ export default function Page({ status, canResetPassword }) {
   const { url } = usePage();
   const searchStatus = url.split("=")[1];
   const { data, setData, post, processing, errors, reset } = useForm({
-    email: "",
+    employee_id: "",
     password: "",
     remember: false,
   });
@@ -22,8 +22,8 @@ export default function Page({ status, canResetPassword }) {
      post(route("login"));
   }
 
-  function formHandler(value, email) {
-    setData(email, value);
+  function formHandler(value, employee_id) {
+    setData(employee_id, value);
   }
 
   return (
@@ -53,7 +53,7 @@ export default function Page({ status, canResetPassword }) {
                           <div className="relative">
                             <input
                               required
-                              value={data?.email ?? ""}
+                              value={data?.employee_id ?? ""}
                               onChange={(e) =>
                                 setData({
                                   ...data,
@@ -61,23 +61,23 @@ export default function Page({ status, canResetPassword }) {
                                 })
                               }
                               type={'text'}
-                              id="email"
-                              name='email'
+                              id="employee_id"
+                              name='employee_id'
                               className="peer text-black rounded-md placeholder-transparent w-full py-2.5 px-5 border-gray-500 border bg-transparent  bg-white focus-within:outline-none focus-within:border-blue-500"
                               placeholder=""
                             />
                             <label
-                              htmlFor='email'
+                              htmlFor='employee_id'
                               className="absolute left-2.5 px-2.5 transition-all bg-white text-blue-black/60 text-sm -top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-placeholder-shown:top-2.5 peer-focus:-top-3 peer-focus:text-sm peer-focus:text-blue-600 peer-focus:bg-white"
                             >
                               Employee ID
                             </label>
                           </div>
-                          {errors.email ==
+                          {errors.employee_id ==
                             "These credentials do not match our records." &&
-                            (data?.email ?? "") !== "" && (
+                            (data?.employee_id ?? "") !== "" && (
                               <p className="text-red-500 text-sm mt-1.5 font-light">
-                                {errors.email}
+                                {errors.employee_id}
                               </p>
                             )}
 

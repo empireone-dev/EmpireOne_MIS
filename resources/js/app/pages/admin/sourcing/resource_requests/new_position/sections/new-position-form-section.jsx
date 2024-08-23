@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Stepper, Step, Typography } from "@material-tailwind/react";
 import { Button } from 'antd';
-import Wysiwyg from '@/app/pages/components/wysiwyg';
+import Wysiwyg from '@/app/pages/_components/wysiwyg';
 
 export default function NewPositionFormSection() {
     const [activeStep, setActiveStep] = useState(0);

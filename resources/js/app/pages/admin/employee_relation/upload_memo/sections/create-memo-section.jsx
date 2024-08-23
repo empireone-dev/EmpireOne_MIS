@@ -1,4 +1,4 @@
-import Wysiwyg from '@/app/pages/components/wysiwyg';
+import Wysiwyg from '@/app/pages/_components/wysiwyg';
 import React, { useEffect, useRef, useState } from 'react';
 
 export default function CreatedMemoSection() {

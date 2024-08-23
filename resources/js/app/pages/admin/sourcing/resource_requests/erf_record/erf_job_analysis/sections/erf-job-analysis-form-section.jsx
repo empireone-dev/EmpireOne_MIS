@@ -1,4 +1,4 @@
-import Wysiwyg from '@/app/pages/components/wysiwyg'
+import Wysiwyg from '@/app/pages/_components/wysiwyg'
 import { router } from '@inertiajs/react'
 import React from 'react'
 

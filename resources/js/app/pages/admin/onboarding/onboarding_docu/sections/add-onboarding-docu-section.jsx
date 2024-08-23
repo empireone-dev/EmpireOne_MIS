@@ -1,4 +1,4 @@
-import Wysiwyg from '@/app/pages/components/wysiwyg';
+import Wysiwyg from '@/app/pages/_components/wysiwyg';
 import { PlusSquareFilled, PlusSquareTwoTone } from '@ant-design/icons'
 import { Modal } from 'antd';
 import React, { useState } from 'react'

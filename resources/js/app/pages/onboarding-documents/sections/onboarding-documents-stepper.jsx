@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Stepper, Step, Button } from "@material-tailwind/react";
-import Wysiwyg from "../../components/wysiwyg";
+import Wysiwyg from "../../_components/wysiwyg";
 
 export function OnboardingDocsStepper() {
     const [activeStep, setActiveStep] = useState(0);

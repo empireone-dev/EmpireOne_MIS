@@ -29,9 +29,9 @@ Route::get('/', function () {
 //     return Inertia::render('Dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/', function () {
+Route::middleware('redirectBasedOnRole')->get('/', function () {
     return Inertia::render('login/page');
-});
+})->name('login.page');
 
 
 
@@ -56,8 +56,8 @@ Route::get('/exit_clearance', function () {
     return Inertia::render('exit_clearance/page');
 });
 
-
-Route::prefix('admin')->group(function () {
+// admin = 1
+Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::get('/initial_rate', function () {
         return Inertia::render('admin/initial_rate/page');
     });
@@ -263,40 +263,14 @@ Route::prefix('admin')->group(function () {
     });
 });
 
-Route::prefix('employee')->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('employee/dashboard/page');
-    });
-    Route::get('/employee_relation', function () {
-        return Inertia::render('employee/employee_relation/page');
-    });
-    Route::get('/engagement', function () {
-        return Inertia::render('employee/engagement/page');
-    });
-    Route::get('/profile', function () {
-        return Inertia::render('employee/profile/page');
-    });
-});
-
-Route::prefix('engagement')->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('engagement/dashboard/page');
-    });
-    Route::get('/employee_relation', function () {
-        return Inertia::render('engagement/employee_relation/page');
-    });
-    Route::get('/employee_wellness', function () {
-        return Inertia::render('engagement/employee_wellness/page');
-    });
-    Route::get('/engagement_section', function () {
-        return Inertia::render('engagement/engagement_section/page');
-    });
-    Route::get('/profile', function () {
-        return Inertia::render('engagement/profile/page');
-    });
-});
-
-Route::prefix('managers')->group(function () {
+// HR = 2
+Route::middleware('auth:sanctum', 'role:2')->prefix('hr')->group(function () {});
+// IT = 3
+Route::middleware('auth:sanctum', 'role:3')->prefix('it')->group(function () {});
+// IT = 4
+Route::middleware('auth:sanctum', 'role:4')->prefix('accounting')->group(function () {});
+// manager =5
+Route::prefix('manager', 'role:5')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('managers/dashboard/page');
     });
@@ -319,6 +293,43 @@ Route::prefix('managers')->group(function () {
         return Inertia::render('managers/sourcing/page');
     });
 });
+// engagement = 6
+Route::prefix('engagement', 'role:6')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('engagement/dashboard/page');
+    });
+    Route::get('/employee_relation', function () {
+        return Inertia::render('engagement/employee_relation/page');
+    });
+    Route::get('/employee_wellness', function () {
+        return Inertia::render('engagement/employee_wellness/page');
+    });
+    Route::get('/engagement_section', function () {
+        return Inertia::render('engagement/engagement_section/page');
+    });
+    Route::get('/profile', function () {
+        return Inertia::render('engagement/profile/page');
+    });
+});
+// employee = 7
+Route::prefix('employee', 'role:7')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('employee/dashboard/page');
+    });
+    Route::get('/employee_relation', function () {
+        return Inertia::render('employee/employee_relation/page');
+    });
+    Route::get('/engagement', function () {
+        return Inertia::render('employee/engagement/page');
+    });
+    Route::get('/profile', function () {
+        return Inertia::render('employee/profile/page');
+    });
+});
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

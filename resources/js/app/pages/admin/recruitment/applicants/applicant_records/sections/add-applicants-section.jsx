@@ -80,6 +80,7 @@ export default function AddApplicantsSection() {
                     Add New Applicant
                 </button>
             </div>
+            
             <Modal
                 title=" "
                 centered

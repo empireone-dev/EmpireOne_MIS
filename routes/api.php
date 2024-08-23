@@ -48,3 +48,4 @@ Route::resource('employee_attrition',EmployeeAttritionController::class);
 Route::resource('emp_memo',UploadMemoController::class);
 Route::resource('engagement',EmployeeEngagementController::class);
 
+require __DIR__ . '/auth.php';

@@ -4,7 +4,9 @@ export const applicantSlice = createSlice({
   name: 'applicant',
   initialState: {
     applicants: [],
-    applicantForm: {}
+    applicantForm: {
+      work_experience:[]
+    }
   },
   reducers: {
     setApplicants: (state, action) => {

@@ -3,7 +3,12 @@ import React from 'react'
 import AddCeoAnnouncementSection from './add-ceo-announcement-section';
 
 export default function CeoAnnouncementSection() {
-    const currentDate = new Date().toDateString();
+    const currentDate = new Date().toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
     const currentHour = new Date().getHours();
     let greeting;
     if (currentHour < 12) {
@@ -19,7 +24,7 @@ export default function CeoAnnouncementSection() {
                 <h2 className="text-2xl font-medium font-sans">
                     <b>{greeting}, CEO</b>
                 </h2>
-                <div className='border border-black rounded-md shadow-xl p-1.5 px-3.5 mr-6 items-center justify-center'>
+                <div className='border border-black rounded-md shadow-xl p-1.5 px-3.5 items-center justify-center'>
                     <h2 className="text-lg font-medium flex items-center">
                         <b className="mr-1"><CalendarDaysIcon className='h-6 text-red-600' /></b>
                         <b>{currentDate}</b>

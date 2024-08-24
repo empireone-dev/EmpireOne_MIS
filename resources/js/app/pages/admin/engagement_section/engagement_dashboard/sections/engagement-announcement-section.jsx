@@ -3,7 +3,12 @@ import React from 'react'
 import AddEngagementAnnouncementSection from './add-engagement-announcement-section';
 
 export default function EngagementAnnouncementSection() {
-    const currentDate = new Date().toDateString();
+    const currentDate = new Date().toLocaleDateString('en-US', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+    });
     const currentHour = new Date().getHours();
     let greeting;
     if (currentHour < 12) {
@@ -24,7 +29,7 @@ export default function EngagementAnnouncementSection() {
                     <b>{currentDate}</b>
                 </h2>
             </div>
-            <AddEngagementAnnouncementSection/>
+            <AddEngagementAnnouncementSection />
         </div>
     )
 }

@@ -22,7 +22,7 @@ export default function EditGuideQuestionSection({ data, label, icon }) {
         } catch (error) {
             messageApi.error('error');
         }
-    }
+    }  
     return (
         <div>
             {contextHolder}
@@ -46,7 +46,7 @@ export default function EditGuideQuestionSection({ data, label, icon }) {
                                     <div className="flex flex-wrap -mx-3 mt-2">
                                         <div className="w-full px-3">
                                             <label className="block uppercase tracking-wide text-xs font-bold mb-2">
-                                                Guide Question
+                                                Guide Questionss
                                             </label>
                                             <input
                                                 defaultValue={dataValue?.guideqs}

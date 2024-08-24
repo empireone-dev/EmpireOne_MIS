@@ -35,7 +35,7 @@ export default function DashboardSection() {
         <h2 className="text-3xl font-medium font-sans text-gray-800 ml-6">
           <b>{greeting}, Sarah Bangbang</b>
         </h2>
-        <div className='border border-black rounded-md shadow-xl p-1.5 px-3.5 mr-6 items-center justify-center'>
+        <div className='border border-black rounded-md shadow-xl p-1.5 px-3.5 mr-3 items-center justify-center'>
           <h2 className="text-lg font-medium text-gray-800 flex items-center">
             <b className="mr-1"><CalendarDaysIcon className='h-6 text-red-600' /></b>
             <b>{currentDate}</b>

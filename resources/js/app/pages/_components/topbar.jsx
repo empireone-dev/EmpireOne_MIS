@@ -6,8 +6,8 @@ import {
     ChevronDownIcon,
     MagnifyingGlassIcon,
 } from "@heroicons/react/20/solid";
-import { setSidebarOpen } from "@/app/redux/app-slice";
 import { Link } from "@inertiajs/react";
+import { setSidebarOpen } from "../redux/app-slice";
 
 export default function Topbar() {
     const dispatch = useDispatch();

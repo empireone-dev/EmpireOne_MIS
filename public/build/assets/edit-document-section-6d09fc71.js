@@ -1,0 +1,1 @@
+import{j as t}from"./app-cbabef96.js";import"./quill.snow-fe7e3155.js";import i from"./wysiwyg-edit-docu-8934d0a7.js";function e(){return t.jsx("div",{className:"",children:t.jsx(i,{})})}export{e as default};

@@ -7,10 +7,11 @@ use Illuminate\Http\Request;
 
 class ApplicantController extends Controller
 {
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $applicant = Applicant::query();
         if ($request->search) {
-            $applicant->where('status',$request->search);
+            $applicant->where('status', $request->search);
         }
         return response()->json([
             'data' => $applicant->paginate(10)
@@ -19,10 +20,13 @@ class ApplicantController extends Controller
 
     public function store(Request $request)
     {
-        Applicant::create($request->all());
+        $data = $request->all();
+        $data['caddress'] = $request->lot . ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province;
+        $data['app_id'] = $request->uniqueAppId;
+        Applicant::create($data);
         return response()->json([
             'status' => 'success',
-           'data'=>$this->index()->original['data']
+            // 'data' => $this->index()->original['data']
         ], 200);
     }
 }

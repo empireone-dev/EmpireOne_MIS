@@ -11,7 +11,9 @@ export function get_applicant_thunk() {
 export function store_applicant_thunk(data) {
   return async function (dispatch, getState) {
     const result = await store_applicant_service(data)
-    dispatch(applicantSlice.actions.setApplicants(result.data));
-    dispatch(applicantSlice.actions.setApplicantForm({}));
+    // dispatch(applicantSlice.actions.setApplicants(result.data));
+    dispatch(applicantSlice.actions.setApplicantForm({
+      work_experience:[]
+    }));
   };
 }

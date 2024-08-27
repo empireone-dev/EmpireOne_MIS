@@ -5,7 +5,7 @@ import { Modal } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setApplicantForm } from "../redux/applicant-slice";
-import { store_applicant_thunk } from "../redux/applicant-thunk";
+import { get_applicant_thunk, store_applicant_thunk } from "../redux/applicant-thunk";
 import Input from "@/app/pages/_components/input";
 import store from "@/app/store/store";
 import { useEffect } from "react";
@@ -14,6 +14,7 @@ import region from "@/app/address/region.json"
 import province from "@/app/address/province.json"
 import city from "@/app/address/city.json"
 import barangay from "@/app/address/barangay.json"
+import moment from "moment/moment";
 
 export default function AddApplicantsSection() {
     const [open, setOpen] = useState(false);
@@ -64,19 +65,41 @@ export default function AddApplicantsSection() {
             );
         }
     }
-
+    function calculateAge(dob) {
+        // Parse the date of birth (YYYY-MM-DD format) into a Date object
+        const birthDate = new Date(dob);
+        const today = new Date();
+        
+        // Calculate the preliminary age
+        let age = today.getFullYear() - birthDate.getFullYear();
+        const monthDifference = today.getMonth() - birthDate.getMonth();
+        
+        // Adjust age if the birthday hasn't occurred yet this year
+        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        
+        return age??0;
+    }
+    
     function submitApplicant(e) {
         e.preventDefault();
         const uniqueAppId = generateUniqueAppId();
+        const dob = calculateAge(applicantForm.dob??new Date())
         dispatch(
             setApplicantForm({
                 ...applicantForm,
                 uniqueAppId: uniqueAppId,
+                age:dob,
+                status:'Pending',
+                submitted:moment().format('YYYY-MM-DD'),
+                app_id:uniqueAppId
             })
         );
         store.dispatch(store_applicant_thunk({ ...applicantForm, uniqueAppId }));
-        setOpen(false);
-        closeModal();
+        store.dispatch(get_applicant_thunk())
+        // setOpen(false);
+        // closeModal();
     }
     console.log("province", province)
     const [showWorkingExperience, setShowWorkingExperience] = useState(false);
@@ -94,6 +117,7 @@ export default function AddApplicantsSection() {
     };
 
     function data_handler(e) {
+        console.log('dadwa',e.target.value)
         if (e.target.name == 'region') {
             const region = JSON.parse(e.target.value)
             const prov = province.filter(obj => obj.region_code === region.region_code);
@@ -168,17 +192,17 @@ export default function AddApplicantsSection() {
                     className="border rounded-lg p-3.5"
                     onSubmit={submitApplicant}
                 >
-                    <div className="w-1/4">
+                    {/* <div className="w-1/4">
                         <Input
                             onChange={(event) => data_handler(event)}
-                            value={applicantForm.app_id ?? ""}
-                            // value={generateUniqueAppId()}
+                            // value={applicantForm.app_id ?? ""}
+                            value={generateUniqueAppId()}
                             name="app_id"
                             label="Application ID"
                             type="text"
                             readOnly
                         />
-                    </div>
+                    </div> */}
                     <h1 className="text-xl font-semibold mb-3 mt-4 text-gray-900 dark:text-gray-100">
                         Site Information
                     </h1>
@@ -449,7 +473,7 @@ export default function AddApplicantsSection() {
                                 // value={applicantForm.barangay ?? ""}
                                 options={newBarangay.map(res => ({
                                     label: res.brgy_name,
-                                    value: JSON.stringify({ name: res.brgy_name, brgy_code: res.brgy_code }),
+                                    value: res.brgy_name,
                                 }))}
                                 required="true"
                                 name="brgy"

@@ -18,7 +18,7 @@ export default function WorkingExperienceSection() {
             end_at: "",
         };
         const updatedExperiences = [
-            ...applicantForm.work_experience,
+            ...applicantForm?.work_experience,
             newExperience,
         ];
         dispatch(
@@ -30,7 +30,7 @@ export default function WorkingExperienceSection() {
     };
 
     const removeWorkingExperience = (id) => {
-        const updatedExperiences = applicantForm.work_experience.filter(
+        const updatedExperiences = applicantForm?.work_experience.filter(
             (experience) => experience.id !== id
         );
         dispatch(
@@ -43,7 +43,7 @@ export default function WorkingExperienceSection() {
 
     const handleInputChange = (index, event) => {
         const { name, value } = event.target;
-        const updatedExperiences = [...applicantForm.work_experience];
+        const updatedExperiences = [...applicantForm?.work_experience];
         updatedExperiences[index] = {
             ...updatedExperiences[index],
             [name]: value,
@@ -60,7 +60,7 @@ export default function WorkingExperienceSection() {
             <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-6">
                 Working Experience
             </h1>
-            {applicantForm.work_experience.map((experience, index) => (
+            {applicantForm?.work_experience.map((experience, index) => (
                 <div
                     key={index}
                     className="mb-6 border-2 border-gray-500 rounded-lg p-7 pb-1 relative"

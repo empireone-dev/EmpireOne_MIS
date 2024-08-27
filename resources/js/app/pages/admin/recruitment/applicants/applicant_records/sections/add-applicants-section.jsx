@@ -9,17 +9,24 @@ import { store_applicant_thunk } from "../redux/applicant-thunk";
 import Input from "@/app/pages/_components/input";
 import store from "@/app/store/store";
 import { useEffect } from "react";
+import Select from "@/app/pages/_components/select";
+import region from "@/app/address/region.json"
+import province from "@/app/address/province.json"
+import city from "@/app/address/city.json"
+import barangay from "@/app/address/barangay.json"
 
 export default function AddApplicantsSection() {
     const [open, setOpen] = useState(false);
     const [applicationCount, setApplicationCount] = useState(0);
     const { applicantForm } = useSelector((state) => state.applicants);
+    const [newProvince, setNewProvince] = useState([])
+    const [newCity, setNewCity] = useState([])
+    const [newBarangay, setNewBarangay] = useState([])
     console.log("applicants", applicantForm);
     const dispatch = useDispatch();
     const closeModal = () => {
         setOpen(false);
     };
-
     function generateUniqueAppId() {
         const today = new Date();
         const year = today.getFullYear().toString().slice(-2);
@@ -71,7 +78,7 @@ export default function AddApplicantsSection() {
         setOpen(false);
         closeModal();
     }
-
+    console.log("province", province)
     const [showWorkingExperience, setShowWorkingExperience] = useState(false);
     const [showFirstTimeJobseeker, setShowFirstTimeJobseeker] = useState(false);
     const [uploadedFile, setUploadedFile] = useState(null);
@@ -87,12 +94,46 @@ export default function AddApplicantsSection() {
     };
 
     function data_handler(e) {
-        dispatch(
-            setApplicantForm({
-                ...applicantForm,
-                [e.target.name]: e.target.value,
-            })
-        );
+        if (e.target.name == 'region') {
+            const region = JSON.parse(e.target.value)
+            const prov = province.filter(obj => obj.region_code === region.region_code);
+            setNewProvince(prov)
+            dispatch(
+                setApplicantForm({
+                    ...applicantForm,
+                    [e.target.name]: region.name,
+                })
+            );
+        } else if (e.target.name == 'province') {
+            const province = JSON.parse(e.target.value)
+            const ct = city.filter(obj => obj.province_code === province.province_code);
+            setNewCity(ct)
+            dispatch(
+                setApplicantForm({
+                    ...applicantForm,
+                    [e.target.name]: city.name,
+                })
+            );
+        }else if (e.target.name == 'city') {
+            const city = JSON.parse(e.target.value)
+            const brgy = barangay.filter(obj => obj.city_code === city.city_code);
+            setNewBarangay(brgy)
+            dispatch(
+                setApplicantForm({
+                    ...applicantForm,
+                    [e.target.name]: barangay.name,
+                })
+            );
+        } else {
+            dispatch(
+                setApplicantForm({
+                    ...applicantForm,
+                    [e.target.name]: e.target.value,
+                })
+            );
+        }
+
+
     }
     console.log("applicantForm", applicantForm);
     return (
@@ -362,46 +403,67 @@ export default function AddApplicantsSection() {
                     </h1>
                     <div className="flex flex-1 gap-4 mb-4 w-full">
                         <div className="flex flex-col w-full">
-                            <Input
+                            <Select
                                 onChange={(event) => data_handler(event)}
-                                value={applicantForm.region ?? ""}
+                                // value={applicantForm.region ?? ""}
+                                options={region.map(res => ({
+                                    label: res.region_name,
+                                    value: JSON.stringify({ name: res.region_name, region_code: res.region_code }),
+                                }))}
                                 required="true"
                                 name="region"
                                 label="Region"
-                                type="text"
                             />
                         </div>
                         <div className="flex flex-col w-full">
-                            <Input
+                            <Select
                                 onChange={(event) => data_handler(event)}
-                                value={applicantForm.province ?? ""}
+                                // value={applicantForm.province ?? ""}
+                                options={newProvince.map(res => ({
+                                    label: res.province_name,
+                                    value: JSON.stringify({ name: res.province_name, province_code: res.province_code }),
+                                }))}
                                 required="true"
                                 name="province"
                                 label="Province"
-                                type="text"
                             />
                         </div>
                         <div className="flex flex-col w-full">
-                            <Input
+                            <Select
                                 onChange={(event) => data_handler(event)}
-                                value={applicantForm.city ?? ""}
+                                // value={applicantForm.city ?? ""}
+                                options={newCity.map(res => ({
+                                    label: res.city_name,
+                                    value: JSON.stringify({ name: res.city_name, city_code: res.city_code }),
+                                }))}
                                 required="true"
                                 name="city"
                                 label="City/Municipality"
-                                type="text"
                             />
                         </div>
                     </div>
                     <div className="flex flex-1 gap-4 mb-4">
                         <div className="flex flex-col  w-1/2">
-                            <Input
+                            <Select
+                                onChange={(event) => data_handler(event)}
+                                // value={applicantForm.barangay ?? ""}
+                                options={newBarangay.map(res => ({
+                                    label: res.brgy_name,
+                                    value: JSON.stringify({ name: res.brgy_name, brgy_code: res.brgy_code }),
+                                }))}
+                                required="true"
+                                name="brgy"
+                                label="Barangay"
+                            />
+
+                            {/* <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.brgy ?? ""}
                                 required="true"
                                 name="brgy"
                                 label="Barangay"
                                 type="text"
-                            />
+                            /> */}
                         </div>
                         <div className="flex flex-col w-full">
                             <Input

@@ -4,7 +4,7 @@ import { Button, Dropdown, message, Space, Modal, Menu } from 'antd';
 import EditGuideQuestionSection from './edit-guide-question-section';
 import DeleteGuideQuestionSection from './delete-guide-question-section';
 
-const ButtonDropDownSection = ({ data }) => {
+const GuideQuestionButtonDropDownSection = ({ data }) => {
 
   const items = [
     {
@@ -18,10 +18,9 @@ const ButtonDropDownSection = ({ data }) => {
     {
       key: '2',
       components: <DeleteGuideQuestionSection
-      data={data}
+        data={data}
         label='Remove Guide Question'
         icon={<DeleteOutlined />}
-
       />
     },
   ];
@@ -57,4 +56,4 @@ const ButtonDropDownSection = ({ data }) => {
   );
 };
 
-export default ButtonDropDownSection;
+export default GuideQuestionButtonDropDownSection;

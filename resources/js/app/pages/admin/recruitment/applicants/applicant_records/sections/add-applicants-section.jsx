@@ -1,7 +1,5 @@
-import Wysiwyg from "@/app/pages/_components/wysiwyg";
 import UploadResumeSection from "@/app/pages/online_application/sections/upload-resume-section";
 import WorkingExperienceSection from "@/app/pages/online_application/sections/working-experience-section";
-import { PlusSquareFilled, PlusSquareTwoTone } from "@ant-design/icons";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
 import { Modal } from "antd";
 import React, { useState } from "react";
@@ -9,15 +7,37 @@ import { useDispatch, useSelector } from "react-redux";
 import { setApplicantForm } from "../redux/applicant-slice";
 import { store_applicant_thunk } from "../redux/applicant-thunk";
 import Input from "@/app/pages/_components/input";
+import store from "@/app/store/store";
+import { useEffect } from "react";
 
 export default function AddApplicantsSection() {
     const [open, setOpen] = useState(false);
+    const [applicationCount, setApplicationCount] = useState(0);
     const { applicantForm } = useSelector((state) => state.applicants);
     console.log("applicants", applicantForm);
     const dispatch = useDispatch();
     const closeModal = () => {
         setOpen(false);
     };
+
+    function generateUniqueAppId() {
+        const today = new Date();
+        const year = today.getFullYear().toString().slice(-2);
+        const month = (today.getMonth() + 1).toString().padStart(2, '0');
+        const day = today.getDate().toString().padStart(2, '0');
+        const datePart = `${year}${month}${day}`;
+
+        const seq = (applicationCount + 1).toString().padStart(2, '0');
+        return `${datePart}${seq}`;
+    }
+
+    useEffect(() => {
+        const fetchApplicationCount = async () => {
+            const count = 0;
+            setApplicationCount(count);
+        };
+        fetchApplicationCount();
+    }, []);
 
     function changeHandler(e) {
         const data = e.target.name;
@@ -40,7 +60,14 @@ export default function AddApplicantsSection() {
 
     function submitApplicant(e) {
         e.preventDefault();
-        store.dispatch(store_applicant_thunk(applicantForm));
+        const uniqueAppId = generateUniqueAppId();
+        dispatch(
+            setApplicantForm({
+                ...applicantForm,
+                uniqueAppId: uniqueAppId,
+            })
+        );
+        store.dispatch(store_applicant_thunk({ ...applicantForm, uniqueAppId }));
         setOpen(false);
         closeModal();
     }
@@ -80,7 +107,7 @@ export default function AddApplicantsSection() {
                     Add New Applicant
                 </button>
             </div>
-            
+
             <Modal
                 title=" "
                 centered
@@ -100,7 +127,18 @@ export default function AddApplicantsSection() {
                     className="border rounded-lg p-3.5"
                     onSubmit={submitApplicant}
                 >
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100">
+                    <div className="w-1/4">
+                        <Input
+                            onChange={(event) => data_handler(event)}
+                            value={applicantForm.app_id ?? ""}
+                            // value={generateUniqueAppId()}
+                            name="app_id"
+                            label="Application ID"
+                            type="text"
+                            readOnly
+                        />
+                    </div>
+                    <h1 className="text-xl font-semibold mb-3 mt-4 text-gray-900 dark:text-gray-100">
                         Site Information
                     </h1>
                     <div>
@@ -117,7 +155,8 @@ export default function AddApplicantsSection() {
                             </select>
                         </div>
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-6 text-center">
+
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-6">
                         Personal Information
                     </h1>
                     <div className="flex flex-1 gap-4">
@@ -139,10 +178,19 @@ export default function AddApplicantsSection() {
                                     value={applicantForm.mname ?? ""}
                                     required="true"
                                     name="mname"
-                                    label="Middle name"
+                                    label="Middle Name"
+                                    type="text"
+                                />
+                                <Input
+                                    onChange={(event) => data_handler(event)}
+                                    value={applicantForm.lname ?? ""}
+                                    required="true"
+                                    name="lname"
+                                    label="Last Name"
                                     type="text"
                                 />
                                 <select
+                                    onChange={(event) => data_handler(event)}
                                     name="suffix"
                                     className="border p-2 rounded  w-1/5"
                                 >
@@ -163,51 +211,55 @@ export default function AddApplicantsSection() {
                         <div className="flex w-full">
                             <div className="flex flex-col gap-4 mb-4 w-full">
                                 <div className="flex flex-col w-full">
-                                    <label htmlFor="">
-                                        <b>Gender</b>
-                                    </label>
                                     <select
+                                        onChange={(event) => data_handler(event)}
+                                        // value={applicantForm.gender ?? ""}
                                         name="gender"
                                         className="border p-2 rounded w-full"
                                     >
-                                        <option disabled selected>
-                                            Sex
-                                        </option>
+                                        <option className="" disabled selected>&nbsp; Gender</option>
                                         <option> Male</option>
                                         <option> Female</option>
                                     </select>
                                 </div>
                                 <div className="flex flex-col w-full">
-                                    <label htmlFor="">
-                                        <b>Date of Birth</b>
-                                    </label>
-                                    <input
+                                    <Input
+                                        onChange={(event) =>
+                                            data_handler(event)
+                                        }
+                                        value={applicantForm.dob ?? ""}
+                                        required="true"
+                                        name="dob"
+                                        label="Date of Birth"
+                                        type="date"
+                                    />
+                                    {/* <input
                                         name="dob"
                                         type="date"
                                         placeholder="Date of birth"
                                         className="border p-2 rounded w-full"
-                                    />
+                                        onChange={(event) => data_handler(event)}
+                                        value={applicantForm.dob ?? ""}
+                                    /> */}
                                 </div>
                                 <div className=" w-full">
-                                    <label htmlFor="">
-                                        <b>Email</b>
-                                    </label>
-                                    <input
+                                    <Input
+                                        onChange={(event) => data_handler(event)}
+                                        value={applicantForm.email ?? ""}
+                                        required="true"
                                         name="email"
+                                        label="Email"
                                         type="email"
-                                        placeholder="Email address"
-                                        className="border p-2 rounded w-full "
                                     />
                                 </div>
                                 <div className="w-full">
-                                    <label htmlFor="">
-                                        <b>Phone Number</b>
-                                    </label>
-                                    <input
+                                    <Input
+                                        onChange={(event) => data_handler(event)}
+                                        value={applicantForm.phone ?? ""}
+                                        required="true"
                                         name="phone"
+                                        label="Phone Number"
                                         type="number"
-                                        placeholder="Phone Number"
-                                        className="border p-2 rounded w-full "
                                     />
                                 </div>
                             </div>
@@ -216,16 +268,12 @@ export default function AddApplicantsSection() {
                         <div className="flex w-full">
                             <div className="flex flex-col gap-4 mb-4 w-full">
                                 <div className="flex flex-col w-full">
-                                    <label htmlFor="">
-                                        <b>Marital Status</b>
-                                    </label>
                                     <select
+                                        onChange={(event) => data_handler(event)}
                                         name="marital"
                                         className="border p-2 rounded w-full"
                                     >
-                                        <option disabled selected>
-                                            Select Status
-                                        </option>
+                                        <option disabled selected>&nbsp; Marital Status</option>
                                         <option> Single</option>
                                         <option> Married</option>
                                         <option> Widowed</option>
@@ -281,16 +329,12 @@ export default function AddApplicantsSection() {
                     </div>
                     <div className="flex flex-1 gap-4 mb-4">
                         <div className="w-full">
-                            <label htmlFor="">
-                                <b>Highest Educational Attainment</b>
-                            </label>
                             <select
                                 name="educ"
-                                className="border p-2 rounded w-full"
+                                className="border p-2.5 rounded w-full"
+                                onChange={(event) => data_handler(event)}
                             >
-                                <option disabled selected>
-                                    Select Educational Attainment
-                                </option>
+                                <option disabled selected>&nbsp; Highest Educational Attainment</option>
                                 <option> Elementary Undergraduate</option>
                                 <option> Elementary Graduate</option>
                                 <option> Highschool/K-12 Undergraduate</option>
@@ -375,52 +419,45 @@ export default function AddApplicantsSection() {
                     </h1>
                     <div className="flex flex-1 gap-4 mb-4">
                         <div className="w-full">
-                            <label htmlFor="">
-                                <b>SSS No.</b>
-                            </label>
-                            <input
+                            <Input
+                                onChange={(event) => data_handler(event)}
+                                value={applicantForm.sss ?? ""}
                                 name="sss"
+                                label="SSS No."
                                 type="text"
-                                placeholder="SSS No."
-                                className="border p-2 rounded w-full "
                             />
                         </div>
                         <div className="w-full">
-                            <label htmlFor="">
-                                <b>Pag-IBIG No.</b>
-                            </label>
-                            <input
+                            <Input
+                                onChange={(event) => data_handler(event)}
+                                value={applicantForm.pagibig ?? ""}
                                 name="pagibig"
+                                label="Pag-IBIG No."
                                 type="text"
-                                placeholder="Pag-IBIG No."
-                                className="border p-2 rounded w-full "
                             />
                         </div>
                     </div>
                     <div className="flex flex-1 gap-4 mb-4">
                         <div className="w-full">
-                            <label htmlFor="">
-                                <b>Tin No.</b>
-                            </label>
-                            <input
+                            <Input
+                                onChange={(event) => data_handler(event)}
+                                value={applicantForm.tin ?? ""}
+                                name="tin"
+                                label="Tin No."
                                 type="text"
-                                placeholder="Tin No."
-                                className="border p-2 rounded w-full "
                             />
                         </div>
                         <div className="w-full">
-                            <label htmlFor="">
-                                <b>Philhealth No.</b>
-                            </label>
-                            <input
+                            <Input
+                                onChange={(event) => data_handler(event)}
+                                value={applicantForm.philh ?? ""}
                                 name="philh"
+                                label="Philhealth No."
                                 type="text"
-                                placeholder="Philhealth No."
-                                className="border p-2 rounded w-full "
                             />
                         </div>
                     </div>
-                    <div className="flex items-center mb-4">
+                    <div className="flex items-center mb-4 mt-6">
                         <input
                             id="with-working-experience-checkbox"
                             type="checkbox"
@@ -454,52 +491,44 @@ export default function AddApplicantsSection() {
                         </label>
                     </div>
                     {showWorkingExperience && <WorkingExperienceSection />}
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-7">
                         Emergency Contact Information
                     </h1>
                     <div className="mb-4 w-full">
-                        <label htmlFor="">
-                            <b>Emergency Contact Fullname</b>
-                        </label>
-                        <input
+                        <Input
+                            onChange={(event) => data_handler(event)}
+                            value={applicantForm.ename ?? ""}
                             name="ename"
+                            label="Emergency Contact Fullname"
                             type="text"
-                            placeholder="Emergency Contact Fullname"
-                            className="border p-2 rounded w-full "
                         />
                     </div>
                     <div className="mb-4 w-full">
-                        <label htmlFor="">
-                            <b>Address</b>
-                        </label>
-                        <input
+                        <Input
+                            onChange={(event) => data_handler(event)}
+                            value={applicantForm.eaddress ?? ""}
                             name="eaddress"
+                            label="Address"
                             type="text"
-                            placeholder="Address"
-                            className="border p-2 rounded w-full "
                         />
                     </div>
                     <div className="flex flex-1 gap-4 mb-4">
                         <div className="w-full">
-                            <label htmlFor="">
-                                <b>Relationship</b>
-                            </label>
-                            <input
+                            <Input
+                                onChange={(event) => data_handler(event)}
+                                value={applicantForm.relationship ?? ""}
                                 name="relationship"
+                                label="Relationship"
                                 type="text"
-                                placeholder="Relationship"
-                                className="border p-2 rounded w-full "
                             />
                         </div>
                         <div className="w-full">
-                            <label htmlFor="">
-                                <b>Contact No.</b>
-                            </label>
-                            <input
+                            <Input
+                                onChange={(event) => data_handler(event)}
+                                value={applicantForm.ephone ?? ""}
                                 name="ephone"
+                                label="Contact No."
                                 type="number"
-                                placeholder="Contact No."
-                                className="border p-2 rounded w-full "
                             />
                         </div>
                     </div>

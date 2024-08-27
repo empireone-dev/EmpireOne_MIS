@@ -306,7 +306,7 @@ const AdminLayout = ({ children }) => {
                     </div>
 
                     <Menu
-                        className="text-lg"
+                        className="text-lg font-semibold"
                         mode="inline"
                         defaultSelectedKeys={active}
                         defaultOpenKeys={path.slice(1 - path.length)}

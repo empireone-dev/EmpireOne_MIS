@@ -1,14 +1,19 @@
 import React from 'react';
 import { DownOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Tooltip } from 'antd';
+import { router } from '@inertiajs/react';
 const handleButtonClick = (e) => {
   message.info('Click on left button.');
   console.log('click left button', e);
 };
-const handleMenuClick = (e) => {
-  message.info('Click on menu item.');
-  console.log('click', e);
+
+const handleMenuClick = (item) => {
+  if (item.onClick) item.onClick();
+  if (item.key === '1') router.visit('onboarding_docu/edit_docu');
+  if (item.key === '2') { window.open('onboarding_docu/view_docu', '_blank'); }
+  
 };
+
 const items = [
   {
     label: 'Edit Document',
@@ -21,6 +26,7 @@ const items = [
     icon: <EyeOutlined />,
   },
 ];
+
 const menuProps = {
   items,
   onClick: handleMenuClick,

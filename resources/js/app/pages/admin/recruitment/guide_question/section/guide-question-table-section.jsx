@@ -5,7 +5,8 @@ import Highlighter from "react-highlight-words";
 import AddGuideQuestionSection from "./add-guide-question-section";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import ButtonDropDownSection from "./button-dropdown-section";
+import ButtonDropDownSection from "./guide-question-button-dropdown-section";
+import GuideQuestionButtonDropDownSection from "./guide-question-button-dropdown-section";
 
 export default function JobTitleTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -160,7 +161,7 @@ export default function JobTitleTableSection() {
             dataIndex: "action",
             render: (_, record) => {
                 return (
-                    <ButtonDropDownSection data={record}/>
+                    <GuideQuestionButtonDropDownSection data={record}/>
                 );
             },
         },

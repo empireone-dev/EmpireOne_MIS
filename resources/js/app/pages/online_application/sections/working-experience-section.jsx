@@ -63,7 +63,7 @@ export default function WorkingExperienceSection() {
             {applicantForm.work_experience.map((experience, index) => (
                 <div
                     key={index}
-                    className="mb-6 border rounded-lg p-4 relative"
+                    className="mb-6 border-2 border-gray-500 rounded-lg p-7 pb-1 relative"
                 >
                     <div className="mb-4 w-full">
                         <Input
@@ -122,7 +122,7 @@ export default function WorkingExperienceSection() {
                             onClick={() =>
                                 removeWorkingExperience(experience.id)
                             }
-                            className="absolute -top-1 right-2 text-red-500 hover:text-red-700"
+                            className="absolute -top-1 right-2 mt-2 text-md text-red-500 hover:text-red-700"
                         >
                             <CloseOutlined />
                         </button>
@@ -133,7 +133,7 @@ export default function WorkingExperienceSection() {
             <button
                 type="button"
                 onClick={()=>addWorkingExperience()}
-                className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-center inline-flex items-center me-2 mb-2 w-full"
+                className="text-gray-900 bg-white hover:bg-gray-300 border border-gray-400 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-center inline-flex items-center me-2 mb-2 w-full"
             >
                 <PlusOutlined />
                 &nbsp; Add Another Working Experience

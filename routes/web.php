@@ -199,13 +199,22 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         });
     });
     Route::prefix('onboarding')->group(function () {
-        Route::get('/onboarding_docu', function () {
-            return Inertia::render('admin/onboarding/onboarding_docu/page');
+        Route::prefix('onboarding_docu')->group(function () {
+            Route::get('/', function () {
+                return Inertia::render('admin/onboarding/onboarding_docu/page');
+            });
+            Route::get('/view_docu', function () {
+                return Inertia::render('admin/onboarding/onboarding_docu/view_docu/page');
+            });
+            Route::get('/edit_docu', function () {
+                return Inertia::render('admin/onboarding/onboarding_docu/edit_docu/page');
+            });
         });
         Route::get('/acknowledgement', function () {
             return Inertia::render('admin/onboarding/acknowledgement/page');
         });
     });
+
     Route::prefix('employee_relation')->group(function () {
         Route::get('/employee_section', function () {
             return Inertia::render('admin/employee_relation/employee_section/page');
@@ -254,7 +263,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 
     Route::get('/ceo_section', function () {
         return Inertia::render('admin/ceo_section/page');
-    }); 
+    });
 
 
 

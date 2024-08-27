@@ -2,9 +2,10 @@ import React, { useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
-import ButtonComponents from "../components/button-components";
 import AddMedicineSection from "./add-medicine-section";
 import { useSelector } from "react-redux";
+import ButtonDropDownSection from "./medicine-button-dropdown-section";
+import MedicineButtonDropDownSection from "./medicine-button-dropdown-section";
 
 export default function MedicineTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -157,7 +158,7 @@ export default function MedicineTableSection() {
             dataIndex: "action",
             render: (_, record) => {
                 return (
-                    <ButtonComponents/>
+                    <MedicineButtonDropDownSection data={record}/>
                 );
             },
         },

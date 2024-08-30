@@ -13,7 +13,10 @@ use App\Http\Controllers\MedicineRecordController;
 use App\Http\Controllers\OnboardingDocController;
 use App\Http\Controllers\OutSourcingErfController;
 use App\Http\Controllers\UploadMemoController;
+use App\Mail\InitialEmail;
+use App\Mail\SendInitialEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -47,5 +50,10 @@ Route::resource('employee_health',EmployeeHealthController::class);
 Route::resource('employee_attrition',EmployeeAttritionController::class);
 Route::resource('emp_memo',UploadMemoController::class);
 Route::resource('engagement',EmployeeEngagementController::class);
+Route::post('/send_email', function (Request $request) {
+    $data = $request->all();
+    Mail::to($data['email'])->send(new InitialEmail($data));
+    return response()->json(['message' => 'Email sent successfully!']);
+});
 
 require __DIR__ . '/auth.php';

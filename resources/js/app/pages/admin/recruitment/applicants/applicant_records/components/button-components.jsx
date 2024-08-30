@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { AuditOutlined, CalendarOutlined, CheckCircleFilled, DotChartOutlined, DownOutlined, InfoCircleOutlined, MedicineBoxOutlined, RiseOutlined, ScheduleOutlined } from '@ant-design/icons';
+import { AuditOutlined, CalendarOutlined, CheckCircleFilled, DotChartOutlined, DownOutlined, InfoCircleOutlined, LoadingOutlined, MedicineBoxOutlined, RiseOutlined, ScheduleOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Modal, Menu } from 'antd';
 import { BriefcaseIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import { router } from '@inertiajs/react';
@@ -15,6 +15,29 @@ const ButtonComponents = ({ data }) => {
   const [virtualFinalModalOpen, setVirtualFinalModalOpen] = useState(false);
   const [finalInterviewerModalOpen, setFinalInterviewerModalOpen] = useState(false);
   const [jobOfferModalOpen, setJobOfferModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false)
+  const [initial, setInitial] = useState({
+    time: '',
+    date: ''
+  })
+
+  const sendEmail = (e) => {
+    e.preventDefault()
+    setLoading(true)
+    axios.post('/api/send_email', {
+      ...data,
+      time: initial.time,
+      date: initial.date
+    }).then(response => {
+      console.log(response.data);
+      message.success('Email sent successfully');
+      setLoading(false)
+    }).catch(error => {
+      setLoading(false)
+      message.success('There was an error sending the email!');
+      console.error('There was an error sending the email!', error);
+    });
+  };
 
   const handleButtonClick = () => {
     console.log('click left button');
@@ -129,6 +152,10 @@ const ButtonComponents = ({ data }) => {
         </Button>
       </Dropdown>
 
+
+
+
+
       <Modal
         title="Application Details"
         centered
@@ -142,30 +169,22 @@ const ButtonComponents = ({ data }) => {
           <h1><b>Personal Information</b></h1>
         </div>
         <div className='flex justify-end'>
-          <h1 className='text-lg mb-2'><b>Status:</b> (Pending)</h1>
+          <h1 className='text-lg mb-2'><b>Status:</b> {data.status}</h1>
         </div>
         <form className='border rounded-lg p-3.5'>
           <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 text-center"></h1>
           <div className="mb-4">
             <label htmlFor=""><b>Application No.</b></label>
-            <input type="number" placeholder="" className="border p-2 rounded w-full" readOnly />
+            <input type="number" value={data.app_id} placeholder="N/A" className="border p-2 rounded w-full" readOnly />
           </div>
           <div className='flex flex-1 gap-4'>
             <div className='flex flex-col w-full mb-4'>
               <label htmlFor=""><b>Full Name</b></label>
               <div className='flex flex-1 gap-3'>
-                <input type="text" placeholder="First name" className="border p-2 rounded w-full" />
-                <input type="text" placeholder="Middle name" className="border p-2 rounded w-full" />
-                <input type="text" placeholder="Last name" className="border p-2 rounded w-full" />
-                <select className="border p-2 rounded  w-1/5">
-                  <option disabled selected>Suffix</option>
-                  <option> Sr.</option>
-                  <option> Jr.</option>
-                  <option> II</option>
-                  <option> III</option>
-                  <option> IV</option>
-                  <option> V</option>
-                </select>
+                <input type="text" value={data.fname} placeholder="N/A" className="border p-2 rounded w-full" readOnly />
+                <input type="text" value={data.mname} placeholder="N/A" className="border p-2 rounded w-full" readOnly />
+                <input type="text" value={data.lname} placeholder="N/A" className="border p-2 rounded w-full" readOnly />
+                <input type="text" value={data.suffix} placeholder="(Suffix)" className="border p-2 rounded w-1/5" readOnly />
               </div>
             </div>
           </div>
@@ -174,23 +193,19 @@ const ButtonComponents = ({ data }) => {
               <div className="flex flex-col gap-4 mb-4 w-full">
                 <div className='flex flex-col w-full'>
                   <label htmlFor=""><b>Gender</b></label>
-                  <select className="border p-2 rounded w-full">
-                    <option disabled selected>Sex</option>
-                    <option> Male</option>
-                    <option> Female</option>
-                  </select>
+                  <input type="text" value={data.gender} placeholder="N/A" className="border p-2 rounded w-full" readOnly />
                 </div>
                 <div className='flex flex-col w-full'>
                   <label htmlFor=""><b>Date of Birth</b></label>
-                  <input type="date" placeholder="Date of birth" className="border p-2 rounded w-full" />
+                  <input type="date" value={data.dob} placeholder="N/A" className="border p-2 rounded w-full" readOnly />
                 </div>
                 <div className=" w-full">
                   <label htmlFor=""><b>Email</b></label>
-                  <input type="email" placeholder="Email address" className="border p-2 rounded w-full " />
+                  <input type="email" value={data.email} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
                 </div>
                 <div className="w-full">
                   <label htmlFor=""><b>Phone Number</b></label>
-                  <input type="number" placeholder="Phone Number" className="border p-2 rounded w-full " />
+                  <input type="number" value={data.phone} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
                 </div>
               </div>
             </div>
@@ -199,21 +214,15 @@ const ButtonComponents = ({ data }) => {
               <div className="flex flex-col gap-4 mb-4 w-full">
                 <div className='flex flex-col w-full'>
                   <label htmlFor=""><b>Marital Status</b></label>
-                  <select className="border p-2 rounded w-full">
-                    <option disabled selected>Select Status</option>
-                    <option> Single</option>
-                    <option> Married</option>
-                    <option> Widowed</option>
-                    <option> Divorced</option>
-                  </select>
+                  <input type="text" value={data.marital} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
                 </div>
                 <div className='flex flex-col w-full'>
                   <label htmlFor=""><b>Religion</b></label>
-                  <input type="text" placeholder="Religion" className="border p-2 rounded w-full" />
+                  <input type="text" value={data.religion} placeholder="N/A" className="border p-2 rounded w-full" readOnly />
                 </div>
                 <div className='flex flex-col w-full'>
                   <label htmlFor=""><b>Nationality</b></label>
-                  <input type="text" placeholder="Nationality" className="border p-2 rounded w-full" />
+                  <input type="text" value={data.nationality} placeholder="N/A" className="border p-2 rounded w-full" readOnly />
                 </div>
               </div>
             </div>
@@ -221,80 +230,81 @@ const ButtonComponents = ({ data }) => {
           </div>
           <div className="mb-4">
             <label htmlFor=""><b>Mother's Maiden Name</b></label>
-            <input type="text" placeholder="Mothers maiden name" className="border p-2 rounded w-full " />
+            <input type="text" value={data.mmname} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
           </div>
           <div className="mb-4">
             <label htmlFor=""><b>Father's Full Name</b></label>
-            <input type="text" placeholder="Fathers full name" className="border p-2 rounded w-full " />
+            <input type="text" value={data.ffname} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
           </div>
           <div className='flex flex-1 gap-4 mb-4'>
             <div className="w-full">
               <label htmlFor=""><b>Highest Educational Attainment</b></label>
-              <select className="border p-2 rounded w-full">
-                <option disabled selected>Select Educational Attainment</option>
-                <option> Elementary Undergraduate</option>
-                <option> Elementary Graduate</option>
-                <option> Highschool/K-12 Undergraduate</option>
-                <option> Highschool/K-12 Graduate</option>
-                <option> College Level</option>
-                <option> College Graduate</option>
-                <option> Vocational Graduate</option>
-                <option> Masteral Degree</option>
-                <option> Doctoral Degree</option>
-              </select>
+              <input type="text" value={data.educ} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
             </div>
             <div className="w-full">
               <label htmlFor=""><b>Course Taken (Only if Applicable)</b></label>
-              <input type="text" placeholder="Course taken" className="border p-2 rounded w-full " />
+              <input type="text" value={data.courset} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
             </div>
           </div>
           <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Address Information</h1>
           <div className="mb-4">
             <label htmlFor=""><b>House/Lot No. , Street , Purok/Sitio , Barangay , City/Municipality , Province</b></label>
-            <input type="text" placeholder="  " className="border p-2 rounded w-full" readOnly />
+            <input type="text" value={data.caddress} placeholder="N/A" className="border p-2 rounded w-full" readOnly />
           </div>
           <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Government ID Information</h1>
           <div className='flex flex-1 gap-4 mb-4'>
             <div className="w-full">
               <label htmlFor=""><b>SSS No.</b></label>
-              <input type="text" placeholder="SSS No." className="border p-2 rounded w-full " />
+              <input type="text" value={data.sss} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
             </div>
             <div className="w-full">
               <label htmlFor=""><b>Pag-IBIG No.</b></label>
-              <input type="text" placeholder="Pag-IBIG No." className="border p-2 rounded w-full " />
+              <input type="text" value={data.pagibig} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
             </div>
           </div>
           <div className='flex flex-1 gap-4 mb-4'>
             <div className="w-full">
               <label htmlFor=""><b>Tin No.</b></label>
-              <input type="text" placeholder="Tin No." className="border p-2 rounded w-full " />
+              <input type="text" value={data.tin} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
             </div>
             <div className="w-full">
               <label htmlFor=""><b>Philhealth No.</b></label>
-              <input type="text" placeholder="Philhealth No." className="border p-2 rounded w-full " />
+              <input type="text" value={data.philh} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
             </div>
           </div>
           <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Emergency Contact Information</h1>
           <div className="mb-4 w-full">
             <label htmlFor=""><b>Emergency Contact Fullname</b></label>
-            <input type="text" placeholder="Emergency Contact Fullname" className="border p-2 rounded w-full " />
+            <input type="text" value={data.ename} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
           </div>
           <div className="mb-4 w-full">
             <label htmlFor=""><b>Address</b></label>
-            <input type="text" placeholder="Address" className="border p-2 rounded w-full " />
+            <input type="text" value={data.eaddress} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
           </div>
           <div className='flex flex-1 gap-4 mb-4'>
             <div className="w-full">
               <label htmlFor=""><b>Relationship</b></label>
-              <input type="text" placeholder="Relationship" className="border p-2 rounded w-full " />
+              <input type="text" value={data.relationship} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
             </div>
             <div className="w-full">
               <label htmlFor=""><b>Contact No.</b></label>
-              <input type="number" placeholder="Contact No." className="border p-2 rounded w-full " />
+              <input type="number" value={data.ephone} placeholder="N/A" className="border p-2 rounded w-full " readOnly />
             </div>
           </div>
         </form>
       </Modal>
+
+
+
+
+
+
+
+
+
+
+
+
 
       <Modal
         title="Initial Phase Interview"
@@ -316,6 +326,20 @@ const ButtonComponents = ({ data }) => {
         </div>
       </Modal>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <Modal
         title="Schedule for Initial Phase Interview (Face to face Interview)"
         centered
@@ -329,15 +353,19 @@ const ButtonComponents = ({ data }) => {
       >
         <li className='bg-gray-300 h-0.5' ></li>
         <div className='flex justify-end mt-1.5'>
-          <h1><b>Status:</b> (Pending)</h1>
+          <h1><b>Status:</b> {data.status}</h1>
         </div>
-        <form class="w-full h-full">
+        <form 
+        onSubmit={sendEmail} class="w-full h-full">
           <div class="flex flex-col -mx-3 mb-3">
             <div class="w-full px-2.5">
               <label class="block uppercase tracking-wide  text-xs font-bold mb-1" for="grid-text">
                 Application No.
               </label>
-              <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="number" placeholder="" readOnly />
+              <input
+                value={data.app_id}
+
+                class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="number" placeholder="" readOnly />
             </div>
 
             <div className='flex flex-1'>
@@ -345,13 +373,15 @@ const ButtonComponents = ({ data }) => {
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Applicant's Name
                 </label>
-                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+                <input value={`${data.fname} ${data.mname} ${data.lname}`} class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
               </div>
               <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Email Address
                 </label>
-                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="email" placeholder="" readOnly />
+                <input
+                  value={data.email}
+                  class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="email" placeholder="" readOnly />
               </div>
             </div>
 
@@ -360,27 +390,66 @@ const ButtonComponents = ({ data }) => {
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Contact No.
                 </label>
-                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+                <input
+                  value={data.phone}
+                  class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
               </div>
               <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule date for Initial Interview
                 </label>
-                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
+                <input
+                onChange={(e)=>setInitial({
+                  ...initial,
+                  date:e.target.value
+                })}
+                class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
               </div>
               <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule time for Initial Interview
                 </label>
-                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
+                <input 
+                 onChange={(e)=>setInitial({
+                  ...initial,
+                  time:e.target.value
+                })}
+                class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
               </div>
             </div>
           </div>
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full">
-            <CheckCircleFilled /> CONFIRM
+          {/* <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+          <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+          <textarea placeholder="Message" value={message} onChange={(e) => setMessage(e.target.value)}></textarea> */}
+          <button
+            type='submit'
+            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? 'cursor-not-allowed opacity-75' : ''}`}
+            onClick={sendEmail}
+            disabled={loading}
+          >
+            {loading ? <LoadingOutlined spin /> : <CheckCircleFilled />}
+            {loading ? ' SENDING...' : ' CONFIRM'}
           </button>
         </form>
       </Modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <Modal
         title="Schedule for Initial Phase Interview (Virtual Interview)"
@@ -457,6 +526,23 @@ const ButtonComponents = ({ data }) => {
         </form>
       </Modal>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <Modal
         title="Final Phase Interview"
         centered
@@ -476,6 +562,26 @@ const ButtonComponents = ({ data }) => {
           </Button>
         </div>
       </Modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
       <Modal
@@ -551,6 +657,25 @@ const ButtonComponents = ({ data }) => {
           </button>
         </form>
       </Modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <Modal
         title="Schedule for Final Phase Interview (Virtual Interview)"
@@ -635,6 +760,28 @@ const ButtonComponents = ({ data }) => {
         </form>
       </Modal>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       <Modal
         title="Final Phase Interviewers"
         centered
@@ -668,6 +815,30 @@ const ButtonComponents = ({ data }) => {
           </Button>
         </div>
       </Modal>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
       <Modal
         title="Job Offer"

@@ -18,13 +18,15 @@ const ButtonComponents = ({ data }) => {
   const [loading, setLoading] = useState(false)
   const [initial, setInitial] = useState({
     time: '',
-    date: ''
+    date: '',
+    meet_link: ''
   })
 
-  const sendEmail = (e) => {
+
+  const sendInitialEmail = (e) => {
     e.preventDefault()
     setLoading(true)
-    axios.post('/api/send_email', {
+    axios.post('/api/sendif_email', {
       ...data,
       time: initial.time,
       date: initial.date
@@ -38,6 +40,26 @@ const ButtonComponents = ({ data }) => {
       console.error('There was an error sending the email!', error);
     });
   };
+
+  const sendInitialvEmail = (e) => {
+    e.preventDefault()
+    setLoading(true)
+    axios.post('/api/sendiv_email', {
+      ...data,
+      time: initial.time,
+      date: initial.date,
+      meet_link: initial.meet_link
+    }).then(response => {
+      console.log(response.data);
+      message.success('Email sent successfully');
+      setLoading(false)
+    }).catch(error => {
+      setLoading(false)
+      message.success('There was an error sending the email!');
+      console.error('There was an error sending the email!', error);
+    });
+  };
+
 
   const handleButtonClick = () => {
     console.log('click left button');
@@ -355,8 +377,8 @@ const ButtonComponents = ({ data }) => {
         <div className='flex justify-end mt-1.5'>
           <h1><b>Status:</b> {data.status}</h1>
         </div>
-        <form 
-        onSubmit={sendEmail} class="w-full h-full">
+        <form
+          onSubmit={sendInitialEmail} class="w-full h-full">
           <div class="flex flex-col -mx-3 mb-3">
             <div class="w-full px-2.5">
               <label class="block uppercase tracking-wide  text-xs font-bold mb-1" for="grid-text">
@@ -399,22 +421,22 @@ const ButtonComponents = ({ data }) => {
                   Schedule date for Initial Interview
                 </label>
                 <input
-                onChange={(e)=>setInitial({
-                  ...initial,
-                  date:e.target.value
-                })}
-                class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
+                  onChange={(e) => setInitial({
+                    ...initial,
+                    date: e.target.value
+                  })}
+                  class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
               </div>
               <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule time for Initial Interview
                 </label>
-                <input 
-                 onChange={(e)=>setInitial({
-                  ...initial,
-                  time:e.target.value
-                })}
-                class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
+                <input
+                  onChange={(e) => setInitial({
+                    ...initial,
+                    time: e.target.value
+                  })}
+                  class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
               </div>
             </div>
           </div>
@@ -424,7 +446,7 @@ const ButtonComponents = ({ data }) => {
           <button
             type='submit'
             className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? 'cursor-not-allowed opacity-75' : ''}`}
-            onClick={sendEmail}
+            onClick={sendInitialEmail}
             disabled={loading}
           >
             {loading ? <LoadingOutlined spin /> : <CheckCircleFilled />}
@@ -432,17 +454,6 @@ const ButtonComponents = ({ data }) => {
           </button>
         </form>
       </Modal>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -466,13 +477,15 @@ const ButtonComponents = ({ data }) => {
         <div className='flex justify-end mt-1.5'>
           <h1><b>Status:</b> (Pending)</h1>
         </div>
-        <form class="w-full h-full">
+        <form class="w-full h-full" onSubmit={sendInitialvEmail}>
           <div class="flex flex-col -mx-3 mb-3">
             <div class="w-full px-2.5">
               <label class="block uppercase tracking-wide  text-xs font-bold mb-1" for="grid-text">
                 Application No.
               </label>
-              <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="number" placeholder="" readOnly />
+              <input
+                value={data.app_id}
+                class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="number" placeholder="" readOnly />
             </div>
 
             <div className='flex flex-1'>
@@ -480,13 +493,17 @@ const ButtonComponents = ({ data }) => {
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Applicant's Name
                 </label>
-                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+                <input
+                  value={`${data.fname} ${data.mname} ${data.lname}`}
+                  class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
               </div>
               <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Email Address
                 </label>
-                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="email" placeholder="" readOnly />
+                <input
+                  value={data.email}
+                  class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="email" placeholder="" readOnly />
               </div>
             </div>
 
@@ -495,13 +512,20 @@ const ButtonComponents = ({ data }) => {
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Contact No.
                 </label>
-                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+                <input
+                  value={data.phone}
+                  class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
               </div>
               <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Meeting Link
                 </label>
-                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+                <input
+                  onChange={(e) => setInitial({
+                    ...initial,
+                    meet_link: e.target.value
+                  })}
+                  class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" />
               </div>
             </div>
 
@@ -510,18 +534,34 @@ const ButtonComponents = ({ data }) => {
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule date for Initial Interview
                 </label>
-                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
+                <input
+                  onChange={(e) => setInitial({
+                    ...initial,
+                    date: e.target.value
+                  })}
+                  class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
               </div>
               <div class="w-full px-2.5">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                   Schedule time for Initial Interview
                 </label>
-                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
+                <input
+                  onChange={(e) => setInitial({
+                    ...initial,
+                    time: e.target.value
+                  })}
+                  class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
               </div>
             </div>
           </div>
-          <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full">
-            <CheckCircleFilled /> CONFIRM
+          <button
+            type='submit'
+            className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? 'cursor-not-allowed opacity-75' : ''}`}
+            onClick={sendInitialvEmail}
+            disabled={loading}
+          >
+            {loading ? <LoadingOutlined spin /> : <CheckCircleFilled />}
+            {loading ? ' SENDING...' : ' CONFIRM'}
           </button>
         </form>
       </Modal>

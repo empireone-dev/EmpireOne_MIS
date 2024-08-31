@@ -14,6 +14,7 @@ use App\Http\Controllers\OnboardingDocController;
 use App\Http\Controllers\OutSourcingErfController;
 use App\Http\Controllers\UploadMemoController;
 use App\Mail\InitialEmail;
+use App\Mail\InitialvEmail;
 use App\Mail\SendInitialEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -35,25 +36,30 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::resource('outsourcing_erf',OutSourcingErfController::class);
+Route::resource('outsourcing_erf', OutSourcingErfController::class);
 Route::get('/get_outsourcing_dashboard', [OutSourcingErfController::class, 'get_outsourcing_dashboard']);
 
-Route::resource('job_position',JobPositionController::class);
-Route::resource('guideq',GuideQuestionController::class);
-Route::resource('applicant',ApplicantController::class);
-Route::resource('checklist',ChecklistController::class);
-Route::resource('joboffer',JobOfferController::class);
-Route::resource('onboarding_doc',OnboardingDocController::class);
-Route::resource('employee',EmployeeController::class);
-Route::resource('medicine_record',MedicineRecordController::class);
-Route::resource('employee_health',EmployeeHealthController::class);
-Route::resource('employee_attrition',EmployeeAttritionController::class);
-Route::resource('emp_memo',UploadMemoController::class);
-Route::resource('engagement',EmployeeEngagementController::class);
-Route::post('/send_email', function (Request $request) {
+Route::resource('job_position', JobPositionController::class);
+Route::resource('guideq', GuideQuestionController::class);
+Route::resource('applicant', ApplicantController::class);
+Route::resource('checklist', ChecklistController::class);
+Route::resource('joboffer', JobOfferController::class);
+Route::resource('onboarding_doc', OnboardingDocController::class);
+Route::resource('employee', EmployeeController::class);
+Route::resource('medicine_record', MedicineRecordController::class);
+Route::resource('employee_health', EmployeeHealthController::class);
+Route::resource('employee_attrition', EmployeeAttritionController::class);
+Route::resource('emp_memo', UploadMemoController::class);
+Route::resource('engagement', EmployeeEngagementController::class);
+Route::post('/sendif_email', function (Request $request) {
     $data = $request->all();
     Mail::to($data['email'])->send(new InitialEmail($data));
     return response()->json(['message' => 'Email sent successfully!']);
 });
 
+Route::post('/sendiv_email', function (Request $request) {
+    $data = $request->all();
+    Mail::to($data['email'])->send(new InitialvEmail($data));
+    return response()->json(['message' => 'Email sent successfully!']);
+});
 require __DIR__ . '/auth.php';

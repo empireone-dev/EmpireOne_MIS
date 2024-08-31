@@ -39,7 +39,7 @@ export default function DeleteMedicineSection({ data, label, icon }) {
                 >
                     <form onSubmit={submit_edit}>
                         <div>
-                            <p>Are you sure you want to delete <b>(Medicine)</b> ?</p>
+                            <p>Are you sure you want to delete <b>{data.medicine}</b> ?</p>
                             <div className='flex flex-1 gap-1.5 justify-end mt-1'>
                                 <button
                                     className='flex justify-end px-2 py-1.5 rounded-md hover:bg-gray-300'

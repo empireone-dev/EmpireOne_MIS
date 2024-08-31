@@ -5,8 +5,8 @@
     We appreciate your interest in joining our team at EmpireOne BPO Solutions Inc. It is with great pleasure that we inform you of your selection for the initial phase interview.
 
     **Interview Details:**
-    Date: {{ \Carbon\Carbon::parse($data['date'])->format('F j, Y') }}
-    Time: {{ \Carbon\Carbon::parse($data['time'])->format('g:i A') }}
+    Date: {{ \Carbon\Carbon::parse($data['iffdate'])->format('F j, Y') }}
+    Time: {{ \Carbon\Carbon::parse($data['ifftime'])->format('g:i A') }}
 
     To ensure a smooth start to the interview process, we kindly request that you arrive a few minutes early. During this interview, we will have the opportunity to discuss your qualifications, experience, and how your skills align with the requirements of the position you applied for.
 

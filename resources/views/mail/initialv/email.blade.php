@@ -1,3 +1,8 @@
+<!-- <div class="w-full flex items-center justify-center">
+    <img src="/images/newlogo.png" alt="">
+    ssss
+</div> -->
+
 <x-mail::message>
 
     # Dear {{$data['fname']}} {{$data['lname']}},
@@ -6,8 +11,8 @@
 
     **Interview Details:**
     Meeting Link: {{$data['meet_link']}}
-    Date: {{ \Carbon\Carbon::parse($data['date'])->format('F j, Y') }}
-    Time: {{ \Carbon\Carbon::parse($data['time'])->format('g:i A') }}
+    Date: {{ \Carbon\Carbon::parse($data['ivdate'])->format('F j, Y') }}
+    Time: {{ \Carbon\Carbon::parse($data['ivtime'])->format('g:i A') }}
 
     To ensure a smooth start to the interview process, we kindly request that you join the meeting a few minutes early using the link provided above. During this interview, we will have the opportunity to discuss your qualifications, experience, and how your skills align with the requirements of the position you applied for.
 

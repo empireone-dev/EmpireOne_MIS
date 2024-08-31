@@ -4,6 +4,7 @@ import { AuditOutlined, CalendarOutlined, CheckCircleFilled, DotChartOutlined, D
 import { Button, Dropdown, message, Space, Modal, Menu } from 'antd';
 import { BriefcaseIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import { router } from '@inertiajs/react';
+import { setApplicants } from '../redux/applicant-slice';
 
 const ButtonComponents = ({ data }) => {
   const [applicationDetailsModalOpen, setApplicationDetailsModalOpen] = useState(false);
@@ -17,8 +18,10 @@ const ButtonComponents = ({ data }) => {
   const [jobOfferModalOpen, setJobOfferModalOpen] = useState(false);
   const [loading, setLoading] = useState(false)
   const [initial, setInitial] = useState({
-    time: '',
-    date: '',
+    ifftime: '',
+    iffdate: '',
+    ivtime: '',
+    ivdate: '',
     meet_link: ''
   })
 
@@ -28,12 +31,15 @@ const ButtonComponents = ({ data }) => {
     setLoading(true)
     axios.post('/api/sendif_email', {
       ...data,
-      time: initial.time,
-      date: initial.date
+      // status: "Initial Phase",
+      ifftime: initial.ifftime,
+      iffdate: initial.iffdate
     }).then(response => {
       console.log(response.data);
       message.success('Email sent successfully');
+      // dispatch(setApplicants(result.status));
       setLoading(false)
+      setFaceToFaceInitialModalOpen(false)
     }).catch(error => {
       setLoading(false)
       message.success('There was an error sending the email!');
@@ -46,12 +52,14 @@ const ButtonComponents = ({ data }) => {
     setLoading(true)
     axios.post('/api/sendiv_email', {
       ...data,
-      time: initial.time,
-      date: initial.date,
+      // status: "Initial Phase",
+      ivtime: initial.ivtime,
+      ivdate: initial.ivdate,
       meet_link: initial.meet_link
     }).then(response => {
       console.log(response.data);
       message.success('Email sent successfully');
+      // dispatch(setApplicants(result.status));
       setLoading(false)
     }).catch(error => {
       setLoading(false)
@@ -423,7 +431,7 @@ const ButtonComponents = ({ data }) => {
                 <input
                   onChange={(e) => setInitial({
                     ...initial,
-                    date: e.target.value
+                    iffdate: e.target.value
                   })}
                   class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
               </div>
@@ -434,7 +442,7 @@ const ButtonComponents = ({ data }) => {
                 <input
                   onChange={(e) => setInitial({
                     ...initial,
-                    time: e.target.value
+                    ifftime: e.target.value
                   })}
                   class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
               </div>
@@ -475,7 +483,7 @@ const ButtonComponents = ({ data }) => {
       >
         <li className='bg-gray-300 h-0.5' ></li>
         <div className='flex justify-end mt-1.5'>
-          <h1><b>Status:</b> (Pending)</h1>
+          <h1><b>Status:</b> {data.status}</h1>
         </div>
         <form class="w-full h-full" onSubmit={sendInitialvEmail}>
           <div class="flex flex-col -mx-3 mb-3">
@@ -537,7 +545,7 @@ const ButtonComponents = ({ data }) => {
                 <input
                   onChange={(e) => setInitial({
                     ...initial,
-                    date: e.target.value
+                    ivdate: e.target.value
                   })}
                   class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" required />
               </div>
@@ -548,7 +556,7 @@ const ButtonComponents = ({ data }) => {
                 <input
                   onChange={(e) => setInitial({
                     ...initial,
-                    time: e.target.value
+                    ivtime: e.target.value
                   })}
                   class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="time" placeholder="" required />
               </div>

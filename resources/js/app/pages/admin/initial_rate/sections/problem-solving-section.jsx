@@ -14,16 +14,16 @@ export default function ProblemSolvingSection() {
             <div>
                 <label htmlFor=""><b>PROBLEM-SOLVING/SOUND JUDGEMENT SCORE</b></label>
                 <div className='flex flex-1 w-full gap-8 mt-1'>
-                    <InitialRateMarkComponent rate="1 - Very Poor" />
-                    <InitialRateMarkComponent rate="2 - Poor" />
-                    <InitialRateMarkComponent rate="3 - Average" />
-                    <InitialRateMarkComponent rate="4 - Good" />
-                    <InitialRateMarkComponent rate="5 - Excellent" />
+                    <InitialRateMarkComponent rate="1 - Very Poor" name="ps" />
+                    <InitialRateMarkComponent rate="2 - Poor" name="ps" />
+                    <InitialRateMarkComponent rate="3 - Average" name="ps" />
+                    <InitialRateMarkComponent rate="4 - Good" name="ps" />
+                    <InitialRateMarkComponent rate="5 - Excellent" name="ps" />
                 </div>
             </div>
             <div className='mt-6'>
                 <label htmlFor=""><b>PROBLEM-SOLVING/SOUND JUDGEMENT NOTES</b></label>
-                <textarea type="text" placeholder="" className="border p-2 rounded w-full mt-1 h-40" />
+                <textarea type="text" name='int_prob_solving_note' placeholder="" className="border p-2 rounded w-full mt-1 h-40" />
             </div>
         </div>
     )

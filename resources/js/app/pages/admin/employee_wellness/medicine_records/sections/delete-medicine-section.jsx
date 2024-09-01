@@ -25,6 +25,7 @@ export default function DeleteMedicineSection({ data, label, icon }) {
     }
     return (
         <div>
+            
 
             {contextHolder}
             <Menu.Item key={data.key} icon={icon}>

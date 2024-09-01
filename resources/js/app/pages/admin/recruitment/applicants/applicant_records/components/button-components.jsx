@@ -25,6 +25,31 @@ const ButtonComponents = ({ data }) => {
     meet_link: ''
   })
 
+//   async function sendInitialEmail(e) {
+//     e.preventDefault();
+//     if (confirm("Are you sure you want to send the email?")) {
+//         setLoading(true);
+//         try {
+//             const response = await axios.post('/api/sendif_email', {
+//                 ...data,
+//                 status: "Initial Phase",
+//                 ifftime: initial.ifftime,
+//                 iffdate: initial.iffdate
+//             });
+//             console.log(response.data);
+//             message.success('Email sent successfully');
+//             dispatch(setApplicants(response.data.status));
+//             setFaceToFaceInitialModalOpen(false);
+//         } catch (error) {
+//             message.error('There was an error sending the email!');
+//             console.error('There was an error sending the email!', error);
+//         } finally {
+//             setLoading(false);
+//         }
+//     }
+// }
+
+
 
   const sendInitialEmail = (e) => {
     e.preventDefault()

@@ -13,16 +13,16 @@ export default function TeamworkSection() {
             <div>
                 <label htmlFor=""><b>TEAMWORK/ INTERPERSONAL SKILLS SCORE</b></label>
                 <div className='flex flex-1 w-full gap-8 mt-1'>
-                    <InitialRateMarkComponent rate="1 - Very Poor" onClick={() => handleTeamworkRatingChange(1)} />
-                    <InitialRateMarkComponent rate="2 - Poor" onClick={() => handleTeamworkRatingChange(2)} />
-                    <InitialRateMarkComponent rate="3 - Average" onClick={() => handleTeamworkRatingChange(3)} />
-                    <InitialRateMarkComponent rate="4 - Good" onClick={() => handleTeamworkRatingChange(4)} />
-                    <InitialRateMarkComponent rate="5 - Excellent" onClick={() => handleTeamworkRatingChange(5)} />
+                    <InitialRateMarkComponent rate="1 - Very Poor" name="t/is" />
+                    <InitialRateMarkComponent rate="2 - Poor" name="t/is" />
+                    <InitialRateMarkComponent rate="3 - Average" name="t/is" />
+                    <InitialRateMarkComponent rate="4 - Good" name="t/is" />
+                    <InitialRateMarkComponent rate="5 - Excellent" name="t/is" />
                 </div>
             </div>
             <div className='mt-6'>
                 <label htmlFor=""><b>TEAMWORK/ INTERPERSONAL SKILLS NOTES</b></label>
-                <textarea type="text" placeholder="" className="border p-2 rounded w-full mt-1 h-40" />
+                <textarea type="text" name='ini_teamwork_note' placeholder="" className="border p-2 rounded w-full mt-1 h-40" />
             </div>
         </div>
     )

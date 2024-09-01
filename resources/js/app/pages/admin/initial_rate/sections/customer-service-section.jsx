@@ -14,16 +14,16 @@ export default function CustomerServiceSection() {
             <div>
                 <label htmlFor=""><b>CUSTOMER SERVICE SCORE</b></label>
                 <div className='flex flex-1 w-full gap-8 mt-1'>
-                    <InitialRateMarkComponent rate="1 - Very Poor" />
-                    <InitialRateMarkComponent rate="2 - Poor" />
-                    <InitialRateMarkComponent rate="3 - Average" />
-                    <InitialRateMarkComponent rate="4 - Good" />
-                    <InitialRateMarkComponent rate="5 - Excellent" />
+                    <InitialRateMarkComponent rate="1 - Very Poor" name="cs" />
+                    <InitialRateMarkComponent rate="2 - Poor" name="cs" />
+                    <InitialRateMarkComponent rate="3 - Average" name="cs" />
+                    <InitialRateMarkComponent rate="4 - Good" name="cs" />
+                    <InitialRateMarkComponent rate="5 - Excellent" name="cs" />
                 </div>
             </div>
             <div className='mt-6'>
                 <label htmlFor=""><b>CUSTOMER SERVICE NOTES</b></label>
-                <textarea type="text" placeholder="" className="border p-2 rounded w-full mt-1 h-40" />
+                <textarea type="text" name='int_cust_serv_note' placeholder="" className="border p-2 rounded w-full mt-1 h-40" />
             </div>
         </div>
     )

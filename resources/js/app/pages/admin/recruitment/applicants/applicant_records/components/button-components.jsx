@@ -5,6 +5,8 @@ import { Button, Dropdown, message, Space, Modal, Menu } from 'antd';
 import { BriefcaseIcon, CalendarIcon } from '@heroicons/react/24/outline';
 import { router } from '@inertiajs/react';
 import { setApplicants } from '../redux/applicant-slice';
+import store from '@/app/store/store';
+import { get_applicant_thunk, sendiv_email_thunk } from '../redux/applicant-thunk';
 
 const ButtonComponents = ({ data }) => {
   const [applicationDetailsModalOpen, setApplicationDetailsModalOpen] = useState(false);
@@ -25,72 +27,70 @@ const ButtonComponents = ({ data }) => {
     meet_link: ''
   })
 
-//   async function sendInitialEmail(e) {
-//     e.preventDefault();
-//     if (confirm("Are you sure you want to send the email?")) {
-//         setLoading(true);
-//         try {
-//             const response = await axios.post('/api/sendif_email', {
-//                 ...data,
-//                 status: "Initial Phase",
-//                 ifftime: initial.ifftime,
-//                 iffdate: initial.iffdate
-//             });
-//             console.log(response.data);
-//             message.success('Email sent successfully');
-//             dispatch(setApplicants(response.data.status));
-//             setFaceToFaceInitialModalOpen(false);
-//         } catch (error) {
-//             message.error('There was an error sending the email!');
-//             console.error('There was an error sending the email!', error);
-//         } finally {
-//             setLoading(false);
-//         }
-//     }
-// }
+  //   async function sendInitialEmail(e) {
+  //     e.preventDefault();
+  //     if (confirm("Are you sure you want to send the email?")) {
+  //         setLoading(true);
+  //         try {
+  //             const response = await axios.post('/api/sendif_email', {
+  //                 ...data,
+  //                 status: "Initial Phase",
+  //                 ifftime: initial.ifftime,
+  //                 iffdate: initial.iffdate
+  //             });
+  //             console.log(response.data);
+  //             message.success('Email sent successfully');
+  //             dispatch(setApplicants(response.data.status));
+  //             setFaceToFaceInitialModalOpen(false);
+  //         } catch (error) {
+  //             message.error('There was an error sending the email!');
+  //             console.error('There was an error sending the email!', error);
+  //         } finally {
+  //             setLoading(false);
+  //         }
+  //     }
+  // }
 
 
 
+  // store.dispatch(get_applicant_thunk())
   const sendInitialEmail = (e) => {
     e.preventDefault()
     setLoading(true)
-    axios.post('/api/sendif_email', {
-      ...data,
-      // status: "Initial Phase",
-      ifftime: initial.ifftime,
-      iffdate: initial.iffdate
-    }).then(response => {
-      console.log(response.data);
-      message.success('Email sent successfully');
-      // dispatch(setApplicants(result.status));
+    try {
+      store.dispatch(sendiv_email_thunk({
+        ...data,
+        ifftime: initial.ifftime,
+        iffdate: initial.iffdate
+      }))
+      store.dispatch(get_applicant_thunk())
       setLoading(false)
       setFaceToFaceInitialModalOpen(false)
-    }).catch(error => {
+      message.success('Email sent successfully');
+    } catch (error) {
+      message.error('There was an error sending the email!');
       setLoading(false)
-      message.success('There was an error sending the email!');
-      console.error('There was an error sending the email!', error);
-    });
+    }
   };
 
   const sendInitialvEmail = (e) => {
     e.preventDefault()
     setLoading(true)
-    axios.post('/api/sendiv_email', {
-      ...data,
-      // status: "Initial Phase",
-      ivtime: initial.ivtime,
-      ivdate: initial.ivdate,
-      meet_link: initial.meet_link
-    }).then(response => {
-      console.log(response.data);
+    try {
+      store.dispatch(sendiv_email_thunk({
+        ...data,
+        ivtime: initial.ivtime,
+        ivdate: initial.ivdate,
+        meet_link:initial.meet_link
+      }))
+      store.dispatch(get_applicant_thunk())
+      setLoading(false)
+      setVirtualInitialModalOpen(false)
       message.success('Email sent successfully');
-      // dispatch(setApplicants(result.status));
+    } catch (error) {
+      message.error('There was an error sending the email!');
       setLoading(false)
-    }).catch(error => {
-      setLoading(false)
-      message.success('There was an error sending the email!');
-      console.error('There was an error sending the email!', error);
-    });
+    }
   };
 
 

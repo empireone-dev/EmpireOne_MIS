@@ -1,5 +1,6 @@
 import { get_applicant_service, store_applicant_service } from "@/app/pages/services/applicant-record-service";
 import { applicantSlice } from "./applicant-slice";
+import sendiv_email_service from "@/app/pages/services/email-service";
 
 export function get_applicant_thunk() {
   return async function (dispatch, getState) {
@@ -15,5 +16,15 @@ export function store_applicant_thunk(data) {
     dispatch(applicantSlice.actions.setApplicantForm({
       work_experience:[]
     }));
+  };
+}
+
+export function sendiv_email_thunk(data) {
+  return async function (dispatch, getState) {
+    const result = await sendiv_email_service(data)
+    // dispatch(applicantSlice.actions.setApplicants(result.data));
+    // dispatch(applicantSlice.actions.setApplicantForm({
+    //   work_experience:[]
+    // }));
   };
 }

@@ -7,7 +7,7 @@ import GuideQuestionSection from './guide-question-section'
 
 export default function InitialRateForm({ data }) {
     return (
-        <div>
+        <div className='font-sans'>
             <div className='flex text-xl items-center justify-center mb-1'>
                 <h1><b>Initial Rating Scale</b></h1>
             </div>

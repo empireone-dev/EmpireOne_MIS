@@ -60,7 +60,7 @@ Route::get('/exit_clearance', function () {
 
 // admin = 1
 Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
-    Route::get('/initial_rate', function () {
+    Route::get('/initial_rate/{app_id}', function () {
         return Inertia::render('admin/initial_rate/page');
     });
     Route::get('/initial_result', function () {

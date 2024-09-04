@@ -1,9 +1,10 @@
 import React from 'react';
 
-export default function InitialRateMarkComponent({ rate, value, name }) {
+export default function InitialRateMarkComponent({ rate, value, name,onChange }) {
   return (
     <div className='flex items-center w-full'>
       <input 
+        onChange={(e)=>onChange(e)}
         id="default-radio-1" 
         type="radio" 
         value={value} 

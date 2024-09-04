@@ -122,12 +122,11 @@ const ButtonComponents = ({ data }) => {
     console.log('click left button');
     window.open('/admin/interviewer_sched', '_blank')
   };
-
   const handleMenuClick = (item) => {
     if (item.onClick) item.onClick();
     if (item.key === '1') setApplicationDetailsModalOpen(true);
     if (item.key === '2') setInitialPhaseModalOpen(true);
-    if (item.key === '3') { window.open('/admin/initial_rate', '_blank'); }
+    if (item.key === '3') { window.open(`/admin/initial_rate/${data.app_id}`, '_blank'); }
     if (item.key === '4') { window.open('/admin/initial_result', '_blank'); }
     if (item.key === '5') { window.open('/admin/final_rate', '_blank'); }
     if (item.key === '6') setFinalPhaseModalOpen(true);

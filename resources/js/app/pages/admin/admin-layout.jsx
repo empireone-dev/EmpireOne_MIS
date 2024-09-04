@@ -23,6 +23,8 @@ import { Layout, Menu, Button, theme, Modal } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
 import AdminFooterComponents from "./_components/admin-footer-components";
 import { KeyIcon } from "@heroicons/react/24/outline";
+import store from "@/app/store/store";
+import { get_user_thunk } from "@/app/redux/app-thunk";
 const { Header, Sider, Content } = Layout;
 const AdminLayout = ({ children }) => {
     const { url } = usePage();
@@ -31,6 +33,9 @@ const AdminLayout = ({ children }) => {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
+    useEffect(()=>{
+        store.dispatch(get_user_thunk())
+    },[])
     const items = [
         {
             key: "dashboard",

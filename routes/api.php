@@ -8,6 +8,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeEngagementController;
 use App\Http\Controllers\EmployeeHealthController;
 use App\Http\Controllers\GuideQuestionController;
+use App\Http\Controllers\InitialRateController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\JobPositionController;
 use App\Http\Controllers\MedicineRecordController;
@@ -52,6 +53,7 @@ Route::resource('employee_health', EmployeeHealthController::class);
 Route::resource('employee_attrition', EmployeeAttritionController::class);
 Route::resource('emp_memo', UploadMemoController::class);
 Route::resource('engagement', EmployeeEngagementController::class);
+Route::resource('initial_rate', InitialRateController::class);
 
 Route::post('/sendiv_email', [EmailController::class, 'sendiv_email']);
   

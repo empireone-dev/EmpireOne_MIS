@@ -29,4 +29,11 @@ class ApplicantController extends Controller
             // 'data' => $this->index()->original['data']
         ], 200);
     }
+
+    public function show($app_id){
+        $applicant = Applicant::where('app_id',$app_id)->first();
+        return response()->json([
+            'status' => $applicant,
+        ], 200);
+    }
 }

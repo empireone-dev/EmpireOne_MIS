@@ -62,12 +62,20 @@ const EmployeeLayout = ({ children }) => {
     },
     {
       key: "engagement_section",
-      icon: <ContactsOutlined />,
+      icon: (
+        <Badge dot offset={[200, 0]}>
+          <ContactsOutlined />
+        </Badge>
+      ),
       label: "Engagement Section",
       children: [
         {
           key: "today_event",
-          icon: <HolderOutlined />,
+          icon: (
+            <Badge count={2} offset={[170, 0]}>
+              <HolderOutlined />
+            </Badge>
+          ),
           label: "Today's Event",
           onClick: () =>
             router.visit(

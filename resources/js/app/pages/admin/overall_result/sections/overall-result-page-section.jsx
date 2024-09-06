@@ -26,7 +26,7 @@ export default function OverallResultPageSection() {
     };
 
     return (
-        <div>
+        <div className='font-sans'>
             <section>
                 <div className="">
                     <div className="text-sm font-medium text-center border-b border-gray-200">

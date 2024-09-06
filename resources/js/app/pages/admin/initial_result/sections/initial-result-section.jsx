@@ -7,7 +7,7 @@ import TeamworkInitialResultSection from './teamwork-initial-result-section'
 
 export default function InitialResultSection() {
     return (
-        <div>
+        <div className='font-sans'>
             <div className='flex text-xl items-center justify-center mb-1'>
                 <h1><b>Initial Phase Result</b></h1>
             </div>

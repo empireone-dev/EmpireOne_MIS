@@ -5,7 +5,7 @@ import WorkEffectivenessFinalRateSection from './work-effectiveness-final-rate-s
 
 export default function FinalRateFormSection() {
     return (
-        <div>
+        <div className='font-sans'>
             <div className='flex text-xl items-center justify-center mb-1'>
                 <h1><b>Final Rating Scale</b></h1>
             </div>
@@ -34,7 +34,7 @@ export default function FinalRateFormSection() {
                     <input type="number" placeholder="" className="border p-2 rounded w-full mt-1" readOnly />
                 </div>
                 <div className='flex flex-col w-full mt-5'>
-                    <label htmlFor=""><b>INITIAL PHASE INTERVIEWER</b></label>
+                    <label htmlFor=""><b>FINAL PHASE INTERVIEWER</b></label>
                     <input type="number" placeholder="" className="border p-2 rounded w-full mt-1" readOnly />
                 </div>
                 <div className='mt-5'>

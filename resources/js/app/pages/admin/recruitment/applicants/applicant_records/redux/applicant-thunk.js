@@ -4,8 +4,11 @@ import sendiv_email_service from "@/app/pages/services/email-service";
 
 export function get_applicant_thunk() {
   return async function (dispatch, getState) {
-    const result = (await get_applicant_service()).data
-    dispatch(applicantSlice.actions.setApplicants(result));
+    const result = (await get_applicant_service())
+    dispatch(applicantSlice.actions.setApplicants(result.data));
+    dispatch(applicantSlice.actions.setInterviewer(result.interviewer));
+
+    
   };
 }
 

@@ -1,24 +1,27 @@
-import React, { useRef, useState } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tag } from 'antd';
-import Highlighter from 'react-highlight-words';
-import ButtonComponents from '../components/button-components';
-import ApplicantsDropdownFilterComponents from '../components/applicants-dropdown-filter-components';
-import { useSelector } from 'react-redux';
-import moment from 'moment';
-import { useEffect } from 'react';
-import { router } from '@inertiajs/react';
-import AddApplicantsSection from './add-applicants-section';
+import React, { useRef, useState } from "react";
+import { SearchOutlined } from "@ant-design/icons";
+import { Button, Input, Space, Table, Tag } from "antd";
+import Highlighter from "react-highlight-words";
+import ButtonComponents from "../components/button-components";
+import ApplicantsDropdownFilterComponents from "../components/applicants-dropdown-filter-components";
+import { useSelector } from "react-redux";
+import moment from "moment";
+import { useEffect } from "react";
+import { router } from "@inertiajs/react";
+import AddApplicantsSection from "./add-applicants-section";
+import ApplicantMenuSection from "./applicant-menu-section";
 
 export default function ApplicantsTableSection() {
-    const [searchText, setSearchText] = useState('');
-    const [searchedColumn, setSearchedColumn] = useState('');
+    const [searchText, setSearchText] = useState("");
+    const [searchedColumn, setSearchedColumn] = useState("");
     // const [filteredDatas, setFilteredDatas] = useState([]);
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(10);
-    const { applicants } = useSelector((state) => state.applicants)
+    const { applicants, interviewer } = useSelector(
+        (state) => state.applicants
+    );
 
-const filteredDatas = applicants.data
+    const filteredDatas = applicants.data;
     // const filterDatas = (selectedStats) => {
     //     if (selectedStats.length === 0) {
     //         setFilteredDatas(applicants);
@@ -42,7 +45,7 @@ const filteredDatas = applicants.data
         // localStorage.clear()
         // setFilteredDatas(applicants);
     }, [applicants]);
-console.log('filteredDatas',filteredDatas)
+    console.log("filteredDatas", filteredDatas);
     const searchInput = useRef(null);
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -52,11 +55,17 @@ console.log('filteredDatas',filteredDatas)
     };
     const handleReset = (clearFilters) => {
         clearFilters();
-        setSearchText('');
+        setSearchText("");
     };
 
     const getColumnSearchProps = (dataIndex) => ({
-        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+        filterDropdown: ({
+            setSelectedKeys,
+            selectedKeys,
+            confirm,
+            clearFilters,
+            close,
+        }) => (
             <div
                 style={{
                     padding: 8,
@@ -67,17 +76,23 @@ console.log('filteredDatas',filteredDatas)
                     ref={searchInput}
                     placeholder={`Search ${dataIndex}`}
                     value={selectedKeys[0]}
-                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    onChange={(e) =>
+                        setSelectedKeys(e.target.value ? [e.target.value] : [])
+                    }
+                    onPressEnter={() =>
+                        handleSearch(selectedKeys, confirm, dataIndex)
+                    }
                     style={{
                         marginBottom: 8,
-                        display: 'block',
+                        display: "block",
                     }}
                 />
                 <Space>
                     <Button
                         type="primary"
-                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        onClick={() =>
+                            handleSearch(selectedKeys, confirm, dataIndex)
+                        }
                         icon={<SearchOutlined />}
                         size="small"
                         style={{
@@ -87,7 +102,9 @@ console.log('filteredDatas',filteredDatas)
                         Search
                     </Button>
                     <Button
-                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        onClick={() =>
+                            clearFilters && handleReset(clearFilters)
+                        }
                         size="small"
                         style={{
                             width: 90,
@@ -123,12 +140,15 @@ console.log('filteredDatas',filteredDatas)
         filterIcon: (filtered) => (
             <SearchOutlined
                 style={{
-                    color: filtered ? '#1677ff' : undefined,
+                    color: filtered ? "#1677ff" : undefined,
                 }}
             />
         ),
         onFilter: (value, record) =>
-            record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+            record[dataIndex]
+                .toString()
+                .toLowerCase()
+                .includes(value.toLowerCase()),
         onFilterDropdownOpenChange: (visible) => {
             if (visible) {
                 setTimeout(() => searchInput.current?.select(), 100);
@@ -138,12 +158,12 @@ console.log('filteredDatas',filteredDatas)
             searchedColumn === dataIndex ? (
                 <Highlighter
                     highlightStyle={{
-                        backgroundColor: '#ffc069',
+                        backgroundColor: "#ffc069",
                         padding: 0,
                     }}
                     searchWords={[searchText]}
                     autoEscape
-                    textToHighlight={text ? text.toString() : ''}
+                    textToHighlight={text ? text.toString() : ""}
                 />
             ) : (
                 text
@@ -152,99 +172,99 @@ console.log('filteredDatas',filteredDatas)
 
     const columns = [
         {
-            title: 'Application #',
-            dataIndex: 'app_id',
-            key: 'emp_id',
-            ...getColumnSearchProps('emp_id'),
+            title: "Application #",
+            dataIndex: "app_id",
+            key: "emp_id",
+            ...getColumnSearchProps("emp_id"),
         },
         {
-            title: 'Fullname',
-            dataIndex: 'fullname',
-            key: 'fullname',
-            ...getColumnSearchProps('fullname'),
+            title: "Fullname",
+            dataIndex: "fullname",
+            key: "fullname",
+            ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
-                console.log('record', record)
+                console.log("record", record);
 
                 return (
                     <div key={i}>
                         {record.lname}, {record.fname}
                     </div>
-                )
-            }
+                );
+            },
         },
         {
-            title: 'Date of Birth',
-            dataIndex: 'dob',
-            key: 'dob',
-            ...getColumnSearchProps('dob'),
+            title: "Date of Birth",
+            dataIndex: "dob",
+            key: "dob",
+            ...getColumnSearchProps("dob"),
             render: (_, record) => {
                 return (
                     <div className="gap-1.5 flex">
-                        {moment(record.dob).format('LL')}
+                        {moment(record.dob).format("LL")}
                     </div>
                 );
             },
         },
         {
-            title: 'Gender',
-            dataIndex: 'gender',
-            key: 'gender',
-            ...getColumnSearchProps('gender'),
+            title: "Gender",
+            dataIndex: "gender",
+            key: "gender",
+            ...getColumnSearchProps("gender"),
         },
         {
-            title: 'Marital Status',
-            dataIndex: 'marital',
-            key: 'mstatus',
-            ...getColumnSearchProps('mstatus'),
+            title: "Marital Status",
+            dataIndex: "marital",
+            key: "mstatus",
+            ...getColumnSearchProps("mstatus"),
         },
         {
-            title: 'Email Address',
-            dataIndex: 'email',
-            key: 'eogs',
-            ...getColumnSearchProps('eogs'),
+            title: "Email Address",
+            dataIndex: "email",
+            key: "eogs",
+            ...getColumnSearchProps("eogs"),
         },
         {
-            title: 'Contact',
-            dataIndex: 'phone',
-            key: 'contact',
-            ...getColumnSearchProps('contact'),
+            title: "Contact",
+            dataIndex: "phone",
+            key: "contact",
+            ...getColumnSearchProps("contact"),
         },
         {
-            title: 'Date Submitted',
-            dataIndex: 'submitted',
-            key: 'submitted',
-            ...getColumnSearchProps('submitted'),
+            title: "Date Submitted",
+            dataIndex: "submitted",
+            key: "submitted",
+            ...getColumnSearchProps("submitted"),
         },
         {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
+            title: "Status",
+            dataIndex: "status",
+            key: "status",
             render: (_, record) => {
-                let color = '';
+                let color = "";
                 switch (record.status) {
-                    case 'Failed':
-                    case 'Dismissal':
-                    case 'Resignation':
-                    case 'EOPE':
-                    case 'AWOL':
-                        color = 'red';
+                    case "Failed":
+                    case "Dismissal":
+                    case "Resignation":
+                    case "EOPE":
+                    case "AWOL":
+                        color = "red";
                         break;
-                    case 'Passed':
-                    case 'Hired':
-                    case 'Regular':
-                        color = 'green';
+                    case "Passed":
+                    case "Hired":
+                    case "Regular":
+                        color = "green";
                         break;
-                    case 'Pending':
-                        color = 'yellow';
+                    case "Pending":
+                        color = "yellow";
                         break;
-                    case 'Initial Phase':
-                        color = 'orange';
+                    case "Initial Phase":
+                        color = "orange";
                         break;
-                    case 'Final Phase':
-                        color = 'blue';
+                    case "Final Phase":
+                        color = "blue";
                         break;
-                    case 'Pooling':
-                        color = 'purple';
+                    case "Pooling":
+                        color = "purple";
                         break;
                 }
                 return (
@@ -253,14 +273,18 @@ console.log('filteredDatas',filteredDatas)
                     </Tag>
                 );
             },
-
         },
         {
-            title: 'Action',
-            dataIndex: 'action',
+            title: "Action",
+            dataIndex: "action",
             render: (_, record) => {
                 return (
-                    <ButtonComponents data={record}/>
+                    <>
+                        <ApplicantMenuSection 
+                         interviewer={interviewer}
+                         data={record}
+                         />
+                    </>
                 );
             },
         },
@@ -279,7 +303,7 @@ console.log('filteredDatas',filteredDatas)
     const paginationConfig = {
         current: page,
         pageSize: pageSize,
-        total:applicants.last_page * pageSize,
+        total: applicants.last_page * pageSize,
         onChange: (page, pageSize) => {
             router.visit(window.location.pathname + `?page=${page}`);
             setCurrent(page);
@@ -289,11 +313,11 @@ console.log('filteredDatas',filteredDatas)
 
     return (
         <div>
-            <div className='flex justify-between items-center '>
+            <div className="flex justify-between items-center ">
                 <div className="flex items-center gap-x-3 mb-4">
                     <h2 className="text-lg font-medium text-gray-800">
                         <b>Applicant(s) Records</b>
-                        <AddApplicantsSection/>
+                        <AddApplicantsSection />
                     </h2>
                 </div>
                 {/* <div className='mr-8'>
@@ -301,9 +325,11 @@ console.log('filteredDatas',filteredDatas)
                 </div> */}
             </div>
             <Table
-            
-            pagination={paginationConfig}
-            columns={columns} dataSource={filteredDatas} className='mt-4' />
+                pagination={paginationConfig}
+                columns={columns}
+                dataSource={filteredDatas}
+                className="mt-4"
+            />
         </div>
     );
-};
+}

@@ -3,17 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ApplicantController extends Controller
 {
     public function index(Request $request)
     {
-        $applicant = Applicant::query();
+        $applicant = Applicant::query()->with(['final','initial']);
+        $user=User::where('position','=','CEO')
+        ->orWhere('position','=','Manager')
+        ->orWhere('position','=','Director')->get();
         if ($request->search) {
             $applicant->where('status', $request->search);
         }
         return response()->json([
+            'interviewer'=>$user,
             'data' => $applicant->paginate(10)
         ], 200);
     }

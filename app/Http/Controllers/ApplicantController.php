@@ -8,17 +8,18 @@ use Illuminate\Http\Request;
 
 class ApplicantController extends Controller
 {
+
     public function index(Request $request)
     {
-        $applicant = Applicant::query()->with(['final','initial']);
-        $user=User::where('position','=','CEO')
-        ->orWhere('position','=','Manager')
-        ->orWhere('position','=','Director')->get();
+        $applicant = Applicant::query()->with(['final', 'initial']);
+        $user = User::where('position', '=', 'CEO')
+            ->orWhere('position', '=', 'Manager')
+            ->orWhere('position', '=', 'Director')->get();
         if ($request->search) {
             $applicant->where('status', $request->search);
         }
         return response()->json([
-            'interviewer'=>$user,
+            'interviewer' => $user,
             'data' => $applicant->paginate(10)
         ], 200);
     }
@@ -35,8 +36,9 @@ class ApplicantController extends Controller
         ], 200);
     }
 
-    public function show($app_id){
-        $applicant = Applicant::where('app_id',$app_id)->first();
+    public function show($app_id)
+    {
+        $applicant = Applicant::where('app_id', $app_id)->first();
         return response()->json([
             'status' => $applicant,
         ], 200);

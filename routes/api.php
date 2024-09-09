@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicantController;
 use App\Http\Controllers\ChecklistController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\EmployeeAttritionController;
 use App\Http\Controllers\EmployeeController;
@@ -39,11 +40,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::resource('outsourcing_erf', OutSourcingErfController::class);
-Route::get('/get_outsourcing_dashboard', [OutSourcingErfController::class, 'get_outsourcing_dashboard']);
+Route::resource('/dashboard', DashboardController::class);
 
 Route::resource('job_position', JobPositionController::class);
 Route::resource('guideq', GuideQuestionController::class);
 Route::resource('applicant', ApplicantController::class);
+
 Route::resource('checklist', ChecklistController::class);
 Route::resource('joboffer', JobOfferController::class);
 Route::resource('onboarding_doc', OnboardingDocController::class);

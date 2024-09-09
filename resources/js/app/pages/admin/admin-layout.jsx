@@ -25,6 +25,7 @@ import AdminFooterComponents from "./_components/admin-footer-components";
 import { KeyIcon } from "@heroicons/react/24/outline";
 import store from "@/app/store/store";
 import { get_user_thunk } from "@/app/redux/app-thunk";
+import { useSelector } from "react-redux";
 const { Header, Sider, Content } = Layout;
 const AdminLayout = ({ children }) => {
     const { url } = usePage();
@@ -241,6 +242,7 @@ const AdminLayout = ({ children }) => {
     const [isOpen, setIsOpen] = useState(false);
     const [changePassModalOpen, setChangePassModalOpen] = useState(false);
     const [updateProfileModalOpen, setUpdateProfileModalOpen] = useState(false);
+    const { user } = useSelector((state) => state.app);
     const dropdownRef = useRef(null);
 
     const handleButtonClick = () => {
@@ -301,10 +303,10 @@ const AdminLayout = ({ children }) => {
                                 className={`${collapsed ? "hidden" : ""} mr-2`}
                             >
                                 <a className=" flex hover:text-primary transition-colors duration-200 ease-in-out text-[1.075rem] font-medium text-secondary-inverse">
-                                    Sarah Bangbang
+                                    {user.employee_fname} {user.employee_lname}
                                 </a>
                                 <span className=" font-medium block text-[0.85rem]">
-                                    SEO Manager
+                                    {user.position}
                                 </span>
                             </div>
                         </div>

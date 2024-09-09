@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { ArchiveBoxXMarkIcon, ArrowRightStartOnRectangleIcon, ArrowTopRightOnSquareIcon, BookOpenIcon, BriefcaseIcon, CalendarDaysIcon, ChatBubbleLeftRightIcon, ChatBubbleOvalLeftEllipsisIcon, CheckBadgeIcon, CheckCircleIcon, CheckIcon, ClipboardDocumentIcon, ClipboardDocumentListIcon, CursorArrowRaysIcon, CursorArrowRippleIcon, DocumentArrowDownIcon, DocumentChartBarIcon, DocumentCheckIcon, DocumentMagnifyingGlassIcon, DocumentMinusIcon, DocumentPlusIcon, ExclamationCircleIcon, HandThumbDownIcon, PencilSquareIcon, ReceiptRefundIcon, RectangleGroupIcon, UserGroupIcon, UserIcon, UserMinusIcon, XCircleIcon } from '@heroicons/react/24/outline'
 import DashboardCardComponents from '../components/dashboard-card-components';
 import { administrator_dashboard_service } from '@/app/pages/services/dashboard-service';
+import { useSelector } from 'react-redux';
 
 export default function DashboardSection() {
+  const { user } = useSelector((state) => state.app);
 
   const [data, setData] = useState({});
   useEffect(() => {
@@ -33,7 +35,7 @@ export default function DashboardSection() {
     <div>
       <div className="flex justify-between items-center">
         <h2 className="text-3xl font-medium font-sans text-gray-800 ml-6">
-          <b>{greeting}, Sarah Bangbang</b>
+          <b>{greeting}, {user.employee_fname} {user.employee_lname}</b>
         </h2>
         <div className='border border-black rounded-md shadow-xl p-1.5 px-3.5 mr-3 items-center justify-center'>
           <h2 className="text-lg font-medium text-gray-800 flex items-center">
@@ -57,7 +59,7 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="green"
               name="On-going ERF"
-              number={data?.status ?? 0}
+              number={data?.ongoing ?? 0}
               icon={<ArrowTopRightOnSquareIcon />}
             />
             <DashboardCardComponents
@@ -75,7 +77,7 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="green"
               name="Declined ERF"
-              number={data?.status ?? 0}
+              number={data?.declined ?? 0}
               icon={<ArchiveBoxXMarkIcon />}
             />
           </div>

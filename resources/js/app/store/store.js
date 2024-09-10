@@ -15,6 +15,7 @@ import empMemoSlice from "../pages/admin/employee_relation/upload_memo/redux/emp
 import engagementSlice from "../pages/admin/engagement_section/calendar_activities/redux/engagement-slice";
 import initialRateSlice from "../pages/admin/initial_rate/redux/initial-rate-state";
 import appSlice from "../redux/app-slice";
+import finalRateSlice from "../pages/admin/final_rate/redux/final-rate-slice";
 const store = configureStore({
     reducer: {
         app:appSlice,
@@ -33,6 +34,7 @@ const store = configureStore({
         emp_memos: empMemoSlice,
         engagements: engagementSlice,
         initial_rate: initialRateSlice,
+        final_rate: finalRateSlice,
     },
 });
 

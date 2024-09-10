@@ -16,11 +16,11 @@ import { BriefcaseIcon } from "@heroicons/react/24/outline";
 import ApplicantProceedInitalPhaseComponent from "../components/applicant-proceed-inital-phase-component";
 import ApplicantInitialRatingScale from "../components/applicant-initial-rating-scale";
 import ApplicantFinalRatingScaleComponent from "../components/applicant-final-rating-scale-component";
-import ApplicantSetScheduleFinalComponent from "../components/applicant-set-schedule-final-component";
 import ApplicantCheckScheduleComponent from "../components/applicant-check-schedule-component";
 import ApplicantResultsComponent from "../components/applicant-results-component";
 import ApplicantJobOfferComponent from "../components/applicant-job-offer-component";
 import ApplicantDetaillsComponent from "../components/applicant-detaills-component";
+import ApplicantSetScheduleComponent from "../components/applicant-set-schedule-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
@@ -40,7 +40,8 @@ export default function ApplicantMenuSection({ data, interviewer }) {
             ? [
                   {
                       component: (
-                          <ApplicantProceedInitalPhaseComponent
+                          <ApplicantSetScheduleComponent
+                              status="Initial Phase"
                               item={{
                                   label: "Proceed to Initial Phase",
                                   key: "2",
@@ -104,7 +105,8 @@ export default function ApplicantMenuSection({ data, interviewer }) {
             ? [
                   {
                       component: (
-                          <ApplicantSetScheduleFinalComponent
+                          <ApplicantSetScheduleComponent
+                              status="Final Phase"
                               item={{
                                   label: "Set Schedule Final Phase",
                                   key: "6",

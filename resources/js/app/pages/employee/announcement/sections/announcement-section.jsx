@@ -23,7 +23,7 @@ export default function AnnouncementSection() {
                         </div>
                         <div className='flex flex-wrap md:flex-nowrap flex-1'>
                             <div className='w-full'>
-                                <div>Aug. 11, 2024 | 06:24 PM</div>
+                                <div></div>
                             </div>
                         </div>
                         <div>
@@ -39,7 +39,6 @@ export default function AnnouncementSection() {
                             </div>
                         </div>
 
-                        {/* Triangular Mark with Text */}
                         <div className='absolute top-0 right-0'>
                             <div className='w-0 h-0 border-t-[60px] rounded-tr-md border-t-red-500 border-l-[65px] border-l-transparent relative'>
                                 <span className='absolute top-[-50px] right-[5px] rotate-45 text-white text-sm font-bold'>NEW</span>
@@ -54,15 +53,7 @@ export default function AnnouncementSection() {
                             <img src="/images/male.png" alt="" className='h-14 rounded-[.95rem]' />
                             <div className='flex flex-col flex-wrap md:flex-nowrap w-full ml-1'>
                                 <h1 className='text-lg'><b>(Human Resource) EmpireOne HR</b></h1>
-                                <div><i>• 4hrs ago</i></div>
-                            </div>
-                            {/* <div className='p-3'>
-                        <button className='text-xl hover:text-blue-500'><DeleteOutlined /></button>
-                    </div> */}
-                        </div>
-                        <div className='flex flex-1'>
-                            <div className='w-full'>
-                                <div>Aug. 11, 2024| 06:24 PM</div>
+                                <div><i>• Aug. 11, 2024 | 06:24 PM</i></div>
                             </div>
                         </div>
                         <div>
@@ -118,9 +109,6 @@ export default function AnnouncementSection() {
                                 <h1 className='text-lg'><b>(Human Resource) EmpireOne HR</b></h1>
                                 <div><i>• 4hrs ago</i></div>
                             </div>
-                            {/* <div className='p-3'>
-                        <button className='text-xl hover:text-blue-500'><DeleteOutlined /></button>
-                    </div> */}
                         </div>
                         <div className='flex flex-1'>
                             <div className='w-full'>

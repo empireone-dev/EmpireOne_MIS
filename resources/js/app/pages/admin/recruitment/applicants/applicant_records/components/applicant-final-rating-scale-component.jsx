@@ -5,7 +5,7 @@ import { useState } from 'react';
 export default function ApplicantFinalRatingScaleComponent({ data,item }) {
   const [open, setOpen] = useState(false);
   function openHandler(params) {
-    setOpen(true);
+    window.open(`/admin/final_rate/${data.app_id}`, "_blank");
 }
 return (
     <>

@@ -1,11 +1,12 @@
 import React from 'react'
 import TodayEventCardComponent from '../components/today-event-card-component'
+import { SparklesIcon } from '@heroicons/react/24/outline'
 
 export default function TodayEventsSection() {
     return (
         <div className='rounded-lg p-3 flex flex-col'>
             <div className=' flex bg-blue-400 p-6 rounded-t-lg mb-5'>
-                <h1 className='text-4xl font-sans text-white'><b>Today's Event(s):</b> 2</h1>
+                <h1 className='flex gap-1 text-4xl font-sans text-white'><SparklesIcon className='h-9'/><b>Today's Event(s):</b> 2</h1>
             </div>
             <div className='mb-6'>
                 <div className='flex flex-col gap-5 mt-1 mx-2'>

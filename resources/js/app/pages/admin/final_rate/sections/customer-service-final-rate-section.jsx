@@ -1,8 +1,20 @@
 import { UserCircleIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 import FinalRateMarkComponent from '../components/final-rate-mark-component'
+import { useDispatch, useSelector } from 'react-redux';
+import { setFinalRate } from '../redux/final-rate-slice';
 
 export default function CustomerServiceFinalRateSection() {
+    const { finalRate } = useSelector((state) => state.final_rate);
+    const dispatch = useDispatch();
+    function handleRate(e) {
+        dispatch(
+            setFinalRate({
+                ...finalRate,
+                [e.target.name]: e.target.value,
+            })
+        );
+    }
     return (
         <div>
             <div className="flex items-center mt-6 mb-2">
@@ -14,16 +26,16 @@ export default function CustomerServiceFinalRateSection() {
             <div>
                 <label htmlFor=""><b>CUSTOMER SERVICE SCORE</b></label>
                 <div className='flex flex-1 w-full gap-8 mt-1'>
-                    <FinalRateMarkComponent rate="1 - Very Poor" name="css" />
-                    <FinalRateMarkComponent rate="2 - Poor" name="css" />
-                    <FinalRateMarkComponent rate="3 - Average" name="css" />
-                    <FinalRateMarkComponent rate="4 - Good" name="css" />
-                    <FinalRateMarkComponent rate="5 - Excellent" name="css" />
+                    <FinalRateMarkComponent onChange={handleRate} rate="1 - Very Poor" name="cscore" value="1" />
+                    <FinalRateMarkComponent onChange={handleRate} rate="2 - Poor" name="cscore" value="2"/>
+                    <FinalRateMarkComponent onChange={handleRate} rate="3 - Average" name="cscore" value="3"/>
+                    <FinalRateMarkComponent onChange={handleRate} rate="4 - Good" name="cscore" value="4"/>
+                    <FinalRateMarkComponent onChange={handleRate} rate="5 - Excellent" name="cscore" value="5"/>
                 </div>
             </div>
             <div className='mt-6'>
                 <label htmlFor=""><b>CUSTOMER SERVICE NOTES</b></label>
-                <textarea type="text" placeholder="" className="border p-2 rounded w-full mt-1 h-40" />
+                <textarea  onChange={handleRate} name='cnotes' type="text" placeholder="" className="border p-2 rounded w-full mt-1 h-40" />
             </div>
         </div>
     )

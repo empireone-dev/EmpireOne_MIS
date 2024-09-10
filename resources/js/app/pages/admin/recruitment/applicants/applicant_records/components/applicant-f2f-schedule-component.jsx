@@ -3,7 +3,10 @@ import { CheckCircleFilled, LoadingOutlined } from "@ant-design/icons";
 import { message, Modal } from "antd";
 import React from "react";
 import { useSelector } from "react-redux";
-import { get_applicant_thunk, sendiv_email_thunk } from "../redux/applicant-thunk";
+import {
+    get_applicant_thunk,
+    sendiv_email_thunk,
+} from "../redux/applicant-thunk";
 import { useState } from "react";
 
 export default function ApplicantF2fScheduleComponent({
@@ -11,7 +14,7 @@ export default function ApplicantF2fScheduleComponent({
     setOpen,
     data,
     status,
-    setOpenDialog
+    setOpenDialog,
 }) {
     const [loading, setLoading] = useState(false);
     const [initial, setInitial] = useState({
@@ -22,27 +25,26 @@ export default function ApplicantF2fScheduleComponent({
         (state) => state.applicants
     );
 
-   async function send_f2f_schedule(e) {
-        if (status == "Initial Phase") {
-            e.preventDefault();
-            setLoading(true);
-            try {
-               await store.dispatch(
-                    sendiv_email_thunk({
-                        ...data,
-                        ifftime: initial.ifftime,
-                        iffdate: initial.iffdate,
-                    })
-                );
-                store.dispatch(get_applicant_thunk());
-                setLoading(false);
-                setOpen(false)
-                setOpenDialog(false)
-                message.success("Email sent successfully");
-            } catch (error) {
-                message.error("There was an error sending the email!");
-                setLoading(false);
-            }
+    async function send_f2f_schedule(e) {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            await store.dispatch(
+                sendiv_email_thunk({
+                    ...data,
+                    ifftime: initial.ifftime,
+                    iffdate: initial.iffdate,
+                    phase_status: status,
+                })
+            );
+            store.dispatch(get_applicant_thunk());
+            setLoading(false);
+            setOpen(false);
+            setOpenDialog(false);
+            message.success("Email sent successfully");
+        } catch (error) {
+            message.error("There was an error sending the email!");
+            setLoading(false);
         }
     }
     return (

@@ -66,7 +66,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::get('/initial_result', function () {
         return Inertia::render('admin/initial_result/page');
     });
-    Route::get('/final_rate', function () {
+    Route::get('/final_rate/{app_id}', function () {
         return Inertia::render('admin/final_rate/page');
     });
     Route::get('/overall_result', function () {

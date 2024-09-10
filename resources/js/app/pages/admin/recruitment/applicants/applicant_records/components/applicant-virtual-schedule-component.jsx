@@ -32,25 +32,24 @@ export default function ApplicantVirtualScheduleComponent({
     async function send_vertual_schedule(e) {
         e.preventDefault();
         setLoading(true);
-        if (status == "Initial Phase") {
-            try {
-                await store.dispatch(
-                    sendiv_email_thunk({
-                        ...data,
-                        ivtime: initial.ivtime,
-                        ivdate: initial.ivdate,
-                        meet_link: initial.meet_link,
-                    })
-                );
-                store.dispatch(get_applicant_thunk());
-                setLoading(false);
-                setOpen(false);
-                setOpenDialog(false);
-                message.success("Email sent successfully");
-            } catch (error) {
-                message.error("There was an error sending the email!");
-                setLoading(false);
-            }
+        try {
+            await store.dispatch(
+                sendiv_email_thunk({
+                    ...data,
+                    ivtime: initial.ivtime,
+                    ivdate: initial.ivdate,
+                    meet_link: initial.meet_link,
+                    phase_status: status,
+                })
+            );
+            store.dispatch(get_applicant_thunk());
+            setLoading(false);
+            setOpen(false);
+            setOpenDialog(false);
+            message.success("Email sent successfully");
+        } catch (error) {
+            message.error("There was an error sending the email!");
+            setLoading(false);
         }
     }
     return (

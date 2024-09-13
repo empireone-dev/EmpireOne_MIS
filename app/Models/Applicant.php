@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Applicant extends Model
@@ -51,5 +52,9 @@ class Applicant extends Model
     public function final(): HasOne
     {
         return $this->hasOne(FinalRate::class,"app_id","app_id");
+    }
+    public function joboffer(): HasMany
+    {
+        return $this->hasMany(JobOffer::class,"app_id","app_id");
     }
 }

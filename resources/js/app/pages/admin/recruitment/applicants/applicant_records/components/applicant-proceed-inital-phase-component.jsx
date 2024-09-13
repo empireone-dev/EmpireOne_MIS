@@ -5,7 +5,8 @@ import { useState } from 'react';
 export default function ApplicantProceedInitalPhaseComponent({ data,item }) {
   const [open, setOpen] = useState(false);
   function openHandler(params) {
-    setOpen(true);
+    // setOpen(true);
+    window.open(`/admin/initial_result/${data.app_id}`, "_blank");
 }
 return (
     <>

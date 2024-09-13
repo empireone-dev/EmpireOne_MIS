@@ -58,18 +58,28 @@ Route::get('/exit_clearance', function () {
     return Inertia::render('exit_clearance/page');
 });
 
+Route::prefix('job_offer')->group(function () {
+    Route::get('/{app_id}', function () {
+        return Inertia::render('job_offer/page');
+    });
+    Route::get('/confirmation', function () {
+        return Inertia::render('job_offer/confirmation/page');
+    });
+});
+
+
 // admin = 1
 Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::get('/initial_rate/{app_id}', function () {
         return Inertia::render('admin/initial_rate/page');
     });
-    Route::get('/initial_result', function () {
+    Route::get('/initial_result/{app_id}', function () {
         return Inertia::render('admin/initial_result/page');
     });
     Route::get('/final_rate/{app_id}', function () {
         return Inertia::render('admin/final_rate/page');
     });
-    Route::get('/overall_result', function () {
+    Route::get('/overall_result/{app_id}', function () {
         return Inertia::render('admin/overall_result/page');
     });
     Route::get('/interviewer_sched', function () {

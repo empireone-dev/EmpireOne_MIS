@@ -9,3 +9,9 @@ export async function create_job_offer_service(data){
     const res = await axios.post('/api/joboffer',data)
     return res.data
 }
+
+
+export async function change_job_offer_service(data){
+    const res = await axios.put('/api/joboffer/'+data.app_id+window.location.search,data)
+    return res.data
+}

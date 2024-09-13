@@ -1,6 +1,7 @@
     import React, { useState } from 'react';
 import InitialPhaseResultSection from './initial-phase-result-section';
 import FinalPhaseResultSection from './final-phase-result-section';
+import { useSelector } from 'react-redux';
 
 function InitialPhaseTab() {
     return (
@@ -20,7 +21,7 @@ function FinalPhaseTab() {
 
 export default function OverallResultPageSection() {
     const [activeTab, setActiveTab] = useState('InitialPhase'); 
-
+  
     const handleTabChange = (tab) => {
         setActiveTab(tab);
     };

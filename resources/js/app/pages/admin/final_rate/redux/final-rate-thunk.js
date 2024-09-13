@@ -5,6 +5,7 @@ import { get_applicant_by_app_id_service } from "@/app/pages/services/applicant-
 export function get_applicant_by_app_id_thunk(app_id) {
   return async function (dispatch, getState) {
     const result = (await get_applicant_by_app_id_service(app_id))
+    console.log('result',result.status)
      dispatch(finalRateSlice.actions.setApplicant(result.status));
   };
 }

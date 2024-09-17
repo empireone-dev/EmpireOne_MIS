@@ -45,7 +45,7 @@ Route::get('/onboarding-documents', function () {
     return Inertia::render('onboarding-documents/page');
 });
 
-Route::get('/pre-employment', function () {
+Route::get('/pre-employment/{app_id}', function () {
     return Inertia::render('pre-employment/page');
 });
 Route::get('/virtual-contract', function () {

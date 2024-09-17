@@ -9,11 +9,13 @@ export default function JobOfferSection() {
     const [offerStatus, setOfferStatus] = useState(null);
     const [form, setForm] = useState({});
     console.log("applicant", applicant);
+    const jo_id = window.location.search.split('=')[1]
 
     const handleAccept = async () => {
         const res = await change_job_offer_service({
             ...applicant,
             ...form,
+            id:jo_id,
             status: "Accepted",
         });
         window.location.reload();
@@ -27,6 +29,7 @@ export default function JobOfferSection() {
         const res = await change_job_offer_service({
             ...applicant,
             ...form,
+            id:jo_id,
             status: "Declined",
         });
         window.location.reload();
@@ -39,8 +42,7 @@ export default function JobOfferSection() {
 
     //     );
     // }
-    const jo = applicant?.joboffer?.find((res) => res.id == 6);
-    console.log("jo", jo);
+    const jo = applicant?.joboffer?.find((res) => res.id == jo_id);
     return (
         <div className="h-screen overflow-hidden">
             <div className="bg-cover bg-[url('/images/SCemp.jpg')] transition-colors duration-300 h-full overflow-y-scroll">

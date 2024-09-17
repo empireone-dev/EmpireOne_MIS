@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\JobOffer as MailJobOffer;
+use App\Mail\PreEmploymentEmail;
 use App\Models\Applicant;
 use App\Models\JobOffer;
 use Illuminate\Http\Request;
@@ -20,8 +21,16 @@ class JobOfferController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        JobOffer::create($request->all());
-        Mail::to($request->email)->send(new MailJobOffer($data));
+        $jo = JobOffer::create($data);
+        Mail::to($request->email)->send(new MailJobOffer(array_merge(
+            $request->all(),
+            ['id' => $jo->id]
+        )));
+        
+        return response()->json([
+            $jo ,
+            'data' => 'success'
+        ], 200);
     }
 
     public function update(Request $request, $id)
@@ -32,9 +41,14 @@ class JobOfferController extends Controller
             'reas' => $request->reas
         ]);
         if ($request->status == 'Accepted') {
-            Applicant::where('app_id', $id)->update([
-                'status' => 'Contract Signing'
-            ]);
+            // Applicant::where('app_id', $id)->update([
+            //     'status' => 'Contract Signing'
+            // ]);
+            Mail::to($request->email)->send(new PreEmploymentEmail(array_merge(
+                $request->all(),
+                ['id' => $jo->id]
+            )));
+            
         }
         return response()->json([
             'data' => 'success'

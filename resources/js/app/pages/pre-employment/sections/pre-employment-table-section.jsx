@@ -136,17 +136,17 @@ export default function PreEmploymentTableSection() {
     const data = [
         {
             key: '1',
-            reqs: 'Mike',
+            reqs: 'Birth Certificate',
             status: 'Approved',
         },
         {
             key: '2',
-            reqs: 'John',
+            reqs: 'Police Clearance',
             status: 'Re-upload',
         },
         {
             key: '3',
-            reqs: 'John',
+            reqs: 'Drug Test',
             status: 'Pending',
         },
     ];

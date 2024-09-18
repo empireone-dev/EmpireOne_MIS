@@ -90,7 +90,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         return Inertia::render('admin/dashboard/page');
     });
 
-    Route::get('/file_201', function () {
+    Route::get('/file_201/{app_id}', function () {
         return Inertia::render('admin/file_201/page');
     });
 

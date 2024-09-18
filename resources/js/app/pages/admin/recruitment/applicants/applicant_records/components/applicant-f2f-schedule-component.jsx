@@ -180,7 +180,7 @@ export default function ApplicantF2fScheduleComponent({
                                 />
                             </div>
                         </div>
-                        <div className="w-full px-2.5">
+                        {/* <div className="w-full px-2.5">
                             <label
                                 className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
                                 for="grid-text"
@@ -204,7 +204,7 @@ export default function ApplicantF2fScheduleComponent({
                                     );
                                 })}
                             </select>
-                        </div>
+                        </div> */}
                     </div>
                     <button
                         type="submit"

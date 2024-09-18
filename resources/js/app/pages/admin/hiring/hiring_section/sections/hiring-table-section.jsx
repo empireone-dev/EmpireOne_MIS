@@ -1,9 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { FolderOpenFilled, SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tag } from 'antd';
+import { DislikeOutlined, FolderOpenFilled, LineOutlined, SearchOutlined } from '@ant-design/icons';
+import { Button, Input, Modal, Space, Table, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { useSelector } from 'react-redux';
 import { router } from '@inertiajs/react';
+import { BriefcaseIcon } from '@heroicons/react/24/outline';
 
 export default function HiringTableSection() {
     const [searchText, setSearchText] = useState('');
@@ -11,6 +12,12 @@ export default function HiringTableSection() {
     const searchInput = useRef(null);
     const { joboffers } = useSelector((state) => state.joboffers)
     console.log('joboffers', joboffers)
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -137,7 +144,7 @@ export default function HiringTableSection() {
                     <div key={i}>
                         {record?.applicant?.fname} {record?.applicant?.mname} {record?.applicant?.lname}
                     </div>
-                    
+
                 )
             }
         },
@@ -167,6 +174,12 @@ export default function HiringTableSection() {
                     case 'Accepted':
                         color = 'blue';
                         break;
+                    case 'Declined':
+                        color = 'red';
+                        break;
+                    case 'Pending':
+                        color = 'yellow';
+                        break;
                 }
 
                 return (
@@ -180,14 +193,62 @@ export default function HiringTableSection() {
             title: 'Action',
             dataIndex: 'action',
             render: (_, record) => {
+
                 return (
-                    <button
-                        type="button"
-                        onClick={() => router.visit('/admin/file_201')}
-                        className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300  shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
-                    >
-                        <FolderOpenFilled />
-                    </button>
+                    <div className='flex gap-1'>
+                        {record.status !== 'Pending' && record.status !== 'Declined' && (
+                            <button
+                                type="button"
+                                onClick={() => router.visit(`/admin/file_201/${joboffers.app_id}`)}
+                                className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
+                            >
+                                <FolderOpenFilled />
+                            </button>
+                        )}
+                        {record.status === 'Declined' && (
+                            <div>
+                                <button
+                                    type="button"
+                                    onClick={showModal}
+                                    className="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 shadow-lg shadow-red-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
+                                >
+                                    <DislikeOutlined />
+                                </button>
+                                <Modal
+                                    title="Declined Job Offer"
+                                    visible={isModalVisible}
+                                    onCancel={() => setIsModalVisible(false)}
+                                    width={800}
+                                    footer={null}
+                                >
+                                    <div className="w-full">
+                                        <hr />
+                                        <label className="block uppercase tracking-wide text-xs font-bold mb-2 mt-2" htmlFor="grid-text">
+                                            Reason for Declining Job Offer
+                                        </label>
+                                        <textarea
+                                            className="appearance-none block w-full h-60 border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                            readOnly
+                                        />
+                                    </div>
+                                    <div className='flex items-center justify-end'>
+                                        <button 
+                                        className='bg-blue-500 text-white hover:bg-blue-600 p-1.5 rounded-md flex'
+                                        onClick=""
+                                        >
+                                            <BriefcaseIcon className='h-5 mr-0.5'/>Make a new Job Offer
+                                        </button>
+                                    </div>
+                                </Modal>
+                            </div>
+                        )}
+                        {record.status === 'Pending' && (
+                            <div className='ml-4'>
+                                <LineOutlined />
+                            </div>
+                        )}
+
+                    </div>
                 )
             }
         },

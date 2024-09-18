@@ -8,7 +8,7 @@ export default function JobOfferSection() {
     const { applicant } = useSelector((state) => state.final_rate);
     const [offerStatus, setOfferStatus] = useState(null);
     const [form, setForm] = useState({});
-    console.log("applicant", applicant);
+    
     const jo_id = window.location.search.split('=')[1]
 
     const handleAccept = async () => {
@@ -43,11 +43,12 @@ export default function JobOfferSection() {
     //     );
     // }
     const jo = applicant?.joboffer?.find((res) => res.id == jo_id);
+   
     return (
         <div className="h-screen overflow-hidden">
             <div className="bg-cover bg-[url('/images/SCemp.jpg')] transition-colors duration-300 h-full overflow-y-scroll">
                 <div className="container mx-auto flex justify-center">
-                    {jo?.status == "Passed" && (
+                    {jo?.status == "Pending" && (
                         <div className="bg-white shadow-2xl shadow-black rounded-lg p-6 mt-12 w-full">
                             <div className="flex items-center justify-center p-3">
                                 <img

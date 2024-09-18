@@ -46,7 +46,7 @@ class JobOfferController extends Controller
             // ]);
             Mail::to($request->email)->send(new PreEmploymentEmail(array_merge(
                 $request->all(),
-                ['id' => $jo->id]
+                ['id' => $jo->id],
             )));
             
         }

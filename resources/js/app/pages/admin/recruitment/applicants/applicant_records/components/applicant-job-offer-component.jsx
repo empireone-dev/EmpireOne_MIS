@@ -11,7 +11,9 @@ import { useEffect } from "react";
 
 export default function ApplicantJobOfferComponent({ data, item }) {
     const { job_positions } = useSelector((state) => state.job_positions);
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState({
+        allowance:0
+    });
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     function openHandler(params) {
@@ -26,6 +28,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                 create_job_offer_thunk({
                     ...form,
                     ...data,
+                    status:'Pending'
                 })
             );
             await store.dispatch(get_applicant_thunk());

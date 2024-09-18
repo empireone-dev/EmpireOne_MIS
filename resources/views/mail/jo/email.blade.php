@@ -10,10 +10,10 @@
   Thank you for your interest in EmpireOne BPO Solutions Inc. We’d like to offer you the position of {{$data['jobPos']}}. Below is our Job Offer: .
 
   1. Employment Status
-  You Employment Status is Probationary upon the start of your employment with EmpireOne Global Solution Inc.
+  Your Employment Status is Probationary upon the start of your employment with EmpireOne Global Solution Inc.
 
   2. Compensation
-  You shall receive a monthly salary Package of Php {{$data['salary']}} + {{$data['allowance']}}.
+  You shall receive a monthly salary Package of Php {{$data['salary']}} {{$data['allowance'] != 0?'+ Php':''}} {{$data['allowance'] != 0?$data['allowance']:''}} {{$data['typea']??''}}.
 
   3. Benefits
   13th month pay, SSS, Philhealth, HDMF (Pag-ibig), 10% Night Differential, EmpireOne points and other government mandated benefits applicable to your employment.
@@ -30,7 +30,7 @@
 
   We are excited to welcome you in our EmpireOne BPO Solutions Inc. family! Thank you.
 
- Note: This job offer letter will be effective within 24 hours upon service and shall be deemed binding and executory upon the issuance of an employment contract.
+  Note: This job offer letter will be effective within 24 hours upon service and shall be deemed binding and executory upon the issuance of an employment contract.
 
 
   Truly yours,

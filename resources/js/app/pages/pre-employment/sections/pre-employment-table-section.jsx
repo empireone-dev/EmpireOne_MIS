@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
-import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Tag } from "antd";
+import { CheckCircleFilled, CheckCircleOutlined, CheckSquareOutlined, LineOutlined, SearchOutlined, UploadOutlined } from "@ant-design/icons";
+import { Button, Input, Modal, Space, Table, Tag, Upload } from "antd";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import moment from "moment";
@@ -10,6 +10,22 @@ export default function PreEmploymentTableSection() {
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
     const { job_positions } = useSelector((state) => state.job_positions)
+
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [fileList, setFileList] = useState([])
+
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleOk = () => {
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
+
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -142,12 +158,17 @@ export default function PreEmploymentTableSection() {
         {
             key: '2',
             reqs: 'Police Clearance',
-            status: 'Re-upload',
+            status: 'Declined',
         },
         {
             key: '3',
             reqs: 'Drug Test',
-            status: 'Pending',
+            status: 'Uploaded',
+        },
+        {
+            key: '4',
+            reqs: 'NBI Clearance',
+            status: 'Approved',
         },
     ];
 
@@ -156,37 +177,91 @@ export default function PreEmploymentTableSection() {
             title: "Requirements",
             dataIndex: "reqs",
             key: "reqs",
-            // ...getColumnSearchProps("reqs"),
+            ...getColumnSearchProps("reqs"),
         },
         {
             title: "Status",
             dataIndex: "status",
             key: "status",
             render: (_, record, i) => {
-                console.log('record', record)
+                console.log('record', record);
+
+                const statusText = record.status === 'Declined'
+                    ? `${record.status} - Blurred Image/Image Not Clear,Uploaded Incorrect File`
+                    : record.status;
 
                 return (
                     <Tag
                         color={
-                            record.status == 'Approved' ? 'green' :
-                                record.status == 'Pending' ? 'orange' :
-                                    record.status == 'Re-upload' ? 'red' :
-                                        record.status == 'In Review' ? 'blue' :
+                            record.status === 'Approved' ? 'green' :
+                                record.status === 'Uploaded' ? 'orange' :
+                                    record.status === 'Declined' ? 'red' :
+                                        record.status === 'In Review' ? 'blue' :
                                             'blue'
                         }
                         key={i}
                     >
-                        {record.status}
+                        {statusText}
                     </Tag>
-
-                )
-
-
-
-
+                );
             }
         },
+        {
+            title: 'Action',
+            dataIndex: 'action',
+            render: (_, record) => {
 
+                return (
+                    <div className='flex gap-1'>
+                        {record.status === 'Approved' && (
+                            <div className="text-green-500">
+                                <CheckCircleOutlined className="text-2xl ml-2.5" />
+                            </div>
+                        )}
+                        {record.status === 'Declined' && (
+                            <div>
+                                <button
+                                    type="button"
+                                    onClick={showModal}
+                                    className="text-2xl ml-2.5 text-red-500"
+                                >
+                                    <UploadOutlined />
+                                </button>
+                                <Modal title="REUPLOAD REQUIREMENTS" open={isModalVisible} onOk={handleOk} okText="Submit" onCancel={handleCancel}>
+                                    <div className='w-full'>
+                                        <label
+                                            className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
+                                            for="grid-text"
+                                        >
+                                            Name of Requirement
+                                        </label>
+                                        <input type="text" className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" value="Police Clearance" readOnly />
+                                    </div>
+                                    <Upload
+                                        action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+                                        listType="picture"
+                                        method='GET'
+                                        maxCount={1}
+                                        multiple={false}
+                                        defaultFileList={fileList}
+                                    >
+                                        <Button type="primary" icon={<UploadOutlined />}>
+                                            Upload Scanned Image
+                                        </Button>
+                                    </Upload>
+                                </Modal>
+                            </div>
+                        )}
+                        {record.status === 'Uploaded' && (
+                            <div className='ml-2.5 text-2xl text-orange-500'>
+                                <CheckSquareOutlined />
+                            </div>
+                        )}
+
+                    </div>
+                )
+            }
+        },
     ];
 
     return (

@@ -1,1 +1,0 @@
-import{j as t}from"./app-cbabef96.js";import o from"./employee-layout-d785303b.js";import"./employee-sidenav-section-f968423c.js";import"./employee-sidenav-components-9fd44c83.js";import"./UsersIcon-8d3f064b.js";import"./UserCircleIcon-51fbb8ab.js";function a(){return t.jsx(o,{children:"Engagement Section"})}export{a as default};

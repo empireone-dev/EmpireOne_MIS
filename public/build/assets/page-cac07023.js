@@ -1,0 +1,1 @@
+import{j as r}from"./app-bafafda5.js";import{OnboardingDocsStepper as o}from"./onboarding-documents-stepper-cd7fc66c.js";import"./index-d9d5c3cb.js";import"./floating-ui.dom-0fe77a48.js";import"./wysiwyg-d811c548.js";import"./quill.snow-cdddaad3.js";function e(){return r.jsx("div",{children:r.jsx(o,{})})}export{e as default};

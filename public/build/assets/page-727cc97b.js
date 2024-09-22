@@ -1,1 +1,0 @@
-import{j as t}from"./app-cbabef96.js";import r from"./exit-interview-form-section-975af4e3.js";import"./checkbox-input-component-6ae580e8.js";import"./table-row-component-bfbf27dc.js";function n(){return t.jsx("div",{children:t.jsx(r,{})})}export{n as default};

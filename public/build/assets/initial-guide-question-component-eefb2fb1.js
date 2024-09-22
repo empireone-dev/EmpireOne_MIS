@@ -1,1 +1,0 @@
-import{j as e}from"./app-cbabef96.js";function i({question:s}){return e.jsxs("div",{className:"flex items-center mb-3 gap-1",children:[e.jsx("input",{id:"default-checkbox",type:"checkbox",value:"",class:"w-4 h-4 text-blue-600 bg-gray-100 border-black rounded focus:ring-blue-500 focus:ring-2"}),e.jsx("h1",{children:e.jsx("b",{children:s})})]})}export{i as default};

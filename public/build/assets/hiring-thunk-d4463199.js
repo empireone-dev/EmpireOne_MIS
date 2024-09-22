@@ -1,0 +1,1 @@
+import{g as r,c as s}from"./job-offer-service-260492a8.js";import{B as c}from"./app-bafafda5.js";function a(){return async function(e,o){const t=(await r()).data;console.log("result",t),e(c.actions.setJobOffers(t))}}function i(e){return async function(o,t){await s(e),console.log("result",e)}}export{i as c,a as g};

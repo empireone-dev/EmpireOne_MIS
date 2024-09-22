@@ -1,0 +1,1 @@
+import{w as e}from"./app-bafafda5.js";import{g as i}from"./applicant-record-service-964f751b.js";async function r(t){return(await axios.post("/api/final_rate",t)).data}function _(t){return async function(a,s){const n=await i(t);console.log("result",n.status),a(e.actions.setApplicant(n.status))}}function p(t){return async function(a,s){await r(t)}}export{_ as g,p as s};

@@ -1,0 +1,1 @@
+import{c as a}from"./app-bafafda5.js";async function s(){return(await a.get("/api/joboffer")).data}async function t(e){return(await a.post("/api/joboffer",e)).data}async function c(e){return(await a.put("/api/joboffer/"+e.app_id+window.location.search,e)).data}export{c as a,t as c,s as g};

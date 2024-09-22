@@ -38,7 +38,7 @@ class ApplicantController extends Controller
 
     public function show($app_id)
     {
-        $applicant = Applicant::where('app_id', $app_id)->with(['final', 'initial','joboffer'])->first();
+        $applicant = Applicant::where('app_id', $app_id)->with(['final', 'initial','joboffer','requirements'])->first();
         return response()->json([
             'status' => $applicant,
         ], 200);

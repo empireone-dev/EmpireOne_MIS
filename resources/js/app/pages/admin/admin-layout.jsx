@@ -229,6 +229,15 @@ const AdminLayout = ({ children }) => {
                             "/admin/engagement_section/calendar_activities"
                         ),
                 },
+                {
+                    key: "emart",
+                    icon: <HolderOutlined />,
+                    label: "E-mart Section",
+                    onClick: () =>
+                        router.visit(
+                            "/admin/engagement_section/emart"
+                        ),
+                },
             ],
         },
         {

@@ -16,6 +16,7 @@ use App\Http\Controllers\JobPositionController;
 use App\Http\Controllers\MedicineRecordController;
 use App\Http\Controllers\OnboardingDocController;
 use App\Http\Controllers\OutSourcingErfController;
+use App\Http\Controllers\PreEmploymentFileController;
 use App\Http\Controllers\UploadMemoController;
 use App\Mail\InitialEmail;
 use App\Mail\InitialvEmail;
@@ -58,6 +59,9 @@ Route::resource('emp_memo', UploadMemoController::class);
 Route::resource('engagement', EmployeeEngagementController::class);
 Route::resource('initial_rate', InitialRateController::class);
 Route::resource('final_rate', FinalRateController::class);
+Route::resource('pre_employment_file', PreEmploymentFileController::class);
+
+
 
 Route::post('/sendiv_email', [EmailController::class, 'sendiv_email']);
   

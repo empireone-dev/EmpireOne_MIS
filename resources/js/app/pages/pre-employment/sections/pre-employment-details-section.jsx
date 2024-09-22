@@ -6,15 +6,19 @@ import UploadRequirementsSection from './upload-requirements-section';
 import store from '@/app/store/store';
 import { get_checklist_thunk } from '../../admin/hiring/pre_employment/redux/pre-employment-thunk';
 import { useEffect } from 'react';
+import { get_pre_employment_file_thunk } from '../redux/pre-employment-files-thunk';
 
 export default function PreEmploymentDetailsSection() {
     const [modalVisible, setModalVisible] = useState(false);
     const { applicant } = useSelector((state) => state.final_rate);
     const jo_id = window.location.search.split('=')[1]
-
+    const app_id = window.location.pathname.split('/')[2]
     useEffect(() => {
         store.dispatch(get_checklist_thunk())
+        store.dispatch(get_pre_employment_file_thunk(app_id))
     }, []);
+
+    
 
     const handleUploadClick = () => {
         setModalVisible(true);
@@ -89,7 +93,7 @@ export default function PreEmploymentDetailsSection() {
                                     </div>
                                 </div>
 
-                               <UploadRequirementsSection />
+                                <UploadRequirementsSection />
                             </form>
                             <PreEmploymentTableSection />
                         </div>

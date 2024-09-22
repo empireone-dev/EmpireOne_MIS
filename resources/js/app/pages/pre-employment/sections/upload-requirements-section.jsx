@@ -2,24 +2,39 @@ import { FileJpgOutlined, UploadOutlined } from '@ant-design/icons'
 import React, { useState } from 'react';
 import { Modal, Button, Upload } from 'antd';
 import { useSelector } from 'react-redux';
+import { store_pre_employment_file_service } from '../../services/pre-employment-file-service';
+import moment from 'moment';
 
 export default function UploadRequirementsSection() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [reqs,setReqs] =useState('')
     const { checklists } = useSelector((state) => state.checklists);
     const [fileList, setFileList] = useState([])
     const showModal = () => {
         setIsModalOpen(true);
     };
 
-    const handleOk = () => {
+    const handleOk = async () => {
         setIsModalOpen(false);
+        const fd = new FormData()
+        console.log('fileList',fileList)
+        fd.append('file', fileList.originFileObj)
+        fd.append('status', 'Uploaded')
+        fd.append('reqs', reqs)
+        fd.append('created', moment().format('YYYY-MM-DD HH:mm:ss'))
+        fd.append('app_id', window.location.pathname.split('/')[2])
+        if (fileList.status == 'done') {
+            const result = await store_pre_employment_file_service(fd)
+            console.log('result', result)
+        }
     };
-
     const handleCancel = () => {
         setIsModalOpen(false);
     };
 
-    console.log("checklists", checklists)
+    async function upload_file({ file }) {
+        setFileList(file)
+    }
     return (
         <div>
 
@@ -40,13 +55,14 @@ export default function UploadRequirementsSection() {
                         className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         name=""
                         id=""
+                        onChange={(e)=>setReqs(e.target.value)}
                     >
                         <option></option>
                         {
                             checklists
                                 .filter(res => res.site === "San Carlos")
                                 .map((res, i) => {
-                                    return <option key={i}>{res.reqs}</option>;
+                                    return <option value={res.reqs} key={i}>{res.reqs}</option>;
                                 })
                         }
                     </select>
@@ -57,6 +73,7 @@ export default function UploadRequirementsSection() {
                     listType="picture"
                     method='GET'
                     maxCount={1}
+                    onChange={upload_file}
                     multiple={false}
                     defaultFileList={fileList}
                 >

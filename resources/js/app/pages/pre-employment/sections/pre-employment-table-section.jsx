@@ -9,7 +9,9 @@ export default function PreEmploymentTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
-    const { job_positions } = useSelector((state) => state.job_positions)
+    // const { job_positions } = useSelector((state) => state.job_positions)
+    const { preemploymentfiles } = useSelector((state) => state.preemploymentfiles)
+    const { applicant } = useSelector((state) => state.final_rate);
 
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [fileList, setFileList] = useState([])
@@ -25,7 +27,6 @@ export default function PreEmploymentTableSection() {
     const handleCancel = () => {
         setIsModalVisible(false);
     };
-
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -149,30 +150,37 @@ export default function PreEmploymentTableSection() {
             ),
     });
 
-    const data = [
-        {
-            key: '1',
-            reqs: 'Birth Certificate',
-            status: 'Approved',
-        },
-        {
-            key: '2',
-            reqs: 'Police Clearance',
-            status: 'Declined',
-        },
-        {
-            key: '3',
-            reqs: 'Drug Test',
-            status: 'Uploaded',
-        },
-        {
-            key: '4',
-            reqs: 'NBI Clearance',
-            status: 'Approved',
-        },
-    ];
+    // const data = [
+    //     {
+    //         key: '1',
+    //         reqs: 'Birth Certificate',
+    //         status: 'Approved',
+    //     },
+    //     {
+    //         key: '2',
+    //         reqs: 'Police Clearance',
+    //         status: 'Declined',
+    //     },
+    //     {
+    //         key: '3',
+    //         reqs: 'Drug Test',
+    //         status: 'Uploaded',
+    //     },
+    //     {
+    //         key: '4',
+    //         reqs: 'NBI Clearance',
+    //         status: 'Approved',
+    //     },
+    // ];
+
 
     const columns = [
+        {
+            title: "App ID",
+            dataIndex: "app_id",
+            key: "app_id",
+            ...getColumnSearchProps("app_id"),
+        },
         {
             title: "Requirements",
             dataIndex: "reqs",
@@ -263,10 +271,10 @@ export default function PreEmploymentTableSection() {
             }
         },
     ];
-
+    console.log('applicant', applicant)
     return (
         <div className="mt-2">
-            <Table columns={columns} dataSource={data} />;
+            <Table columns={columns} dataSource={applicant?.requirements ?? []} />;
         </div>
     );
 }

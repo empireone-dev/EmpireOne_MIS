@@ -1,9 +1,12 @@
-import { CheckSquareOutlined, PlusSquareFilled, PlusSquareTwoTone } from '@ant-design/icons'
+import { CheckSquareFilled, CheckSquareOutlined, PlusSquareFilled, PlusSquareTwoTone } from '@ant-design/icons'
 import { Modal } from 'antd';
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 
 export default function File201ChecklistButtonSection() {
     const [open, setOpen] = useState(false);
+    const { checklists } = useSelector((state) => state.checklists);
+    const { applicant } = useSelector((state) => state.final_rate);
     return (
         <div className="my-2">
             <div class="inline-flex rounded-md shadow-sm" role="group">
@@ -17,7 +20,7 @@ export default function File201ChecklistButtonSection() {
                 </button>
             </div>
             <Modal
-                title={<span>Pre Employment Checklist of <b><u>Sarah Sample</u></b></span>}
+                title={<span><CheckSquareOutlined/> Pre Employment Checklist of <b>{applicant?.fname ?? ''} {applicant?.lname ?? ''}</b></span>}
                 centered
                 open={open}
                 onCancel={() => setOpen(false)}
@@ -29,18 +32,37 @@ export default function File201ChecklistButtonSection() {
                         <img className="w-48" src="/images/newlogo.png" alt="logo" />
                     </div>
                     <div class="flex flex-col -mx-3 mb-6 px-2">
-                        <div class="flex items-center mb-4">
-                            <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2" checked/>
-                                <label for="default-checkbox" class="ms-2 text-lg font-medium dark:text-gray-300">Birth Certificate *</label>
+                        <div>
+                            {
+                                checklists
+                                    .filter(res => res.site === "San Carlos")
+                                    .map((res, i) => (
+                                        <div className="flex items-center mb-4" key={i}>
+                                            <input
+                                                id={`checkbox-${i}`}
+                                                type="checkbox"
+                                                value={res.reqs}
+                                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
+                                            />
+                                            <label
+                                                htmlFor={`checkbox-${i}`}
+                                                className="ms-2 text-lg font-medium dark:text-gray-300"
+                                            >
+                                                {res.reqs}
+                                            </label>
+                                        </div>
+                                    ))
+                            }
+                        </div>
+
+                        {/* <div class="flex items-center mb-4">
+                            <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2" checked />
+                            <label for="default-checkbox" class="ms-2 text-lg font-medium dark:text-gray-300">SSS Form E1/SSS ID * </label>
                         </div>
                         <div class="flex items-center mb-4">
-                            <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2" checked/>
-                                <label for="default-checkbox" class="ms-2 text-lg font-medium dark:text-gray-300">SSS Form E1/SSS ID * </label>
-                        </div>
-                        <div class="flex items-center mb-4">
-                            <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"  />
-                                <label for="default-checkbox" class="ms-2 text-lg font-medium dark:text-gray-300">Certificate of Employment from the previous employer </label>
-                        </div>
+                            <input id="default-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2" />
+                            <label for="default-checkbox" class="ms-2 text-lg font-medium dark:text-gray-300">Certificate of Employment from the previous employer </label>
+                        </div> */}
                     </div>
                 </form>
             </Modal>

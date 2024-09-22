@@ -18,6 +18,7 @@ class JobOfferController extends Controller
             'data' => $joboffer
         ], 200);
     }
+    
     public function store(Request $request)
     {
         $data = $request->all();

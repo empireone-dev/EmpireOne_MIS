@@ -5,13 +5,21 @@ import Highlighter from 'react-highlight-words';
 import { useSelector } from 'react-redux';
 import { router } from '@inertiajs/react';
 import File201ButtonSection from './file-201-button-section';
+import store from '@/app/store/store';
+import { get_checklist_thunk } from '../../hiring/pre_employment/redux/pre-employment-thunk';
+import { useEffect } from 'react';
 
 export default function File201TableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
     const searchInput = useRef(null);
-    const { joboffers } = useSelector((state) => state.joboffers)
+    const { applicant } = useSelector((state) => state.final_rate);
+    console.log('applicant',applicant.requirements)
+
+    useEffect(() => {
+        store.dispatch(get_checklist_thunk())
+    }, []);
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -122,7 +130,7 @@ export default function File201TableSection() {
     const columns = [
         {
             title: 'Requirements',
-            dataIndex: 'name',
+            dataIndex: 'reqs',
             key: 'reqs',
             ...getColumnSearchProps('reqs'),
         },
@@ -159,23 +167,8 @@ export default function File201TableSection() {
         },
     ];
 
-    const dataSource = [
-        {
-            key: '1',
-            name: 'Barangay Clearance with the purpose of bank application',
-            status: 'Approved',
-        },
-        {
-            key: '2',
-            name: 'Birth Certificate',
-            status: 'Approved',
-        },
-        {
-            key: '3',
-            name: 'Contract',
-            status: 'Uploaded',
-        },
-    ];
+    const dataSource = applicant?.requirements??[];
+    // console.log("preemploymentfile",preemploymentfile)
 
     return (
         <div>
@@ -188,12 +181,24 @@ export default function File201TableSection() {
             >
                 <p>Sample Image</p>
                 <img src="/images/SCemp.jpg" alt="" />
+                <div className='flex flex-1 gap-1 w-full items-center justify-center mt-2 text-white'>
+                    <div className='flex w-full items-center justify-center'>
+                        <button className='bg-green-500 w-full rounded hover:bg-green-600 p-0.5'>
+                            Approved
+                        </button>
+                    </div>
+                    <div className='flex w-full items-center justify-center'>
+                        <button className='bg-red-500 w-full rounded hover:bg-red-600 p-0.5'>
+                            Declined
+                        </button>
+                    </div>
+                </div>
             </Modal>
 
             <div>
                 <div className="flex items-center gap-x-3 mb-4">
                     <h2 className="text-lg font-medium text-gray-800">
-                        Pre-Employment Requirements of:<b> <u>Sarah Sample</u></b>
+                        Pre-Employment Requirements of<b> {applicant?.fname??''} {applicant?.lname??''}</b>
                     </h2>
                 </div>
                 <div className='flex flex-1 justify-between'>

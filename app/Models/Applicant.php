@@ -57,4 +57,8 @@ class Applicant extends Model
     {
         return $this->hasMany(JobOffer::class,"app_id","app_id");
     }
+    public function requirements(): HasMany
+    {
+        return $this->hasMany(PreEmploymentFile::class,"app_id","app_id");
+    }
 }

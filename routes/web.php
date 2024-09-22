@@ -269,6 +269,9 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
                 return Inertia::render('admin/engagement_section/calendar_activities/all_events_rate/page');
             });
         });
+        Route::get('/emart', function () {
+            return Inertia::render('admin/engagement_section/emart/page');
+        });
     });
 
     Route::get('/ceo_section', function () {

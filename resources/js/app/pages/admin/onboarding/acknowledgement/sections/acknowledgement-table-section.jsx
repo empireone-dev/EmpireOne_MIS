@@ -134,7 +134,7 @@ export default function AcknowledgementTableSection() {
                     <div key={i}>
                         {record?.applicant?.fname} {record?.applicant?.mname} {record?.applicant?.lname}
                     </div>
-                    
+
                 )
             }
         },
@@ -156,9 +156,24 @@ export default function AcknowledgementTableSection() {
             key: 'status',
             render: (_, record, i) => {
                 console.log('record', record)
+                let color = '';
+                switch (record.status) {
+                    case 'Contract Signing':
+                        color = 'green';
+                        break;
+                    case 'Accepted':
+                        color = 'blue';
+                        break;
+                    case 'Declined':
+                        color = 'red';
+                        break;
+                    case 'Pending':
+                        color = 'yellow';
+                        break;
+                }
 
                 return (
-                    <Tag color={'orange'} key={i}>
+                    <Tag color={color} key={record.key}>
                         {record.status}
                     </Tag>
                 )
@@ -172,7 +187,7 @@ export default function AcknowledgementTableSection() {
                     <div className='flex flex-1 gap-1'>
                         <button
                             type="button"
-                            onClick={() => router.visit('/admin/file_201')}
+                            onClick={() => router.visit(`/admin/file_201/${record.app_id}`)}
                             className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300  shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
                         >
                             <FolderOpenFilled />

@@ -1,7 +1,9 @@
-import { PictureFilled } from "@ant-design/icons";
+import { PictureFilled, StopOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import React from "react";
 import { useState } from "react";
+import File201ApprovedSection from "./file-201-approved-section";
+import File201DeclinedSection from "./file-201-declined-section";
 
 export default function File201ImageSection({ data }) {
     const [open, setOpen] = useState(false);
@@ -15,26 +17,24 @@ export default function File201ImageSection({ data }) {
                 <PictureFilled />
             </button>
             <Modal
-                title="(Pre Employment Requirements' Name)"
+                title={data.reqs}
                 visible={open}
                 onCancel={() => setOpen(false)}
                 footer={null}
             >
-                <p>{data.reqs}</p>
-                <img src={data.reqs_img} alt="" />
-                <div className="flex flex-1 gap-1 w-full items-center justify-center mt-2 text-white">
+                {data?.reqs_img ? (
+                    <img src={data.reqs_img} alt="Requirement Image" />
+                ) : (
+                    <p className="flex items-center justify-center text-gray-400 font-sans">
+                        <StopOutlined />
+                        &nbsp;No image available
+                    </p>
+                )}
+                <div className="flex flex-1 gap-1 w-full items-center justify-center mt-3 text-white">
                     {data.status === "Uploaded" ? (
                         <>
-                            <div className="flex w-full items-center justify-center">
-                                <button className="bg-green-500 w-full rounded hover:bg-green-600 p-0.5">
-                                    Approved
-                                </button>
-                            </div>
-                            <div className="flex w-full items-center justify-center">
-                                <button className="bg-red-500 w-full rounded hover:bg-red-600 p-0.5">
-                                    Declined
-                                </button>
-                            </div>
+                            <File201ApprovedSection />
+                            <File201DeclinedSection />
                         </>
                     ) : (
                         <p className="text-center">Status: {data.status}</p>

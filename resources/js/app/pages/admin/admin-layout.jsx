@@ -168,6 +168,20 @@ const AdminLayout = ({ children }) => {
             ],
         },
         {
+            key: "attrition",
+            icon: <UserDeleteOutlined />,
+            label: "Attrition",
+            children: [
+                {
+                    key: "attrition_section",
+                    icon: <HolderOutlined />,
+                    label: "Attrition Section",
+                    onClick: () =>
+                        router.visit("/admin/attrition/attrition_section"),
+                },
+            ],
+        },
+        {
             key: "employee_wellness",
             icon: <MedicineBoxOutlined />,
             label: "Employee Wellness",
@@ -189,20 +203,6 @@ const AdminLayout = ({ children }) => {
                         router.visit(
                             "/admin/employee_wellness/employee_health_data"
                         ),
-                },
-            ],
-        },
-        {
-            key: "attrition",
-            icon: <UserDeleteOutlined />,
-            label: "Attrition",
-            children: [
-                {
-                    key: "attrition_section",
-                    icon: <HolderOutlined />,
-                    label: "Attrition Section",
-                    onClick: () =>
-                        router.visit("/admin/attrition/attrition_section"),
                 },
             ],
         },

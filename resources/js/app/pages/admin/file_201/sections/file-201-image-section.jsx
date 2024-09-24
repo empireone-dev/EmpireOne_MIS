@@ -1,12 +1,13 @@
 import { PictureFilled, StopOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
+import { Image, Modal } from "antd";
 import React from "react";
 import { useState } from "react";
 import File201ApprovedSection from "./file-201-approved-section";
-import File201DeclinedSection from "./file-201-declined-section";
+import File201ButtonDeclinedSection from "./file-201-button-declined-section";
 
 export default function File201ImageSection({ data }) {
     const [open, setOpen] = useState(false);
+    
     return (
         <div>
             <button
@@ -24,7 +25,9 @@ export default function File201ImageSection({ data }) {
                 footer={null}
             >
                 {data?.reqs_img ? (
-                    <img src={data.reqs_img} alt="Requirement Image" />
+                    <Image 
+                    src={data.reqs_img}
+                    />
                 ) : (
                     <p className="flex items-center justify-center text-gray-400 font-sans">
                         <StopOutlined />
@@ -34,8 +37,13 @@ export default function File201ImageSection({ data }) {
                 <div className="flex flex-1 gap-1.5 w-full items-center justify-center mt-3 text-white">
                     {data.status === "Uploaded" ? (
                         <>
-                            <File201ApprovedSection />
-                            <File201DeclinedSection />
+                            <File201ApprovedSection
+                            setOpen={setOpen}
+                            data={data}/>
+                            <File201ButtonDeclinedSection
+                             setOpen={setOpen}
+                            data={data}
+                            />
                         </>
                     ) : (
                         <p className="text-center">Status: {data.status}</p>

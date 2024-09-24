@@ -10,3 +10,8 @@ export async function get_pre_employment_file_service(){
     const res = await axios.get('/api/pre_employment_file')
     return res.data
 }
+
+export async function update_pre_employment_file_service(data){
+    const res = await axios.put('/api/pre_employment_file/'+data.id,data)
+    return res.data
+}

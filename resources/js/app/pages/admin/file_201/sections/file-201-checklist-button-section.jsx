@@ -1,4 +1,5 @@
 import { CheckSquareFilled, CheckSquareOutlined, PlusSquareFilled, PlusSquareTwoTone } from '@ant-design/icons'
+import { PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import { Modal } from 'antd';
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
@@ -65,6 +66,13 @@ export default function File201ChecklistButtonSection() {
                         </div> */}
                     </div>
                 </form>
+                <div className='w-full'>
+                    <button className='flex items-center justify-center gap-1 bg-blue-500 w-full p-2 text-white rounded-md'>
+                        <PaperAirplaneIcon className='h-5' /><div>
+                            Send Contract Signing
+                        </div>
+                    </button>
+                </div>
             </Modal>
         </div>
     )

@@ -47,4 +47,16 @@ class PreEmploymentFileController extends Controller
             'data' => 'No file uploaded'
         ], 400);
     }
+
+    public function update(Request $request, $id){
+        $preempfile = PreEmploymentFile::find($id);
+        $preempfile->update([
+            'status'=>$request->status,
+            'reas'=>$request->reas,
+        ]);
+
+        return response()->json([
+            'data' => $this->index()->original['data']
+        ], 200);
+    }
 }

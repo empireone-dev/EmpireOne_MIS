@@ -13,12 +13,12 @@ export default function File201UploadReqsButtonSection() {
     const { applicant } = useSelector((state) => state.final_rate);
     const { checklists } = useSelector((state) => state.checklists);
     const [fileList, setFileList] = useState([])
-    const [reqs,setReqs] =useState('')
+    const [reqs, setReqs] = useState('')
 
     const handleOk = async () => {
         setOpen(false);
         const fd = new FormData()
-        console.log('fileList',fileList)
+        console.log('fileList', fileList)
         fd.append('file', fileList.originFileObj)
         fd.append('status', 'Uploaded')
         fd.append('reqs', reqs)
@@ -80,7 +80,7 @@ export default function File201UploadReqsButtonSection() {
                             </div>
                             <div className='mb-4'>
                                 <label htmlFor=""><b>Requirement's Name</b></label>
-                                <select className="border p-2 rounded  w-full" onChange={(e)=>setReqs(e.target.value)}>
+                                <select className="border p-2 rounded  w-full" onChange={(e) => setReqs(e.target.value)}>
                                     <option> </option>
                                     {
                                         checklists
@@ -104,6 +104,9 @@ export default function File201UploadReqsButtonSection() {
                                     Upload Scanned Image
                                 </Button>
                             </Upload>
+                            <div className='mt-3 text-zinc-400 text-sm'>
+                                <p><i>Note: Requirements marked with an asterisk (*) are mandatory and must be submitted or uploaded to proceed to the next step of the application process.</i></p>
+                            </div>
                         </div>
                     </div>
                 </form>

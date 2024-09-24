@@ -20,7 +20,7 @@ export default function File201ChecklistButtonSection() {
                 </button>
             </div>
             <Modal
-                title={<span><CheckSquareOutlined/> Pre Employment Checklist of <b>{applicant?.fname ?? ''} {applicant?.lname ?? ''}</b></span>}
+                title={<span className='text-xl'><CheckSquareOutlined /> Pre Employment Checklist of <b>{applicant?.fname ?? ''} {applicant?.lname ?? ''}</b></span>}
                 centered
                 open={open}
                 onCancel={() => setOpen(false)}
@@ -48,7 +48,7 @@ export default function File201ChecklistButtonSection() {
                                                 htmlFor={`checkbox-${i}`}
                                                 className="ms-2 text-lg font-medium dark:text-gray-300"
                                             >
-                                                {res.reqs}
+                                                {res.reqs} {res.remarks === "Yes" && <span className="text-red-500 text-xl">*</span>}
                                             </label>
                                         </div>
                                     ))

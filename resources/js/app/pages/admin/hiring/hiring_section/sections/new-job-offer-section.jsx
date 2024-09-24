@@ -1,5 +1,5 @@
 import { BriefcaseIcon } from '@heroicons/react/24/outline'
-import { Modal } from 'antd';
+import { message, Modal } from 'antd';
 import React from 'react'
 import { useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -16,7 +16,7 @@ export default function NewJobOfferSection({ data, setIsModalVisible }) {
     });
     const [loading, setLoading] = useState(false);
 
-    console.log('data',data)
+    console.log('data', data)
 
     async function send_job_offer(e) {
         e.preventDefault();
@@ -25,7 +25,7 @@ export default function NewJobOfferSection({ data, setIsModalVisible }) {
             await store.dispatch(
                 create_job_offer_thunk({
                     ...form,
-                    ...data,
+                    ...data.applicant,
                     status: 'Pending'
                 })
             );
@@ -35,6 +35,7 @@ export default function NewJobOfferSection({ data, setIsModalVisible }) {
             setLoading(false);
             setIsModalVisible(false)
         } catch (error) {
+            message.success("Failed to sent Job Offer!");
             setLoading(false);
         }
     }
@@ -46,7 +47,7 @@ export default function NewJobOfferSection({ data, setIsModalVisible }) {
                 onClick={() => {
                     setNewOfferOpen(true);
                     setIsModalVisible(false);
-                  }}
+                }}
             >
                 <BriefcaseIcon className='h-5 mr-0.5' />Make a new Job Offer
             </button>
@@ -54,7 +55,7 @@ export default function NewJobOfferSection({ data, setIsModalVisible }) {
                 title="Job Offer"
                 centered
                 visible={openNewOffer}
-                width={900} 
+                width={900}
                 onOk={() => {
                     setNewOfferOpen(false);
                 }}
@@ -93,7 +94,7 @@ export default function NewJobOfferSection({ data, setIsModalVisible }) {
                                     Firstname
                                 </label>
                                 <input
-                                    value={data?.applicant?.fname}
+                                    value={data?.applicant?.fname ?? ''}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -112,7 +113,7 @@ export default function NewJobOfferSection({ data, setIsModalVisible }) {
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
-                                    value={data?.applicant?.mname}
+                                    value={data?.applicant?.mname ?? ''}
                                     placeholder=""
                                     readOnly
                                 />
@@ -127,7 +128,7 @@ export default function NewJobOfferSection({ data, setIsModalVisible }) {
                                 <input
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
-                                    value={data?.applicant?.lname}
+                                    value={data?.applicant?.lname ?? ''}
                                     type="text"
                                     placeholder=""
                                     readOnly

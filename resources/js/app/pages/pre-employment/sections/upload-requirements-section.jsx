@@ -7,7 +7,7 @@ import moment from 'moment';
 
 export default function UploadRequirementsSection() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [reqs,setReqs] =useState('')
+    const [reqs, setReqs] = useState('')
     const { checklists } = useSelector((state) => state.checklists);
     const [fileList, setFileList] = useState([])
     const showModal = () => {
@@ -17,7 +17,7 @@ export default function UploadRequirementsSection() {
     const handleOk = async () => {
         setIsModalOpen(false);
         const fd = new FormData()
-        console.log('fileList',fileList)
+        console.log('fileList', fileList)
         fd.append('file', fileList.originFileObj)
         fd.append('status', 'Uploaded')
         fd.append('reqs', reqs)
@@ -55,17 +55,20 @@ export default function UploadRequirementsSection() {
                         className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         name=""
                         id=""
-                        onChange={(e)=>setReqs(e.target.value)}
+                        onChange={(e) => setReqs(e.target.value)}
                     >
-                        <option></option>
+                        <option value=""></option>
                         {
                             checklists
                                 .filter(res => res.site === "San Carlos")
-                                .map((res, i) => {
-                                    return <option value={res.reqs} key={i}>{res.reqs}</option>;
-                                })
+                                .map((res, i) => (
+                                    <option value={res.reqs} key={i}>
+                                        {res.reqs} {res.remarks === "Yes" ? "*" : ""}
+                                    </option>
+                                ))
                         }
                     </select>
+
 
                 </div>
                 <Upload
@@ -81,6 +84,9 @@ export default function UploadRequirementsSection() {
                         Upload Scanned Image
                     </Button>
                 </Upload>
+                <div className='mt-3 text-zinc-400 text-sm'>
+                    <p><i>Note: Requirements marked with an asterisk (*) are mandatory and must be submitted or uploaded to proceed to the next step of the application process.</i></p>
+                </div>
             </Modal>
         </div>
     )

@@ -20,6 +20,7 @@ export default function File201ImageSection({ data }) {
                 title={data.reqs}
                 visible={open}
                 onCancel={() => setOpen(false)}
+                width={800}
                 footer={null}
             >
                 {data?.reqs_img ? (
@@ -30,7 +31,7 @@ export default function File201ImageSection({ data }) {
                         &nbsp;No image available
                     </p>
                 )}
-                <div className="flex flex-1 gap-1 w-full items-center justify-center mt-3 text-white">
+                <div className="flex flex-1 gap-1.5 w-full items-center justify-center mt-3 text-white">
                     {data.status === "Uploaded" ? (
                         <>
                             <File201ApprovedSection />

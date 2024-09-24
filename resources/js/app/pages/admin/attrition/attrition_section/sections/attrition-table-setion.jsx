@@ -5,6 +5,9 @@ import Highlighter from 'react-highlight-words';
 import AddAttritionSection from './add-attrition-section';
 import { useSelector } from 'react-redux';
 import ButtonComponents from '../components/button-components';
+import store from '@/app/store/store';
+import { get_employee_thunk } from '../../../employee_relation/employee_section/redux/employee-section-thunk';
+import { useEffect } from 'react';
 
 export default function AttritionTableSection() {
     const [searchText, setSearchText] = useState('');
@@ -12,6 +15,10 @@ export default function AttritionTableSection() {
     const searchInput = useRef(null);
     const { employee_attritions } = useSelector((state) => state.employee_attritions)
     console.log('attrition', employee_attritions)
+
+    useEffect(() => {
+        store.dispatch(get_employee_thunk())
+    }, []);
     
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -178,14 +185,14 @@ export default function AttritionTableSection() {
         },
         {
             title: 'Exit Clearance Status',
-            dataIndex: 'status',
-            key: 'status',
+            dataIndex: 'estatus',
+            key: 'estatus',
             render: (_, record, i) => {
                 console.log('record', record)
 
                 return (
                     <Tag color={'orange'} key={i}>
-                        {record.status}
+                        {record.estatus}
                     </Tag>
                 )
             }

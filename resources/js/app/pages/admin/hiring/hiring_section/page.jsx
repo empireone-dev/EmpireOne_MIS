@@ -4,17 +4,18 @@ import HiringTableSection from './sections/hiring-table-section'
 import store from '@/app/store/store';
 import { get_job_offer_thunk } from './redux/hiring-thunk';
 import { useEffect } from 'react';
-import { get_applicant_by_app_id_thunk } from '../../final_rate/redux/final-rate-thunk';
+import { get_job_position_thunk } from '../../sourcing/job_title_section/redux/job-title-thunk';
+import { get_applicant_thunk } from '../../recruitment/applicants/applicant_records/redux/applicant-thunk';
 
 export default function HiringSectionPage() {
-  const app_id = window.location.pathname.split('/')[3]
   useEffect(() => {
-    store.dispatch(get_applicant_by_app_id_thunk)
+    store.dispatch(get_applicant_thunk())
     store.dispatch(get_job_offer_thunk())
+    store.dispatch(get_job_position_thunk())
   }, []);
   return (
     <AdminLayout>
-        <HiringTableSection/>
+      <HiringTableSection />
     </AdminLayout>
   )
 }

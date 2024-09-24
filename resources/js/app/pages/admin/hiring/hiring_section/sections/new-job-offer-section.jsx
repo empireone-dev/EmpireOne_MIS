@@ -1,23 +1,22 @@
-import { create_job_offer_thunk } from "@/app/pages/admin/hiring/hiring_section/redux/hiring-thunk";
-import store from "@/app/store/store";
-import { LoadingOutlined } from "@ant-design/icons";
-import { BriefcaseIcon } from "@heroicons/react/24/outline";
-import { Menu, message, Modal } from "antd";
-import React from "react";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { get_applicant_thunk } from "../redux/applicant-thunk";
+import { BriefcaseIcon } from '@heroicons/react/24/outline'
+import { Modal } from 'antd';
+import React from 'react'
+import { useState } from 'react';
+import { LoadingOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
+import { get_applicant_thunk } from '../../../recruitment/applicants/applicant_records/redux/applicant-thunk';
+import { create_job_offer_thunk } from '../redux/hiring-thunk';
+import store from '@/app/store/store';
 
-export default function ApplicantJobOfferComponent({ data, item }) {
+export default function NewJobOfferSection({ data, setIsModalVisible }) {
+    const [openNewOffer, setNewOfferOpen] = useState(false);
     const { job_positions } = useSelector((state) => state.job_positions);
     const [form, setForm] = useState({
-        allowance:0
+        allowance: 0
     });
-    const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    function openHandler(params) {
-        setOpen(true);
-    }
+
+    console.log('data',data)
 
     async function send_job_offer(e) {
         e.preventDefault();
@@ -27,31 +26,39 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                 create_job_offer_thunk({
                     ...form,
                     ...data,
-                    status:'Pending'
+                    status: 'Pending'
                 })
             );
             await store.dispatch(get_applicant_thunk());
             message.success("Job Offer already sent!");
-            setOpen(false);
+            setNewOfferOpen(false);
             setLoading(false);
+            setIsModalVisible(false)
         } catch (error) {
             setLoading(false);
         }
     }
+
     return (
-        <>
-            <Menu.Item onClick={() => openHandler(true)} icon={item.icon}>
-                {item.label}
-            </Menu.Item>
+        <div className='flex items-center justify-end'>
+            <button
+                className='bg-blue-500 text-white hover:bg-blue-600 p-1.5 rounded-md flex'
+                onClick={() => {
+                    setNewOfferOpen(true);
+                    setIsModalVisible(false);
+                  }}
+            >
+                <BriefcaseIcon className='h-5 mr-0.5' />Make a new Job Offer
+            </button>
             <Modal
                 title="Job Offer"
                 centered
-                visible={open}
-                width={900}
+                visible={openNewOffer}
+                width={900} 
                 onOk={() => {
-                    setOpen(false);
+                    setNewOfferOpen(false);
                 }}
-                onCancel={() => setOpen(false)}
+                onCancel={() => setNewOfferOpen(false)}
                 footer={null}
             >
                 <li className="bg-gray-300 h-0.5"></li>
@@ -86,7 +93,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                     Firstname
                                 </label>
                                 <input
-                                    value={data.fname}
+                                    value={data?.applicant?.fname}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -105,7 +112,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
-                                    value={data.mname}
+                                    value={data?.applicant?.mname}
                                     placeholder=""
                                     readOnly
                                 />
@@ -120,7 +127,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                 <input
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
-                                    value={data.lname}
+                                    value={data?.applicant?.lname}
                                     type="text"
                                     placeholder=""
                                     readOnly
@@ -264,6 +271,6 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                     </button>
                 </form>
             </Modal>
-        </>
-    );
+        </div>
+    )
 }

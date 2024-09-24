@@ -136,14 +136,31 @@ export default function File201TableSection() {
             ...getColumnSearchProps('reqs'),
         },
         {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-            render: (_, record, i) => (
-                <Tag color={'orange'} key={i}>
-                    {record.status}
-                </Tag>
-            ),
+            title: "Status",
+            dataIndex: "status",
+            key: "status",
+            render: (_, record, i) => {
+                console.log('record', record);
+
+                const statusText = record.status === 'Declined'
+                    ? `${record.status} - ${record.reas}`
+                    : record.status;
+
+                return (
+                    <Tag
+                        color={
+                            record.status === 'Approved' ? 'green' :
+                                record.status === 'Uploaded' ? 'orange' :
+                                    record.status === 'Declined' ? 'red' :
+                                        record.status === 'In Review' ? 'blue' :
+                                            'blue'
+                        }
+                        key={i}
+                    >
+                        {statusText}
+                    </Tag>
+                );
+            }
         },
         {
             title: 'Action',

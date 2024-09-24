@@ -195,7 +195,7 @@ export default function PreEmploymentTableSection() {
                 console.log('record', record);
 
                 const statusText = record.status === 'Declined'
-                    ? `${record.status} - Blurred Image/Image Not Clear,Uploaded Incorrect File`
+                    ? `${record.status} - ${record.reas}`
                     : record.status;
 
                 return (

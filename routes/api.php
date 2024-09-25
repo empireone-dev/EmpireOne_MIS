@@ -41,6 +41,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::post('/search_applicant', [ApplicantController::class, 'search_applicant']);
+
+
 Route::resource('outsourcing_erf', OutSourcingErfController::class);
 Route::resource('/dashboard', DashboardController::class);
 

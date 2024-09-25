@@ -5,3 +5,10 @@ export async function get_user_service(){
   
     return res.data
 }
+
+
+export async function search_applicant_service(data){
+    const res = await axios.post('/api/search_applicant',data)
+  
+    return res.data
+}

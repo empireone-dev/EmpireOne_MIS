@@ -9,9 +9,18 @@ use Illuminate\Http\Request;
 class ApplicantController extends Controller
 {
 
+    public function search_applicant(Request $request)
+    {
+        $applicant = User::where('employee_fname', $request->search)->with(['employee'])
+            ->orWhere('employee_lname', $request->search)
+            ->orWhere('employee_id', $request->search)->get();
+        return response()->json([
+            'data' => $applicant
+        ], 200);
+    }
     public function index(Request $request)
     {
-        $applicant = Applicant::query()->with(['final', 'initial','joboffer']);
+        $applicant = Applicant::query()->with(['final', 'initial', 'joboffer','user']);
         $user = User::where('position', '=', 'CEO')
             ->orWhere('position', '=', 'Manager')
             ->orWhere('position', '=', 'Director')->get();
@@ -38,7 +47,7 @@ class ApplicantController extends Controller
 
     public function show($app_id)
     {
-        $applicant = Applicant::where('app_id', $app_id)->with(['final', 'initial','joboffer','requirements'])->first();
+        $applicant = Applicant::where('app_id', $app_id)->with(['final', 'initial', 'joboffer', 'requirements'])->first();
         return response()->json([
             'status' => $applicant,
         ], 200);

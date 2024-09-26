@@ -62,5 +62,8 @@ class Applicant extends Model
     {
         return $this->hasMany(PreEmploymentFile::class,"app_id","app_id");
     }
-   
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class,"app_id","app_id");
+    }
 }

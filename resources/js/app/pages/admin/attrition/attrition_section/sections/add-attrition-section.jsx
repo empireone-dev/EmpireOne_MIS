@@ -10,6 +10,8 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
+import store from "@/app/store/store";
+import { get_employee_attrition_thunk, store_attrition_thunk } from "../redux/employee-attrition-thunk";
 
 export default function AddAttritionSection() {
     const [open, setOpen] = useState(false);
@@ -18,6 +20,8 @@ export default function AddAttritionSection() {
     const { employees } = useSelector((state) => state.employees);
     const [applicants, setApplicants] = useState([]);
     const [applicant, setApplicant] = useState({});
+    const [form, setForm] = useState({});
+    const [loading,setLoading] =useState(false)
 
     async function search_applicant(e) {
         e.preventDefault();
@@ -27,12 +31,29 @@ export default function AddAttritionSection() {
         setApplicants(result.data);
     }
 
-    function classNames(...classes) {
-        return classes.filter(Boolean).join(" ");
+    async function submit_attrition(params) {
+        setLoading(true)
+       try {
+        await store.dispatch(store_attrition_thunk({
+            ...applicant,
+            ...form
+        }));
+        await store.dispatch(get_employee_attrition_thunk())
+        setLoading(false)
+        setOpen(false)
+       } catch (error) {
+        setLoading(false)
+       }
     }
+
+
+    console.log('applicants',applicants)
     return (
         <div className="my-2">
-            <div class="inline-flex rounded-md bg-white shadow-2xl" role="group">
+            <div
+                class="inline-flex rounded-md bg-white shadow-2xl"
+                role="group"
+            >
                 <button
                     type="button"
                     onClick={() => setOpen(true)}
@@ -46,10 +67,11 @@ export default function AddAttritionSection() {
                 title="Select Employee Attrition"
                 centered
                 open={open}
-                onOk={() => setOpen(false)}
+                onOk={() => submit_attrition()}
                 onCancel={() => setOpen(false)}
                 width={1000}
                 okText="Submit"
+                confirmLoading={loading}
                 cancelText="Cancel"
             >
                 <form
@@ -101,7 +123,7 @@ export default function AddAttritionSection() {
                         >
                             <div className="min-w-0 my-3">
                                 <div className="flex items-start gap-x-3 font-bold">
-                                    {res.employee_fname} {res.employee_lname}
+                                    {res.fname} {res.lname}
                                 </div>
                             </div>
                             <div className="flex flex-none items-center gap-x-4">
@@ -121,69 +143,6 @@ export default function AddAttritionSection() {
                 </ul>
                 <form class="w-full h-full">
                     <div class="flex flex-col -mx-3 mb-6">
-                        <div className="w-full px-3">
-                            {/* <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="employee-select">
-                                Employee's Name
-                            </label> */}
-                            {/* <Select
-                                // showSearch
-                                placeholder="Search for an employee"
-                                optionFilterProp="children"
-                                className="w-full"
-                                onChange={(value) => console.log(`Selected: ${value}`)}
-                                filterOption={(input, option) =>
-                                    typeof option?.children === 'string' && option.children.toLowerCase().includes(input.toLowerCase())
-                                }
-                                // Additional props for better accessibility
-                                dropdownRender={(menu) => (
-                                    <>
-                                        <div style={{ padding: '8px' }}>
-                                            <input
-                                                type="text"
-                                                placeholder="Search..."
-                                                style={{
-                                                    width: '100%',
-                                                    border: '1px solid #d9d9d9',
-                                                    borderRadius: '4px',
-                                                    padding: '4px'
-                                                }}
-                                                onChange={(e) => {
-                                                    const value = e.target.value.toLowerCase();
-                                                    const filteredOptions = employees
-                                                        .slice()
-                                                        .sort((a, b) => {
-                                                            const nameA = `${a.applicant?.fname} ${a.applicant?.lname}`.toLowerCase();
-                                                            const nameB = `${b.applicant?.fname} ${b.applicant?.lname}`.toLowerCase();
-                                                            return nameA.localeCompare(nameB);
-                                                        })
-                                                        .filter(employee => {
-                                                            const fullName = `${employee.applicant?.fname} ${employee.applicant?.lname}`.toLowerCase();
-                                                            return fullName.includes(value);
-                                                        });
-
-                                                    // Update state or trigger any action with filteredOptions
-                                                    console.log('Filtered Options:', filteredOptions);
-                                                }}
-                                            />
-                                        </div>
-                                        {menu}
-                                    </>
-                                )}
-                            >
-                                {employees
-                                    .slice()
-                                    .sort((a, b) => {
-                                        const nameA = `${a.applicant?.fname} ${a.applicant?.lname}`.toLowerCase();
-                                        const nameB = `${b.applicant?.fname} ${b.applicant?.lname}`.toLowerCase();
-                                        return nameA.localeCompare(nameB);
-                                    })
-                                    .map((employee, index) => (
-                                        <Option key={index} value={employee.id}>
-                                            {employee.applicant?.fname} {employee.applicant?.lname}
-                                        </Option>
-                                    ))}
-                            </Select> */}
-                        </div>
                         <div class="w-full px-3">
                             <label
                                 class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
@@ -195,7 +154,7 @@ export default function AddAttritionSection() {
                                 class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="grid-text"
                                 type="text"
-                                value={applicant.employee_id}
+                                value={applicant.app_id}
                                 placeholder=""
                                 readOnly
                             />
@@ -210,7 +169,7 @@ export default function AddAttritionSection() {
                                     job Position
                                 </label>
                                 <input
-                                    value={applicant.position}
+                                    value={applicant?.employee?.position}
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -226,7 +185,7 @@ export default function AddAttritionSection() {
                                     Department
                                 </label>
                                 <input
-                                    value={applicant?.department}
+                                     value={applicant?.employee?.dept}
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -330,6 +289,13 @@ export default function AddAttritionSection() {
                                     Separation Date
                                 </label>
                                 <input
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                    name="separation"
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="date"
@@ -344,15 +310,21 @@ export default function AddAttritionSection() {
                                     Reason for Separation
                                 </label>
                                 <select
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    name=""
+                                    name="reason"
                                     id=""
                                 >
                                     <option value=""></option>
-                                    <option value="">Resignation</option>
-                                    <option value="">Dismissal</option>
-                                    <option value="">End of Contract</option>
-                                    <option value="">AWOL</option>
+                                    <option value="Resignation">Resignation</option>
+                                    <option value="Dismissal">Dismissal</option>
+                                    <option value="End of Contract">End of Contract</option>
+                                    <option value="AWOL">AWOL</option>
                                 </select>
                             </div>
                         </div>

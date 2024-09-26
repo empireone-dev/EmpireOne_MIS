@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicantController;
+use App\Http\Controllers\AttritionController;
 use App\Http\Controllers\ChecklistController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmailController;
@@ -63,6 +64,7 @@ Route::resource('engagement', EmployeeEngagementController::class);
 Route::resource('initial_rate', InitialRateController::class);
 Route::resource('final_rate', FinalRateController::class);
 Route::resource('pre_employment_file', PreEmploymentFileController::class);
+Route::resource('attrition', AttritionController::class);
 
 
 

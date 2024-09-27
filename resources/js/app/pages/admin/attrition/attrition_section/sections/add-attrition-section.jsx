@@ -46,8 +46,8 @@ export default function AddAttritionSection() {
        }
     }
 
-
-    console.log('applicants',applicants)
+const new_applicants =applicants.filter(applicant => applicant.employee !== null && applicant.employee !== 0)
+    console.log('new_applicants',new_applicants)
     return (
         <div className="my-2">
             <div
@@ -116,7 +116,7 @@ export default function AddAttritionSection() {
                     </button>
                 </form>
                 <ul role="list" className="divide-y divide-gray-100 my-3">
-                    {applicants.map((res) => (
+                    {new_applicants.map((res) => (
                         <li
                             key={res.id}
                             className="flex items-center justify-between gap-x-6 bg-blue-200 rounded-lg px-3"

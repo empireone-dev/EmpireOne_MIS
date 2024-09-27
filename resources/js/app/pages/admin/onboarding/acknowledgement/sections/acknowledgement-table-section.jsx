@@ -1,7 +1,5 @@
 import React, { useRef, useState } from "react";
 import {
-    DislikeOutlined,
-    ExclamationCircleFilled,
     FolderOpenFilled,
     LineOutlined,
     SearchOutlined,
@@ -10,7 +8,6 @@ import { Button, Input, Modal, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import { router } from "@inertiajs/react";
-import { BriefcaseIcon } from "@heroicons/react/24/outline";
 import DeclinedReasonSection from "./declined-reason-section";
 
 export default function AcknowledgementTableSection() {

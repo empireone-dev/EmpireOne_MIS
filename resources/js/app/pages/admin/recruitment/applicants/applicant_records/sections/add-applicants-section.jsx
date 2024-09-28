@@ -298,14 +298,6 @@ export default function AddApplicantsSection() {
                                         label="Date of Birth"
                                         type="date"
                                     />
-                                    {/* <input
-                                        name="dob"
-                                        type="date"
-                                        placeholder="Date of birth"
-                                        className="border p-2 rounded w-full"
-                                        onChange={(event) => data_handler(event)}
-                                        value={applicantForm.dob ?? ""}
-                                    /> */}
                                 </div>
                                 <div className=" w-full">
                                     <Input
@@ -479,15 +471,6 @@ export default function AddApplicantsSection() {
                                 name="brgy"
                                 label="Barangay"
                             />
-
-                            {/* <Input
-                                onChange={(event) => data_handler(event)}
-                                value={applicantForm.brgy ?? ""}
-                                required="true"
-                                name="brgy"
-                                label="Barangay"
-                                type="text"
-                            /> */}
                         </div>
                         <div className="flex flex-col w-full">
                             <Input

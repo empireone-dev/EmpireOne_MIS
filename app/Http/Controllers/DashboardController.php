@@ -15,16 +15,17 @@ class DashboardController extends Controller
         $ongoing = OutSourcingErf::where('status', '=', 'In Review')->count();
         $declined = OutSourcingErf::where('status', '=', 'Declined')->count();
 
-        // $active = Applicant::whereIn('status', ['Approved', 'Active'])->count();
-        // $pending = Applicant::where('status', '=', 'Pending')->count();
-        // $ongoing = Applicant::where('status', '=', 'In Review')->count();
-        // $declined = Applicant::where('status', '=', 'Declined')->count();
+        $active = Applicant::whereIn('status', ['Approved', 'Active'])->count();
+        $pending = Applicant::where('status', '=', 'Pending')->count();
+        $final = Applicant::where('status', '=', 'Final Phase')->count();
+        $declined = Applicant::where('status', '=', 'Declined')->count();
     
         return response()->json([
             'active' => $active,
             'pending' => $pending,
             'ongoing' => $ongoing,
-            'declined' => $declined
+            'declined' => $declined,
+            'final' => $final
 
         ], 200);
     }

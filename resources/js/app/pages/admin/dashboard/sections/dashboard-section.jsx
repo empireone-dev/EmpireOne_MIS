@@ -31,6 +31,8 @@ export default function DashboardSection() {
   } else {
     greeting = 'Good evening';
   }
+
+  console.log('data',data)
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -53,31 +55,31 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="green"
               name="Pending ERF"
-              number={data?.pending ?? 0}
+              number={data?.outsourcing?.pending ?? 0}
               icon={<ReceiptRefundIcon />}
             />
             <DashboardCardComponents
               bgColor="green"
               name="On-going ERF"
-              number={data?.ongoing ?? 0}
+              number={data?.outsourcing?.ongoing ?? 0}
               icon={<ArrowTopRightOnSquareIcon />}
             />
             <DashboardCardComponents
               bgColor="green"
               name="Active ERF"
-              number={data?.active ?? 0}
+              number={data?.outsourcing?.active ?? 0}
               icon={<RectangleGroupIcon />}
             />
             <DashboardCardComponents
               bgColor="green"
               name="Completed ERF"
-              number={data?.active ?? 0}
+              number={data?.outsourcing?.active ?? 0}
               icon={<CheckCircleIcon />}
             />
             <DashboardCardComponents
               bgColor="green"
               name="Declined ERF"
-              number={data?.declined ?? 0}
+              number={data?.outsourcing?.declined ?? 0}
               icon={<ArchiveBoxXMarkIcon />}
             />
           </div>
@@ -91,7 +93,7 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="orange"
               name="Pending Application"
-              number={data?.status ?? 0}
+              number={data?.applicant?.pending ?? 0}
               icon={<UserGroupIcon />}
             />
             <DashboardCardComponents
@@ -103,7 +105,7 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="orange"
               name="Final Phase Application"
-              number={data?.status ?? 0}
+              number={data?.applicant?.final ?? 0}
               icon={<CursorArrowRippleIcon />}
             />
             <DashboardCardComponents

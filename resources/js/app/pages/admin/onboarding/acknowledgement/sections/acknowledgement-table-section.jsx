@@ -4,7 +4,7 @@ import {
     LineOutlined,
     SearchOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Modal, Space, Table, Tag } from "antd";
+import { Button, Input, Modal, Space, Table, Tag, Tooltip } from "antd";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import { router } from "@inertiajs/react";
@@ -216,20 +216,28 @@ export default function AcknowledgementTableSection() {
                     <div className="flex gap-1">
                         {record.status !== "Pending" &&
                             record.status !== "Declined" && (
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        router.visit(
-                                            `/admin/file_201/${record.app_id}?status=${record.status}`
-                                        )
-                                    }
-                                    className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
-                                >
-                                    <FolderOpenFilled />
-                                </button>
+                                <Tooltip title="201 File">
+                                    <div>
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                router.visit(
+                                                    `/admin/file_201/${record.app_id}?status=${record.status}`
+                                                )
+                                            }
+                                            className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
+                                        >
+                                            <FolderOpenFilled />
+                                        </button>
+                                    </div>
+                                </Tooltip>
                             )}
                         {record.status === "Declined" && (
-                            <DeclinedReasonSection data={record} />
+                            <Tooltip title="Reason of Declination">
+                                <div>
+                                    <DeclinedReasonSection data={record} />
+                                </div>
+                            </Tooltip>
                         )}
                         {record.status === "Pending" && (
                             <div className="ml-4">

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useSelector } from 'react-redux';
 import { get_applicant_thunk } from '../../../recruitment/applicants/applicant_records/redux/applicant-thunk';
-import { create_job_offer_thunk } from '../redux/hiring-thunk';
+import { create_new_job_offer_thunk } from '../redux/hiring-thunk';
 import store from '@/app/store/store';
 
 export default function NewJobOfferSection({ data, setIsModalVisible }) {
@@ -23,7 +23,7 @@ export default function NewJobOfferSection({ data, setIsModalVisible }) {
         setLoading(true);
         try {
             await store.dispatch(
-                create_job_offer_thunk({
+                create_new_job_offer_thunk({
                     ...form,
                     ...data.applicant,
                     status: 'Pending'
@@ -52,7 +52,7 @@ export default function NewJobOfferSection({ data, setIsModalVisible }) {
                 <BriefcaseIcon className='h-5 mr-0.5' />Make a new Job Offer
             </button>
             <Modal
-                title="Job Offer"
+                title="New Job Offer"
                 centered
                 visible={openNewOffer}
                 width={900}
@@ -267,7 +267,7 @@ export default function NewJobOfferSection({ data, setIsModalVisible }) {
                             ) : (
                                 <BriefcaseIcon className="h-6 mr-1" />
                             )}
-                            &nbsp; {loading ? " SENDING..." : " SEND JOB OFFER"}
+                            &nbsp; {loading ? " SENDING..." : " SEND ANOTHER JOB OFFER"}
                         </div>
                     </button>
                 </form>

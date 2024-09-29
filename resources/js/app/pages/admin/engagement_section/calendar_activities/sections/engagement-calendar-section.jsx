@@ -7,15 +7,15 @@ import TableTabSection from './table-tab-section';
 function CalendarTab() {
   return (
     <div class="lg:flex lg:h-full lg:flex-col">
-        <CalendarTabSection/>
-      </div>
+      <CalendarTabSection />
+    </div>
   );
 }
 
 function TableTab() {
   return (
     <div class="mx-auto ">
-      <TableTabSection/>
+      <TableTabSection />
     </div>
   );
 }
@@ -23,7 +23,7 @@ function TableTab() {
 function BothTab() {
   return (
     <div class="mx-auto ">
-      <BothSiteTabSection/>
+      <BothSiteTabSection />
     </div>
   );
 }
@@ -34,7 +34,7 @@ export default function EngagementCalendarSection() {
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
-  
+
   return (
     <div>
       <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200  ">
@@ -51,9 +51,18 @@ export default function EngagementCalendarSection() {
           </li>
         </ul>
       </div>
-      {activeTab === 'Calendar' && <CalendarTab />}
-      {activeTab === 'Table' && <TableTab />}
-      {activeTab === 'Both' && <BothTab />}
+      <div className={`transition-opacity duration-500 ease-in-out ${activeTab === 'Calendar' ? 'opacity-100' : 'opacity-0'}`}>
+        {activeTab === 'Calendar' && <CalendarTab />}
+      </div>
+      <div className={`transition-opacity duration-500 ease-in-out ${activeTab === 'Table' ? 'opacity-100' : 'opacity-0'}`}>
+        {activeTab === 'Table' && <TableTab />}
+      </div>
+      <div className={`transition-opacity duration-500 ease-in-out ${activeTab === 'Both' ? 'opacity-100' : 'opacity-0'}`}>
+        {activeTab === 'Both' && <BothTab />}
+      </div>
+
+
+
     </div>
   )
 }

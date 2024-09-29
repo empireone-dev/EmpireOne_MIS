@@ -1,4 +1,5 @@
 import {
+    CheckCircleOutlined,
     CheckSquareFilled,
     CheckSquareOutlined,
     PlusSquareFilled,
@@ -20,12 +21,25 @@ export default function File201ChecklistButtonSection() {
         (req) => req.status === "Approved"
     );
 
+    console.log("applicant", applicant);
     async function send_contract_signing() {
         // Trigger any logic to send the contract signing
         setOpenConfirmationModal(true);
         setOpenChecklistModal(false);
     }
+    const url = window.location.pathname + window.location.search;
+    function getQueryParam(url, param) {
+        const queryString = url.split("?")[1]; // Get the query string
+        if (!queryString) return null; // Return null if no query string
 
+        const params = new URLSearchParams(queryString); // Create a URLSearchParams object
+        return params.get(param); // Get the value of the specified parameter
+    }
+
+    // Get the search status
+    const status = getQueryParam(url, "status");
+
+    console.log("status", status);
     return (
         <div className="my-2">
             <div className="inline-flex rounded-md shadow-sm" role="group">
@@ -98,18 +112,31 @@ export default function File201ChecklistButtonSection() {
                     </div>
                 </form>
                 <div className="w-full">
-                    <button
-                        onClick={send_contract_signing}
-                        className="flex items-center justify-center gap-1 bg-blue-500 w-full p-2 text-white rounded-md"
-                    >
-                        <PaperAirplaneIcon className="h-5" />
-                        <div>Send Contract Signing</div>
-                    </button>
+                    {status == "Accepted" && (
+                        <button
+                            // onClick={send_onboarding_ack}
+                            className="flex items-center justify-center gap-1 bg-blue-500 w-full p-2 text-white rounded-md"
+                        >
+                            <PaperAirplaneIcon className="h-5" />
+                            <div>Send Onboarding Acknowledgement</div>
+                        </button>
+                    )}
+                    {status == "Contract Signing" && (
+                        <button
+                            onClick={send_contract_signing}
+                            className="flex items-center justify-center gap-1 bg-blue-500 w-full p-2 text-white rounded-md"
+                        >
+                            <PaperAirplaneIcon className="h-5" />
+                            <div>Send Contract Signing</div>
+                        </button>
+                    )}
                 </div>
             </Modal>
 
             <Modal
-                title={`Sent Contract Signing for ${applicant?.fname ?? ""} ${applicant?.lname ?? ""}`}
+                title={`Sent Contract Signing for ${applicant?.fname ?? ""} ${
+                    applicant?.lname ?? ""
+                }`}
                 centered
                 open={openConfirmationModal}
                 width={650}
@@ -117,8 +144,12 @@ export default function File201ChecklistButtonSection() {
                 footer={null}
             >
                 <div className="flex flex-1 gap-4 w-full mt-4">
-                    <PhysicalCOntractSigning setOpen={setOpenConfirmationModal}/>
-                    <VirtualContractSigning setOpen={setOpenConfirmationModal}/>
+                    <PhysicalCOntractSigning
+                        setOpen={setOpenConfirmationModal}
+                    />
+                    <VirtualContractSigning
+                        setOpen={setOpenConfirmationModal}
+                    />
                 </div>
             </Modal>
         </div>

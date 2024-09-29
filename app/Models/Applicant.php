@@ -48,22 +48,26 @@ class Applicant extends Model
 
     public function initial(): HasOne
     {
-        return $this->hasOne(InitialRate::class,"app_id","app_id");
+        return $this->hasOne(InitialRate::class, "app_id", "app_id");
     }
     public function final(): HasOne
     {
-        return $this->hasOne(FinalRate::class,"app_id","app_id");
+        return $this->hasOne(FinalRate::class, "app_id", "app_id");
     }
     public function joboffer(): HasMany
     {
-        return $this->hasMany(JobOffer::class,"app_id","app_id");
+        return $this->hasMany(JobOffer::class, "app_id", "app_id");
     }
     public function requirements(): HasMany
     {
-        return $this->hasMany(PreEmploymentFile::class,"app_id","app_id");
+        return $this->hasMany(PreEmploymentFile::class, "app_id", "app_id");
     }
     public function employee(): BelongsTo
     {
-        return $this->belongsTo(Employee::class,"app_id","app_id");
+        return $this->belongsTo(Employee::class, "app_id", "app_id");
+    }
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
 }

@@ -30,5 +30,10 @@ class Employee extends Model
         return $this->hasOne(Applicant::class,"app_id","emp_id");
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class,"sup_id","id");
+    }
+
     
 }

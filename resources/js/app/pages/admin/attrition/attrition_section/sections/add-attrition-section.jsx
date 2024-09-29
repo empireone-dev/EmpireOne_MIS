@@ -21,7 +21,7 @@ export default function AddAttritionSection() {
     const [applicants, setApplicants] = useState([]);
     const [applicant, setApplicant] = useState({});
     const [form, setForm] = useState({});
-    const [loading,setLoading] =useState(false)
+    const [loading, setLoading] = useState(false)
 
     async function search_applicant(e) {
         e.preventDefault();
@@ -33,21 +33,22 @@ export default function AddAttritionSection() {
 
     async function submit_attrition(params) {
         setLoading(true)
-       try {
-        await store.dispatch(store_attrition_thunk({
-            ...applicant,
-            ...form
-        }));
-        await store.dispatch(get_employee_attrition_thunk())
-        setLoading(false)
-        setOpen(false)
-       } catch (error) {
-        setLoading(false)
-       }
+        try {
+            await store.dispatch(store_attrition_thunk({
+                ...applicant,
+                ...form
+            }));
+            await store.dispatch(get_employee_attrition_thunk())
+            setLoading(false)
+            setOpen(false)
+        } catch (error) {
+            setLoading(false)
+        }
     }
 
-const new_applicants =applicants.filter(applicant => applicant.employee !== null && applicant.employee !== 0)
-    console.log('new_applicants',new_applicants)
+    const new_applicants = applicants.filter(applicant => applicant.employee !== null && applicant.employee !== 0)
+    console.log('employees.user', employees?.user)
+
     return (
         <div className="my-2">
             <div
@@ -185,7 +186,7 @@ const new_applicants =applicants.filter(applicant => applicant.employee !== null
                                     Department
                                 </label>
                                 <input
-                                     value={applicant?.employee?.dept}
+                                    value={applicant?.employee?.dept}
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -220,6 +221,7 @@ const new_applicants =applicants.filter(applicant => applicant.employee !== null
                                     Supervisor
                                 </label>
                                 <input
+                                    value={employees?.users?.employee_fname ?? ""}
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"

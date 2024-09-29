@@ -2,6 +2,7 @@ import { CheckCircleFilled, LoadingOutlined } from "@ant-design/icons";
 import { Modal } from "antd";
 import React from "react";
 import { useState } from "react";
+import SendUploadContractSection from "./send-upload-contract-section";
 
 export default function VirtualContractSigning({setOpen}) {
     const [openVirtualSigning, setVirtualSigningOpen] = useState(false);
@@ -48,7 +49,7 @@ export default function VirtualContractSigning({setOpen}) {
                 Virtual Contract Signing
             </button>
             <Modal
-                title={`Schedule for Contract Signing (Virtual Contract Signing)`}
+                title={`Contract Signing (Virtual Contract Signing)`}
                 centered
                 visible={openVirtualSigning}
                 width={900}
@@ -147,51 +148,6 @@ export default function VirtualContractSigning({setOpen}) {
                                 />
                             </div>
                         </div>
-                        <div className=" flex">
-                            <div className="w-full px-2.5">
-                                <label
-                                    className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
-                                >
-                                    Schedule date for Contract Signing
-                                </label>
-                                <input
-                                    // onChange={(e) =>
-                                    //     setInitial({
-                                    //         ...initial,
-                                    //         iffdate: e.target.value,
-                                    //     })
-                                    // }
-                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-text"
-                                    type="date"
-                                    placeholder=""
-                                    required
-                                />
-                            </div>
-                            <div className="w-full px-2.5">
-                                <label
-                                    className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
-                                >
-                                    Schedule time for Contract Signing
-                                    {/* {status} */}
-                                </label>
-                                <input
-                                    // onChange={(e) =>
-                                    //     setInitial({
-                                    //         ...initial,
-                                    //         ifftime: e.target.value,
-                                    //     })
-                                    // }
-                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-text"
-                                    type="time"
-                                    placeholder=""
-                                    required
-                                />
-                            </div>
-                        </div>
                         {/* <div className="w-full px-2.5">
                             <label
                                 className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
@@ -218,6 +174,7 @@ export default function VirtualContractSigning({setOpen}) {
                             </select>
                         </div> */}
                     </div>
+                    <SendUploadContractSection/>
                     <button
                         type="submit"
                         className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${

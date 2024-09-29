@@ -41,7 +41,7 @@ Route::get('/online_application', function () {
     return Inertia::render('online_application/page');
 });
 
-Route::get('/onboarding-documents', function () {
+Route::get('/onboarding-documents/{app_id}', function () {
     return Inertia::render('onboarding-documents/page');
 });
 

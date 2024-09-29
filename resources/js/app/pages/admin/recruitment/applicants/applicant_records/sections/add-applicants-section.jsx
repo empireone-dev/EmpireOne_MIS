@@ -135,7 +135,7 @@ export default function AddApplicantsSection() {
             dispatch(
                 setApplicantForm({
                     ...applicantForm,
-                    [e.target.name]: city.name,
+                    [e.target.name]: province.name,
                 })
             );
         }else if (e.target.name == 'city') {
@@ -145,7 +145,7 @@ export default function AddApplicantsSection() {
             dispatch(
                 setApplicantForm({
                     ...applicantForm,
-                    [e.target.name]: barangay.name,
+                    [e.target.name]: city.name,
                 })
             );
         } else {

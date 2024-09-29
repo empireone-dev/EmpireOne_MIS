@@ -7,33 +7,18 @@
 
   # Dear Mr./Ms. {{$data['fname']}} {{$data['lname']}},
 
-  Thank you for your interest in EmpireOne BPO Solutions Inc. We’d like to offer you the position of {{$data['jobPos']}}. Below is our Job Offer: .
+  I trust this message finds you well. We would like to express our sincere gratitude for your prompt and thorough completion of the pre-employment requirements. Your diligence in providing the necessary documentation is greatly appreciated, and it reflects your commitment to a smooth onboarding process.
 
-  1. Employment Status
-  Your Employment Status is Probationary upon the start of your employment with EmpireOne Global Solution Inc.
+  As we prepare to welcome you to our team, we want to ensure that you have all the information needed for a seamless transition. To facilitate this, we kindly invite you to review and acknowledge our company onboarding documents. These documents contain essential information about our policies, procedures, and the culture at EmpireOne.
 
-  2. Compensation
-  You shall receive a monthly salary Package of Php {{$data['salary']}} {{$data['allowance'] != 0?'+ Php':''}} {{$data['allowance'] != 0?$data['allowance']:''}} {{$data['typea']??''}}.
+  To access the onboarding documents, please click on the following link: http://127.0.0.1:8000/onboarding-documents/{{$data['app_id']}}
 
-  3. Benefits
-  13th month pay, SSS, Philhealth, HDMF (Pag-ibig), 10% Night Differential, EmpireOne points and other government mandated benefits applicable to your employment.
+  We encourage you to carefully review each document and reach out to us if you have any questions or need further clarification. Your understanding and acknowledgment of these materials will contribute to a positive and successful onboarding experience.
 
-  4. Employment Review
-  The management will review your performance during your probationary employment and your continued employment will depend on your ability to meet all required expectation and performance set by the company.
+  Once again, thank you for your cooperation and commitment to a successful onboarding process. We look forward to welcoming you officially to the EmpireOne family.
+ 
 
-  5. Working Schedule
-  Your working schedule is for 9 hours every weekday during which one (1) hour is allotted for lunch break and weekdays for restdays.
-
-  To accept/decline this job offer you may click on this link: http://127.0.0.1:8000/job_offer/{{$data['app_id']}}?id={{$data['id']}} EmpireOne BPO Solutions Inc - Job Offer
-
-  We expect you to follow all the policies and provisions indicated in the company Code of Conduct and Discipline of EmpireOne Global Solution Inc. which will be issued to you when you start your career with us.
-
-  We are excited to welcome you in our EmpireOne BPO Solutions Inc. family! Thank you.
-
-  Note: This job offer letter will be effective within 24 hours upon service and shall be deemed binding and executory upon the issuance of an employment contract.
-
-
-  Truly yours,
+  Best regards,
 
   HR Team
   EmpireOne BPO Solutions Inc.

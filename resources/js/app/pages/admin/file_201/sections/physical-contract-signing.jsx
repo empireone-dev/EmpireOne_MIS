@@ -48,7 +48,7 @@ export default function PhysicalCOntractSigning({setOpen}) {
                 Physical Contract Signing
             </button>
             <Modal
-                title={`Schedule for Contract Signing (Physical Contract Signing)`}
+                title={`Contract Signing (Physical Contract Signing)`}
                 centered
                 visible={openPhysicalSigning}
                 width={900}

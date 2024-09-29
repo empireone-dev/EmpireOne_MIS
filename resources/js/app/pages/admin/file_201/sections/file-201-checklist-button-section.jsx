@@ -2,6 +2,7 @@ import {
     CheckCircleOutlined,
     CheckSquareFilled,
     CheckSquareOutlined,
+    FormOutlined,
     PlusSquareFilled,
     PlusSquareTwoTone,
 } from "@ant-design/icons";
@@ -11,6 +12,7 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import PhysicalCOntractSigning from "./physical-contract-signing";
 import VirtualContractSigning from "./virtual-contract-signing";
+import OnboardingAcknowledgeSection from "./onboarding-acknowledge-section";
 
 export default function File201ChecklistButtonSection() {
     const [openChecklistModal, setOpenChecklistModal] = useState(false);
@@ -112,29 +114,23 @@ export default function File201ChecklistButtonSection() {
                     </div>
                 </form>
                 <div className="w-full">
-                    {status == "Accepted" && (
-                        <button
-                            // onClick={send_onboarding_ack}
-                            className="flex items-center justify-center gap-1 bg-blue-500 w-full p-2 text-white rounded-md"
-                        >
-                            <PaperAirplaneIcon className="h-5" />
-                            <div>Send Onboarding Acknowledgement</div>
-                        </button>
-                    )}
-                    {status == "Contract Signing" && (
+                    {/* {status == "Accepted" && ( */}
+                       <OnboardingAcknowledgeSection/>
+                    {/* )} */}
+                    {/* {status == "Contract Signing" && ( */}
                         <button
                             onClick={send_contract_signing}
                             className="flex items-center justify-center gap-1 bg-blue-500 w-full p-2 text-white rounded-md"
                         >
-                            <PaperAirplaneIcon className="h-5" />
-                            <div>Send Contract Signing</div>
+                            <FormOutlined/>
+                            <div>Contract Signing</div>
                         </button>
-                    )}
+                    {/* )} */}
                 </div>
             </Modal>
 
             <Modal
-                title={`Sent Contract Signing for ${applicant?.fname ?? ""} ${
+                title={`Contract Signing for ${applicant?.fname ?? ""} ${
                     applicant?.lname ?? ""
                 }`}
                 centered

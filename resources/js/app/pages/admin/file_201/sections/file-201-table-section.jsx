@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { FileTextFilled, PictureFilled, SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tag, Modal } from 'antd';
+import { Button, Input, Space, Table, Tag, Modal, Tooltip } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { useSelector } from 'react-redux';
 import { router } from '@inertiajs/react';
@@ -9,6 +9,8 @@ import store from '@/app/store/store';
 import { get_checklist_thunk } from '../../hiring/pre_employment/redux/pre-employment-thunk';
 import { useEffect } from 'react';
 import File201ImageSection from './file-201-image-section';
+import File201ContractSection from './file-201-contract-section';
+import ContractApprovalButtonSection from './contract-approval-button-section';
 
 export default function File201TableSection() {
     const [searchText, setSearchText] = useState('');
@@ -167,29 +169,47 @@ export default function File201TableSection() {
             dataIndex: 'action',
             render: (_, record) => (
                 <div className='flex flex-1 gap-1'>
-                <File201ImageSection data={record}/>
-                    <button
-                        type="button"
-                        className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300  shadow-lg shadow-green-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
-                    >
-                        <FileTextFilled />
-                    </button>
+                    {record.reqs !== 'Contract' && (
+                        <Tooltip title="View Uploaded Requirements">
+                            <div>
+                                <File201ImageSection data={record} />
+                            </div>
+                        </Tooltip>
+                    )}
+                    {record.reqs === 'Contract' && (
+                        <div className='flex w-full gap-1.5'>
+                            <div>
+                                <Tooltip title="View Contract"> {/* Add Tooltip here */}
+                                    <div>
+                                        <File201ContractSection data={record} />
+                                    </div>
+                                </Tooltip>
+                            </div>
+                            {record.status === 'Uploaded' && (
+                                <Tooltip title="Contract Approval">
+                                    <div>
+                                        <ContractApprovalButtonSection data={record} />
+                                    </div>
+                                </Tooltip>
+                            )}
+                        </div>
+                    )}
                 </div>
             ),
         },
     ];
 
-    const dataSource = applicant?.requirements??[];
+    const dataSource = applicant?.requirements ?? [];
     // console.log("preemploymentfile",preemploymentfile)
 
     return (
         <div>
             {/* Modal component */}
-      
+
             <div>
                 <div className="flex items-center gap-x-3 mb-4">
                     <h2 className="text-lg font-medium text-gray-800">
-                        Pre-Employment Requirements of<b> {applicant?.fname??''} {applicant?.lname??''}</b>
+                        Pre-Employment Requirements of<b> {applicant?.fname ?? ''} {applicant?.lname ?? ''}</b>
                     </h2>
                 </div>
                 <div className='flex flex-1 justify-between'>

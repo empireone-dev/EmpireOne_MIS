@@ -5,7 +5,7 @@ import CarcarEngagementDashboardSection from './carcar-engagement-dashboard-sect
 function SanCarlosTab() {
     return (
         <div class="mx-auto ">
-            <SanCarlosEngagementDaashboardSection/>
+            <SanCarlosEngagementDaashboardSection />
         </div>
     );
 }
@@ -13,13 +13,13 @@ function SanCarlosTab() {
 function CarcarTab() {
     return (
         <div class="mx-auto ">
-           <CarcarEngagementDashboardSection/>
+            <CarcarEngagementDashboardSection />
         </div>
     );
 }
 
 export default function EngagementDashboardCardSection() {
-    const [activeTab, setActiveTab] = useState('SanCarlos'); 
+    const [activeTab, setActiveTab] = useState('SanCarlos');
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
@@ -39,8 +39,13 @@ export default function EngagementDashboardCardSection() {
                             </li>
                         </ul>
                     </div>
-                    {activeTab === 'SanCarlos' && <SanCarlosTab />}
-                    {activeTab === 'Carcar' && <CarcarTab />}
+                    <div className={`transition-opacity duration-500 ease-in-out ${activeTab === 'SanCarlos' ? 'opacity-100' : 'opacity-0'}`}>
+                        {activeTab === 'SanCarlos' && <SanCarlosTab />}
+                    </div>
+
+                    <div className={`transition-opacity duration-500 ease-in-out ${activeTab === 'Carcar' ? 'opacity-100' : 'opacity-0'}`}>
+                        {activeTab === 'Carcar' && <CarcarTab />}
+                    </div>
                 </div>
             </section>
         </div>

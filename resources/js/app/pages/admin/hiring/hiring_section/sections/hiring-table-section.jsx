@@ -222,7 +222,7 @@ export default function HiringTableSection() {
                                             type="button"
                                             onClick={() =>
                                                 router.visit(
-                                                    `/admin/file_201/${record.app_id}`
+                                                    `/admin/file_201/${record.app_id}?status=${record.status}`
                                                 )
                                             }
                                             className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"

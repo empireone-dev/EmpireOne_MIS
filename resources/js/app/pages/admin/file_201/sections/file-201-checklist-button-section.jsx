@@ -114,25 +114,24 @@ export default function File201ChecklistButtonSection() {
                     </div>
                 </form>
                 <div className="w-full">
-                    {/* {status == "Accepted" && ( */}
-                       <OnboardingAcknowledgeSection/>
-                    {/* )} */}
-                    {/* {status == "Contract Signing" && ( */}
+                    {status == "Accepted" && (
+                        <OnboardingAcknowledgeSection />
+                    )}
+                    {status == "Contract Signing" && (
                         <button
                             onClick={send_contract_signing}
                             className="flex items-center justify-center gap-1 bg-blue-500 w-full p-2 text-white rounded-md"
                         >
-                            <FormOutlined/>
+                            <FormOutlined />
                             <div>Contract Signing</div>
                         </button>
-                    {/* )} */}
+                    )}
                 </div>
             </Modal>
 
             <Modal
-                title={`Contract Signing for ${applicant?.fname ?? ""} ${
-                    applicant?.lname ?? ""
-                }`}
+                title={`Contract Signing for ${applicant?.fname ?? ""} ${applicant?.lname ?? ""
+                    }`}
                 centered
                 open={openConfirmationModal}
                 width={650}

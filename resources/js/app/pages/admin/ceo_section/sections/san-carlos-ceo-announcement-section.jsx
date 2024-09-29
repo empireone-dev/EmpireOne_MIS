@@ -15,14 +15,9 @@ export default function SanCarlosCeoAnnouncementSection() {
                         <button className='text-xl hover:text-blue-500'><DeleteOutlined /></button>
                     </div>
                 </div>
-                <div className='flex flex-1'>
-                    <div className='w-full'>
-                        <div>Aug. 11, 2024| 06:24 PM</div>
-                    </div>
-                </div>
                 <div>
                     <div className='mt-2 mb-1'>
-                        <h1 className='text-2xl'>ANNOUNCEMENT TITLE</h1>
+                        <h1 className='text-2xl'>ANNOUNCEMENT TITLE FOR SAN CARLOS</h1>
                     </div>
                     <div className='mb-2'>
                         <p>Announcement Content: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ut odio massa. Donec lobortis pellentesque diam at porttitor. Etiam ac luctus lorem. Aenean non turpis sed ipsum eleifend dapibus. Aenean sodales eu orci quis rhoncus. Praesent vitae diam massa. Aenean sed lectus massa. Nunc a nisi non nibh cursus mattis. Cras eget finibus lectus. Nunc quis ornare est, eget mollis orci. Pellentesque eleifend sollicitudin nunc sit amet hendrerit. Mauris blandit purus eget urna maximus malesuada. Fusce facilisis et neque non facilisis. Suspendisse mattis sollicitudin dolor quis condimentum. Quisque gravida viverra tortor, eleifend condimentum turpis.</p>

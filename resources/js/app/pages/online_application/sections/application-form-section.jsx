@@ -115,7 +115,6 @@ export default function ApplicationFormSection() {
   };
 
   function data_handler(e) {
-    console.log('dadwa', e.target.value)
     if (e.target.name == 'region') {
       const region = JSON.parse(e.target.value)
       const prov = province.filter(obj => obj.region_code === region.region_code);
@@ -133,7 +132,7 @@ export default function ApplicationFormSection() {
       dispatch(
         setApplicantForm({
           ...applicantForm,
-          [e.target.name]: city.name,
+          [e.target.name]: province.name,
         })
       );
     } else if (e.target.name == 'city') {
@@ -143,7 +142,7 @@ export default function ApplicationFormSection() {
       dispatch(
         setApplicantForm({
           ...applicantForm,
-          [e.target.name]: barangay.name,
+          [e.target.name]: city.name,
         })
       );
     } else {
@@ -157,7 +156,7 @@ export default function ApplicationFormSection() {
 
 
   }
-  console.log("applicantForm", applicantForm);
+  console.log("ssssssssss", applicantForm);
 
 
 

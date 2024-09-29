@@ -15,6 +15,7 @@ use App\Http\Controllers\InitialRateController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\JobPositionController;
 use App\Http\Controllers\MedicineRecordController;
+use App\Http\Controllers\NewJobOfferController;
 use App\Http\Controllers\OnboardingDocController;
 use App\Http\Controllers\OutSourcingErfController;
 use App\Http\Controllers\PreEmploymentFileController;
@@ -54,6 +55,7 @@ Route::resource('applicant', ApplicantController::class);
 
 Route::resource('checklist', ChecklistController::class);
 Route::resource('joboffer', JobOfferController::class);
+Route::resource('new_joboffer', NewJobOfferController::class);
 Route::resource('onboarding_doc', OnboardingDocController::class);
 Route::resource('employee', EmployeeController::class);
 Route::resource('medicine_record', MedicineRecordController::class);

@@ -10,12 +10,12 @@ export function OnboardingDocsStepper() {
     const [onboardingCompleted, setOnboardingCompleted] = useState(false);
     const { onboarding_docs } = useSelector((state) => state.onboarding_docs);
     const [agree, setAgree] = useState([]);
-   
+
 
     const handleNext = () => {
         if (!isLastStep) {
             setActiveStep((cur) => cur + 1);
-        } 
+        }
     };
     const handlePrev = () => {
         setAgree(agree.slice(1));
@@ -87,7 +87,9 @@ export function OnboardingDocsStepper() {
                         return (
                             <Step
                                 key={i}
-                                onClick={() => handleStepClick(i)}
+                                onClick={() => {
+                                    if (!isReadOnly) handleStepClick(i); 
+                                }}
                                 className="p-2 w-10 !bg-blue-gray-50 cursor-pointer items-center justify-center"
                                 activeClassName="ring-0 !bg-blue-600 text-white"
                                 completedClassName="!bg-blue-600 text-white"
@@ -147,7 +149,7 @@ export function OnboardingDocsStepper() {
                                                 onClick={finish_handler}
                                                 className={
                                                     agree.length ==
-                                                    onboarding_docs.length
+                                                        onboarding_docs.length
                                                         ? "bg-blue-600 hover:bg-blue-700 "
                                                         : "disabledNextButton bg-blue-400"
                                                 }

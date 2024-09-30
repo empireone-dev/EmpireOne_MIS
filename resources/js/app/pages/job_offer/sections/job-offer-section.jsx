@@ -8,14 +8,14 @@ export default function JobOfferSection() {
     const { applicant } = useSelector((state) => state.final_rate);
     const [offerStatus, setOfferStatus] = useState(null);
     const [form, setForm] = useState({});
-    
+
     const jo_id = window.location.search.split('=')[1]
 
     const handleAccept = async () => {
         const res = await change_job_offer_service({
             ...applicant,
             ...form,
-            id:jo_id,
+            id: jo_id,
             status: "Accepted",
         });
         window.location.reload();
@@ -29,7 +29,7 @@ export default function JobOfferSection() {
         const res = await change_job_offer_service({
             ...applicant,
             ...form,
-            id:jo_id,
+            id: jo_id,
             status: "Declined",
         });
         window.location.reload();
@@ -43,7 +43,7 @@ export default function JobOfferSection() {
     //     );
     // }
     const jo = applicant?.joboffer?.find((res) => res.id == jo_id);
-   
+    console.log('waaa', jo)
     return (
         <div className="h-screen overflow-hidden">
             <div className="bg-cover bg-[url('/images/SCemp.jpg')] transition-colors duration-300 h-full overflow-y-scroll">
@@ -66,7 +66,7 @@ export default function JobOfferSection() {
                                 Dear Mr./Ms. <b>{applicant.lname}</b>,<br />
                                 <br /> Thank you for your interest in EmpireOne
                                 Global Solution Inc. We’d like to offer you the
-                                position of <b>POSITION</b>. Below is our Job
+                                position of <b>{jo?.jobPos}</b>. Below is our Job
                                 Offer:
                                 <br /> <br />
                                 1. <b>Employment Status</b>
@@ -76,8 +76,13 @@ export default function JobOfferSection() {
                                 Solution Inc.
                                 <br /> <br /> 2. <b>Compensation</b>
                                 <br />
-                                You shall receive a monthly salary Package of
-                                Php <b>SALARY + ALLOWANCE = PACKAGE</b>.
+                                You shall receive a monthly salary of
+                                <b> Php&nbsp; 
+                                    <span>
+                                        {new Intl.NumberFormat('en-PH', { style: 'decimal', minimumFractionDigits: 2 }).format(jo.salary)}
+                                        {jo.allowance ? ' + Php ' : ''}
+                                        {jo.allowance ? new Intl.NumberFormat('en-PH', { style: 'decimal', minimumFractionDigits: 2 }).format(jo.allowance) : ''}
+                                    </span></b>.
                                 <br /> <br /> 3. <b>Benefits</b>
                                 <br />
                                 13th month pay, SSS, Philhealth, HDMF

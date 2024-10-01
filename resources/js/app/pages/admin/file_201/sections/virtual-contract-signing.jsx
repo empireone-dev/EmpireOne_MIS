@@ -4,7 +4,7 @@ import React from "react";
 import { useState } from "react";
 import SendUploadContractSection from "./send-upload-contract-section";
 
-export default function VirtualContractSigning({setOpen}) {
+export default function VirtualContractSigning({ data, setOpen }) {
     const [openVirtualSigning, setVirtualSigningOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     // const [physical, setPhysical] = useState({
@@ -41,9 +41,9 @@ export default function VirtualContractSigning({setOpen}) {
         <div className="flex w-full items-center justify-center">
             <button
                 onClick={() => {
-                  setVirtualSigningOpen(true);
-                  setOpen(false);
-              }}
+                    setVirtualSigningOpen(true);
+                    setOpen(false);
+                }}
                 className="bg-blue-500 w-full rounded-md text-white hover:bg-blue-600 p-1.5"
             >
                 Virtual Contract Signing
@@ -54,7 +54,7 @@ export default function VirtualContractSigning({setOpen}) {
                 visible={openVirtualSigning}
                 width={900}
                 onOk={() => {
-                  setVirtualSigningOpen(false);
+                    setVirtualSigningOpen(false);
                 }}
                 onCancel={() => setVirtualSigningOpen(false)}
                 footer={null}
@@ -70,7 +70,7 @@ export default function VirtualContractSigning({setOpen}) {
                                 Application No.
                             </label>
                             <input
-                                // value={data?.app_id}
+                                value={data?.app_id}
                                 className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="grid-text"
                                 type="number"
@@ -88,7 +88,7 @@ export default function VirtualContractSigning({setOpen}) {
                                     Applicant's Name
                                 </label>
                                 <input
-                                    // value={`${data.fname} ${data.mname} ${data.lname}`}
+                                    value={`${data.fname} ${data.mname} ${data.lname}`}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -107,7 +107,7 @@ export default function VirtualContractSigning({setOpen}) {
                                     Email Address
                                 </label>
                                 <input
-                                    // value={data?.email}
+                                    value={data?.email}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="email"
@@ -123,7 +123,7 @@ export default function VirtualContractSigning({setOpen}) {
                                     Job Position
                                 </label>
                                 <input
-                                    // value={data?.phone}
+                                    value={data?.joboffer?.jobPos}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -139,7 +139,7 @@ export default function VirtualContractSigning({setOpen}) {
                                     Salary
                                 </label>
                                 <input
-                                    // value={data?.phone}
+                                    value={data?.joboffer?.salary}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -174,12 +174,11 @@ export default function VirtualContractSigning({setOpen}) {
                             </select>
                         </div> */}
                     </div>
-                    <SendUploadContractSection/>
+                    <SendUploadContractSection />
                     <button
                         type="submit"
-                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${
-                            loading ? "cursor-not-allowed opacity-75" : ""
-                        }`}
+                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
+                            }`}
                         onClick={send_virtual_signing}
                         disabled={loading}
                     >

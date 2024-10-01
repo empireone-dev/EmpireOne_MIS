@@ -54,7 +54,7 @@ export default function NewPositionFormSection() {
             case 0:
                 return (
                     <form>
-                        <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-6 text-center">EMPLOYEE REQUISITION FORM</h1>
+                        <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-6 text-center">EMPLOYEE REQUISITION FORM</h1>
                         <h1 className='text-lg'><b>Instructions/Hiring Information</b></h1>
                         <p>&emsp;&emsp;Use this form to initiate the recruitment process for all new and existing staff. Please complete all applicable sections of this form. <b>NO OFFERS should be made, either verbally or in written form, before all approvals on the form are completed</b>.</p>
                         <div className='flex flex-1 w-full gap-4 mb-4 mt-4'>

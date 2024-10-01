@@ -79,7 +79,7 @@ export default function File201ChecklistButtonSection({ data }) {
                             alt="logo"
                         />
                     </div>
-                    <div className="flex flex-col -mx-3 mb-6 px-2">
+                    <div className="flex flex-col -mx-3 mb-2 px-2">
                         <div>
                             {checklists
                                 .filter((res) => res.site === "San Carlos")
@@ -99,7 +99,7 @@ export default function File201ChecklistButtonSection({ data }) {
                                         />
                                         <label
                                             htmlFor={`checkbox-${i}`}
-                                            className="ms-2 text-lg font-medium dark:text-gray-300"
+                                            className="ms-2 text-lg font-medium "
                                         >
                                             {res.reqs}{" "}
                                             {res.remarks === "Yes" && (
@@ -126,6 +126,11 @@ export default function File201ChecklistButtonSection({ data }) {
                             <div>Contract Signing</div>
                         </button>
                     )}
+                    {status == "Signed" && (
+                        <div className=" text-slate-500 text-md">
+                            <i>Contract signing completed.</i>
+                        </div>
+                    )}
                 </div>
             </Modal>
 
@@ -141,9 +146,11 @@ export default function File201ChecklistButtonSection({ data }) {
                 <div className="flex flex-1 gap-4 w-full mt-4">
                     <PhysicalCOntractSigning
                         setOpen={setOpenConfirmationModal}
+                        data={data}
                     />
                     <VirtualContractSigning
                         setOpen={setOpenConfirmationModal}
+                        data={data}
                     />
                 </div>
             </Modal>

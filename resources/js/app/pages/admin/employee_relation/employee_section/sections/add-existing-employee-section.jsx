@@ -41,7 +41,7 @@ export default function AddExistingEmployeeSection() {
                 cancelText="Cancel"
             >
                 <form className='border rounded-lg p-3.5'>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100">Site Information</h1>
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900 ">Site Information</h1>
                     <div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <select className="border p-2 rounded w-full">
@@ -51,7 +51,7 @@ export default function AddExistingEmployeeSection() {
                             </select>
                         </div>
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-6 text-center">Personal Information</h1>
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-6 text-center">Personal Information</h1>
                     <div className='flex flex-1 gap-4'>
                         <div className='flex flex-col w-full mb-4'>
                             <label htmlFor=""><b>Full Name</b></label>
@@ -150,7 +150,7 @@ export default function AddExistingEmployeeSection() {
                             <input type="text" placeholder="Course taken" className="border p-2 rounded w-full " />
                         </div>
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Address Information</h1>
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Address Information</h1>
                     <div className="flex flex-1 gap-4 mb-4 w-full">
                         <div className='flex flex-col w-full'>
                             <label htmlFor=""><b>Region</b></label>
@@ -175,7 +175,7 @@ export default function AddExistingEmployeeSection() {
                             <input type="text" placeholder="House/Lot No., Street, Purok/Sitio" className="border p-2 rounded w-full " />
                         </div>
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Government ID Information</h1>
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Government ID Information</h1>
                     <div className='flex flex-1 gap-4 mb-4'>
                         <div className="w-full">
                             <label htmlFor=""><b>SSS No.</b></label>
@@ -203,9 +203,9 @@ export default function AddExistingEmployeeSection() {
                             value=""
                             checked={showWorkingExperience}
                             onChange={handleWorkingExperienceChange}
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  -gray-800 focus:ring-2  "
                         />
-                        <label htmlFor="with-working-experience-checkbox" className="ms-2 text-md font-medium text-gray-900 dark:text-gray-300"><b>with Working Experience</b></label>
+                        <label htmlFor="with-working-experience-checkbox" className="ms-2 text-md font-medium text-gray-900 "><b>with Working Experience</b></label>
                     </div>
                     <div className="flex items-center mb-4">
                         <input
@@ -214,13 +214,13 @@ export default function AddExistingEmployeeSection() {
                             value=""
                             checked={showFirstTimeJobseeker}
                             onChange={handleFirstTimeJobseekerChange}
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  -gray-800 focus:ring-2  "
                             disabled={showWorkingExperience}
                         />
-                        <label htmlFor="first-time-jobseeker-checkbox" className="ms-2 text-md font-medium text-gray-900 dark:text-gray-300"><b>First Time Jobseeker</b></label>
+                        <label htmlFor="first-time-jobseeker-checkbox" className="ms-2 text-md font-medium text-gray-900 "><b>First Time Jobseeker</b></label>
                     </div>
                     {showWorkingExperience && <WorkingExperienceSection />}
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Emergency Contact Information</h1>
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Emergency Contact Information</h1>
                     <div className="mb-4 w-full">
                         <label htmlFor=""><b>Emergency Contact Fullname</b></label>
                         <input type="text" placeholder="Emergency Contact Fullname" className="border p-2 rounded w-full " />

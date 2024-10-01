@@ -3,7 +3,7 @@ import { Modal } from "antd";
 import React from "react";
 import { useState } from "react";
 
-export default function PhysicalCOntractSigning({setOpen}) {
+export default function PhysicalCOntractSigning({data, setOpen}) {
     const [openPhysicalSigning, setPhysicalSigningOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     // const [physical, setPhysical] = useState({
@@ -36,6 +36,7 @@ export default function PhysicalCOntractSigning({setOpen}) {
             setLoading(false);
         }
     }
+    console.log('data',data)
     return (
         <div className="flex w-full items-center justify-center">
             <button
@@ -69,7 +70,7 @@ export default function PhysicalCOntractSigning({setOpen}) {
                                 Application No.
                             </label>
                             <input
-                                // value={data?.app_id}
+                                value={data?.app_id}
                                 className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="grid-text"
                                 type="number"
@@ -87,7 +88,7 @@ export default function PhysicalCOntractSigning({setOpen}) {
                                     Applicant's Name
                                 </label>
                                 <input
-                                    // value={`${data.fname} ${data.mname} ${data.lname}`}
+                                    value={`${data.fname} ${data.mname} ${data.lname}`}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -106,7 +107,7 @@ export default function PhysicalCOntractSigning({setOpen}) {
                                     Email Address
                                 </label>
                                 <input
-                                    // value={data?.email}
+                                    value={data?.email}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="email"
@@ -122,7 +123,7 @@ export default function PhysicalCOntractSigning({setOpen}) {
                                     Job Position
                                 </label>
                                 <input
-                                    // value={data?.phone}
+                                    value={data?.joboffer?.jobPos}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -138,7 +139,7 @@ export default function PhysicalCOntractSigning({setOpen}) {
                                     Salary
                                 </label>
                                 <input
-                                    // value={data?.phone}
+                                    value={data?.joboffer?.salary}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"

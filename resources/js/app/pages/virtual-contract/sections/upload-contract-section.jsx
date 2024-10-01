@@ -34,7 +34,7 @@ export default function UploadContractSection() {
 
     return (
         <div>
-            <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Upload your PDF file scanned contract here.</h1>
+            <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Upload your PDF file scanned contract here.</h1>
             <div className="w-full py-9 bg-gray-50 rounded-2xl border border-gray-300 gap-3 grid border-dashed" onDragOver={handleDragOver} onDrop={handleDrop}>
                 <div className="grid gap-1">
                     <FilePdfOutlined className='flex items-center justify-center text-4xl' />

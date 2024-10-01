@@ -180,7 +180,7 @@ const ButtonComponents = () => {
           <h1><b>Personal Information</b></h1>
         </div>
         <form className='border rounded-lg p-3.5'>
-          <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 text-center"></h1>
+          <h1 className="text-xl font-semibold mb-3 text-gray-900  text-center"></h1>
           <div className='flex flex-1 gap-4'>
             <div className='flex flex-col w-full mb-4'>
               <label htmlFor=""><b>Full Name</b></label>
@@ -279,7 +279,7 @@ const ButtonComponents = () => {
               <input type="text" placeholder="Course taken" className="border p-2 rounded w-full " />
             </div>
           </div>
-          <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Address Information</h1>
+          <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Address Information</h1>
           <div className="flex flex-1 gap-4 mb-4 w-full">
             <div className='flex flex-col w-full'>
               <label htmlFor=""><b>Region</b></label>
@@ -304,7 +304,7 @@ const ButtonComponents = () => {
               <input type="text" placeholder="House/Lot No., Street, Purok/Sitio" className="border p-2 rounded w-full " />
             </div>
           </div>
-          <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Government ID Information</h1>
+          <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Government ID Information</h1>
           <div className='flex flex-1 gap-4 mb-4'>
             <div className="w-full">
               <label htmlFor=""><b>SSS No.</b></label>
@@ -325,7 +325,7 @@ const ButtonComponents = () => {
               <input type="text" placeholder="Philhealth No." className="border p-2 rounded w-full " />
             </div>
           </div>
-          <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">Emergency Contact Information</h1>
+          <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Emergency Contact Information</h1>
           <div className="mb-4 w-full">
             <label htmlFor=""><b>Emergency Contact Fullname</b></label>
             <input type="text" placeholder="Emergency Contact Fullname" className="border p-2 rounded w-full " />

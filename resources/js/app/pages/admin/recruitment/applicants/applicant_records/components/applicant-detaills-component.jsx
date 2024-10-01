@@ -34,7 +34,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                     </h1>
                 </div>
                 <form className="border rounded-lg p-3.5">
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 text-center"></h1>
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  text-center"></h1>
                     <div className="mb-4">
                         <label htmlFor="">
                             <b>Application No.</b>
@@ -229,7 +229,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                             />
                         </div>
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">
                         Address Information
                     </h1>
                     <div className="mb-4">
@@ -247,7 +247,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                             readOnly
                         />
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">
                         Government ID Information
                     </h1>
                     <div className="flex flex-1 gap-4 mb-4">
@@ -302,7 +302,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                             />
                         </div>
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">
                         Emergency Contact Information
                     </h1>
                     <div className="mb-4 w-full">

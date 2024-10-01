@@ -57,7 +57,7 @@ export default function WorkingExperienceSection() {
     };
     return (
         <div>
-            <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-6">
+            <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-6">
                 Working Experience
             </h1>
             {applicantForm?.work_experience.map((experience, index) => (

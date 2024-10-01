@@ -4,6 +4,7 @@ import { Button, Input, Modal, Space, Table, Tag, Upload } from "antd";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import ReUploadRequirementsSection from "./re-upload-requirements-section";
 
 export default function PreEmploymentTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -13,20 +14,6 @@ export default function PreEmploymentTableSection() {
     const { preemploymentfiles } = useSelector((state) => state.preemploymentfiles)
     const { applicant } = useSelector((state) => state.final_rate);
 
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [fileList, setFileList] = useState([])
-
-    const showModal = () => {
-        setIsModalVisible(true);
-    };
-
-    const handleOk = () => {
-        setIsModalVisible(false);
-    };
-
-    const handleCancel = () => {
-        setIsModalVisible(false);
-    };
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -227,38 +214,7 @@ export default function PreEmploymentTableSection() {
                             </div>
                         )}
                         {record.status === 'Declined' && (
-                            <div>
-                                <button
-                                    type="button"
-                                    onClick={showModal}
-                                    className="text-2xl ml-2.5 text-red-500"
-                                >
-                                    <UploadOutlined />
-                                </button>
-                                <Modal title="REUPLOAD REQUIREMENTS" open={isModalVisible} onOk={handleOk} okText="Submit" onCancel={handleCancel}>
-                                    <div className='w-full'>
-                                        <label
-                                            className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                            for="grid-text"
-                                        >
-                                            Name of Requirement
-                                        </label>
-                                        <input type="text" className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" value="Police Clearance" readOnly />
-                                    </div>
-                                    <Upload
-                                        action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                                        listType="picture"
-                                        method='GET'
-                                        maxCount={1}
-                                        multiple={false}
-                                        defaultFileList={fileList}
-                                    >
-                                        <Button type="primary" icon={<UploadOutlined />}>
-                                            Upload Scanned Image
-                                        </Button>
-                                    </Upload>
-                                </Modal>
-                            </div>
+                            <ReUploadRequirementsSection data={record} />
                         )}
                         {record.status === 'Uploaded' && (
                             <div className='ml-2.5 text-2xl text-orange-500'>

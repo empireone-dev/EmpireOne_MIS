@@ -201,7 +201,6 @@ export default function File201TableSection() {
 
     const dataSource = applicant?.requirements ?? [];
     // console.log("preemploymentfile",preemploymentfile)
-
     return (
         <div>
             {/* Modal component */}
@@ -213,7 +212,7 @@ export default function File201TableSection() {
                     </h2>
                 </div>
                 <div className='flex flex-1 justify-between'>
-                    <File201ButtonSection />
+                    <File201ButtonSection data={applicant} />
                 </div>
             </div>
             <Table columns={columns} dataSource={dataSource} />

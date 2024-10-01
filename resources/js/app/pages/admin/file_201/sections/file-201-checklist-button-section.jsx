@@ -14,7 +14,7 @@ import PhysicalCOntractSigning from "./physical-contract-signing";
 import VirtualContractSigning from "./virtual-contract-signing";
 import OnboardingAcknowledgeSection from "./onboarding-acknowledge-section";
 
-export default function File201ChecklistButtonSection() {
+export default function File201ChecklistButtonSection({ data }) {
     const [openChecklistModal, setOpenChecklistModal] = useState(false);
     const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
     const { checklists } = useSelector((state) => state.checklists);
@@ -115,7 +115,7 @@ export default function File201ChecklistButtonSection() {
                 </form>
                 <div className="w-full">
                     {status == "Accepted" && (
-                        <OnboardingAcknowledgeSection />
+                        <OnboardingAcknowledgeSection data={data} setOpen={setOpenChecklistModal} />
                     )}
                     {status == "Contract Signing" && (
                         <button

@@ -203,7 +203,7 @@ export default function AddApplicantsSection() {
                             readOnly
                         />
                     </div> */}
-                    <h1 className="text-xl font-semibold mb-3 mt-4 text-gray-900 dark:text-gray-100">
+                    <h1 className="text-xl font-semibold mb-3 mt-4 text-gray-900 ">
                         Site Information
                     </h1>
                     <div>
@@ -221,7 +221,7 @@ export default function AddApplicantsSection() {
                         </div>
                     </div>
 
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-6">
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-6">
                         Personal Information
                     </h1>
                     <div className="flex flex-1 gap-4">
@@ -414,7 +414,7 @@ export default function AddApplicantsSection() {
                             />
                         </div>
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">
                         Address Information
                     </h1>
                     <div className="flex flex-1 gap-4 mb-4 w-full">
@@ -483,7 +483,7 @@ export default function AddApplicantsSection() {
                             />
                         </div>
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-9">
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">
                         Government ID Information
                     </h1>
                     <div className="flex flex-1 gap-4 mb-4">
@@ -533,11 +533,11 @@ export default function AddApplicantsSection() {
                             value=""
                             checked={showWorkingExperience}
                             onChange={handleWorkingExperienceChange}
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  -gray-800 focus:ring-2  "
                         />
                         <label
                             htmlFor="with-working-experience-checkbox"
-                            className="ms-2 text-md font-medium text-gray-900 dark:text-gray-300"
+                            className="ms-2 text-md font-medium text-gray-900 "
                         >
                             <b>with Working Experience</b>
                         </label>
@@ -549,18 +549,18 @@ export default function AddApplicantsSection() {
                             value=""
                             checked={showFirstTimeJobseeker}
                             onChange={handleFirstTimeJobseekerChange}
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  -gray-800 focus:ring-2  "
                             disabled={showWorkingExperience}
                         />
                         <label
                             htmlFor="first-time-jobseeker-checkbox"
-                            className="ms-2 text-md font-medium text-gray-900 dark:text-gray-300"
+                            className="ms-2 text-md font-medium text-gray-900 "
                         >
                             <b>First Time Jobseeker</b>
                         </label>
                     </div>
                     {showWorkingExperience && <WorkingExperienceSection />}
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 dark:text-gray-100 mt-7">
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-7">
                         Emergency Contact Information
                     </h1>
                     <div className="mb-4 w-full">

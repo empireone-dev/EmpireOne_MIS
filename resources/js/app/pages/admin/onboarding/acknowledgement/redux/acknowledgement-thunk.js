@@ -13,8 +13,8 @@ export function get_job_offer_thunk() {
 
 export function get_on_boarding_thunk() {
   return async function (dispatch, getState) {
-    const result = (await get_onboarding_doc_service()).data
-    console.log('result',result)
-    dispatch(onboardingDocuSlice.actions.setOnboardingDocus(result));
+    const result = (await get_onboarding_doc_service())
+    dispatch(onboardingDocuSlice.actions.setOnboardingDocus(result.data));
+    dispatch(onboardingDocuSlice.actions.setOd(result.od));
   };
 }

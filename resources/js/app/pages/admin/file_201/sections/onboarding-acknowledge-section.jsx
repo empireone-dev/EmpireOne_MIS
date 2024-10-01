@@ -15,7 +15,7 @@ export default function OnboardingAcknowledgeSection({ data, setOpen }) {
 
     console.log('data', data)
 
-    async function send_onboarding_ack() {
+    async function send_onboarding_ack(e) {
         e.preventDefault();
         setLoading(true);
         try {
@@ -23,7 +23,7 @@ export default function OnboardingAcknowledgeSection({ data, setOpen }) {
                 create_onboarding_ack_thunk({
                     ...form,
                     ...data,
-                    status: 'Pending'
+                    // status: 'Pending'
                 })
             );
             await store.dispatch(get_applicant_thunk());

@@ -12,3 +12,12 @@ export default function sendiv_email_service(data) {
 
     }
 }
+
+export function sendiv_contract_email_service(data) {
+    try {
+        const result = axios.post('/api/sendiv_email',data)
+        return result
+    } catch (error) {
+
+    }
+}

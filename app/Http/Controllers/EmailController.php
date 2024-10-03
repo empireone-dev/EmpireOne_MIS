@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContractPhysical;
+use App\Mail\ContractVirtual;
 use App\Mail\FinalEmail;
 use App\Mail\FinalvEmail;
 use App\Mail\InitialEmail;
@@ -9,8 +11,10 @@ use App\Mail\InitialvEmail;
 use App\Models\Applicant;
 use App\Models\FinalRate;
 use App\Models\InitialRate;
+use App\Models\PreEmploymentFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class EmailController extends Controller
 {
@@ -51,6 +55,21 @@ class EmailController extends Controller
                 Applicant::where('app_id', $data['app_id'])->update([
                     'status' => 'Initial Phase'
                 ]);
+            } else if ($request->phase_status == 'physical_contract_signing') {
+                Mail::to($request->email)->send(new ContractPhysical($data));
+            } else if ($request->phase_status == 'virtual_contract_signing') {
+
+                if ($request->hasFile('file')) {
+                    $path = $request->file('file')->store(date("Y"), 's3');
+                    $url = Storage::disk('s3')->url($path);
+                    PreEmploymentFile::create([
+                        'app_id' => $request->app_id,
+                        'reqs' => 'Contract Documents',
+                        'reqs_img' => $url,
+                        'status' => 'Contract',
+                    ]);
+                    Mail::to($request->email)->send(new ContractVirtual($data, $url));
+                }
             } else {
                 Mail::to($request->email)->send(new FinalEmail($data));
                 FinalRate::create([

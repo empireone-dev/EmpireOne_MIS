@@ -4,7 +4,7 @@
 
     I hope this message finds you well. We kindly invite you to join us for the official signing of your employment contract. The details are as follows:.
 
-    Job Position: {{$data['jPos']}}
+    Job Position: {{$data['jobPos']}}
     Salary: {{$data['salary']}}
     Date & Time: {{ \Carbon\Carbon::parse($data['ifftime'])->format('g:i A') }}
 

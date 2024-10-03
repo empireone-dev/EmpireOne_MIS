@@ -1,11 +1,18 @@
+import store from "@/app/store/store";
 import { CheckCircleFilled, LoadingOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
+import { message, Modal } from "antd";
 import React from "react";
 import { useState } from "react";
+import { sendiv_email_thunk } from "../../recruitment/applicants/applicant_records/redux/applicant-thunk";
 
-export default function PhysicalCOntractSigning({data, setOpen}) {
+export default function PhysicalCOntractSigning({ data, setOpen }) {
     const [openPhysicalSigning, setPhysicalSigningOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [initial, setInitial] = useState({
+        ifftime: "",
+        iffdate: "",
+    });
+    const jo =data.joboffer.find(res=>res.status == 'Accepted')
     // const [physical, setPhysical] = useState({
     //     ifftime: "",
     //     iffdate: "",
@@ -21,12 +28,12 @@ export default function PhysicalCOntractSigning({data, setOpen}) {
             await store.dispatch(
                 sendiv_email_thunk({
                     ...data,
+                    ...jo,
                     ifftime: initial.ifftime,
                     iffdate: initial.iffdate,
-                    phase_status: status,
+                    phase_status: "physical_contract_signing",
                 })
             );
-            store.dispatch(get_applicant_thunk());
             setLoading(false);
             setOpen(false);
             setOpenDialog(false);
@@ -36,7 +43,7 @@ export default function PhysicalCOntractSigning({data, setOpen}) {
             setLoading(false);
         }
     }
-    console.log('data',data)
+    console.log("datasss", data.joboffer.find(res=>res.status == 'Accepted'));
     return (
         <div className="flex w-full items-center justify-center">
             <button
@@ -123,7 +130,7 @@ export default function PhysicalCOntractSigning({data, setOpen}) {
                                     Job Position
                                 </label>
                                 <input
-                                    value={data?.joboffer?.jobPos}
+                                    value={jo?.jobPos}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -139,7 +146,7 @@ export default function PhysicalCOntractSigning({data, setOpen}) {
                                     Salary
                                 </label>
                                 <input
-                                    value={data?.joboffer?.salary}
+                                    value={jo?.salary}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -157,12 +164,12 @@ export default function PhysicalCOntractSigning({data, setOpen}) {
                                     Schedule date for Contract Signing
                                 </label>
                                 <input
-                                    // onChange={(e) =>
-                                    //     setInitial({
-                                    //         ...initial,
-                                    //         iffdate: e.target.value,
-                                    //     })
-                                    // }
+                                    onChange={(e) =>
+                                        setInitial({
+                                            ...initial,
+                                            iffdate: e.target.value,
+                                        })
+                                    }
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="date"
@@ -179,12 +186,12 @@ export default function PhysicalCOntractSigning({data, setOpen}) {
                                     {/* {status} */}
                                 </label>
                                 <input
-                                    // onChange={(e) =>
-                                    //     setInitial({
-                                    //         ...initial,
-                                    //         ifftime: e.target.value,
-                                    //     })
-                                    // }
+                                    onChange={(e) =>
+                                        setInitial({
+                                            ...initial,
+                                            ifftime: e.target.value,
+                                        })
+                                    }
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="time"

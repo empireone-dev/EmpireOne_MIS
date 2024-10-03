@@ -2,13 +2,12 @@ import { FilePdfOutlined } from '@ant-design/icons';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import React, { useState } from 'react';
 
-export default function SendUploadContractSection() {
-    const [uploadedFile, setUploadedFile] = useState(null);
+export default function SendUploadContractSection({uploadedFile, setUploadedFile}) {
 
     const displayUploadedFile = (file) => {
         if (file) {
             const fileUrl = URL.createObjectURL(file);
-            setUploadedFile(fileUrl);
+       
         } else {
             setUploadedFile(null);
         }
@@ -17,6 +16,7 @@ export default function SendUploadContractSection() {
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
         displayUploadedFile(file);
+        setUploadedFile(file)
     };
 
     const handleDragOver = (e) => {

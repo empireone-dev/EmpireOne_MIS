@@ -1,16 +1,17 @@
 import { CheckCircleFilled, LoadingOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
+import { message, Modal } from "antd";
 import React from "react";
 import { useState } from "react";
 import SendUploadContractSection from "./send-upload-contract-section";
+import store from "@/app/store/store";
+import { sendiv_contract_email_thunk, sendiv_email_thunk } from "../../recruitment/applicants/applicant_records/redux/applicant-thunk";
 
 export default function VirtualContractSigning({ data, setOpen }) {
     const [openVirtualSigning, setVirtualSigningOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    // const [physical, setPhysical] = useState({
-    //     ifftime: "",
-    //     iffdate: "",
-    // });
+    const [uploadedFile, setUploadedFile] = useState(null);
+
+    const jo = data.joboffer.find((res) => res.status == "Accepted");
     // const { applicants, interviewer } = useSelector(
     //     (state) => state.applicants
     // );
@@ -18,16 +19,20 @@ export default function VirtualContractSigning({ data, setOpen }) {
     async function send_virtual_signing(e) {
         e.preventDefault();
         setLoading(true);
+        const fd = new FormData();
+        fd.append('file', uploadedFile);
+        fd.append('phase_status', 'virtual_contract_signing');
+        fd.append('jobPos', jo?.jobPos);
+        fd.append('salary', jo?.salary);
+        fd.append('app_id', data?.app_id);
+        fd.append('fname', data?.fname);
+        fd.append('lname', data?.lname);
+        fd.append('email', data?.email);
+
         try {
             await store.dispatch(
-                sendiv_email_thunk({
-                    ...data,
-                    ifftime: initial.ifftime,
-                    iffdate: initial.iffdate,
-                    phase_status: status,
-                })
+                sendiv_contract_email_thunk(fd)
             );
-            store.dispatch(get_applicant_thunk());
             setLoading(false);
             setOpen(false);
             setOpenDialog(false);
@@ -123,7 +128,7 @@ export default function VirtualContractSigning({ data, setOpen }) {
                                     Job Position
                                 </label>
                                 <input
-                                    value={data?.joboffer?.jobPos}
+                                    value={jo?.jobPos}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -139,7 +144,7 @@ export default function VirtualContractSigning({ data, setOpen }) {
                                     Salary
                                 </label>
                                 <input
-                                    value={data?.joboffer?.salary}
+                                    value={jo?.salary}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -174,11 +179,15 @@ export default function VirtualContractSigning({ data, setOpen }) {
                             </select>
                         </div> */}
                     </div>
-                    <SendUploadContractSection />
+                    <SendUploadContractSection
+                        uploadedFile={uploadedFile}
+                        setUploadedFile={setUploadedFile}
+                    />
                     <button
                         type="submit"
-                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
-                            }`}
+                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${
+                            loading ? "cursor-not-allowed opacity-75" : ""
+                        }`}
                         onClick={send_virtual_signing}
                         disabled={loading}
                     >
@@ -191,7 +200,6 @@ export default function VirtualContractSigning({ data, setOpen }) {
                     </button>
                 </form>
             </Modal>
-
         </div>
     );
 }

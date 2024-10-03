@@ -2,9 +2,9 @@
 
     # Dear {{$data['fname']}} {{$data['lname']}},
 
-    I hope this message finds you well. We are delighted to inform you that we have reached the point in our agreement process where we are ready to proceed with the signing of the {{$data['jPos']}}. Embracing the efficiency and convenience of technology, we have opted for an contract signing method utilizing a PDF document. The details are as follows:
+    I hope this message finds you well. We are delighted to inform you that we have reached the point in our agreement process where we are ready to proceed with the signing of the {{$data['jobPos']}}. Embracing the efficiency and convenience of technology, we have opted for an contract signing method utilizing a PDF document. The details are as follows:
 
-    Job Position: {{$data['jPos']}}
+    Job Position: {{$data['jobPos']}}
     Salary: {{$data['salary']}}
 
     To sign the document, follow these steps:

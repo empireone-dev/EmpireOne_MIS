@@ -62,13 +62,20 @@ class EmailController extends Controller
                 if ($request->hasFile('file')) {
                     $path = $request->file('file')->store(date("Y"), 's3');
                     $url = Storage::disk('s3')->url($path);
+                    if ($url) {
+                        Mail::to($request->email)->send(new ContractVirtual($data, $url));
+                    }
+                }
+            } else if ($request->phase_status == 'upload_contract') {
+                if ($request->hasFile('file')) {
+                    $path = $request->file('file')->store(date("Y"), 's3');
+                    $url = Storage::disk('s3')->url($path);
                     PreEmploymentFile::create([
                         'app_id' => $request->app_id,
-                        'reqs' => 'Contract Documents',
+                        'reqs' => 'Contract',
                         'reqs_img' => $url,
-                        'status' => 'Contract',
+                        'status' => 'Uploaded',
                     ]);
-                    Mail::to($request->email)->send(new ContractVirtual($data, $url));
                 }
             } else {
                 Mail::to($request->email)->send(new FinalEmail($data));

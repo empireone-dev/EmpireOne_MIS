@@ -1,32 +1,26 @@
 <x-mail::message>
 
-    # Dear {{$data['fname']}} {{$data['lname']}},
+    Dear {{$data['fname']}} {{$data['lname']}},
 
-    I hope this message finds you well. We are delighted to inform you that we have reached the point in our agreement process where we are ready to proceed with the signing of the {{$data['jobPos']}}. Embracing the efficiency and convenience of technology, we have opted for an contract signing method utilizing a PDF document. The details are as follows:
+    I hope this message finds you well. After a thorough review, we regret to inform you that the contract for the position of {{$data['jobPos']}} has been declined due to the following reason(s):
 
-    Job Position: {{$data['jobPos']}}
-    Salary: {{$data['salary']}}
+    Reason: {{$data['decline_reason'] ?? 'Blurred Contract'}}
 
-    To sign the document, follow these steps:
+    In light of this, we kindly request that you re-upload the corrected or signed contract document to proceed with the next steps in the process. Please follow the instructions below:
 
-    1. Download and print the PDF Document Contract.
-    2. Sign the printed contract.
-    3. Scan and Convert the image into PDF File:
-    4. Upload your signed contract to this link below:
-    
-    http://127.0.0.1:8000/virtual-contract/{{$data['app_id']}}
+    Download and print the PDF Document Contract.
+    Sign the printed contract.
+    Scan and ensure the document is clear and legible.
+    Convert the scanned file into PDF format.
+    Upload the new version of the signed contract to the link below:
+    Re-upload Link
 
-    If, for any reason, you are unable or encounter difficulties with the process, please inform us promptly. We are happy to explore alternative arrangements to accommodate your contract signing or provide assistance with the virtual contract signing process.
+    If you encounter any issues or require assistance during this process, please do not hesitate to reach out. We are committed to providing support to ensure a smooth and successful contract submission.
 
-    We appreciate your cooperation and commitment to this process and we are excited about the prospect of you joining our team and contributing your valuable skills and expertise. Our goal is to facilitate a seamless and secure signing experience as we formalize our partnership. We are confident that this approach will enhance the overall efficiency and effectiveness of our collaboration.
-
-    In preparation for the virtual contract signing, Attached here is the PDF document for Contract Signing.
-
-    Thank you for your attention to this matter, and we look forward to a successful contract signing.
+    Thank you for your prompt attention to this matter. We are eager to move forward once the corrected document is received and we remain enthusiastic about the opportunity to have you join our team.
 
     Warm regards,
-
     HR Team
-    EmpireOne BPO Solutions Inc.
+    EmpireOne BPO Solutions Inc
 
 </x-mail::message>

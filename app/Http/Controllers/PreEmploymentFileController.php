@@ -27,15 +27,15 @@ class PreEmploymentFileController extends Controller
             $url = Storage::disk('s3')->url($path);
 
             // Optionally, you can save the URL or file info to the database here
-            PreEmploymentFile::create([
-                'app_id' => $request->app_id,
-                'reqs' => $request->reqs,
-                'reqs_img' => $url,
-                'status' => $request->status,
-                'reas' => $request->reas,
-                'created' => $request->created,
+            // PreEmploymentFile::create([
+            //     'app_id' => $request->app_id,
+            //     'reqs' => $request->reqs,
+            //     'reqs_img' => $url,
+            //     'status' => $request->status,
+            //     'reas' => $request->reas,
+            //     'created' => $request->created,
 
-            ]);
+            // ]);
             return response()->json([
                 'data' => 'success',
                 'url' => $url, // Return the URL of the uploaded file,

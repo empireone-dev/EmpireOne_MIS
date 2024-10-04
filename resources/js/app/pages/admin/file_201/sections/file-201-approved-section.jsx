@@ -6,11 +6,12 @@ import { get_applicant_by_app_id_thunk } from "../../final_rate/redux/final-rate
 export default function File201ApprovedSection({data,setOpen}) {
 
     const app_id = window.location.pathname.split('/')[3]
-
+console.log('datassssssss',data)
    async function on_handler(params) {
       await  update_pre_employment_file_service({
             ...data,
-            status:'Approved'
+            status:'Approved',
+            isContract:true
         })
       await  store.dispatch(get_applicant_by_app_id_thunk(app_id))
         setOpen(false)

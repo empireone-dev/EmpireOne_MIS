@@ -57,11 +57,37 @@ class PreEmploymentFileController extends Controller
     {
         $preempfile = PreEmploymentFile::where('id', $id)->first();
 
+        // if (!$preempfile) {
+        //     return response()->json(['error' => 'File not found'], 404);
+        // }
 
-        $preempfile->update([
-            'status' => $request->status,
-            'reas' => $request->reas,
-        ]);
+        if ($request->status !== 'Declined') {
+            $preempfile->update([
+                'status' => $request->status,
+                'reas' => $request->reas,
+            ]);
+        } elseif ($request->status === 'Declined') {
+            $defaultReason = 'blurred contract';
+            $reas = $request->reas ?: $defaultReason;
+
+            if ($request->hasFile('file')) {
+                $uploadedFile = $request->file('file');
+                $path = $uploadedFile->store(date("Y"), 's3');
+                $url = Storage::disk('s3')->url($path);
+
+                $preempfile->update([
+                    'status' => 'Uploaded',
+                    'reas' => '',
+                    'reqs_img' => $url,
+                ]);
+            } else {
+                $preempfile->update([
+                    'status' => 'Declined',
+                    'reas' => $reas,
+                ]);
+            }
+        }
+
 
         if ($request->reqs == 'Contract' && $request->status != 'Declined') {
             $jo = JobOffer::where([
@@ -69,9 +95,9 @@ class PreEmploymentFileController extends Controller
                 ['status', '=', 'Contract Signing'],
             ])->first();
             $jo->update([
-                'status' => 'Signed'
+                'status' => 'Hired'
             ]);
-        }else if ($request->reqs == 'Contract' && $request->status == 'Declined') {
+        } else if ($request->reqs == 'Contract' && $request->status == 'Declined') {
             Mail::to($request->email)->send(new DeclinedContract($request->all()));
         }
 

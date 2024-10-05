@@ -1,13 +1,19 @@
 import { UploadOutlined } from '@ant-design/icons'
 import { Button, Modal, Upload } from 'antd'
-import moment from 'moment';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
+import { update_pre_employment_file_service } from '../../services/pre-employment-file-service';
 
 export default function ReUploadRequirementsSection(data) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [reqs, setReqs] = useState('')
     const [fileList, setFileList] = useState([])
+
+    useEffect(() => {
+        if (data?.data?.reqs) {
+            setReqs(data?.data?.reqs);
+        }
+    }, [data]);
 
     const showModal = () => {
         setIsModalVisible(true);
@@ -20,10 +26,10 @@ export default function ReUploadRequirementsSection(data) {
         fd.append('file', fileList.originFileObj)
         fd.append('status', 'Uploaded')
         fd.append('reqs', reqs)
-        fd.append('created', moment().format('YYYY-MM-DD HH:mm:ss'))
+        // fd.append('created', moment().format('YYYY-MM-DD HH:mm:ss'))
         fd.append('app_id', window.location.pathname.split('/')[2])
         if (fileList.status == 'done') {
-            const result = await store_pre_employment_file_service(fd)
+            const result = await update_pre_employment_file_service(fd)
             console.log('result', result)
         }
     };
@@ -35,6 +41,8 @@ export default function ReUploadRequirementsSection(data) {
     async function upload_file({ file }) {
         setFileList(file)
     }
+
+    console.log('data', data)
 
     return (
         <div>
@@ -55,14 +63,17 @@ export default function ReUploadRequirementsSection(data) {
                     </label>
                     <input
                         onChange={(e) => setReqs(e.target.value)}
-                        value={data?.data?.reqs}
-                        type="text" className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" readOnly />
+                        value={reqs}
+                        type="text"
+                        name="reqs"
+                        className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" readOnly />
                 </div>
                 <Upload
                     action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
                     listType="picture"
                     method='GET'
                     maxCount={1}
+                    onChange={upload_file}
                     multiple={false}
                     defaultFileList={fileList}
                 >

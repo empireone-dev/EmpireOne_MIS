@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { DownOutlined, EditOutlined, FileOutlined, FileTextOutlined, FolderOpenOutlined, PrinterOutlined, QrcodeOutlined, UsergroupAddOutlined } from '@ant-design/icons';
 import { Button, Dropdown, message, Space, Modal, Menu } from 'antd';
 import { router } from '@inertiajs/react';
+import Input from '@/app/pages/_components/input';
 
 const ButtonComponents = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -15,7 +16,7 @@ const ButtonComponents = () => {
   const handleMenuClick = (item) => {
     if (item.onClick) item.onClick();
     if (item.key === '1') setModalOpen(true);
-    if (item.key === '2') router.visit('/admin/file_201');
+    if (item.key === '2') router.visit(`/admin/file_201/{$app_id}`);
     if (item.key === '3') setStatusModalOpen(true);
     if (item.key === '4') router.visit('#');
     if (item.key === '5') router.visit('#');
@@ -157,7 +158,7 @@ const ButtonComponents = () => {
               </div>
               <div class="w-full px-3">
                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
-                Date of Regularization
+                  Date of Regularization
                 </label>
                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" />
               </div>
@@ -181,6 +182,12 @@ const ButtonComponents = () => {
         </div>
         <form className='border rounded-lg p-3.5'>
           <h1 className="text-xl font-semibold mb-3 text-gray-900  text-center"></h1>
+          <div className='mb-4'>
+            <div className='flex flex-col w-full'>
+              <label htmlFor=""><b>Employee No.</b></label>
+              <input type="text" placeholder="" className="border p-2 rounded w-full" readOnly />
+            </div>
+          </div>
           <div className='flex flex-1 gap-4'>
             <div className='flex flex-col w-full mb-4'>
               <label htmlFor=""><b>Full Name</b></label>
@@ -279,6 +286,83 @@ const ButtonComponents = () => {
               <input type="text" placeholder="Course taken" className="border p-2 rounded w-full " />
             </div>
           </div>
+
+          <div className='flex flex-1 gap-4'>
+            <div className='flex flex-col w-full mb-4'>
+              <div className='flex flex-1 gap-3'>
+                <select
+                  // onChange={(event) => data_handler(event)}
+                  name='suffix'
+                  className="border p-2 rounded  w-full">
+                  <option disabled selected>Job Position</option>
+                  <option> Sr.</option>
+                  <option> Jr.</option>
+                  <option> II</option>
+                  <option> III</option>
+                  <option> IV</option>
+                  <option> V</option>
+                </select>
+                <select
+                  // onChange={(event) => data_handler(event)}
+                  name='suffix'
+                  className="border p-2 rounded  w-full">
+                  <option disabled selected>Department</option>
+                  <option> Sr.</option>
+                  <option> Jr.</option>
+                  <option> II</option>
+                  <option> III</option>
+                  <option> IV</option>
+                  <option> V</option>
+                </select>
+                <select
+                  // onChange={(event) => data_handler(event)}
+                  name='suffix'
+                  className="border p-2 rounded  w-full">
+                  <option disabled selected>Account (If Applicable)</option>
+                  <option> Sr.</option>
+                  <option> Jr.</option>
+                  <option> II</option>
+                  <option> III</option>
+                  <option> IV</option>
+                  <option> V</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div className='flex flex-1 gap-4'>
+            <div className='flex flex-col w-full mb-4'>
+              <div className='flex flex-1 gap-3'>
+                <select
+                  // onChange={(event) => data_handler(event)}
+                  name='suffix'
+                  className="border p-2 rounded  w-full">
+                  <option disabled selected>Supervisor</option>
+                  <option> Sr.</option>
+                  <option> Jr.</option>
+                  <option> II</option>
+                  <option> III</option>
+                  <option> IV</option>
+                  <option> V</option>
+                </select>
+                <Input
+                  // onChange={(event) => data_handler(event)}
+                  // value={applicantForm.hired ?? ""}
+                  name="hired"
+                  label="Hired Date"
+                  type="date"
+                />
+                <select
+                  // onChange={(event) => data_handler(event)}
+                  name='suffix'
+                  className="border p-2 rounded  w-full">
+                  <option disabled selected>Status</option>
+                  <option> Probationary</option>
+                  <option> Regular</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
           <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Address Information</h1>
           <div className="flex flex-1 gap-4 mb-4 w-full">
             <div className='flex flex-col w-full'>

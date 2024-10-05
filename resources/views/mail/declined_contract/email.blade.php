@@ -2,19 +2,23 @@
 
     Dear {{$data['fname']}} {{$data['lname']}},
 
-    I hope this message finds you well. We regret to inform you that the contract document you submitted for the {{$data['jobPos']}} was found to be unclear, specifically due to blurring, which affects the legibility of the details. In order to proceed, we kindly request that you re-upload a clearer version of the signed contract. The steps are outlined below:
+    I hope this message finds you well. After a thorough review, we regret to inform you that the contract for the position of {{$data['jobPos']}} has been declined due to the following reason(s):
 
-    Ensure that the scanned copy is clear and all text is easily readable.
+    Reason: {{$data['decline_reason'] ?? ''}}
 
-    Convert the image into a PDF file.
+    In light of this, we kindly request that you re-upload the corrected or signed contract document to proceed with the next steps in the process. Please follow the instructions below:
 
-    Upload the revised signed contract using the following link:
+    Download and print the PDF Document Contract.
+    Sign the printed contract.
+    Scan and ensure the document is clear and legible.
+    Convert the scanned file into PDF format.
+    Upload the new version of the signed contract to the link below:
+        
+    Re-upload Link
 
-    Upload Contract
+    If you encounter any issues or require assistance during this process, please do not hesitate to reach out. We are committed to providing support to ensure a smooth and successful contract submission.
 
-    If you encounter any issues with the process or require assistance, please do not hesitate to reach out to us. We are happy to help and ensure the contract submission goes smoothly.
-
-    Thank you for your prompt attention to this matter. We are eager to finalize the process and officially welcome you to our team.
+    Thank you for your prompt attention to this matter. We are eager to move forward once the corrected document is received and we remain enthusiastic about the opportunity to have you join our team.
 
     Warm regards,
     HR Team

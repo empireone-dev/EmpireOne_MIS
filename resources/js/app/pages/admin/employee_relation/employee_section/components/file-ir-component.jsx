@@ -1,7 +1,7 @@
 import { Menu, Modal } from 'antd'
 import React, { useState } from 'react'
 
-export default function FileIrComponent({data, item}) {
+export default function FileIrComponent({ data, item }) {
     const [statusModalOpen, setStatusModalOpen] = useState(false);
     function openHandler(params) {
         setStatusModalOpen(true);
@@ -12,7 +12,7 @@ export default function FileIrComponent({data, item}) {
                 {item.label}
             </Menu.Item>
             <Modal
-                title=" Incident Report"
+                title=""
                 centered
                 visible={statusModalOpen}
                 onOk={() => setStatusModalOpen(false)}
@@ -23,85 +23,63 @@ export default function FileIrComponent({data, item}) {
                 footer={null}
             >
                 <form class="w-full h-full">
-                    <div class="flex flex-col -mx-3 mb-6">
+                    <div class="flex flex-col -mx-3">
+                        <div className='flex items-center justify-center'>
+                            <h1 className='text-xl'><b>INCIDENT REPORT</b></h1>
+                        </div>
+                        <hr />
+                        <div className='flex flex-1 mt-2'>
+                            <div class="w-full px-3">
+                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                                    Date of Incident
+                                </label>
+                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="date" placeholder="" />
+                            </div>
+                            <div class="w-full px-3">
+                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                                    Time of Incident
+                                </label>
+                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="time" placeholder="" />
+                            </div>
+                            <div class="w-full px-3">
+                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
+                                    Employee Involved
+                                </label>
+                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="" readOnly />
+                            </div>
+                        </div>
+
                         <div class="w-full px-3">
                             <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
-                                Employee's Name
+                                Incident Subject
                             </label>
-                            <select class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="" id="">
-                                <option value=""></option>
-                            </select>
-
+                            <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="" readOnly />
                         </div>
                         <div class="w-full px-3">
                             <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
-                                Employee No.
+                                Incident Summary
                             </label>
-                            <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+                            <textarea class="appearance-none block w-full h-60 border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="" />
                         </div>
 
                         <div className='flex flex-1 '>
                             <div class="w-full px-3">
                                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
-                                    job Position
+                                    Attachment
                                 </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
+                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="file" placeholder="" />
                             </div>
                             <div class="w-full px-3">
                                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
-                                    Department
+                                    Filed By
                                 </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="text" placeholder="" readOnly />
-                            </div>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
-                                    Account <i>(If Applicable)</i>
-                                </label>
-                                <select class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="" id="">
-                                    <option value=""></option>
-                                </select>
+                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="" readOnly/>
                             </div>
                         </div>
-
-                        <div className='flex flex-1'>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
-                                    Supervisor
-                                </label>
-                                <select class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="" id="">
-                                    <option value=""></option>
-                                </select>
-                            </div>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
-                                    EOGS Email
-                                </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="email" placeholder="" />
-                            </div>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
-                                    Status
-                                </label>
-                                <select class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="" id="">
-                                    <option value="">Probationary</option>
-                                    <option value="">Regular</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className='flex flex-1'>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
-                                    Hired Date
-                                </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" />
-                            </div>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
-                                    Date of Regularization
-                                </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-text" type="date" placeholder="" />
-                            </div>
+                        <div className='flex items-center justify-center p-1.5 px-2 mt-1'>
+                            <button className='bg-blue-500 hover:bg-blue-600 text-white w-full p-1.5 rounded-md'>
+                                GENERATE INCIDENT REPORT
+                            </button>
                         </div>
                     </div>
                 </form>

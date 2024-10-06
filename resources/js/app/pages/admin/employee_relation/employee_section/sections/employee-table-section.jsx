@@ -2,10 +2,9 @@ import React, { useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
-import DropdownButton from '../components/button-components';
-import ButtonComponents from '../components/button-components';
 import { useSelector } from 'react-redux';
 import AddEmployeeButtonSection from './add-employee-button-section';
+import EmployeeMenuSection from './employee-menu-section';
 
 export default function EmployeeTableSection() {
     const [searchText, setSearchText] = useState('');
@@ -203,7 +202,9 @@ export default function EmployeeTableSection() {
             dataIndex: 'action',
             render: (_, record) => {
                 return (
-                    <ButtonComponents />
+                    <EmployeeMenuSection
+                    data={record}
+                    />
                 )
             }
         },

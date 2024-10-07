@@ -2,21 +2,24 @@ import { FilePdfOutlined } from '@ant-design/icons';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import React, { useState } from 'react';
 
-export default function SendUploadContractSection({uploadedFile, setUploadedFile}) {
+export default function SendUploadContractSection({uploadedFile, setUploadedFile,setFile}) {
+    // const [uploadedFile, setUploadedFile] = useState(null);
 
     const displayUploadedFile = (file) => {
         if (file) {
             const fileUrl = URL.createObjectURL(file);
-       
+            setUploadedFile(fileUrl);
         } else {
             setUploadedFile(null);
         }
     };
 
+    console.log('uploadedFile',uploadedFile)
+
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
         displayUploadedFile(file);
-        setUploadedFile(file)
+        setFile(file)
     };
 
     const handleDragOver = (e) => {
@@ -31,7 +34,7 @@ export default function SendUploadContractSection({uploadedFile, setUploadedFile
     const handleRemoveFile = () => {
         setUploadedFile(null);
     };
-
+    console.log('uploadedFile',uploadedFile)
     return (
         <div>
             <h1 className="block uppercase tracking-wide  text-xs font-bold mb-3">Upload contract</h1>
@@ -44,7 +47,7 @@ export default function SendUploadContractSection({uploadedFile, setUploadedFile
                     <h4 className="text-center text-gray-900 text-sm font-medium leading-snug">Drag and Drop your file here or</h4>
                     <div className="flex items-center justify-center">
                         <label>
-                            <input type="file" accept="application/pdf" hidden onChange={handleFileInputChange} />
+                            <input type="file" accept="application/pdf" hidden onChange={handleFileInputChange} required/>
                             <div className="flex w-28 h-9 px-2 flex-col bg-green-600 rounded-full shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none">Choose File</div>
                         </label>
                     </div>
@@ -52,7 +55,7 @@ export default function SendUploadContractSection({uploadedFile, setUploadedFile
             </div>
             <div>
                 {uploadedFile && (
-                    <div id="display-area" className='mt-4 mb-4'>
+                    <div id="PDFDisplay" className='mt-4 mb-4'>
                         <div className='flex flex-1 items-center justify-end w-full bg-neutral-800 rounded-t-md'>
                             <div>
                                 <button className=' rounded-t-md text-white py-1.5 px-3 items-center justify-end' onClick={handleRemoveFile}><XMarkIcon className='h-6' /></button>

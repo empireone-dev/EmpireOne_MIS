@@ -10,8 +10,9 @@ export default function VirtualContractSigning({ data, setOpen }) {
     const [openVirtualSigning, setVirtualSigningOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [uploadedFile, setUploadedFile] = useState(null);
+    const [file, setFile] = useState(null);
 
-    const jo = data.joboffer.find((res) => res.status == "Accepted");
+    const jo = data?.joboffer?.find((res) => res.status == "Contract Signing");
     // const { applicants, interviewer } = useSelector(
     //     (state) => state.applicants
     // );
@@ -20,7 +21,7 @@ export default function VirtualContractSigning({ data, setOpen }) {
         e.preventDefault();
         setLoading(true);
         const fd = new FormData();
-        fd.append('file', uploadedFile);
+        fd.append('file', file);
         fd.append('phase_status', 'virtual_contract_signing');
         fd.append('jobPos', jo?.jobPos);
         fd.append('salary', jo?.salary);
@@ -35,7 +36,6 @@ export default function VirtualContractSigning({ data, setOpen }) {
             );
             setLoading(false);
             setOpen(false);
-            setOpenDialog(false);
             message.success("Email sent successfully");
         } catch (error) {
             message.error("There was an error sending the email!");
@@ -180,14 +180,14 @@ export default function VirtualContractSigning({ data, setOpen }) {
                         </div> */}
                     </div>
                     <SendUploadContractSection
+                        setFile={setFile}
                         uploadedFile={uploadedFile}
                         setUploadedFile={setUploadedFile}
                     />
                     <button
                         type="submit"
-                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${
-                            loading ? "cursor-not-allowed opacity-75" : ""
-                        }`}
+                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
+                            }`}
                         onClick={send_virtual_signing}
                         disabled={loading}
                     >

@@ -5,6 +5,8 @@ import { useState } from 'react';
 import File201ApprovedSection from './file-201-approved-section';
 import File201DeclinedSection from './file-201-declined-section';
 import File201ButtonDeclinedSection from './file-201-button-declined-section';
+import ContractDeclineSection from './contract-decline-section';
+import ContractButtonDeclinedSection from './contract-button-declined-section';
 
 export default function ContractApprovalButtonSection({ data }) {
     const [open, setOpen] = useState(false);
@@ -32,7 +34,7 @@ export default function ContractApprovalButtonSection({ data }) {
             >
                 <div className='flex gap-3 text-center text-white items-center justify-center mt-2'>
                     <File201ApprovedSection data={data} setOpen={setOpen} />
-                    <File201ButtonDeclinedSection data={data} setOpen={setOpen} />
+                    <ContractButtonDeclinedSection data={data} setOpen={setOpen} />
                 </div>
             </Modal>
         </div>

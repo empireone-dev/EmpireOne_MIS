@@ -45,8 +45,8 @@ class ContractVirtual extends Mailable
         // Add the attachment from the URL
         if ($this->filePath) {
             $email->attach($this->filePath, [
-                'as' => 'contract-signature.jpg', // You can rename the file if needed
-                'mime' => 'image/jpeg', // Specify the mime type of the file
+                'as' => 'attached-contract.pdf', // Renaming the file to a PDF format
+                'mime' => 'application/pdf', // Specify the mime type for PDF
             ]);
         }
 

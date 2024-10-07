@@ -188,16 +188,19 @@ export default function HiringTableSection() {
                 let color = "";
                 switch (record.status) {
                     case "Contract Signing":
-                        color = "green";
+                        color = "#52D017";
                         break;
                     case "Accepted":
-                        color = "blue";
+                        color = "#43BFC7";
                         break;
                     case "Declined":
-                        color = "red";
+                        color = "#E55451";
                         break;
                     case "Pending":
-                        color = "yellow";
+                        color = "#E1AD01";
+                        break;
+                    case "Hired":
+                        color = "#008000";
                         break;
                 }
 

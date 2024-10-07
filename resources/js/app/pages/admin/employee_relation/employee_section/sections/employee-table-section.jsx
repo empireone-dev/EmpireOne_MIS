@@ -2,16 +2,18 @@ import React, { useRef, useState } from 'react';
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag } from 'antd';
 import Highlighter from 'react-highlight-words';
-import DropdownButton from '../components/button-components';
-import ButtonComponents from '../components/button-components';
 import { useSelector } from 'react-redux';
 import AddEmployeeButtonSection from './add-employee-button-section';
+import EmployeeMenuSection from './employee-menu-section';
 
 export default function EmployeeTableSection() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+    const { applicant } = useSelector((state) => state.final_rate);
     const { employees } = useSelector((state) => state.employees)
+
+    console.log('wsss', applicant)
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -182,10 +184,10 @@ export default function EmployeeTableSection() {
                 let color = '';
                 switch (record.status) {
                     case 'Probationary':
-                        color = 'green';
+                        color = '#52D017';
                         break;
                     case 'Regular':
-                        color = 'blue';
+                        color = '#43BFC7';
                         break;
                 }
                 return (
@@ -200,7 +202,9 @@ export default function EmployeeTableSection() {
             dataIndex: 'action',
             render: (_, record) => {
                 return (
-                    <ButtonComponents />
+                    <EmployeeMenuSection
+                    data={record}
+                    />
                 )
             }
         },
@@ -214,7 +218,7 @@ export default function EmployeeTableSection() {
                         <b>Employee Section</b>
                     </h2>
                 </div>
-                <AddEmployeeButtonSection/>
+                <AddEmployeeButtonSection data={applicant} />
             </div>
             <Table columns={columns} dataSource={employees} />;
         </div>

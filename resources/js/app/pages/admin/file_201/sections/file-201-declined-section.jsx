@@ -14,7 +14,7 @@ export default function File201DeclinedSection({ data, setOpen }) {
             ...reason,
             status: 'Declined'
         })
-        await store.dispatch(get_applicant_by_app_id_thunk(app_id))
+        await store.dispatch(get_applicant_by_app_id_thunk(app_id)) 
         setOpen(false)
     }
     return (

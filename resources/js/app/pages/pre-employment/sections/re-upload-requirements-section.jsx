@@ -4,28 +4,27 @@ import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { update_pre_employment_file_service } from '../../services/pre-employment-file-service';
 
-export default function ReUploadRequirementsSection(data) {
+export default function ReUploadRequirementsSection({data}) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [reqs, setReqs] = useState('')
     const [fileList, setFileList] = useState([])
 
     useEffect(() => {
-        if (data?.data?.reqs) {
-            setReqs(data?.data?.reqs);
+        if (data?.reqs) {
+            setReqs(data?.reqs);
         }
     }, [data]);
 
     const showModal = () => {
         setIsModalVisible(true);
     };
-
     const handleOk = async () => {
         setIsModalVisible(false);
         const fd = new FormData()
-        console.log('fileList', fileList)
         fd.append('file', fileList.originFileObj)
         fd.append('status', 'Uploaded')
         fd.append('reqs', reqs)
+        fd.append('id', data?.id)
         // fd.append('created', moment().format('YYYY-MM-DD HH:mm:ss'))
         fd.append('app_id', window.location.pathname.split('/')[2])
         if (fileList.status == 'done') {

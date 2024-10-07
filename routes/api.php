@@ -70,6 +70,7 @@ Route::resource('engagement', EmployeeEngagementController::class);
 Route::resource('initial_rate', InitialRateController::class);
 Route::resource('final_rate', FinalRateController::class);
 Route::resource('pre_employment_file', PreEmploymentFileController::class);
+Route::post('/reupload_file', [PreEmploymentFileController::class, 'reupload_file']);
 Route::resource('attrition', AttritionController::class);
 
 

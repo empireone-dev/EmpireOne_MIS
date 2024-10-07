@@ -12,6 +12,6 @@ export async function get_pre_employment_file_service(){
 }
 
 export async function update_pre_employment_file_service(data){
-    const res = await axios.put('/api/pre_employment_file/'+data.id,data)
+    const res = await axios.post('/api/reupload_file',data)
     return res.data
 }

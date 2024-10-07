@@ -45,6 +45,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::post('/search_applicant', [ApplicantController::class, 'search_applicant']);
+Route::resource('applicant', ApplicantController::class);
+Route::post('/get_applicant', [ApplicantController::class, 'get_applicant']);
+Route::get('/get_hired_applicant', [ApplicantController::class, 'get_hired_applicant']);
 
 
 Route::resource('outsourcing_erf', OutSourcingErfController::class);
@@ -52,7 +55,6 @@ Route::resource('/dashboard', DashboardController::class);
 
 Route::resource('job_position', JobPositionController::class);
 Route::resource('guideq', GuideQuestionController::class);
-Route::resource('applicant', ApplicantController::class);
 
 Route::resource('checklist', ChecklistController::class);
 Route::resource('joboffer', JobOfferController::class);

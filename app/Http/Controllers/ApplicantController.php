@@ -3,11 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
+use App\Models\JobOffer;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class ApplicantController extends Controller
 {
+
+    public function get_hired_applicant(){
+        $applicants = JobOffer::where('status', 'Hired')->with(['applicant'])->get();
+        return response()->json([
+            'data' => $applicants
+        ], 200);
+    }
 
     public function search_applicant(Request $request)
     {

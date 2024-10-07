@@ -16,7 +16,6 @@ export default function ApplicantDetaillsComponent({ data,item }) {
             </Menu.Item>
             <Modal
                 title="Application Details"
-                centered
                 visible={open}
                 onOk={() => setOpen(false)}
                 onCancel={() => setOpen(false)}

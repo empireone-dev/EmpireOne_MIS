@@ -13,7 +13,6 @@ export default function FileNteComponent({ data, item }) {
             </Menu.Item>
             <Modal
                 title="Notice to Explain"
-                centered
                 visible={statusModalOpen}
                 onOk={() => setStatusModalOpen(false)}
                 onCancel={() => setStatusModalOpen(false)}

@@ -13,7 +13,7 @@ export default function FileIrComponent({ data, item }) {
             </Menu.Item>
             <Modal
                 title=""
-                centered
+                // centered
                 visible={statusModalOpen}
                 onOk={() => setStatusModalOpen(false)}
                 onCancel={() => setStatusModalOpen(false)}

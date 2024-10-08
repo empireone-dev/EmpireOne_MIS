@@ -7,7 +7,7 @@ export default function AddEmployeeButtonSection({data}) {
         <div className="my-2">
             <div class="inline-flex rounded-md shadow-sm" role="group">
                 <AddNewEmployeeSection data={data}/>
-                <AddExistingEmployeeSection/>
+                <AddExistingEmployeeSection data={data}/>
             </div>
         </div>
     );

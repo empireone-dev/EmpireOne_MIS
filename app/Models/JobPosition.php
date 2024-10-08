@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class JobPosition extends Model
 {
@@ -17,4 +18,9 @@ class JobPosition extends Model
         'site',
         'ref_id',
     ];
+
+    public function outsourcing_erf(): HasOne
+    {
+        return $this->hasOne(OutSourcingErf::class, "ref_id", "ref_id");
+    }
 }

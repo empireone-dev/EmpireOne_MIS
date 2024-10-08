@@ -11,7 +11,7 @@ import { get_applicant_thunk } from "../redux/applicant-thunk";
 export default function ApplicantJobOfferComponent({ data, item }) {
     const { job_positions } = useSelector((state) => state.job_positions);
     const [form, setForm] = useState({
-        allowance:0
+        allowance: 0
     });
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -27,7 +27,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                 create_job_offer_thunk({
                     ...form,
                     ...data,
-                    status:'Pending'
+                    status: 'Pending',
                 })
             );
             await store.dispatch(get_applicant_thunk());
@@ -38,6 +38,8 @@ export default function ApplicantJobOfferComponent({ data, item }) {
             setLoading(false);
         }
     }
+
+    console.log('job_positions', job_positions)
     return (
         <>
             <Menu.Item onClick={() => openHandler(true)} icon={item.icon}>
@@ -140,14 +142,22 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     name=""
                                     id=""
-                                    onChange={(e) =>
+                                    onChange={(e) => {
+                                        const selectedJob = job_positions.find(
+                                            (job) => job.jPosition === e.target.value
+                                        );
+
                                         setForm({
                                             ...form,
-                                            salary: e.target.selectedOptions[0]
-                                                .id,
-                                            jobPos: e.target.value,
-                                        })
-                                    }
+                                            outsourcing_erf: {
+                                                ...form.outsourcing_erf, 
+                                                department: selectedJob?.outsourcing_erf?.department || "", 
+                                            },
+                                            salary: selectedJob?.salary || "", 
+                                            jobPos: selectedJob?.jPosition || e.target.value, 
+                                        });
+                                    }}
+
                                 >
                                     <option selected disabled></option>
                                     {job_positions.map((res, i) => {
@@ -162,6 +172,14 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                         );
                                     })}
                                 </select>
+                                <input
+                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-text"
+                                    type="text"
+                                    placeholder=""
+                                    readOnly
+                                    value={form?.outsourcing_erf?.department ?? ""}
+                                />
                             </div>
                             <div className="w-3/5 px-2.5">
                                 <label

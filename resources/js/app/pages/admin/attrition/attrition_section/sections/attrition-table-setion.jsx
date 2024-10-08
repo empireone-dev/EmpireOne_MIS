@@ -8,6 +8,7 @@ import ButtonComponents from '../components/button-components';
 import store from '@/app/store/store';
 import { get_employee_thunk } from '../../../employee_relation/employee_section/redux/employee-section-thunk';
 import { useEffect } from 'react';
+import AttritionMenuSection from './attrition-menu-section';
 
 export default function AttritionTableSection() {
     const [searchText, setSearchText] = useState('');
@@ -173,29 +174,43 @@ export default function AttritionTableSection() {
             title: 'Employment Status',
             dataIndex: 'status',
             key: 'status',
-            render: (_, record, i) => {
-                console.log('record', record)
-
+            render: (_, record) => {
+                let color = '';
+                switch (record.status) {
+                    case 'Probationary':
+                        color = '#52D017';
+                        break;
+                    case 'Regular':
+                        color = '#43BFC7';
+                        break;
+                }
                 return (
-                    <Tag color={'orange'} key={i}>
+                    <Tag color={color} key={record.key}>
                         {record.status}
                     </Tag>
-                )
-            }
+                );
+            },
         },
         {
             title: 'Exit Clearance Status',
             dataIndex: 'estatus',
             key: 'estatus',
-            render: (_, record, i) => {
-                console.log('record', record)
-
+            render: (_, record) => {
+                let color = '';
+                switch (record.estatus) {
+                    case 'Pending':
+                        color = '#E1AD01';
+                        break;
+                    case 'Cleared':
+                        color = '#52D017';
+                        break;
+                }
                 return (
-                    <Tag color={'orange'} key={i}>
+                    <Tag color={color} key={record.key}>
                         {record.estatus}
                     </Tag>
-                )
-            }
+                );
+            },
         },
         {
             title: 'Action',
@@ -204,6 +219,7 @@ export default function AttritionTableSection() {
                 return (
                     <h1>
                         <ButtonComponents/>
+                        {/* <AttritionMenuSection data={record}/> */}
                     </h1>
                 )
             }

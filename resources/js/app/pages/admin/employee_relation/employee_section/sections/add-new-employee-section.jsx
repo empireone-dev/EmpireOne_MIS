@@ -25,6 +25,7 @@ export default function AddNewEmployeeSection({ data }) {
             setForm({});
         }
     }
+    console.log("form?.jobPos?", form?.jobPos);
     return (
         <div className="my-2">
             <div class="inline-flex rounded-md shadow-sm" role="group">
@@ -115,6 +116,7 @@ export default function AddNewEmployeeSection({ data }) {
                                     Department
                                 </label>
                                 <input
+                                    value={form?.department ?? ""}
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"

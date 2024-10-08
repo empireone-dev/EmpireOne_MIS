@@ -18,7 +18,7 @@ import { get_applicant_thunk, store_applicant_thunk } from '../../../recruitment
 import Input from '@/app/pages/_components/input';
 import Select from '@/app/pages/_components/select';
 
-export default function AddExistingEmployeeSection() {
+export default function AddExistingEmployeeSection({data}) {
     const [open, setOpen] = useState(false);
     const [applicationCount, setApplicationCount] = useState(0);
     const { applicantForm } = useSelector((state) => state.applicants);

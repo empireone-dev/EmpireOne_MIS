@@ -175,7 +175,7 @@ export default function AddApplicantsSection() {
 
             <Modal
                 title=" "
-                centered
+                // centered
                 open={open}
                 onOk={(e) => submitApplicant(e)}
                 onCancel={() => setOpen(false)}

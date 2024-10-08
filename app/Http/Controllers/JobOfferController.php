@@ -18,18 +18,20 @@ class JobOfferController extends Controller
             'data' => $joboffer
         ], 200);
     }
-    
+
     public function store(Request $request)
     {
         $data = $request->all();
-        $jo = JobOffer::create($data);
+        $jo = JobOffer::create(array_merge($data, [
+            'department' => $request->outsourcing_erf['department']
+        ]));
         Mail::to($request->email)->send(new MailJobOffer(array_merge(
             $request->all(),
             ['id' => $jo->id]
         )));
-        
+
         return response()->json([
-            $jo ,
+            $jo,
             'data' => 'success'
         ], 200);
     }
@@ -49,7 +51,6 @@ class JobOfferController extends Controller
                 $request->all(),
                 ['id' => $jo->id],
             )));
-            
         }
         return response()->json([
             'data' => 'success'

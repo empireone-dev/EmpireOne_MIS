@@ -1,41 +1,25 @@
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+// src/components/MyEditor.js
+import React, { useState } from 'react';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import JABlank from './ja-blank';
 
-// Define modules and formats for your editor
-const modules = {
-    toolbar: [
-        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] },
-        { 'size': [] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' },
-        { 'indent': '-1' }, { 'indent': '+1' }],
-        ['link', 'image', 'video'],
-        ['clean']
-    ],
-    clipboard: {
-        // toggle to add extra line breaks when pasting HTML:
-        matchVisual: false,
-    }
+const Wysiwyg = ({ label, value, onChange,name }) => {
+  return (
+    <div>
+      <h2>{label}</h2>
+      <CKEditor
+        editor={ClassicEditor}
+        data={value}
+        onChange={(event, editor) => {
+          const data = editor.getData();
+          onChange(data);
+        }}
+      />
+      {/* <h3>Output:</h3>
+      <div dangerouslySetInnerHTML={{ __html: editorData }} /> */}
+    </div>
+  );
 };
 
-const formats = [
-    'header', 'font', 'size',
-    'bold', 'italic', 'underline', 'strike', 'blockquote',
-    'list', 'bullet', 'indent',
-    'link', 'image', 'video'
-];
-
-export default function Wysiwyg({ label, value, onChange,name }) {
-
-    return (
-        <div>
-            <ReactQuill
-                onChange={(e)=>onChange(e,name)}
-                className='h-[650px]'
-                modules={modules}
-                formats={formats}
-                value={value}
-            />
-        </div>
-    );
-}
+export default Wysiwyg;

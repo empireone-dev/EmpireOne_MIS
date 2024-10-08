@@ -30,16 +30,16 @@ export default function AddExistingEmployeeSection({data}) {
     const closeModal = () => {
         setOpen(false);
     };
-    function generateUniqueAppId() {
-        const today = new Date();
-        const year = today.getFullYear().toString().slice(-2);
-        const month = (today.getMonth() + 1).toString().padStart(2, '0');
-        const day = today.getDate().toString().padStart(2, '0');
-        const datePart = `${year}${month}${day}`;
+    // function generateUniqueAppId() {
+    //     const today = new Date();
+    //     const year = today.getFullYear().toString().slice(-2);
+    //     const month = (today.getMonth() + 1).toString().padStart(2, '0');
+    //     const day = today.getDate().toString().padStart(2, '0');
+    //     const datePart = `${year}${month}${day}`;
 
-        const seq = (applicationCount + 1).toString().padStart(2, '0');
-        return `${datePart}${seq}`;
-    }
+    //     const seq = (applicationCount + 1).toString().padStart(2, '0');
+    //     return `${datePart}${seq}`;
+    // }
 
     useEffect(() => {
         const fetchApplicationCount = async () => {
@@ -86,7 +86,7 @@ export default function AddExistingEmployeeSection({data}) {
 
     function submitApplicant(e) {
         e.preventDefault();
-        const uniqueAppId = generateUniqueAppId();
+        // const uniqueAppId = generateUniqueAppId();
         const dob = calculateAge(applicantForm.dob ?? new Date())
         dispatch(
             setApplicantForm({
@@ -199,9 +199,9 @@ export default function AddExistingEmployeeSection({data}) {
                     <div className="mb-4">
                         <Input
                             onChange={(event) => data_handler(event)}
-                            value={applicantForm.mmname ?? ""}
+                            value={applicantForm.emp_id ?? ""}
                             required="true"
-                            name="mmname"
+                            name="emp_id"
                             label="Employee No."
                             type="text"
                         />

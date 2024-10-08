@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { Stepper, Step, Typography } from "@material-tailwind/react";
 import { Button } from 'antd';
 import Wysiwyg from '@/app/pages/_components/wysiwyg';
+import JABlank from '@/app/pages/_components/ja-blank';
+import JDBlank from '@/app/pages/_components/jd-blank';
 
 export default function NewPositionFormSection() {
     const [activeStep, setActiveStep] = useState(0);
 
     // Define form data state for each step
     const [step1FormData, setStep1FormData] = useState({ step1Field: '' });
-    const [step2FormData, setStep2FormData] = useState({ jobAnalysisDetails: '' });
-    const [step3FormData, setStep3FormData] = useState({ jobDescriptionDetails: '' });
+    const [step2FormData, setStep2FormData] = useState({ jobAnalysisDetails: JABlank()});
+    const [step3FormData, setStep3FormData] = useState({ jobDescriptionDetails: JDBlank() });
 
     const handleNext = () => {
         if (activeStep === 0) {
@@ -41,6 +43,7 @@ export default function NewPositionFormSection() {
     };
 
     const handleStep2FormChange = (value) => {
+        console.log('value',value)
         setStep2FormData({ jobAnalysisDetails: value });
     };
 

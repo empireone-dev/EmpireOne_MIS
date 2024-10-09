@@ -218,8 +218,8 @@ export default function AttritionTableSection() {
             render: (_, record) => {
                 return (
                     <h1>
-                        <ButtonComponents/>
-                        {/* <AttritionMenuSection data={record}/> */}
+                        {/* <ButtonComponents/> */}
+                        <AttritionMenuSection data={record}/>
                     </h1>
                 )
             }

@@ -51,7 +51,7 @@ Route::get('/pre-employment/{app_id}', function () {
 Route::get('/virtual-contract/{app_id}', function () {
     return Inertia::render('virtual-contract/page');
 });
-Route::get('/exit_interview', function () {
+Route::get('/exit_interview/{app_id}', function () {
     return Inertia::render('exit_interview/page');
 });
 Route::get('/exit_clearance', function () {

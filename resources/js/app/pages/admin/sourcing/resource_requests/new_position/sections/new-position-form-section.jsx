@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import { Stepper, Step, Typography } from "@material-tailwind/react";
 import { Button } from 'antd';
 import Wysiwyg from '@/app/pages/_components/wysiwyg';
-import JABlank from '@/app/pages/_components/ja-blank';
-import JDBlank from '@/app/pages/_components/jd-blank';
+import App from '@/app/pages/_components/summernote-editor';
+import App2 from '@/app/pages/_components/summernote-editor2';
 
 export default function NewPositionFormSection() {
     const [activeStep, setActiveStep] = useState(0);
 
     // Define form data state for each step
     const [step1FormData, setStep1FormData] = useState({ step1Field: '' });
-    const [step2FormData, setStep2FormData] = useState({ jobAnalysisDetails: JABlank()});
-    const [step3FormData, setStep3FormData] = useState({ jobDescriptionDetails: JDBlank() });
+    const [step2FormData, setStep2FormData] = useState({ jobAnalysisDetails: '' });
+    const [step3FormData, setStep3FormData] = useState({ jobDescriptionDetails: '' });
 
     const handleNext = () => {
         if (activeStep === 0) {
             setActiveStep(1);
         } else if (activeStep === 1) {
-            setActiveStep(2); 
+            setActiveStep(2);
         } else {
             console.log('Form submitted:', { step1FormData, step2FormData, step3FormData });
         }
@@ -43,7 +43,6 @@ export default function NewPositionFormSection() {
     };
 
     const handleStep2FormChange = (value) => {
-        console.log('value',value)
         setStep2FormData({ jobAnalysisDetails: value });
     };
 
@@ -136,12 +135,13 @@ export default function NewPositionFormSection() {
                 return (
                     <form>
                         <div>
-                            <Wysiwyg
+                            {/* <Wysiwyg
                                 label="Job Analysis Details"
                                 name="wysiwyg"
                                 value={step2FormData.jobAnalysisDetails}
                                 onChange={handleStep2FormChange}
-                            />
+                            /> */}
+                            <App />
                         </div>
                         <div className="mt-20 flex justify-between">
                             <Button
@@ -160,12 +160,13 @@ export default function NewPositionFormSection() {
                 return (
                     <form>
                         <div>
-                            <Wysiwyg
+                            {/* <Wysiwyg
                                 label="Job Description Details"
                                 name="wysiwyg"
                                 value={step3FormData.jobDescriptionDetails}
                                 onChange={handleStep3FormChange}
-                            />
+                            /> */}
+                            <App2 />
                         </div>
                         <div className="mt-20 flex justify-between">
                             <Button
@@ -197,7 +198,7 @@ export default function NewPositionFormSection() {
                         className="h-4 w-4 !bg-gray-300"
                         activeClassName="ring-0 !bg-blue-600 text-blue-600"
                         completedClassName="!bg-blue-600 text-blue-600"
-                        onClick={() => handleStepChange(0)}
+                        // onClick={() => handleStepChange(0)}
                     >
                         <div className="absolute -bottom-[2.3rem] w-max text-center text-xs">
                             <Typography variant="h6" color="inherit">Employee Requisition</Typography>
@@ -207,7 +208,7 @@ export default function NewPositionFormSection() {
                         className="h-4 w-4 !bg-gray-300"
                         activeClassName="ring-0 !bg-blue-600 text-blue-600"
                         completedClassName="!bg-blue-600 text-blue-600"
-                        onClick={() => handleStepChange(1)}
+                        // onClick={() => handleStepChange(1)}
                     >
                         <div className="absolute -bottom-[2.3rem] w-max text-center text-xs">
                             <Typography variant="h6" color="inherit">Job Analysis</Typography>
@@ -217,7 +218,7 @@ export default function NewPositionFormSection() {
                         className="h-4 w-4 !bg-blue-gray-50 cursor-pointer"
                         activeClassName="ring-0 !bg-blue-600 text-blue-600"
                         completedClassName="!bg-blue-600 text-blue-600"
-                        onClick={() => handleStepChange(2)}
+                        // onClick={() => handleStepChange(2)}
                     >
                         <div className="absolute -bottom-[2.3rem] w-max text-center text-xs">
                             <Typography variant="h6" color="inherit">Job Description</Typography>

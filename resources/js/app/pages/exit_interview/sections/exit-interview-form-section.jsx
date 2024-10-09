@@ -10,7 +10,7 @@ export default function ExitInterviewFormSection() {
                 <div className="container mx-auto flex justify-center">
                     <div className="bg-white shadow-2xl shadow-black rounded-lg p-6 mt-12 w-full">
                         <div className="flex items-center justify-center p-3">
-                            <img className="w-60" src="images/newlogo.png" alt="logo" />
+                            <img className="w-60" src="/images/newlogo.png" alt="logo" />
                         </div>
                         <div className='flex text-2xl items-center justify-center'>
                             <h1><b>EXIT INTERVIEW</b></h1>

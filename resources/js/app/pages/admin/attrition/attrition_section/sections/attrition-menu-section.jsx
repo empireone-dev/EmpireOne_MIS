@@ -4,12 +4,12 @@ import {
     DeliveredProcedureOutlined,
     DownOutlined,
     EditOutlined,
+    FileSearchOutlined,
     FolderOpenOutlined,
-    PrinterOutlined,
-    QrcodeOutlined,
-    UsergroupAddOutlined,
 } from "@ant-design/icons";
 import File201Component from "../../../employee_relation/employee_section/components/file-201-component";
+import AttritionReasonComponent from "../components/attrition-reason-components";
+import AttritionExitInterviewComponent from "../components/attrition-exit-interview-component";
 // import UpdateEmployeeComponent from "../components/update-employee-component";
 // import File201Component from "../components/file-201-component";
 // import EmploymentStatusComponent from "../components/employment-status-component";
@@ -21,18 +21,18 @@ import File201Component from "../../../employee_relation/employee_section/compon
 
 export default function AttritionMenuSection({ data }) {
     const items = [
-        // {
-        //     component: (
-        //         <UpdateEmployeeComponent
-        //             item={{
-        //                 label: "Update Employee",
-        //                 key: "1",
-        //                 icon: <EditOutlined />,
-        //             }}
-        //             data={data}
-        //         />
-        //     ),
-        // },
+        {
+            component: (
+                <AttritionReasonComponent
+                    item={{
+                        label: "View Reason",
+                        key: "1",
+                        icon: <FileSearchOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
         {
             component: (
                 <File201Component
@@ -45,23 +45,23 @@ export default function AttritionMenuSection({ data }) {
                 />
             ),
         },
-        // ...(data.status == "Cleared"
-        //     ? [
-        //         {
-        //             component: (
-        //                 <ApplicantSetScheduleComponent
-        //                     // status="Initial Phase"
-        //                     item={{
-        //                         label: "Procees Exit Interview & Clearance",
-        //                         key: "3",
-        //                         icon: <DeliveredProcedureOutlined />,
-        //                     }}
-        //                     data={data}
-        //                 />
-        //             ),
-        //         },
-        //     ]
-        //     : []),
+        ...(data?.estatus == "Pending"
+            ? [
+                {
+                    component: (
+                        <AttritionExitInterviewComponent
+                            // status="Initial Phase"
+                            item={{
+                                label: "Procees Exit Interview & Clearance",
+                                key: "3",
+                                icon: <DeliveredProcedureOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
+            : []),
         // ...(data.status == "Initial Phase"
         //     ? [
         //         {
@@ -186,7 +186,7 @@ export default function AttritionMenuSection({ data }) {
         //     ]
         //     : []),
     ];
-
+console.log('data',data)
     return (
         <div>
             <Dropdown

@@ -1,7 +1,9 @@
 import { Menu, Modal } from 'antd'
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 
 export default function FileIrComponent({ data, item }) {
+    const { user } = useSelector((state) => state.app);
     const [statusModalOpen, setStatusModalOpen] = useState(false);
     function openHandler(params) {
         setStatusModalOpen(true);
@@ -45,7 +47,7 @@ export default function FileIrComponent({ data, item }) {
                                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                                     Employee Involved
                                 </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="" readOnly />
+                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={`${data?.applicant?.fname} ${data?.applicant?.mname} ${data?.applicant?.lname}`} readOnly />
                             </div>
                         </div>
 
@@ -73,7 +75,8 @@ export default function FileIrComponent({ data, item }) {
                                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2" for="grid-text">
                                     Filed By
                                 </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" placeholder="" readOnly/>
+                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={`${user.employee_fname} ${user.employee_lname}`} readOnly />
+                                {/* {user.employee_fname} {user.employee_lname} */}
                             </div>
                         </div>
                         <div className='flex items-center justify-center p-1.5 px-2 mt-1'>

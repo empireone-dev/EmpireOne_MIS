@@ -1,25 +1,44 @@
-// src/components/MyEditor.js
-import React, { useState } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import JABlank from './ja-blank';
+import React, { useCallback } from 'react';
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import Quill styles
+import DOMPurify from 'dompurify'; // Ensure this is correctly imported
 
-const Wysiwyg = ({ label, value, onChange,name }) => {
-  return (
-    <div>
-      <h2>{label}</h2>
-      <CKEditor
-        editor={ClassicEditor}
-        data={value}
-        onChange={(event, editor) => {
-          const data = editor.getData();
-          onChange(data);
-        }}
-      />
-      {/* <h3>Output:</h3>
-      <div dangerouslySetInnerHTML={{ __html: editorData }} /> */}
-    </div>
-  );
+const modules = {
+    toolbar: [
+        [{ 'header': '1' }, { 'header': '2' }, { 'font': [] }, { 'size': [] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+        ['link', 'image', 'video'],
+        ['clean']
+    ],
+    clipboard: {
+        matchVisual: false,
+    }
 };
 
-export default Wysiwyg;
+const formats = [
+    'header', 'font', 'size',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent',
+    'link', 'image', 'video'
+];
+
+export default function Wysiwyg({ label, value, onChange, name }) {
+    const handleChange = useCallback((content) => {
+        const sanitizedContent = DOMPurify.sanitize(content);
+        onChange(sanitizedContent, name);
+    }, [onChange, name]);
+
+    return (
+        <div>
+            <label>{label}</label>
+            <ReactQuill
+                onChange={handleChange}
+                className='h-[650px]'
+                modules={modules}
+                formats={formats}
+                value={value}
+            />
+        </div>
+    );
+}

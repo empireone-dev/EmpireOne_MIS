@@ -14,4 +14,10 @@ class OutSourcingErfController extends Controller
             'data' => $erfrec
         ], 200);
     }
+    public function store(Request $request){
+        
+        return response()->json([
+            'data' => $request->all()
+        ], 200);
+    }
 }

@@ -1,8 +1,14 @@
 import React, { useEffect, useRef } from "react";
 
-const App = () => {
+const App = ({setForm,form}) => {
     const wysiwygRef = useRef(null);
 
+    function onChangeHandler(e) {
+        setForm({
+            ...form,
+            jd: e.target.innerHTML
+        })
+    }
     // Initialize the wysiwyg editor
     useEffect(() => {
         const wysiwyg = wysiwygRef.current;
@@ -18,6 +24,10 @@ const App = () => {
 
         // Make the body content editable
         doc.body.contentEditable = true;
+        doc.body.addEventListener('input', onChangeHandler);
+        return () => {
+            doc.body.removeEventListener('input', onChangeHandler);
+        };
     }, []);
 
     const format = (command, param = null) => {

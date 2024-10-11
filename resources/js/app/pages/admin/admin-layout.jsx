@@ -50,6 +50,13 @@ const AdminLayout = ({ children }) => {
             label: "Sourcing",
             children: [
                 {
+                    key: "department",
+                    icon: <HolderOutlined />,
+                    label: "Department",
+                    onClick: () =>
+                        router.visit("/admin/sourcing/department"),
+                },
+                {
                     key: "job_title_section",
                     icon: <HolderOutlined />,
                     label: "Job Title Section",

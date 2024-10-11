@@ -64,7 +64,7 @@ export default function AddNewEmployeeSection({ data }) {
                                 id=""
                             >
                                 <option value=""></option>
-                                {hiredApplicants.map((res, i) => {
+                                {hiredApplicants?.map((res, i) => {
                                     return (
                                         <option value={JSON.stringify(res)}>
                                             {res.applicant.fname}{" "}

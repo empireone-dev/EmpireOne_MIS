@@ -1,14 +1,22 @@
-import { get_employee_service } from "@/app/pages/services/employee-service";
+import { get_employee_by_id_service, get_employee_service } from "@/app/pages/services/employee-service";
 import { employeeSlice } from "./employee-section-slice";
 import {  create_employee_service, get_hired_applicant_service } from "@/app/pages/services/applicant-final-service";
 
 export function get_employee_thunk() {
   return async function (dispatch, getState) {
     const result = (await get_employee_service()).data
-    console.log('result',result)
-    dispatch(employeeSlice.actions.setEmployees(result));
+   dispatch(employeeSlice.actions.setEmployees(result));
   };
 }
+
+export function get_employee_by_id_thunk(id) {
+  return async function (dispatch, getState) {
+    const result = (await get_employee_by_id_service(id)).data
+    console.log('resultresult',result)
+    dispatch(employeeSlice.actions.setEmployee(result));
+  };
+}
+
 
 export function get_hired_applicant_thunk() {
   return async function (dispatch, getState) {

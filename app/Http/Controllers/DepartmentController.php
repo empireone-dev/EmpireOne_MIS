@@ -25,4 +25,13 @@ class DepartmentController extends Controller
             'result' => $department
         ], 200);
     }
+
+    public function destroy($id)
+    {
+        $department = Department::where('id', $id)->first();
+        $department->delete();
+        return response()->json([
+            'result' => $department
+        ], 200);
+    }
 }

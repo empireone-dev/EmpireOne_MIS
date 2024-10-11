@@ -1,19 +1,20 @@
-import React, { useRef, useState } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tag } from 'antd';
-import Highlighter from 'react-highlight-words';
-import { useSelector } from 'react-redux';
-import AddEmployeeButtonSection from './add-employee-button-section';
-import EmployeeMenuSection from './employee-menu-section';
+import React, { useRef, useState } from "react";
+import { SearchOutlined } from "@ant-design/icons";
+import { Button, Input, Pagination, Space, Table, Tag } from "antd";
+import Highlighter from "react-highlight-words";
+import { useSelector } from "react-redux";
+import AddEmployeeButtonSection from "./add-employee-button-section";
+import EmployeeMenuSection from "./employee-menu-section";
+import { router } from "@inertiajs/react";
 
 export default function EmployeeTableSection() {
-    const [searchText, setSearchText] = useState('');
-    const [searchedColumn, setSearchedColumn] = useState('');
+    const [searchText, setSearchText] = useState("");
+    const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
     const { applicant } = useSelector((state) => state.final_rate);
-    const { employees } = useSelector((state) => state.employees)
+    const { employees } = useSelector((state) => state.employees);
 
-    console.log('wsss', applicant)
+    console.log("wsss", applicant);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -21,11 +22,17 @@ export default function EmployeeTableSection() {
     };
     const handleReset = (clearFilters) => {
         clearFilters();
-        setSearchText('');
+        setSearchText("");
     };
 
     const getColumnSearchProps = (dataIndex) => ({
-        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+        filterDropdown: ({
+            setSelectedKeys,
+            selectedKeys,
+            confirm,
+            clearFilters,
+            close,
+        }) => (
             <div
                 style={{
                     padding: 8,
@@ -36,17 +43,23 @@ export default function EmployeeTableSection() {
                     ref={searchInput}
                     placeholder={`Search ${dataIndex}`}
                     value={selectedKeys[0]}
-                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    onChange={(e) =>
+                        setSelectedKeys(e.target.value ? [e.target.value] : [])
+                    }
+                    onPressEnter={() =>
+                        handleSearch(selectedKeys, confirm, dataIndex)
+                    }
                     style={{
                         marginBottom: 8,
-                        display: 'block',
+                        display: "block",
                     }}
                 />
                 <Space>
                     <Button
                         type="primary"
-                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        onClick={() =>
+                            handleSearch(selectedKeys, confirm, dataIndex)
+                        }
                         icon={<SearchOutlined />}
                         size="small"
                         style={{
@@ -56,7 +69,9 @@ export default function EmployeeTableSection() {
                         Search
                     </Button>
                     <Button
-                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        onClick={() =>
+                            clearFilters && handleReset(clearFilters)
+                        }
                         size="small"
                         style={{
                             width: 90,
@@ -92,12 +107,15 @@ export default function EmployeeTableSection() {
         filterIcon: (filtered) => (
             <SearchOutlined
                 style={{
-                    color: filtered ? '#1677ff' : undefined,
+                    color: filtered ? "#1677ff" : undefined,
                 }}
             />
         ),
         onFilter: (value, record) =>
-            record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+            record[dataIndex]
+                .toString()
+                .toLowerCase()
+                .includes(value.toLowerCase()),
         onFilterDropdownOpenChange: (visible) => {
             if (visible) {
                 setTimeout(() => searchInput.current?.select(), 100);
@@ -107,12 +125,12 @@ export default function EmployeeTableSection() {
             searchedColumn === dataIndex ? (
                 <Highlighter
                     highlightStyle={{
-                        backgroundColor: '#ffc069',
+                        backgroundColor: "#ffc069",
                         padding: 0,
                     }}
                     searchWords={[searchText]}
                     autoEscape
-                    textToHighlight={text ? text.toString() : ''}
+                    textToHighlight={text ? text.toString() : ""}
                 />
             ) : (
                 text
@@ -121,73 +139,68 @@ export default function EmployeeTableSection() {
 
     const columns = [
         {
-            title: 'Employee #',
-            dataIndex: 'emp_id',
-            key: 'emp_id',
-            ...getColumnSearchProps('emp_id'),
+            title: "Employee #",
+            dataIndex: "emp_id",
+            key: "emp_id",
+            ...getColumnSearchProps("emp_id"),
         },
         {
-            title: 'Fullname',
-            dataIndex: 'fullname',
-            key: 'fullname',
-            ...getColumnSearchProps('fullname'),
+            title: "Fullname",
+            dataIndex: "fullname",
+            key: "fullname",
+            ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
-                console.log('record', record)
+                console.log("record", record);
 
                 return (
                     <div key={i}>
-                        {record?.applicant?.fname} {record?.applicant?.mname} {record?.applicant?.lname}
+                        {record?.applicant?.fname} {record?.applicant?.mname}{" "}
+                        {record?.applicant?.lname}
                     </div>
-
-                )
-            }
+                );
+            },
         },
         {
-            title: 'Position',
-            dataIndex: 'position',
-            key: 'position',
-            ...getColumnSearchProps('position'),
+            title: "Position",
+            dataIndex: "position",
+            key: "position",
+            ...getColumnSearchProps("position"),
         },
         {
-            title: 'Department',
-            dataIndex: 'dept',
-            key: 'dept',
-            ...getColumnSearchProps('dept'),
+            title: "Department",
+            dataIndex: "dept",
+            key: "dept",
+            ...getColumnSearchProps("dept"),
         },
         {
-            title: 'Email Address',
-            dataIndex: 'eogs',
-            key: 'eogs',
-            ...getColumnSearchProps('eogs'),
+            title: "Email Address",
+            dataIndex: "eogs",
+            key: "eogs",
+            ...getColumnSearchProps("eogs"),
         },
         {
-            title: 'Contact',
-            dataIndex: 'contact',
-            key: 'contact',
-            ...getColumnSearchProps('contact'),
+            title: "Contact",
+            dataIndex: "contact",
+            key: "contact",
+            ...getColumnSearchProps("contact"),
             render: (_, record, i) => {
-                console.log('record', record)
+                console.log("record", record);
 
-                return (
-                    <div key={i}>
-                        {record?.applicant?.phone}
-                    </div>
-
-                )
-            }
+                return <div key={i}>{record?.applicant?.phone}</div>;
+            },
         },
         {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
+            title: "Status",
+            dataIndex: "status",
+            key: "status",
             render: (_, record) => {
-                let color = '';
+                let color = "";
                 switch (record.status) {
-                    case 'Probationary':
-                        color = '#52D017';
+                    case "Probationary":
+                        color = "#52D017";
                         break;
-                    case 'Regular':
-                        color = '#43BFC7';
+                    case "Regular":
+                        color = "#43BFC7";
                         break;
                 }
                 return (
@@ -198,18 +211,31 @@ export default function EmployeeTableSection() {
             },
         },
         {
-            title: 'Action',
-            dataIndex: 'action',
+            title: "Action",
+            dataIndex: "action",
             render: (_, record) => {
-                return (
-                    <EmployeeMenuSection
-                    data={record}
-                    />
-                )
-            }
+                return <EmployeeMenuSection data={record} />;
+            },
         },
     ];
 
+    const url = window.location.pathname + window.location.search;
+
+    const getQueryParam = (url, paramName) => {
+        const searchParams = new URLSearchParams(url.split("?")[1]);
+        return searchParams.get(paramName);
+    };
+
+    const page = getQueryParam(url, "page");
+    const currentPage = page ? parseInt(page, 10) : 1; // Ensure currentPage is a number
+
+    const onChangePaginate = (page) => {
+        const searchParams = new URLSearchParams(window.location.search);
+        searchParams.set("page", page);
+        const newUrl = window.location.pathname + "?" + searchParams.toString();
+        router.visit(newUrl);
+    };
+    // const isStatus = getQueryParam(url, "status");
     return (
         <div>
             <div>
@@ -220,8 +246,19 @@ export default function EmployeeTableSection() {
                 </div>
                 <AddEmployeeButtonSection data={applicant} />
             </div>
-            <Table columns={columns} dataSource={employees} />;
+            <Table
+                pagination={false}
+                columns={columns}
+                dataSource={employees.data}
+            />
+            <div className="flex w-full items-center justify-end mt-2">
+                <Pagination
+                    onChange={onChangePaginate}
+                    defaultCurrent={currentPage}
+                    total={employees.total}
+                    showSizeChanger={false}
+                />
+            </div>
         </div>
     );
-
-};
+}

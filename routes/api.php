@@ -10,6 +10,8 @@ use App\Http\Controllers\EmployeeAttritionController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\EmployeeEngagementController;
 use App\Http\Controllers\EmployeeHealthController;
+use App\Http\Controllers\ERFJaController;
+use App\Http\Controllers\ERFJdController;
 use App\Http\Controllers\FinalRateController;
 use App\Http\Controllers\GuideQuestionController;
 use App\Http\Controllers\InitialRateController;
@@ -52,6 +54,14 @@ Route::get('/get_hired_applicant', [ApplicantController::class, 'get_hired_appli
 
 
 Route::resource('outsourcing_erf', OutSourcingErfController::class);
+Route::get('/count_outsourcing_erf/{date}', [OutSourcingErfController::class, 'count_outsourcing_erf']);
+Route::get('/outsourcing_erf_by_id/{erf_id}', [OutSourcingErfController::class, 'outsourcing_erf_by_id']);
+
+
+Route::resource('/ERFJa', ERFJaController::class);
+Route::resource('/ERFJd', ERFJdController::class);
+
+
 Route::resource('/dashboard', DashboardController::class);
 
 Route::resource('job_position', JobPositionController::class);

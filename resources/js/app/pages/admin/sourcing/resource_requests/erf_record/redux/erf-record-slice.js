@@ -4,7 +4,8 @@ export const erfRecordSlice = createSlice({
   name: 'erf_record',
   initialState: {
     erf_records: [],
-    erf_recordForm: {}
+    erf_recordForm: {},
+    filteredData:[],
   },
   reducers: {
     setErfRecords: (state, action) => {
@@ -16,8 +17,11 @@ export const erfRecordSlice = createSlice({
     resetErfRecord: (state, action) => {
       state.erf_records = action.payload
     },
+    setFilteredData: (state, action) => {
+      state.filteredData = action.payload
+    },
   },
 })
-export const { setErfRecords, setErfRecordForm, resetErfRecord } = erfRecordSlice.actions
+export const { setErfRecords, setErfRecordForm, resetErfRecord,setFilteredData } = erfRecordSlice.actions
 
 export default erfRecordSlice.reducer

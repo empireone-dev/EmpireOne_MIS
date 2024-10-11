@@ -34,6 +34,9 @@ class Employee extends Model
     {
         return $this->belongsTo(User::class,"sup_id","id");
     }
-
+    public function attrition(): BelongsTo
+    {
+        return $this->belongsTo(Attrition::class,"emp_id","emp_id");
+    }
     
 }

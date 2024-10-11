@@ -4,6 +4,7 @@ export const employeeSlice = createSlice({
   name: 'employee',
   initialState: {
     employees: [],
+    employee:{},
     employeeForm: {},
     hiredApplicants:[]
   },
@@ -20,9 +21,12 @@ export const employeeSlice = createSlice({
     setHiredApplicants: (state, action) => {
       state.hiredApplicants = action.payload
     },
+    setEmployee: (state, action) => {
+      state.employee = action.payload
+    },
     
   },
 })
-export const { setEmployees, setEmployeeForm, resetEmployee,setHiredApplicants } = employeeSlice.actions
+export const { setEmployees, setEmployeeForm, resetEmployee,setHiredApplicants,setEmployee } = employeeSlice.actions
 
 export default employeeSlice.reducer

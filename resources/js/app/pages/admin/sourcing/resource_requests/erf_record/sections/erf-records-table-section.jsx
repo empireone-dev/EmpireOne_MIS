@@ -4,40 +4,33 @@ import { Button, Input, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
 import ButtonComponents from "../components/button-components";
 import ErfDropdownFilterComponents from "@/app/pages/admin/sourcing/resource_requests/erf_record/components/erf-dropdown-filter-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import AddPositionButtonSection from "./add-position-button-section";
+import { setErfRecords, setFilteredData } from "../redux/erf-record-slice";
 
 export default function ErfRecordsTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
-    const [filteredData, setFilteredData] = useState([]);
-    const { erf_records } = useSelector((state) => state.erf_records);
+    const { erf_records,filteredData } = useSelector((state) => state.erf_records);
+    const dispatch =useDispatch()
     console.log("erf_records", erf_records);
 
     const filterData = (selectedStatus) => {
         if (selectedStatus.length === 0) {
-            setFilteredData(erf_records);
+            dispatch(setFilteredData(erf_records))
         } else {
             const filtered = erf_records.filter((record) =>
                 selectedStatus.includes(record.status)
             );
-            setFilteredData(filtered);
+            dispatch(setFilteredData(filtered))
         }
     };
 
-    useEffect(() => {
-        const storedData = localStorage.getItem("filteredData");
-        if (storedData) {
-            setFilteredData(JSON.parse(storedData));
-        } else {
-            filterData([]);
-        }
-    }, []);
 
     useEffect(() => {
-        localStorage.setItem("filteredData", JSON.stringify(filteredData));
-    }, [filteredData]);
+        dispatch(setFilteredData(erf_records))
+    }, [erf_records]);
 
     const searchInput = useRef(null);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {

@@ -33,4 +33,13 @@ class OutSourcingErf extends Model
     {
         return $this->hasOne(User::class,"id","user_id");
     }
+
+    public function ja(): HasOne
+    {
+        return $this->hasOne(ERFJa::class,"ref_id","ref_id");
+    }
+    public function jd(): HasOne
+    {
+        return $this->hasOne(ERFJd::class,"ref_id","ref_id");
+    }
 }

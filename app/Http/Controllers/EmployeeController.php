@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $employee = Employee::with('applicant')->get();
+        $employee = Employee::with('applicant')->paginate(10);
         return response()->json([
             'data' => $employee
         ], 200);
@@ -33,4 +33,13 @@ class EmployeeController extends Controller
             'data' => []
         ], 200);
     }
+
+    public function show($id)
+    {
+        $employee = Employee::where('emp_id',$id)->with(['attrition','applicant'])->first();
+        return response()->json([
+            'data' => $employee
+        ], 200);
+    }
+
 }

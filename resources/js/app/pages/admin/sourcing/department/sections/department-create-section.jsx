@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import { Button, message, Modal } from "antd";
 import Input from "@/app/pages/_components/input";
 import store from "@/app/store/store";
-import { create_department_thunk } from "../redux/department-thunk";
+import {
+    create_department_thunk,
+    get_department_thunk,
+} from "../redux/department-thunk";
 
 const DepartmentCreateSection = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -12,16 +15,19 @@ const DepartmentCreateSection = () => {
         setIsModalOpen(true);
     };
     const handleOk = async () => {
-        // setIsModalOpen(false);
         setLoading(true);
         try {
             await store.dispatch(create_department_thunk(form));
-            setLoading(false);
-            setIsModalOpen(false);
+            await store.dispatch(get_department_thunk());
+            message.success("Successfully Added!"); // Show success message
+            setIsModalOpen(false); // Close the modal
         } catch (error) {
-            setLoading(false);
+            message.error("Failed to add department. Please try again."); // Show error message
+        } finally {
+            setLoading(false); // Always reset loading state
         }
     };
+
     const handleCancel = () => {
         setIsModalOpen(false);
     };

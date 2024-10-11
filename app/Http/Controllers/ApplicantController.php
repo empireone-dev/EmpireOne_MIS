@@ -13,7 +13,7 @@ class ApplicantController extends Controller
     public function get_hired_applicant(){
         $applicants = JobOffer::where('status', 'Hired')->with(['applicant'])->get();
         return response()->json([
-            'data' => $applicants
+            'status' => $applicants
         ], 200);
     }
 

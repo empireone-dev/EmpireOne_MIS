@@ -1,17 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Stepper, Step, Typography } from "@material-tailwind/react";
-import { Button } from "antd";
+import { Button, message } from "antd";
 import Wysiwyg from "@/app/pages/_components/wysiwyg";
 import App from "@/app/pages/_components/summernote-editor";
 import App2 from "@/app/pages/_components/summernote-editor2";
 import store from "@/app/store/store";
 import { create_outsourcing_erf_thunk } from "../../erf_record/redux/erf-record-thunk";
 import { useSelector } from "react-redux";
+import moment from "moment";
+import { router } from "@inertiajs/react";
 
 export default function NewPositionFormSection() {
     const [activeStep, setActiveStep] = useState(0);
     const { job_positions } = useSelector((state) => state.job_positions);
-    const { departments } = useSelector((state) => state.departments);
+    const { departments, erfCount } = useSelector((state) => state.departments);
+    const { user } = useSelector((state) => state.app);
+    const [loading, setLoading] = useState(false);
     // console.log('job_positions',job_positions)
     // Define form data state for each step
     // const [step1FormData, setStep1FormData] = useState({ step1Field: '' });
@@ -26,6 +30,22 @@ export default function NewPositionFormSection() {
             setActiveStep(2);
         }
     };
+    const generateUniqueAppId = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = (today.getMonth() + 1).toString().padStart(2, "0");
+        const day = today.getDate().toString().padStart(2, "0");
+        const datePart = `${month}${day}${year}`;
+
+        const seq = (applicationCount + erfCount).toString().padStart(2, "0"); // Ensuring two-digit sequence
+        return `${datePart}${seq}`;
+    };
+    useEffect(() => {
+        setForm({
+            ...form,
+            ref_id: generateUniqueAppId(),
+        });
+    }, [erfCount]);
 
     const handlePrev = () => {
         if (activeStep > 0) {
@@ -33,9 +53,40 @@ export default function NewPositionFormSection() {
         }
     };
 
-    function submit_erf(params) {
-        store.dispatch(create_outsourcing_erf_thunk(form));
+    async function submit_erf(params) {
+        setLoading(true);
+        try {
+            await store.dispatch(
+                create_outsourcing_erf_thunk({
+                    submitted: moment().format("YYYY-MM-DD"),
+                    ...form,
+                    ...user,
+                })
+            );
+            message.success("Successfully Added!");
+            setTimeout(() => {
+                setLoading(false);
+                router.visit("/admin/sourcing/resource_requests/erf_record");
+            }, 2000);
+        } catch (error) {
+            setLoading(false);
+        }
     }
+
+    const [applicationCount, setApplicationCount] = useState(0); // State to hold count of submissions
+
+    useEffect(() => {
+        // Fetch the count of today's submissions when the component mounts
+        const fetchApplicationCount = async () => {
+            try {
+                const response = await axios.get("/api/applications/today"); // Replace with your API endpoint
+                setApplicationCount(response.data.count); // Assuming the API returns { count: <number> }
+            } catch (error) {
+                console.error("Error fetching application count:", error);
+            }
+        };
+        fetchApplicationCount();
+    }, []);
 
     const renderFormByStep = () => {
         switch (activeStep) {
@@ -66,14 +117,8 @@ export default function NewPositionFormSection() {
                                     <b>Reference No.</b>
                                 </label>
                                 <input
-                                    onChange={(e) =>
-                                        setForm({
-                                            ...form,
-                                            ref_no: e.target.value,
-                                        })
-                                    }
                                     type="text"
-                                    placeholder=""
+                                    value={form?.ref_id ?? ""}
                                     className="border p-2 rounded w-full"
                                     readOnly
                                 />
@@ -104,7 +149,7 @@ export default function NewPositionFormSection() {
                                     onChange={(e) =>
                                         setForm({
                                             ...form,
-                                            jonType: e.target.value,
+                                            jobType: e.target.value,
                                         })
                                     }
                                     className="border p-2 rounded w-full"
@@ -166,7 +211,6 @@ export default function NewPositionFormSection() {
                                     type="text"
                                     placeholder=""
                                     className="border p-2 rounded w-full"
-                                    readOnly
                                 />
                             </div>
                             <div className="w-full flex flex-col">
@@ -336,6 +380,7 @@ export default function NewPositionFormSection() {
                                 Prev
                             </Button>
                             <Button
+                                loading={loading}
                                 onClick={submit_erf}
                                 className="bg-blue-600 hover:bg-blue-700 text-white w-32"
                             >

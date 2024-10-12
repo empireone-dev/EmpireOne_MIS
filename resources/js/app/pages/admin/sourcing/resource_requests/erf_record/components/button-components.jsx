@@ -14,7 +14,7 @@ const ButtonComponents = () => {
   const handleMenuClick = (item) => {
     if (item.onClick) item.onClick();
     if (item.key === '1') setModalOpen(true);
-    if (item.key === '2') router.visit('/admin/sourcing/resource_requests/erf_record/erf_job_analysis');
+    if (item.key === '2') router.visit('/router.visit(`/admin/sourcing/job_title_section/job_analysis/${record?.ref_id}`)}');
     if (item.key === '3') router.visit('/admin/sourcing/resource_requests/erf_record/erf_job_description');
   };
 

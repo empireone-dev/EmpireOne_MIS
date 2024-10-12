@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import AddPositionButtonSection from "./add-position-button-section";
 import { setErfRecords, setFilteredData } from "../redux/erf-record-slice";
+import ErfMenuButtonSection from "./erf-menu-button-section";
 
 export default function ErfRecordsTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -245,7 +246,7 @@ export default function ErfRecordsTableSection() {
             title: "Action",
             dataIndex: "action",
             render: (_, record) => {
-                return <ButtonComponents />;
+                return <ErfMenuButtonSection data={record} />;
             },
         },
     ];

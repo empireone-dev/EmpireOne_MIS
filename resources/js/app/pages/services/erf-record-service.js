@@ -32,3 +32,8 @@ export async function update_erf_jd_service(data){
     const res = await axios.put('/api/ERFJd/'+data.ref_id,data)
     return res.data
 }
+
+export async function update_outsourcing_erf_service(data){
+    const res = await axios.put(`/api/outsourcing_erf/${data.id}`, data);
+    return res.data;
+}

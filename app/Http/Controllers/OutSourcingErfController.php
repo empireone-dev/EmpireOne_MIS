@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ERFJa;
 use App\Models\ERFJd;
+use App\Models\JobPosition;
 use App\Models\OutSourcingErf;
 use Illuminate\Http\Request;
 
@@ -73,6 +74,41 @@ class OutSourcingErfController extends Controller
 
         return response()->json([
             'data' => $request->all()
+        ], 200);
+    }
+
+
+    // public function update(Request $request, $id)
+    // {
+    //     $erfrec = OutSourcingErf::where('id', '=',  $request->id)->first();
+    //     $erfrec->update([
+    //         'status' => $request->status,
+    //     ]);
+    //     return response()->json([
+    //         'data' => 'success'
+    //     ], 200);
+    // }
+
+    public function update(Request $request, $id)
+    {
+        $erfrec = OutSourcingErf::find($id);
+        $erfrec->update([
+            'status' => $request->status,
+        ]);
+
+        if ($request->status === 'Approved') {
+            // Create a new Job Position
+            JobPosition::create([
+                'ref_id' => $request->ref_id,
+                'salary' => $request->budgetCost,
+                'jPosition' => $request->jobTitle,
+                'status' => 'Approved',
+                'site' => $request->site,
+            ]);
+        }
+
+        return response()->json([
+            'data' => $this->index()->original['data']
         ], 200);
     }
 }

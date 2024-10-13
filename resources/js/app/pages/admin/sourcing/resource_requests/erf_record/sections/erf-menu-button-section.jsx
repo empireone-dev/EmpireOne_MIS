@@ -23,18 +23,23 @@ import ErfUpdateStatusComponent from "../components/erf-update-status-component"
 
 export default function ErfMenuButtonSection({ data }) {
     const items = [
-        {
-            component: (
-                <ErfUpdateStatusComponent
-                    item={{
-                        label: "Update Status",
-                        key: "1",
-                        icon: <EditOutlined />,
-                    }}
-                    data={data}
-                />
-            ),
-        },
+
+        ...(data?.status !== "Approved"
+            ? [
+                {
+                    component: (
+                        <ErfUpdateStatusComponent
+                            item={{
+                                label: "Update Status",
+                                key: "1",
+                                icon: <EditOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
+            : []),
         {
             component: (
                 <ErfJAComponent
@@ -59,24 +64,8 @@ export default function ErfMenuButtonSection({ data }) {
                 />
             ),
         },
-        
-        // ...(data?.estatus == "Pending"
-        //     ? [
-        //         {
-        //             component: (
-        //                 <AttritionExitInterviewComponent
-        //                     // status="Initial Phase"
-        //                     item={{
-        //                         label: "Procees Exit Interview & Clearance",
-        //                         key: "3",
-        //                         icon: <DeliveredProcedureOutlined />,
-        //                     }}
-        //                     data={data}
-        //                 />
-        //             ),
-        //         },
-        //     ]
-        //     : []),
+
+
         // ...(data.status == "Initial Phase"
         //     ? [
         //         {
@@ -201,7 +190,7 @@ export default function ErfMenuButtonSection({ data }) {
         //     ]
         //     : []),
     ];
-console.log('data',data)
+    console.log('data', data)
     return (
         <div>
             <Dropdown

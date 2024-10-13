@@ -24,6 +24,7 @@ use App\Http\Controllers\OnboardingDocController;
 use App\Http\Controllers\OutSourcingErfController;
 use App\Http\Controllers\PreEmploymentFileController;
 use App\Http\Controllers\UploadMemoController;
+use App\Http\Controllers\UserController;
 use App\Mail\InitialEmail;
 use App\Mail\InitialvEmail;
 use App\Mail\SendInitialEmail;
@@ -66,12 +67,12 @@ Route::resource('/dashboard', DashboardController::class);
 
 Route::resource('job_position', JobPositionController::class);
 Route::resource('guideq', GuideQuestionController::class);
-
+Route::resource('users', UserController::class);
 Route::resource('checklist', ChecklistController::class);
 Route::resource('joboffer', JobOfferController::class);
 Route::resource('new_joboffer', NewJobOfferController::class);
 Route::resource('onboarding_doc', OnboardingDocController::class);
-Route::resource('onboarding_ack',OnboardingAckController::class);
+Route::resource('onboarding_ack', OnboardingAckController::class);
 Route::resource('employee', EmployeeController::class);
 Route::resource('medicine_record', MedicineRecordController::class);
 Route::resource('employee_health', EmployeeHealthController::class);
@@ -88,5 +89,5 @@ Route::resource('attrition', AttritionController::class);
 
 
 Route::post('/sendiv_email', [EmailController::class, 'sendiv_email']);
-  
+
 require __DIR__ . '/auth.php';

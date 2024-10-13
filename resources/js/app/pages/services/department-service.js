@@ -18,6 +18,11 @@ export function create_department_service(data) {
   }
 }
 
+export async function update_department_service(data){
+  const res = await axios.put(`/api/department/${data.id}`, data);
+  return res.data;
+}
+
 
 export function delete_department_service(id) {
   try {

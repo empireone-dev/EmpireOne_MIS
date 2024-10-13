@@ -1,4 +1,4 @@
-import { create_department_service, delete_department_service, get_department_service } from '@/app/pages/services/department-service';
+import { create_department_service, delete_department_service, get_department_service, update_department_service } from '@/app/pages/services/department-service';
 import {departmentSlice} from './department-slice';
 import { get_outsourcing_erf_by_id_service, get_outsourcing_erf_service, update_erf_ja_service, update_erf_jd_service } from '@/app/pages/services/erf-record-service';
 
@@ -49,6 +49,13 @@ export function update_erf_jd_thunk(data) {
   return async function (dispatch, getState) {
     const res = await update_erf_jd_service(data)
     // dispatch(departmentSlice.actions.setJa(res.data));
+  };
+}
+
+export function update_department_thunk(data) {
+  return async function (dispatch, getState) {  
+    const res = await update_department_service(data)
+    // dispatch(departmentSlice.actions.setDepartments(result.data));
   };
 }
 

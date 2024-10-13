@@ -1,27 +1,54 @@
-import React, { useState } from "react";
-import { Modal } from "antd";
+import React, { useState, useEffect } from "react";
+import { message, Modal } from "antd";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import { get_department_thunk } from "../redux/department-thunk";
+import { get_department_thunk, update_department_thunk } from "../redux/department-thunk";
 import Input from "@/app/pages/_components/input";
+import { useSelector } from "react-redux";
+import store from "@/app/store/store";
 
-export default function DepartmentUpdateSection(data) {
+export default function DepartmentUpdateSection({ data }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState({
+        id: data?.id,
+        dept: data?.dept || "",
+        depthead: data?.user?.id || "",
+    });
     const [loading, setLoading] = useState(false);
+    const { users } = useSelector((state) => state.app);
+
     const showModal = () => {
         setIsModalOpen(true);
     };
 
-    function update_department() {
-        // store.dispatch(update_department_thunk(data.id));
-        store.dispatch(get_department_thunk());
-        message.success("Updated Successfully!");
+
+    console.log('datsssa', data)
+    async function update_department(e) {
+        e.preventDefault();
+        setLoading(true);
+
+        try {
+            await store.dispatch(update_department_thunk({
+                ...form
+            }));
+            await store.dispatch(get_department_thunk());
+            message.success("Updated Successfully!");
+            setIsModalOpen(false);
+        } catch (error) {
+            message.error("Failed to update. Please try again.");
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
     }
 
     const handleCancel = () => {
         setIsModalOpen(false);
+        setForm({
+            dept: data?.dept || "",
+            depthead: data?.user?.id || "",
+        }); // Reset form to initial data on cancel
     };
-    console.log("data", data);
+
     return (
         <div>
             <button
@@ -39,31 +66,47 @@ export default function DepartmentUpdateSection(data) {
                 confirmLoading={loading}
                 okText="Update"
             >
-                <div className="flex flex-col gap-4">
-                    <h1>Department Information</h1>
-                    <Input
-                        onChange={(e) =>
-                            setForm({
-                                ...form,
-                                dept: e.target.value,
-                            })
-                        }
-                        value={data?.data?.dept}
-                        name="dept"
-                        label="Department's Name"
-                        type="text"
-                    />
-                    <select
-                        // onChange={(event) => data_handler(event)}
-                        name="depthead"
-                        className="border p-2 rounded w-full"
-                    >
-                        <option disabled selected>
-                            &nbsp; {data?.data?.depthead}
-                        </option>
-                        <option> </option>
-                    </select>
-                </div>
+                <form className="w-full pb-4" onSubmit={update_department}>
+                    <div className="flex flex-col gap-4">
+                        <h1>Department Information</h1>
+                        <Input
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    dept: e.target.value,
+                                })
+                            }
+                            value={form?.dept}
+                            name="dept"
+                            label="Department's Name"
+                            type="text"
+                        />
+                        <select
+                            className="border p-2 rounded-md w-full"
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    depthead: e.target.value,
+                                })
+                            }
+                            value={form.depthead}
+                        >
+                            <option value="">
+                                {data?.user?.employee_fname ?? ''} {data?.user?.employee_lname ?? ''}
+                            </option>
+                            {Array.isArray(users) &&
+                                users
+                                    .filter((res) =>
+                                        ["Manager", "Account Manager", "Operations Manager", "Director", "CEO"].includes(res.position)
+                                    )
+                                    .map((res) => (
+                                        <option value={res.id} key={res.id}>
+                                            {`${res.employee_fname} ${res.employee_lname}`}
+                                        </option>
+                                    ))}
+                        </select>
+                    </div>
+                </form>
             </Modal>
         </div>
     );

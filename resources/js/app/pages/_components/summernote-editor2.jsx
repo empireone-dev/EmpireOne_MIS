@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import JDBlank from "./jd-blank";
+import { AlignCenterOutlined, AlignLeftOutlined, AlignRightOutlined, OrderedListOutlined, UnorderedListOutlined } from "@ant-design/icons";
 
-const App = ({setForm,form,data}) => {
+const App = ({ setForm, form, data }) => {
     const wysiwygRef = useRef(null);
 
     function onChangeHandler(e) {
@@ -10,12 +11,12 @@ const App = ({setForm,form,data}) => {
             jd: e.target.innerHTML
         })
     }
-    useEffect(()=>{
+    useEffect(() => {
         setForm({
             ...form,
-            jd:data ?? JDBlank()
+            jd: data ?? JDBlank()
         })
-    },[])
+    }, [])
     // Initialize the wysiwyg editor
     useEffect(() => {
         const wysiwyg = wysiwygRef.current;
@@ -45,83 +46,95 @@ const App = ({setForm,form,data}) => {
 
     return (
         <div className="">
-            <div className="border border-gray-200 overflow-hidden rounded-md">
+            <div className="border border-gray-400 overflow-hidden rounded-md">
                 <div className="w-full flex border-b border-gray-200 text-xl text-gray-600">
                     <button
+                        type="button"
                         className="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("bold")}
                     >
-                        <i className="mdi mdi-format-bold"></i>
+                        <i className="mdi mdi-format-underline"><b>B</b></i>
                     </button>
                     <button
+                        type="button"
                         className="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("italic")}
                     >
-                        <i className="mdi mdi-format-italic"></i>
+                        <i className="font-serif"><b>I</b></i>
                     </button>
                     <button
+                        type="button"
                         className="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 mr-1 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("underline")}
                     >
-                        <i className="mdi mdi-format-underline"></i>
+                        <i className="mdi mdi-format-underline"><u>U</u></i>
                     </button>
                     <button
+                        type="button"
                         className="outline-none focus:outline-none border-l border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("formatBlock", "P")}
                     >
-                        <i className="mdi mdi-format-paragraph"></i>
+                        <i className="mdi mdi-format-paragraph">P</i>
                     </button>
                     <button
+                        type="button"
                         className="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("formatBlock", "H1")}
                     >
-                        <i className="mdi mdi-format-header-1"></i>
+                        <i className="mdi mdi-format-header-1"><b>H1</b></i>
                     </button>
                     <button
+                        type="button"
                         className="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("formatBlock", "H2")}
                     >
-                        <i className="mdi mdi-format-header-2"></i>
+                        <i className="mdi mdi-format-header-2"><b>H2</b></i>
                     </button>
                     <button
+                        type="button"
                         className="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 mr-1 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("formatBlock", "H3")}
                     >
-                        <i className="mdi mdi-format-header-3"></i>
+                        <i className="mdi mdi-format-header-3"><b>H3</b></i>
                     </button>
                     <button
+                        type="button"
                         className="outline-none focus:outline-none border-l border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("insertUnorderedList")}
                     >
-                        <i className="mdi mdi-format-list-bulleted"></i>
+                        <i className="mdi mdi-format-list-bulleted"><UnorderedListOutlined /></i>
                     </button>
                     <button
+                        type="button"
                         className="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 mr-1 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("insertOrderedList")}
                     >
-                        <i className="mdi mdi-format-list-numbered"></i>
+                        <i className="mdi mdi-format-list-numbered"><OrderedListOutlined /></i>
                     </button>
                     <button
+                        type="button"
                         className="outline-none focus:outline-none border-l border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("justifyLeft")}
                     >
-                        <i className="mdi mdi-format-align-left"></i>
+                        <i className="mdi mdi-format-align-left"><AlignLeftOutlined /></i>
                     </button>
                     <button
+                        type="button"
                         className="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("justifyCenter")}
                     >
-                        <i className="mdi mdi-format-align-center"></i>
+                        <i className="mdi mdi-format-align-center"><AlignCenterOutlined /></i>
                     </button>
                     <button
+                        type="button"
                         className="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("justifyRight")}
                     >
-                        <i className="mdi mdi-format-align-right"></i>
+                        <i className="mdi mdi-format-align-right"><AlignRightOutlined /></i>
                     </button>
                 </div>
                 <div className="w-full">
-                    <iframe ref={wysiwygRef} className="w-full h-96 overflow-y-auto"></iframe>
+                    <iframe ref={wysiwygRef} className="w-full h-screen overflow-hidden p-3"></iframe>
                 </div>
             </div>
 

@@ -1,15 +1,39 @@
+import store from "@/app/store/store";
 import { router } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { create_outsourcing_erf_thunk } from "../../erf_record/redux/erf-record-thunk";
+import moment from "moment";
+import axios from 'axios';
+import { message } from "antd";
 
 export default function ExistingPositionFormSection() {
-    const [applicationCount, setApplicationCount] = useState(0); // State to hold count of submissions
+    const { job_positions } = useSelector((state) => state.job_positions);
+    const { erfCount } = useSelector((state) => state.departments);
+    const { user } = useSelector((state) => state.app);
+
+    const [loading, setLoading] = useState(false);
+    const [form, setForm] = useState({
+        department: '',
+        budgetCost: '',
+        jobTitle: '',
+        jobType: '',
+        personnel: '',
+        dateNeed: '',
+        positionStatus: '',
+        sourcingMethod: '',
+        justification: '',
+        site: user?.site || '',
+    });
+
+    const [applicationCount, setApplicationCount] = useState(0);
+    const [reqs, setReqs] = useState('');
 
     useEffect(() => {
-        // Fetch the count of today's submissions when the component mounts
         const fetchApplicationCount = async () => {
             try {
-                const response = await axios.get("/api/applications/today"); // Replace with your API endpoint
-                setApplicationCount(response.data.count); // Assuming the API returns { count: <number> }
+                const response = await axios.get("/api/applications/today");
+                setApplicationCount(response.data.count);
             } catch (error) {
                 console.error("Error fetching application count:", error);
             }
@@ -17,166 +41,206 @@ export default function ExistingPositionFormSection() {
         fetchApplicationCount();
     }, []);
 
+    useEffect(() => {
+        setForm((prevForm) => ({
+            ...prevForm,
+            ref_id: generateUniqueAppId(),
+        }));
+    }, [erfCount]);
+
     const generateUniqueAppId = () => {
         const today = new Date();
-        const year = today.getFullYear();
-        const month = (today.getMonth() + 1).toString().padStart(2, "0");
-        const day = today.getDate().toString().padStart(2, "0");
-        const datePart = `${month}${day}${year}`;
-
-        const seq = (applicationCount + 1).toString().padStart(2, "0"); // Ensuring two-digit sequence
+        const datePart = moment(today).format("MMDDYYYY");
+        const seq = (applicationCount + erfCount).toString().padStart(2, "0");
         return `${datePart}${seq}`;
     };
+
+    const handleJobTitleChange = (e) => {
+        const selectedJobTitle = e.target.value;
+        const selectedJob = job_positions.find(job => job.jPosition === selectedJobTitle);
+
+        if (selectedJob) {
+            setForm((prevForm) => ({
+                ...prevForm,
+                department: selectedJob.outsourcing_erf.department,
+                budgetCost: selectedJob.salary,
+                jobTitle: selectedJobTitle
+            }));
+        } else {
+            setForm((prevForm) => ({
+                ...prevForm,
+                department: '',
+                budgetCost: '',
+                jobTitle: selectedJobTitle
+            }));
+        }
+        setReqs(selectedJobTitle);
+    };
+
+    const submitErf = async () => {
+        setLoading(true);
+        try {
+            await store.dispatch(
+                create_outsourcing_erf_thunk({
+                    submitted: moment().format("YYYY-MM-DD"),
+                    ...form,
+                    ...user,
+                })
+            );
+            message.success("Successfully Added!");
+            setTimeout(() => {
+                setLoading(false);
+                router.visit("/admin/sourcing/resource_requests/erf_record");
+            }, 2000);
+        } catch (error) {
+            console.error("Error submitting ERF:", error);
+            setLoading(false);
+        }
+    };
+
     return (
         <div>
             <form>
-                <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-6 text-center">
+                <h1 className="text-xl font-semibold mb-3 text-gray-900 mt-6 text-center">
                     EMPLOYEE REQUISITION FORM
                 </h1>
-                <h1 className="text-lg">
-                    <b>Instructions/Hiring Information</b>
-                </h1>
+                <h1 className="text-lg"><b>Instructions/Hiring Information</b></h1>
                 <p>
                     &emsp;&emsp;Use this form to initiate the recruitment
                     process for all new and existing staff. Please complete all
                     applicable sections of this form.{" "}
-                    <b>
-                        NO OFFERS should be made, either verbally or in written
-                        form, before all approvals on the form are completed
-                    </b>
-                    .
+                    <b>NO OFFERS should be made, either verbally or in written
+                        form, before all approvals on the form are completed</b>.
                 </p>
+                <input
+                    onChange={(e) =>
+                        setForm({
+                            ...form,
+                            site: e.target.value,
+                        })
+                    }
+                    value={form?.site ?? ""}
+                    type="hidden"
+                />
                 <div className="flex flex-1 w-full gap-4 mb-4 mt-4">
                     <div className="w-full flex flex-col">
-                        <label htmlFor="">
-                            <b>Reference No.</b>
-                        </label>
+                        <label><b>Reference No.</b></label>
                         <input
-                            onChange={(e) =>
-                                setForm({
-                                    ...form,
-                                    ref_no: e.target.value,
-                                })
-                            }
                             type="text"
-                            value={generateUniqueAppId}
+                            value={form.ref_id || ""}
                             className="border p-2 rounded w-full"
                             readOnly
                         />
                     </div>
                     <div className="w-full flex flex-col">
-                        <label htmlFor="">
-                            <b>Job Title</b>
-                        </label>
+                        <label><b>Job Title</b></label>
                         <select
                             className="border p-2 rounded w-full"
-                            name=""
-                            id=""
+                            onChange={handleJobTitleChange}
+                            value={form.jobTitle}
                         >
                             <option value=""></option>
+                            {job_positions
+                                .filter(res => res.status === "Approved")
+                                .map((res, i) => (
+                                    <option value={res.jPosition} key={i}>
+                                        {res.jPosition}
+                                    </option>
+                                ))}
                         </select>
                     </div>
                 </div>
                 <div className="flex flex-1 w-full gap-4 mb-4">
                     <div className="w-full flex flex-col">
-                        <label htmlFor="">
-                            <b>Job Type</b>
-                        </label>
+                        <label><b>Job Type</b></label>
                         <select
+                            onChange={(e) => setForm({ ...form, jobType: e.target.value })}
                             className="border p-2 rounded w-full"
-                            name=""
-                            id=""
+                            value={form.jobType}
                         >
                             <option value=""></option>
+                            <option value="Full Time">Full Time</option>
+                            <option value="Part Time">Part Time</option>
+                            <option value="Temporary">Temporary</option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                     <div className="w-full flex flex-col">
-                        <label htmlFor="">
-                            <b>No. of Required Personnel</b>
-                        </label>
+                        <label><b>No. of Required Personnel</b></label>
                         <input
                             type="number"
-                            placeholder=""
                             className="border p-2 rounded w-full"
+                            onChange={(e) => setForm({ ...form, personnel: e.target.value })}
                         />
                     </div>
                     <div className="w-full flex flex-col">
-                        <label htmlFor="">
-                            <b>Date Needed</b>
-                        </label>
+                        <label><b>Date Needed</b></label>
                         <input
                             type="date"
-                            placeholder=""
                             className="border p-2 rounded w-full"
+                            onChange={(e) => setForm({ ...form, dateNeed: e.target.value })}
                         />
                     </div>
                 </div>
                 <div className="flex flex-1 w-full gap-4 mb-4">
                     <div className="w-full flex flex-col">
-                        <label htmlFor="">
-                            <b>Position Status</b>
-                        </label>
+                        <label><b>Position Status</b></label>
                         <select
+                            onChange={(e) => setForm({ ...form, positionStatus: e.target.value })}
                             className="border p-2 rounded w-full"
-                            name=""
-                            id=""
+                            value={form.positionStatus}
                         >
                             <option value=""></option>
+                            <option>Replacement</option>
+                            <option>Reorganization</option>
+                            <option>Other</option>
                         </select>
                     </div>
                     <div className="w-full flex flex-col">
-                        <label htmlFor="">
-                            <b>Department</b>
-                        </label>
+                        <label><b>Department</b></label>
                         <input
                             type="text"
-                            placeholder=""
+                            value={form.department}
                             className="border p-2 rounded w-full"
                             readOnly
                         />
                     </div>
                     <div className="w-full flex flex-col">
-                        <label htmlFor="">
-                            <b>Sourcing Method</b>
-                        </label>
+                        <label><b>Sourcing Method</b></label>
                         <select
+                            onChange={(e) => setForm({ ...form, sourcingMethod: e.target.value })}
                             className="border p-2 rounded w-full"
-                            name=""
-                            id=""
+                            value={form.sourcingMethod}
                         >
                             <option value=""></option>
+                            <option>Internal Candidates</option>
+                            <option>External Candidates</option>
+                            <option>Both</option>
                         </select>
                     </div>
                 </div>
                 <div className="w-full flex flex-col mb-4">
-                    <label htmlFor="">
-                        <b>Reason or Justification of the Request</b>
-                    </label>
+                    <label><b>Reason or Justification of the Request</b></label>
                     <textarea
-                        type="text"
-                        placeholder=""
                         className="border h-40 p-2 rounded w-full"
+                        onChange={(e) => setForm({ ...form, justification: e.target.value })}
                     />
                 </div>
                 <div className="flex flex-1 w-full gap-4 mb-4">
                     <div className="w-full flex flex-col">
-                        <label htmlFor="">
-                            <b>Manager Submitting Request</b>
-                        </label>
+                        <label><b>Manager Submitting Request</b></label>
                         <input
                             type="text"
-                            placeholder=""
+                            value={`${user?.employee_fname || ''} ${user?.employee_lname || ''}`}
                             className="border p-2 rounded w-full"
                             readOnly
                         />
                     </div>
                     <div className="w-full flex flex-col">
-                        <label htmlFor="">
-                            <b>Budget/Cost per head:</b>
-                        </label>
+                        <label><b>Budget/Cost per head:</b></label>
                         <input
                             type="text"
-                            placeholder=""
+                            value={form.budgetCost}
                             className="border p-2 rounded w-full"
                             readOnly
                         />
@@ -186,16 +250,17 @@ export default function ExistingPositionFormSection() {
                     <button
                         className="rounded-md hover:bg-blue-100 w-32 h-10 mt-2"
                         type="button"
-                        onClick={() =>
-                            router.visit(
-                                "/admin/sourcing/resource_requests/erf_record"
-                            )
-                        }
+                        onClick={() => router.visit("/admin/sourcing/resource_requests/erf_record")}
                     >
                         Back
                     </button>
-                    <button className="bg-blue-600 rounded-md hover:bg-blue-700 text-white w-32 h-10 mt-2">
-                        Submit
+                    <button
+                        className="bg-blue-600 rounded-md hover:bg-blue-700 text-white w-32 h-10 mt-2"
+                        type="button"
+                        onClick={submitErf}
+                        disabled={loading}
+                    >
+                        {loading ? "Submitting..." : "Submit"}
                     </button>
                 </div>
             </form>

@@ -22,7 +22,11 @@ export default function NewPositionFormSection() {
     // const [step2FormData, setStep2FormData] = useState({ jobAnalysisDetails: '' });
     // const [step3FormData, setStep3FormData] = useState({ jobDescriptionDetails: '' });
 
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState({
+        positionStatus: 'New Position',
+        site: user?.site || '',
+    });
+
     const handleNext = () => {
         if (activeStep === 0) {
             setActiveStep(1);
@@ -53,7 +57,7 @@ export default function NewPositionFormSection() {
         }
     };
 
-    async function submit_erf(params) {
+    async function submit_new_erf(params) {
         setLoading(true);
         try {
             await store.dispatch(
@@ -111,6 +115,17 @@ export default function NewPositionFormSection() {
                             </b>
                             .
                         </p>
+                        <input
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    site: e.target.value,
+                                })
+                            }
+                            value={form?.site ?? ""}
+                            type="hidden"
+                            className="border p-2 rounded w-full"
+                        />
                         <div className="flex flex-1 w-full gap-4 mb-4 mt-4">
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">
@@ -209,9 +224,11 @@ export default function NewPositionFormSection() {
                                         })
                                     }
                                     type="text"
-                                    placeholder=""
+                                    value={form.positionStatus}
                                     className="border p-2 rounded w-full"
+                                    readOnly
                                 />
+
                             </div>
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">
@@ -293,7 +310,7 @@ export default function NewPositionFormSection() {
                                         })
                                     }
                                     type="text"
-                                    placeholder=""
+                                    value={`${user?.employee_fname || ''} ${user?.employee_lname || ''}`}
                                     className="border p-2 rounded w-full"
                                     readOnly
                                 />
@@ -381,7 +398,7 @@ export default function NewPositionFormSection() {
                             </Button>
                             <Button
                                 loading={loading}
-                                onClick={submit_erf}
+                                onClick={submit_new_erf}
                                 className="bg-blue-600 hover:bg-blue-700 text-white w-32"
                             >
                                 Submit
@@ -406,7 +423,7 @@ export default function NewPositionFormSection() {
                         className="h-4 w-4 !bg-gray-300"
                         activeClassName="ring-0 !bg-blue-600 text-blue-600"
                         completedClassName="!bg-blue-600 text-blue-600"
-                        // onClick={() => handleStepChange(0)}
+                    // onClick={() => handleStepChange(0)}
                     >
                         <div className="absolute -bottom-[2.3rem] w-max text-center text-xs">
                             <Typography variant="h6" color="inherit">
@@ -418,7 +435,7 @@ export default function NewPositionFormSection() {
                         className="h-4 w-4 !bg-gray-300"
                         activeClassName="ring-0 !bg-blue-600 text-blue-600"
                         completedClassName="!bg-blue-600 text-blue-600"
-                        // onClick={() => handleStepChange(1)}
+                    // onClick={() => handleStepChange(1)}
                     >
                         <div className="absolute -bottom-[2.3rem] w-max text-center text-xs">
                             <Typography variant="h6" color="inherit">
@@ -430,7 +447,7 @@ export default function NewPositionFormSection() {
                         className="h-4 w-4 !bg-blue-gray-50 cursor-pointer"
                         activeClassName="ring-0 !bg-blue-600 text-blue-600"
                         completedClassName="!bg-blue-600 text-blue-600"
-                        // onClick={() => handleStepChange(2)}
+                    // onClick={() => handleStepChange(2)}
                     >
                         <div className="absolute -bottom-[2.3rem] w-max text-center text-xs">
                             <Typography variant="h6" color="inherit">

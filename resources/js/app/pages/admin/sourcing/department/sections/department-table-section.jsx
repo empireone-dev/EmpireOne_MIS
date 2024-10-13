@@ -8,8 +8,12 @@ const DepartmentTableSection = () => {
     const { departments } = useSelector((store) => store.departments);
     const data = departments?.map((res) => ({
         dept: res?.dept,
+        depthead: `${res?.user?.employee_fname ?? ''} ${res?.user?.employee_lname ?? ''}`, // concatenate first and last names
         action: res,
     }));
+
+
+    console.log('departments', departments)
 
     const columns = [
         {
@@ -17,6 +21,11 @@ const DepartmentTableSection = () => {
             dataIndex: "dept",
             key: "dept",
             render: (text) => <a>{text}</a>,
+        },
+        {
+            title: "Department Head",
+            dataIndex: "depthead",
+            key: "depthead",
         },
         {
             title: "Action",

@@ -9,11 +9,12 @@ class DepartmentController extends Controller
 {
     public function index()
     {
-        $department = Department::get();
+        $department = Department::with('user')->get();
         return response()->json([
             'result' => $department
         ], 200);
     }
+
     public function store(Request $request)
     {
         Department::create($request->all());
@@ -32,6 +33,23 @@ class DepartmentController extends Controller
         $department->delete();
         return response()->json([
             'result' => $department
+        ], 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $department = Department::find($id);
+
+        if (!$department) {
+            return response()->json([
+                'message' => 'Department not found.',
+            ], 404);
+        }
+
+        $department->update($request->all());
+
+        return response()->json([
+            'data' => Department::with('user')->get() // or you can just return the updated department
         ], 200);
     }
 }

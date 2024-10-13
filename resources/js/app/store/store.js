@@ -14,10 +14,10 @@ import employeeAttritionSlice from "../pages/admin/attrition/attrition_section/r
 import empMemoSlice from "../pages/admin/employee_relation/upload_memo/redux/emp-memo-slice";
 import engagementSlice from "../pages/admin/engagement_section/calendar_activities/redux/engagement-slice";
 import initialRateSlice from "../pages/admin/initial_rate/redux/initial-rate-state";
-import appSlice from "../redux/app-slice";
 import finalRateSlice from "../pages/admin/final_rate/redux/final-rate-slice";
 import preEmploymentFilesSlice from "../pages/pre-employment/redux/pre-employment-files-slice";
 import departmentSlice from "../pages/admin/sourcing/department/redux/department-slice";
+import  appSlice from "../pages/redux/app-slice";
 const store = configureStore({
     reducer: {
         app:appSlice,

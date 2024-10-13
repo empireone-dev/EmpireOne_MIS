@@ -7,10 +7,9 @@ import { get_department_service } from '@/app/pages/services/department-service'
 import { get_department_thunk } from './redux/department-thunk'
 
 export default function DepartmentPage() {
-
-  useEffect(()=>{
+  useEffect(() => {
     store.dispatch(get_department_thunk())
-  },[])
+  }, [])
   return (
     <AdminLayout>
       <DepartmentCreateSection />

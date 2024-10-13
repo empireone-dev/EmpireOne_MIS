@@ -11,9 +11,9 @@ use Illuminate\Support\Facades\Mail;
 
 class JobOfferController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $joboffer = JobOffer::with('applicant')->get();
+        $joboffer = JobOffer::with('applicant')->paginate(10);
         return response()->json([
             'data' => $joboffer
         ], 200);

@@ -5,18 +5,29 @@ import { router } from "@inertiajs/react";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { update_erf_jd_thunk } from "../../../department/redux/department-thunk";
+import { message } from "antd";
 
 export default function JobDescriptionFormSection() {
     const { erf } = useSelector((state) => state.departments);
     const [form, setForm] = useState({});
     
-    function update_jd() {
-        store.dispatch(
-            update_erf_jd_thunk({
+    const [loading, setLoading] = useState(false);
+    async function update_jd() {
+        setLoading(true);
+
+        try {
+            await store.dispatch(update_erf_jd_thunk({
                 form,
-                ...erf,
-            })
-        );
+                ...erf
+            }));
+            message.success("Updated Successfully!");
+            router.visit(`/admin/sourcing/job_title_section/job_description/${erf?.ref_id}`);
+        } catch (error) {
+            message.error("Failed to update. Please try again.");
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
     }
     return (
         <div>

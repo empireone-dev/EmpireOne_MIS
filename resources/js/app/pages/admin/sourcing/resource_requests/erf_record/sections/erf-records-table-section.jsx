@@ -159,7 +159,7 @@ export default function ErfRecordsTableSection() {
     const columns = [
         {
             title: "Ref #",
-            dataIndex: "id",
+            dataIndex: "ref_id",
             key: "emp_id",
             ...getColumnSearchProps("emp_id"),
         },

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function get_job_offer_service(){
-    const res = await axios.get('/api/joboffer')
+    const res = await axios.get('/api/joboffer'+window.location.search??'?page=1')
     return res.data
 }
 

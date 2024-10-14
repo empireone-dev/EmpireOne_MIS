@@ -9,7 +9,7 @@ class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
-        $employee = Employee::with('applicant')->paginate(10);
+        $employee = Employee::with(['applicant','user'])->paginate(10);
         return response()->json([
             'data' => $employee
         ], 200);
@@ -36,7 +36,7 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $employee = Employee::where('emp_id',$id)->with(['attrition','applicant'])->first();
+        $employee = Employee::where('emp_id',$id)->with(['attrition','applicant','user'])->first();
         return response()->json([
             'data' => $employee
         ], 200);

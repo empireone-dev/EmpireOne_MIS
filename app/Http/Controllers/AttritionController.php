@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class AttritionController extends Controller
 {
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         Attrition::create([
             'app_id' => $request->app_id,
             'emp_id' => $request->app_id,
@@ -16,7 +17,7 @@ class AttritionController extends Controller
             'account' => $request->employee['account'],
             'sup_id' => $request->employee['sup_id'],
             'hired' => $request->employee['hired'],
-            'eogs' =>$request->employee['eogs'],
+            'eogs' => $request->employee['eogs'],
             'status' => $request->status,
             'reas' => $request->reason,
             'separation' => $request->separation,

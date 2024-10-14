@@ -20,8 +20,15 @@ export default function AddAttritionSection() {
     const { employees } = useSelector((state) => state.employees);
     const [applicants, setApplicants] = useState([]);
     const [applicant, setApplicant] = useState({});
-    const [form, setForm] = useState({});
+    const { users } = useSelector((state) => state.app);
     const [loading, setLoading] = useState(false)
+
+    const [form, setForm] = useState({ reason: '', resignationReasonSelect: '', dismissalReasonSelect: '', });
+
+    const handleReasonChange = (e) => {
+        const { value } = e.target;
+        setForm({ ...form, reason: value, resignationReasonSelect: '', dismissalReasonSelect: '' });
+    };
 
     async function search_applicant(e) {
         e.preventDefault();
@@ -47,7 +54,7 @@ export default function AddAttritionSection() {
     }
 
     const new_applicants = applicants.filter(applicant => applicant.employee !== null && applicant.employee !== 0)
-    console.log('employees.user', employees?.user)
+    console.log('employeesasda', applicant)
 
     return (
         <div className="my-2">
@@ -147,7 +154,7 @@ export default function AddAttritionSection() {
                         <div class="w-full px-3">
                             <label
                                 class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                for="grid-text"
+
                             >
                                 Employee No.
                             </label>
@@ -165,7 +172,7 @@ export default function AddAttritionSection() {
                             <div class="w-full px-3">
                                 <label
                                     class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
+
                                 >
                                     job Position
                                 </label>
@@ -181,7 +188,7 @@ export default function AddAttritionSection() {
                             <div class="w-full px-3">
                                 <label
                                     class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
+
                                 >
                                     Department
                                 </label>
@@ -197,7 +204,7 @@ export default function AddAttritionSection() {
                             <div class="w-full px-3">
                                 <label
                                     class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
+
                                 >
                                     Account <i>(If Applicable)</i>
                                 </label>
@@ -216,12 +223,12 @@ export default function AddAttritionSection() {
                             <div class="w-full px-3">
                                 <label
                                     class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
+
                                 >
                                     Supervisor
                                 </label>
                                 <input
-                                    value={employees?.users?.employee_fname ?? ""}
+                                    value={applicant?.employee?.sup_id ?? ""}
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -232,7 +239,7 @@ export default function AddAttritionSection() {
                             <div class="w-full px-3">
                                 <label
                                     class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
+
                                 >
                                     EOGS Email
                                 </label>
@@ -251,7 +258,7 @@ export default function AddAttritionSection() {
                             <div class="w-full px-3">
                                 <label
                                     class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
+
                                 >
                                     Hired Date
                                 </label>
@@ -267,7 +274,7 @@ export default function AddAttritionSection() {
                             <div class="w-full px-3">
                                 <label
                                     class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
+
                                 >
                                     Status
                                 </label>
@@ -286,7 +293,7 @@ export default function AddAttritionSection() {
                             <div class="w-full px-3">
                                 <label
                                     class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
+
                                 >
                                     Separation Date
                                 </label>
@@ -307,29 +314,90 @@ export default function AddAttritionSection() {
                             <div class="w-full px-3">
                                 <label
                                     class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
+
                                 >
                                     Reason for Separation
                                 </label>
                                 <select
-                                    onChange={(e) =>
-                                        setForm({
-                                            ...form,
-                                            [e.target.name]: e.target.value,
-                                        })
-                                    }
+                                    // onChange={(e) =>
+                                    //     setForm({
+                                    //         ...form,
+                                    //         [e.target.name]: e.target.value,
+                                    //     })
+                                    // }
+                                    onChange={handleReasonChange}
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     name="reason"
                                     id=""
                                 >
                                     <option value=""></option>
-                                    <option value="Resignation">Resignation</option>
-                                    <option value="Dismissal">Dismissal</option>
-                                    <option value="End of Contract">End of Contract</option>
-                                    <option value="AWOL">AWOL</option>
+                                    <option>Resignation</option>
+                                    <option>Dismissal</option>
+                                    <option>Terminated</option>
+                                    <option>End of Contract</option>
+                                    <option>End of Probationary Employment</option>
+                                    <option>AWOL</option>
                                 </select>
                             </div>
                         </div>
+                        {form.reason === 'Resignation' && (
+                            <div className="w-full px-3" id="resignationReason">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="resignationReasonSelect">
+                                    Reason for Resignation:
+                                </label>
+                                <select
+                                    name="resignationReasonSelect"
+                                    id="resignationReasonSelect"
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    onChange={(e) => setForm({ ...form, resignationReasonSelect: e.target.value })}
+                                >
+                                    <option value=""></option>
+                                    <option>Shift Career Path</option>
+                                    <option>Health Reason</option>
+                                    <option>Pursue Education</option>
+                                    <option>Family Care</option>
+                                    <option>Higher Salary</option>
+                                    <option>Higher Position</option>
+                                    <option>Better Job Scope</option>
+                                    <option>Better Environment</option>
+                                </select>
+                            </div>
+                        )}
+
+                        {form.reason === 'Dismissal' && (
+                            <>
+                                <div className="w-full px-3" id="dismissalReason">
+                                    <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="dismissalReasonSelect">
+                                        Reason for Dismissal:
+                                    </label>
+                                    <select
+                                        name="dismissalReasonSelect"
+                                        id="dismissalReasonSelect"
+                                        className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                        onChange={(e) => setForm({ ...form, dismissalReasonSelect: e.target.value })}
+                                    >
+                                        <option value=""></option>
+                                        <option>Policy Violations</option>
+                                        <option>Performance</option>
+                                        <option>Others</option>
+                                    </select>
+                                </div>
+
+                                <div className="w-full px-3" id="TerminationReport">
+                                    <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="TerminationReportSelect">
+                                        Upload Termination Report:
+                                    </label>
+                                    <input
+                                        type="file"
+                                        name="TerminationReportSelect[]"
+                                        id="TerminationReportSelect"
+                                        className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                        accept=".jpg, .jpeg, .png, .pdf"
+                                        multiple
+                                    />
+                                </div>
+                            </>
+                        )}
                     </div>
                 </form>
             </Modal>

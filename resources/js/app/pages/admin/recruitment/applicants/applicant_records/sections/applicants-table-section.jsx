@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { router } from "@inertiajs/react";
 import AddApplicantsSection from "./add-applicants-section";
 import ApplicantMenuSection from "./applicant-menu-section";
+import ApplicantSearchSection from "./applicant-search-section";
 
 export default function ApplicantsTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -49,9 +50,10 @@ export default function ApplicantsTableSection() {
     const searchInput = useRef(null);
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
-        confirm();
-        setSearchText(selectedKeys[0]);
-        setSearchedColumn(dataIndex);
+        // confirm();
+        // setSearchText(selectedKeys[0]);
+        // setSearchedColumn(dataIndex);
+        console.log("waaa", selectedKeys, dataIndex);
     };
     const handleReset = (clearFilters) => {
         clearFilters();
@@ -175,13 +177,13 @@ export default function ApplicantsTableSection() {
             title: "Application #",
             dataIndex: "app_id",
             key: "emp_id",
-            ...getColumnSearchProps("emp_id"),
+            // ...getColumnSearchProps("emp_id"),
         },
         {
             title: "Fullname",
             dataIndex: "fullname",
             key: "fullname",
-            ...getColumnSearchProps("fullname"),
+            // ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
                 console.log("record", record);
 
@@ -196,7 +198,7 @@ export default function ApplicantsTableSection() {
             title: "Date of Birth",
             dataIndex: "dob",
             key: "dob",
-            ...getColumnSearchProps("dob"),
+            // ...getColumnSearchProps("dob"),
             render: (_, record) => {
                 return (
                     <div className="gap-1.5 flex">
@@ -209,31 +211,31 @@ export default function ApplicantsTableSection() {
             title: "Gender",
             dataIndex: "gender",
             key: "gender",
-            ...getColumnSearchProps("gender"),
+            // ...getColumnSearchProps("gender"),
         },
         {
             title: "Marital Status",
             dataIndex: "marital",
             key: "mstatus",
-            ...getColumnSearchProps("mstatus"),
+            // ...getColumnSearchProps("mstatus"),
         },
         {
             title: "Email Address",
             dataIndex: "email",
             key: "eogs",
-            ...getColumnSearchProps("eogs"),
+            // ...getColumnSearchProps("eogs"),
         },
         {
             title: "Contact",
             dataIndex: "phone",
             key: "contact",
-            ...getColumnSearchProps("contact"),
+            // ...getColumnSearchProps("contact"),
         },
         {
             title: "Date Submitted",
             dataIndex: "submitted",
             key: "submitted",
-            ...getColumnSearchProps("submitted"),
+            // ...getColumnSearchProps("submitted"),
         },
         {
             title: "Status",
@@ -280,10 +282,10 @@ export default function ApplicantsTableSection() {
             render: (_, record) => {
                 return (
                     <>
-                        <ApplicantMenuSection 
-                         interviewer={interviewer}
-                         data={record}
-                         />
+                        <ApplicantMenuSection
+                            interviewer={interviewer}
+                            data={record}
+                        />
                     </>
                 );
             },
@@ -323,6 +325,10 @@ export default function ApplicantsTableSection() {
                 {/* <div className='mr-8'>
                     <ApplicantsDropdownFilterComponents filterDatas={filterDatas} />
                 </div> */}
+            </div>
+
+            <div className="flex flex-col items-start w-96 ">
+                <ApplicantSearchSection />
             </div>
             <Table
                 pagination={paginationConfig}

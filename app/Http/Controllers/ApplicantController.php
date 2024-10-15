@@ -10,7 +10,8 @@ use Illuminate\Http\Request;
 class ApplicantController extends Controller
 {
 
-    public function get_hired_applicant(){
+    public function get_hired_applicant()
+    {
         $applicants = JobOffer::where('status', 'Hired')->with(['applicant'])->get();
         return response()->json([
             'status' => $applicants
@@ -28,13 +29,22 @@ class ApplicantController extends Controller
     }
     public function index(Request $request)
     {
-        $applicant = Applicant::query()->with(['final', 'initial', 'joboffer','user']);
+        $applicant = Applicant::query()->with(['final', 'initial', 'joboffer', 'user']);
         $user = User::where('position', '=', 'CEO')
             ->orWhere('position', '=', 'Manager')
             ->orWhere('position', '=', 'Director')->get();
         if ($request->search) {
             $applicant->where('status', $request->search);
         }
+        if ($request->searching) {
+            $applicant->where(function ($query) use ($request) {
+                $query->where('fname', 'LIKE', '%' . $request->searching . '%') // Search by first name
+                    ->orWhere('lname', 'LIKE', '%' . $request->searching . '%') // Search by last name
+                    ->orWhere('mname', 'LIKE', '%' . $request->searching . '%') // Search by last name
+                    ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%'); // Search by applicant ID
+            });
+        }
+
         return response()->json([
             'interviewer' => $user,
             'data' => $applicant->paginate(10)

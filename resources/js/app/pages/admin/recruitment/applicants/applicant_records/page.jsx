@@ -5,6 +5,7 @@ import store from '@/app/store/store';
 import { useEffect } from 'react';
 import { get_applicant_thunk } from './redux/applicant-thunk';
 import { get_job_position_thunk } from '../../../sourcing/job_title_section/redux/job-title-thunk';
+import ApplicantSearchSection from './sections/applicant-search-section';
 
 export default function ApplicantRecords() {
   useEffect(() => {

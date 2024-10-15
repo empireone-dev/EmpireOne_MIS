@@ -9,9 +9,27 @@ class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
-        $employee = Employee::with(['applicant','user'])->paginate(10);
+        // Start with the base query
+        $query = Employee::query()->with(['applicant', 'user']);
+    
+        // Apply searching if the searching parameter is present
+        if ($request->searching) {
+            $query->where(function ($subQuery) use ($request) {
+                $subQuery->where('app_id', 'LIKE', '%' . $request->searching . '%') // Search by applicant ID
+                    ->orWhereHas('applicant', function ($query) use ($request) {
+                        $query->where('lname', 'LIKE', '%' . $request->searching . '%') // Search by last name in applicant relation
+                            ->orWhere('fname', 'LIKE', '%' . $request->searching . '%') // Search by first name in applicant relation
+                            ->orWhere('mname', 'LIKE', '%' . $request->searching . '%'); // Search by middle name in applicant relation
+                    });
+            });
+        }
+        
+    
+        // Execute the query and paginate the results
+        $applicants = $query->paginate(10);
+    
         return response()->json([
-            'data' => $employee
+            'data' => $applicants
         ], 200);
     }
 
@@ -36,10 +54,9 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $employee = Employee::where('emp_id',$id)->with(['attrition','applicant','user'])->first();
+        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user'])->first();
         return response()->json([
             'data' => $employee
         ], 200);
     }
-
 }

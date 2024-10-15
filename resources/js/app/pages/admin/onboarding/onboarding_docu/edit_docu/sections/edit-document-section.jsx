@@ -1,4 +1,4 @@
-import Summernote from '@/app/pages/_components/summernote'
+import Summernote from '@/app/pages/_components/summernote-view';
 import { router } from '@inertiajs/react';
 import { message } from 'antd';
 import React, { useState } from 'react'

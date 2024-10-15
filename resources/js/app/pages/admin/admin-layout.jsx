@@ -183,13 +183,13 @@ const AdminLayout = ({ children }) => {
                             "/admin/employee_relation/employee_section?page=1"
                         ),
                 },
-                {
-                    key: "upload_memo",
-                    icon: <HolderOutlined />,
-                    label: "Upload Memo",
-                    onClick: () =>
-                        router.visit("/admin/employee_relation/upload_memo"),
-                },
+                // {
+                //     key: "upload_memo",
+                //     icon: <HolderOutlined />,
+                //     label: "Upload Memo",
+                //     onClick: () =>
+                //         router.visit("/admin/employee_relation/upload_memo"),
+                // },
             ],
         },
         {
@@ -265,12 +265,12 @@ const AdminLayout = ({ children }) => {
         //         },
         //     ],
         // },
-        {
-            key: "ceo_Section",
-            icon: <UserOutlined />,
-            label: "CEO Section",
-            onClick: () => router.visit("/admin/ceo_section"),
-        },
+        // {
+        //     key: "ceo_Section",
+        //     icon: <UserOutlined />,
+        //     label: "CEO Section",
+        //     onClick: () => router.visit("/admin/ceo_section"),
+        // },
     ];
 
     const [isOpen, setIsOpen] = useState(false);

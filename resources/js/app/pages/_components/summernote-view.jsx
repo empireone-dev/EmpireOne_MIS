@@ -22,7 +22,7 @@ const Summernote = ({ setForm, form, data }) => {
 
         // Create a basic HTML structure for the iframe's document
         doc.open();
-        doc.write();
+        doc.write(data);
         doc.close();
 
         // Make the body content editable

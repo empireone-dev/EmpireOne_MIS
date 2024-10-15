@@ -1,5 +1,4 @@
-import Summernote from '@/app/pages/_components/summernote'
-import WysiwygEditDocu from '@/app/pages/_components/wysiwyg-edit-docu'
+import Summernote from '@/app/pages/_components/summernote-view';
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
 

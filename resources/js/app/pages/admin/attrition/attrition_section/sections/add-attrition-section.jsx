@@ -228,7 +228,7 @@ export default function AddAttritionSection() {
                                     Supervisor
                                 </label>
                                 <input
-                                    value={applicant?.employee?.sup_id ?? ""}
+                                    value={(applicant?.employee?.user?.employee_fname ?? "") + " " + (applicant?.employee?.user?.employee_lname ?? "")}
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"

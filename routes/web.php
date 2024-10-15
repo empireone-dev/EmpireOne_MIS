@@ -219,10 +219,10 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
             Route::get('/', function () {
                 return Inertia::render('admin/onboarding/onboarding_docu/page');
             });
-            Route::get('/view_docu', function () {
+            Route::get('/view_docu/{id}', function () {
                 return Inertia::render('admin/onboarding/onboarding_docu/view_docu/page');
             });
-            Route::get('/edit_docu', function () {
+            Route::get('/edit_docu/{id}', function () {
                 return Inertia::render('admin/onboarding/onboarding_docu/edit_docu/page');
             });
         });

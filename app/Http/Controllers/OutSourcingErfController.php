@@ -15,7 +15,7 @@ class OutSourcingErfController extends Controller
         $res = OutSourcingErf::where('ref_id', $ref_id)->with(['ja', 'jd'])->first();
 
         return response()->json([
-            'data' => $res
+            'data' => $res  
         ], 200);
     }
     public function count_outsourcing_erf($date)

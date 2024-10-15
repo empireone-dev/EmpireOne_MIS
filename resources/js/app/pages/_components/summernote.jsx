@@ -4,16 +4,16 @@ import { AlignCenterOutlined, AlignLeftOutlined, AlignRightOutlined, OrderedList
 const Summernote = ({ setForm, form, data }) => {
     const wysiwygRef = useRef(null);
     function onChangeHandler(e) {
-        // setForm({
-        //     ...form,
-        //     ja: e.target.innerHTML,
-        // });
+        setForm({
+            ...form,
+            doc_content: e.target.innerHTML,
+        });
     }
     useEffect(() => {
-        // setForm({
-        //     ...form,
-        //     ja: data ?? JABlank(),
-        // });
+        setForm({
+            ...form,
+            doc_content: data,
+        });
     }, [data]);
     // Initialize the wysiwyg editor
     useEffect(() => {
@@ -22,11 +22,7 @@ const Summernote = ({ setForm, form, data }) => {
 
         // Create a basic HTML structure for the iframe's document
         doc.open();
-        if (data) {
-            doc.write(data);
-        } else {
-            // doc.write(JABlank());
-        }
+        doc.write(data);
         doc.close();
 
         // Make the body content editable
@@ -101,35 +97,35 @@ const Summernote = ({ setForm, form, data }) => {
                         className="outline-none focus:outline-none border-l border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("insertUnorderedList")}
                     >
-                        <i className="mdi mdi-format-list-bulleted"><UnorderedListOutlined/></i>
+                        <i className="mdi mdi-format-list-bulleted"><UnorderedListOutlined /></i>
                     </button>
                     <button
                         type="button"
                         className="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 mr-1 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("insertOrderedList")}
                     >
-                        <i className="mdi mdi-format-list-numbered"><OrderedListOutlined/></i>
+                        <i className="mdi mdi-format-list-numbered"><OrderedListOutlined /></i>
                     </button>
                     <button
                         type="button"
                         className="outline-none focus:outline-none border-l border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("justifyLeft")}
                     >
-                        <i className="mdi mdi-format-align-left"><AlignLeftOutlined/></i>
+                        <i className="mdi mdi-format-align-left"><AlignLeftOutlined /></i>
                     </button>
                     <button
                         type="button"
                         className="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("justifyCenter")}
                     >
-                        <i className="mdi mdi-format-align-center"><AlignCenterOutlined/></i>
+                        <i className="mdi mdi-format-align-center"><AlignCenterOutlined /></i>
                     </button>
                     <button
                         type="button"
                         className="outline-none focus:outline-none border-r border-gray-200 w-10 h-10 hover:text-indigo-500 active:bg-gray-50"
                         onClick={() => format("justifyRight")}
                     >
-                        <i className="mdi mdi-format-align-right"><AlignRightOutlined/></i>
+                        <i className="mdi mdi-format-align-right"><AlignRightOutlined /></i>
                     </button>
                 </div>
                 <div className="w-full">

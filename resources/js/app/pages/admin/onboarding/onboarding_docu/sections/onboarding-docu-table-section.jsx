@@ -7,6 +7,7 @@ import ButtonComponents from '../components/button-components';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import AddOnboardingDocuSection from './add-onboarding-docu-section';
+import OnboardingMenuButtonSection from './onboarding-menu-button-sections';
 
 export default function OnboardingDocuTableSection() {
     const [searchText, setSearchText] = useState('');
@@ -150,7 +151,7 @@ export default function OnboardingDocuTableSection() {
             dataIndex: 'action',
             render: (_, record) => {
                 return (
-                    <ButtonComponents />
+                    <OnboardingMenuButtonSection data={record} />
                 )
             }
         },

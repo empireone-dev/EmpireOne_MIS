@@ -5,7 +5,8 @@ export const onboardingDocuSlice = createSlice({
   initialState: {
     onboarding_docs: [],
     onboarding_docForm: {},
-    od:{}
+    od:{},
+    onboarding_doc:{}
   },
   reducers: {
     setOnboardingDocus: (state, action) => {
@@ -20,8 +21,11 @@ export const onboardingDocuSlice = createSlice({
     setOd: (state, action) => {
       state.od = action.payload
     },
+    setOnboardingDoc: (state, action) => {
+      state.onboarding_doc = action.payload
+    },
   },
 })
-export const { setOnboardingDocus, setOnboardingDocuForm, resetOnboardingDocu,setOd } = onboardingDocuSlice.actions
+export const { setOnboardingDocus, setOnboardingDocuForm, resetOnboardingDocu,setOd, setOnboardingDocu } = onboardingDocuSlice.actions
 
 export default onboardingDocuSlice.reducer

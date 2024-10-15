@@ -11,6 +11,7 @@ class OnboardingDoc extends Model
     protected $table = 'onboarding_docs';
     public $timestamps = false;
     protected $fillable = [
+        'id',
         'doc_name',
         'doc_content',
         'site',

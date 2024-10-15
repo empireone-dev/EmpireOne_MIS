@@ -1,16 +1,19 @@
 import Summernote from "@/app/pages/_components/summernote";
+import store from "@/app/store/store";
 import { PlusSquareTwoTone } from "@ant-design/icons";
-import { Modal } from "antd";
+import { message, Modal } from "antd";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import { create_onboarding_docu_thunk, get_onboarding_docu_thunk } from "../redux/onboarding-docu-thunk";
 
 export default function AddOnboardingDocuSection() {
     const [open, setOpen] = useState(false);
     const { user } = useSelector((state) => state.app);
     const [loading, setLoading] = useState(false);
+    const [newForm,setNewForm]=useState({
+        site:user?.site??''
+    })
     const [form, setForm] = useState({
-        doc_name: '',
-        site: user?.site || '',
         doc_content: '',
     });
 
@@ -19,6 +22,7 @@ export default function AddOnboardingDocuSection() {
         try {
             await store.dispatch(
                 create_onboarding_docu_thunk({
+                    ...newForm,
                     ...form,
                     ...user,
                 })
@@ -33,7 +37,7 @@ export default function AddOnboardingDocuSection() {
             setOpen(false);
         }
     };
-
+console.log('formform',form)
     return (
         <div className="my-2">
             <div className="inline-flex rounded-md shadow-sm" role="group">
@@ -64,7 +68,7 @@ export default function AddOnboardingDocuSection() {
                             </label>
                             <input
                                 value={form.doc_name}
-                                onChange={(e) => setForm({ ...form, doc_name: e.target.value })}
+                                onChange={(e) => setNewForm({ ...newForm, doc_name: e.target.value })}
                                 className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 name="doc_name"
                                 type="text"
@@ -75,7 +79,8 @@ export default function AddOnboardingDocuSection() {
                                 Document's Content
                             </label>
                             {/* Pass setForm with current form state to Summernote */}
-                            <Summernote form={form} setForm={setForm} />
+                            <Summernote
+                            form={form} setForm={setForm} />
                         </div>
                     </div>
                 </form>

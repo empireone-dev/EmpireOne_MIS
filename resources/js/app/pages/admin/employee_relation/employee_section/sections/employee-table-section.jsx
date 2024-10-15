@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import AddEmployeeButtonSection from "./add-employee-button-section";
 import EmployeeMenuSection from "./employee-menu-section";
 import { router } from "@inertiajs/react";
+import EmployeeSearchSection from "./employee-search-section";
 
 export default function EmployeeTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -14,7 +15,7 @@ export default function EmployeeTableSection() {
     const { applicant } = useSelector((state) => state.final_rate);
     const { employees } = useSelector((state) => state.employees);
 
-    console.log("wsss", applicant);
+    console.log("wsss", employees);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -142,13 +143,13 @@ export default function EmployeeTableSection() {
             title: "Employee #",
             dataIndex: "emp_id",
             key: "emp_id",
-            ...getColumnSearchProps("emp_id"),
+            // ...getColumnSearchProps("emp_id"),
         },
         {
             title: "Fullname",
             dataIndex: "fullname",
             key: "fullname",
-            ...getColumnSearchProps("fullname"),
+            // ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
                 console.log("record", record);
 
@@ -164,25 +165,25 @@ export default function EmployeeTableSection() {
             title: "Position",
             dataIndex: "position",
             key: "position",
-            ...getColumnSearchProps("position"),
+            // ...getColumnSearchProps("position"),
         },
         {
             title: "Department",
             dataIndex: "dept",
             key: "dept",
-            ...getColumnSearchProps("dept"),
+            // ...getColumnSearchProps("dept"),
         },
         {
             title: "Email Address",
             dataIndex: "eogs",
             key: "eogs",
-            ...getColumnSearchProps("eogs"),
+            // ...getColumnSearchProps("eogs"),
         },
         {
             title: "Contact",
             dataIndex: "contact",
             key: "contact",
-            ...getColumnSearchProps("contact"),
+            // ...getColumnSearchProps("contact"),
             render: (_, record, i) => {
                 console.log("record", record);
 
@@ -246,6 +247,7 @@ export default function EmployeeTableSection() {
                 </div>
                 <AddEmployeeButtonSection data={applicant} />
             </div>
+            <EmployeeSearchSection />
             <Table
                 pagination={false}
                 columns={columns}

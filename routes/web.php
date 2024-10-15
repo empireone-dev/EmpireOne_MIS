@@ -114,54 +114,11 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
             });
         });
 
-        Route::prefix('resource_requests')->group(function () {
-            Route::prefix('erf_record')->group(function () {
-                Route::get('/', function () {
-                    return Inertia::render('admin/sourcing/resource_requests/page');
-                });
-                Route::get('/erf_job_analysis', function () {
-                    return Inertia::render('admin/sourcing/resource_requests/erf_record/erf_job_analysis/page');
-                });
-                Route::get('/erf_job_description', function () {
-                    return Inertia::render('admin/sourcing/resource_requests/erf_record/erf_job_description/page');
-                });
-            });
-            Route::get('/new_position', function () {
-                return Inertia::render('admin/sourcing/resource_requests/new_position/page');
-            });
-            Route::get('/existing_position', function () {
-                return Inertia::render('admin/sourcing/resource_requests/existing_position/page');
-            });
-            Route::get('/approved_erf', function () {
-                return Inertia::render('admin/sourcing/resource_requests/approved_erf/page');
-            });
-            Route::get('/declined_erf', function () {
-                return Inertia::render('admin/sourcing/resource_requests/declined_erf/page');
-            });
-        });
-
-        Route::prefix('resource_requests')->group(function () {
-            Route::get('/erf_record', function () {
+        Route::prefix('erf_record')->group(function () {
+            Route::get('/', function () {
                 return Inertia::render('admin/sourcing/resource_requests/erf_record/page');
             });
-            Route::get('/new_position', function () {
-                return Inertia::render('admin/sourcing/resource_requests/new_position/page');
-            });
-            Route::get('/existing_position', function () {
-                return Inertia::render('admin/sourcing/resource_requests/existing_position/page');
-            });
-            Route::get('/approved_erf', function () {
-                return Inertia::render('admin/sourcing/resource_requests/approved_erf/page');
-            });
-            Route::get('/declined_erf', function () {
-                return Inertia::render('admin/sourcing/resource_requests/declined_erf/page');
-            });
-        });
 
-        Route::prefix('resource_requests')->group(function () {
-            Route::get('/erf_record', function () {
-                return Inertia::render('admin/sourcing/resource_requests/erf_record/page');
-            });
             Route::get('/new_position', function () {
                 return Inertia::render('admin/sourcing/resource_requests/new_position/page');
             });
@@ -174,7 +131,74 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
             Route::get('/declined_erf', function () {
                 return Inertia::render('admin/sourcing/resource_requests/declined_erf/page');
             });
+            //         Route::get('/erf_job_analysis', function () {
+            //             return Inertia::render('admin/sourcing/resource_requests/erf_record/erf_job_analysis/page');
+            //         });
+            //         Route::get('/erf_job_description', function () {
+            //             return Inertia::render('admin/sourcing/resource_requests/erf_record/erf_job_description/page');
+            //         });
         });
+        // Route::prefix('resource_requests')->group(function () {
+        //     Route::prefix('erf_record')->group(function () {
+        //         Route::get('/', function () {
+        //             return Inertia::render('admin/sourcing/resource_requests/page');
+        //         });
+        //         Route::get('/erf_job_analysis', function () {
+        //             return Inertia::render('admin/sourcing/resource_requests/erf_record/erf_job_analysis/page');
+        //         });
+        //         Route::get('/erf_job_description', function () {
+        //             return Inertia::render('admin/sourcing/resource_requests/erf_record/erf_job_description/page');
+        //         });
+        //     });
+        //     Route::get('/new_position', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/new_position/page');
+        //     });
+        //     Route::get('/existing_position', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/existing_position/page');
+        //     });
+        //     Route::get('/approved_erf', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/approved_erf/page');
+        //     });
+        //     Route::get('/declined_erf', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/declined_erf/page');
+        //     });
+        // });
+
+        // Route::prefix('resource_requests')->group(function () {
+        //     Route::get('/erf_record', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/erf_record/page');
+        //     });
+        //     Route::get('/new_position', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/new_position/page');
+        //     });
+        //     Route::get('/existing_position', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/existing_position/page');
+        //     });
+        //     Route::get('/approved_erf', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/approved_erf/page');
+        //     });
+        //     Route::get('/declined_erf', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/declined_erf/page');
+        //     });
+        // });
+
+        // Route::prefix('resource_requests')->group(function () {
+        //     Route::get('/erf_record', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/erf_record/page');
+        //     });
+        //     Route::get('/new_position', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/new_position/page');
+        //     });
+        //     Route::get('/existing_position', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/existing_position/page');
+        //     });
+        //     Route::get('/approved_erf', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/approved_erf/page');
+        //     });
+        //     Route::get('/declined_erf', function () {
+        //         return Inertia::render('admin/sourcing/resource_requests/declined_erf/page');
+        //     });
+        // });
     });
 
     Route::prefix('recruitment')->group(function () {
@@ -182,29 +206,32 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
             return Inertia::render('admin/recruitment/guide_question/page');
         });
 
-        Route::prefix('applicants')->group(function () {
-            Route::get('/applicant_records', function () {
-                return Inertia::render('admin/recruitment/applicants/applicant_records/page');
-            });
-            Route::get('/pendings', function () {
-                return Inertia::render('admin/recruitment/applicants/pendings/page');
-            });
-            Route::get('/initial', function () {
-                return Inertia::render('admin/recruitment/applicants/initial/page');
-            });
-            Route::get('/final', function () {
-                return Inertia::render('admin/recruitment/applicants/final/page');
-            });
-            Route::get('/passed', function () {
-                return Inertia::render('admin/recruitment/applicants/passed/page');
-            });
-            Route::get('/failed', function () {
-                return Inertia::render('admin/recruitment/applicants/failed/page');
-            });
-            Route::get('/{slug}/{id}', function () {
-                return Inertia::render('admin/recruitment/applicants/id/page');
-            });
+        Route::get('/applicant_records', function () {
+            return Inertia::render('admin/recruitment/applicants/applicant_records/page');
         });
+        // Route::prefix('applicants')->group(function () {
+        //     Route::get('/applicant_records', function () {
+        //         return Inertia::render('admin/recruitment/applicants/applicant_records/page');
+        //     });
+        //     Route::get('/pendings', function () {
+        //         return Inertia::render('admin/recruitment/applicants/pendings/page');
+        //     });
+        //     Route::get('/initial', function () {
+        //         return Inertia::render('admin/recruitment/applicants/initial/page');
+        //     });
+        //     Route::get('/final', function () {
+        //         return Inertia::render('admin/recruitment/applicants/final/page');
+        //     });
+        //     Route::get('/passed', function () {
+        //         return Inertia::render('admin/recruitment/applicants/passed/page');
+        //     });
+        //     Route::get('/failed', function () {
+        //         return Inertia::render('admin/recruitment/applicants/failed/page');
+        //     });
+        //     Route::get('/{slug}/{id}', function () {
+        //         return Inertia::render('admin/recruitment/applicants/id/page');
+        //     });
+        // });
     });
     Route::prefix('hiring')->group(function () {
         Route::get('/pre_employment', function () {
@@ -293,86 +320,86 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     });
 });
 
-// HR = 2
-Route::middleware('auth:sanctum', 'role:2')->prefix('hr')->group(function () {});
-// IT = 3
-Route::middleware('auth:sanctum', 'role:3')->prefix('it')->group(function () {});
-// IT = 4
-Route::middleware('auth:sanctum', 'role:4')->prefix('accounting')->group(function () {});
-// manager =5
-Route::prefix('manager', 'role:5')->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('managers/dashboard/page');
-    });
-    Route::get('/attrition', function () {
-        return Inertia::render('managers/attrition/page');
-    });
-    Route::get('/employee_relation', function () {
-        return Inertia::render('managers/employee_relation/page');
-    });
-    Route::get('/engagement_section', function () {
-        return Inertia::render('managers/engagement_section/page');
-    });
-    Route::get('/profile', function () {
-        return Inertia::render('managers/profile/page');
-    });
-    Route::get('/recruitment', function () {
-        return Inertia::render('managers/recruitment/page');
-    });
-    Route::get('/sourcing', function () {
-        return Inertia::render('managers/sourcing/page');
-    });
-});
-// engagement = 6
-Route::prefix('engagement', 'role:6')->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('engagement/dashboard/page');
-    });
-    Route::get('/employee_relation', function () {
-        return Inertia::render('engagement/employee_relation/page');
-    });
-    Route::get('/employee_wellness', function () {
-        return Inertia::render('engagement/employee_wellness/page');
-    });
-    Route::get('/engagement_section', function () {
-        return Inertia::render('engagement/engagement_section/page');
-    });
-    Route::get('/profile', function () {
-        return Inertia::render('engagement/profile/page');
-    });
-});
-// employee = 7
-Route::prefix('employee', 'role:7')->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('employee/dashboard/page');
-    });
-    Route::get('/employee_relation', function () {
-        return Inertia::render('employee/employee_relation/page');
-    });
-    Route::get('/announcement', function () {
-        return Inertia::render('employee/announcement/page');
-    });
-    Route::get('/list_memo', function () {
-        return Inertia::render('employee/list_memo/page');
-    });
-    Route::get('/engagement', function () {
-        return Inertia::render('employee/engagement/page');
-    });
-    Route::prefix('engagement')->group(function () {
-        Route::get('/today_event', function () {
-            return Inertia::render('employee/engagement/today_event/page');
-        });
-        Route::get('/upcoming_event', function () {
-            return Inertia::render('employee/engagement/upcoming_event/page');
-        });
-        Route::get('/birthday', function () {
-            return Inertia::render('employee/engagement/birthday/page');
-        });
-    });
-    Route::get('/profile', function () {
-        return Inertia::render('employee/profile/page');
-    });
-});
+// // HR = 2
+// Route::middleware('auth:sanctum', 'role:2')->prefix('hr')->group(function () {});
+// // IT = 3
+// Route::middleware('auth:sanctum', 'role:3')->prefix('it')->group(function () {});
+// // IT = 4
+// Route::middleware('auth:sanctum', 'role:4')->prefix('accounting')->group(function () {});
+// // manager =5
+// Route::prefix('manager', 'role:5')->group(function () {
+//     Route::get('/dashboard', function () {
+//         return Inertia::render('managers/dashboard/page');
+//     });
+//     Route::get('/attrition', function () {
+//         return Inertia::render('managers/attrition/page');
+//     });
+//     Route::get('/employee_relation', function () {
+//         return Inertia::render('managers/employee_relation/page');
+//     });
+//     Route::get('/engagement_section', function () {
+//         return Inertia::render('managers/engagement_section/page');
+//     });
+//     Route::get('/profile', function () {
+//         return Inertia::render('managers/profile/page');
+//     });
+//     Route::get('/recruitment', function () {
+//         return Inertia::render('managers/recruitment/page');
+//     });
+//     Route::get('/sourcing', function () {
+//         return Inertia::render('managers/sourcing/page');
+//     });
+// });
+// // engagement = 6
+// Route::prefix('engagement', 'role:6')->group(function () {
+//     Route::get('/dashboard', function () {
+//         return Inertia::render('engagement/dashboard/page');
+//     });
+//     Route::get('/employee_relation', function () {
+//         return Inertia::render('engagement/employee_relation/page');
+//     });
+//     Route::get('/employee_wellness', function () {
+//         return Inertia::render('engagement/employee_wellness/page');
+//     });
+//     Route::get('/engagement_section', function () {
+//         return Inertia::render('engagement/engagement_section/page');
+//     });
+//     Route::get('/profile', function () {
+//         return Inertia::render('engagement/profile/page');
+//     });
+// });
+// // employee = 7
+// Route::prefix('employee', 'role:7')->group(function () {
+//     Route::get('/dashboard', function () {
+//         return Inertia::render('employee/dashboard/page');
+//     });
+//     Route::get('/employee_relation', function () {
+//         return Inertia::render('employee/employee_relation/page');
+//     });
+//     Route::get('/announcement', function () {
+//         return Inertia::render('employee/announcement/page');
+//     });
+//     Route::get('/list_memo', function () {
+//         return Inertia::render('employee/list_memo/page');
+//     });
+//     Route::get('/engagement', function () {
+//         return Inertia::render('employee/engagement/page');
+//     });
+//     Route::prefix('engagement')->group(function () {
+//         Route::get('/today_event', function () {
+//             return Inertia::render('employee/engagement/today_event/page');
+//         });
+//         Route::get('/upcoming_event', function () {
+//             return Inertia::render('employee/engagement/upcoming_event/page');
+//         });
+//         Route::get('/birthday', function () {
+//             return Inertia::render('employee/engagement/birthday/page');
+//         });
+//     });
+//     Route::get('/profile', function () {
+//         return Inertia::render('employee/profile/page');
+//     });
+// });
 
 
 

@@ -16,3 +16,8 @@ export async function create_onboarding_doc_service(data) {
     const res = await axios.post('/api/onboarding_doc', data)
     return res.data
 }
+
+export async function update_onboarding_doc_service(data) {
+    const res = await axios.put('/api/onboarding_doc/' + data.id, data)
+    return res.data
+}

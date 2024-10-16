@@ -53,13 +53,14 @@ class OnboardingDocController extends Controller
     }
 
 
-    // public function update(Request $request, $id)
-    // {
-    //     $onboardingdoc = OnboardingDoc::find($id);
-    //     $onboardingdoc->update($request->all());
-
-    //     return response()->json([
-    //         'data' => $this->index()->original['data']
-    //     ], 200);
-    // }
+    public function update(Request $request, $id)
+    {
+        $res = OnboardingDoc::where('id', $id)->first();
+        $res->update([
+            'doc_content' => $request->form['doc_content']
+        ]);
+        return response()->json([
+            'data' => 'success'
+        ], 200);
+    }
 }

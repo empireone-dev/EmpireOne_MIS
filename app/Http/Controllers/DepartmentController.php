@@ -49,7 +49,7 @@ class DepartmentController extends Controller
         $department->update($request->all());
 
         return response()->json([
-            'data' => Department::with('user')->get() // or you can just return the updated department
+            'data' => Department::with('user')->get() 
         ], 200);
     }
 }

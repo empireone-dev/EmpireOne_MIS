@@ -34,9 +34,9 @@ export function create_employee_thunk(data) {
   };
 }
 
-export function store_employee_thunk(data) {
+export function store_employee_thunk(fd) {
   return async function (dispatch, getState) {
-    const result = await store_employee_service(data)
+    const result = await store_employee_service(fd)
     dispatch(applicantSlice.actions.setApplicantForm({
       work_experience: []
     }));

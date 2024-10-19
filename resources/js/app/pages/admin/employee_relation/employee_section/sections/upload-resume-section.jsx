@@ -2,7 +2,7 @@ import { FilePdfOutlined } from '@ant-design/icons';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import React, { useState } from 'react';
 
-export default function UploadResumeSection() {
+export default function UploadResumeSection({files,setFiles}) {
     const [uploadedFile, setUploadedFile] = useState(null);
 
     const displayUploadedFile = (file) => {
@@ -16,6 +16,7 @@ export default function UploadResumeSection() {
 
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
+        setFiles(file)
         displayUploadedFile(file);
     };
 

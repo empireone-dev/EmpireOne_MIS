@@ -18,9 +18,9 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    public $timestamps = false;
     protected $fillable = [
         'id',
-        'name',
         'role_id',
         'employee_id',
         'employee_fname',

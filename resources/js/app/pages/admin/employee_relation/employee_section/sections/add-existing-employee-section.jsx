@@ -97,6 +97,7 @@ export default function AddExistingEmployeeSection({ data }) {
         // setOpen(false);
         // closeModal();
     }
+    
     const [showWorkingExperience, setShowWorkingExperience] = useState(false);
     const [showFirstTimeJobseeker, setShowFirstTimeJobseeker] = useState(false);
     const [uploadedFile, setUploadedFile] = useState(null);

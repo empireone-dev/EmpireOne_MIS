@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Applicant;
 use App\Models\JobOffer;
 use App\Models\User;
-use App\Models\WorkingExperience;
 use Illuminate\Http\Request;
 
 class ApplicantController extends Controller
@@ -58,17 +57,6 @@ class ApplicantController extends Controller
         $data['caddress'] = $request->lot . ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province;
         $data['app_id'] = $request->uniqueAppId;
         Applicant::create($data);
-
-        foreach ($request->work_experience as $key => $value) {
-            WorkingExperience::create([
-                'app_id' => $request->uniqueAppId,
-                'company' => $value['company'],
-                'end_at' => $value['end_at'],
-                'position' => $value['position'],
-                'started_at' => $value['started_at'],
-            ]);
-        }
-        
         return response()->json([
             'status' => 'success',
             // 'data' => $this->index()->original['data']

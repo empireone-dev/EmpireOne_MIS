@@ -3,7 +3,7 @@ import { router } from '@inertiajs/react';
 import { message } from 'antd';
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
-import { update_onboarding_doc_thunk } from '../../redux/onboarding-docu-thunk';
+import { get_onboarding_docu_by_id_thunk, update_onboarding_doc_thunk } from '../../redux/onboarding-docu-thunk';
 import store from '@/app/store/store';
 
 export default function EditDocumentSection() {
@@ -11,6 +11,8 @@ export default function EditDocumentSection() {
     const { onboarding_doc } = useSelector((state) => state.onboarding_docs);
     const [form, setForm] = useState({});
     const [loading, setLoading] = useState(false);
+    const id = window.location.pathname.split('/')[5]
+
     async function update_onboarding_doc() {
         setLoading(true);
 
@@ -23,11 +25,11 @@ export default function EditDocumentSection() {
 
         try {
             await store.dispatch(update_onboarding_doc_thunk({
-                form,
-                ...onboarding_doc
+                ...onboarding_doc.data,
+                ...form,
             }));
-            message.success("Updated Successfully!");
-            router.visit(`/admin/onboarding/onboarding_docu/edit_docu/${onboarding_doc?.id}`);
+            await message.success("Updated Successfully!");
+            setLoading(true);
         } catch (error) {
             message.error("Failed to update. Please try again.");
             console.error(error);
@@ -62,7 +64,7 @@ export default function EditDocumentSection() {
                     <button
                         className='bg-blue-500 py-1.5 px-5 rounded-md text-white hover:bg-blue-600'
                         onClick={update_onboarding_doc}
-                        disabled={loading} 
+                        disabled={loading}
                     >
                         {loading ? 'Updating...' : 'Update'}
                     </button>

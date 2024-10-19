@@ -17,10 +17,11 @@ import initialRateSlice from "../pages/admin/initial_rate/redux/initial-rate-sta
 import finalRateSlice from "../pages/admin/final_rate/redux/final-rate-slice";
 import preEmploymentFilesSlice from "../pages/pre-employment/redux/pre-employment-files-slice";
 import departmentSlice from "../pages/admin/sourcing/department/redux/department-slice";
-import  appSlice from "../pages/redux/app-slice";
+import appSlice from "../pages/redux/app-slice";
+import accountSlice from "../pages/admin/employee_relation/employee_section/redux/account-slice";
 const store = configureStore({
     reducer: {
-        app:appSlice,
+        app: appSlice,
         dashboard: dashboardSlice,
         job_positions: jobTitleSlice,
         erf_records: erfRecordSlice,
@@ -38,7 +39,8 @@ const store = configureStore({
         initial_rate: initialRateSlice,
         final_rate: finalRateSlice,
         preemploymentfiles: preEmploymentFilesSlice,
-        departments: departmentSlice
+        departments: departmentSlice,
+        accounts: accountSlice
     },
 });
 

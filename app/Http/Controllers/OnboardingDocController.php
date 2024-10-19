@@ -57,7 +57,7 @@ class OnboardingDocController extends Controller
     {
         $res = OnboardingDoc::where('id', $id)->first();
         $res->update([
-            'doc_content' => $request->form['doc_content']
+            'doc_content' => $request->doc_content
         ]);
         return response()->json([
             'data' => 'success'

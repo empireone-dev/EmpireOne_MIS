@@ -17,29 +17,25 @@ import { setApplicantForm } from '../../../recruitment/applicants/applicant_reco
 import { get_applicant_thunk, store_applicant_thunk } from '../../../recruitment/applicants/applicant_records/redux/applicant-thunk';
 import Input from '@/app/pages/_components/input';
 import Select from '@/app/pages/_components/select';
+import { store_employee_thunk } from '../redux/employee-section-thunk';
 
-export default function AddExistingEmployeeSection({data}) {
+export default function AddExistingEmployeeSection({ data }) {
     const [open, setOpen] = useState(false);
+    const { job_positions } = useSelector((state) => state.job_positions);
+    const { departments } = useSelector((state) => state.departments);
+    const { accounts } = useSelector((state) => state.accounts);
+    const { users } = useSelector((state) => state.app);
+
+
+    console.log('users', users)
+
     const [applicationCount, setApplicationCount] = useState(0);
     const { applicantForm } = useSelector((state) => state.applicants);
     const [newProvince, setNewProvince] = useState([])
     const [newCity, setNewCity] = useState([])
     const [newBarangay, setNewBarangay] = useState([])
-    console.log("applicants", applicantForm);
-    const dispatch = useDispatch();
-    const closeModal = () => {
-        setOpen(false);
-    };
-    // function generateUniqueAppId() {
-    //     const today = new Date();
-    //     const year = today.getFullYear().toString().slice(-2);
-    //     const month = (today.getMonth() + 1).toString().padStart(2, '0');
-    //     const day = today.getDate().toString().padStart(2, '0');
-    //     const datePart = `${year}${month}${day}`;
 
-    //     const seq = (applicationCount + 1).toString().padStart(2, '0');
-    //     return `${datePart}${seq}`;
-    // }
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const fetchApplicationCount = async () => {
@@ -86,19 +82,17 @@ export default function AddExistingEmployeeSection({data}) {
 
     function submitApplicant(e) {
         e.preventDefault();
-        // const uniqueAppId = generateUniqueAppId();
+        const uniqueAppId = applicantForm.uniqueAppId;
         const dob = calculateAge(applicantForm.dob ?? new Date())
         dispatch(
             setApplicantForm({
                 ...applicantForm,
-                uniqueAppId: uniqueAppId,
                 age: dob,
-                status: 'Pending',
                 submitted: moment().format('YYYY-MM-DD'),
                 app_id: uniqueAppId
             })
         );
-        store.dispatch(store_applicant_thunk({ ...applicantForm, uniqueAppId }));
+        store.dispatch(store_employee_thunk({ ...applicantForm, uniqueAppId }));
         store.dispatch(get_applicant_thunk())
         // setOpen(false);
         // closeModal();
@@ -199,9 +193,9 @@ export default function AddExistingEmployeeSection({data}) {
                     <div className="mb-4">
                         <Input
                             onChange={(event) => data_handler(event)}
-                            value={applicantForm.emp_id ?? ""}
+                            value={applicantForm.uniqueAppId ?? ""}
                             required="true"
-                            name="emp_id"
+                            name="uniqueAppId"
                             label="Employee No."
                             type="text"
                         />
@@ -392,39 +386,48 @@ export default function AddExistingEmployeeSection({data}) {
                             <div className='flex flex-1 gap-3'>
                                 <select
                                     onChange={(event) => data_handler(event)}
-                                    name='suffix'
+                                    name='position'
                                     className="border p-2 rounded  w-full">
                                     <option disabled selected>Job Position</option>
-                                    <option> Sr.</option>
-                                    <option> Jr.</option>
-                                    <option> II</option>
-                                    <option> III</option>
-                                    <option> IV</option>
-                                    <option> V</option>
+                                    {
+                                        job_positions
+                                            .filter(res => res.site === "San Carlos")
+                                            .map((res, i) => (
+                                                <option value={res.jPosition} key={i}>
+                                                    {res.jPosition}
+                                                </option>
+                                            ))
+                                    }
                                 </select>
                                 <select
                                     onChange={(event) => data_handler(event)}
-                                    name='suffix'
+                                    name='dept'
                                     className="border p-2 rounded  w-full">
                                     <option disabled selected>Department</option>
-                                    <option> Sr.</option>
-                                    <option> Jr.</option>
-                                    <option> II</option>
-                                    <option> III</option>
-                                    <option> IV</option>
-                                    <option> V</option>
+                                    {
+                                        departments
+                                            .filter(res => res.site === "San Carlos")
+                                            .map((res, i) => (
+                                                <option value={res.dept} key={i}>
+                                                    {res.dept}
+                                                </option>
+                                            ))
+                                    }
                                 </select>
                                 <select
                                     onChange={(event) => data_handler(event)}
-                                    name='suffix'
+                                    name='account'
                                     className="border p-2 rounded  w-full">
                                     <option disabled selected>Account (If Applicable)</option>
-                                    <option> Sr.</option>
-                                    <option> Jr.</option>
-                                    <option> II</option>
-                                    <option> III</option>
-                                    <option> IV</option>
-                                    <option> V</option>
+                                    {
+                                        accounts
+                                            // .filter(res => res.site === "San Carlos")
+                                            .map((res, i) => (
+                                                <option value={res.acc} key={i}>
+                                                    {res.acc}
+                                                </option>
+                                            ))
+                                    }
                                 </select>
                             </div>
                         </div>
@@ -434,15 +437,23 @@ export default function AddExistingEmployeeSection({data}) {
                             <div className='flex flex-1 gap-3'>
                                 <select
                                     onChange={(event) => data_handler(event)}
-                                    name='suffix'
+                                    // name='sup_id'
+                                    // value={applicantForm.sup_id}
                                     className="border p-2 rounded  w-full">
                                     <option disabled selected>Supervisor</option>
-                                    <option> Sr.</option>
-                                    <option> Jr.</option>
-                                    <option> II</option>
-                                    <option> III</option>
-                                    <option> IV</option>
-                                    <option> V</option>
+                                    {
+                                        users
+                                            .filter(
+                                                (res) =>
+                                                    res.site === "San Carlos" &&
+                                                    ["Manager", "Account Manager", "Supervisor", "Team Leader", "Director", "CEO"].includes(res.position)
+                                            )
+                                            .map((res) => (
+                                                <option value={res.id} key={res.id}>
+                                                    {res.employee_fname} {res.employee_lname}
+                                                </option>
+                                            ))
+                                    }
                                 </select>
                                 <Input
                                     onChange={(event) => data_handler(event)}
@@ -453,7 +464,7 @@ export default function AddExistingEmployeeSection({data}) {
                                 />
                                 <select
                                     onChange={(event) => data_handler(event)}
-                                    name='suffix'
+                                    name='status'
                                     className="border p-2 rounded  w-full">
                                     <option disabled selected>Status</option>
                                     <option> Probationary</option>

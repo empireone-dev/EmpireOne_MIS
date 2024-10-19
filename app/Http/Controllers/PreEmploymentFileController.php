@@ -52,6 +52,7 @@ class PreEmploymentFileController extends Controller
             'data' => 'No file uploaded'
         ], 400);
     }
+    
     public function reupload_file(Request $request)
     {
         $preempfile = PreEmploymentFile::where('id', $request->id)->first();

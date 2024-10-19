@@ -70,4 +70,8 @@ class Applicant extends Model
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
+    public function cvfile(): HasOne
+    {
+        return $this->hasOne(CVFile::class, "app_id", "app_id");
+    }
 }

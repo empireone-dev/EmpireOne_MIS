@@ -9,7 +9,7 @@ import moment from 'moment';
 // import Select from '../../_components/select';
 import { useEffect } from 'react';
 import { PlusSquareTwoTone } from '@ant-design/icons'
-import { Modal } from 'antd';
+import { message, Modal } from 'antd';
 import React, { useState } from 'react'
 import UploadResumeSection from './upload-resume-section';
 import WorkingExperienceSection from './working-experience-section';
@@ -18,6 +18,7 @@ import { get_applicant_thunk, store_applicant_thunk } from '../../../recruitment
 import Input from '@/app/pages/_components/input';
 import Select from '@/app/pages/_components/select';
 import { store_employee_thunk } from '../redux/employee-section-thunk';
+import { wait } from 'ckeditor5';
 
 export default function AddExistingEmployeeSection({ data }) {
     const [open, setOpen] = useState(false);
@@ -25,16 +26,16 @@ export default function AddExistingEmployeeSection({ data }) {
     const { departments } = useSelector((state) => state.departments);
     const { accounts } = useSelector((state) => state.accounts);
     const { users } = useSelector((state) => state.app);
-
-
-    console.log('users', users)
+    const [showWorkingExperience, setShowWorkingExperience] = useState(false);
+    const [showFirstTimeJobseeker, setShowFirstTimeJobseeker] = useState(false);
+    const [uploadedFile, setUploadedFile] = useState(null);
+    const [loading, setLoading] = useState(null);
 
     const [applicationCount, setApplicationCount] = useState(0);
     const { applicantForm } = useSelector((state) => state.applicants);
     const [newProvince, setNewProvince] = useState([])
     const [newCity, setNewCity] = useState([])
     const [newBarangay, setNewBarangay] = useState([])
-
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -43,6 +44,7 @@ export default function AddExistingEmployeeSection({ data }) {
             setApplicationCount(count);
         };
         fetchApplicationCount();
+        setLoading(false)
     }, []);
 
     function changeHandler(e) {
@@ -63,44 +65,78 @@ export default function AddExistingEmployeeSection({ data }) {
             );
         }
     }
-    function calculateAge(dob) {
-        // Parse the date of birth (YYYY-MM-DD format) into a Date object
-        const birthDate = new Date(dob);
-        const today = new Date();
+    console.log('query', applicantForm)
 
-        // Calculate the preliminary age
-        let age = today.getFullYear() - birthDate.getFullYear();
-        const monthDifference = today.getMonth() - birthDate.getMonth();
-
-        // Adjust age if the birthday hasn't occurred yet this year
-        if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-
-        return age ?? 0;
-    }
-
-    function submitApplicant(e) {
+    async function submitApplicant(e) {
         e.preventDefault();
-        const uniqueAppId = applicantForm.uniqueAppId;
-        const dob = calculateAge(applicantForm.dob ?? new Date())
-        dispatch(
-            setApplicantForm({
-                ...applicantForm,
-                age: dob,
-                submitted: moment().format('YYYY-MM-DD'),
-                app_id: uniqueAppId
-            })
-        );
-        store.dispatch(store_employee_thunk({ ...applicantForm, uniqueAppId }));
-        store.dispatch(get_applicant_thunk())
-        // setOpen(false);
-        // closeModal();
+        setLoading(true)
+        const fd = new FormData()
+        fd.append('files', uploadedFile)
+        fd.append('site', applicantForm.site)
+        fd.append('app_id', applicantForm.app_id)
+        fd.append('fname', applicantForm.fname)
+        fd.append('mname', applicantForm.mname)
+        fd.append('lname', applicantForm.lname)
+        fd.append('suffix', applicantForm.suffix)
+        fd.append('dob', applicantForm.dob)
+        fd.append('religion', applicantForm.religion)
+        fd.append('email', applicantForm.email)
+        fd.append('nationality', applicantForm.nationality)
+        fd.append('phone', applicantForm.phone)
+        fd.append('mmname', applicantForm.mmname)
+        fd.append('ffname', applicantForm.ffname)
+        fd.append('courset', applicantForm.courset)
+        fd.append('hired', applicantForm.hired)
+        fd.append('lot', applicantForm.lot)
+        fd.append('sss', applicantForm.sss)
+        fd.append('pagibig', applicantForm.pagibig)
+        fd.append('tin', applicantForm.tin)
+        fd.append('philh', applicantForm.philh)
+        fd.append('ename', applicantForm.ename)
+        fd.append('eaddress', applicantForm.eaddress)
+        fd.append('relationship', applicantForm.relationship)
+        fd.append('ephone', applicantForm.ephone)
+        fd.append('marital', applicantForm.marital)
+        fd.append('gender', applicantForm.gender)
+        fd.append('account', applicantForm.account)
+        fd.append('region', applicantForm.region)
+        fd.append('city', applicantForm.city)
+        fd.append('brgy', applicantForm.brgy)
+        fd.append('status', applicantForm.status)
+        fd.append('position', applicantForm.position)
+        fd.append('dept', applicantForm.dept)
+        fd.append('account', applicantForm.account)
+        fd.append('sup_id', applicantForm.sup_id)
+        fd.append('province', applicantForm.province)
+
+        try {
+            applicantForm.work_experience.forEach((value) => {
+                fd.append("work_experience[]", JSON.stringify({
+                    app_id: applicantForm.app_id,
+                    company: value.company,
+                    position: value.position,
+                    started_at: value.started_at,
+                    end_at: value.end_at,
+                }));
+            });
+            await dispatch(
+                setApplicantForm({
+                    ...applicantForm,
+                    submitted: moment().format('YYYY-MM-DD'),
+                    app_id: applicantForm.app_id
+                })
+            );
+            await store.dispatch(store_employee_thunk(fd));
+            await store.dispatch(get_applicant_thunk())
+            message.success('Employee Saved successfully')
+            setLoading(true)
+            setOpen(false);
+        } catch (error) {
+            message.error('Employee failed to saved')
+            setLoading(true)
+        }
     }
-    
-    const [showWorkingExperience, setShowWorkingExperience] = useState(false);
-    const [showFirstTimeJobseeker, setShowFirstTimeJobseeker] = useState(false);
-    const [uploadedFile, setUploadedFile] = useState(null);
+
 
     const handleWorkingExperienceChange = (e) => {
         setShowWorkingExperience(e.target.checked);
@@ -170,6 +206,7 @@ export default function AddExistingEmployeeSection({ data }) {
             <Modal
                 title="Existing Employee"
                 // centered
+                confirmLoading={loading}
                 open={open}
                 onOk={submitApplicant}
                 onCancel={() => setOpen(false)}
@@ -185,8 +222,8 @@ export default function AddExistingEmployeeSection({ data }) {
                                 name='site'
                                 className="border p-2 rounded w-full">
                                 <option disabled selected>Select Site</option>
-                                <option>San Carlos </option>
-                                <option>Carcar </option>
+                                <option value="San Carlos">San Carlos </option>
+                                <option value="Carcar">Carcar </option>
                             </select>
                         </div>
                     </div>
@@ -194,9 +231,9 @@ export default function AddExistingEmployeeSection({ data }) {
                     <div className="mb-4">
                         <Input
                             onChange={(event) => data_handler(event)}
-                            value={applicantForm.uniqueAppId ?? ""}
+                            value={applicantForm.app_id ?? ""}
                             required="true"
-                            name="uniqueAppId"
+                            name="app_id"
                             label="Employee No."
                             type="text"
                         />
@@ -438,8 +475,8 @@ export default function AddExistingEmployeeSection({ data }) {
                             <div className='flex flex-1 gap-3'>
                                 <select
                                     onChange={(event) => data_handler(event)}
-                                    // name='sup_id'
-                                    // value={applicantForm.sup_id}
+                                    name='sup_id'
+                                    value={applicantForm.sup_id}
                                     className="border p-2 rounded  w-full">
                                     <option disabled selected>Supervisor</option>
                                     {
@@ -646,7 +683,10 @@ export default function AddExistingEmployeeSection({ data }) {
                             />
                         </div>
                     </div>
-                    <UploadResumeSection />
+                    <UploadResumeSection
+                        files={uploadedFile}
+                        setFiles={setUploadedFile}
+                    />
                     {/* <div className="flex justify-end mt-2.5">
                                 <button
                                     type="submit" id="theme-toggle" className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">

@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
+use App\Models\CVFile;
 use App\Models\Employee;
+use App\Models\User;
 use App\Models\WorkingExperience;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 class EmployeeController extends Controller
 {
     public function index(Request $request)
@@ -40,19 +43,34 @@ class EmployeeController extends Controller
 
         $data = $request->all();
         $data['caddress'] = $request->lot . ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province;
-        $data['app_id'] = $request->uniqueAppId;
+        $data['app_id'] = $request->app_id;
         Applicant::create($data);
 
-        foreach ($request->work_experience as $key => $value) {
-            WorkingExperience::create([
-                'app_id' => $request->uniqueAppId,
-                'company' => $value['company'],
-                'end_at' => $value['end_at'],
-                'position' => $value['position'],
-                'started_at' => $value['started_at'],
-            ]);
+        if (!is_array($request->work_experience)) {
+            // If work_experience is not an array, try to decode it as JSON
+            $workExperience = json_decode($request->work_experience, true);
+        } else {
+            $workExperience = $request->work_experience;
         }
-
+        
+        if (is_array($workExperience) && count($workExperience) !== 0) {
+            foreach ($workExperience as $jsonValue) {
+                // Decode the JSON string to an associative array
+                $value = json_decode($jsonValue, true);
+                
+                // Check if decoding was successful
+                if (is_array($value)) {
+                    WorkingExperience::create([
+                        'app_id' => $value['app_id'],
+                        'company' => $value['company'],
+                        'end_at' => $value['end_at'],
+                        'position' => $value['position'],
+                        'started_at' => $value['started_at'],
+                    ]);
+                } 
+            }
+        }
+       
         // $employee = Employee::with('applicant')->get();
         Employee::create([
             'app_id' => $request->app_id,
@@ -67,6 +85,34 @@ class EmployeeController extends Controller
             'status' => $request->status,
         ]);
 
+
+        User::create([
+            'role_id' => '7',
+            'employee_id' => $request->app_id,
+            'employee_fname' => $request->fname,
+            'employee_mname' => $request->mname,
+            'employee_lname' => $request->lname,
+            'employee_suffix' => $request->suffix,
+            'department' => $request->dept,
+            'account' => $request->account,
+            'sup_id' => $request->sup_id,
+            'position' => $request->position,
+            // 'profile' => $request->profile, // Ensure this is either a URL or valid path if it's an image or file
+            'site' => $request->site,
+            // 'googlecal' => $request->googlecal,
+            'gender' => $request->gender,
+            'password' => Hash::make('Business12'), 
+        ]);
+        
+
+        if ($request->hasFile('files')) {
+            $path = $request->file('files')->store(date("Y"), 's3');
+            $url = Storage::disk('s3')->url($path);
+            CVFile::create([
+                'app_id'=>$request->app_id,
+                'file'=>$url,
+            ]);
+        }
         return response()->json([
             'data' => 'success',
         ], 200);

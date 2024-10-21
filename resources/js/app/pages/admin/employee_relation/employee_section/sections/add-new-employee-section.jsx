@@ -1,17 +1,43 @@
 import store from "@/app/store/store";
-import { PlusSquareFilled, PlusSquareTwoTone } from "@ant-design/icons";
-import { Modal } from "antd";
+import { PlusSquareTwoTone } from "@ant-design/icons";
+import { message, Modal } from "antd";
 import React, { useState } from "react";
-import { create_employee_thunk } from "../redux/employee-section-thunk";
+import { create_employee_thunk, get_employee_thunk } from "../redux/employee-section-thunk";
 import { useSelector } from "react-redux";
 
 export default function AddNewEmployeeSection({ data }) {
     const [open, setOpen] = useState(false);
-    const [form, setForm] = useState({});
+    const [loading, setLoading] = useState(false); // Added loading state
+    const { accounts } = useSelector((state) => state.accounts);
+    const { applicant } = useSelector((state) => state.applicants);
+    const { users } = useSelector((state) => state.app);
     const { hiredApplicants } = useSelector((store) => store.employees);
-    console.log("data", form);
-    function submit_handler(params) {
-        store.dispatch(create_employee_thunk(form));
+
+    const [form, setForm] = useState({
+        fname: applicant?.fname || '',
+        mname: applicant?.mname || '',
+        lname: applicant?.lname || '',
+        suffix: applicant?.suffix || '',
+    });
+
+    console.log('assasss',applicant)
+
+    async function submit_handler() {
+        try {
+            setLoading(true); // Set loading before starting the submission
+            await store.dispatch(
+                create_employee_thunk({
+                    ...form,
+                })
+            );
+            await store.dispatch(get_employee_thunk());
+            message.success("Successfully Added!");
+            setOpen(false); // Close modal on success
+        } catch (error) {
+            message.error("Failed to save Employee. Please try again.");
+        } finally {
+            setLoading(false); // Reset loading after submission
+        }
     }
 
     function select_employees(e) {
@@ -25,14 +51,14 @@ export default function AddNewEmployeeSection({ data }) {
             setForm({});
         }
     }
-    console.log("form?.jobPos?", form?.jobPos);
+
     return (
         <div className="my-2">
-            <div class="inline-flex rounded-md shadow-sm" role="group">
+            <div className="inline-flex rounded-md shadow-sm" role="group">
                 <button
                     type="button"
                     onClick={() => setOpen(true)}
-                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-transparent border border-blue-500 rounded-s-lg hover:bg-blue-500 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-500 focus:bg-blue-500 focus:text-white      gap-1"
+                    className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-transparent border border-blue-500 rounded-s-lg hover:bg-blue-500 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-500 focus:bg-blue-500 focus:text-white gap-1"
                 >
                     <PlusSquareTwoTone className="text-xl" />
                     Add New Employee
@@ -42,191 +68,159 @@ export default function AddNewEmployeeSection({ data }) {
                 title="New Employee"
                 centered
                 open={open}
-                onOk={() => submit_handler()}
+                onOk={submit_handler}
                 onCancel={() => setOpen(false)}
                 width={1000}
                 okText="Save"
                 cancelText="Cancel"
+                confirmLoading={loading}
             >
-                <form class="w-full h-full">
-                    <div class="flex flex-col -mx-3 mb-6">
-                        <div class="w-full px-3">
-                            <label
-                                class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                for="grid-text"
-                            >
+                <div className="w-full h-full">
+                    <div className="flex flex-col -mx-3 mb-6">
+                        <div className="w-full px-3">
+                            <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
                                 Employee's Name
                             </label>
                             <select
-                                onChange={(e) => select_employees(e)}
-                                class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                name=""
-                                id=""
+                                onChange={select_employees}
+                                className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                             >
-                                <option value=""></option>
-                                {hiredApplicants?.map((res, i) => {
-                                    return (
-                                        <option value={JSON.stringify(res)}>
-                                            {res.applicant.fname}{" "}
-                                            {res.applicant.lname}
-                                        </option>
-                                    );
-                                })}
+                                <option value="">Select Employee</option>
+                                {hiredApplicants?.map((res, i) => (
+                                    <option key={i} value={JSON.stringify(res)}>
+                                        {res.applicant.fname} {res.applicant.mname} {res.applicant.lname}
+                                    </option>
+                                ))}
                             </select>
                         </div>
-                        <div class="w-full px-3">
-                            <label
-                                class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                for="grid-text"
-                            >
+                        <div className="w-full px-3">
+                            <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
                                 Employee No.
                             </label>
                             <input
-                                value={form?.app_id ?? ""}
-                                class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                id="grid-text"
+                                value={form?.app_id || ""}
+                                className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 type="text"
                                 placeholder=""
                                 readOnly
                             />
                         </div>
 
-                        <div className="flex flex-1 ">
-                            <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
-                                >
-                                    job Position
+                        <div className="flex flex-1">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
+                                    Job Position
                                 </label>
                                 <input
-                                    value={form?.jobPos ?? ""}
-                                    class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-text"
+                                    value={form?.jobPos || ""}
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     type="text"
-                                    placeholder=""
                                     readOnly
                                 />
                             </div>
-                            <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
-                                >
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
                                     Department
                                 </label>
                                 <input
-                                    value={form?.department ?? ""}
-                                    class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-text"
+                                    value={form?.department || ""}
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     type="text"
-                                    placeholder=""
                                     readOnly
                                 />
                             </div>
-                            <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
-                                >
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
                                     Account <i>(If Applicable)</i>
                                 </label>
                                 <select
-                                    class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    name=""
-                                    id=""
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    value={form?.account || ""}
+                                    onChange={(e) => setForm({ ...form, account: e.target.value })}
                                 >
-                                    <option value=""></option>
+                                    <option value="">Select an Account</option>
+                                    {accounts?.map((res, i) => (
+                                        <option key={i} value={res.acc}>
+                                            {res.acc}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
 
                         <div className="flex flex-1">
-                            <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
-                                >
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
                                     Supervisor
                                 </label>
                                 <select
-                                    class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    name=""
-                                    id=""
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    value={form?.sup_id || ""}
+                                    onChange={(e) => setForm({ ...form, sup_id: e.target.value })}
                                 >
-                                    <option value=""></option>
+                                    <option value="">Select Supervisor</option>
+                                    {users
+                                        .filter((res) => res.site === "San Carlos" && ["Manager", "Supervisor", "Team Leader", "Director", "CEO"].includes(res.position))
+                                        .map((res) => (
+                                            <option key={res.id} value={res.id}>
+                                                {res.employee_fname} {res.employee_lname}
+                                            </option>
+                                        ))}
                                 </select>
                             </div>
-                            <div class="w-full px-3">
-                                <label
-                                    onChange={(e) =>
-                                        setForm({
-                                            ...form,
-                                            eogs: e.target.value,
-                                        })
-                                    }
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
-                                >
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
                                     EOGS Email
                                 </label>
                                 <input
-                                    class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-text"
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    value={form?.eogs || ""}
                                     type="email"
-                                    placeholder=""
+                                    placeholder="Input email"
+                                    onChange={(e) => setForm({ ...form, eogs: e.target.value })}
                                 />
                             </div>
                         </div>
 
                         <div className="flex flex-1">
-                            <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
-                                >
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
                                     Hired Date
                                 </label>
                                 <input
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    value={form?.hired || ""}
+                                    type="date"
                                     onChange={(e) =>
                                         setForm({
                                             ...form,
-                                            hired_date: e.target.value,
+                                            hired: e.target.value,
                                         })
                                     }
-                                    class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-text"
-                                    type="date"
                                     placeholder=""
                                 />
                             </div>
-                            <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
-                                >
+
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
                                     Status
                                 </label>
                                 <select
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    value={form?.emp_status || ""}
                                     onChange={(e) =>
                                         setForm({
                                             ...form,
-                                            status: e.target.value,
-                                        })
-                                    }
-                                    class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    name=""
-                                    id=""
+                                            emp_status: e.target.value
+                                        })}
                                 >
-                                    <option value="Probationary">
-                                        Probationary
-                                    </option>
+                                    <option value="Probationary">Probationary</option>
                                     <option value="Regular">Regular</option>
                                 </select>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </Modal>
         </div>
     );

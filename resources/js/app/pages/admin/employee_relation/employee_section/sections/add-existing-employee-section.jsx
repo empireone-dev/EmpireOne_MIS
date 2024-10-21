@@ -41,7 +41,7 @@ export default function AddExistingEmployeeSection({ data }) {
     useEffect(() => {
         const fetchApplicationCount = async () => {
             const count = 0;
-            setApplicationCount(count);
+            setApplicationCount(count); 
         };
         fetchApplicationCount();
         setLoading(false)

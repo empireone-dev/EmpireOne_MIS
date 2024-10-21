@@ -14,7 +14,7 @@ class ApplicantController extends Controller
     {
         $applicants = JobOffer::where('status', 'Hired')->with(['applicant'])->get();
         return response()->json([
-            'status' => $applicants
+            'data' => $applicants
         ], 200);
     }
 

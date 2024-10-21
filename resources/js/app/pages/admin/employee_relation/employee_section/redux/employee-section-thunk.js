@@ -2,7 +2,6 @@ import { get_employee_by_id_service, get_employee_service, store_employee_servic
 import { employeeSlice } from "./employee-section-slice";
 import { create_employee_service, get_hired_applicant_service } from "@/app/pages/services/applicant-final-service";
 import { applicantSlice } from "../../../recruitment/applicants/applicant_records/redux/applicant-slice";
-import { get_account_service } from "@/app/pages/services/account-service";
 
 export function get_employee_thunk() {
   return async function (dispatch, getState) {
@@ -23,7 +22,7 @@ export function get_employee_by_id_thunk(id) {
 export function get_hired_applicant_thunk() {
   return async function (dispatch, getState) {
     const result = (await get_hired_applicant_service()).data
-    console.log('waaa', result)
+    console.log('sss', result)
     dispatch(employeeSlice.actions.setHiredApplicants(result));
   };
 }

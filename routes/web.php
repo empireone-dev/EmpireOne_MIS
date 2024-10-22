@@ -259,8 +259,13 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     });
 
     Route::prefix('employee_relation')->group(function () {
-        Route::get('/employee_section', function () {
-            return Inertia::render('admin/employee_relation/employee_section/page');
+        Route::prefix('/employee_section')->group(function () {
+            Route::get('/', function () {
+                return Inertia::render('admin/employee_relation/employee_section/page');
+            });
+            Route::get('/update_employee/{app_id}', function () {
+                return Inertia::render('admin/employee_relation/employee_section/update_employee/page');
+            });
         });
         Route::get('/upload_memo', function () {
             return Inertia::render('admin/employee_relation/upload_memo/page');

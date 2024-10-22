@@ -2,7 +2,7 @@ import store from "@/app/store/store";
 import { PlusSquareTwoTone } from "@ant-design/icons";
 import { message, Modal } from "antd";
 import React, { useState } from "react";
-import { create_employee_thunk, get_employee_thunk } from "../redux/employee-section-thunk";
+import { get_employee_thunk, store_new_employee_thunk } from "../redux/employee-section-thunk";
 import { useSelector } from "react-redux";
 
 export default function AddNewEmployeeSection({ data }) {
@@ -11,22 +11,20 @@ export default function AddNewEmployeeSection({ data }) {
     const { accounts } = useSelector((state) => state.accounts);
     const { applicant } = useSelector((state) => state.applicants);
     const { users } = useSelector((state) => state.app);
+    const { user } = useSelector((state) => state.app);
     const { hiredApplicants } = useSelector((store) => store.employees);
 
     const [form, setForm] = useState({
-        fname: applicant?.fname || '',
-        mname: applicant?.mname || '',
-        lname: applicant?.lname || '',
-        suffix: applicant?.suffix || '',
+        site: user?.site || '',
     });
 
-    console.log('assasss',applicant)
+    // console.log('assasss', value?.applicant?.fname)
 
     async function submit_handler() {
         try {
             setLoading(true); // Set loading before starting the submission
             await store.dispatch(
-                create_employee_thunk({
+                store_new_employee_thunk({
                     ...form,
                 })
             );
@@ -46,7 +44,14 @@ export default function AddNewEmployeeSection({ data }) {
             setForm({
                 ...form,
                 ...value,
+                fname: value.applicant.fname,
+                mname: value.applicant.mname,
+                lname: value.applicant.lname,
+                suffix: value.applicant.suffix,
+                gender: value.applicant.gender,
+                site: user?.site || '',
             });
+            // console.log("Selected applicant's first name:", value.applicant.fname);
         } else {
             setForm({});
         }
@@ -78,7 +83,7 @@ export default function AddNewEmployeeSection({ data }) {
                 <div className="w-full h-full">
                     <div className="flex flex-col -mx-3 mb-6">
                         <div className="w-full px-3">
-                            <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
+                            <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                 Employee's Name
                             </label>
                             <select
@@ -94,7 +99,7 @@ export default function AddNewEmployeeSection({ data }) {
                             </select>
                         </div>
                         <div className="w-full px-3">
-                            <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
+                            <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                 Employee No.
                             </label>
                             <input
@@ -108,7 +113,7 @@ export default function AddNewEmployeeSection({ data }) {
 
                         <div className="flex flex-1">
                             <div className="w-full px-3">
-                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     Job Position
                                 </label>
                                 <input
@@ -119,7 +124,7 @@ export default function AddNewEmployeeSection({ data }) {
                                 />
                             </div>
                             <div className="w-full px-3">
-                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     Department
                                 </label>
                                 <input
@@ -130,7 +135,7 @@ export default function AddNewEmployeeSection({ data }) {
                                 />
                             </div>
                             <div className="w-full px-3">
-                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     Account <i>(If Applicable)</i>
                                 </label>
                                 <select
@@ -150,7 +155,7 @@ export default function AddNewEmployeeSection({ data }) {
 
                         <div className="flex flex-1">
                             <div className="w-full px-3">
-                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     Supervisor
                                 </label>
                                 <select
@@ -169,7 +174,7 @@ export default function AddNewEmployeeSection({ data }) {
                                 </select>
                             </div>
                             <div className="w-full px-3">
-                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     EOGS Email
                                 </label>
                                 <input
@@ -184,7 +189,7 @@ export default function AddNewEmployeeSection({ data }) {
 
                         <div className="flex flex-1">
                             <div className="w-full px-3">
-                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     Hired Date
                                 </label>
                                 <input
@@ -202,7 +207,7 @@ export default function AddNewEmployeeSection({ data }) {
                             </div>
 
                             <div className="w-full px-3">
-                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="grid-text">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     Status
                                 </label>
                                 <select
@@ -214,6 +219,7 @@ export default function AddNewEmployeeSection({ data }) {
                                             emp_status: e.target.value
                                         })}
                                 >
+                                    <option selected>Select Employee Status</option>
                                     <option value="Probationary">Probationary</option>
                                     <option value="Regular">Regular</option>
                                 </select>

@@ -14,3 +14,8 @@ export async function store_employee_service(fd) {
     const res = await axios.post('/api/employee', fd)
     return res.data
 }
+
+export async function store_new_employee_service(data) {
+    const res = await axios.post('/api/store_new_employee', data)
+    return res.data
+}

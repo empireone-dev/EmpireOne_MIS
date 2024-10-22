@@ -46,7 +46,7 @@ export default function DepartmentUpdateSection({ data }) {
         setForm({
             dept: data?.dept || "",
             depthead: data?.user?.id || "",
-        }); // Reset form to initial data on cancel
+        }); 
     };
 
     return (

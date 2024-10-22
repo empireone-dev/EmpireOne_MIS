@@ -26,6 +26,7 @@ import { KeyIcon } from "@heroicons/react/24/outline";
 import store from "@/app/store/store";
 import { useSelector } from "react-redux";
 import { get_user_thunk, get_users_thunk } from "../redux/app-thunk";
+import UpdateProfile from "../_components/update-profile";
 const { Header, Sider, Content } = Layout;
 const AdminLayout = ({ children }) => {
     const { url } = usePage();
@@ -387,9 +388,8 @@ const AdminLayout = ({ children }) => {
                                 <div
                                     ref={dropdownRef}
                                     id="dropdown"
-                                    className={`z-10 ${
-                                        isOpen ? "block" : "hidden"
-                                    } absolute w-auto p-3 px-5 bg-white rounded-lg shadow-lg  mt-4`}
+                                    className={`z-10 ${isOpen ? "block" : "hidden"
+                                        } absolute w-auto p-3 px-5 bg-white rounded-lg shadow-lg  mt-4`}
                                 >
                                     <h6 className="mb-3 text-sm font-medium ">
                                         Account Controls
@@ -399,7 +399,8 @@ const AdminLayout = ({ children }) => {
                                         aria-labelledby="dropdownDefault"
                                     >
                                         <li class="flex items-center text-lg  px-2">
-                                            <button
+                                            <UpdateProfile user = {user} />
+                                            {/* <button
                                                 onClick={() => {
                                                     setUpdateProfileModalOpen(
                                                         true
@@ -411,7 +412,7 @@ const AdminLayout = ({ children }) => {
                                                     <UserOutlined className="text-lg mr-2" />
                                                     Update Profile
                                                 </h6>
-                                            </button>
+                                            </button> */}
                                         </li>
                                         <li class="flex items-center text-lg  px-2">
                                             <button

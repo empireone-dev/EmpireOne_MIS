@@ -47,6 +47,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::put('/user/{id}', [UserController::class, 'update']);
+
 
 
 Route::post('/search_applicant', [ApplicantController::class, 'search_applicant']);
@@ -77,6 +79,8 @@ Route::get('/onboarding_doc_by_id/{id}', [OnboardingDocController::class, 'onboa
 
 Route::resource('onboarding_ack', OnboardingAckController::class);
 Route::resource('employee', EmployeeController::class);
+Route::post('/store_new_employee', [EmployeeController::class, 'store_new_employee']);
+
 Route::resource('medicine_record', MedicineRecordController::class);
 Route::resource('employee_health', EmployeeHealthController::class);
 Route::resource('employee_attrition', EmployeeAttritionController::class);

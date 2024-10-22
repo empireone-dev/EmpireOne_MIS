@@ -29,8 +29,6 @@ class EmployeeController extends Controller
                     });
             });
         }
-
-
         // Execute the query and paginate the results
         $applicants = $query->paginate(10);
 
@@ -42,99 +40,117 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $data['caddress'] = $request->lot . ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province;
+        $data['app_id'] = $request->app_id;
+        Applicant::create($data);
 
-        if (!$request->hasFile('files')) {
-            // Create Employee and User directly if no files are uploaded
-            Employee::create([
-                'app_id' => $request->app_id,
-                'emp_id' => $request->app_id,
-                'position' => $request->jobPos,
-                'dept' => $request->department,
-                'account' => $request->account,
-                'sup_id' => $request->sup_id,
-                'hired' => $request->hired,
-                // 'due' => $request->due,
-                'eogs' => $request->eogs,
-                'status' => $request->emp_status,
-            ]);
-
-
-            User::create([
-                'role_id' => '7',
-                'employee_id' => $request->app_id,
-                'employee_fname' => $request->fname,
-                'employee_mname' => $request->mname,
-                'employee_lname' => $request->lname,
-                'employee_suffix' => $request->suffix,
-                'department' => $request->department,
-                'account' => $request->account,
-                'sup_id' => $request->sup_id,
-                'position' => $request->jobPos,
-                // 'profile' => $request->profile, // Ensure this is either a URL or valid path if it's an image or file
-                'site' => $request->site,
-                // 'googlecal' => $request->googlecal,
-                'gender' => $request->gender,
-                'password' => Hash::make('Business12'),
-            ]);
-
-            return response()->json(['data' => 'success'], 200);
+        if (!is_array($request->work_experience)) {
+            // If work_experience is not an array, try to decode it as JSON
+            $workExperience = json_decode($request->work_experience, true);
         } else {
-            $data = $request->all();
-            $data['caddress'] = $request->lot . ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province;
-            $data['app_id'] = $request->app_id;
-            Applicant::create($data);
+            $workExperience = $request->work_experience;
+        }
 
-            $workExperience = is_array($request->work_experience) ? $request->work_experience : json_decode($request->work_experience, true);
+        if (is_array($workExperience) && count($workExperience) !== 0) {
+            foreach ($workExperience as $jsonValue) {
+                // Decode the JSON string to an associative array
+                $value = json_decode($jsonValue, true);
 
-            if (is_array($workExperience)) {
-                foreach ($workExperience as $jsonValue) {
-                    $value = json_decode($jsonValue, true);
-                    if (is_array($value)) {
-                        WorkingExperience::create($value);
-                    }
+                // Check if decoding was successful
+                if (is_array($value)) {
+                    WorkingExperience::create([
+                        'app_id' => $value['app_id'],
+                        'company' => $value['company'],
+                        'end_at' => $value['end_at'],
+                        'position' => $value['position'],
+                        'started_at' => $value['started_at'],
+                    ]);
                 }
             }
-
-            Employee::create([
-                'app_id' => $request->app_id,
-                'emp_id' => $request->app_id,
-                'position' => $request->position,
-                'dept' => $request->dept,
-                'account' => $request->account,
-                'sup_id' => $request->sup_id,
-                'hired' => $request->hired,
-                // 'due' => $request->due,
-                'eogs' => $request->email,
-                'status' => $request->status,
-            ]);
-
-
-            User::create([
-                'role_id' => '7',
-                'employee_id' => $request->app_id,
-                'employee_fname' => $request->fname,
-                'employee_mname' => $request->mname,
-                'employee_lname' => $request->lname,
-                'employee_suffix' => $request->suffix,
-                'department' => $request->dept,
-                'account' => $request->account,
-                'sup_id' => $request->sup_id,
-                'position' => $request->position,
-                // 'profile' => $request->profile, // Ensure this is either a URL or valid path if it's an image or file
-                'site' => $request->site,
-                // 'googlecal' => $request->googlecal,
-                'gender' => $request->gender,
-                'password' => Hash::make('Business12'),
-            ]);
-
-            if ($request->hasFile('files')) {
-                $path = $request->file('files')->store(date("Y"), 's3');
-                $url = Storage::disk('s3')->url($path);
-                CVFile::create(['app_id' => $data['app_id'], 'file' => $url]);
-            }
-
-            return response()->json(['data' => 'success'], 200);
         }
+        // $employee = Employee::with('applicant')->get();
+        Employee::create([
+            'app_id' => $request->app_id,
+            'emp_id' => $request->app_id,
+            'position' => $request->position,
+            'dept' => $request->dept,
+            'account' => $request->account,
+            'sup_id' => $request->sup_id,
+            'hired' => $request->hired,
+            // 'due' => $request->due,
+            'eogs' => $request->email,
+            'status' => $request->status,
+        ]);
+
+        User::create([
+            'role_id' => '7',
+            'employee_id' => $request->app_id,
+            'employee_fname' => $request->fname,
+            'employee_mname' => $request->mname,
+            'employee_lname' => $request->lname,
+            'employee_suffix' => $request->suffix,
+            'department' => $request->dept,
+            'account' => $request->account,
+            'sup_id' => $request->sup_id,
+            'position' => $request->position,
+            // 'profile' => $request->profile, // Ensure this is either a URL or valid path if it's an image or file
+            'site' => $request->site,
+            // 'googlecal' => $request->googlecal,
+            'gender' => $request->gender,
+            'password' => Hash::make('Business12'),
+        ]);
+
+        if ($request->hasFile('files')) {
+            $path = $request->file('files')->store(date("Y"), 's3');
+            $url = Storage::disk('s3')->url($path);
+            CVFile::create([
+                'app_id' => $request->app_id,
+                'file' => $url,
+            ]);
+        }
+        return response()->json([
+            'data' => 'success',
+        ], 200);
+    }
+
+
+    public function store_new_employee(Request $request)
+    {
+        // $employee = Employee::with('applicant')->get();
+        Employee::create([
+            'app_id' => $request->app_id,
+            'emp_id' => $request->app_id,
+            'position' => $request->jobPos,
+            'dept' => $request->department,
+            'account' => $request->account,
+            'sup_id' => $request->sup_id,
+            'hired' => $request->hired,
+            // 'due' => $request->due,
+            'eogs' => $request->eogs,
+            'status' => $request->emp_status,
+        ]);
+
+        User::create([
+            'role_id' => '7',
+            'employee_id' => $request->app_id,
+            'employee_fname' => $request->fname,
+            'employee_mname' => $request->mname,
+            'employee_lname' => $request->lname,
+            'employee_suffix' => $request->suffix,
+            'department' => $request->department,
+            'account' => $request->account,
+            'sup_id' => $request->sup_id,
+            'position' => $request->jobPos,
+            // 'profile' => $request->profile, // Ensure this is either a URL or valid path if it's an image or file
+            'site' => $request->site,
+            // 'googlecal' => $request->googlecal,
+            'gender' => $request->gender,
+            'password' => Hash::make('Business12'),
+        ]);
+
+        return response()->json([
+            'data' => 'success',
+        ], 200);
     }
 
 
@@ -145,4 +161,7 @@ class EmployeeController extends Controller
             'data' => $employee
         ], 200);
     }
+
+
+    
 }

@@ -70,4 +70,22 @@ class ApplicantController extends Controller
             'status' => $applicant,
         ], 200);
     }
+
+
+    public function update(Request $request, $id)
+    {
+        $applicant = Applicant::find($id);
+
+        if (!$applicant) {
+            return response()->json([
+                'message' => 'Department not found.',
+            ], 404);
+        }
+
+        $applicant->update($request->all());
+
+        return response()->json([
+            'data' => 'success'
+        ], 200);
+    }
 }

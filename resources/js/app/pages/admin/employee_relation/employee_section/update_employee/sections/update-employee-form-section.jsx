@@ -211,7 +211,7 @@ export default function UpdateEmployeeFormSection() {
                 <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-6">Government ID Information</h1>
                 <div className='flex flex-1 gap-4 mb-4'>
                     <div className="w-full">
-                        <label htmlFor=""><b>SSS No.</b></label>
+                        <label htmlFor=""><b>SSS No.</b></label> 
                         <input type="text" value={applicant?.sss} className="border p-2 rounded w-full " />
                     </div>
                     <div className="w-full">

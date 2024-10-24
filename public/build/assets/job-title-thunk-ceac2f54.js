@@ -1,1 +1,0 @@
-import{c as s,H as i}from"./app-bafafda5.js";async function n(){return(await s.get("/api/job_position")).data}function c(){return async function(t,a){const o=(await n()).data;console.log("result",o),t(i.actions.setJobPositions(o))}}export{c as g};

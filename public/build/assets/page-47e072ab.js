@@ -1,1 +1,0 @@
-import{j as r}from"./app-bafafda5.js";import o from"./change-password-form-section-afbb77de.js";import"./design-d95f84ac.js";function a(){return r.jsx("div",{children:r.jsx(o,{})})}export{a as default};

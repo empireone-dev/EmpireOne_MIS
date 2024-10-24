@@ -1,5 +1,5 @@
 import React from 'react';
-import videoBackground from '../../../../../../../../HRIS/public/images/design.mp4';
+// import videoBackground from '../../../../../../../../HRIS/public/images/design.mp4';
 import { useForm, usePage } from '@inertiajs/react';
 import { useEffect } from 'react';
 import { KeyIcon, LockClosedIcon } from '@heroicons/react/20/solid';
@@ -29,10 +29,10 @@ export default function ChangePasswordFormSection({ status, canResetPassword }) 
 
     return (
         <div className="relative w-screen h-screen">
-            <video autoPlay loop muted className="absolute inset-0 w-full h-full object-cover">
+            {/* <video autoPlay loop muted className="absolute inset-0 w-full h-full object-cover">
                 <source src={videoBackground} type="video/mp4" />
                 Your browser does not support the video tag.
-            </video>
+            </video> */}
             <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative z-10">
                     <form

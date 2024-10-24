@@ -15,6 +15,7 @@ use App\Http\Controllers\ERFJaController;
 use App\Http\Controllers\ERFJdController;
 use App\Http\Controllers\FinalRateController;
 use App\Http\Controllers\GuideQuestionController;
+use App\Http\Controllers\IncidentReportController;
 use App\Http\Controllers\InitialRateController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\JobPositionController;
@@ -64,6 +65,10 @@ Route::get('/outsourcing_erf_by_id/{erf_id}', [OutSourcingErfController::class, 
 
 Route::resource('/ERFJa', ERFJaController::class);
 Route::resource('/ERFJd', ERFJdController::class);
+
+
+Route::resource('/incident_report', IncidentReportController::class);
+
 
 
 Route::resource('/dashboard', DashboardController::class);

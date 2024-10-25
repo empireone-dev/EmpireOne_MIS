@@ -13,6 +13,7 @@ import moment from 'moment';
 import Input from '../../_components/input';
 import Select from '../../_components/select';
 import { useEffect } from 'react';
+import { message } from 'antd';
 
 export default function ApplicationFormSection() {
   const [open, setOpen] = useState(false);
@@ -21,6 +22,7 @@ export default function ApplicationFormSection() {
   const [newProvince, setNewProvince] = useState([])
   const [newCity, setNewCity] = useState([])
   const [newBarangay, setNewBarangay] = useState([])
+  const [error, setError] = useState({})
   console.log("applicants", applicantForm);
   const dispatch = useDispatch();
   const closeModal = () => {
@@ -67,38 +69,40 @@ export default function ApplicationFormSection() {
     // Parse the date of birth (YYYY-MM-DD format) into a Date object
     const birthDate = new Date(dob);
     const today = new Date();
-
     // Calculate the preliminary age
     let age = today.getFullYear() - birthDate.getFullYear();
     const monthDifference = today.getMonth() - birthDate.getMonth();
-
     // Adjust age if the birthday hasn't occurred yet this year
     if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
       age--;
     }
-
     return age ?? 0;
   }
 
-  function submitApplicant(e) {
+  async function submitApplicant(e) {
     e.preventDefault();
     const uniqueAppId = generateUniqueAppId();
     const dob = calculateAge(applicantForm.dob ?? new Date())
-    dispatch(
-      setApplicantForm({
-        ...applicantForm,
-        uniqueAppId: uniqueAppId,
-        age: dob,
-        status: 'Pending',
-        submitted: moment().format('YYYY-MM-DD'),
-        app_id: uniqueAppId
-      })
-    );
-    store.dispatch(store_applicant_thunk({ ...applicantForm, uniqueAppId }));
-    store.dispatch(get_applicant_thunk())
+    const result = await store.dispatch(store_applicant_thunk({
+      ...applicantForm,
+      uniqueAppId: uniqueAppId,
+      age: dob,
+      status: 'Pending',
+      submitted: moment().format('YYYY-MM-DD'),
+      app_id: uniqueAppId,
+    }));
+    message.success('Application has been submitted');
+    if (result.status == 200) {
+      store.dispatch(get_applicant_thunk())
+    } else {
+      setError(result.response.data.errors);
+      message.error('Failed to submit Application');
+      console.log('resultsss', result.response)
+    }
     // setOpen(false);
     // closeModal();
   }
+
   console.log("province", province)
   const [showWorkingExperience, setShowWorkingExperience] = useState(false);
   const [showFirstTimeJobseeker, setShowFirstTimeJobseeker] = useState(false);
@@ -171,29 +175,53 @@ export default function ApplicationFormSection() {
             <div className='flex text-2xl items-center justify-center'>
               <h1><b>ONLINE APPLICATION FORM</b></h1>
             </div>
-            <form className='border rounded-lg p-3.5' onSubmit={submitApplicant}>
-              <h1 className="text-xl font-semibold mb-3 text-gray-900 ">Site Information</h1>
+            <form
+              className="border rounded-lg p-3.5"
+              onSubmit={submitApplicant}
+            >
+              {/* <div className="w-1/4">
+                        <Input
+                            onChange={(event) => data_handler(event)}
+                            // value={applicantForm.app_id ?? ""}
+                            value={generateUniqueAppId()}
+                            name="app_id"
+                            label="Application ID"
+                            type="text"
+                            readOnly
+                        />
+                    </div> */}
+              <h1 className="text-xl font-semibold mb-3 mt-4 text-gray-900 ">
+                Site Information
+              </h1>
               <div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                   <select
                     onChange={(event) => data_handler(event)}
-                    name='site'
-                    className="border p-2 rounded w-full">
-                    <option disabled selected>Select Site</option>
+                    name="site"
+                    className="border p-2 rounded w-full"
+                  >
+                    <option disabled selected>
+                      Select Site
+                    </option>
                     <option>San Carlos </option>
                     <option>Carcar </option>
                   </select>
                 </div>
               </div>
-              <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-6 text-center">Personal Information</h1>
-              <div className='flex flex-1 gap-4'>
-                <div className='flex flex-col w-full mb-4'>
-                  <label htmlFor=""><b>Full Name</b></label>
-                  <div className='flex flex-1 gap-3'>
+
+              <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-6">
+                Personal Information
+              </h1>
+              <div className="flex flex-1 gap-4">
+                <div className="flex flex-col w-full mb-4">
+                  <div className="flex flex-1 gap-3">
+                    {/* <input name='fname' type="text" placeholder="First name" className="border p-2 rounded w-full" />
+                                <input name='mname' type="text" placeholder="Middle name" className="border p-2 rounded w-full" />
+                                <input name='lname' type="text" placeholder="Last name" className="border p-2 rounded w-full" /> */}
                     <Input
                       onChange={(event) => data_handler(event)}
                       value={applicantForm.fname ?? ""}
-                      required="true"
+                      required={error?.fname ? true : false}
                       name="fname"
                       label="First Name"
                       type="text"
@@ -201,7 +229,7 @@ export default function ApplicationFormSection() {
                     <Input
                       onChange={(event) => data_handler(event)}
                       value={applicantForm.mname ?? ""}
-                      required="true"
+                      required={error?.mname ? true : false}
                       name="mname"
                       label="Middle Name"
                       type="text"
@@ -209,16 +237,19 @@ export default function ApplicationFormSection() {
                     <Input
                       onChange={(event) => data_handler(event)}
                       value={applicantForm.lname ?? ""}
-                      required="true"
+                      required={error?.lname ? true : false}
                       name="lname"
                       label="Last Name"
                       type="text"
                     />
                     <select
                       onChange={(event) => data_handler(event)}
-                      name='suffix'
-                      className="border p-2 rounded  w-1/5">
-                      <option disabled selected>Suffix</option>
+                      name="suffix"
+                      className="border p-2 rounded  w-1/5"
+                    >
+                      <option disabled selected>
+                        Suffix
+                      </option>
                       <option> Sr.</option>
                       <option> Jr.</option>
                       <option> II</option>
@@ -229,26 +260,35 @@ export default function ApplicationFormSection() {
                   </div>
                 </div>
               </div>
-              <div className='flex flex-1 gap-4'>
-                <div className='flex w-full'>
+              <div className="flex flex-1 gap-4">
+                <div className="flex w-full">
                   <div className="flex flex-col gap-4 mb-4 w-full">
-                    <div className='flex flex-col w-full'>
+                    <div className="flex flex-col w-full">
                       <select
                         onChange={(event) => data_handler(event)}
-                        name='gender'
-                        className="border p-2 rounded w-full">
-                        <option disabled selected>Gender</option>
+                        // value={applicantForm.gender ?? ""}
+                        name="gender"
+                        className="border p-2 rounded w-full"
+                      >
+                        <option className="" disabled selected>&nbsp; Gender</option>
                         <option> Male</option>
                         <option> Female</option>
                       </select>
+                      {
+                        error?.gender && <span className="text-red-500 text-sm mt-1">
+                          This field is required.
+                        </span>
+                      }
+
                     </div>
-                    <div className='flex flex-col w-full'>
+
+                    <div className="flex flex-col w-full">
                       <Input
                         onChange={(event) =>
                           data_handler(event)
                         }
                         value={applicantForm.dob ?? ""}
-                        required="true"
+                        required={error?.dob ? true : false}
                         name="dob"
                         label="Date of Birth"
                         type="date"
@@ -258,7 +298,7 @@ export default function ApplicationFormSection() {
                       <Input
                         onChange={(event) => data_handler(event)}
                         value={applicantForm.email ?? ""}
-                        required="true"
+                        required={error?.email ? true : false}
                         name="email"
                         label="Email"
                         type="email"
@@ -268,7 +308,7 @@ export default function ApplicationFormSection() {
                       <Input
                         onChange={(event) => data_handler(event)}
                         value={applicantForm.phone ?? ""}
-                        required="true"
+                        required={error?.phone ? true : false}
                         name="phone"
                         label="Phone Number"
                         type="number"
@@ -277,39 +317,45 @@ export default function ApplicationFormSection() {
                   </div>
                 </div>
 
-                <div className='flex w-full'>
+                <div className="flex w-full">
                   <div className="flex flex-col gap-4 mb-4 w-full">
-                    <div className='flex flex-col w-full'>
+                    <div className="flex flex-col w-full">
                       <select
                         onChange={(event) => data_handler(event)}
-                        name='marital'
-                        className="border p-2 rounded w-full">
-                        <option disabled selected>Marital Status</option>
+                        name="marital"
+                        className="border p-2 rounded w-full"
+                      >
+                        <option disabled selected>&nbsp; Marital Status</option>
                         <option> Single</option>
                         <option> Married</option>
                         <option> Widowed</option>
                         <option> Divorced</option>
                       </select>
+                      {
+                        error?.marital && <span className="text-red-500 text-sm mt-1">
+                          This field is required.
+                        </span>
+                      }
                     </div>
-                    <div className='flex flex-col w-full'>
+                    <div className="flex flex-col w-full">
                       <Input
                         onChange={(event) =>
                           data_handler(event)
                         }
                         value={applicantForm.religion ?? ""}
-                        required="true"
+                        required={error?.religion ? true : false}
                         name="religion"
                         label="Religion"
                         type="text"
                       />
                     </div>
-                    <div className='flex flex-col w-full'>
+                    <div className="flex flex-col w-full">
                       <Input
                         onChange={(event) =>
                           data_handler(event)
                         }
                         value={applicantForm.nationality ?? ""}
-                        required="true"
+                        required={error?.nationality ? true : false}
                         name="nationality"
                         label="Nationality"
                         type="text"
@@ -317,13 +363,11 @@ export default function ApplicationFormSection() {
                     </div>
                   </div>
                 </div>
-
               </div>
               <div className="mb-4">
                 <Input
                   onChange={(event) => data_handler(event)}
                   value={applicantForm.mmname ?? ""}
-                  required="true"
                   name="mmname"
                   label="Mothers maiden name"
                   type="text"
@@ -333,19 +377,19 @@ export default function ApplicationFormSection() {
                 <Input
                   onChange={(event) => data_handler(event)}
                   value={applicantForm.ffname ?? ""}
-                  required="true"
                   name="ffname"
                   label="Fathers fullname"
                   type="text"
                 />
               </div>
-              <div className='flex flex-1 gap-4 mb-4'>
+              <div className="flex flex-1 gap-4 mb-4">
                 <div className="w-full">
                   <select
+                    name="educ"
+                    className="border p-2.5 rounded w-full"
                     onChange={(event) => data_handler(event)}
-                    name='educ'
-                    className="border p-2 rounded w-full">
-                    <option disabled selected>Select Educational Attainment</option>
+                  >
+                    <option disabled selected>&nbsp; Highest Educational Attainment</option>
                     <option> Elementary Undergraduate</option>
                     <option> Elementary Graduate</option>
                     <option> Highschool/K-12 Undergraduate</option>
@@ -361,16 +405,17 @@ export default function ApplicationFormSection() {
                   <Input
                     onChange={(event) => data_handler(event)}
                     value={applicantForm.courset ?? ""}
-                    required="true"
                     name="courset"
                     label="Course taken"
                     type="text"
                   />
                 </div>
               </div>
-              <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Address Information</h1>
+              <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">
+                Address Information
+              </h1>
               <div className="flex flex-1 gap-4 mb-4 w-full">
-                <div className='flex flex-col w-full'>
+                <div className="flex flex-col w-full">
                   <Select
                     onChange={(event) => data_handler(event)}
                     // value={applicantForm.region ?? ""}
@@ -378,12 +423,11 @@ export default function ApplicationFormSection() {
                       label: res.region_name,
                       value: JSON.stringify({ name: res.region_name, region_code: res.region_code }),
                     }))}
-                    required="true"
                     name="region"
                     label="Region"
                   />
                 </div>
-                <div className='flex flex-col w-full'>
+                <div className="flex flex-col w-full">
                   <Select
                     onChange={(event) => data_handler(event)}
                     // value={applicantForm.province ?? ""}
@@ -391,12 +435,11 @@ export default function ApplicationFormSection() {
                       label: res.province_name,
                       value: JSON.stringify({ name: res.province_name, province_code: res.province_code }),
                     }))}
-                    required="true"
                     name="province"
                     label="Province"
                   />
                 </div>
-                <div className='flex flex-col w-full'>
+                <div className="flex flex-col w-full">
                   <Select
                     onChange={(event) => data_handler(event)}
                     // value={applicantForm.city ?? ""}
@@ -404,14 +447,13 @@ export default function ApplicationFormSection() {
                       label: res.city_name,
                       value: JSON.stringify({ name: res.city_name, city_code: res.city_code }),
                     }))}
-                    required="true"
                     name="city"
                     label="City/Municipality"
                   />
                 </div>
               </div>
               <div className="flex flex-1 gap-4 mb-4">
-                <div className='flex flex-col  w-1/2'>
+                <div className="flex flex-col  w-1/2">
                   <Select
                     onChange={(event) => data_handler(event)}
                     // value={applicantForm.barangay ?? ""}
@@ -419,24 +461,24 @@ export default function ApplicationFormSection() {
                       label: res.brgy_name,
                       value: res.brgy_name,
                     }))}
-                    required="true"
                     name="brgy"
                     label="Barangay"
                   />
                 </div>
-                <div className='flex flex-col w-full'>
+                <div className="flex flex-col w-full">
                   <Input
                     onChange={(event) => data_handler(event)}
                     value={applicantForm.lot ?? ""}
-                    required="true"
                     name="lot"
                     label="House/Lot No., Street, Purok/Sitio"
                     type="text"
                   />
                 </div>
               </div>
-              <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Government ID Information</h1>
-              <div className='flex flex-1 gap-4 mb-4'>
+              <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">
+                Government ID Information
+              </h1>
+              <div className="flex flex-1 gap-4 mb-4">
                 <div className="w-full">
                   <Input
                     onChange={(event) => data_handler(event)}
@@ -456,7 +498,7 @@ export default function ApplicationFormSection() {
                   />
                 </div>
               </div>
-              <div className='flex flex-1 gap-4 mb-4'>
+              <div className="flex flex-1 gap-4 mb-4">
                 <div className="w-full">
                   <Input
                     onChange={(event) => data_handler(event)}
@@ -476,7 +518,7 @@ export default function ApplicationFormSection() {
                   />
                 </div>
               </div>
-              <div className="flex items-center mb-4">
+              <div className="flex items-center mb-4 mt-6">
                 <input
                   id="with-working-experience-checkbox"
                   type="checkbox"
@@ -485,7 +527,12 @@ export default function ApplicationFormSection() {
                   onChange={handleWorkingExperienceChange}
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  -gray-800 focus:ring-2  "
                 />
-                <label htmlFor="with-working-experience-checkbox" className="ms-2 text-md font-medium text-gray-900 "><b>with Working Experience</b></label>
+                <label
+                  htmlFor="with-working-experience-checkbox"
+                  className="ms-2 text-md font-medium text-gray-900 "
+                >
+                  <b>with Working Experience</b>
+                </label>
               </div>
               <div className="flex items-center mb-4">
                 <input
@@ -497,10 +544,17 @@ export default function ApplicationFormSection() {
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  -gray-800 focus:ring-2  "
                   disabled={showWorkingExperience}
                 />
-                <label htmlFor="first-time-jobseeker-checkbox" className="ms-2 text-md font-medium text-gray-900 "><b>First Time Jobseeker</b></label>
+                <label
+                  htmlFor="first-time-jobseeker-checkbox"
+                  className="ms-2 text-md font-medium text-gray-900 "
+                >
+                  <b>First Time Jobseeker</b>
+                </label>
               </div>
               {showWorkingExperience && <WorkingExperienceSection />}
-              <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Emergency Contact Information</h1>
+              <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-7">
+                Emergency Contact Information
+              </h1>
               <div className="mb-4 w-full">
                 <Input
                   onChange={(event) => data_handler(event)}
@@ -519,7 +573,7 @@ export default function ApplicationFormSection() {
                   type="text"
                 />
               </div>
-              <div className='flex flex-1 gap-4 mb-4'>
+              <div className="flex flex-1 gap-4 mb-4">
                 <div className="w-full">
                   <Input
                     onChange={(event) => data_handler(event)}
@@ -542,8 +596,9 @@ export default function ApplicationFormSection() {
               <UploadResumeSection />
               <div className="flex justify-end mt-2.5">
                 <button
-                  type="submit" id="theme-toggle" className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
-                  SUBMIT
+                  onSubmit={submitApplicant}
+                  type="submit" id="theme-toggle" className="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
+                  SUBMIT APPLICATION
                 </button>
               </div>
             </form>

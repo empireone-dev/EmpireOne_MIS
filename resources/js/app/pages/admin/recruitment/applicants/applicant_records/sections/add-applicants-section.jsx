@@ -1,7 +1,7 @@
 import UploadResumeSection from "@/app/pages/online_application/sections/upload-resume-section";
 import WorkingExperienceSection from "@/app/pages/online_application/sections/working-experience-section";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
-import { Modal } from "antd";
+import { message, Modal } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setApplicantForm } from "../redux/applicant-slice";
@@ -20,14 +20,18 @@ export default function AddApplicantsSection() {
     const [open, setOpen] = useState(false);
     const [applicationCount, setApplicationCount] = useState(0);
     const { applicantForm } = useSelector((state) => state.applicants);
+    const { user } = useSelector((state) => state.app);
     const [newProvince, setNewProvince] = useState([])
     const [newCity, setNewCity] = useState([])
     const [newBarangay, setNewBarangay] = useState([])
+    const [error, setError] = useState({})
     console.log("applicants", applicantForm);
     const dispatch = useDispatch();
     const closeModal = () => {
         setOpen(false);
     };
+
+    console.log('user', user)
     function generateUniqueAppId() {
         const today = new Date();
         const year = today.getFullYear().toString().slice(-2);
@@ -69,35 +73,40 @@ export default function AddApplicantsSection() {
         // Parse the date of birth (YYYY-MM-DD format) into a Date object
         const birthDate = new Date(dob);
         const today = new Date();
-        
+
         // Calculate the preliminary age
         let age = today.getFullYear() - birthDate.getFullYear();
         const monthDifference = today.getMonth() - birthDate.getMonth();
-        
+
         // Adjust age if the birthday hasn't occurred yet this year
         if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
             age--;
         }
-        
-        return age??0;
+
+        return age ?? 0;
     }
-    
-    function submitApplicant(e) {
+
+    async function submitApplicant(e) {
         e.preventDefault();
         const uniqueAppId = generateUniqueAppId();
-        const dob = calculateAge(applicantForm.dob??new Date())
-        dispatch(
-            setApplicantForm({
-                ...applicantForm,
-                uniqueAppId: uniqueAppId,
-                age:dob,
-                status:'Pending',
-                submitted:moment().format('YYYY-MM-DD'),
-                app_id:uniqueAppId
-            })
-        );
-        store.dispatch(store_applicant_thunk({ ...applicantForm, uniqueAppId }));
-        store.dispatch(get_applicant_thunk())
+        const dob = calculateAge(applicantForm.dob ?? new Date())
+        const result = await store.dispatch(store_applicant_thunk({
+            ...applicantForm,
+            uniqueAppId: uniqueAppId,
+            age: dob,
+            status: 'Pending',
+            submitted: moment().format('YYYY-MM-DD'),
+            app_id: uniqueAppId,
+            site: user?.site || ""
+        }));
+
+        if (result.status == 200) {
+            store.dispatch(get_applicant_thunk())
+        } else {
+            setError(result.response.data.errors);
+            message.error('Failed to submit Application');
+            console.log('resultsss', result.response)
+        }
         // setOpen(false);
         // closeModal();
     }
@@ -117,7 +126,7 @@ export default function AddApplicantsSection() {
     };
 
     function data_handler(e) {
-        console.log('dadwa',e.target.value)
+        console.log('dadwa', e.target.value)
         if (e.target.name == 'region') {
             const region = JSON.parse(e.target.value)
             const prov = province.filter(obj => obj.region_code === region.region_code);
@@ -138,7 +147,7 @@ export default function AddApplicantsSection() {
                     [e.target.name]: province.name,
                 })
             );
-        }else if (e.target.name == 'city') {
+        } else if (e.target.name == 'city') {
             const city = JSON.parse(e.target.value)
             const brgy = barangay.filter(obj => obj.city_code === city.city_code);
             setNewBarangay(brgy)
@@ -208,7 +217,8 @@ export default function AddApplicantsSection() {
                     </h1>
                     <div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <select
+                            {/* <select
+                                onChange={(event) => data_handler(event)}
                                 name="site"
                                 className="border p-2 rounded w-full"
                             >
@@ -217,7 +227,7 @@ export default function AddApplicantsSection() {
                                 </option>
                                 <option>San Carlos </option>
                                 <option>Carcar </option>
-                            </select>
+                            </select> */}
                         </div>
                     </div>
 
@@ -233,7 +243,7 @@ export default function AddApplicantsSection() {
                                 <Input
                                     onChange={(event) => data_handler(event)}
                                     value={applicantForm.fname ?? ""}
-                                    required="true"
+                                    required={error?.fname ? true : false}
                                     name="fname"
                                     label="First Name"
                                     type="text"
@@ -241,7 +251,7 @@ export default function AddApplicantsSection() {
                                 <Input
                                     onChange={(event) => data_handler(event)}
                                     value={applicantForm.mname ?? ""}
-                                    required="true"
+                                    required={error?.mname ? true : false}
                                     name="mname"
                                     label="Middle Name"
                                     type="text"
@@ -249,7 +259,7 @@ export default function AddApplicantsSection() {
                                 <Input
                                     onChange={(event) => data_handler(event)}
                                     value={applicantForm.lname ?? ""}
-                                    required="true"
+                                    required={error?.lname ? true : false}
                                     name="lname"
                                     label="Last Name"
                                     type="text"
@@ -286,14 +296,21 @@ export default function AddApplicantsSection() {
                                         <option> Male</option>
                                         <option> Female</option>
                                     </select>
+                                    {
+                                        error?.gender && <span className="text-red-500 text-sm mt-1">
+                                            This field is required.
+                                        </span>
+                                    }
+
                                 </div>
+
                                 <div className="flex flex-col w-full">
                                     <Input
                                         onChange={(event) =>
                                             data_handler(event)
                                         }
                                         value={applicantForm.dob ?? ""}
-                                        required="true"
+                                        required={error?.dob ? true : false}
                                         name="dob"
                                         label="Date of Birth"
                                         type="date"
@@ -303,7 +320,7 @@ export default function AddApplicantsSection() {
                                     <Input
                                         onChange={(event) => data_handler(event)}
                                         value={applicantForm.email ?? ""}
-                                        required="true"
+                                        required={error?.email ? true : false}
                                         name="email"
                                         label="Email"
                                         type="email"
@@ -313,7 +330,7 @@ export default function AddApplicantsSection() {
                                     <Input
                                         onChange={(event) => data_handler(event)}
                                         value={applicantForm.phone ?? ""}
-                                        required="true"
+                                        required={error?.phone ? true : false}
                                         name="phone"
                                         label="Phone Number"
                                         type="number"
@@ -336,6 +353,11 @@ export default function AddApplicantsSection() {
                                         <option> Widowed</option>
                                         <option> Divorced</option>
                                     </select>
+                                    {
+                                        error?.marital && <span className="text-red-500 text-sm mt-1">
+                                            This field is required.
+                                        </span>
+                                    }
                                 </div>
                                 <div className="flex flex-col w-full">
                                     <Input
@@ -343,7 +365,7 @@ export default function AddApplicantsSection() {
                                             data_handler(event)
                                         }
                                         value={applicantForm.religion ?? ""}
-                                        required="true"
+                                        required={error?.religion ? true : false}
                                         name="religion"
                                         label="Religion"
                                         type="text"
@@ -355,7 +377,7 @@ export default function AddApplicantsSection() {
                                             data_handler(event)
                                         }
                                         value={applicantForm.nationality ?? ""}
-                                        required="true"
+                                        required={error?.nationality ? true : false}
                                         name="nationality"
                                         label="Nationality"
                                         type="text"
@@ -368,7 +390,6 @@ export default function AddApplicantsSection() {
                         <Input
                             onChange={(event) => data_handler(event)}
                             value={applicantForm.mmname ?? ""}
-                            required="true"
                             name="mmname"
                             label="Mothers maiden name"
                             type="text"
@@ -378,7 +399,6 @@ export default function AddApplicantsSection() {
                         <Input
                             onChange={(event) => data_handler(event)}
                             value={applicantForm.ffname ?? ""}
-                            required="true"
                             name="ffname"
                             label="Fathers fullname"
                             type="text"
@@ -407,7 +427,6 @@ export default function AddApplicantsSection() {
                             <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.courset ?? ""}
-                                required="true"
                                 name="courset"
                                 label="Course taken"
                                 type="text"
@@ -426,7 +445,6 @@ export default function AddApplicantsSection() {
                                     label: res.region_name,
                                     value: JSON.stringify({ name: res.region_name, region_code: res.region_code }),
                                 }))}
-                                required="true"
                                 name="region"
                                 label="Region"
                             />
@@ -439,7 +457,6 @@ export default function AddApplicantsSection() {
                                     label: res.province_name,
                                     value: JSON.stringify({ name: res.province_name, province_code: res.province_code }),
                                 }))}
-                                required="true"
                                 name="province"
                                 label="Province"
                             />
@@ -452,7 +469,6 @@ export default function AddApplicantsSection() {
                                     label: res.city_name,
                                     value: JSON.stringify({ name: res.city_name, city_code: res.city_code }),
                                 }))}
-                                required="true"
                                 name="city"
                                 label="City/Municipality"
                             />
@@ -467,7 +483,6 @@ export default function AddApplicantsSection() {
                                     label: res.brgy_name,
                                     value: res.brgy_name,
                                 }))}
-                                required="true"
                                 name="brgy"
                                 label="Barangay"
                             />
@@ -476,7 +491,6 @@ export default function AddApplicantsSection() {
                             <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.lot ?? ""}
-                                required="true"
                                 name="lot"
                                 label="House/Lot No., Street, Purok/Sitio"
                                 type="text"

@@ -53,13 +53,56 @@ class ApplicantController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'courset' => 'nullable',
+            'eaddress' => 'nullable',
+            'dob' => 'required',
+            'email' => 'required',
+            'ename' => 'nullable',
+            'ephone' => 'nullable',
+            'ffname' => 'nullable',
+            'fname' => 'required',
+            'gender' => 'required',
+            'lname' => 'required',
+            'lot' => 'nullable',
+            'marital' => 'required',
+            'mmname' => 'nullable',
+            'mname' => 'required', // Include this if you want it required
+            'nationality' => 'required',
+            'pagibig' => 'nullable',
+            'philh' => 'nullable',
+            'phone' => 'required',
+            'relationship' => 'nullable',
+            'religion' => 'required',
+            'sss' => 'nullable',
+            'status' => 'nullable',
+            'tin' => 'nullable',
+            'site' => 'nullable',
+            'uniqueAppId' => 'required',
+            'work_experience' => 'nullable', // If this is required too
+        ]);
+
+
+
         $data = $request->all();
         $data['caddress'] = $request->lot . ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province;
-        $data['app_id'] = $request->uniqueAppId;
-        Applicant::create($data);
+
+        $applicant = Applicant::create($data);
+        $site = ['site'];
+
+        $date = date("y-m-d");
+        $count = Applicant::whereDate('submitted', $date)->count();
+        $count_number = ($count >= 10) ? $count : '0' . ($count);
+        $date_unique = date("ymd") . $count_number;
+        $applicant->update([
+            'app_id' => $date_unique,
+            'status' => 'Pending',
+        ]);
         return response()->json([
+            'count' => $count,
+            'date' => $date,
             'status' => 'success',
-            // 'data' => $this->index()->original['data']
+            'site' => $site,
         ], 200);
     }
 

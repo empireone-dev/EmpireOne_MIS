@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
+use App\Models\CVFile;
 use App\Models\JobOffer;
 use App\Models\User;
+use App\Models\WorkingExperience;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ApplicantController extends Controller
 {
@@ -78,7 +81,7 @@ class ApplicantController extends Controller
             'status' => 'nullable',
             'tin' => 'nullable',
             'site' => 'nullable',
-            'uniqueAppId' => 'required',
+            'uniqueAppId' => 'nullable',
             'work_experience' => 'nullable', // If this is required too
         ]);
 
@@ -98,11 +101,47 @@ class ApplicantController extends Controller
             'app_id' => $date_unique,
             'status' => 'Pending',
         ]);
+
+        if (!is_array($request->work_experience)) {
+            // If work_experience is not an array, try to decode it as JSON
+            $workExperience = json_decode($request->work_experience, true);
+        } else {
+            $workExperience = $request->work_experience;
+        }
+
+        if (is_array($workExperience) && count($workExperience) !== 0) {
+            foreach ($workExperience as $jsonValue) {
+                // Decode the JSON string to an associative array
+                $value = json_decode($jsonValue, true);
+
+                // Check if decoding was successful
+                if (is_array($value)) {
+                    WorkingExperience::create([
+                        'app_id' => $date_unique,
+                        'company' => $value['company'],
+                        'end_at' => $value['end_at'],
+                        'position' => $value['position'],
+                        'started_at' => $value['started_at'],
+                    ]);
+                }
+            }
+        }
+
+        if ($request->hasFile('files')) {
+            $path = $request->file('files')->store(date("Y"), 's3');
+            $url = Storage::disk('s3')->url($path);
+            CVFile::create([
+                'app_id' => $date_unique,
+                'file' => $url,
+            ]);
+        }
+
         return response()->json([
             'count' => $count,
             'date' => $date,
             'status' => 'success',
             'site' => $site,
+            'data' => 'success',
         ], 200);
     }
 

@@ -1,4 +1,3 @@
-import UploadResumeSection from "@/app/pages/online_application/sections/upload-resume-section";
 import WorkingExperienceSection from "@/app/pages/online_application/sections/working-experience-section";
 import { UserPlusIcon } from "@heroicons/react/24/outline";
 import { message, Modal } from "antd";
@@ -15,6 +14,7 @@ import province from "@/app/address/province.json"
 import city from "@/app/address/city.json"
 import barangay from "@/app/address/barangay.json"
 import moment from "moment/moment";
+import UploadResumeSection from "@/app/pages/admin/employee_relation/employee_section/sections/upload-resume-section";
 
 export default function AddApplicantsSection() {
     const [open, setOpen] = useState(false);
@@ -32,16 +32,6 @@ export default function AddApplicantsSection() {
     };
 
     console.log('user', user)
-    function generateUniqueAppId() {
-        const today = new Date();
-        const year = today.getFullYear().toString().slice(-2);
-        const month = (today.getMonth() + 1).toString().padStart(2, '0');
-        const day = today.getDate().toString().padStart(2, '0');
-        const datePart = `${year}${month}${day}`;
-
-        const seq = (applicationCount + 1).toString().padStart(2, '0');
-        return `${datePart}${seq}`;
-    }
 
     useEffect(() => {
         const fetchApplicationCount = async () => {
@@ -88,32 +78,83 @@ export default function AddApplicantsSection() {
 
     async function submitApplicant(e) {
         e.preventDefault();
-        const uniqueAppId = generateUniqueAppId();
-        const dob = calculateAge(applicantForm.dob ?? new Date())
-        const result = await store.dispatch(store_applicant_thunk({
-            ...applicantForm,
-            uniqueAppId: uniqueAppId,
-            age: dob,
-            status: 'Pending',
-            submitted: moment().format('YYYY-MM-DD'),
-            app_id: uniqueAppId,
-            site: user?.site || ""
-        }));
+        setLoading(true);
 
-        if (result.status == 200) {
-            store.dispatch(get_applicant_thunk())
-        } else {
-            setError(result.response.data.errors);
-            message.error('Failed to submit Application');
-            console.log('resultsss', result.response)
+        const dob = calculateAge(applicantForm.dob ?? new Date());
+
+        const fd = new FormData();
+        fd.append('files', uploadedFile)
+        fd.append('site', user?.site);
+        fd.append('fname', applicantForm.fname);
+        fd.append('mname', applicantForm.mname);
+        fd.append('lname', applicantForm.lname);
+        fd.append('suffix', applicantForm.suffix);
+        fd.append('dob', applicantForm.dob);
+        fd.append('religion', applicantForm.religion);
+        fd.append('email', applicantForm.email);
+        fd.append('nationality', applicantForm.nationality);
+        fd.append('phone', applicantForm.phone);
+        fd.append('mmname', applicantForm.mmname);
+        fd.append('ffname', applicantForm.ffname);
+        fd.append('educ', applicantForm.educ);
+        fd.append('courset', applicantForm.courset);
+        fd.append('hired', applicantForm.hired);
+        fd.append('lot', applicantForm.lot);
+        fd.append('sss', applicantForm.sss);
+        fd.append('pagibig', applicantForm.pagibig);
+        fd.append('tin', applicantForm.tin);
+        fd.append('philh', applicantForm.philh);
+        fd.append('ename', applicantForm.ename);
+        fd.append('eaddress', applicantForm.eaddress);
+        fd.append('relationship', applicantForm.relationship);
+        fd.append('ephone', applicantForm.ephone);
+        fd.append('marital', applicantForm.marital);
+        fd.append('gender', applicantForm.gender);
+        fd.append('region', applicantForm.region);
+        fd.append('city', applicantForm.city);
+        fd.append('brgy', applicantForm.brgy);
+        fd.append('province', applicantForm.province);
+
+        applicantForm.work_experience.forEach((value) => {
+            fd.append("work_experience[]", JSON.stringify({
+                company: value.company,
+                position: value.position,
+                started_at: value.started_at,
+                end_at: value.end_at,
+            }));
+        });
+
+        try {
+            await store.dispatch(store_applicant_thunk(fd));
+
+            await store.dispatch(setApplicantForm({
+                ...applicantForm,
+                age: dob,
+                submitted: moment().format('YYYY-MM-DD'),
+            }));
+
+            // const result = await store.dispatch(get_applicant_thunk());
+            // if (fd.status === 200) {
+            //     // message.success('Application has been submitted successfully');
+            // } else {
+            //     setError(fd.response.data.errors);
+            //     // message.error('Failed to submit Application');
+            //     console.log('resultsss', fd.response);
+            // }
+        } catch (error) {
+            // message.error('Failed to submit application');
+            console.error(error);
+        } finally {
+            setLoading(false);
         }
-        // setOpen(false);
-        // closeModal();
     }
+
     console.log("province", province)
     const [showWorkingExperience, setShowWorkingExperience] = useState(false);
     const [showFirstTimeJobseeker, setShowFirstTimeJobseeker] = useState(false);
     const [uploadedFile, setUploadedFile] = useState(null);
+    const [loading, setLoading] = useState(null);
+
 
     const handleWorkingExperienceChange = (e) => {
         setShowWorkingExperience(e.target.checked);
@@ -188,6 +229,7 @@ export default function AddApplicantsSection() {
                 open={open}
                 onOk={(e) => submitApplicant(e)}
                 onCancel={() => setOpen(false)}
+                confirmLoading={loading}
                 width={1500}
                 okText="Submit"
                 cancelText="Cancel"
@@ -212,9 +254,6 @@ export default function AddApplicantsSection() {
                             readOnly
                         />
                     </div> */}
-                    <h1 className="text-xl font-semibold mb-3 mt-4 text-gray-900 ">
-                        Site Information
-                    </h1>
                     <div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             {/* <select
@@ -615,7 +654,10 @@ export default function AddApplicantsSection() {
                             />
                         </div>
                     </div>
-                    <UploadResumeSection />
+                    <UploadResumeSection
+                        files={uploadedFile}
+                        setFiles={setUploadedFile}
+                    />
                 </form>
             </Modal>
         </div>

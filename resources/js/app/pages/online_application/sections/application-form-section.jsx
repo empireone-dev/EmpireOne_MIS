@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import WorkingExperienceSection from './working-experience-section';
-import UploadResumeSection from './upload-resume-section';
 import { useDispatch, useSelector } from 'react-redux';
 import { setApplicantForm } from '../../admin/recruitment/applicants/applicant_records/redux/applicant-slice';
 import { get_applicant_thunk, store_applicant_thunk } from '../../admin/recruitment/applicants/applicant_records/redux/applicant-thunk';
@@ -14,6 +13,8 @@ import Input from '../../_components/input';
 import Select from '../../_components/select';
 import { useEffect } from 'react';
 import { message } from 'antd';
+import UploadResumeSection from '../../admin/employee_relation/employee_section/sections/upload-resume-section';
+import { LoadingOutlined, SendOutlined } from '@ant-design/icons';
 
 export default function ApplicationFormSection() {
   const [open, setOpen] = useState(false);
@@ -28,16 +29,6 @@ export default function ApplicationFormSection() {
   const closeModal = () => {
     setOpen(false);
   };
-  function generateUniqueAppId() {
-    const today = new Date();
-    const year = today.getFullYear().toString().slice(-2);
-    const month = (today.getMonth() + 1).toString().padStart(2, '0');
-    const day = today.getDate().toString().padStart(2, '0');
-    const datePart = `${year}${month}${day}`;
-
-    const seq = (applicationCount + 1).toString().padStart(2, '0');
-    return `${datePart}${seq}`;
-  }
 
   useEffect(() => {
     const fetchApplicationCount = async () => {
@@ -81,32 +72,85 @@ export default function ApplicationFormSection() {
 
   async function submitApplicant(e) {
     e.preventDefault();
-    const uniqueAppId = generateUniqueAppId();
-    const dob = calculateAge(applicantForm.dob ?? new Date())
-    const result = await store.dispatch(store_applicant_thunk({
-      ...applicantForm,
-      uniqueAppId: uniqueAppId,
-      age: dob,
-      status: 'Pending',
-      submitted: moment().format('YYYY-MM-DD'),
-      app_id: uniqueAppId,
-    }));
-    message.success('Application has been submitted');
-    if (result.status == 200) {
-      store.dispatch(get_applicant_thunk())
-    } else {
-      setError(result.response.data.errors);
-      message.error('Failed to submit Application');
-      console.log('resultsss', result.response)
+    setLoading(true);
+
+    const dob = calculateAge(applicantForm.dob ?? new Date());
+
+    const fd = new FormData();
+    fd.append('files', uploadedFile)
+    fd.append('site', applicantForm.site);
+    fd.append('fname', applicantForm.fname);
+    fd.append('mname', applicantForm.mname);
+    fd.append('lname', applicantForm.lname);
+    fd.append('suffix', applicantForm.suffix);
+    fd.append('dob', applicantForm.dob);
+    fd.append('religion', applicantForm.religion);
+    fd.append('email', applicantForm.email);
+    fd.append('nationality', applicantForm.nationality);
+    fd.append('phone', applicantForm.phone);
+    fd.append('mmname', applicantForm.mmname);
+    fd.append('ffname', applicantForm.ffname);
+    fd.append('educ', applicantForm.educ);
+    fd.append('courset', applicantForm.courset);
+    fd.append('hired', applicantForm.hired);
+    fd.append('lot', applicantForm.lot);
+    fd.append('sss', applicantForm.sss);
+    fd.append('pagibig', applicantForm.pagibig);
+    fd.append('tin', applicantForm.tin);
+    fd.append('philh', applicantForm.philh);
+    fd.append('ename', applicantForm.ename);
+    fd.append('eaddress', applicantForm.eaddress);
+    fd.append('relationship', applicantForm.relationship);
+    fd.append('ephone', applicantForm.ephone);
+    fd.append('marital', applicantForm.marital);
+    fd.append('gender', applicantForm.gender);
+    fd.append('region', applicantForm.region);
+    fd.append('city', applicantForm.city);
+    fd.append('brgy', applicantForm.brgy);
+    fd.append('province', applicantForm.province);
+
+    applicantForm.work_experience.forEach((value) => {
+      fd.append("work_experience[]", JSON.stringify({
+        company: value.company,
+        position: value.position,
+        started_at: value.started_at,
+        end_at: value.end_at,
+      }));
+    });
+
+    try {
+      await store.dispatch(store_applicant_thunk(fd));
+
+      await store.dispatch(setApplicantForm({
+        ...applicantForm,
+        age: dob,
+        submitted: moment().format('YYYY-MM-DD'),
+        status: 'Pending'
+      }));
+
+      const result = await store.dispatch(get_applicant_thunk());
+      if (result.status === 200) {
+        // message.success('Application has been submitted successfully');
+      } else {
+        setError(result.response.data.errors);
+        // message.error('Failed to submit Application');
+        console.log('resultsss', result.response);
+      }
+    } catch (error) {
+      // message.error('Failed to submit application');
+      console.error(error);
+    } finally {
+      setLoading(false);
     }
-    // setOpen(false);
-    // closeModal();
   }
+
 
   console.log("province", province)
   const [showWorkingExperience, setShowWorkingExperience] = useState(false);
   const [showFirstTimeJobseeker, setShowFirstTimeJobseeker] = useState(false);
   const [uploadedFile, setUploadedFile] = useState(null);
+  const [loading, setLoading] = useState(null);
+
 
   const handleWorkingExperienceChange = (e) => {
     setShowWorkingExperience(e.target.checked);
@@ -167,7 +211,7 @@ export default function ApplicationFormSection() {
   return (
     <div className="h-screen overflow-hidden ">
       <div className="bg-cover bg-[url('/images/SCemp.jpg')] transition-colors duration-300 h-full overflow-y-scroll">
-        <div className="container mx-auto flex justify-center">
+        <div className="container mx-auto px-10 flex justify-center">
           <div className="bg-white shadow-2xl shadow-black rounded-lg p-6 mt-12 w-full">
             <div className="flex items-center justify-center p-3">
               <img className="w-60" src="images/newlogo.png" alt="logo" />
@@ -593,12 +637,25 @@ export default function ApplicationFormSection() {
                   />
                 </div>
               </div>
-              <UploadResumeSection />
+              <UploadResumeSection
+                files={uploadedFile}
+                setFiles={setUploadedFile}
+              />
               <div className="flex justify-end mt-2.5">
+
                 <button
-                  onSubmit={submitApplicant}
-                  type="submit" id="theme-toggle" className="px-4 py-2 rounded-lg bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
-                  SUBMIT APPLICATION
+                  type="submit"
+                  className={` bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
+                    }`}
+                  onClick={submitApplicant}
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <LoadingOutlined spin />
+                  ) : (
+                    <SendOutlined />
+                  )}
+                  {loading ? " SUBMITTING..." : " SUBMIT APPLICATION"}
                 </button>
               </div>
             </form>

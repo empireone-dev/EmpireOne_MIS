@@ -102,7 +102,6 @@ export default function AddExistingEmployeeSection({ data }) {
         fd.append('region', applicantForm.region)
         fd.append('city', applicantForm.city)
         fd.append('brgy', applicantForm.brgy)
-        fd.append('status', applicantForm.status)
         fd.append('position', applicantForm.position)
         fd.append('dept', applicantForm.dept)
         fd.append('account', applicantForm.account)

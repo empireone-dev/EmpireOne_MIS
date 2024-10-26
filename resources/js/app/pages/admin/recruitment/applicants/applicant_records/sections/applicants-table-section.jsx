@@ -22,6 +22,8 @@ export default function ApplicantsTableSection() {
         (state) => state.applicants
     );
 
+    console.log('asssss',applicants.fd)
+
     const filteredDatas = applicants.data;
     // const filterDatas = (selectedStats) => {
     //     if (selectedStats.length === 0) {
@@ -32,20 +34,20 @@ export default function ApplicantsTableSection() {
     //     }
     // };
 
-    useEffect(() => {
-        // const storedDatas = localStorage.getItem('filteredDatas');
-        // if (storedDatas) {
-        //     setFilteredDatas(JSON.parse(storedDatas));
-        // } else {
-        //     filterDatas([]);
-        // }
-    }, []);
+    // useEffect(() => {
+    //     // const storedDatas = localStorage.getItem('filteredDatas');
+    //     // if (storedDatas) {
+    //     //     setFilteredDatas(JSON.parse(storedDatas));
+    //     // } else {
+    //     //     filterDatas([]);
+    //     // }
+    // }, []);
 
-    useEffect(() => {
-        // localStorage.setItem('filteredDatas', JSON.stringify(filteredDatas));
-        // localStorage.clear()
-        // setFilteredDatas(applicants);
-    }, [applicants]);
+    // useEffect(() => {
+    //     // localStorage.setItem('filteredDatas', JSON.stringify(filteredDatas));
+    //     // localStorage.clear()
+    //     // setFilteredDatas(applicants);
+    // }, [applicants]);
     console.log("filteredDatas", filteredDatas);
     const searchInput = useRef(null);
 

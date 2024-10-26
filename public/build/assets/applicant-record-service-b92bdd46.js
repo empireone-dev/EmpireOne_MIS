@@ -1,1 +1,0 @@
-import{h as t}from"./app-62b5ebaa.js";async function n(){return(await t.get("/api/applicant"+window.location.search)).data}async function e(a){return(await t.get("/api/applicant/"+a)).data}async function c(a){return(await t.post("/api/applicant",a)).data}export{e as a,n as g,c as s};

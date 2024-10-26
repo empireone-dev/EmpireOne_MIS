@@ -126,13 +126,9 @@ export default function AddApplicantsSection() {
 
         try {
             await store.dispatch(store_applicant_thunk(fd));
-
-            await store.dispatch(setApplicantForm({
-                ...applicantForm,
-                age: dob,
-                submitted: moment().format('YYYY-MM-DD'),
-            }));
-
+            await store.dispatch(get_applicant_thunk())
+            setOpen(false)
+            message.success('')
             // const result = await store.dispatch(get_applicant_thunk());
             // if (fd.status === 200) {
             //     // message.success('Application has been submitted successfully');

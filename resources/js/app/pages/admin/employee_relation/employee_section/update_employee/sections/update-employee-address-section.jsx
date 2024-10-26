@@ -1,4 +1,4 @@
-import { EditOutlined, LoadingOutlined, SendOutlined } from '@ant-design/icons';
+import { EditOutlined, HomeOutlined, LoadingOutlined, SendOutlined } from '@ant-design/icons';
 import { Modal, Tooltip } from 'antd'
 import React, { useState } from 'react'
 import region from "@/app/address/region.json"
@@ -70,7 +70,9 @@ export default function UpdateEmployeeAddressSection() {
         <>
             <Tooltip title="Update New Address">
                 <div>
-                    <button className='text-2xl ml-2'
+                    <button
+                        type='button'
+                        className='text-2xl ml-2'
                         onClick={openHandler}
                     ><EditOutlined />
                     </button>
@@ -127,17 +129,19 @@ export default function UpdateEmployeeAddressSection() {
                                 />
                             </div>
                         </div>
-                        <div className="flex flex-1 gap-4 mb-4">
-                            <Select
-                                onChange={(event) => data_handler(event)}
-                                // value={applicantForm.barangay ?? ""}
-                                options={newBarangay.map(res => ({
-                                    label: res.brgy_name,
-                                    value: res.brgy_name,
-                                }))}
-                                name="brgy"
-                                label="Barangay"
-                            />
+                        <div className="flex flex-1 gap-1 mb-4">
+                            <div className='w-1/2 pr-3'>
+                                <Select
+                                    onChange={(event) => data_handler(event)}
+                                    // value={applicantForm.barangay ?? ""}
+                                    options={newBarangay.map(res => ({
+                                        label: res.brgy_name,
+                                        value: res.brgy_name,
+                                    }))}
+                                    name="brgy"
+                                    label="Barangay"
+                                />
+                            </div>
                             <div className='flex flex-col w-full'>
                                 <Input
                                     onChange={(event) => data_handler(event)}
@@ -161,9 +165,9 @@ export default function UpdateEmployeeAddressSection() {
                                 {loading ? (
                                     <LoadingOutlined spin />
                                 ) : (
-                                    <SendOutlined />
+                                    <HomeOutlined />
                                 )}
-                                {loading ? " UPDATING..." : " UPDATE ADDRESS"}
+                                {loading ? " UPDATING..." : " UPDATE NEW ADDRESS"}
                             </button>
                         </div>
                     </div>

@@ -22,7 +22,6 @@ export default function ApplicantsTableSection() {
         (state) => state.applicants
     );
 
-    console.log('asssss',applicants.fd)
 
     const filteredDatas = applicants.data;
     // const filterDatas = (selectedStats) => {

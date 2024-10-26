@@ -6,5 +6,3 @@ applicant change nullable
 -app_id
 
 message on submitting applicant
-
-TypeError: Cannot read properties of undefined (reading 'status') when save add applicant

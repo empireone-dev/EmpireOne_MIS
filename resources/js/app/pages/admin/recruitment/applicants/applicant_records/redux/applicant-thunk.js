@@ -12,10 +12,10 @@ export function get_applicant_thunk() {
   };
 }
 
-export function store_applicant_thunk(data) {
+export function store_applicant_thunk(fd) {
   return async function (dispatch, getState) {
-    const result = await store_applicant_service(data)
-    dispatch(applicantSlice.actions.setApplicants(result.data));
+    const result = await store_applicant_service(fd)
+    dispatch(applicantSlice.actions.setApplicants(result.fd));
     dispatch(applicantSlice.actions.setApplicantForm({
       work_experience: []
     }));

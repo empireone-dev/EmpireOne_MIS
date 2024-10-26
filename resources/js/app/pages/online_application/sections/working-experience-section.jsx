@@ -71,7 +71,6 @@ export default function WorkingExperienceSection() {
                                 handleInputChange(index, event)
                             }
                             value={experience.company ?? ""}
-                            required="true"
                             name="company"
                             label="Company"
                             type="text"
@@ -83,7 +82,6 @@ export default function WorkingExperienceSection() {
                                 handleInputChange(index, event)
                             }
                             value={experience.position ?? ""}
-                            required="true"
                             name="position"
                             label="Position"
                             type="text"
@@ -96,7 +94,6 @@ export default function WorkingExperienceSection() {
                                     handleInputChange(index, event)
                                 }
                                 value={experience.started_at ?? ""}
-                                required="true"
                                 name="started_at"
                                 label="Started At"
                                 type="date"
@@ -108,7 +105,6 @@ export default function WorkingExperienceSection() {
                                     handleInputChange(index, event)
                                 }
                                 value={experience.end_at ?? ""}
-                                required="true"
                                 name="end_at"
                                 label="End At"
                                 type="date"

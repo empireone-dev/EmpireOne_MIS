@@ -56,6 +56,7 @@ Route::post('/search_applicant', [ApplicantController::class, 'search_applicant'
 Route::resource('applicant', ApplicantController::class);
 Route::post('/get_applicant', [ApplicantController::class, 'get_applicant']);
 Route::get('/get_hired_applicant', [ApplicantController::class, 'get_hired_applicant']);
+Route::put('/update_address/{id}', [ApplicantController::class, 'update_address']);
 
 
 Route::resource('outsourcing_erf', OutSourcingErfController::class);

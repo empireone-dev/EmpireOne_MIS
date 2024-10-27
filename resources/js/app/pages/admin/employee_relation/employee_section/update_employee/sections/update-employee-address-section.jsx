@@ -1,27 +1,49 @@
 import { EditOutlined, HomeOutlined, LoadingOutlined, SendOutlined } from '@ant-design/icons';
-import { Modal, Tooltip } from 'antd'
+import { message, Modal, Tooltip } from 'antd'
 import React, { useState } from 'react'
 import region from "@/app/address/region.json"
 import province from "@/app/address/province.json"
 import city from "@/app/address/city.json"
 import barangay from "@/app/address/barangay.json"
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Input from '@/app/pages/_components/input';
 import Select from '@/app/pages/_components/select';
+import { get_employee_thunk, update_address_thunk } from '../../redux/employee-section-thunk';
+import store from '@/app/store/store';
+import { setApplicantForm } from '@/app/pages/admin/recruitment/applicants/applicant_records/redux/applicant-slice';
 
 export default function UpdateEmployeeAddressSection() {
     const [isModalOpen, setIsModalOpen] = useState(null)
     const { applicantForm } = useSelector((state) => state.applicants);
+    const { applicant } = useSelector((state) => state.final_rate);
+    const [newProvince, setNewProvince] = useState([])
+    const [newCity, setNewCity] = useState([])
+    const [newBarangay, setNewBarangay] = useState([])
+    const [loading, setLoading] = useState(null);
+    const dispatch = useDispatch();
 
 
     function openHandler() {
         setIsModalOpen(true);
     }
 
-    const [newProvince, setNewProvince] = useState([])
-    const [newCity, setNewCity] = useState([])
-    const [newBarangay, setNewBarangay] = useState([])
-    const [loading, setLoading] = useState(null);
+    async function submit_edit_address(e) {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            await store.dispatch(update_address_thunk(applicantForm));
+            await store.dispatch(get_employee_thunk());
+            message.success('Updated Successfully');
+            setIsModalOpen(false);
+        } catch (error) {
+            message.error(error.message || 'Error updating address');
+        } finally {
+            setLoading(false);
+        }
+    }
+
+
+
 
     function data_handler(e) {
         if (e.target.name == 'region') {
@@ -58,6 +80,7 @@ export default function UpdateEmployeeAddressSection() {
             dispatch(
                 setApplicantForm({
                     ...applicantForm,
+                    id: applicant?.id,
                     [e.target.name]: e.target.value,
                 })
             );
@@ -82,14 +105,14 @@ export default function UpdateEmployeeAddressSection() {
             <Modal
                 title="Update Address"
                 visible={isModalOpen}
-                onOk={() => setIsModalOpen(false)}
+                onOk={submit_edit_address}
                 onCancel={() => setIsModalOpen(false)}
                 width={1000}
                 okText="Update"
                 cancelText="Cancel"
                 footer={null}
             >
-                <form className="w-full h-full">
+                <form className="w-full h-full" onSubmit={submit_edit_address}>
                     <div>
                         <div className="flex flex-1 gap-4 mb-4 w-full">
                             <div className='flex flex-col w-full'>
@@ -145,7 +168,7 @@ export default function UpdateEmployeeAddressSection() {
                             <div className='flex flex-col w-full'>
                                 <Input
                                     onChange={(event) => data_handler(event)}
-                                    value={applicantForm.lot ?? ""}
+                                    value={applicantForm.lot || ""}
                                     name="lot"
                                     label="House/Lot No., Street, Purok/Sitio"
                                     type="text"
@@ -159,7 +182,7 @@ export default function UpdateEmployeeAddressSection() {
                                 type="submit"
                                 className={` bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
                                     }`}
-                                // onClick={submitApplicant}
+                                onClick={submit_edit_address}
                                 disabled={loading}
                             >
                                 {loading ? (

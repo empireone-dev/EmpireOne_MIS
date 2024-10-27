@@ -329,7 +329,7 @@ const AdminLayout = ({ children }) => {
                                 <div className="inline-block relative shrink-0 cursor-pointer rounded-[.95rem]">
                                     <img
                                         className="w-[40px] h-[40px] shrink-0 inline-block rounded-[.95rem]"
-                                        src="https://raw.githubusercontent.com/Loopple/loopple-public-assets/main/riva-dashboard-tailwind/img/avatars/avatar1.jpg"
+                                        src="https://www.transparentpng.com/thumb/user/gray-user-profile-icon-png-fP8Q1P.png" 
                                         alt="avatar image"
                                     />
                                 </div>

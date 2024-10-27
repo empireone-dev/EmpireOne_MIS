@@ -30,6 +30,7 @@ export default function AddExistingEmployeeSection({ data }) {
     const [showFirstTimeJobseeker, setShowFirstTimeJobseeker] = useState(false);
     const [uploadedFile, setUploadedFile] = useState(null);
     const [loading, setLoading] = useState(null);
+    const [error, setError] = useState({})
 
     const [applicationCount, setApplicationCount] = useState(0);
     const { applicantForm } = useSelector((state) => state.applicants);
@@ -41,7 +42,7 @@ export default function AddExistingEmployeeSection({ data }) {
     useEffect(() => {
         const fetchApplicationCount = async () => {
             const count = 0;
-            setApplicationCount(count); 
+            setApplicationCount(count);
         };
         fetchApplicationCount();
         setLoading(false)
@@ -231,7 +232,7 @@ export default function AddExistingEmployeeSection({ data }) {
                         <Input
                             onChange={(event) => data_handler(event)}
                             value={applicantForm.app_id ?? ""}
-                            required="true"
+                            required={error?.app_id ? true : false}
                             name="app_id"
                             label="Employee No."
                             type="text"
@@ -244,7 +245,7 @@ export default function AddExistingEmployeeSection({ data }) {
                                 <Input
                                     onChange={(event) => data_handler(event)}
                                     value={applicantForm.fname ?? ""}
-                                    required="true"
+                                    required={error?.fname ? true : false}
                                     name="fname"
                                     label="First Name"
                                     type="text"
@@ -252,7 +253,6 @@ export default function AddExistingEmployeeSection({ data }) {
                                 <Input
                                     onChange={(event) => data_handler(event)}
                                     value={applicantForm.mname ?? ""}
-                                    required="true"
                                     name="mname"
                                     label="Middle Name"
                                     type="text"
@@ -260,7 +260,7 @@ export default function AddExistingEmployeeSection({ data }) {
                                 <Input
                                     onChange={(event) => data_handler(event)}
                                     value={applicantForm.lname ?? ""}
-                                    required="true"
+                                    required={error?.lname ? true : false}
                                     name="lname"
                                     label="Last Name"
                                     type="text"
@@ -299,7 +299,7 @@ export default function AddExistingEmployeeSection({ data }) {
                                             data_handler(event)
                                         }
                                         value={applicantForm.dob ?? ""}
-                                        required="true"
+                                        required={error?.dob ? true : false}
                                         name="dob"
                                         label="Date of Birth"
                                         type="date"
@@ -309,7 +309,7 @@ export default function AddExistingEmployeeSection({ data }) {
                                     <Input
                                         onChange={(event) => data_handler(event)}
                                         value={applicantForm.email ?? ""}
-                                        required="true"
+                                        required={error?.email ? true : false}
                                         name="email"
                                         label="Email"
                                         type="email"
@@ -319,7 +319,7 @@ export default function AddExistingEmployeeSection({ data }) {
                                     <Input
                                         onChange={(event) => data_handler(event)}
                                         value={applicantForm.phone ?? ""}
-                                        required="true"
+                                        required={error?.phone ? true : false}
                                         name="phone"
                                         label="Phone Number"
                                         type="number"
@@ -347,7 +347,7 @@ export default function AddExistingEmployeeSection({ data }) {
                                             data_handler(event)
                                         }
                                         value={applicantForm.religion ?? ""}
-                                        required="true"
+                                        required={error?.religion ? true : false}
                                         name="religion"
                                         label="Religion"
                                         type="text"
@@ -359,7 +359,7 @@ export default function AddExistingEmployeeSection({ data }) {
                                             data_handler(event)
                                         }
                                         value={applicantForm.nationality ?? ""}
-                                        required="true"
+                                        required={error?.nationality ? true : false}
                                         name="nationality"
                                         label="Nationality"
                                         type="text"
@@ -373,7 +373,6 @@ export default function AddExistingEmployeeSection({ data }) {
                         <Input
                             onChange={(event) => data_handler(event)}
                             value={applicantForm.mmname ?? ""}
-                            required="true"
                             name="mmname"
                             label="Mothers maiden name"
                             type="text"
@@ -383,7 +382,6 @@ export default function AddExistingEmployeeSection({ data }) {
                         <Input
                             onChange={(event) => data_handler(event)}
                             value={applicantForm.ffname ?? ""}
-                            required="true"
                             name="ffname"
                             label="Fathers fullname"
                             type="text"
@@ -411,7 +409,6 @@ export default function AddExistingEmployeeSection({ data }) {
                             <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.courset ?? ""}
-                                required="true"
                                 name="courset"
                                 label="Course taken"
                                 type="text"
@@ -571,7 +568,6 @@ export default function AddExistingEmployeeSection({ data }) {
                             <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.lot ?? ""}
-                                required="true"
                                 name="lot"
                                 label="House/Lot No., Street, Purok/Sitio"
                                 type="text"

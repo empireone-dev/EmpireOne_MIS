@@ -1,6 +1,6 @@
 import { get_employee_by_id_service, get_employee_service, store_employee_service, store_new_employee_service } from "@/app/pages/services/employee-service";
 import { employeeSlice } from "./employee-section-slice";
-import { create_employee_service, get_hired_applicant_service } from "@/app/pages/services/applicant-final-service";
+import { create_employee_service, get_hired_applicant_service, update_address_service } from "@/app/pages/services/applicant-final-service";
 import { applicantSlice } from "../../../recruitment/applicants/applicant_records/redux/applicant-slice";
 import { create_incident_report_service } from "@/app/pages/services/incident-report-service";
 
@@ -57,6 +57,13 @@ export function create_incident_report_thunk(data) {
     // dispatch(employeeSlice.actions.setEmployeeForm({
     //   work_experience: []
     // }));
+  };
+}
+
+export function update_address_thunk(data) {
+  return async function (dispatch, getState) {
+    const res = await update_address_service(data)
+    // dispatch(employeeSlice.actions.setEmployeeForm(result.data));
   };
 }
 

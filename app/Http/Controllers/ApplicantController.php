@@ -160,11 +160,31 @@ class ApplicantController extends Controller
 
         if (!$applicant) {
             return response()->json([
-                'message' => 'Department not found.',
+                'message' => 'Applicant not found.',
             ], 404);
         }
 
         $applicant->update($request->all());
+
+        return response()->json([
+            'data' => 'success'
+        ], 200);
+    }
+
+
+    public function update_address(Request $request, $id)
+    {
+        $applicant = Applicant::find($id);
+
+        if (!$applicant) {
+            return response()->json([
+                'message' => 'Applicant not found.',
+            ], 404);
+        }
+
+        $applicant->update([
+            'caddress' => $request->lot . ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province,
+        ]);
 
         return response()->json([
             'data' => 'success'

@@ -7,6 +7,10 @@ import UpdateEmployeeAddressSection from './update-employee-address-section';
 
 export default function UpdateEmployeeFormSection() {
     const { applicant } = useSelector((state) => state.final_rate);
+    const { job_positions } = useSelector((state) => state.job_positions);
+    const { departments } = useSelector((state) => state.departments);
+    const { accounts } = useSelector((state) => state.accounts);
+    const { users } = useSelector((state) => state.app);
     // const { employees } = useSelector((state) => state.employees);
 
     console.log('applicant', applicant)
@@ -126,40 +130,49 @@ export default function UpdateEmployeeFormSection() {
                     <div className='flex flex-col w-full mb-4'>
                         <div className='flex flex-1 gap-3'>
                             <select
-                                // onChange={(event) => applicant_handler(event)}
-                                name='suffix'
+                                onChange={(event) => data_handler(event)}
+                                name='position'
                                 className="border p-2 rounded  w-full">
-                                <option disabled selected>{applicant?.position}</option>
-                                <option> Sr.</option>
-                                <option> Jr.</option>
-                                <option> II</option>
-                                <option> III</option>
-                                <option> IV</option>
-                                <option> V</option>
+                                <option disabled selected>Job Position</option>
+                                {
+                                    job_positions
+                                        .filter(res => res.site === "San Carlos")
+                                        .map((res, i) => (
+                                            <option value={res.jPosition} key={i}>
+                                                {res.jPosition}
+                                            </option>
+                                        ))
+                                }
                             </select>
                             <select
-                                // onChange={(event) => applicant_handler(event)}
-                                name='suffix'
+                                onChange={(event) => data_handler(event)}
+                                name='dept'
                                 className="border p-2 rounded  w-full">
-                                <option disabled selected>{applicant?.dept}</option>
-                                <option> Sr.</option>
-                                <option> Jr.</option>
-                                <option> II</option>
-                                <option> III</option>
-                                <option> IV</option>
-                                <option> V</option>
+                                <option disabled selected>Department</option>
+                                {
+                                    departments
+                                        .filter(res => res.site === "San Carlos")
+                                        .map((res, i) => (
+                                            <option value={res.dept} key={i}>
+                                                {res.dept}
+                                            </option>
+                                        ))
+                                }
                             </select>
                             <select
-                                // onChange={(event) => applicant_handler(event)}
-                                name='suffix'
+                                onChange={(event) => data_handler(event)}
+                                name='account'
                                 className="border p-2 rounded  w-full">
-                                <option disabled selected>{applicant?.account}</option>
-                                <option> Sr.</option>
-                                <option> Jr.</option>
-                                <option> II</option>
-                                <option> III</option>
-                                <option> IV</option>
-                                <option> V</option>
+                                <option disabled selected>Account (If Applicable)</option>
+                                {
+                                    accounts
+                                        // .filter(res => res.site === "San Carlos")
+                                        .map((res, i) => (
+                                            <option value={res.acc} key={i}>
+                                                {res.acc}
+                                            </option>
+                                        ))
+                                }
                             </select>
                         </div>
                     </div>
@@ -168,36 +181,44 @@ export default function UpdateEmployeeFormSection() {
                     <div className='flex flex-col w-full mb-4'>
                         <div className='flex flex-1 gap-3'>
                             <select
-                                // onChange={(event) => applicant_handler(event)}
-                                name='suffix'
+                                onChange={(event) => data_handler(event)}
+                                name='sup_id'
+                                value={applicant.sup_id}
                                 className="border p-2 rounded  w-full">
-                                <option disabled selected>{applicant?.sup_id}</option>
-                                <option> Sr.</option>
-                                <option> Jr.</option>
-                                <option> II</option>
-                                <option> III</option>
-                                <option> IV</option>
-                                <option> V</option>
+                                <option disabled selected>Supervisor</option>
+                                {
+                                    users
+                                        .filter(
+                                            (res) =>
+                                                res.site === "San Carlos" &&
+                                                ["Manager", "Account Manager", "Supervisor", "Team Leader", "Director", "CEO"].includes(res.position)
+                                        )
+                                        .map((res) => (
+                                            <option value={res.id} key={res.id}>
+                                                {res.employee_fname} {res.employee_lname}
+                                            </option>
+                                        ))
+                                }
                             </select>
                             <Input
-                                // onChange={(event) => applicant_handler(event)}
-                                // value={applicantForm.hired ?? ""}
-                                value={applicant?.hired}
+                                onChange={(event) => data_handler(event)}
+                                value={applicant.hired ?? ""}
                                 name="hired"
                                 label="Hired Date"
                                 type="date"
                             />
                             <select
-                                // onChange={(event) => applicant_handler(event)}
-                                name='suffix'
+                                onChange={(event) => data_handler(event)}
+                                name='status'
                                 className="border p-2 rounded  w-full">
-                                <option disabled selected>{applicant?.status}</option>
+                                <option disabled selected>Status</option>
                                 <option> Probationary</option>
                                 <option> Regular</option>
                             </select>
                         </div>
                     </div>
                 </div>
+
 
                 <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Address Information</h1>
                 <div className="flex flex-1 gap-1 mb-4 w-full">

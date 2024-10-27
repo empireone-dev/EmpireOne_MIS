@@ -32,7 +32,7 @@ export default function DashboardSection() {
     greeting = 'Good evening';
   }
 
-  console.log('data',data)
+  console.log('data', data)
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -93,31 +93,31 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="orange"
               name="Pending Application"
-              number={data?.applicant?.pending ?? 0}
+              number={data?.applicant?.app_pending ?? 0}
               icon={<UserGroupIcon />}
             />
             <DashboardCardComponents
               bgColor="orange"
               name="Initial Phase Application"
-              number={data?.status ?? 0}
+              number={data?.applicant?.app_initial ?? 0}
               icon={<CursorArrowRaysIcon />}
             />
             <DashboardCardComponents
               bgColor="orange"
               name="Final Phase Application"
-              number={data?.applicant?.final ?? 0}
+              number={data?.applicant?.app_final ?? 0}
               icon={<CursorArrowRippleIcon />}
             />
             <DashboardCardComponents
               bgColor="orange"
               name="Passed Application"
-              number={data?.status ?? 0}
+              number={data?.applicant?.app_passed ?? 0}
               icon={<CheckCircleIcon />}
             />
             <DashboardCardComponents
               bgColor="orange"
               name="Failed Application"
-              number={data?.status ?? 0}
+              number={data?.applicant?.app_failed ?? 0}
               icon={<XCircleIcon />}
             />
           </div>

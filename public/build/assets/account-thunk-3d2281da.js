@@ -1,0 +1,1 @@
+import{h as n,v as a}from"./app-9094fa5b.js";function e(){try{return n.get("/api/account")}catch{}}function s(){return async function(t,o){const c=await e();t(a.actions.setAccounts(c.data.result))}}export{s as g};

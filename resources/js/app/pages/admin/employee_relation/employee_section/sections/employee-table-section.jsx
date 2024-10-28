@@ -236,6 +236,7 @@ export default function EmployeeTableSection() {
         const newUrl = window.location.pathname + "?" + searchParams.toString();
         router.visit(newUrl);
     };
+    const pageSize = 10; 
     // const isStatus = getQueryParam(url, "status");
     return (
         <div>
@@ -253,13 +254,23 @@ export default function EmployeeTableSection() {
                 columns={columns}
                 dataSource={employees.data}
             />
-            <div className="flex w-full items-center justify-end mt-2">
-                <Pagination
-                    onChange={onChangePaginate}
-                    defaultCurrent={currentPage}
-                    total={employees.total}
-                    showSizeChanger={false}
-                />
+            <div className="flex">
+                <div className="w-full mt-3.5">
+                    {employees.total > 0 ? (
+                        `Showing ${(currentPage - 1) * pageSize + 1} to ${Math.min(currentPage * pageSize, employees.total)} of ${employees.total} entries`
+                    ) : (
+                        "No entries available"
+                    )}
+                </div>
+                <div className="flex w-full items-center justify-end mt-2">
+                    <Pagination
+                        onChange={onChangePaginate}
+                        defaultCurrent={currentPage}
+                        total={employees.total}
+                        pageSize={pageSize}
+                        showSizeChanger={false}
+                    />
+                </div>
             </div>
         </div>
     );

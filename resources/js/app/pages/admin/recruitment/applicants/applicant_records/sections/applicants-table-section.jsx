@@ -307,10 +307,10 @@ export default function ApplicantsTableSection() {
         current: page,
         pageSize: pageSize,
         total: applicants.last_page * pageSize,
-        onChange: (page, pageSize) => {
-            router.visit(window.location.pathname + `?page=${page}`);
-            setCurrent(page);
-            setPageSize(pageSize);
+        onChange: (newPage, newPageSize) => {
+            router.visit(window.location.pathname + `?page=${newPage}`);
+            setCurrent(newPage);
+            setPageSize(newPageSize);
         },
     };
 
@@ -320,23 +320,30 @@ export default function ApplicantsTableSection() {
                 <div className="flex items-center gap-x-3 mb-4">
                     <h2 className="text-lg font-medium text-gray-800">
                         <b>Applicant(s) Records</b>
-                        <AddApplicantsSection />
                     </h2>
+                    <AddApplicantsSection />
                 </div>
-                {/* <div className='mr-8'>
-                    <ApplicantsDropdownFilterComponents filterDatas={filterDatas} />
-                </div> */}
             </div>
 
-            <div className="flex flex-col items-start w-96 ">
+            <div className="flex flex-col items-start w-96">
                 <ApplicantSearchSection />
             </div>
+
             <Table
                 pagination={paginationConfig}
                 columns={columns}
                 dataSource={filteredDatas}
                 className="mt-4"
             />
+
+            <div className="w-full">
+                {applicants.total > 0 ? (
+                    `Showing ${(page - 1) * pageSize + 1} to ${Math.min(page * pageSize, applicants.total)} of ${applicants.total} entries`
+                ) : (
+                    "No entries available"
+                )}
+            </div>
         </div>
     );
+
 }

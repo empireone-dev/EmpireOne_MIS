@@ -5,16 +5,36 @@ import store from '@/app/store/store';
 import { useEffect } from 'react';
 import { get_applicant_thunk } from './redux/applicant-thunk';
 import { get_job_position_thunk } from '../../../sourcing/job_title_section/redux/job-title-thunk';
-import ApplicantSearchSection from './sections/applicant-search-section';
+import { useState } from 'react';
+import Skeleton from '@/app/pages/_components/skeleton';
+import { useDispatch } from 'react-redux';
 
 export default function ApplicantRecords() {
   useEffect(() => {
     store.dispatch(get_applicant_thunk())
     store.dispatch(get_job_position_thunk())
   }, []);
+
+  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    async function loadData() {
+      await store.dispatch((get_applicant_thunk()))
+      setLoading(false)
+    }
+    loadData()
+  }, [loading]);
   return (
     <AdminLayout>
-      <ApplicantsTableSection />
+      {loading ? (
+        <div>
+          <Skeleton />
+        </div>
+      ) : (
+        !loading && (
+          <ApplicantsTableSection />
+        )
+      )}
     </AdminLayout>
   )
 }

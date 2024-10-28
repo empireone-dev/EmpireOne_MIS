@@ -5,6 +5,9 @@ import store from '@/app/store/store';
 import { get_employee_thunk, get_hired_applicant_thunk } from './redux/employee-section-thunk';
 import { useEffect } from 'react';
 import { get_applicant_thunk } from '../../recruitment/applicants/applicant_records/redux/applicant-thunk';
+import Skeleton from '@/app/pages/_components/skeleton';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
 
 export default function EmployeeRelationPage() {
   useEffect(() => {
@@ -12,9 +15,27 @@ export default function EmployeeRelationPage() {
     store.dispatch(get_applicant_thunk())
     store.dispatch(get_hired_applicant_thunk())
   }, []);
+
+  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    async function loadData() {
+      await store.dispatch((get_employee_thunk()))
+      setLoading(false)
+    }
+    loadData()
+  }, [loading]);
   return (
     <AdminLayout>
-        <EmployeeTableSection/>
+      {loading ? (
+        <div>
+          <Skeleton />
+        </div>
+      ) : (
+        !loading && (
+          <EmployeeTableSection />
+        )
+      )}
     </AdminLayout>
   )
 }

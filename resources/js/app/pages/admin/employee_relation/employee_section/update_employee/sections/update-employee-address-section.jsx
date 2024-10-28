@@ -11,6 +11,7 @@ import Select from '@/app/pages/_components/select';
 import { get_employee_thunk, update_address_thunk } from '../../redux/employee-section-thunk';
 import store from '@/app/store/store';
 import { setApplicantForm } from '@/app/pages/admin/recruitment/applicants/applicant_records/redux/applicant-slice';
+import { get_applicant_by_app_id_thunk } from '@/app/pages/admin/final_rate/redux/final-rate-thunk';
 
 export default function UpdateEmployeeAddressSection() {
     const [isModalOpen, setIsModalOpen] = useState(null)
@@ -21,6 +22,7 @@ export default function UpdateEmployeeAddressSection() {
     const [newBarangay, setNewBarangay] = useState([])
     const [loading, setLoading] = useState(null);
     const dispatch = useDispatch();
+    const app_id = window.location.pathname.split('/')[5]
 
 
     function openHandler() {
@@ -32,8 +34,8 @@ export default function UpdateEmployeeAddressSection() {
         setLoading(true);
         try {
             await store.dispatch(update_address_thunk(applicantForm));
-            await store.dispatch(get_employee_thunk());
-            message.success('Updated Successfully');
+            // await store.dispatch(get_employee_thunk());
+            await store.dispatch(get_applicant_by_app_id_thunk(app_id))
             setIsModalOpen(false);
         } catch (error) {
             message.error(error.message || 'Error updating address');
@@ -185,12 +187,13 @@ export default function UpdateEmployeeAddressSection() {
                                 onClick={submit_edit_address}
                                 disabled={loading}
                             >
-                                {loading ? (
+                                <HomeOutlined/> UPDATE NEW ADDRESS
+                                {/* {loading ? (
                                     <LoadingOutlined spin />
                                 ) : (
                                     <HomeOutlined />
                                 )}
-                                {loading ? " UPDATING..." : " UPDATE NEW ADDRESS"}
+                                {loading ? " UPDATING..." : " UPDATE NEW ADDRESS"} */}
                             </button>
                         </div>
                     </div>

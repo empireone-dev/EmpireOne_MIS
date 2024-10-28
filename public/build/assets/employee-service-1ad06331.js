@@ -1,0 +1,1 @@
+import{h as a}from"./app-07ae6753.js";async function o(){return(await a.get("/api/employee"+window.location.search)).data}async function r(e){return(await a.get("/api/employee/"+e)).data}async function n(e){return(await a.post("/api/employee",e)).data}async function i(e){return(await a.post("/api/store_new_employee",e)).data}export{r as a,i as b,o as g,n as s};

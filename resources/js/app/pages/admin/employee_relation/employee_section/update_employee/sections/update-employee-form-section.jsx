@@ -1,17 +1,79 @@
 import Input from '@/app/pages/_components/input';
-import { EditOutlined } from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { message } from 'antd';
 import React from 'react'
 import { useSelector } from 'react-redux';
 import UpdateEmployeeAddressSection from './update-employee-address-section';
+import store from '@/app/store/store';
+import { useState } from 'react';
+import { update_applicant_thunk } from '@/app/pages/admin/recruitment/applicants/applicant_records/redux/applicant-thunk';
+import { useEffect } from 'react';
+import { get_applicant_by_app_id_thunk } from '@/app/pages/admin/final_rate/redux/final-rate-thunk';
 
 export default function UpdateEmployeeFormSection() {
+    const { employee } = useSelector((state) => state.employees);
     const { applicant } = useSelector((state) => state.final_rate);
     const { job_positions } = useSelector((state) => state.job_positions);
     const { departments } = useSelector((state) => state.departments);
     const { accounts } = useSelector((state) => state.accounts);
     const { users } = useSelector((state) => state.app);
-    // const { employees } = useSelector((state) => state.employees);
+    const [loading, setLoading] = useState(null);
+    const [form, setForm] = useState({});
+    const app_id = window.location.pathname.split('/')[5]
+
+    useEffect(() => {
+        setForm({
+            id: applicant?.id,
+            fname: applicant?.fname || "",
+            mname: applicant?.mname || "",
+            lname: applicant?.lname || "",
+            suffix: applicant?.suffix || "",
+            gender: applicant?.gender || "",
+            dob: applicant?.dob || "",
+            email: applicant?.email || "",
+            phone: applicant?.phone || "",
+            marital: applicant?.marital || "",
+            religion: applicant?.religion || "",
+            nationality: applicant?.nationality || "",
+            mmname: applicant?.mmname || "",
+            ffname: applicant?.ffname || "",
+            educ: applicant?.educ || "",
+            courset: applicant?.courset || "",
+            position: employee?.position || "",
+            dept: employee?.dept || "",
+            account: employee?.account || "",
+            sup_id: employee?.sup_id || "",
+            hired: employee?.hired || "",
+            status: employee?.status || "",
+            sss: applicant?.sss || "",
+            tin: applicant?.tin || "",
+            pagibig: applicant?.pagibig || "",
+            philh: applicant?.philh || "",
+            ename: applicant?.ename || "",
+            eaddress: applicant?.eaddress || "",
+            relationship: applicant?.relationship || "",
+            ephone: applicant?.ephone || "",
+        });
+    }, [applicant, employee]);
+
+
+
+    console.log('emploeesss', employee)
+
+    async function edit_information(e) {
+        e.preventDefault();
+        setLoading(true);
+        try {
+            await store.dispatch(update_applicant_thunk(form)); // Pass form as an object
+            await store.dispatch(get_applicant_by_app_id_thunk(app_id));
+            message.success('Updated Successfully');
+        } catch (error) {
+            message.error(error.message || 'Error updating changes');
+        } finally {
+            setLoading(false);
+        }
+    }
+
 
     console.log('applicant', applicant)
     return (
@@ -19,7 +81,7 @@ export default function UpdateEmployeeFormSection() {
             <div className='flex text-2xl items-center justify-center'>
                 <h1><b>Personal Information</b></h1>
             </div>
-            <form className='border rounded-lg p-3.5'>
+            <form className='border rounded-lg p-3.5' onSubmit={edit_information}>
                 <h1 className="text-xl font-semibold mb-3 text-gray-900  text-center"></h1>
                 <div className='mb-4'>
                     <div className='flex flex-col w-full'>
@@ -31,10 +93,43 @@ export default function UpdateEmployeeFormSection() {
                     <div className='flex flex-col w-full mb-4'>
                         <label htmlFor=""><b>Full Name</b></label>
                         <div className='flex flex-1 gap-3'>
-                            <input type="text" value={applicant?.fname} className="border p-2 rounded w-full" />
-                            <input type="text" value={applicant?.mname} className="border p-2 rounded w-full" />
-                            <input type="text" value={applicant?.lname} className="border p-2 rounded w-full" />
-                            <select className="border p-2 rounded  w-1/5">
+                            <input type="text"
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        fname: e.target.value,
+                                    })
+                                }
+                                value={form?.fname}
+                                name="fname"
+                                className="border p-2 rounded w-full" />
+                            <input type="text"
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        mname: e.target.value,
+                                    })
+                                }
+                                value={form?.mname}
+                                className="border p-2 rounded w-full" />
+                            <input type="text"
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        lname: e.target.value,
+                                    })
+                                }
+                                value={form?.lname}
+                                className="border p-2 rounded w-full" />
+                            <select
+                                value={form?.suffix ?? ''}
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        suffix: e.target.value,
+                                    })
+                                }
+                                className="border p-2 rounded  w-1/5">
                                 <option disabled selected>{applicant?.suffix}</option>
                                 <option> Sr.</option>
                                 <option> Jr.</option>
@@ -51,7 +146,15 @@ export default function UpdateEmployeeFormSection() {
                         <div className="flex flex-col gap-4 mb-4 w-full">
                             <div className='flex flex-col w-full'>
                                 <label htmlFor=""><b>Gender</b></label>
-                                <select className="border p-2 rounded w-full">
+                                <select
+                                    value={form?.gender ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            gender: e.target.value,
+                                        })
+                                    }
+                                    className="border p-2 rounded w-full">
                                     <option disabled selected>{applicant?.gender}</option>
                                     <option> Male</option>
                                     <option> Female</option>
@@ -59,15 +162,39 @@ export default function UpdateEmployeeFormSection() {
                             </div>
                             <div className='flex flex-col w-full'>
                                 <label htmlFor=""><b>Date of Birth</b></label>
-                                <input type="date" value={applicant?.dob} className="border p-2 rounded w-full" />
+                                <input type="date"
+                                    value={form?.dob ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            dob: e.target.value,
+                                        })
+                                    }
+                                    className="border p-2 rounded w-full" />
                             </div>
                             <div className=" w-full">
                                 <label htmlFor=""><b>Email</b></label>
-                                <input type="email" value={applicant?.email} className="border p-2 rounded w-full " />
+                                <input type="email"
+                                    value={form?.email ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            email: e.target.value,
+                                        })
+                                    }
+                                    className="border p-2 rounded w-full " />
                             </div>
                             <div className="w-full">
                                 <label htmlFor=""><b>Phone Number</b></label>
-                                <input type="number" value={applicant?.phone} className="border p-2 rounded w-full " />
+                                <input type="number"
+                                    value={form?.phone ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            phone: e.target.value,
+                                        })
+                                    }
+                                    className="border p-2 rounded w-full " />
                             </div>
                         </div>
                     </div>
@@ -76,7 +203,15 @@ export default function UpdateEmployeeFormSection() {
                         <div className="flex flex-col gap-4 mb-4 w-full">
                             <div className='flex flex-col w-full'>
                                 <label htmlFor=""><b>Marital Status</b></label>
-                                <select className="border p-2 rounded w-full">
+                                <select
+                                    value={form?.marital ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            marital: e.target.value,
+                                        })
+                                    }
+                                    className="border p-2 rounded w-full">
                                     <option disabled selected>{applicant?.marital}</option>
                                     <option> Single</option>
                                     <option> Married</option>
@@ -86,11 +221,27 @@ export default function UpdateEmployeeFormSection() {
                             </div>
                             <div className='flex flex-col w-full'>
                                 <label htmlFor=""><b>Religion</b></label>
-                                <input type="text" value={applicant?.religion} className="border p-2 rounded w-full" />
+                                <input type="text"
+                                    value={form?.religion ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            religion: e.target.value,
+                                        })
+                                    }
+                                    className="border p-2 rounded w-full" />
                             </div>
                             <div className='flex flex-col w-full'>
                                 <label htmlFor=""><b>Nationality</b></label>
-                                <input type="text" value={applicant?.nationality} className="border p-2 rounded w-full" />
+                                <input type="text"
+                                    value={form?.nationality ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            nationality: e.target.value,
+                                        })
+                                    }
+                                    className="border p-2 rounded w-full" />
                             </div>
                         </div>
                     </div>
@@ -98,16 +249,40 @@ export default function UpdateEmployeeFormSection() {
                 </div>
                 <div className="mb-4">
                     <label htmlFor=""><b>Mother's Maiden Name</b></label>
-                    <input type="text" value={applicant?.mmname} className="border p-2 rounded w-full " />
+                    <input type="text"
+                        value={form?.mmname ?? ''}
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                mmname: e.target.value,
+                            })
+                        }
+                        className="border p-2 rounded w-full " />
                 </div>
                 <div className="mb-4">
                     <label htmlFor=""><b>Father's Full Name</b></label>
-                    <input type="text" value={applicant?.ffname} className="border p-2 rounded w-full " />
+                    <input type="text"
+                        value={form?.ffname ?? ''}
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                ffname: e.target.value,
+                            })
+                        }
+                        className="border p-2 rounded w-full " />
                 </div>
                 <div className='flex flex-1 gap-4 mb-4'>
                     <div className="w-full">
                         <label htmlFor=""><b>Highest Educational Attainment</b></label>
-                        <select className="border p-2 rounded w-full">
+                        <select
+                            value={form?.educ ?? ''}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    educ: e.target.value,
+                                })
+                            }
+                            className="border p-2 rounded w-full">
                             <option disabled selected>{applicant?.educ}</option>
                             <option> Elementary Undergraduate</option>
                             <option> Elementary Graduate</option>
@@ -122,7 +297,15 @@ export default function UpdateEmployeeFormSection() {
                     </div>
                     <div className="w-full">
                         <label htmlFor=""><b>Course Taken (Only if Applicable)</b></label>
-                        <input type="text" value={applicant?.courset} className="border p-2 rounded w-full " />
+                        <input type="text"
+                            value={form?.courset ?? ''}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    courset: e.target.value,
+                                })
+                            }
+                            className="border p-2 rounded w-full " />
                     </div>
                 </div>
 
@@ -130,7 +313,13 @@ export default function UpdateEmployeeFormSection() {
                     <div className='flex flex-col w-full mb-4'>
                         <div className='flex flex-1 gap-3'>
                             <select
-                                onChange={(event) => data_handler(event)}
+                                value={form?.position ?? ''}
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        position: e.target.value,
+                                    })
+                                }
                                 name='position'
                                 className="border p-2 rounded  w-full">
                                 <option disabled selected>Job Position</option>
@@ -145,7 +334,13 @@ export default function UpdateEmployeeFormSection() {
                                 }
                             </select>
                             <select
-                                onChange={(event) => data_handler(event)}
+                                value={form?.dept ?? ''}
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        dept: e.target.value,
+                                    })
+                                }
                                 name='dept'
                                 className="border p-2 rounded  w-full">
                                 <option disabled selected>Department</option>
@@ -160,10 +355,17 @@ export default function UpdateEmployeeFormSection() {
                                 }
                             </select>
                             <select
-                                onChange={(event) => data_handler(event)}
+                                value={form?.account ?? ''}
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        account: e.target.value,
+                                    })
+                                }
                                 name='account'
                                 className="border p-2 rounded  w-full">
                                 <option disabled selected>Account (If Applicable)</option>
+                                <option value="">--</option>
                                 {
                                     accounts
                                         // .filter(res => res.site === "San Carlos")
@@ -181,9 +383,14 @@ export default function UpdateEmployeeFormSection() {
                     <div className='flex flex-col w-full mb-4'>
                         <div className='flex flex-1 gap-3'>
                             <select
-                                onChange={(event) => data_handler(event)}
+                                value={form?.sup_id ?? ''}
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        sup_id: e.target.value,
+                                    })
+                                }
                                 name='sup_id'
-                                value={applicant.sup_id}
                                 className="border p-2 rounded  w-full">
                                 <option disabled selected>Supervisor</option>
                                 {
@@ -201,17 +408,28 @@ export default function UpdateEmployeeFormSection() {
                                 }
                             </select>
                             <Input
-                                onChange={(event) => data_handler(event)}
-                                value={applicant.hired ?? ""}
+                                value={form?.hired ?? ''}
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        hired: e.target.value,
+                                    })
+                                }
                                 name="hired"
                                 label="Hired Date"
                                 type="date"
                             />
                             <select
-                                onChange={(event) => data_handler(event)}
+                                value={form?.status ?? ''}
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        status: e.target.value,
+                                    })
+                                }
                                 name='status'
                                 className="border p-2 rounded  w-full">
-                                <option disabled selected>Status</option>
+                                <option disabled selected>{employee?.status}</option>
                                 <option> Probationary</option>
                                 <option> Regular</option>
                             </select>
@@ -233,48 +451,120 @@ export default function UpdateEmployeeFormSection() {
                 <div className='flex flex-1 gap-4 mb-4'>
                     <div className="w-full">
                         <label htmlFor=""><b>SSS No.</b></label>
-                        <input type="text" value={applicant?.sss} className="border p-2 rounded w-full " />
+                        <input type="text"
+                            value={form?.sss ?? ''}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    sss: e.target.value,
+                                })
+                            }
+                            className="border p-2 rounded w-full " />
                     </div>
                     <div className="w-full">
                         <label htmlFor=""><b>Pag-IBIG No.</b></label>
-                        <input type="text" value={applicant?.pagibig} className="border p-2 rounded w-full " />
+                        <input type="text"
+                            value={form?.pagibig ?? ''}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    pagibig: e.target.value,
+                                })
+                            }
+                            className="border p-2 rounded w-full " />
                     </div>
                 </div>
                 <div className='flex flex-1 gap-4 mb-4'>
                     <div className="w-full">
                         <label htmlFor=""><b>Tin No.</b></label>
-                        <input type="text" value={applicant?.tin} className="border p-2 rounded w-full " />
+                        <input type="text"
+                            value={form?.tin ?? ''}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    tin: e.target.value,
+                                })
+                            }
+                            className="border p-2 rounded w-full " />
                     </div>
                     <div className="w-full">
                         <label htmlFor=""><b>Philhealth No.</b></label>
-                        <input type="text" value={applicant?.philh} className="border p-2 rounded w-full " />
+                        <input type="text"
+                            value={form?.philh ?? ''}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    philh: e.target.value,
+                                })
+                            }
+                            className="border p-2 rounded w-full " />
                     </div>
                 </div>
                 <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Emergency Contact Information</h1>
                 <div className="mb-4 w-full">
                     <label htmlFor=""><b>Emergency Contact Fullname</b></label>
-                    <input type="text" value={applicant?.ename} className="border p-2 rounded w-full " />
+                    <input type="text"
+                        value={form?.ename ?? ''}
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                ename: e.target.value,
+                            })
+                        }
+                        className="border p-2 rounded w-full " />
                 </div>
                 <div className="mb-4 w-full">
                     <label htmlFor=""><b>Address</b></label>
-                    <input type="text" value={applicant?.eaddress} className="border p-2 rounded w-full " />
+                    <input type="text"
+                        value={form?.eaddress ?? ''}
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                eaddress: e.target.value,
+                            })
+                        }
+                        className="border p-2 rounded w-full " />
                 </div>
                 <div className='flex flex-1 gap-4 mb-4'>
                     <div className="w-full">
                         <label htmlFor=""><b>Relationship</b></label>
-                        <input type="text" value={applicant?.relationship} className="border p-2 rounded w-full " />
+                        <input type="text"
+                            value={form?.relationship ?? ''}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    relationship: e.target.value,
+                                })
+                            }
+                            className="border p-2 rounded w-full " />
                     </div>
                     <div className="w-full">
                         <label htmlFor=""><b>Contact No.</b></label>
-                        <input type="number" value={applicant?.ephone} className="border p-2 rounded w-full " />
+                        <input type="number"
+                            value={form?.ephone ?? ''}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    ephone: e.target.value,
+                                })
+                            }
+                            className="border p-2 rounded w-full " />
                     </div>
                 </div>
                 <div className='flex gap-2 justify-end items-center mt-6'>
-                    <button className='hover:bg-slate-300 p-2 rounded-md'>
-                        Cancel
-                    </button>
-                    <button className='bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md'>
-                        Save Changes
+                    <button
+                        type="submit"
+                        className={` bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg ${loading ? "cursor-not-allowed opacity-75" : ""
+                            }`}
+                        onClick={edit_information}
+                        disabled={loading}
+                    >
+                        {loading ? (
+                            <LoadingOutlined spin />
+                        ) : (
+                            <></>
+                        )}
+                        {loading ? " UPDATING..." : "  Save Changes"}
                     </button>
                 </div>
             </form>

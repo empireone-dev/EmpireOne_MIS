@@ -317,23 +317,28 @@ export default function ApplicantsTableSection() {
     return (
         <div>
             <div className="flex justify-between items-center ">
-                <div className="flex items-center gap-x-3 mb-4">
+                <div className="flex items-center gap-x-3 mb-3">
                     <h2 className="text-lg font-medium text-gray-800">
                         <b>Applicant(s) Records</b>
                     </h2>
-                    <AddApplicantsSection />
+
                 </div>
             </div>
 
-            <div className="flex flex-col items-start w-96">
-                <ApplicantSearchSection />
+            <div className="flex flex-1 justify-between w-full items-start">
+                <div>
+                    <ApplicantSearchSection />
+                </div>
+                <div className="flex justify-end items-center mr-5">
+                    <AddApplicantsSection />
+                </div>
             </div>
 
             <Table
                 pagination={paginationConfig}
                 columns={columns}
                 dataSource={filteredDatas}
-                className="mt-4"
+                className="mt-1"
             />
 
             <div className="w-full">

@@ -9,6 +9,7 @@ import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import { router } from "@inertiajs/react";
 import DeclinedReasonSection from "./declined-reason-section";
+import HiringSearchSection from "./hiring-search-section";
 
 export default function HiringTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -279,6 +280,9 @@ export default function HiringTableSection() {
                         <b>Hiring Section</b>
                     </h2>
                 </div>
+            </div>
+            <div className="flex flex-1 justify-between w-full items-start">
+                <HiringSearchSection />
             </div>
             <Table
                 pagination={false}

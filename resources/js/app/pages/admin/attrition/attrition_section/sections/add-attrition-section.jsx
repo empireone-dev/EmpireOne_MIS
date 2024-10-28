@@ -3,6 +3,7 @@ import {
     PlusSquareFilled,
     PlusSquareTwoTone,
     UserAddOutlined,
+    UserDeleteOutlined,
 } from "@ant-design/icons";
 import { Modal, Select } from "antd";
 import React from "react";
@@ -67,8 +68,8 @@ export default function AddAttritionSection() {
                     onClick={() => setOpen(true)}
                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-transparent border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-500 focus:bg-blue-500 focus:text-white      gap-1"
                 >
-                    <PlusSquareTwoTone className="text-xl" />
-                    Select Employee
+                    <UserDeleteOutlined className="text-xl" />
+                    Select Employee Attirition
                 </button>
             </div>
             <Modal
@@ -98,7 +99,7 @@ export default function AddAttritionSection() {
                             type="text"
                             id="simple-search"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
-                            placeholder="Search branch name..."
+                            placeholder="Search employee..."
                         />
                     </div>
                     <button

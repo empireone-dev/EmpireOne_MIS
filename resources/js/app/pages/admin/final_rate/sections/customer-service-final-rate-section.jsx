@@ -27,15 +27,15 @@ export default function CustomerServiceFinalRateSection() {
                 <label htmlFor=""><b>CUSTOMER SERVICE SCORE</b></label>
                 <div className='flex flex-1 w-full gap-8 mt-1'>
                     <FinalRateMarkComponent onChange={handleRate} rate="1 - Very Poor" name="cscore" value="1" />
-                    <FinalRateMarkComponent onChange={handleRate} rate="2 - Poor" name="cscore" value="2"/>
-                    <FinalRateMarkComponent onChange={handleRate} rate="3 - Average" name="cscore" value="3"/>
-                    <FinalRateMarkComponent onChange={handleRate} rate="4 - Good" name="cscore" value="4"/>
-                    <FinalRateMarkComponent onChange={handleRate} rate="5 - Excellent" name="cscore" value="5"/>
+                    <FinalRateMarkComponent onChange={handleRate} rate="2 - Poor" name="cscore" value="2" />
+                    <FinalRateMarkComponent onChange={handleRate} rate="3 - Average" name="cscore" value="3" />
+                    <FinalRateMarkComponent onChange={handleRate} rate="4 - Good" name="cscore" value="4" />
+                    <FinalRateMarkComponent onChange={handleRate} rate="5 - Excellent" name="cscore" value="5" />
                 </div>
             </div>
             <div className='mt-6'>
                 <label htmlFor=""><b>CUSTOMER SERVICE NOTES</b></label>
-                <textarea  onChange={handleRate} name='cnotes' type="text" placeholder="" className="border p-2 rounded w-full mt-1 h-40" />
+                <textarea onChange={handleRate} name='cnotes' type="text" placeholder="" className="border p-2 rounded w-full mt-1 h-40" />
             </div>
         </div>
     )

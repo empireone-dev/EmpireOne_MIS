@@ -8,7 +8,7 @@ import moment from 'moment';
 // import Input from '../../_components/input';
 // import Select from '../../_components/select';
 import { useEffect } from 'react';
-import { PlusSquareTwoTone } from '@ant-design/icons'
+import { UserAddOutlined } from '@ant-design/icons'
 import { message, Modal } from 'antd';
 import React, { useState } from 'react'
 import UploadResumeSection from './upload-resume-section';
@@ -199,7 +199,7 @@ export default function AddExistingEmployeeSection({ data }) {
                     onClick={() => setOpen(true)}
                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-transparent border border-blue-500 rounded-e-lg hover:bg-blue-500 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-500 focus:bg-blue-500 focus:text-white      gap-1"
                 >
-                    <PlusSquareTwoTone className='text-xl' />
+                    <UserAddOutlined className='text-xl' />
                     Add Existing Employee
                 </button>
             </div>

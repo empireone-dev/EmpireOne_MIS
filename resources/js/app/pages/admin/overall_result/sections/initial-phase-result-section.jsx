@@ -17,7 +17,7 @@ export default function InitialPhaseResultSection() {
                         </label>
                         <input
                             type="number"
-                            value={applicant?.lname}
+                            value={applicant?.app_id}
                             placeholder=""
                             className="border p-2 rounded w-full"
                             readOnly

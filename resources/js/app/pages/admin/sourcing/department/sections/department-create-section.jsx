@@ -7,6 +7,7 @@ import {
     get_department_thunk,
 } from "../redux/department-thunk";
 import { useSelector } from "react-redux";
+import { PlusSquareTwoTone } from "@ant-design/icons";
 
 const DepartmentCreateSection = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -53,9 +54,14 @@ const DepartmentCreateSection = () => {
 
     return (
         <>
-            <Button type="primary" onClick={showModal}>
+            <button
+                type="button"
+                onClick={showModal}
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-transparent border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white gap-1"
+            >
+                <PlusSquareTwoTone className='text-xl' />
                 Create Department
-            </Button>
+            </button>
             <Modal
                 title="Create Department"
                 open={isModalOpen}

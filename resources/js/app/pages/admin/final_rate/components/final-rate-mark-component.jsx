@@ -9,6 +9,7 @@ export default function FinalRateMarkComponent({ rate, value, name, onChange, sc
         type="radio"
         value={value}
         name={name}
+        checked={value == score}
         defaultChecked={value == score}
         className="w-4 h-4 text-blue-600 bg-gray-100 border-black focus:ring-blue-500 focus:ring-2 mr-1"
       />

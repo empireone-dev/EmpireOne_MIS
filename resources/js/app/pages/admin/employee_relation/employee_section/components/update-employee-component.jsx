@@ -8,7 +8,7 @@ export default function UpdateEmployeeComponent({ data, item }) {
 
     const [modalOpen, setModalOpen] = useState(false);
     function openHandler(params) {
-        router.visit(`/admin/employee_relation/employee_section/update_employee/${data.app_id}`);
+        window.open(`/admin/employee_relation/employee_section/update_employee/${data.app_id}`, "_blank");
     }
 
     console.log('data', data)

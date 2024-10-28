@@ -1,6 +1,6 @@
 import Summernote from "@/app/pages/_components/summernote";
 import store from "@/app/store/store";
-import { PlusSquareTwoTone } from "@ant-design/icons";
+import { FileAddOutlined, PlusSquareTwoTone } from "@ant-design/icons";
 import { message, Modal } from "antd";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -46,7 +46,7 @@ console.log('formform',form)
                     onClick={() => setOpen(true)}
                     className="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-transparent border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-500 focus:bg-blue-500 focus:text-white gap-1"
                 >
-                    <PlusSquareTwoTone className="text-xl" />
+                    <FileAddOutlined className="text-xl" />
                     Add Onboarding Documents
                 </button>
             </div>

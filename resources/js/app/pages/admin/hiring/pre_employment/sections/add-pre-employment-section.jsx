@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { store_checklist_thunk } from '../redux/pre-employment-thunk';
 import { setChecklistForm } from '../redux/pre-employment-slice';
+import { FolderAddOutlined } from '@ant-design/icons';
 
 export default function AddPreEmploymentSection() {
     const [open, setOpen] = useState(false);
@@ -33,8 +34,9 @@ export default function AddPreEmploymentSection() {
             <button
                 type="button"
                 onClick={() => setOpen(true)}
-                class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-transparent border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white focus:ring-2 focus:ring-blue-500"
+                class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-transparent border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white gap-1"
             >
+                <FolderAddOutlined className='text-xl' />
                 Add Pre-Employment Requirements
             </button>
             <Modal

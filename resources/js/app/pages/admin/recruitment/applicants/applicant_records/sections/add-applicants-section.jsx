@@ -207,12 +207,12 @@ export default function AddApplicantsSection() {
     }
     console.log("applicantForm", applicantForm);
     return (
-        <div className="my-2">
+        <div className="my-3">
             <div class="inline-flex rounded-md shadow-sm" role="group">
                 <button
                     type="button"
                     onClick={() => setOpen(true)}
-                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-transparent border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-500 focus:bg-blue-500 focus:text-white      gap-1"
+                    class="inline-flex items-center px-4 py-2 text-sm font-medium bg-blue-500 hover:bg-blue-700 text-white border rounded-lg gap-1"
                 >
                     <UserPlusIcon className="h-5" />
                     Add New Applicant

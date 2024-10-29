@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { update_applicant_thunk } from '@/app/pages/admin/recruitment/applicants/applicant_records/redux/applicant-thunk';
 import { useEffect } from 'react';
 import { get_applicant_by_app_id_thunk } from '@/app/pages/admin/final_rate/redux/final-rate-thunk';
+import { get_employee_by_id_thunk } from '../../redux/employee-section-thunk';
 
 export default function UpdateEmployeeFormSection() {
     const { employee } = useSelector((state) => state.employees);
@@ -23,6 +24,7 @@ export default function UpdateEmployeeFormSection() {
 
     useEffect(() => {
         setForm({
+            app_id: applicant?.app_id,
             id: applicant?.id,
             fname: applicant?.fname || "",
             mname: applicant?.mname || "",
@@ -66,6 +68,7 @@ export default function UpdateEmployeeFormSection() {
         try {
             await store.dispatch(update_applicant_thunk(form)); // Pass form as an object
             await store.dispatch(get_applicant_by_app_id_thunk(app_id));
+            await store.dispatch(get_employee_by_id_thunk(app_id));
             message.success('Updated Successfully');
         } catch (error) {
             message.error(error.message || 'Error updating changes');

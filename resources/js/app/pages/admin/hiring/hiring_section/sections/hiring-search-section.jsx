@@ -27,7 +27,7 @@ export default function HiringSearchSection() {
     }
 
     return (
-        <form onSubmit={search_data} className="w-96  my-2">
+        <form onSubmit={search_data} className="w-96 my-2">
             <label
                 htmlFor="default-search"
                 className="mb-2 text-sm font-medium text-gray-900 sr-only "
@@ -58,7 +58,7 @@ export default function HiringSearchSection() {
                     type="search"
                     id="default-search"
                     className="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 "
-                    placeholder="Search Applicant"
+                    placeholder="Search Employee"
                 />
                 <button
                     type="submit"

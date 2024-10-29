@@ -99,7 +99,7 @@ export default function UpdateEmployeeAddressSection() {
                         type='button'
                         className='text-2xl ml-2'
                         onClick={openHandler}
-                    ><EditOutlined />
+                    ><HomeOutlined />
                     </button>
                 </div>
             </Tooltip>
@@ -187,7 +187,7 @@ export default function UpdateEmployeeAddressSection() {
                                 onClick={submit_edit_address}
                                 disabled={loading}
                             >
-                                <HomeOutlined/> UPDATE NEW ADDRESS
+                                <HomeOutlined /> UPDATE NEW ADDRESS
                                 {/* {loading ? (
                                     <LoadingOutlined spin />
                                 ) : (

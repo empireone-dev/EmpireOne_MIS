@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Applicant;
 use App\Models\CVFile;
+use App\Models\Employee;
 use App\Models\JobOffer;
 use App\Models\User;
 use App\Models\WorkingExperience;
@@ -156,6 +157,7 @@ class ApplicantController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Update Applicant
         $applicant = Applicant::find($id);
 
         if (!$applicant) {
@@ -166,10 +168,36 @@ class ApplicantController extends Controller
 
         $applicant->update($request->all());
 
-        return response()->json([
-            'data' => 'success'
-        ], 200);
+
+        $employee = Employee::where('app_id', '=', $request->app_id)->first();
+
+        if (!$employee) {
+            return response()->json([
+                'message' => 'Employee not found.',
+            ], 404);
+        }
+
+        $employee->update($request->all());
+
+        // // Update Job Offer
+        // $jo = JobOffer::where('app_id', '=', $request->app_id)->first();
+
+        // if (!$jo) {
+        //     return response()->json([
+        //         'message' => 'Job offer not found.',
+        //     ], 404);
+        // }
+
+        // $jo->update([
+        //     'jobPos' => $request->status,
+        //     'salary' => $request->reas,
+        // ]);
+
+        // return response()->json([
+        //     'data' => 'success'
+        // ], 200);
     }
+
 
 
     public function update_address(Request $request, $id)

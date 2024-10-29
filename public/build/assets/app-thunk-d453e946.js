@@ -1,1 +1,0 @@
-import{g as r,a as u,u as c}from"./user-service-b1e11d74.js";import{f as a}from"./app-3f091e2d.js";function _(t){return async function(s,e){const n=await u();s(a.actions.setUser(n))}}function g(){return async function(t,s){const e=(await r()).result;console.log("waaa",e),t(a.actions.setUsers(e))}}function p(t){return async function(s,e){await c(t)}}export{_ as a,g,p as u};

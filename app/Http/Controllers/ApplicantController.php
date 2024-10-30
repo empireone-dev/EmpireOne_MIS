@@ -31,21 +31,25 @@ class ApplicantController extends Controller
             'data' => $applicant
         ], 200);
     }
+    
     public function index(Request $request)
     {
-        $applicant = Applicant::query()->with(['final', 'initial', 'joboffer', 'user']);
-        $user = User::where('position', '=', 'CEO')
-            ->orWhere('position', '=', 'Manager')
-            ->orWhere('position', '=', 'Director')->get();
+        $applicant = Applicant::query()
+            ->with(['final', 'initial', 'joboffer', 'user'])
+            ->orderBy('status'); // Sort by status in ascending order
+
+        $user = User::whereIn('position', ['CEO', 'Manager', 'Director'])->get();
+
         if ($request->search) {
             $applicant->where('status', $request->search);
         }
+
         if ($request->searching) {
             $applicant->where(function ($query) use ($request) {
-                $query->where('fname', 'LIKE', '%' . $request->searching . '%') // Search by first name
-                    ->orWhere('lname', 'LIKE', '%' . $request->searching . '%') // Search by last name
-                    ->orWhere('mname', 'LIKE', '%' . $request->searching . '%') // Search by last name
-                    ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%'); // Search by applicant ID
+                $query->where('fname', 'LIKE', '%' . $request->searching . '%')
+                    ->orWhere('lname', 'LIKE', '%' . $request->searching . '%')
+                    ->orWhere('mname', 'LIKE', '%' . $request->searching . '%')
+                    ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%');
             });
         }
 
@@ -54,6 +58,7 @@ class ApplicantController extends Controller
             'data' => $applicant->paginate(10)
         ], 200);
     }
+
 
     public function store(Request $request)
     {

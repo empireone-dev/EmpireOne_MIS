@@ -10,21 +10,19 @@ import { useDispatch } from 'react-redux';
 import { useState } from 'react';
 
 export default function EmployeeRelationPage() {
-  useEffect(() => {
-    store.dispatch(get_employee_thunk())
-    store.dispatch(get_applicant_thunk())
-    store.dispatch(get_hired_applicant_thunk())
-  }, []);
 
-  const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
+
   useEffect(() => {
     async function loadData() {
       await store.dispatch((get_employee_thunk()))
+      await store.dispatch(get_applicant_thunk())
+      await store.dispatch(get_hired_applicant_thunk())
       setLoading(false)
     }
     loadData()
-  }, [loading]);
+  }, []);
+  
   return (
     <AdminLayout>
       {loading ? (

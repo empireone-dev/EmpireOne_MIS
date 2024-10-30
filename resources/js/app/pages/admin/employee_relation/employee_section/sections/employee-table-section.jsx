@@ -7,6 +7,7 @@ import AddEmployeeButtonSection from "./add-employee-button-section";
 import EmployeeMenuSection from "./employee-menu-section";
 import { router } from "@inertiajs/react";
 import EmployeeSearchSection from "./employee-search-section";
+import SearchBranchSection from "./search-branch-section";
 
 export default function EmployeeTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -236,7 +237,7 @@ export default function EmployeeTableSection() {
         const newUrl = window.location.pathname + "?" + searchParams.toString();
         router.visit(newUrl);
     };
-    const pageSize = 10; 
+    const pageSize = 10;
     // const isStatus = getQueryParam(url, "status");
     return (
         <div>
@@ -246,7 +247,10 @@ export default function EmployeeTableSection() {
                         <b>Employee Section</b>
                     </h2>
                 </div>
-                <AddEmployeeButtonSection data={applicant} />
+                <div className="flex items-center justify-between">
+                    <AddEmployeeButtonSection data={applicant} />
+                    <SearchBranchSection />
+                </div>
             </div>
             <EmployeeSearchSection />
             <Table
@@ -256,11 +260,14 @@ export default function EmployeeTableSection() {
             />
             <div className="flex">
                 <div className="w-full mt-3.5">
-                    {employees.total > 0 ? (
-                        `Showing ${(currentPage - 1) * pageSize + 1} to ${Math.min(currentPage * pageSize, employees.total)} of ${employees.total} entries`
-                    ) : (
-                        "No entries available"
-                    )}
+                    {employees.total > 0
+                        ? `Showing ${
+                              (currentPage - 1) * pageSize + 1
+                          } to ${Math.min(
+                              currentPage * pageSize,
+                              employees.total
+                          )} of ${employees.total} entries`
+                        : "No entries available"}
                 </div>
                 <div className="flex w-full items-center justify-end mt-2">
                     <Pagination

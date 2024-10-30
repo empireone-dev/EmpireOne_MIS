@@ -22,7 +22,6 @@ export default function ApplicantsTableSection() {
         (state) => state.applicants
     );
 
-
     const filteredDatas = applicants.data;
     // const filterDatas = (selectedStats) => {
     //     if (selectedStats.length === 0) {
@@ -278,6 +277,13 @@ export default function ApplicantsTableSection() {
             },
         },
         {
+            title: "Site",
+            dataIndex: "site",
+            render: (_, record) => {
+                return <>{record.site}</>;
+            },
+        },
+        {
             title: "Action",
             dataIndex: "action",
             render: (_, record) => {
@@ -321,7 +327,6 @@ export default function ApplicantsTableSection() {
                     <h2 className="text-lg font-medium text-gray-800">
                         <b>Applicant(s) Records</b>
                     </h2>
-
                 </div>
             </div>
 
@@ -342,13 +347,13 @@ export default function ApplicantsTableSection() {
             />
 
             <div className="w-full">
-                {applicants.total > 0 ? (
-                    `Showing ${(page - 1) * pageSize + 1} to ${Math.min(page * pageSize, applicants.total)} of ${applicants.total} entries`
-                ) : (
-                    "No entries available"
-                )}
+                {applicants.total > 0
+                    ? `Showing ${(page - 1) * pageSize + 1} to ${Math.min(
+                          page * pageSize,
+                          applicants.total
+                      )} of ${applicants.total} entries`
+                    : "No entries available"}
             </div>
         </div>
     );
-
 }

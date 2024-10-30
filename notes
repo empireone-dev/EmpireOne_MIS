@@ -6,3 +6,46 @@ applicant change nullable
 -app_id
 
 message on submitting applicant
+
+
+HRIS:
+-Check interviewer schedule menu action from google calendar on Final Phase Status
+http://127.0.0.1:8000/admin/recruitment/applicants/applicant_records?page=1
+
+-After done uploading a requirement, matangtang na ang requirement nga humanag upload
+http://127.0.0.1:8000/pre-employment/24022201?id=49
+
+-Search function for all tables
+http://127.0.0.1:8000/admin/sourcing/job_title_section
+http://127.0.0.1:8000/admin/sourcing/resource_requests/erf_record
+http://127.0.0.1:8000/admin/recruitment/guide_question
+http://127.0.0.1:8000/admin/hiring/pre_employment
+http://127.0.0.1:8000/admin/hiring/hiring_section
+http://127.0.0.1:8000/admin/onboarding/onboarding_docu
+http://127.0.0.1:8000/admin/onboarding/acknowledgement
+http://127.0.0.1:8000/admin/file_201/24021501?status=Contract%20Signing
+http://127.0.0.1:8000/admin/attrition/attrition_section
+
+-File IR
+http://127.0.0.1:8000/admin/employee_relation/employee_section
+
+-File NTE
+http://127.0.0.1:8000/admin/employee_relation/employee_section
+
+-Exit Clearance and Interview
+http://127.0.0.1:8000/admin/attrition/attrition_section
+http://127.0.0.1:8000/exit_interview/23071010
+http://127.0.0.1:8000/exit_clearance/23071010
+
+update password
+upper right corner button settings
+
+multiple click mabuang ang system or mag lag
+
+search bar function of all the pagination (current is just the first page) 
+
+
+
+
+
+

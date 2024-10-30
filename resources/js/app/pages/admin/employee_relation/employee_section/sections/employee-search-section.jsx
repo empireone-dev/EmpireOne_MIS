@@ -23,7 +23,7 @@ export default function EmployeeSearchSection() {
 
     function search_data(e) {
         e.preventDefault();
-        router.visit(newUrl);
+        router.visit(window.location.pathname+'?searching='+search);
     }
 
     return (

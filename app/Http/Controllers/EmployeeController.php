@@ -161,7 +161,4 @@ class EmployeeController extends Controller
             'data' => $employee
         ], 200);
     }
-
-
-    
 }

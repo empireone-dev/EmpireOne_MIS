@@ -45,7 +45,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+// Route::middleware('throttle:60,1')->group(function (Request $request) {
+//     return $request->employee();
+// });
+
+Route::middleware(['auth:sanctum', 'throttle:60,1'])->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::put('/user/{id}', [UserController::class, 'update']);

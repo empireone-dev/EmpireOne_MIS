@@ -7,7 +7,8 @@ export const applicantSlice = createSlice({
     applicantForm: {
       work_experience:[]
     },
-    interviewer:[]
+    interviewer:[],
+    filteredData:[],
   },
   reducers: {
     setApplicants: (state, action) => {
@@ -22,8 +23,11 @@ export const applicantSlice = createSlice({
     setInterviewer: (state, action) => {
       state.interviewer = action.payload
     },
+    setFilteredData: (state, action) => {
+      state.filteredData = action.payload
+    },
   },
 })
-export const { setApplicants, setApplicantForm, resetAppicant } = applicantSlice.actions
+export const { setApplicants, setApplicantForm, resetAppicant, setFilteredData } = applicantSlice.actions
 
 export default applicantSlice.reducer

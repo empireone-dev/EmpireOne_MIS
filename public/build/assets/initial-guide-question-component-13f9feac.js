@@ -1,1 +1,0 @@
-import{j as e}from"./app-8fcc972c.js";function s({question:c}){return e.jsxs("div",{className:"flex items-center mb-3 gap-1",children:[e.jsx("input",{checked:!0,id:"checked-checkbox",type:"checkbox",value:"",class:"w-4 h-4 text-blue-600 bg-gray-100 border-black rounded focus:ring-blue-500 focus:ring-2"}),e.jsx("h1",{children:e.jsx("b",{children:c})})]})}export{s as default};

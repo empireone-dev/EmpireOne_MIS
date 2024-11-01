@@ -13,10 +13,8 @@ export default function EmployeeTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
-    const { applicant } = useSelector((state) => state.final_rate);
     const { employees } = useSelector((state) => state.employees);
 
-    console.log("wsss", employees);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -248,7 +246,7 @@ export default function EmployeeTableSection() {
                     </h2>
                 </div>
                 <div className="flex items-center justify-between">
-                    <AddEmployeeButtonSection data={applicant} />
+                    <AddEmployeeButtonSection />
                     <SearchBranchSection />
                 </div>
             </div>
@@ -261,12 +259,11 @@ export default function EmployeeTableSection() {
             <div className="flex">
                 <div className="w-full mt-3.5">
                     {employees.total > 0
-                        ? `Showing ${
-                              (currentPage - 1) * pageSize + 1
-                          } to ${Math.min(
-                              currentPage * pageSize,
-                              employees.total
-                          )} of ${employees.total} entries`
+                        ? `Showing ${(currentPage - 1) * pageSize + 1
+                        } to ${Math.min(
+                            currentPage * pageSize,
+                            employees.total
+                        )} of ${employees.total} entries`
                         : "No entries available"}
                 </div>
                 <div className="flex w-full items-center justify-end mt-2">

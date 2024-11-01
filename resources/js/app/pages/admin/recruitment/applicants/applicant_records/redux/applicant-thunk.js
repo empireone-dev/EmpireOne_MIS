@@ -7,8 +7,6 @@ export function get_applicant_thunk() {
     const result = (await get_applicant_service())
     dispatch(applicantSlice.actions.setApplicants(result.data));
     dispatch(applicantSlice.actions.setInterviewer(result.interviewer));
-
-
   };
 }
 

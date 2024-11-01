@@ -5,11 +5,10 @@ import React, { useState } from "react";
 import { get_employee_thunk, store_new_employee_thunk } from "../redux/employee-section-thunk";
 import { useSelector } from "react-redux";
 
-export default function AddNewEmployeeSection({ data }) {
+export default function AddNewEmployeeSection() {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false); // Added loading state
     const { accounts } = useSelector((state) => state.accounts);
-    const { applicant } = useSelector((state) => state.applicants);
     const { users } = useSelector((state) => state.app);
     const { user } = useSelector((state) => state.app);
     const { hiredApplicants } = useSelector((store) => store.employees);

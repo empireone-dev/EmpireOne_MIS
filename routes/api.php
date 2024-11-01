@@ -49,12 +49,10 @@ use Illuminate\Support\Facades\Route;
 //     return $request->employee();
 // });
 
-Route::middleware(['auth:sanctum', 'throttle:60,1'])->get('/user', function (Request $request) {
+Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::put('/user/{id}', [UserController::class, 'update']);
-
-
 
 Route::post('/search_applicant', [ApplicantController::class, 'search_applicant']);
 Route::resource('applicant', ApplicantController::class);

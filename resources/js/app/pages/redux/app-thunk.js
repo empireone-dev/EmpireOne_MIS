@@ -18,9 +18,9 @@ export function get_user_thunk(app_id) {
 
 export function get_users_thunk() {
   return async function (dispatch, getState) {
-    const result = (await get_users_service()).result
-    console.log('waaa', result)
-    dispatch(appSlice.actions.setUsers(result));
+    const res = (await get_users_service()).result
+    console.log('waaa', res)
+    dispatch(appSlice.actions.setUsers(res));
   };
 }
 

@@ -31,14 +31,20 @@ const { Header, Sider, Content } = Layout;
 const AdminLayout = ({ children }) => {
     const { url } = usePage();
     const [collapsed, setCollapsed] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [changePassModalOpen, setChangePassModalOpen] = useState(false);
+    const [updateProfileModalOpen, setUpdateProfileModalOpen] = useState(false);
+    const { user } = useSelector((state) => state.app);
+
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
 
     useEffect(() => {
-        store.dispatch(get_users_thunk());
-        store.dispatch(get_user_thunk());
-    }, []);
+        // store.dispatch(get_users_thunk());
+            console.log('waaaa',user)
+            store.dispatch(get_user_thunk());
+    }, [user.id]);
     const items = [
         {
             key: "dashboard",
@@ -274,10 +280,6 @@ const AdminLayout = ({ children }) => {
         // },
     ];
 
-    const [isOpen, setIsOpen] = useState(false);
-    const [changePassModalOpen, setChangePassModalOpen] = useState(false);
-    const [updateProfileModalOpen, setUpdateProfileModalOpen] = useState(false);
-    const { user } = useSelector((state) => state.app);
     const dropdownRef = useRef(null);
 
     const handleButtonClick = () => {

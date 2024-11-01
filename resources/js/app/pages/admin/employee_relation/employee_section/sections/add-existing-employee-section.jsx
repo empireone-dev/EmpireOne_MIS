@@ -19,8 +19,10 @@ import Input from '@/app/pages/_components/input';
 import Select from '@/app/pages/_components/select';
 import { store_employee_thunk } from '../redux/employee-section-thunk';
 import { wait } from 'ckeditor5';
+import { get_job_position_thunk } from '../../../sourcing/job_title_section/redux/job-title-thunk';
+import { get_department_thunk } from '../../../sourcing/department/redux/department-thunk';
 
-export default function AddExistingEmployeeSection({ data }) {
+export default function AddExistingEmployeeSection() {
     const [open, setOpen] = useState(false);
     const { job_positions } = useSelector((state) => state.job_positions);
     const { departments } = useSelector((state) => state.departments);
@@ -39,6 +41,13 @@ export default function AddExistingEmployeeSection({ data }) {
     const [newBarangay, setNewBarangay] = useState([])
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if (open) {
+            store.dispatch(get_job_position_thunk())
+            store.dispatch(get_department_thunk())
+        }
+    }, [open]);
+    
     useEffect(() => {
         const fetchApplicationCount = async () => {
             const count = 0;

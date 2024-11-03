@@ -21,4 +21,5 @@ class Department extends Model
     {
         return $this->belongsTo(User::class, "depthead", "id");
     }
+    
 }

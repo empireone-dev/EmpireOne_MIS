@@ -16,7 +16,7 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         // Start with the base query
-        $query = Employee::query()->with(['applicant', 'user']);
+        $query = Employee::query()->with(['applicant', 'user', 'department']);
 
         // Apply searching if the searching parameter is present
         if ($request->searching) {
@@ -156,7 +156,7 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user'])->first();
+        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'department'])->first();
         return response()->json([
             'data' => $employee
         ], 200);

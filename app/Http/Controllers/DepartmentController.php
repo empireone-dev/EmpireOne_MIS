@@ -21,7 +21,7 @@ class DepartmentController extends Controller
     }
     public function show($id)
     {
-        $department = Department::where('id', $id)->first();
+        $department = Department::where('id', $id)->with(['user'])->first();
         return response()->json([
             'result' => $department
         ], 200);
@@ -49,7 +49,7 @@ class DepartmentController extends Controller
         $department->update($request->all());
 
         return response()->json([
-            'data' => Department::with('user')->get() 
+            'data' => Department::with('user')->get()
         ], 200);
     }
 }

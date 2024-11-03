@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import CheckboxInputComponent from '../components/checkbox-input-component';
 import TableRowComponent from '../components/table-row-component';
+import { useSelector } from 'react-redux';
 
 export default function ExitInterviewFormSection() {
+    const { employee } = useSelector((state) => state.employees);
+    const { user } = useSelector((state) => state.app);
+
+    console.log('employee', employee)
 
     return (
         <div className="h-screen overflow-hidden ">
@@ -21,23 +26,23 @@ export default function ExitInterviewFormSection() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Full Name:</b></label>
-                                            <input type="text" placeholder="Full name" className="border p-2 rounded w-full" />
+                                            <input type="text" value={`${employee?.applicant?.fname || ''} ${employee?.applicant?.mname || ''} ${employee?.applicant?.lname || ''}`} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Account / Department:</b></label>
-                                            <input type="text" placeholder="Account / Department:" className="border p-2 rounded w-full" />
+                                            <input type="text" value={employee?.account} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Date Hired:</b></label>
-                                            <input type="date" placeholder="Date Hired:" className="border p-2 rounded w-full" />
+                                            <input type="date" value={employee?.hired} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className=" w-full">
                                             <label htmlFor=""><b>Immediate Supervisor:</b></label>
-                                            <input type="text" placeholder="Immediate Supervisor:" className="border p-2 rounded w-full " />
+                                            <input type="text" value={`${employee?.user?.employee_fname || ''} ${employee?.user?.employee_mname || ''} ${employee?.user?.employee_lname || ''}`} className="border p-2 rounded w-full " />
                                         </div>
                                         <div className="w-full">
                                             <label htmlFor=""><b>Employment Status:</b></label>
-                                            <input type="text" placeholder="Employment Status:" className="border p-2 rounded w-full " />
+                                            <input type="text" value={employee?.status} className="border p-2 rounded w-full " />
                                         </div>
                                     </div>
                                 </div>
@@ -46,23 +51,23 @@ export default function ExitInterviewFormSection() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>ID Number:</b></label>
-                                            <input type="text" placeholder="Full name" className="border p-2 rounded w-full" />
+                                            <input type="text" value={employee?.app_id} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Position Title:</b></label>
-                                            <input type="text" placeholder="Position Title:" className="border p-2 rounded w-full" />
+                                            <input type="text" value={employee?.position} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Date Separated:</b></label>
-                                            <input type="date" placeholder="Date Separated:" className="border p-2 rounded w-full" />
+                                            <input type="date" value={employee?.attrition?.separation} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Department Manager:</b></label>
-                                            <input type="text" placeholder="" className="border p-2 rounded w-full" />
+                                            <input type="text" value={`${employee?.department?.depthead || ''} ${employee?.department?.employee_mname || ''} ${employee?.department?.employee_lname || ''}`} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Reason for Separation::</b></label>
-                                            <input type="text" placeholder="" className="border p-2 rounded w-full" />
+                                            <input type="text" value={employee?.attrition?.reas} className="border p-2 rounded w-full" />
                                         </div>
                                     </div>
                                 </div>
@@ -155,27 +160,27 @@ export default function ExitInterviewFormSection() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                            <TableRowComponent
-                                                title="Opportunities to use your abilities and skills"
-                                            />
-                                            <TableRowComponent
-                                                title="Expectation of the Job Task"
-                                            />
-                                            <TableRowComponent
-                                                title="Training received"
-                                            />
-                                            <TableRowComponent
-                                                title="Availability of the resources needed for the job"
-                                            />
-                                            <TableRowComponent
-                                                title="Recognition of your contribution"
-                                            />
-                                            <TableRowComponent
-                                                title="Cooperation within your department"
-                                            />
-                                            <TableRowComponent
-                                                title="Cooperation with other department"
-                                            />
+                                        <TableRowComponent
+                                            title="Opportunities to use your abilities and skills"
+                                        />
+                                        <TableRowComponent
+                                            title="Expectation of the Job Task"
+                                        />
+                                        <TableRowComponent
+                                            title="Training received"
+                                        />
+                                        <TableRowComponent
+                                            title="Availability of the resources needed for the job"
+                                        />
+                                        <TableRowComponent
+                                            title="Recognition of your contribution"
+                                        />
+                                        <TableRowComponent
+                                            title="Cooperation within your department"
+                                        />
+                                        <TableRowComponent
+                                            title="Cooperation with other department"
+                                        />
                                     </tbody>
                                 </table>
                             </div>
@@ -193,27 +198,27 @@ export default function ExitInterviewFormSection() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                            <TableRowComponent
-                                                title="My Supervisor had an understanding of my responsibilities"
-                                            />
-                                            <TableRowComponent
-                                                title="Overall relationship with my supervisor"
-                                            />
-                                            <TableRowComponent
-                                                title="I was treated fairly by my supervisor"
-                                            />
-                                            <TableRowComponent
-                                                title="My supervisor was receptive to and implemented suggestion"
-                                            />
-                                            <TableRowComponent
-                                                title="My supervisor's ability to handle complaints and problem"
-                                            />
-                                            <TableRowComponent
-                                                title="My supervisor has good/best management skills"
-                                            />
-                                            <TableRowComponent
-                                                title="My relationship with my co-workers"
-                                            />
+                                        <TableRowComponent
+                                            title="My Supervisor had an understanding of my responsibilities"
+                                        />
+                                        <TableRowComponent
+                                            title="Overall relationship with my supervisor"
+                                        />
+                                        <TableRowComponent
+                                            title="I was treated fairly by my supervisor"
+                                        />
+                                        <TableRowComponent
+                                            title="My supervisor was receptive to and implemented suggestion"
+                                        />
+                                        <TableRowComponent
+                                            title="My supervisor's ability to handle complaints and problem"
+                                        />
+                                        <TableRowComponent
+                                            title="My supervisor has good/best management skills"
+                                        />
+                                        <TableRowComponent
+                                            title="My relationship with my co-workers"
+                                        />
                                     </tbody>
                                 </table>
                             </div>

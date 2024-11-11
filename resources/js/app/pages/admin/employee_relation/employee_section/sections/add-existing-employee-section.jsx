@@ -117,6 +117,7 @@ export default function AddExistingEmployeeSection() {
         fd.append('account', applicantForm.account)
         fd.append('sup_id', applicantForm.sup_id)
         fd.append('province', applicantForm.province)
+        fd.append('status', applicantForm.status)
 
         try {
             applicantForm.work_experience.forEach((value) => {

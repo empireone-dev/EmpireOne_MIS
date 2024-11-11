@@ -139,11 +139,11 @@ export default function AddExistingEmployeeSection() {
             await store.dispatch(store_employee_thunk(fd));
             await store.dispatch(get_applicant_thunk())
             message.success('Employee Saved successfully')
-            setLoading(true)
+            setLoading(false)
             setOpen(false);
         } catch (error) {
             message.error('Employee failed to saved')
-            setLoading(true)
+            setLoading(false)
         }
     }
 

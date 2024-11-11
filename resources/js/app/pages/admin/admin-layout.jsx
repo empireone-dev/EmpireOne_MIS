@@ -41,9 +41,9 @@ const AdminLayout = ({ children }) => {
     } = theme.useToken();
 
     useEffect(() => {
-        // store.dispatch(get_users_thunk());
-            console.log('waaaa',user)
-            store.dispatch(get_user_thunk());
+        store.dispatch(get_users_thunk());
+        console.log('waaaa', user)
+        store.dispatch(get_user_thunk());
     }, [user.id]);
     const items = [
         {
@@ -331,7 +331,7 @@ const AdminLayout = ({ children }) => {
                                 <div className="inline-block relative shrink-0 cursor-pointer rounded-[.95rem]">
                                     <img
                                         className="w-[40px] h-[40px] shrink-0 inline-block rounded-[.95rem]"
-                                        src="https://www.transparentpng.com/thumb/user/gray-user-profile-icon-png-fP8Q1P.png" 
+                                        src="https://www.transparentpng.com/thumb/user/gray-user-profile-icon-png-fP8Q1P.png"
                                         alt="avatar image"
                                     />
                                 </div>
@@ -401,7 +401,7 @@ const AdminLayout = ({ children }) => {
                                         aria-labelledby="dropdownDefault"
                                     >
                                         <li class="flex items-center text-lg  px-2">
-                                            <UpdateProfile user = {user} />
+                                            <UpdateProfile user={user} />
                                             {/* <button
                                                 onClick={() => {
                                                     setUpdateProfileModalOpen(

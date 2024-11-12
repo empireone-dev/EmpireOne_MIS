@@ -3,6 +3,7 @@ import { Menu, Modal } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { create_incident_report_thunk } from "../redux/employee-section-thunk";
+import UploadFileIRSection from "../sections/upload-file-ir-section";
 
 export default function FileIrComponent({ data, item }) {
     const { user } = useSelector((state) => state.app);
@@ -43,7 +44,7 @@ export default function FileIrComponent({ data, item }) {
                 width={1000}
                 okText="GENERATE INCIDENT REPORT"
                 cancelText="CANCEL"
-                // footer={null}
+            // footer={null}
             >
                 <form class="w-full h-full">
                     <div class="flex flex-col -mx-3">
@@ -130,19 +131,20 @@ export default function FileIrComponent({ data, item }) {
                             />
                         </div>
 
-                        <div className="flex flex-1 ">
+                        <div className="flex flex-1 w-full mb-1 ">
                             <div class="w-full px-3">
                                 <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
+                                    class="block uppercase tracking-wide  text-xs font-bold mb-2 mt-2"
                                     for="grid-text"
                                 >
                                     Attachment
                                 </label>
-                                <input
+                                <UploadFileIRSection />
+                                {/* <input
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     type="file"
                                     placeholder=""
-                                />
+                                /> */}
                             </div>
                             <div class="w-full px-3">
                                 <label
@@ -152,7 +154,7 @@ export default function FileIrComponent({ data, item }) {
                                     Filed By
                                 </label>
                                 <input
-                                    class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    class="appearance-none block w-full   border border-gray-400 rounded py-2 px-4 mb-1.5 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     type="text"
                                     value={`${user.employee_fname} ${user.employee_lname}`}
                                     readOnly

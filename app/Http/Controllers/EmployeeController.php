@@ -15,27 +15,42 @@ class EmployeeController extends Controller
 {
     public function index(Request $request)
     {
-        // Start with the base query
+        // Start with the base query, eager loading relationships
         $query = Employee::query()->with(['applicant', 'user', 'department']);
 
+        // Apply account filter if the account parameter is present
+        if ($request->account != 'null' && $request->account != 'N/A' && $request->account) {
+            $query->where('account', '=', $request->account);
+        } else if ($request->account == 'N/A') {
+            $query->where('account', '=', null);
+            $query->orWhere('account', '=', '');
+        }
+        if ($request->status != 'null' && $request->status) {
+            $query->where('status', '=', $request->status);
+        }
         // Apply searching if the searching parameter is present
         if ($request->searching) {
             $query->where(function ($subQuery) use ($request) {
-                $subQuery->where('app_id', 'LIKE', '%' . $request->searching . '%') // Search by applicant ID
+                // Search by applicant ID
+                $subQuery->where('app_id', 'LIKE', '%' . $request->searching . '%')
                     ->orWhereHas('applicant', function ($query) use ($request) {
-                        $query->where('lname', 'LIKE', '%' . $request->searching . '%') // Search by last name in applicant relation
-                            ->orWhere('fname', 'LIKE', '%' . $request->searching . '%') // Search by first name in applicant relation
-                            ->orWhere('mname', 'LIKE', '%' . $request->searching . '%'); // Search by middle name in applicant relation
+                        // Search by last name, first name, or middle name in the applicant relation
+                        $query->where('lname', 'LIKE', '%' . $request->searching . '%')
+                            ->orWhere('fname', 'LIKE', '%' . $request->searching . '%')
+                            ->orWhere('mname', 'LIKE', '%' . $request->searching . '%');
                     });
             });
         }
+
         // Execute the query and paginate the results
         $applicants = $query->paginate(10);
 
+        // Return the results as JSON
         return response()->json([
             'data' => $applicants
         ], 200);
     }
+
 
     public function store(Request $request)
     {

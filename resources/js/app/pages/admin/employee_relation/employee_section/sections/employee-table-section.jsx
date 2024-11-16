@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Pagination, Space, Table, Tag } from "antd";
+import { Button, Input, Pagination, Select, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import AddEmployeeButtonSection from "./add-employee-button-section";
@@ -15,6 +15,7 @@ export default function EmployeeTableSection() {
     const searchInput = useRef(null);
     const { employees } = useSelector((state) => state.employees);
 
+    const url = window.location.pathname + window.location.search;
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -137,6 +138,28 @@ export default function EmployeeTableSection() {
             ),
     });
 
+    const accounts = [
+        { label: "JTV", value: "JTV" },
+        { label: "Service Market", value: "Service Market" },
+        { label: "Curtis", value: "Curtis" },
+        { label: "Aifi", value: "Aifi" },
+        { label: "Latham Pool", value: "Latham Pool" },
+        { label: "Weby", value: "Weby" },
+        { label: "N/A", value: "N/A" },
+    ]
+
+    const urls = new URL(window.location.href);
+    const searchParams = new URLSearchParams(urls.search);
+    const pages = searchParams.get('page');
+    const account = searchParams.get('account');
+    const status = searchParams.get('status');
+    function search_account(value) {
+        router.visit('?page=' + pages + '&account=' + value + '&status=' + status)
+    }
+    function search_status(value) {
+        router.visit('?page=' + pages + '&account=' + account + '&status=' + value)
+    }
+
     const columns = [
         {
             title: "Employee #",
@@ -173,21 +196,23 @@ export default function EmployeeTableSection() {
             // ...getColumnSearchProps("dept"),
         },
         {
-            title: "Account",
+            title: <div className="flex gap-3 items-center justify-center">
+
+                Account
+                <Select
+                    className="w-28"
+                    showSearch
+                    placeholder="Select an account"
+                    optionFilterProp="label"
+                    value={account}
+                    onChange={search_account}
+                    // onSearch={onSearch}
+                    options={accounts}
+                />
+            </div>,
             dataIndex: "account",
             key: "dept",
             render: (text) => text || "N/A",
-            filters: [
-                { text: "JTV", value: "JTV" },
-                { text: "Service Market", value: "Service Market" },
-                { text: "Curtis", value: "Curtis" },
-                { text: "Aifi", value: "Aifi" },
-                { text: "Latham Pool", value: "Latham Pool" },
-                { text: "Weby", value: "Weby" },
-                { text: "N/A", value: "N/A" },
-            ],
-            onFilter: (value, record) => record.account === value,
-            // ...getColumnSearchProps("dept"),
         },
         {
             title: "Email Address",
@@ -207,19 +232,39 @@ export default function EmployeeTableSection() {
             },
         },
         {
-            title: "Status",
+            title: <div className="flex gap-3 items-center justify-center">
+                Status
+                <Select
+                    className="w-28"
+                    showSearch
+                    placeholder="Select an account"
+                    optionFilterProp="label"
+                    value={status}
+                    onChange={search_status}
+                    // onSearch={onSearch}
+                    options={[
+                        { text: "Probationary", value: "Probationary" },
+                        { text: "Regular", value: "Regular" },
+                        { text: "Extended Probationary", value: "Extended Probationary" },
+                        { text: "EOPE", value: "EOPE" },
+                        { text: "Terminated", value: "Terminated" },
+                        { text: "AWOL", value: "AWOL" },
+                        { text: "Resigned", value: "Resigned" },
+                    ]}
+                />
+            </div>,
             dataIndex: "status",
             key: "status",
-            filters: [
-                { text: "Probationary", value: "Probationary" },
-                { text: "Regular", value: "Regular" },
-                { text: "Extended Probationary", value: "Extended Probationary" },
-                { text: "EOPE", value: "EOPE" },
-                { text: "Terminated", value: "Terminated" },
-                { text: "AWOL", value: "AWOL" },
-                { text: "Resigned", value: "Resigned" },
-            ],
-            onFilter: (value, record) => record.status === value,
+            // filters: [
+            //     { text: "Probationary", value: "Probationary" },
+            //     { text: "Regular", value: "Regular" },
+            //     { text: "Extended Probationary", value: "Extended Probationary" },
+            //     { text: "EOPE", value: "EOPE" },
+            //     { text: "Terminated", value: "Terminated" },
+            //     { text: "AWOL", value: "AWOL" },
+            //     { text: "Resigned", value: "Resigned" },
+            // ],
+            // onFilter: (value, record) => record.status === value,
             render: (_, record) => {
                 let color = "";
                 switch (record.status) {
@@ -236,7 +281,7 @@ export default function EmployeeTableSection() {
                     </Tag>
                 );
             },
-        },        
+        },
         {
             title: "Action",
             dataIndex: "action",
@@ -246,7 +291,6 @@ export default function EmployeeTableSection() {
         },
     ];
 
-    const url = window.location.pathname + window.location.search;
 
     const getQueryParam = (url, paramName) => {
         const searchParams = new URLSearchParams(url.split("?")[1]);

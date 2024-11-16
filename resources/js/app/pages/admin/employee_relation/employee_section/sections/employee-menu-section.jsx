@@ -1,31 +1,13 @@
 import React from "react";
 import { Button, Dropdown, message, Space, Modal, Menu } from "antd";
 import {
-    AuditOutlined,
-    CalendarOutlined,
-    CheckCircleFilled,
-    DotChartOutlined,
     DownOutlined,
     EditOutlined,
     FolderOpenOutlined,
-    InfoCircleOutlined,
-    LoadingOutlined,
-    MedicineBoxOutlined,
     PrinterOutlined,
     QrcodeOutlined,
-    RiseOutlined,
-    ScheduleOutlined,
     UsergroupAddOutlined,
 } from "@ant-design/icons";
-import { BriefcaseIcon } from "@heroicons/react/24/outline";
-import ApplicantDetaillsComponent from "../../../recruitment/applicants/applicant_records/components/applicant-detaills-component";
-import ApplicantSetScheduleComponent from "../../../recruitment/applicants/applicant_records/components/applicant-set-schedule-component";
-import ApplicantInitialRatingScale from "../../../recruitment/applicants/applicant_records/components/applicant-initial-rating-scale";
-import ApplicantProceedInitalPhaseComponent from "../../../recruitment/applicants/applicant_records/components/applicant-proceed-inital-phase-component";
-import ApplicantFinalRatingScaleComponent from "../../../recruitment/applicants/applicant_records/components/applicant-final-rating-scale-component";
-import ApplicantCheckScheduleComponent from "../../../recruitment/applicants/applicant_records/components/applicant-check-schedule-component";
-import ApplicantResultsComponent from "../../../recruitment/applicants/applicant_records/components/applicant-results-component";
-import ApplicantJobOfferComponent from "../../../recruitment/applicants/applicant_records/components/applicant-job-offer-component";
 import UpdateEmployeeComponent from "../components/update-employee-component";
 import File201Component from "../components/file-201-component";
 import EmploymentStatusComponent from "../components/employment-status-component";

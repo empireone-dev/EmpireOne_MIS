@@ -173,6 +173,23 @@ export default function EmployeeTableSection() {
             // ...getColumnSearchProps("dept"),
         },
         {
+            title: "Account",
+            dataIndex: "account",
+            key: "dept",
+            render: (text) => text || "N/A",
+            filters: [
+                { text: "JTV", value: "JTV" },
+                { text: "Service Market", value: "Service Market" },
+                { text: "Curtis", value: "Curtis" },
+                { text: "Aifi", value: "Aifi" },
+                { text: "Latham Pool", value: "Latham Pool" },
+                { text: "Weby", value: "Weby" },
+                { text: "N/A", value: "N/A" },
+            ],
+            onFilter: (value, record) => record.account === value,
+            // ...getColumnSearchProps("dept"),
+        },
+        {
             title: "Email Address",
             dataIndex: "eogs",
             key: "eogs",
@@ -193,6 +210,16 @@ export default function EmployeeTableSection() {
             title: "Status",
             dataIndex: "status",
             key: "status",
+            filters: [
+                { text: "Probationary", value: "Probationary" },
+                { text: "Regular", value: "Regular" },
+                { text: "Extended Probationary", value: "Extended Probationary" },
+                { text: "EOPE", value: "EOPE" },
+                { text: "Terminated", value: "Terminated" },
+                { text: "AWOL", value: "AWOL" },
+                { text: "Resigned", value: "Resigned" },
+            ],
+            onFilter: (value, record) => record.status === value,
             render: (_, record) => {
                 let color = "";
                 switch (record.status) {
@@ -209,7 +236,7 @@ export default function EmployeeTableSection() {
                     </Tag>
                 );
             },
-        },
+        },        
         {
             title: "Action",
             dataIndex: "action",
@@ -247,7 +274,7 @@ export default function EmployeeTableSection() {
                 </div>
                 <div className="flex items-center justify-between">
                     <AddEmployeeButtonSection />
-                    <SearchBranchSection />
+                    {/* <SearchBranchSection /> */}
                 </div>
             </div>
             <EmployeeSearchSection />

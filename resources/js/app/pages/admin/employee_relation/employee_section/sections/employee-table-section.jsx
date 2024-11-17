@@ -155,13 +155,14 @@ export default function EmployeeTableSection() {
     const status = searchParams.get('status');
     const site = searchParams.get('site');
     function search_account(value) {
-        router.visit('?page=' + pages + '&account=' + value + '&status=' + status + '&site=' + site)
+
+        router.visit('?page=' + pages + '&account=' + (value || 'null') + '&status=' + status + '&site=' + site)
     }
     function search_status(value) {
-        router.visit('?page=' + pages + '&account=' + account + '&status=' + value + '&site=' + site)
+        router.visit('?page=' + pages + '&account=' + account + '&status=' + (value || 'null') + '&site=' + site)
     }
     function search_site(value) {
-        router.visit('?page=' + pages + '&account=' + account + '&status=' + status + '&site=' + value)
+        router.visit('?page=' + pages + '&account=' + account + '&status=' + status + '&site=' + (value || 'null'))
     }
 
     const columns = [
@@ -205,11 +206,12 @@ export default function EmployeeTableSection() {
                 Account
                 <FilterOutlined /> */}
                 <Select
+                    allowClear
                     className="w-28"
                     showSearch
                     placeholder="Account"
                     optionFilterProp="label"
-                    value={account}
+                    value={account  == 'null'?null:account}
                     onChange={search_account}
                     // onSearch={onSearch}
                     options={accounts}
@@ -242,11 +244,13 @@ export default function EmployeeTableSection() {
                 Account
                 <FilterOutlined /> */}
                 <Select
+                    allowClear
                     className="w-28"
                     showSearch
                     placeholder="Site"
                     optionFilterProp="label"
-                    value={site}
+                    
+                    value={site  == 'null'?null:site}
                     onChange={search_site}
                     // onSearch={onSearch}
                     options={
@@ -273,11 +277,12 @@ export default function EmployeeTableSection() {
             title: <div className="flex gap-3 items-center justify-center">
                 {/* Status */}
                 <Select
+                    allowClear
                     className="w-28"
                     showSearch
                     placeholder="Status"
                     optionFilterProp="label"
-                    value={status}
+                    value={status  == 'null'?null:status}
                     onChange={search_status}
                     // onSearch={onSearch}
                     options={[

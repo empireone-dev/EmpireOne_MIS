@@ -1,0 +1,1 @@
+import{h as n}from"./app-7621599e.js";async function e(){return(await n.get("/api/applicant"+window.location.search)).data}async function i(a){return(await n.get("/api/applicant/"+a)).data}async function s(a){try{return(await n.post("/api/applicant",a)).data}catch(t){return t}}async function c(a){return(await n.put(`/api/applicant/${a.id}`,a)).data}export{i as a,e as g,s,c as u};

@@ -168,6 +168,23 @@ class EmployeeController extends Controller
         ], 200);
     }
 
+    public function update(Request $request, $id)
+    {
+        $employee = Employee::find($id);
+
+        if (!$employee) {
+            return response()->json([
+                'message' => 'Employee not found.',
+            ], 404);
+        }
+
+        $employee->update($request->all());
+
+        return response()->json([
+            'data' => Employee::with('user')->get()
+        ], 200);
+    }
+
 
     public function show($id)
     {

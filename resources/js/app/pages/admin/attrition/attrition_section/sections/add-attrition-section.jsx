@@ -332,12 +332,21 @@ export default function AddAttritionSection() {
                                     id=""
                                 >
                                     <option value=""></option>
-                                    <option>Resignation</option>
-                                    <option>Dismissal</option>
-                                    <option>Terminated</option>
-                                    <option>End of Contract</option>
-                                    <option>End of Probationary Employment</option>
-                                    <option>AWOL</option>
+                                    <option value="Resigned">Resignation</option>
+                                    <option value="Dismissal">Dismissal</option>
+                                    <option value="Terminated">Terminated</option>
+                                    <option value="End of Contract">End of Contract</option>
+                                    <option value="EOPE">EOPE (End of Probationary Employment)</option>
+                                    <option value="AWOL">AWOL (Absent Without Official Leave)</option>
+                                    {/* 
+                                    { text: "Probationary", value: "Probationary" },
+                        { text: "Regular", value: "Regular" },
+                        { text: "Extended Probationary", value: "Extended Probationary" },
+                        { text: "EOPE", value: "EOPE" },
+                        { text: "Terminated", value: "Terminated" },
+                        { text: "AWOL", value: "AWOL" },
+                        { text: "Resigned", value: "Resigned" },
+                                     */}
                                 </select>
                             </div>
                         </div>

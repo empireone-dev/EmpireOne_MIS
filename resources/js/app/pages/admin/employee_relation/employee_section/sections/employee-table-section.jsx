@@ -247,7 +247,9 @@ export default function EmployeeTableSection() {
                         { text: "Regular", value: "Regular" },
                         { text: "Extended Probationary", value: "Extended Probationary" },
                         { text: "EOPE", value: "EOPE" },
+                        { text: "End of Contract", value: "End of Contract" },
                         { text: "Terminated", value: "Terminated" },
+                        { text: "Dismissal", value: "Dismissed" },
                         { text: "AWOL", value: "AWOL" },
                         { text: "Resigned", value: "Resigned" },
                     ]}
@@ -271,8 +273,29 @@ export default function EmployeeTableSection() {
                     case "Probationary":
                         color = "#52D017";
                         break;
+                    case "Extended Probationary":
+                        color = "#52D017";
+                        break;
+                    case "EOPE":
+                        color = "#FF0000";
+                        break;
                     case "Regular":
                         color = "#43BFC7";
+                        break;
+                    case "Terminated":
+                        color = "#FF0000";
+                        break;
+                    case "Dismissed":
+                        color = "#FF0000";
+                        break;
+                    case "AWOL":
+                        color = "#FF0000";
+                        break;
+                    case "End of Contract":
+                        color = "#FF0000";
+                        break;
+                    case "Resigned":
+                        color = "#FF0000";
                         break;
                 }
                 return (

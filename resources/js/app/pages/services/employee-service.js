@@ -19,3 +19,8 @@ export async function store_new_employee_service(data) {
     const res = await axios.post('/api/store_new_employee', data)
     return res.data
 }
+
+export async function update_employee_service(data){
+    const res = await axios.put(`/api/employee/${data.id}`, data);
+    return res.data;
+  }

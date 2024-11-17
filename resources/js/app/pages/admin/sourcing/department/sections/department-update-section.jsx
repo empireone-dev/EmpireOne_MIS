@@ -39,7 +39,7 @@ export default function DepartmentUpdateSection({ data }) {
         } finally {
             setLoading(false);
         }
-    }
+    }   
 
     const handleCancel = () => {
         setIsModalOpen(false);

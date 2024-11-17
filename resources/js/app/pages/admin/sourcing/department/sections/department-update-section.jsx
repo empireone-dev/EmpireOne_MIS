@@ -8,14 +8,17 @@ import store from "@/app/store/store";
 
 export default function DepartmentUpdateSection({ data }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [form, setForm] = useState({
-        id: data?.id,
-        dept: data?.dept || "",
-        depthead: data?.user?.id || "",
-    });
+    const [form, setForm] = useState({});
     const [loading, setLoading] = useState(false);
     const { users } = useSelector((state) => state.app);
 
+    useEffect(() => {
+        setForm({
+            id: data?.id,
+            dept: data?.dept || "",
+            depthead: data?.user?.id || "",
+        })
+    }, []);
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -28,7 +31,8 @@ export default function DepartmentUpdateSection({ data }) {
 
         try {
             await store.dispatch(update_department_thunk({
-                ...form
+                ...form,
+                id: data.id
             }));
             await store.dispatch(get_department_thunk());
             message.success("Updated Successfully!");
@@ -39,14 +43,14 @@ export default function DepartmentUpdateSection({ data }) {
         } finally {
             setLoading(false);
         }
-    }   
+    }
 
     const handleCancel = () => {
         setIsModalOpen(false);
         setForm({
             dept: data?.dept || "",
             depthead: data?.user?.id || "",
-        }); 
+        });
     };
 
     return (
@@ -91,9 +95,9 @@ export default function DepartmentUpdateSection({ data }) {
                             }
                             value={form.depthead}
                         >
-                            <option value="">
+                            {/* <option value="">
                                 {data?.user?.employee_fname ?? ''} {data?.user?.employee_lname ?? ''}
-                            </option>
+                            </option> */}
                             {Array.isArray(users) &&
                                 users
                                     .filter((res) =>

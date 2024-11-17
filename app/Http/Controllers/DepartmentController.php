@@ -9,7 +9,7 @@ class DepartmentController extends Controller
 {
     public function index()
     {
-        $department = Department::get();
+        $department = Department::with(['user'])->get();
         return response()->json([
             'result' => $department
         ], 200);
@@ -38,7 +38,7 @@ class DepartmentController extends Controller
 
     public function update(Request $request, $id)
     {
-        $department = Department::find($id);
+        $department = Department::where('id',$id)->first();
 
         if (!$department) {
             return response()->json([

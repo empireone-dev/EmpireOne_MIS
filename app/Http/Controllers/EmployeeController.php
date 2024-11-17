@@ -18,6 +18,12 @@ class EmployeeController extends Controller
         // Start with the base query, eager loading relationships
         $query = Employee::query()->with(['applicant', 'user', 'department']);
 
+        if ($request->site != 'null' && $request->site) {
+            // $query->where('site', '=', $request->site);
+            $query->orWhereHas('applicant', function ($q) use ($request) {
+                $q->where('site', '=', $request->site);
+            });
+        }
         // Apply account filter if the account parameter is present
         if ($request->account != 'null' && $request->account != 'N/A' && $request->account) {
             $query->where('account', '=', $request->account);
@@ -28,9 +34,7 @@ class EmployeeController extends Controller
         if ($request->status != 'null' && $request->status) {
             $query->where('status', '=', $request->status);
         }
-        if ($request->site != 'null' && $request->site) {
-            $query->where('site', '=', $request->site);
-        }
+       
         // Apply searching if the searching parameter is present
         if ($request->searching) {
             $query->where(function ($subQuery) use ($request) {

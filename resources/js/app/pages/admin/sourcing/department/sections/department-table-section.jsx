@@ -8,7 +8,7 @@ const DepartmentTableSection = () => {
     const { departments } = useSelector((store) => store.departments);
     const data = departments?.map((res) => ({
         dept: res?.dept,
-        depthead: `${res?.user?.employee_fname ?? ''} ${res?.user?.employee_lname ?? ''}`, // concatenate first and last names
+        depthead: `${res?.user?.employee_fname ?? ''} ${res?.user?.employee_lname ?? ''}`, 
         action: res,
     }));
 

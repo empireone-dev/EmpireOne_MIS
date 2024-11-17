@@ -28,6 +28,9 @@ class EmployeeController extends Controller
         if ($request->status != 'null' && $request->status) {
             $query->where('status', '=', $request->status);
         }
+        if ($request->site != 'null' && $request->site) {
+            $query->where('site', '=', $request->site);
+        }
         // Apply searching if the searching parameter is present
         if ($request->searching) {
             $query->where(function ($subQuery) use ($request) {

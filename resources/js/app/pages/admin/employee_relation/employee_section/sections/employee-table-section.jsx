@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { SearchOutlined } from "@ant-design/icons";
+import { FilterOutlined, SearchOutlined } from "@ant-design/icons";
 import { Button, Input, Pagination, Select, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
@@ -153,11 +153,15 @@ export default function EmployeeTableSection() {
     const pages = searchParams.get('page');
     const account = searchParams.get('account');
     const status = searchParams.get('status');
+    const site = searchParams.get('site');
     function search_account(value) {
-        router.visit('?page=' + pages + '&account=' + value + '&status=' + status)
+        router.visit('?page=' + pages + '&account=' + value + '&status=' + status + '&site=' + site)
     }
     function search_status(value) {
-        router.visit('?page=' + pages + '&account=' + account + '&status=' + value)
+        router.visit('?page=' + pages + '&account=' + account + '&status=' + value + '&site=' + site)
+    }
+    function search_site(value) {
+        router.visit('?page=' + pages + '&account=' + account + '&status=' + status + '&site=' + value)
     }
 
     const columns = [
@@ -197,12 +201,13 @@ export default function EmployeeTableSection() {
         },
         {
             title: <div className="flex gap-3 items-center justify-center">
-
+                {/* 
                 Account
+                <FilterOutlined /> */}
                 <Select
                     className="w-28"
                     showSearch
-                    placeholder="Select an account"
+                    placeholder="Account"
                     optionFilterProp="label"
                     value={account}
                     onChange={search_account}
@@ -233,11 +238,44 @@ export default function EmployeeTableSection() {
         },
         {
             title: <div className="flex gap-3 items-center justify-center">
-                Status
+                {/* 
+                Account
+                <FilterOutlined /> */}
                 <Select
                     className="w-28"
                     showSearch
-                    placeholder="Select an account"
+                    placeholder="Site"
+                    optionFilterProp="label"
+                    value={site}
+                    onChange={search_site}
+                    // onSearch={onSearch}
+                    options={
+                        [
+                            { text: "San Carlos", value: "San Carlos" },
+                            { text: "Carcar", value: "Carcar" },
+                        ]
+                    }
+                />
+            </div>,
+            dataIndex: "site",
+            key: "site",
+            render: (_, record, i) => {
+                console.log("record", record);
+
+                return (
+                    <div key={i}>
+                        {record?.applicant?.site}
+                    </div>
+                );
+            },
+        },
+        {
+            title: <div className="flex gap-3 items-center justify-center">
+                {/* Status */}
+                <Select
+                    className="w-28"
+                    showSearch
+                    placeholder="Status"
                     optionFilterProp="label"
                     value={status}
                     onChange={search_status}

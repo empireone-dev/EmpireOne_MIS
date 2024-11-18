@@ -17,6 +17,7 @@ export default function UpdateEmployeeFormSection() {
     const { job_positions } = useSelector((state) => state.job_positions);
     const { departments } = useSelector((state) => state.departments);
     const { accounts } = useSelector((state) => state.accounts);
+    const { user } = useSelector((state) => state.app);
     const { users } = useSelector((state) => state.app);
     const [loading, setLoading] = useState(null);
     const [form, setForm] = useState({});
@@ -328,13 +329,17 @@ export default function UpdateEmployeeFormSection() {
                                 <option disabled selected>Job Position</option>
                                 {
                                     job_positions
-                                        .filter(res => res.site === "San Carlos")
+                                        .filter(res =>
+                                            user?.role_id === 1 || res.site === user?.site
+                                        )
                                         .map((res, i) => (
                                             <option value={res.jPosition} key={i}>
                                                 {res.jPosition}
                                             </option>
                                         ))
                                 }
+
+
                             </select>
                             <select
                                 value={form?.dept ?? ''}
@@ -349,13 +354,16 @@ export default function UpdateEmployeeFormSection() {
                                 <option disabled selected>Department</option>
                                 {
                                     departments
-                                        .filter(res => res.site === "San Carlos")
+                                        .filter(res =>
+                                            user?.role_id === 1 || res.site === user?.site
+                                        )
                                         .map((res, i) => (
                                             <option value={res.dept} key={i}>
                                                 {res.dept}
                                             </option>
                                         ))
                                 }
+
                             </select>
                             <select
                                 value={form?.account ?? ''}
@@ -398,17 +406,30 @@ export default function UpdateEmployeeFormSection() {
                                 <option disabled selected>Supervisor</option>
                                 {
                                     users
-                                        .filter(
-                                            (res) =>
-                                                res.site === "San Carlos" &&
-                                                ["Manager", "Account Manager", "Supervisor", "Team Leader", "Director", "CEO"].includes(res.position)
+                                        .filter(res =>
+                                            user?.role_id === 1 ||
+                                            (res.site === user?.site && res.role_id === user?.role_id)
                                         )
-                                        .map((res) => (
+                                        .filter(res =>
+                                            ["Manager", "Account Manager", "Supervisor", "Team Leader", "Director", "CEO"].includes(res.position)
+                                        )
+                                        .map((res, i) => (
                                             <option value={res.id} key={res.id}>
                                                 {res.employee_fname} {res.employee_lname}
                                             </option>
                                         ))
                                 }
+
+
+                                {/* {
+                                    departments
+                                        .filter(res => user?.role_id === 1 || (res.site === user?.site && res.role_id === user?.role_id))
+                                        .map((res, i) => (
+                                            <option value={res.dept} key={i}>
+                                                {res.dept}
+                                            </option>
+                                        ))
+                                } */}
                             </select>
                             <Input
                                 value={form?.hired ?? ''}

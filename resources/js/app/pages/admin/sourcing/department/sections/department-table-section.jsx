@@ -1,20 +1,32 @@
 import React from "react";
-import { Space, Table, Tag, Tooltip } from "antd";
+import { Table, Tooltip } from "antd";
 import { useSelector } from "react-redux";
 import DepartmentDeleteSection from "./department-delete-section";
 import DepartmentUpdateSection from "./department-update-section";
 
 const DepartmentTableSection = () => {
+    // Get departments and user data from Redux store
     const { departments } = useSelector((store) => store.departments);
-    const data = departments?.map((res) => ({
+    const { user } = useSelector((state) => state.app);
+
+    // If there is no user or departments, return an empty table
+    if (!user || !departments) {
+        return <div>No data available</div>;
+    }
+
+    // Filter departments by user's site
+    const filteredDepartments = user.role_id === 1
+        ? departments // Show all departments for admin users
+        : departments?.filter((dept) => dept.site === user.site); 
+
+    // Prepare the data for the table
+    const data = filteredDepartments?.map((res) => ({
         dept: res?.dept,
-        depthead: `${res?.user?.employee_fname ?? ''} ${res?.user?.employee_lname ?? ''}`, 
+        depthead: `${res?.user?.employee_fname ?? ''} ${res?.user?.employee_lname ?? ''}`,
         action: res,
     }));
 
-
-    console.log('departments', departments)
-
+    // Define table columns
     const columns = [
         {
             title: "Departments",
@@ -53,6 +65,9 @@ const DepartmentTableSection = () => {
             },
         },
     ];
+
+    // Return the table
     return <Table columns={columns} dataSource={data} />;
 };
+
 export default DepartmentTableSection;

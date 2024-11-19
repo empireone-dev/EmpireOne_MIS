@@ -143,7 +143,10 @@ export default function EmployeeTableSection() {
         { label: "Service Market", value: "Service Market" },
         { label: "Curtis", value: "Curtis" },
         { label: "Aifi", value: "Aifi" },
-        { label: "Latham Pool", value: "Latham Pool" },
+        {
+            label: "Latham Pool",
+            values: ["Latham Pool (Designer)", "Latham Pool (Order Entry)"]
+        },
         { label: "Weby", value: "Weby" },
         { label: "N/A", value: "N/A" },
     ]
@@ -211,7 +214,7 @@ export default function EmployeeTableSection() {
                     showSearch
                     placeholder="Account"
                     optionFilterProp="label"
-                    value={account  == 'null'?null:account}
+                    value={account == 'null' ? null : account}
                     onChange={search_account}
                     // onSearch={onSearch}
                     options={accounts}
@@ -249,8 +252,8 @@ export default function EmployeeTableSection() {
                     showSearch
                     placeholder="Site"
                     optionFilterProp="label"
-                    
-                    value={site  == 'null'?null:site}
+
+                    value={site == 'null' ? null : site}
                     onChange={search_site}
                     // onSearch={onSearch}
                     options={
@@ -282,7 +285,7 @@ export default function EmployeeTableSection() {
                     showSearch
                     placeholder="Status"
                     optionFilterProp="label"
-                    value={status  == 'null'?null:status}
+                    value={status == 'null' ? null : status}
                     onChange={search_status}
                     // onSearch={onSearch}
                     options={[

@@ -10,6 +10,8 @@ import { setInitialRate } from "../redux/initial-rate-state";
 import { store_initial_rate_thunk } from "../redux/initial-rate-thunk";
 import store from "@/app/store/store";
 import { useState } from "react";
+import { message } from "antd";
+import { router } from "@inertiajs/react";
 
 export default function InitialRateForm({ data }) {
     const { initialRate, applicant } = useSelector(
@@ -48,11 +50,12 @@ export default function InitialRateForm({ data }) {
             })
         );
     }
-
     async function submit_initial_rate(e) {
         e.preventDefault();
         setLoading(true);
         await store.dispatch(store_initial_rate_thunk(initialRate));
+        await message.success('Applicant successfully rated');
+        router.visit('/admin/recruitment/applicant_records?searching='+app_id)
         setLoading(false);
     }
     return (

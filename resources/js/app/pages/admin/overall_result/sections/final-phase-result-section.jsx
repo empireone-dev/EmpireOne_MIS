@@ -24,7 +24,7 @@ export default function FinalPhaseResultSection() {
                 <WorkEffectivenessFinalResultSection data={applicant}/>
                 <div className='flex flex-col w-full mt-3'>
                     <label htmlFor=""><b>OVERALL RESULT</b></label>
-                    <input type="text" placeholder=""  value={applicant?.final?.oresult??''} className="border p-2 rounded w-full mt-1" readOnly />
+                    <input type="text" placeholder=""  value={applicant?.final?.oavg??''} className="border p-2 rounded w-full mt-1" readOnly />
                 </div>
                 <div className='flex flex-col w-full mt-5'>
                     <label htmlFor=""><b>INITIAL PHASE INTERVIEWER</b></label>

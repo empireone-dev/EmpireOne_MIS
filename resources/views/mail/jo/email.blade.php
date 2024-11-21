@@ -24,7 +24,8 @@
   5. Working Schedule
   Your working schedule is for 9 hours every weekday during which one (1) hour is allotted for lunch break and weekdays for restdays.
 
-  To accept/decline this job offer you may click on this link: http://127.0.0.1:8000/job_offer/{{$data['app_id']}}?id={{$data['id']}} EmpireOne BPO Solutions Inc - Job Offer
+  To accept/decline this job offer you may click on this link: https://empireone-hris.com/job_offer/{{$data['app_id']}}?id={{$data['id']}} EmpireOne BPO Solutions Inc - Job Offer
+
 
   We expect you to follow all the policies and provisions indicated in the company Code of Conduct and Discipline of EmpireOne Global Solution Inc. which will be issued to you when you start your career with us.
 

@@ -1,13 +1,16 @@
 import { UploadOutlined } from '@ant-design/icons'
-import { Button, Modal, Upload } from 'antd'
+import { Button, message, Modal, Upload } from 'antd'
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { update_pre_employment_file_service } from '../../services/pre-employment-file-service';
+import store from '@/app/store/store';
+import { get_applicant_by_app_id_thunk } from '../../admin/final_rate/redux/final-rate-thunk';
 
 export default function ReUploadRequirementsSection({data}) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [reqs, setReqs] = useState('')
     const [fileList, setFileList] = useState([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
         if (data?.reqs) {
@@ -19,17 +22,25 @@ export default function ReUploadRequirementsSection({data}) {
         setIsModalVisible(true);
     };
     const handleOk = async () => {
-        setIsModalVisible(false);
         const fd = new FormData()
+        setLoading(true)
         fd.append('file', fileList.originFileObj)
         fd.append('status', 'Uploaded')
         fd.append('reqs', reqs)
         fd.append('id', data?.id)
         // fd.append('created', moment().format('YYYY-MM-DD HH:mm:ss'))
         fd.append('app_id', window.location.pathname.split('/')[2])
-        if (fileList.status == 'done') {
-            const result = await update_pre_employment_file_service(fd)
-            console.log('result', result)
+        try {
+            if (fileList.status == 'done') {
+                const result = await update_pre_employment_file_service(fd)
+                await store.dispatch(get_applicant_by_app_id_thunk(window.location.pathname.split('/')[2]))
+                await message.success('Reuploaded successfully!')
+                setIsModalVisible(false);
+                setLoading(false)
+            }
+        } catch (error) {
+            setLoading(false)
+            
         }
     };
 
@@ -52,7 +63,9 @@ export default function ReUploadRequirementsSection({data}) {
             >
                 <UploadOutlined />
             </button>
-            <Modal title="REUPLOAD REQUIREMENTS" open={isModalVisible} onOk={handleOk} okText="Submit" onCancel={handleCancel}>
+            <Modal
+            confirmLoading={loading}
+            title="REUPLOAD REQUIREMENTS" open={isModalVisible} onOk={handleOk} okText="Submit" onCancel={handleCancel}>
                 <div className='w-full'>
                     <label
                         className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"

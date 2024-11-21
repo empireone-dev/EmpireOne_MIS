@@ -13,11 +13,7 @@ export default function PreEmploymentDetailsSection() {
     const { applicant } = useSelector((state) => state.final_rate);
     const jo_id = window.location.search.split('=')[1]
     const app_id = window.location.pathname.split('/')[2]
-    useEffect(() => {
-        store.dispatch(get_checklist_thunk())
-        store.dispatch(get_pre_employment_file_thunk(app_id))
-    }, []);
-
+ 
     
 
     const handleUploadClick = () => {

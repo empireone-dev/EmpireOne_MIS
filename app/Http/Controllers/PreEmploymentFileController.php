@@ -41,6 +41,16 @@ class PreEmploymentFileController extends Controller
                 'created' => $request->created,
 
             ]);
+
+            if ($request->reqs == 'Contract') {
+                $jo = JobOffer::where([
+                    ['app_id', '=', $request->app_id],
+                    ['status', '=', 'Contract Signing']
+                ])->first();
+                $jo->update([
+                    'status' => 'Hired',
+                ]);
+            }
             return response()->json([
                 'data' => 'success',
                 'url' => $url, // Return the URL of the uploaded file,
@@ -52,7 +62,7 @@ class PreEmploymentFileController extends Controller
             'data' => 'No file uploaded'
         ], 400);
     }
-    
+
     public function reupload_file(Request $request)
     {
         $preempfile = PreEmploymentFile::where('id', $request->id)->first();

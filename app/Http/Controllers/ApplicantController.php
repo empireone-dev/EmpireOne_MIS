@@ -16,7 +16,7 @@ class ApplicantController extends Controller
 
     public function get_hired_applicant()
     {
-        $applicants = JobOffer::where('status', 'Hired')->with(['applicant'])->get();
+        $applicants = JobOffer::where('status', 'Hired')->with(['applicant', 'employee'])->doesntHave('employee')->get();
         return response()->json([
             'data' => $applicants
         ], 200);
@@ -31,12 +31,12 @@ class ApplicantController extends Controller
             'data' => $applicant
         ], 200);
     }
-    
+
     public function index(Request $request)
     {
         $applicant = Applicant::query()
             ->with(['final', 'initial', 'joboffer', 'user']);
-            // ->orderBy('status'); // Sort by status in ascending order
+        // ->orderBy('status'); // Sort by status in ascending order
 
         $user = User::whereIn('position', ['CEO', 'Manager', 'Director'])->get();
 
@@ -54,7 +54,7 @@ class ApplicantController extends Controller
         }
 
         if ($request->status) {
-            $applicant->where('status','=',$request->status);
+            $applicant->where('status', '=', $request->status);
         }
 
         return response()->json([

@@ -13,6 +13,7 @@ export default function PhysicalCOntractSigning({ data, setOpen }) {
         iffdate: "",
     });
     const jo =data.joboffer.find(res=>res.status == 'Accepted')
+    const newJo = data?.joboffer?.find(res=>res.status == 'Contract Signing')
     // const [physical, setPhysical] = useState({
     //     ifftime: "",
     //     iffdate: "",
@@ -28,22 +29,23 @@ export default function PhysicalCOntractSigning({ data, setOpen }) {
             await store.dispatch(
                 sendiv_email_thunk({
                     ...data,
-                    ...jo,
+                    ...newJo,
                     ifftime: initial.ifftime,
                     iffdate: initial.iffdate,
                     phase_status: "physical_contract_signing",
                 })
             );
+           await message.success("Email sent successfully");
             setLoading(false);
             setOpen(false);
-            setOpenDialog(false);
-            message.success("Email sent successfully");
+            setPhysicalSigningOpen(false);
         } catch (error) {
+            console.log('error',error)
             message.error("There was an error sending the email!");
             setLoading(false);
         }
     }
-    console.log("datasss", data.joboffer.find(res=>res.status == 'Accepted'));
+    // console.log("datasss", data?.joboffer?.find(res=>res.status == 'Contract Signing'));
     return (
         <div className="flex w-full items-center justify-center">
             <button
@@ -130,7 +132,7 @@ export default function PhysicalCOntractSigning({ data, setOpen }) {
                                     Job Position
                                 </label>
                                 <input
-                                    value={jo?.jobPos}
+                                    value={newJo?.jobPos}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -146,7 +148,7 @@ export default function PhysicalCOntractSigning({ data, setOpen }) {
                                     Salary
                                 </label>
                                 <input
-                                    value={jo?.salary}
+                                    value={newJo?.salary}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"

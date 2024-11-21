@@ -12,7 +12,7 @@ export function OnboardingDocsStepper() {
     const { onboarding_docs,od } = useSelector((state) => state.onboarding_docs);
     const [agree, setAgree] = useState([]);
 
-
+console.log('onboarding_docs',onboarding_docs)
     const handleNext = () => {
         if (!isLastStep) {
             setActiveStep((cur) => cur + 1);

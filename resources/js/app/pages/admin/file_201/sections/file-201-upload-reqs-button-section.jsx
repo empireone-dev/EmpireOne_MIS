@@ -1,7 +1,8 @@
 import WorkingExperienceSection from '@/app/pages/online_application/sections/working-experience-section';
 import { store_pre_employment_file_service } from '@/app/pages/services/pre-employment-file-service';
+import store from '@/app/store/store';
 import { PlusSquareTwoTone, UploadOutlined } from '@ant-design/icons'
-import { Button, Modal, Upload } from 'antd';
+import { Button, message, Modal, Upload } from 'antd';
 import moment from 'moment';
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
@@ -14,11 +15,10 @@ export default function File201UploadReqsButtonSection() {
     const { checklists } = useSelector((state) => state.checklists);
     const [fileList, setFileList] = useState([])
     const [reqs, setReqs] = useState('')
+    const app_id = window.location.pathname.split('/')[3]
 
     const handleOk = async () => {
-        setOpen(false);
         const fd = new FormData()
-        console.log('fileList', fileList)
         fd.append('file', fileList.originFileObj)
         fd.append('status', 'Uploaded')
         fd.append('reqs', reqs)
@@ -26,7 +26,9 @@ export default function File201UploadReqsButtonSection() {
         fd.append('app_id', window.location.pathname.split('/')[3])
         if (fileList.status == 'done') {
             const result = await store_pre_employment_file_service(fd)
-            console.log('result', result)
+             await store.dispatch(get_applicant_by_app_id_thunk(app_id))
+            await message.success('Uploaded Successfully!')
+            setOpen(false)
         }
     };
 
@@ -82,6 +84,7 @@ export default function File201UploadReqsButtonSection() {
                                 <label htmlFor=""><b>Requirement's Name</b></label>
                                 <select className="border p-2 rounded  w-full" onChange={(e) => setReqs(e.target.value)}>
                                     <option> </option>
+                                    <option value="Contract">Contract Document</option>
                                     {
                                         checklists
                                             .filter(res => res.site === "San Carlos")

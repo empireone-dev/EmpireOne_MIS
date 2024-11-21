@@ -1,1 +1,0 @@
-import{j as o}from"./app-b8945b9a.js";function i(){return o.jsx("div",{children:"SourcingDashboardSection"})}export{i as default};

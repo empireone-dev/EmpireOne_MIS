@@ -94,7 +94,7 @@ class PreEmploymentFileController extends Controller
             } else {
                 $preempfile->update([
                     'status' => 'Declined',
-                    'reas' => $reas,
+                    'reas' => $request->reas,
                 ]);
             }
         }

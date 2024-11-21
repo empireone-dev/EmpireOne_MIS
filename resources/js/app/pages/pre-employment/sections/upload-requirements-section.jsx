@@ -1,33 +1,64 @@
 import { FileJpgOutlined, UploadOutlined } from '@ant-design/icons'
 import React, { useState } from 'react';
-import { Modal, Button, Upload } from 'antd';
+import { Modal, Button, Upload, message } from 'antd';
 import { useSelector } from 'react-redux';
 import { store_pre_employment_file_service } from '../../services/pre-employment-file-service';
 import moment from 'moment';
+import { get_checklist_thunk } from '../../admin/hiring/pre_employment/redux/pre-employment-thunk';
+import store from '@/app/store/store';
+import { store_pre_employment_file_thunk } from '../redux/pre-employment-files-thunk';
+import { get_applicant_by_app_id_thunk } from '../../admin/final_rate/redux/final-rate-thunk';
 
 export default function UploadRequirementsSection() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [reqs, setReqs] = useState('')
     const { checklists } = useSelector((state) => state.checklists);
     const [fileList, setFileList] = useState([])
+    const [loading, setLoading] = useState(false)
+    const app_id = window.location.pathname.split('/')[2]
+    const { applicant } = useSelector((state) => state.final_rate);
+
     const showModal = () => {
         setIsModalOpen(true);
     };
 
+      
+      // The dataset containing `reqs` values to remove
+      const toRemove = applicant?.requirements?.map(res=>res.reqs)??[];
+      
+      const filteredEntries = checklists.filter(entry => !toRemove.includes(entry.reqs));
+      
+
+
     const handleOk = async () => {
-        setIsModalOpen(false);
+        setLoading(true);
         const fd = new FormData()
         console.log('fileList', fileList)
         fd.append('file', fileList.originFileObj)
         fd.append('status', 'Uploaded')
         fd.append('reqs', reqs)
         fd.append('created', moment().format('YYYY-MM-DD HH:mm:ss'))
-        fd.append('app_id', window.location.pathname.split('/')[2])
-        if (fileList.status == 'done') {
-            const result = await store_pre_employment_file_service(fd)
-            console.log('result', result)
+        fd.append('app_id', app_id)
+
+        try {
+            if (fileList.status == 'done') {
+                await store_pre_employment_file_service(fd)
+                await store.dispatch(get_applicant_by_app_id_thunk(app_id))
+                await message.success('Uploaded successfully!')
+                setIsModalOpen(false);
+                setFileList([])
+                setOpen(false)
+            }
+
+        } catch (error) {
+            // message.error('Failed to submit application');
+            console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
+
+
     const handleCancel = () => {
         setIsModalOpen(false);
     };
@@ -43,7 +74,9 @@ export default function UploadRequirementsSection() {
                     <FileJpgOutlined /> UPLOAD REQUIREMENTS
                 </button>
             </div>
-            <Modal title="UPLOAD REQUIREMENTS" open={isModalOpen} onOk={handleOk} okText="Submit" onCancel={handleCancel}>
+            <Modal
+                confirmLoading={loading}
+                title="UPLOAD REQUIREMENTS" open={isModalOpen} onOk={handleOk} okText="Submit" onCancel={handleCancel}>
                 <div className='w-full'>
                     <label
                         className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
@@ -59,8 +92,7 @@ export default function UploadRequirementsSection() {
                     >
                         <option value=""></option>
                         {
-                            checklists
-                                .filter(res => res.site === "San Carlos")
+                            filteredEntries?.filter(res => res.site === "San Carlos")
                                 .map((res, i) => (
                                     <option value={res.reqs} key={i}>
                                         {res.reqs} {res.remarks === "Yes" ? "*" : ""}

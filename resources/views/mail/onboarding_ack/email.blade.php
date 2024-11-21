@@ -11,7 +11,7 @@
 
   As we prepare to welcome you to our team, we want to ensure that you have all the information needed for a seamless transition. To facilitate this, we kindly invite you to review and acknowledge our company onboarding documents. These documents contain essential information about our policies, procedures, and the culture at EmpireOne.
 
-  To access the onboarding documents, please click on the following link: http://127.0.0.1:8000/onboarding-documents/{{$data['app_id']}}
+  To access the onboarding documents, please click on the following link: https://empireone-hris.com/onboarding-documents/{{$data['app_id']}}
 
   We encourage you to carefully review each document and reach out to us if you have any questions or need further clarification. Your understanding and acknowledgment of these materials will contribute to a positive and successful onboarding experience.
 

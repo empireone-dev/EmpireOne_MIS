@@ -10,16 +10,13 @@ import Skeleton from '@/app/pages/_components/skeleton';
 import { useDispatch } from 'react-redux';
 
 export default function ApplicantRecords() {
-  useEffect(() => {
-    store.dispatch(get_applicant_thunk())
-    store.dispatch(get_job_position_thunk())
-  }, []);
 
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
   useEffect(() => {
     async function loadData() {
       await store.dispatch((get_applicant_thunk()))
+      await store.dispatch(get_job_position_thunk())
       setLoading(false)
     }
     loadData()

@@ -13,11 +13,23 @@ class JobOfferController extends Controller
 {
     public function index(Request $request)
     {
-        $joboffer = JobOffer::with('applicant')->paginate(10);
+        $jobofferQuery = JobOffer::with('applicant');
+
+        if ($request->search) {
+            $jobofferQuery->where('status', $request->search);
+        }
+
+        if ($request->status) {
+            $jobofferQuery->where('status', '=', $request->status);
+        }
+
+        $joboffer = $jobofferQuery->paginate(10);
+
         return response()->json([
             'data' => $joboffer
         ], 200);
     }
+
 
     public function store(Request $request)
     {

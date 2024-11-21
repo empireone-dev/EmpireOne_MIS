@@ -175,7 +175,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                 <input
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
-                                    type="text"
+                                    type="hidden"
                                     placeholder=""
                                     readOnly
                                     value={form?.outsourcing_erf?.department ?? ""}

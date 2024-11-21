@@ -118,22 +118,22 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 },
             ]
             : []),
-        ...(data.status == "Final Phase" && !data.final
-            ? [
-                {
-                    component: (
-                        <ApplicantCheckScheduleComponent
-                            data={data}
-                            item={{
-                                label: "Check Schedule of Interviewer",
-                                key: "7",
-                                icon: <ScheduleOutlined />,
-                            }}
-                        />
-                    ),
-                },
-            ]
-            : []),
+        // ...(data.status == "Final Phase" && !data.final
+        //     ? [
+        //         {
+        //             component: (
+        //                 <ApplicantCheckScheduleComponent
+        //                     data={data}
+        //                     item={{
+        //                         label: "Check Schedule of Interviewer",
+        //                         key: "7",
+        //                         icon: <ScheduleOutlined />,
+        //                     }}
+        //                 />
+        //             ),
+        //         },
+        //     ]
+        //     : []),
         ...(data.status == "Passed" ||
             data.status == "Pooling" ||
             data.status == "Failed" ||

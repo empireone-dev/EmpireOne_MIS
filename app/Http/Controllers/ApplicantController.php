@@ -35,8 +35,8 @@ class ApplicantController extends Controller
     public function index(Request $request)
     {
         $applicant = Applicant::query()
-            ->with(['final', 'initial', 'joboffer', 'user'])
-            ->orderBy('status'); // Sort by status in ascending order
+            ->with(['final', 'initial', 'joboffer', 'user']);
+            // ->orderBy('status'); // Sort by status in ascending order
 
         $user = User::whereIn('position', ['CEO', 'Manager', 'Director'])->get();
 
@@ -51,6 +51,10 @@ class ApplicantController extends Controller
                     ->orWhere('mname', 'LIKE', '%' . $request->searching . '%')
                     ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%');
             });
+        }
+
+        if ($request->status) {
+            $applicant->where('status','=',$request->status);
         }
 
         return response()->json([

@@ -4,7 +4,7 @@ import {
     LineOutlined,
     SearchOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Modal, Pagination, Space, Table, Tag, Tooltip } from "antd";
+import { Button, Input, Modal, Pagination, Select, Space, Table, Tag, Tooltip } from "antd";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import { router } from "@inertiajs/react";
@@ -143,6 +143,16 @@ export default function AcknowledgementTableSection() {
                 text
             ),
     });
+    
+    const urls = new URL(window.location.href);
+    const searchParams = new URLSearchParams(urls.search);
+    const pages = searchParams.get('page');
+    const status = searchParams.get('status');
+
+    function search_status(value) {
+
+        router.visit('?page=' + pages + '&status=' + (value || 'null'))
+    }
 
     const columns = [
         {
@@ -180,7 +190,28 @@ export default function AcknowledgementTableSection() {
             ...getColumnSearchProps("salary"),
         },
         {
-            title: "Status",
+            title: <div>
+                <Select
+                    allowClear
+                    className="w-28"
+                    showSearch
+                    placeholder="Status"
+                    optionFilterProp="label"
+
+                    value={status == 'null' ? null : status}
+                    onChange={search_status}
+                    // onSearch={onSearch}
+                    options={
+                        [
+                            { text: "Contract Signing", value: "Contract Signing" },
+                            { text: "Accepted", value: "Accepted" },
+                            { text: "Declined", value: "Declined" },
+                            { text: "Pending", value: "Pending" },
+                            { text: "Hired", value: "Hired" },
+                        ]
+                    }
+                />
+            </div>,
             dataIndex: "status",
             key: "status",
             render: (_, record, i) => {

@@ -45,13 +45,9 @@ export default function FinalRateFormSection() {
         e.preventDefault();
         setLoading(true);
         await store.dispatch(store_final_rate_thunk(finalRate));
-        message.success("Successfully Rated!");
+        await message.success("Successfully Rated!");
         setLoading(false);
-        setTimeout(() => {
-            router.visit(
-                "/admin/recruitment/applicants/applicant_records?page=1"
-            );
-        }, 2000);
+        router.visit('/admin/recruitment/applicant_records?searching=' + app_id)
     }
 
     console.log(finalRate, "finalRate");
@@ -105,7 +101,7 @@ export default function FinalRateFormSection() {
                 </div>
                 <CustomerServiceFinalSection />
                 <WorkEffectivenessFinalRateSection />
-                <div className="flex items-center mb-5 mt-3 gap-1">
+                {/* <div className="flex items-center mb-5 mt-3 gap-1">
                     <input
                         id="default-checkbox"
                         type="checkbox"
@@ -115,7 +111,7 @@ export default function FinalRateFormSection() {
                     <h1>
                         <b>Mark as Tier Shark</b>
                     </h1>
-                </div>
+                </div> */}
                 <div className="flex flex-col w-full mt-3">
                     <label htmlFor="">
                         <b>OVERALL RESULT</b>
@@ -155,9 +151,8 @@ export default function FinalRateFormSection() {
                 <div className="flex justify-end mt-3.5">
                     <button
                         type="submit"
-                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${
-                            loading ? "cursor-not-allowed opacity-75" : ""
-                        }`}
+                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
+                            }`}
                         onClick={submit_final_rate}
                         disabled={loading}
                     >

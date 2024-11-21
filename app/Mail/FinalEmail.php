@@ -53,7 +53,7 @@ class FinalEmail extends Mailable
     public function build()
     {
         return $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('final Phase Interview Schedule - EmpireOne BPO Solutions Inc')
+            ->subject('Final Phase Interview Schedule - EmpireOne BPO Solutions Inc')
             ->markdown('mail.final.email')
             ->with($this->data);
     }

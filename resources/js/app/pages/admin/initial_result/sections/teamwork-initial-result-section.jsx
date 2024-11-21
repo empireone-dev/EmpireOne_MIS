@@ -1,6 +1,7 @@
 import { UserGroupIcon } from '@heroicons/react/24/outline'
 import React from 'react'
 import InitialRateMarkComponent from '../components/initial-rate-mark-component'
+import { useSelector } from 'react-redux';
 
 export default function TeamworkInitialResultSection({data}) {
   

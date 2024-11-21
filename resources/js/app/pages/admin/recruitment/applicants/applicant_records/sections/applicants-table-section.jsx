@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Tag } from "antd";
+import { Button, Input, Select, Space, Table, Tag } from "antd";
 import Highlighter from "react-highlight-words";
 import ButtonComponents from "../components/button-components";
 import ApplicantsDropdownFilterComponents from "../components/applicants-dropdown-filter-components";
@@ -21,7 +21,12 @@ export default function ApplicantsTableSection() {
     const { applicants, interviewer } = useSelector(
         (state) => state.applicants
     );
-
+    
+    const urls = new URL(window.location.href);
+    const searchParams = new URLSearchParams(urls.search);
+    const pages = searchParams.get('page');
+    const status = searchParams.get('status');
+    
     const filteredDatas = applicants.data;
     // const filterDatas = (selectedStats) => {
     //     if (selectedStats.length === 0) {
@@ -172,6 +177,11 @@ export default function ApplicantsTableSection() {
             ),
     });
 
+
+    function search_status(value) {
+
+        router.visit('?page='+pages+'&status=' + (value || 'null'))
+    }
     const columns = [
         {
             title: "Application #",
@@ -238,7 +248,30 @@ export default function ApplicantsTableSection() {
             // ...getColumnSearchProps("submitted"),
         },
         {
-            title: "Status",
+            title: <div>
+                <Select
+                    allowClear
+                    className="w-28"
+                    showSearch
+                    placeholder="Status"
+                    optionFilterProp="label"
+
+                    value={status == 'null' ? null : status}
+                    onChange={search_status}
+                    // onSearch={onSearch}
+                    options={
+                        [
+                            { text: "Passed", value: "Passed" },
+                            { text: "Hired", value: "Hired" },
+                            { text: "Regular", value: "Regular" },
+                            { text: "Pending", value: "Pending" },
+                            { text: "Initial Phase", value: "Initial Phase" },
+                            { text: "Final Phase", value: "Final Phase" },
+                            { text: "Pooling", value: "Pooling" },
+                        ]
+                    }
+                />
+            </div>,
             dataIndex: "status",
             key: "status",
             render: (_, record) => {
@@ -349,9 +382,9 @@ export default function ApplicantsTableSection() {
             <div className="w-full">
                 {applicants.total > 0
                     ? `Showing ${(page - 1) * pageSize + 1} to ${Math.min(
-                          page * pageSize,
-                          applicants.total
-                      )} of ${applicants.total} entries`
+                        page * pageSize,
+                        applicants.total
+                    )} of ${applicants.total} entries`
                     : "No entries available"}
             </div>
         </div>

@@ -29,4 +29,8 @@ class JobOffer extends Model
     {
         return $this->hasOne(Applicant::class,"app_id","app_id");
     }
+    public function employee(): HasOne
+    {
+        return $this->hasOne(Employee::class,"app_id","app_id");
+    }
 }

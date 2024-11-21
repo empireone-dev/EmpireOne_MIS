@@ -16,7 +16,7 @@ export default function AddNewEmployeeSection() {
     const [form, setForm] = useState({
         site: user?.site || '',
     });
-
+console.log('hiredApplicants',hiredApplicants)
     // console.log('assasss', value?.applicant?.fname)
 
     async function submit_handler() {

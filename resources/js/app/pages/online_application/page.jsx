@@ -7,7 +7,7 @@ import { get_job_position_thunk } from '../admin/sourcing/job_title_section/redu
 
 export default function OnlineApplicationPage() {
   useEffect(() => {
-    store.dispatch(get_applicant_thunk())
+    // store.dispatch(get_applicant_thunk())
     store.dispatch(get_job_position_thunk())
   }, []);
   return (

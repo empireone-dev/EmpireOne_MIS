@@ -70,7 +70,7 @@ class ApplicantController extends Controller
             'courset' => 'nullable',
             'eaddress' => 'nullable',
             'dob' => 'required',
-            'email' => 'required',
+            'email' => 'required|email|unique:applicant,email',
             'ename' => 'nullable',
             'ephone' => 'nullable',
             'ffname' => 'nullable',
@@ -80,19 +80,19 @@ class ApplicantController extends Controller
             'lot' => 'nullable',
             'marital' => 'required',
             'mmname' => 'nullable',
-            'mname' => 'required', // Include this if you want it required
+            'mname' => 'required',
             'nationality' => 'required',
             'pagibig' => 'nullable',
             'philh' => 'nullable',
             'phone' => 'required',
             'relationship' => 'nullable',
-            'religion' => 'required',
+            'religion' => 'nullable',
             'sss' => 'nullable',
             'status' => 'nullable',
             'tin' => 'nullable',
-            'site' => 'nullable',
+            'site' => 'required',
             'uniqueAppId' => 'nullable',
-            'work_experience' => 'nullable', // If this is required too
+            'work_experience' => 'nullable',
         ]);
 
 
@@ -149,7 +149,7 @@ class ApplicantController extends Controller
         return response()->json([
             'count' => $count,
             'date' => $date,
-            'status' => 'success',
+            'status' => 200,
             'site' => $site,
             'data' => 'success',
         ], 200);

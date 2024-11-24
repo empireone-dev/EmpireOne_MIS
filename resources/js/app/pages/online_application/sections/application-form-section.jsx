@@ -78,36 +78,36 @@ export default function ApplicationFormSection() {
 
     const fd = new FormData();
     fd.append('files', uploadedFile)
-    fd.append('site', applicantForm.site);
-    fd.append('fname', applicantForm.fname);
-    fd.append('mname', applicantForm.mname);
-    fd.append('lname', applicantForm.lname);
-    fd.append('suffix', applicantForm.suffix);
-    fd.append('dob', applicantForm.dob);
-    fd.append('religion', applicantForm.religion);
-    fd.append('email', applicantForm.email);
-    fd.append('nationality', applicantForm.nationality);
-    fd.append('phone', applicantForm.phone);
-    fd.append('mmname', applicantForm.mmname);
-    fd.append('ffname', applicantForm.ffname);
-    fd.append('educ', applicantForm.educ);
-    fd.append('courset', applicantForm.courset);
-    fd.append('hired', applicantForm.hired);
-    fd.append('lot', applicantForm.lot);
-    fd.append('sss', applicantForm.sss);
-    fd.append('pagibig', applicantForm.pagibig);
-    fd.append('tin', applicantForm.tin);
-    fd.append('philh', applicantForm.philh);
-    fd.append('ename', applicantForm.ename);
-    fd.append('eaddress', applicantForm.eaddress);
-    fd.append('relationship', applicantForm.relationship);
-    fd.append('ephone', applicantForm.ephone);
-    fd.append('marital', applicantForm.marital);
-    fd.append('gender', applicantForm.gender);
-    fd.append('region', applicantForm.region);
-    fd.append('city', applicantForm.city);
-    fd.append('brgy', applicantForm.brgy);
-    fd.append('province', applicantForm.province);
+    fd.append('site', applicantForm.site ?? '');
+    fd.append('fname', applicantForm.fname ?? '');
+    fd.append('mname', applicantForm.mname ?? '');
+    fd.append('lname', applicantForm.lname ?? '');
+    fd.append('suffix', applicantForm.suffix ?? '');
+    fd.append('dob', applicantForm.dob ?? moment().format('YYYY-MM-DD'));
+    fd.append('religion', applicantForm.religion ?? '');
+    fd.append('email', applicantForm.email ?? '');
+    fd.append('nationality', applicantForm.nationality ?? '');
+    fd.append('phone', applicantForm.phone ?? '');
+    fd.append('mmname', applicantForm.mmname ?? '');
+    fd.append('ffname', applicantForm.ffname ?? '');
+    fd.append('educ', applicantForm.educ ?? '');
+    fd.append('courset', applicantForm.courset ?? '');
+    fd.append('hired', applicantForm.hired ?? '');
+    fd.append('lot', applicantForm.lot ?? '');
+    fd.append('sss', applicantForm.sss ?? '');
+    fd.append('pagibig', applicantForm.pagibig ?? '');
+    fd.append('tin', applicantForm.tin ?? '');
+    fd.append('philh', applicantForm.philh ?? '');
+    fd.append('ename', applicantForm.ename ?? '');
+    fd.append('eaddress', applicantForm.eaddress ?? '');
+    fd.append('relationship', applicantForm.relationship ?? '');
+    fd.append('ephone', applicantForm.ephone ?? '');
+    fd.append('marital', applicantForm.marital ?? '');
+    fd.append('gender', applicantForm.gender ?? '');
+    fd.append('region', applicantForm.region ?? '');
+    fd.append('city', applicantForm.city ?? '');
+    fd.append('brgy', applicantForm.brgy ?? '');
+    fd.append('province', applicantForm.province ?? '');
 
     applicantForm.work_experience.forEach((value) => {
       fd.append("work_experience[]", JSON.stringify({
@@ -119,22 +119,13 @@ export default function ApplicationFormSection() {
     });
 
     try {
-      await store.dispatch(store_applicant_thunk(fd));
+      const result = await store.dispatch(store_applicant_thunk(fd));
 
-      await store.dispatch(setApplicantForm({
-        ...applicantForm,
-        age: dob,
-        submitted: moment().format('YYYY-MM-DD'),
-        status: 'Pending'
-      }));
-
-      const result = await store.dispatch(get_applicant_thunk());
       if (result.status === 200) {
-        // message.success('Application has been submitted successfully');
+        message.success('Application has been submitted successfully');
       } else {
         setError(result.response.data.errors);
-        // message.error('Failed to submit Application');
-        console.log('resultsss', result.response);
+        message.error('Failed to submit Application');
       }
     } catch (error) {
       // message.error('Failed to submit application');
@@ -239,17 +230,24 @@ export default function ApplicationFormSection() {
               </h1>
               <div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <select
-                    onChange={(event) => data_handler(event)}
-                    name="site"
-                    className="border p-2 rounded w-full"
-                  >
-                    <option disabled selected>
-                      Select Site
-                    </option>
-                    <option>San Carlos </option>
-                    <option>Carcar </option>
-                  </select>
+                  <div className='flex flex-col'>
+                    <select
+                      onChange={(event) => data_handler(event)}
+                      name="site"
+                      className="border p-2 rounded w-full"
+                    >
+                      <option disabled selected>
+                        Select Site
+                      </option>
+                      <option>San Carlos </option>
+                      <option>Carcar </option>
+                    </select>
+                    {error?.site && (
+                      <span className="text-red-500 text-sm mt-1">
+                        This field is required.
+                      </span>
+                    )}
+                  </div>
                 </div>
               </div>
 
@@ -336,6 +334,7 @@ export default function ApplicationFormSection() {
                         name="dob"
                         label="Date of Birth"
                         type="date"
+                        errorMessage={error?.dob}
                       />
                     </div>
                     <div className=" w-full">
@@ -346,6 +345,7 @@ export default function ApplicationFormSection() {
                         name="email"
                         label="Email"
                         type="email"
+                        errorMessage={error?.email}
                       />
                     </div>
                     <div className="w-full">
@@ -356,6 +356,7 @@ export default function ApplicationFormSection() {
                         name="phone"
                         label="Phone Number"
                         type="number"
+                        errorMessage={error?.email}
                       />
                     </div>
                   </div>

@@ -7,6 +7,7 @@ export default function Input({
     name,
     label,
     type,
+    errorMessage
 }) {
 
     return (
@@ -32,7 +33,7 @@ export default function Input({
             </div>
             {required && (
                 <span className="text-red-500 text-sm mt-1">
-                    This field is required.
+                    {errorMessage??'This field is required.'}
                 </span>
             )}
         </div>

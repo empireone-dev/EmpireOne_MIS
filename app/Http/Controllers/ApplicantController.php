@@ -59,7 +59,7 @@ class ApplicantController extends Controller
 
         return response()->json([
             'interviewer' => $user,
-            'data' => $applicant->paginate(10)
+            'data' => $applicant->orderBy('id', 'desc')->paginate(10),
         ], 200);
     }
 

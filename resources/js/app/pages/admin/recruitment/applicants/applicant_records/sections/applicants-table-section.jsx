@@ -347,7 +347,7 @@ export default function ApplicantsTableSection() {
         pageSize: pageSize,
         total: applicants.last_page * pageSize,
         onChange: (newPage, newPageSize) => {
-            router.visit(window.location.pathname + `?page=${newPage}`);
+            router.visit(window.location.pathname + `?page=${newPage}&status=${status}`);
             setCurrent(newPage);
             setPageSize(newPageSize);
         },

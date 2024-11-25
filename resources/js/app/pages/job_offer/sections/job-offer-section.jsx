@@ -2,23 +2,30 @@ import { Modal } from "antd";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { change_job_offer_service } from "../../services/job-offer-service";
+import { LoadingOutlined } from "@ant-design/icons";
 
 export default function JobOfferSection() {
     const [open, setOpen] = useState(false);
     const { applicant } = useSelector((state) => state.final_rate);
     const [offerStatus, setOfferStatus] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({});
 
     const jo_id = window.location.search.split('=')[1]
 
     const handleAccept = async () => {
-        const res = await change_job_offer_service({
-            ...applicant,
-            ...form,
-            id: jo_id,
-            status: "Accepted",
-        });
-        window.location.reload();
+        setLoading(true);
+        try {
+            await change_job_offer_service({
+                ...applicant,
+                ...form,
+                id: jo_id,
+                status: "Accepted",
+            });
+            window.location.reload();
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleDecline = () => {
@@ -26,15 +33,19 @@ export default function JobOfferSection() {
     };
 
     const handleDeclineSubmit = async () => {
-        const res = await change_job_offer_service({
-            ...applicant,
-            ...form,
-            id: jo_id,
-            status: "Declined",
-        });
-        window.location.reload();
-
-        setOpen(false);
+        setLoading(true);
+        try {
+            await change_job_offer_service({
+                ...applicant,
+                ...form,
+                id: jo_id,
+                status: "Declined",
+            });
+            window.location.reload();
+        } finally {
+            setLoading(false);
+            setOpen(false);
+        }
     };
 
     // if (offerStatus === "accepted" || offerStatus === "declined") {
@@ -77,7 +88,7 @@ export default function JobOfferSection() {
                                 <br /> <br /> 2. <b>Compensation</b>
                                 <br />
                                 You shall receive a monthly salary of
-                                <b> Php&nbsp; 
+                                <b> Php&nbsp;
                                     <span>
                                         {new Intl.NumberFormat('en-PH', { style: 'decimal', minimumFractionDigits: 2 }).format(jo.salary)}
                                         {jo.allowance ? ' + Php ' : ''}
@@ -109,17 +120,27 @@ export default function JobOfferSection() {
                                     <button
                                         onClick={handleDecline}
                                         type="button"
-                                        className="px-4 py-2 rounded-md hover:bg-blue-600 hover:text-white focus:outline-none transition-colors"
+                                        disabled={loading}
+                                        className={`px-4 py-2 rounded-md transition-colors ${loading
+                                                ? "bg-gray-400 text-white cursor-not-allowed"
+                                                : "bg-red-500 hover:bg-red-600 text-white focus:outline-none"
+                                            }`}
                                     >
-                                        DECLINE
+                                        {loading ? "DECLINE" : "DECLINE"}
                                     </button>
                                     <button
+                                        type="submit"
+                                        className={` bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md ${loading ? "cursor-not-allowed opacity-75" : ""
+                                            }`}
                                         onClick={handleAccept}
-                                        type="button"
-                                        id="theme-toggle"
-                                        className="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-700 focus:outline-none transition-colors"
+                                        disabled={loading}
                                     >
-                                        ACCEPT
+                                        {loading ? (
+                                            <LoadingOutlined spin />
+                                        ) : (
+                                            < ></>
+                                        )}
+                                        {loading ? " ACCEPTING..." : " ACCEPT"}
                                     </button>
                                 </div>
                             </form>
@@ -132,6 +153,7 @@ export default function JobOfferSection() {
                                 width={1000}
                                 okText="Submit"
                                 cancelText="Cancel"
+                                confirmLoading={loading}
                             >
                                 <hr />
                                 <form className="w-full">

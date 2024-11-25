@@ -207,6 +207,23 @@ class ApplicantController extends Controller
         // ], 200);
     }
 
+    public function update_applicant_status(Request $request, $id)
+    {
+        // Update Applicant
+        $applicant = Applicant::find($id);
+
+        if (!$applicant) {
+            return response()->json([
+                'message' => 'Applicant not found.',
+            ], 404);
+        }
+
+        $applicant->update([
+            'status' => $request->status,
+        ]);
+    }
+
+
 
 
     public function update_address(Request $request, $id)

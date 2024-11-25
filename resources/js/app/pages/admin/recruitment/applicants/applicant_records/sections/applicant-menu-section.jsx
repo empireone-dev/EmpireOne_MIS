@@ -11,6 +11,7 @@ import {
     MedicineBoxOutlined,
     RiseOutlined,
     ScheduleOutlined,
+    TeamOutlined,
 } from "@ant-design/icons";
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
 import ApplicantProceedInitalPhaseComponent from "../components/applicant-proceed-inital-phase-component";
@@ -21,6 +22,7 @@ import ApplicantResultsComponent from "../components/applicant-results-component
 import ApplicantJobOfferComponent from "../components/applicant-job-offer-component";
 import ApplicantDetaillsComponent from "../components/applicant-detaills-component";
 import ApplicantSetScheduleComponent from "../components/applicant-set-schedule-component";
+import ApplicantPoolingComponent from "../components/applicant-pooling-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
@@ -162,10 +164,26 @@ export default function ApplicantMenuSection({ data, interviewer }) {
             ? [
                 {
                     component: (
+                        <ApplicantPoolingComponent
+                            item={{
+                                label: "Proceed for Pooling",
+                                key: "9",
+                                icon: <TeamOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
+            : []),
+        ...(data.status == "Passed" || data.status == "Pooling"
+            ? [
+                {
+                    component: (
                         <ApplicantJobOfferComponent
                             item={{
-                                label: "Job Offer",
-                                key: "9",
+                                label: "Make a Job Offer",
+                                key: "10",
                                 icon: (
                                     <BriefcaseIcon className="h-4 mr-0.5" />
                                 ),
@@ -176,6 +194,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 },
             ]
             : []),
+
     ];
 
     return (

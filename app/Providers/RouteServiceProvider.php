@@ -18,11 +18,11 @@ class RouteServiceProvider extends ServiceProvider
      * @var string
      */
     public const ADMIN_DASHBOARD = '/admin/dashboard';
-    public const HR_DASHBOARD = '/hr/dashboard';
-    public const IT_DASHBOARD = '/it/dashboard';
-    public const ACCOUNTING_DASHBOARD = '/accounting/dashboard';
-    public const MANAGER_DASHBOARD = '/manager/dashboard';
-    public const ENGAGEMENT_DASHBOARD = '/engagement/dashboard';
+    public const HR_DASHBOARD = '/admin/dashboard';
+    public const IT_DASHBOARD = '/admin/dashboard';
+    public const ACCOUNTING_DASHBOARD = '/admin/dashboard';
+    public const MANAGER_DASHBOARD = '/admin/dashboard';
+    public const ENGAGEMENT_DASHBOARD = '/admin/dashboard';
     public const EMPLOYEE_DASHBOARD = '/employee/dashboard';
 
     /**

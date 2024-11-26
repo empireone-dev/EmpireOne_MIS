@@ -373,38 +373,38 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 //         return Inertia::render('engagement/profile/page');
 //     });
 // });
-// // employee = 7
-// Route::prefix('employee', 'role:7')->group(function () {
-//     Route::get('/dashboard', function () {
-//         return Inertia::render('employee/dashboard/page');
-//     });
-//     Route::get('/employee_relation', function () {
-//         return Inertia::render('employee/employee_relation/page');
-//     });
-//     Route::get('/announcement', function () {
-//         return Inertia::render('employee/announcement/page');
-//     });
-//     Route::get('/list_memo', function () {
-//         return Inertia::render('employee/list_memo/page');
-//     });
-//     Route::get('/engagement', function () {
-//         return Inertia::render('employee/engagement/page');
-//     });
-//     Route::prefix('engagement')->group(function () {
-//         Route::get('/today_event', function () {
-//             return Inertia::render('employee/engagement/today_event/page');
-//         });
-//         Route::get('/upcoming_event', function () {
-//             return Inertia::render('employee/engagement/upcoming_event/page');
-//         });
-//         Route::get('/birthday', function () {
-//             return Inertia::render('employee/engagement/birthday/page');
-//         });
-//     });
-//     Route::get('/profile', function () {
-//         return Inertia::render('employee/profile/page');
-//     });
-// });
+// employee = 7
+Route::prefix('employee', 'role:7')->group(function () {
+    Route::get('/dashboard', function () {
+        return Inertia::render('employee/dashboard/page');
+    });
+    Route::get('/employee_relation', function () {
+        return Inertia::render('employee/employee_relation/page');
+    });
+    Route::get('/announcement', function () {
+        return Inertia::render('employee/announcement/page');
+    });
+    Route::get('/list_memo', function () {
+        return Inertia::render('employee/list_memo/page');
+    });
+    Route::get('/engagement', function () {
+        return Inertia::render('employee/engagement/page');
+    });
+    Route::prefix('engagement')->group(function () {
+        Route::get('/today_event', function () {
+            return Inertia::render('employee/engagement/today_event/page');
+        });
+        Route::get('/upcoming_event', function () {
+            return Inertia::render('employee/engagement/upcoming_event/page');
+        });
+        Route::get('/birthday', function () {
+            return Inertia::render('employee/engagement/birthday/page');
+        });
+    });
+    Route::get('/profile', function () {
+        return Inertia::render('employee/profile/page');
+    });
+});
 
 
 

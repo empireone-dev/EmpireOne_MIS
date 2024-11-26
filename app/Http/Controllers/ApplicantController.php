@@ -57,6 +57,11 @@ class ApplicantController extends Controller
             $applicant->where('status', '=', $request->status);
         }
 
+        if ($request->site && $request->site !== 'null') {
+            $applicant->where('site', '=', $request->site);
+        }
+
+
         return response()->json([
             'interviewer' => $user,
             'data' => $applicant->orderBy('id', 'desc')->paginate(10),

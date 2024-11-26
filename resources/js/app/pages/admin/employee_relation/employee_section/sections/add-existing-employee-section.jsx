@@ -47,7 +47,7 @@ export default function AddExistingEmployeeSection() {
             store.dispatch(get_department_thunk())
         }
     }, [open]);
-    
+
     useEffect(() => {
         const fetchApplicationCount = async () => {
             const count = 0;
@@ -509,7 +509,9 @@ export default function AddExistingEmployeeSection() {
                                 <select
                                     onChange={(event) => data_handler(event)}
                                     name='status'
-                                    className="border p-2 rounded  w-full">
+                                    className="border p-2 rounded  w-full"
+                                    required
+                                >
                                     <option disabled selected>Status</option>
                                     <option> Probationary</option>
                                     <option> Regular</option>

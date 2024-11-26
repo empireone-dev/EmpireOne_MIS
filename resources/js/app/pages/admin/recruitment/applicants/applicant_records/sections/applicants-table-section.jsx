@@ -21,12 +21,13 @@ export default function ApplicantsTableSection() {
     const { applicants, interviewer } = useSelector(
         (state) => state.applicants
     );
-    
+
     const urls = new URL(window.location.href);
     const searchParams = new URLSearchParams(urls.search);
     const pages = searchParams.get('page');
     const status = searchParams.get('status');
-    
+    const site = searchParams.get('site');
+
     const filteredDatas = applicants.data;
     // const filterDatas = (selectedStats) => {
     //     if (selectedStats.length === 0) {
@@ -179,8 +180,10 @@ export default function ApplicantsTableSection() {
 
 
     function search_status(value) {
-
-        router.visit('?page='+pages+'&status=' + (value || 'null'))
+        router.visit('?page=' + pages + '&status=' + (value || 'null') + '&site=' + site)
+    }
+    function search_site(value) {
+        router.visit('?page=' + pages + '&status=' + status + '&site=' + (value || 'null'))
     }
     const columns = [
         {
@@ -261,13 +264,15 @@ export default function ApplicantsTableSection() {
                     // onSearch={onSearch}
                     options={
                         [
-                            { text: "Passed", value: "Passed" },
-                            { text: "Hired", value: "Hired" },
-                            { text: "Regular", value: "Regular" },
                             { text: "Pending", value: "Pending" },
                             { text: "Initial Phase", value: "Initial Phase" },
                             { text: "Final Phase", value: "Final Phase" },
+                            { text: "Passed", value: "Passed" },
                             { text: "Pooling", value: "Pooling" },
+                            { text: "Failed", value: "Failed" },
+                            { text: "Hired", value: "Hired" },
+                            { text: "Regular", value: "Regular" },
+                            { text: "Probationary", value: "Probationary" },
                         ]
                     }
                 />
@@ -286,17 +291,18 @@ export default function ApplicantsTableSection() {
                         break;
                     case "Passed":
                     case "Hired":
-                    case "Regular":
+                    case "Probationary":
                         color = "green";
+                        break;
+                    case "Final Phase":
+                    case "Regular":
+                        color = "blue";
                         break;
                     case "Pending":
                         color = "yellow";
                         break;
                     case "Initial Phase":
                         color = "orange";
-                        break;
-                    case "Final Phase":
-                        color = "blue";
                         break;
                     case "Pooling":
                         color = "purple";
@@ -310,10 +316,38 @@ export default function ApplicantsTableSection() {
             },
         },
         {
-            title: "Site",
+            title: <div className="flex gap-3 items-center justify-center">
+                {/* 
+                Account
+                <FilterOutlined /> */}
+                <Select
+                    allowClear
+                    className="w-28"
+                    showSearch
+                    placeholder="Site"
+                    optionFilterProp="label"
+
+                    value={site == 'null' ? null : site}
+                    onChange={search_site}
+                    // onSearch={onSearch}
+                    options={
+                        [
+                            { text: "San Carlos", value: "San Carlos" },
+                            { text: "Carcar", value: "Carcar" },
+                        ]
+                    }
+                />
+            </div>,
             dataIndex: "site",
-            render: (_, record) => {
-                return <>{record.site}</>;
+            key: "site",
+            render: (_, record, i) => {
+                console.log("record", record);
+
+                return (
+                    <div key={i}>
+                        {record?.site}
+                    </div>
+                );
             },
         },
         {

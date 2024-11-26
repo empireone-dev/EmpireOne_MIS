@@ -25,6 +25,9 @@ import { Layout, Menu, Button, theme, Modal, Badge } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
 import { KeyIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 import AdminFooterComponents from "../admin/_components/admin-footer-components";
+import store from "@/app/store/store";
+import { get_user_thunk, get_users_thunk } from "../redux/app-thunk";
+import { useSelector } from "react-redux";
 const { Header, Sider, Content } = Layout;
 const EmployeeLayout = ({ children }) => {
   const { url } = usePage();
@@ -32,6 +35,13 @@ const EmployeeLayout = ({ children }) => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
+  const { user } = useSelector((state) => state.app);
+
+  useEffect(() => {
+    store.dispatch(get_users_thunk());
+    console.log('waaaa', user)
+    store.dispatch(get_user_thunk());
+}, [user.id]);
 
   const items = [
     {
@@ -177,10 +187,10 @@ const EmployeeLayout = ({ children }) => {
                 className={`${collapsed ? "hidden" : ""} mr-2`}
               >
                 <a className=" flex hover:text-primary transition-colors duration-200 ease-in-out text-[1.075rem] font-medium text-secondary-inverse">
-                  Mateo Bangbang
+                {user.employee_fname} {user.employee_lname}
                 </a>
                 <span className=" font-sm block text-[0.85rem]">
-                  IT Staff
+                {user.position}
                 </span>
               </div>
             </div>

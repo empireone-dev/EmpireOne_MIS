@@ -37,6 +37,9 @@ class ApplicantController extends Controller
         $applicant = Applicant::query()
             ->with(['final', 'initial', 'joboffer', 'user']);
         // ->orderBy('status'); // Sort by status in ascending order
+        if ($request->site && $request->site !== 'null') {
+            $applicant->where('site', '=', $request->site);
+        }
 
         $user = User::whereIn('position', ['CEO', 'Manager', 'Director'])->get();
 
@@ -57,9 +60,7 @@ class ApplicantController extends Controller
             $applicant->where('status', '=', $request->status);
         }
 
-        if ($request->site && $request->site !== 'null') {
-            $applicant->where('site', '=', $request->site);
-        }
+        
 
 
         return response()->json([

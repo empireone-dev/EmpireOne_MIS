@@ -5,7 +5,7 @@ import {
     UserAddOutlined,
     UserDeleteOutlined,
 } from "@ant-design/icons";
-import { Modal, Select } from "antd";
+import { message, Modal, Select } from "antd";
 import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -42,13 +42,22 @@ export default function AddAttritionSection() {
     async function submit_attrition(params) {
         setLoading(true)
         try {
-            await store.dispatch(store_attrition_thunk({
+            const res = await store.dispatch(store_attrition_thunk({
                 ...applicant,
                 ...form
             }));
-            await store.dispatch(get_employee_attrition_thunk())
-            setLoading(false)
-            setOpen(false)
+            if (res.status == 'success') {
+                console.log('ressss', res.status)
+                await store.dispatch(get_employee_attrition_thunk())
+                message.success('Successfully Added')
+                setLoading(false)
+                setOpen(false)
+            } else {
+                message.error('Employee has been already added to Attrition Records')
+                setLoading(false)
+                setOpen(false)
+            }
+
         } catch (error) {
             setLoading(false)
         }

@@ -12,6 +12,7 @@ export function get_employee_attrition_thunk() {
 
 export function store_attrition_thunk(data) {
     return async function (dispatch, getState) {
-        const result = (await store_attrition_service(data)).data
+        const result = (await store_attrition_service(data))
+        return result
     };
 }

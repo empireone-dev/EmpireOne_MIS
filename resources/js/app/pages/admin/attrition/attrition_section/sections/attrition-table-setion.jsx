@@ -20,7 +20,7 @@ export default function AttritionTableSection() {
     useEffect(() => {
         store.dispatch(get_employee_thunk())
     }, []);
-    
+
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -192,6 +192,18 @@ export default function AttritionTableSection() {
             },
         },
         {
+            title: 'Reason for Separation',
+            dataIndex: 'reas',
+            key: 'reas',
+            render: (_, record) => {
+                return (
+                    <Tag color="#FF0000" key={record.key}>
+                        {record.reas}
+                    </Tag>
+                );
+            },
+        },
+        {
             title: 'Exit Clearance Status',
             dataIndex: 'estatus',
             key: 'estatus',
@@ -219,7 +231,7 @@ export default function AttritionTableSection() {
                 return (
                     <h1>
                         {/* <ButtonComponents/> */}
-                        <AttritionMenuSection data={record}/>
+                        <AttritionMenuSection data={record} />
                     </h1>
                 )
             }

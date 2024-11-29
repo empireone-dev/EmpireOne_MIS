@@ -22,31 +22,31 @@ export default function UploadRequirementsSection() {
         setIsModalOpen(true);
     };
 
-      
-      // The dataset containing `reqs` values to remove
-      const toRemove = applicant?.requirements?.map(res=>res.reqs)??[];
-      
-      const filteredEntries = checklists.filter(entry => !toRemove.includes(entry.reqs));
-      
+
+    // The dataset containing `reqs` values to remove
+    const toRemove = applicant?.requirements?.map(res => res.reqs) ?? [];
+
+    const filteredEntries = checklists.filter(entry => !toRemove.includes(entry.reqs));
+
 
 
     const handleOk = async () => {
         setLoading(true);
         const fd = new FormData()
-        console.log('fileList', fileList)
-        fd.append('file', fileList.originFileObj)
+        fd.append('file', fileList[0].originFileObj)
         fd.append('status', 'Uploaded')
         fd.append('reqs', reqs)
         fd.append('created', moment().format('YYYY-MM-DD HH:mm:ss'))
         fd.append('app_id', app_id)
 
         try {
-            if (fileList.status == 'done') {
+            if (fileList[0].status == 'done') {
                 await store_pre_employment_file_service(fd)
                 await store.dispatch(get_applicant_by_app_id_thunk(app_id))
-                await message.success('Uploaded successfully!')
+                message.success('Uploaded successfully!')
                 setIsModalOpen(false);
                 setFileList([])
+                setReqs('')
                 setOpen(false)
             }
 
@@ -64,7 +64,9 @@ export default function UploadRequirementsSection() {
     };
 
     async function upload_file({ file }) {
-        setFileList(file)
+        setFileList([
+            file
+        ])
     }
     return (
         <div>
@@ -90,7 +92,9 @@ export default function UploadRequirementsSection() {
                         id=""
                         onChange={(e) => setReqs(e.target.value)}
                     >
-                        <option value=""></option>
+                        {
+                            !reqs && <option value=""  selected disabled></option>
+                        }
                         {
                             filteredEntries?.filter(res => res.site === "San Carlos")
                                 .map((res, i) => (
@@ -110,7 +114,7 @@ export default function UploadRequirementsSection() {
                     maxCount={1}
                     onChange={upload_file}
                     multiple={false}
-                    defaultFileList={fileList}
+                    fileList={fileList}
                 >
                     <Button type="primary" icon={<UploadOutlined />}>
                         Upload Scanned Image

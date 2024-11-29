@@ -46,24 +46,24 @@ export default function PreEmploymentDetailsSection() {
                                 <div className='flex flex-col w-full mb-4'>
                                     <label htmlFor=""><b>Application No.</b></label>
                                     <div className='flex flex-1 gap-3'>
-                                        <input type="text" className="border p-2 rounded w-full" value={applicant.app_id} readOnly />
+                                        <input type="text" className="border p-2 rounded w-full" value={applicant?.app_id} readOnly />
                                     </div>
                                 </div>
                                 <div className='flex flex-1 gap-4'>
                                     <div className='flex flex-col w-full mb-4'>
                                         <label htmlFor=""><b>Full Name</b></label>
                                         <div className='flex flex-1 gap-3'>
-                                            <input type="text" className="border p-2 rounded w-full" value={applicant.fname} readOnly />
-                                            <input type="text" className="border p-2 rounded w-full" value={applicant.mname} readOnly />
-                                            <input type="text" className="border p-2 rounded w-full" value={applicant.lname} readOnly />
-                                            <input type="text" className="border p-2 rounded w-1/5" value={applicant.suffix} readOnly />
+                                            <input type="text" className="border p-2 rounded w-full" value={applicant?.fname} readOnly />
+                                            <input type="text" className="border p-2 rounded w-full" value={applicant?.mname} readOnly />
+                                            <input type="text" className="border p-2 rounded w-full" value={applicant?.lname} readOnly />
+                                            <input type="text" className="border p-2 rounded w-1/5" value={applicant?.suffix} readOnly />
                                         </div>
                                     </div>
                                 </div>
                                 <div className="flex flex-1 gap-4 mb-4 w-full">
                                     <div className='flex flex-col w-full'>
                                         <label htmlFor=""><b>Email</b></label>
-                                        <input type="email" className="border p-2 rounded w-full" value={applicant.email} readOnly />
+                                        <input type="email" className="border p-2 rounded w-full" value={applicant?.email} readOnly />
                                     </div>
                                     <div className='flex flex-col w-full'>
                                         <label htmlFor=""><b>Job Position</b></label>

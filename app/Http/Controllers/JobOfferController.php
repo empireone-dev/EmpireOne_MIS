@@ -19,7 +19,7 @@ class JobOfferController extends Controller
             $jobofferQuery->where('status', $request->search);
         }
 
-        if ($request->status) {
+        if ($request->status && $request->status !== 'null') {
             $jobofferQuery->where('status', '=', $request->status);
         }
 

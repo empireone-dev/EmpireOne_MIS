@@ -180,10 +180,10 @@ export default function ApplicantsTableSection() {
 
 
     function search_status(value) {
-        router.visit('?page=' + pages + '&status=' + (value || 'null') + '&site=' + site)
+        router.visit('?page=1' + '&status=' + (value || 'null') + '&site=' + site)
     }
     function search_site(value) {
-        router.visit('?page=' + pages + '&status=' + status + '&site=' + (value || 'null'))
+        router.visit('?page=1' + '&status=' + status + '&site=' + (value || 'null'))
     }
     const columns = [
         {
@@ -381,7 +381,7 @@ export default function ApplicantsTableSection() {
         pageSize: pageSize,
         total: applicants.last_page * pageSize,
         onChange: (newPage, newPageSize) => {
-            router.visit(window.location.pathname + `?page=${newPage}&status=${status}`);
+            router.visit(window.location.pathname + `?page=${newPage}&status=${status}&site=${site}`);
             setCurrent(newPage);
             setPageSize(newPageSize);
         },

@@ -6,11 +6,11 @@ import { Button, message, Modal, Upload } from 'antd';
 import moment from 'moment';
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux';
+import { get_applicant_by_app_id_thunk } from '../../final_rate/redux/final-rate-thunk';
 
 export default function File201UploadReqsButtonSection() {
     const [open, setOpen] = useState(false);
-    const [showWorkingExperience, setShowWorkingExperience] = useState(false);
-    const [showFirstTimeJobseeker, setShowFirstTimeJobseeker] = useState(false);
+    const [loading, setLoading] = useState(false)
     const { applicant } = useSelector((state) => state.final_rate);
     const { checklists } = useSelector((state) => state.checklists);
     const [fileList, setFileList] = useState([])
@@ -18,17 +18,26 @@ export default function File201UploadReqsButtonSection() {
     const app_id = window.location.pathname.split('/')[3]
 
     const handleOk = async () => {
+        setLoading(true)
         const fd = new FormData()
-        fd.append('file', fileList.originFileObj)
+        fd.append('file', fileList[0].originFileObj)
         fd.append('status', 'Uploaded')
         fd.append('reqs', reqs)
         fd.append('created', moment().format('YYYY-MM-DD HH:mm:ss'))
         fd.append('app_id', window.location.pathname.split('/')[3])
-        if (fileList.status == 'done') {
-            const result = await store_pre_employment_file_service(fd)
-             await store.dispatch(get_applicant_by_app_id_thunk(app_id))
-            await message.success('Uploaded Successfully!')
-            setOpen(false)
+        try {
+            if (fileList[0].status == 'done') {
+                await store_pre_employment_file_service(fd)
+                await store.dispatch(get_applicant_by_app_id_thunk(app_id))
+                message.success('Uploaded Successfully!')
+                setOpen(false)
+                setReqs('')
+                setFileList([])
+                setLoading(false)
+            }
+        } catch (error) {
+            setLoading(false)
+
         }
     };
 
@@ -36,20 +45,16 @@ export default function File201UploadReqsButtonSection() {
         setOpen(false);
     };
 
-    const handleWorkingExperienceChange = (e) => {
-        setShowWorkingExperience(e.target.checked);
-        setShowFirstTimeJobseeker(false);
-    };
 
-    const handleFirstTimeJobseekerChange = (e) => {
-        setShowFirstTimeJobseeker(e.target.checked);
-        setShowWorkingExperience(false);
-    };
 
     async function upload_file({ file }) {
-        setFileList(file)
+        setFileList([
+            file
+        ])
     }
-
+    const toRemove = applicant?.requirements?.map(res => res.reqs) ?? [];
+    const filteredEntries = checklists.filter(entry => !toRemove.includes(entry.reqs));
+    const isContract = applicant?.requirements?.find(res => res.reqs == 'Contract')
     return (
         <div className="my-2">
             <div class="inline-flex rounded-md shadow-sm" role="group">
@@ -63,6 +68,7 @@ export default function File201UploadReqsButtonSection() {
                 </button>
             </div>
             <Modal
+                confirmLoading={loading}
                 title="Add Requirements"
                 centered
                 open={open}
@@ -78,15 +84,19 @@ export default function File201UploadReqsButtonSection() {
                         <div className="mt-2">
                             <div className='mb-4'>
                                 <label htmlFor=""><b>Application ID</b></label>
-                                <input name='' type="text" value={applicant?.app_id ?? ''} className='border p-2 rounded  w-full' readOnly />
+                                <input name='' type="text" value={app_id ?? ''} className='border p-2 rounded  w-full' readOnly />
                             </div>
                             <div className='mb-4'>
                                 <label htmlFor=""><b>Requirement's Name</b></label>
                                 <select className="border p-2 rounded  w-full" onChange={(e) => setReqs(e.target.value)}>
-                                    <option> </option>
-                                    <option value="Contract">Contract Document</option>
                                     {
-                                        checklists
+                                        !reqs && <option selected disabled> </option>
+                                    }
+                                    {
+                                        !isContract && <option value="Contract">Contract Document</option>
+                                    }
+                                    {
+                                        filteredEntries
                                             .filter(res => res.site === "San Carlos")
                                             .map((res, i) => {
                                                 return <option value={res.reqs} key={i}>{res.reqs}</option>;
@@ -101,7 +111,7 @@ export default function File201UploadReqsButtonSection() {
                                 maxCount={1}
                                 onChange={upload_file}
                                 multiple={false}
-                                defaultFileList={fileList}
+                                fileList={fileList}
                             >
                                 <Button type="primary" icon={<UploadOutlined />}>
                                     Upload Scanned Image

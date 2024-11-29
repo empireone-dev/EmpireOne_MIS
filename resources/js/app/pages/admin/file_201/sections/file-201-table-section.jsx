@@ -18,7 +18,7 @@ export default function File201TableSection() {
     const [modalVisible, setModalVisible] = useState(false);
     const searchInput = useRef(null);
     const { applicant } = useSelector((state) => state.final_rate);
-    // console.log('applicant',applicant.requirements)
+   console.log('applicant',applicant)
 
     useEffect(() => {
         store.dispatch(get_checklist_thunk())

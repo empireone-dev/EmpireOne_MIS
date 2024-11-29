@@ -56,7 +56,7 @@ class ApplicantController extends Controller
             });
         }
 
-        if ($request->status) {
+        if ($request->status  && $request->status !== 'null') {
             $applicant->where('status', '=', $request->status);
         }
 

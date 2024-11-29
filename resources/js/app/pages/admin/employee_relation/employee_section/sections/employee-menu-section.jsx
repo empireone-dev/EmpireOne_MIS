@@ -55,32 +55,32 @@ export default function EmployeeMenuSection({ data }) {
                 />
             ),
         },
-        {
-            component: (
-                <FileIrComponent
-                    item={{
-                        label: "File IR",
-                        key: "4",
-                        icon: <i>IR</i>,
-                    }}
-                    data={data}
-                />
-            ),
-        },
-        {
-            component: (
-                <FileNteComponent
-                    item={{
-                        label: "File NTE",
-                        key: "5",
-                        icon: <div className="text-xs" style={{ fontSize: "8.5px" }}>
-                            <i>NTE</i>
-                        </div>,
-                    }}
-                    data={data}
-                />
-            ),
-        },
+        // {
+        //     component: (
+        //         <FileIrComponent
+        //             item={{
+        //                 label: "File IR",
+        //                 key: "4",
+        //                 icon: <i>IR</i>,
+        //             }}
+        //             data={data}
+        //         />
+        //     ),
+        // },
+        // {
+        //     component: (
+        //         <FileNteComponent
+        //             item={{
+        //                 label: "File NTE",
+        //                 key: "5",
+        //                 icon: <div className="text-xs" style={{ fontSize: "8.5px" }}>
+        //                     <i>NTE</i>
+        //                 </div>,
+        //             }}
+        //             data={data}
+        //         />
+        //     ),
+        // },
         {
             component: (
                 <PrintCoeComponent

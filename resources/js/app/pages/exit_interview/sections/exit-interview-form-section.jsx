@@ -30,7 +30,7 @@ export default function ExitInterviewFormSection() {
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Account / Department:</b></label>
-                                            <input type="text" value={employee?.account} className="border p-2 rounded w-full" />
+                                            <input type="text" value={employee?.account ? employee?.account : employee?.dept?.dept} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Date Hired:</b></label>
@@ -63,7 +63,7 @@ export default function ExitInterviewFormSection() {
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Department Manager:</b></label>
-                                            <input type="text" value={`${employee?.department?.depthead || ''} ${employee?.department?.employee_mname || ''} ${employee?.department?.employee_lname || ''}`} className="border p-2 rounded w-full" />
+                                            <input type="text" value={`${employee?.dept?.user?.employee_fname || ''} ${employee?.dept?.user?.employee_lname || ''}`} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Reason for Separation::</b></label>

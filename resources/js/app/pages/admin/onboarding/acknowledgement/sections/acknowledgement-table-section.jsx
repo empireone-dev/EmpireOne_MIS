@@ -9,6 +9,7 @@ import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import { router } from "@inertiajs/react";
 import DeclinedReasonSection from "./declined-reason-section";
+import HiringSearchSection from "../../../hiring/hiring_section/sections/hiring-search-section";
 
 export default function AcknowledgementTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -143,7 +144,7 @@ export default function AcknowledgementTableSection() {
                 text
             ),
     });
-    
+
     const urls = new URL(window.location.href);
     const searchParams = new URLSearchParams(urls.search);
     const pages = searchParams.get('page');
@@ -310,6 +311,7 @@ export default function AcknowledgementTableSection() {
                     </h2>
                 </div>
             </div>
+            <HiringSearchSection />
             <Table
                 pagination={false}
                 columns={columns}

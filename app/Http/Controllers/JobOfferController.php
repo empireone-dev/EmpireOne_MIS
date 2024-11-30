@@ -23,6 +23,19 @@ class JobOfferController extends Controller
             $jobofferQuery->where('status', '=', $request->status);
         }
 
+        if ($request->searching) {
+            $jobofferQuery->where(function ($subQuery) use ($request) {
+                // Search by applicant ID
+                $subQuery->where('app_id', 'LIKE', '%' . $request->searching . '%')
+                    ->orWhereHas('applicant', function ($query) use ($request) {
+                        // Search by last name, first name, or middle name in the applicant relation
+                        $query->where('lname', 'LIKE', '%' . $request->searching . '%')
+                            ->orWhere('fname', 'LIKE', '%' . $request->searching . '%')
+                            ->orWhere('mname', 'LIKE', '%' . $request->searching . '%');
+                    });
+            });
+        }
+
         $joboffer = $jobofferQuery->paginate(10);
 
         return response()->json([

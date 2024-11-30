@@ -23,11 +23,11 @@ export default function HiringSearchSection() {
 
     function search_data(e) {
         e.preventDefault();
-        router.visit(newUrl);
+        router.visit(window.location.pathname+'?searching='+search);
     }
 
     return (
-        <form onSubmit={search_data} className="w-96 my-2">
+        <form onSubmit={search_data} className="w-96">
             <label
                 htmlFor="default-search"
                 className="mb-2 text-sm font-medium text-gray-900 sr-only "

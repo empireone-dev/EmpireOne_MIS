@@ -10,6 +10,13 @@ class AttritionController extends Controller
     public function store(Request $request)
     {
 
+        $request->validate([
+            'reason' => 'required|string',
+            'separation' => 'required|date',
+        ], [
+            'reason.required' => 'The reason field is required.',
+            'separation.required' => 'The separation date is required.',
+        ]);
 
         $attrition = Attrition::where('app_id', $request->app_id)->first();
         if ($attrition) {

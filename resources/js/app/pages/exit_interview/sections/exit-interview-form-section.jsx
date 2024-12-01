@@ -2,12 +2,41 @@ import React, { useState } from 'react';
 import CheckboxInputComponent from '../components/checkbox-input-component';
 import TableRowComponent from '../components/table-row-component';
 import { useSelector } from 'react-redux';
+import store from '@/app/store/store';
+import { store_exit_int_thunk } from '../redux/exit-interview-thunk';
+import { message } from 'antd';
+import { router } from '@inertiajs/react';
 
 export default function ExitInterviewFormSection() {
     const { employee } = useSelector((state) => state.employees);
     const { user } = useSelector((state) => state.app);
+    const app_id = window.location.pathname.split("/")[2];
+    const [loading, setLoading] = useState(false);
+    const [form, setForm] = useState({
+        // dept: "",
+        // depthead: "",
+        // site: user?.site || '',
+    });
 
     console.log('employee', employee)
+
+    const submitExitInt = async () => {
+        setLoading(true);
+        try {
+            await store.dispatch(
+                store_exit_int_thunk({
+                    ...form,
+                })
+            );
+            // await store.dispatch(get_department_thunk());
+            message.success("Exit Interview Successfully Recorded");
+            router.visit('/exit_clearance?searching=' + app_id)
+        } catch (error) {
+            message.error("Failed to record Exit Interview. Please try again.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="h-screen overflow-hidden ">
@@ -20,13 +49,14 @@ export default function ExitInterviewFormSection() {
                         <div className='flex text-2xl items-center justify-center'>
                             <h1><b>EXIT INTERVIEW</b></h1>
                         </div>
-                        <form className='border rounded-lg p-3.5'>
+                        <form className='border rounded-lg p-3.5' onSubmit={submitExitInt}>
                             <div className='flex flex-1 gap-4 border-4 border-gray-400 p-4 mb-3'>
                                 <div className='flex w-full'>
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Full Name:</b></label>
-                                            <input type="text" value={`${employee?.applicant?.fname || ''} ${employee?.applicant?.mname || ''} ${employee?.applicant?.lname || ''}`} className="border p-2 rounded w-full" />
+                                            <input
+                                                type="text" value={`${employee?.applicant?.fname || ''} ${employee?.applicant?.mname || ''} ${employee?.applicant?.lname || ''}`} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Account / Department:</b></label>
@@ -34,7 +64,7 @@ export default function ExitInterviewFormSection() {
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Date Hired:</b></label>
-                                            <input type="date" value={employee?.hired} className="border p-2 rounded w-full" />
+                                            <input type="date" value={employee?.hired || ''} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className=" w-full">
                                             <label htmlFor=""><b>Immediate Supervisor:</b></label>
@@ -42,7 +72,7 @@ export default function ExitInterviewFormSection() {
                                         </div>
                                         <div className="w-full">
                                             <label htmlFor=""><b>Employment Status:</b></label>
-                                            <input type="text" value={employee?.status} className="border p-2 rounded w-full " />
+                                            <input type="text" value={employee?.status || ''} className="border p-2 rounded w-full " />
                                         </div>
                                     </div>
                                 </div>
@@ -51,15 +81,15 @@ export default function ExitInterviewFormSection() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>ID Number:</b></label>
-                                            <input type="text" value={employee?.app_id} className="border p-2 rounded w-full" />
+                                            <input type="text" value={employee?.app_id || ''} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Position Title:</b></label>
-                                            <input type="text" value={employee?.position} className="border p-2 rounded w-full" />
+                                            <input type="text" value={employee?.position || ''} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Date Separated:</b></label>
-                                            <input type="date" value={employee?.attrition?.separation} className="border p-2 rounded w-full" />
+                                            <input type="date" value={employee?.attrition?.separation || ''} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Department Manager:</b></label>
@@ -67,7 +97,7 @@ export default function ExitInterviewFormSection() {
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Reason for Separation::</b></label>
-                                            <input type="text" value={employee?.attrition?.reas} className="border p-2 rounded w-full" />
+                                            <input type="text" value={employee?.attrition?.reas || ''} className="border p-2 rounded w-full" />
                                         </div>
                                     </div>
                                 </div>
@@ -78,7 +108,15 @@ export default function ExitInterviewFormSection() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>1. Please describe the main reason for leaving your current position.</b></label>
-                                            <textarea type="text" placeholder="" className="border p-2 rounded w-full" />
+                                            <textarea
+                                                onChange={(e) =>
+                                                    setForm({
+                                                        ...form,
+                                                        mreas: e.target.value,
+                                                    })
+                                                }
+                                                value={form?.mreas || ''}
+                                                type="text" placeholder="" className="border p-2 rounded w-full" />
                                         </div>
                                     </div>
                                 </div>
@@ -89,7 +127,7 @@ export default function ExitInterviewFormSection() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>2. Kindly choose the following factors below that influence your decision to leave.</b></label>
-                                            <CheckboxInputComponent label="Pay" />
+                                            {/* <CheckboxInputComponent label="Pay" />
                                             <CheckboxInputComponent label="Supervisor" />
                                             <CheckboxInputComponent label="Work Condition (Schedule, Setting, Travel, Flexibility)" />
                                             <CheckboxInputComponent label="Location / Commute" />
@@ -98,9 +136,17 @@ export default function ExitInterviewFormSection() {
                                             <CheckboxInputComponent label="Health Reasons" />
                                             <CheckboxInputComponent label="Family Care" />
                                             <CheckboxInputComponent label="Too Strict Company Policy" />
-                                            <CheckboxInputComponent label="No Career Development / Enhancement" />
+                                            <CheckboxInputComponent label="No Career Development / Enhancement" /> */}
                                             <label htmlFor="" className='mt-1'>Others:</label>
-                                            <input type="text" placeholder="" className="border p-2 rounded w-full " />
+                                            <input
+                                                onChange={(e) =>
+                                                    setForm({
+                                                        ...form,
+                                                        others: e.target.value,
+                                                    })
+                                                }
+                                                value={form?.others || ''}
+                                                type="text" placeholder="" className="border p-2 rounded w-full " />
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +157,15 @@ export default function ExitInterviewFormSection() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>3. Is there anything you wish you had known before you took the job?</b></label>
-                                            <textarea type="text" placeholder="" className="border p-2 rounded w-full" />
+                                            <textarea
+                                                onChange={(e) =>
+                                                    setForm({
+                                                        ...form,
+                                                        wish: e.target.value,
+                                                    })
+                                                }
+                                                value={form?.wish || ''}
+                                                type="text" placeholder="" className="border p-2 rounded w-full" />
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +176,15 @@ export default function ExitInterviewFormSection() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>4. What would you suggest to the management to make our organization a better place to work?</b></label>
-                                            <textarea type="text" placeholder="" className="border p-2 rounded w-full" />
+                                            <textarea
+                                                onChange={(e) =>
+                                                    setForm({
+                                                        ...form,
+                                                        suggest: e.target.value,
+                                                    })
+                                                }
+                                                value={form?.suggest || ''}
+                                                type="text" placeholder="" className="border p-2 rounded w-full" />
                                         </div>
                                     </div>
                                 </div>
@@ -133,7 +195,15 @@ export default function ExitInterviewFormSection() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>5. Do you feel you received appreciate support to enable to do your job?</b></label>
-                                            <textarea type="text" placeholder="" className="border p-2 rounded w-full" />
+                                            <textarea
+                                                onChange={(e) =>
+                                                    setForm({
+                                                        ...form,
+                                                        appreciate: e.target.value,
+                                                    })
+                                                }
+                                                value={form?.appreciate || ''}
+                                                type="text" placeholder="" className="border p-2 rounded w-full" />
                                         </div>
                                     </div>
                                 </div>
@@ -144,9 +214,9 @@ export default function ExitInterviewFormSection() {
                                 <h1><b>2. Satisfied,</b></h1>
                                 <h1><b>3. Neutral,</b></h1>
                                 <h1><b>4. Dissatisfied,</b></h1>
-                                <h1><b>5. Very dissatisfied</b></h1>
+                                <h1><b>5. Very Dissatisfied</b></h1>
                             </div>
-
+                            {/* 
                             <div className='flex flex-1 gap-4 border-4 border-gray-400 mt-2 mb-3'>
                                 <table class="table table-bordered text-center w-full">
                                     <thead className='border-b-2 border-gray-300 w-full'>
@@ -221,13 +291,18 @@ export default function ExitInterviewFormSection() {
                                         />
                                     </tbody>
                                 </table>
-                            </div>
+                            </div> */}
 
 
 
                             <div className="flex justify-end mt-2.5">
-                                <button type="button" id="theme-toggle" className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
-                                    SUBMIT EXIT INTERVIEW
+                                <button
+                                    type="submit"
+                                    className={`px-4 py-2 rounded text-white focus:outline-none transition-colors ${loading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'
+                                        }`}
+                                    disabled={loading}
+                                >
+                                    {loading ? 'Submitting...' : 'SUBMIT EXIT INTERVIEW'}
                                 </button>
                             </div>
                         </form>

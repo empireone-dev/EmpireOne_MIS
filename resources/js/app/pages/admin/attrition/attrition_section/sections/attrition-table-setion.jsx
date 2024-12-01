@@ -9,6 +9,7 @@ import store from '@/app/store/store';
 import { get_employee_thunk } from '../../../employee_relation/employee_section/redux/employee-section-thunk';
 import { useEffect } from 'react';
 import AttritionMenuSection from './attrition-menu-section';
+import moment from 'moment';
 
 export default function AttritionTableSection() {
     const [searchText, setSearchText] = useState('');
@@ -128,16 +129,16 @@ export default function AttritionTableSection() {
 
     const columns = [
         {
-            title: 'Employee #',
+            title: 'Employee No.',
             dataIndex: 'emp_id',
             key: 'emp_id',
-            ...getColumnSearchProps('emp_id'),
+            // ...getColumnSearchProps('emp_id'),
         },
         {
             title: 'Employee Name',
             dataIndex: 'fullname',
             key: 'fullname',
-            ...getColumnSearchProps('fullname'),
+            // ...getColumnSearchProps('fullname'),
             render: (_, record, i) => {
                 return (
                     <div key={i}>
@@ -150,25 +151,39 @@ export default function AttritionTableSection() {
             title: 'Position',
             dataIndex: 'position',
             key: 'position',
-            ...getColumnSearchProps('position'),
+            // ...getColumnSearchProps('position'),
         },
         {
             title: 'Department',
             dataIndex: 'dept',
             key: 'dept',
-            ...getColumnSearchProps('dept'),
+            // ...getColumnSearchProps('dept'),
         },
         {
             title: 'Hired',
-            dataIndex: 'dept',
-            key: 'dept',
-            ...getColumnSearchProps('dept'),
+            dataIndex: 'hired',
+            key: 'hired',
+            render: (_, record) => {
+                return (
+                    <div className="gap-1.5 flex">
+                        {record.hired ? moment(record.hired).format('LL') : ''}
+                    </div>
+                );
+            },
+            // ...getColumnSearchProps('hired'),
         },
         {
             title: 'Separation',
-            dataIndex: 'dept',
-            key: 'dept',
-            ...getColumnSearchProps('dept'),
+            dataIndex: 'separation',
+            key: 'separation',
+            render: (_, record) => {
+                return (
+                    <div className="gap-1.5 flex">
+                        {record.separation ? moment(record.separation).format('LL') : ''}
+                    </div>
+                );
+            },
+            // ...getColumnSearchProps('separation'),
         },
         {
             title: 'Employment Status',

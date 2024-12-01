@@ -19,6 +19,7 @@ class DepartmentController extends Controller
     {
         Department::create($request->all());
     }
+    
     public function show($id)
     {
         $department = Department::where('id', $id)->with(['user'])->first();

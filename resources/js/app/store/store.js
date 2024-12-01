@@ -19,6 +19,7 @@ import preEmploymentFilesSlice from "../pages/pre-employment/redux/pre-employmen
 import departmentSlice from "../pages/admin/sourcing/department/redux/department-slice";
 import appSlice from "../pages/redux/app-slice";
 import accountSlice from "../pages/admin/employee_relation/employee_section/redux/account-slice";
+import exitInterviewSlice from "../pages/exit_interview/redux/exit-interview-slice";
 const store = configureStore({
     reducer: {
         app: appSlice,
@@ -40,7 +41,8 @@ const store = configureStore({
         final_rate: finalRateSlice,
         preemploymentfiles: preEmploymentFilesSlice,
         departments: departmentSlice,
-        accounts: accountSlice
+        accounts: accountSlice,
+        exit_int: exitInterviewSlice
     },
 });
 

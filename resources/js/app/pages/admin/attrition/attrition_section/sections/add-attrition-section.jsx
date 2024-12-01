@@ -22,6 +22,7 @@ export default function AddAttritionSection() {
     const [applicants, setApplicants] = useState([]);
     const [applicant, setApplicant] = useState({});
     const { users } = useSelector((state) => state.app);
+    const [error, setError] = useState({})
     const [loading, setLoading] = useState(false)
 
     const [form, setForm] = useState({ reason: '', resignationReasonSelect: '', dismissalReasonSelect: '', });
@@ -59,7 +60,12 @@ export default function AddAttritionSection() {
             }
 
         } catch (error) {
-            setLoading(false)
+            if (error?.response?.data?.errors) {
+                setError(error.response.data.errors);
+            } else {
+                message.error('An error occurred. Please try again later.');
+            }
+            setLoading(false);
         }
     }
 
@@ -314,12 +320,19 @@ export default function AddAttritionSection() {
                                             [e.target.name]: e.target.value,
                                         })
                                     }
+                                    value={form.separation || ''}
                                     name="separation"
-                                    class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    className={`appearance-none block w-full border py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${error?.separation ? 'border-red-500' : 'border-gray-400'} rounded focus:border-gray-500`}
                                     id="grid-text"
                                     type="date"
                                     placeholder=""
+                                    required
                                 />
+                                {error?.separation && (
+                                    <span className="text-red-500 text-sm mt-1">
+                                        Please input date of separation.
+                                    </span>
+                                )}
                             </div>
                             <div class="w-full px-3">
                                 <label
@@ -336,9 +349,10 @@ export default function AddAttritionSection() {
                                     //     })
                                     // }
                                     onChange={handleReasonChange}
-                                    class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    className={`appearance-none block w-full border py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${error?.reason ? 'border-red-500' : 'border-gray-400'} rounded focus:border-gray-500`}
                                     name="reason"
-                                    id=""
+                                    value={form.reason || ''}
+                                    required
                                 >
                                     <option value=""></option>
                                     <option value="Resigned">Resignation</option>
@@ -357,6 +371,11 @@ export default function AddAttritionSection() {
                         { text: "Resigned", value: "Resigned" },
                                      */}
                                 </select>
+                                {error?.reason && (
+                                    <span className="text-red-500 text-sm mt-1">
+                                        Please select reason of separation.
+                                    </span>
+                                )}
                             </div>
                         </div>
                         {form.reason === 'Resignation' && (

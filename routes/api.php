@@ -13,6 +13,8 @@ use App\Http\Controllers\EmployeeEngagementController;
 use App\Http\Controllers\EmployeeHealthController;
 use App\Http\Controllers\ERFJaController;
 use App\Http\Controllers\ERFJdController;
+use App\Http\Controllers\ExitClearanceController;
+use App\Http\Controllers\ExitInterviewController;
 use App\Http\Controllers\FinalRateController;
 use App\Http\Controllers\GuideQuestionController;
 use App\Http\Controllers\IncidentReportController;
@@ -102,6 +104,8 @@ Route::resource('account', AccountController::class);
 Route::resource('pre_employment_file', PreEmploymentFileController::class);
 Route::post('/reupload_file', [PreEmploymentFileController::class, 'reupload_file']);
 Route::resource('attrition', AttritionController::class);
+Route::resource('exit_int', ExitInterviewController::class);
+Route::resource('exit_clr', ExitClearanceController::class);
 
 
 

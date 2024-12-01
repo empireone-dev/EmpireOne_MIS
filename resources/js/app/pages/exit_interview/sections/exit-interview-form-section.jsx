@@ -116,7 +116,7 @@ export default function ExitInterviewFormSection() {
                                                     })
                                                 }
                                                 value={form?.mreas || ''}
-                                                type="text" placeholder="" className="border p-2 rounded w-full" />
+                                                type="text" placeholder="" className="border p-2 h-40 rounded w-full" />
                                         </div>
                                     </div>
                                 </div>
@@ -165,7 +165,7 @@ export default function ExitInterviewFormSection() {
                                                     })
                                                 }
                                                 value={form?.wish || ''}
-                                                type="text" placeholder="" className="border p-2 rounded w-full" />
+                                                type="text" placeholder="" className="border p-2 h-40  rounded w-full" />
                                         </div>
                                     </div>
                                 </div>
@@ -184,7 +184,7 @@ export default function ExitInterviewFormSection() {
                                                     })
                                                 }
                                                 value={form?.suggest || ''}
-                                                type="text" placeholder="" className="border p-2 rounded w-full" />
+                                                type="text" placeholder="" className="border p-2 h-40  rounded w-full" />
                                         </div>
                                     </div>
                                 </div>

@@ -55,7 +55,7 @@ export default function InitialRateForm({ data }) {
         setLoading(true);
         await store.dispatch(store_initial_rate_thunk(initialRate));
         await message.success('Applicant successfully rated');
-        router.visit('/admin/recruitment/applicant_records?searching='+app_id)
+        router.visit('/admin/recruitment/applicant_records?searching=' + app_id)
         setLoading(false);
     }
     return (
@@ -140,9 +140,8 @@ export default function InitialRateForm({ data }) {
                 <div className="flex justify-end mt-3.5">
                     <button
                         type="submit"
-                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${
-                            loading ? "cursor-not-allowed opacity-75" : ""
-                        }`}
+                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
+                            }`}
                         onClick={submit_initial_rate}
                         disabled={loading}
                     >

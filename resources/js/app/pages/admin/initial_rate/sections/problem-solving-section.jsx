@@ -15,7 +15,7 @@ export default function ProblemSolvingSection() {
             })
         );
     }
-    console.log('initialRate',initialRate)
+    console.log('initialRate', initialRate)
     return (
         <div>
             <div className="flex items-center mt-6 mb-2">

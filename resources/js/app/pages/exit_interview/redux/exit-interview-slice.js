@@ -4,10 +4,12 @@ export const exitInterviewSlice = createSlice({
     name: 'exit_int',
     initialState: {
         exitInterviews: [],
-        exitInterviewForm: {}
+        exitInterviewForm: {
+            factors: []
+        }
     },
     reducers: {
-        setExitInterview: (state, action) => {
+        setExitInterviews: (state, action) => {
             state.exitInterviews = action.payload
         },
         setExitInterviewForm: (state, action) => {

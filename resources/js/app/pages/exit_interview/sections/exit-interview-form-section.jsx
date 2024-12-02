@@ -1,42 +1,86 @@
 import React, { useState } from 'react';
 import CheckboxInputComponent from '../components/checkbox-input-component';
 import TableRowComponent from '../components/table-row-component';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import store from '@/app/store/store';
 import { store_exit_int_thunk } from '../redux/exit-interview-thunk';
 import { message } from 'antd';
 import { router } from '@inertiajs/react';
+import { useEffect } from 'react';
+import { setExitInterviewForm } from '../redux/exit-interview-slice';
+import ExitFactorsSection from './exit-factors-section';
+import RateJobSection from './rate-job-section';
+import RateSupWorkerSection from './rate-sup-worker-section';
 
 export default function ExitInterviewFormSection() {
+    const { exitInterviewForm } = useSelector(
+        (state) => state.exit_int
+    );
+    const dispatch = useDispatch();
     const { employee } = useSelector((state) => state.employees);
     const { user } = useSelector((state) => state.app);
     const app_id = window.location.pathname.split("/")[2];
     const [loading, setLoading] = useState(false);
-    const [form, setForm] = useState({
-        // dept: "",
-        // depthead: "",
-        // site: user?.site || '',
-    });
+    useEffect(() => {
+        dispatch(
+            setExitInterviewForm({
+                ...exitInterviewForm,
+                // interviewer: user?.employee_fname + " " + user?.employee_lname,
+                // int_id: user.id,
+                app_id: app_id,
+                emp_id: app_id
+                // oavg:
+                //     (parseInt(initialRate.tscore ?? 0) +
+                //         parseInt(initialRate.pscore ?? 0) +
+                //         parseInt(initialRate.cscore ?? 0)) /
+                //     3,
+                //tier condition
+            })
+        );
+    }, [
+        // initialRate?.tscore,
+        // initialRate?.pscore,
+        // initialRate?.cscore,
+        // user?.employee_fname,
+    ]);
+
+    function handleRate(e) {
+        dispatch(
+            setExitInterviewForm({
+                ...exitInterviewForm,
+                [e.target.name]: e.target.value,
+            })
+        );
+    }
 
     console.log('employee', employee)
 
-    const submitExitInt = async () => {
+    async function submitExitInt(e) {
+        e.preventDefault();
         setLoading(true);
-        try {
-            await store.dispatch(
-                store_exit_int_thunk({
-                    ...form,
-                })
-            );
-            // await store.dispatch(get_department_thunk());
-            message.success("Exit Interview Successfully Recorded");
-            router.visit('/exit_clearance?searching=' + app_id)
-        } catch (error) {
-            message.error("Failed to record Exit Interview. Please try again.");
-        } finally {
-            setLoading(false);
-        }
-    };
+        await store.dispatch(store_exit_int_thunk(exitInterviewForm));
+        await message.success('Exit Interview Successfully Recorded');
+        router.visit('/exit_clearance/' + app_id)
+        setLoading(false);
+    }
+
+    // const submitExitInt = async () => {
+    //     setLoading(true);
+    //     try {
+    //         await store.dispatch(
+    //             store_exit_int_thunk({
+    //                 ...form,
+    //             })
+    //         );
+    //         // await store.dispatch(get_department_thunk());
+    //         message.success("Exit Interview Successfully Recorded");
+    //         router.visit('/exit_clearance?searching=' + app_id)
+    //     } catch (error) {
+    //         message.error("Failed to record Exit Interview. Please try again.");
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
 
     return (
         <div className="h-screen overflow-hidden ">
@@ -81,7 +125,7 @@ export default function ExitInterviewFormSection() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>ID Number:</b></label>
-                                            <input type="text" value={employee?.app_id || ''} className="border p-2 rounded w-full" />
+                                            <input type="text" name='app_id' value={employee?.app_id || ''} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Position Title:</b></label>
@@ -109,14 +153,11 @@ export default function ExitInterviewFormSection() {
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>1. Please describe the main reason for leaving your current position.</b></label>
                                             <textarea
-                                                onChange={(e) =>
-                                                    setForm({
-                                                        ...form,
-                                                        mreas: e.target.value,
-                                                    })
-                                                }
-                                                value={form?.mreas || ''}
-                                                type="text" placeholder="" className="border p-2 h-40 rounded w-full" />
+                                                onChange={handleRate}
+                                                // value={form?.mreas || ''}
+                                                type="text"
+                                                name="mreas"
+                                                placeholder="" className="border p-2 h-40 rounded w-full" />
                                         </div>
                                     </div>
                                 </div>
@@ -126,26 +167,11 @@ export default function ExitInterviewFormSection() {
                                 <div className='flex w-full'>
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
-                                            <label htmlFor=""><b>2. Kindly choose the following factors below that influence your decision to leave.</b></label>
-                                            {/* <CheckboxInputComponent label="Pay" />
-                                            <CheckboxInputComponent label="Supervisor" />
-                                            <CheckboxInputComponent label="Work Condition (Schedule, Setting, Travel, Flexibility)" />
-                                            <CheckboxInputComponent label="Location / Commute" />
-                                            <CheckboxInputComponent label="Management" />
-                                            <CheckboxInputComponent label="Career Shift" />
-                                            <CheckboxInputComponent label="Health Reasons" />
-                                            <CheckboxInputComponent label="Family Care" />
-                                            <CheckboxInputComponent label="Too Strict Company Policy" />
-                                            <CheckboxInputComponent label="No Career Development / Enhancement" /> */}
+                                            <ExitFactorsSection />
                                             <label htmlFor="" className='mt-1'>Others:</label>
                                             <input
-                                                onChange={(e) =>
-                                                    setForm({
-                                                        ...form,
-                                                        others: e.target.value,
-                                                    })
-                                                }
-                                                value={form?.others || ''}
+                                                onChange={handleRate}
+                                                name="factsOther"
                                                 type="text" placeholder="" className="border p-2 rounded w-full " />
                                         </div>
                                     </div>
@@ -158,13 +184,8 @@ export default function ExitInterviewFormSection() {
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>3. Is there anything you wish you had known before you took the job?</b></label>
                                             <textarea
-                                                onChange={(e) =>
-                                                    setForm({
-                                                        ...form,
-                                                        wish: e.target.value,
-                                                    })
-                                                }
-                                                value={form?.wish || ''}
+                                                onChange={handleRate}
+                                                name="wish"
                                                 type="text" placeholder="" className="border p-2 h-40  rounded w-full" />
                                         </div>
                                     </div>
@@ -177,13 +198,8 @@ export default function ExitInterviewFormSection() {
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>4. What would you suggest to the management to make our organization a better place to work?</b></label>
                                             <textarea
-                                                onChange={(e) =>
-                                                    setForm({
-                                                        ...form,
-                                                        suggest: e.target.value,
-                                                    })
-                                                }
-                                                value={form?.suggest || ''}
+                                                onChange={handleRate}
+                                                name="suggest"
                                                 type="text" placeholder="" className="border p-2 h-40  rounded w-full" />
                                         </div>
                                     </div>
@@ -196,13 +212,8 @@ export default function ExitInterviewFormSection() {
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>5. Do you feel you received appreciate support to enable to do your job?</b></label>
                                             <textarea
-                                                onChange={(e) =>
-                                                    setForm({
-                                                        ...form,
-                                                        appreciate: e.target.value,
-                                                    })
-                                                }
-                                                value={form?.appreciate || ''}
+                                                onChange={handleRate}
+                                                name="apprec"
                                                 type="text" placeholder="" className="border p-2 rounded w-full" />
                                         </div>
                                     </div>
@@ -216,94 +227,24 @@ export default function ExitInterviewFormSection() {
                                 <h1><b>4. Dissatisfied,</b></h1>
                                 <h1><b>5. Very Dissatisfied</b></h1>
                             </div>
-                            {/* 
-                            <div className='flex flex-1 gap-4 border-4 border-gray-400 mt-2 mb-3'>
-                                <table class="table table-bordered text-center w-full">
-                                    <thead className='border-b-2 border-gray-300 w-full'>
-                                        <tr>
-                                            <th className="border border-gray-300 py-2">Your Job</th>
-                                            <th className="border border-gray-300 py-2">1</th>
-                                            <th className="border border-gray-300 py-2">2</th>
-                                            <th className="border border-gray-300 py-2">3</th>
-                                            <th className="border border-gray-300 py-2">4</th>
-                                            <th className="border border-gray-300 py-2">5</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <TableRowComponent
-                                            title="Opportunities to use your abilities and skills"
-                                        />
-                                        <TableRowComponent
-                                            title="Expectation of the Job Task"
-                                        />
-                                        <TableRowComponent
-                                            title="Training received"
-                                        />
-                                        <TableRowComponent
-                                            title="Availability of the resources needed for the job"
-                                        />
-                                        <TableRowComponent
-                                            title="Recognition of your contribution"
-                                        />
-                                        <TableRowComponent
-                                            title="Cooperation within your department"
-                                        />
-                                        <TableRowComponent
-                                            title="Cooperation with other department"
-                                        />
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className='flex flex-1 gap-4 border-4 border-gray-400 mt-5 mb-3'>
-                                <table class="table table-bordered text-center w-full">
-                                    <thead className='border-b-2 border-gray-300 w-full'>
-                                        <tr>
-                                            <th className="border border-gray-300 py-2">Supervisor and Co-worker</th>
-                                            <th className="border border-gray-300 py-2">1</th>
-                                            <th className="border border-gray-300 py-2">2</th>
-                                            <th className="border border-gray-300 py-2">3</th>
-                                            <th className="border border-gray-300 py-2">4</th>
-                                            <th className="border border-gray-300 py-2">5</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <TableRowComponent
-                                            title="My Supervisor had an understanding of my responsibilities"
-                                        />
-                                        <TableRowComponent
-                                            title="Overall relationship with my supervisor"
-                                        />
-                                        <TableRowComponent
-                                            title="I was treated fairly by my supervisor"
-                                        />
-                                        <TableRowComponent
-                                            title="My supervisor was receptive to and implemented suggestion"
-                                        />
-                                        <TableRowComponent
-                                            title="My supervisor's ability to handle complaints and problem"
-                                        />
-                                        <TableRowComponent
-                                            title="My supervisor has good/best management skills"
-                                        />
-                                        <TableRowComponent
-                                            title="My relationship with my co-workers"
-                                        />
-                                    </tbody>
-                                </table>
-                            </div> */}
-
-
-
+                            <RateJobSection />
+                            <RateSupWorkerSection />
                             <div className="flex justify-end mt-2.5">
                                 <button
+                                    type="submit"
+                                    className=''
+                                // disabled={loading}
+                                >
+                                    submit
+                                </button>
+                                {/* <button
                                     type="submit"
                                     className={`px-4 py-2 rounded text-white focus:outline-none transition-colors ${loading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'
                                         }`}
                                     disabled={loading}
                                 >
                                     {loading ? 'Submitting...' : 'SUBMIT EXIT INTERVIEW'}
-                                </button>
+                                </button> */}
                             </div>
                         </form>
                     </div>

@@ -28,7 +28,8 @@ export default function ExitInterviewFormSection() {
                 // interviewer: user?.employee_fname + " " + user?.employee_lname,
                 // int_id: user.id,
                 app_id: app_id,
-                emp_id: app_id
+                emp_id: app_id,
+                // int_id: user?.id
                 // oavg:
                 //     (parseInt(initialRate.tscore ?? 0) +
                 //         parseInt(initialRate.pscore ?? 0) +
@@ -232,19 +233,12 @@ export default function ExitInterviewFormSection() {
                             <div className="flex justify-end mt-2.5">
                                 <button
                                     type="submit"
-                                    className=''
-                                // disabled={loading}
-                                >
-                                    submit
-                                </button>
-                                {/* <button
-                                    type="submit"
                                     className={`px-4 py-2 rounded text-white focus:outline-none transition-colors ${loading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'
                                         }`}
                                     disabled={loading}
                                 >
                                     {loading ? 'Submitting...' : 'SUBMIT EXIT INTERVIEW'}
-                                </button> */}
+                                </button>
                             </div>
                         </form>
                     </div>

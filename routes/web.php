@@ -54,9 +54,9 @@ Route::get('/virtual-contract/{app_id}', function () {
 // Route::get('/exit_interview/{app_id}', function () {
 //     return Inertia::render('exit_interview/page');
 // });
-Route::get('/exit_clearance/{app_id}', function () {
-    return Inertia::render('exit_clearance/page');
-});
+// Route::get('/exit_clearance/{app_id}', function () {
+//     return Inertia::render('exit_clearance/page');
+// });
 Route::get('/print_coe/{app_id}', function () {
     return Inertia::render('print_coe/page');
 });
@@ -99,6 +99,10 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 
     Route::get('/exit_interview/{app_id}', function () {
         return Inertia::render('admin/exit_interview/page');
+    });
+
+    Route::get('/exit_clearance/{app_id}', function () {
+        return Inertia::render('admin/exit_clearance/page');
     });
 
     Route::prefix('sourcing')->group(function () {

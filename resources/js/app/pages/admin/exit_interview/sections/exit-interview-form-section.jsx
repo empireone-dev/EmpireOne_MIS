@@ -59,7 +59,7 @@ export default function ExitInterviewFormSection() {
         setLoading(true);
         await store.dispatch(store_exit_int_thunk(exitInterviewForm));
         await message.success('Exit Interview Successfully Recorded');
-        router.visit('/exit_clearance/' + app_id)
+        router.visit('/admin/exit_clearance/' + app_id)
         setLoading(false);
     }
 

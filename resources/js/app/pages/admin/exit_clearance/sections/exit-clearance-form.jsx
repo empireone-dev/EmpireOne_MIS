@@ -1,6 +1,14 @@
+import { SignatureOutlined } from '@ant-design/icons';
+import { Tooltip } from 'antd';
 import React from 'react'
+import { useSelector } from 'react-redux';
+import UploadSignatureSection from './upload-signature-section';
 
 export default function ExitClearanceForm() {
+    const { employee } = useSelector((state) => state.employees);
+    const { user } = useSelector((state) => state.app);
+
+    console.log('user', user)
     return (
         <div className="h-screen overflow-hidden ">
             <div className="bg-cover bg-[url('/images/SCemp.jpg')] transition-colors duration-300 h-full overflow-y-scroll">
@@ -18,23 +26,23 @@ export default function ExitClearanceForm() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Full Name:</b></label>
-                                            <input type="text" placeholder="Full name" className="border p-2 rounded w-full" />
+                                            <input type="text" value={`${employee?.applicant?.fname || ''} ${employee?.applicant?.mname || ''} ${employee?.applicant?.lname || ''}`} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Account / Department:</b></label>
-                                            <input type="text" placeholder="Account / Department:" className="border p-2 rounded w-full" />
+                                            <input type="text" value={employee?.account ? employee?.account : employee?.dept?.dept} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Date Hired:</b></label>
-                                            <input type="date" placeholder="Date Hired:" className="border p-2 rounded w-full" />
+                                            <input type="date" value={employee?.hired || ''} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className=" w-full">
                                             <label htmlFor=""><b>Immediate Supervisor:</b></label>
-                                            <input type="text" placeholder="Immediate Supervisor:" className="border p-2 rounded w-full " />
+                                            <input type="text" value={`${employee?.user?.employee_fname || ''} ${employee?.user?.employee_mname || ''} ${employee?.user?.employee_lname || ''}`} className="border p-2 rounded w-full " />
                                         </div>
                                         <div className="w-full">
                                             <label htmlFor=""><b>Employment Status:</b></label>
-                                            <input type="text" placeholder="Employment Status:" className="border p-2 rounded w-full " />
+                                            <input type="text" value={employee?.status || ''} className="border p-2 rounded w-full " />
                                         </div>
                                     </div>
                                 </div>
@@ -43,23 +51,23 @@ export default function ExitClearanceForm() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>ID Number:</b></label>
-                                            <input type="text" placeholder="Full name" className="border p-2 rounded w-full" />
+                                            <input type="text" value={employee?.app_id || ''} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Position Title:</b></label>
-                                            <input type="text" placeholder="Position Title:" className="border p-2 rounded w-full" />
+                                            <input type="text" value={employee?.position || ''} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Date Separated:</b></label>
-                                            <input type="date" placeholder="Date Separated:" className="border p-2 rounded w-full" />
+                                            <input type="date" value={employee?.attrition?.separation || ''} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Department Manager:</b></label>
-                                            <input type="text" placeholder="" className="border p-2 rounded w-full" />
+                                            <input type="text" value={`${employee?.dept?.user?.employee_fname || ''} ${employee?.dept?.user?.employee_lname || ''}`} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Reason for Separation::</b></label>
-                                            <input type="text" placeholder="" className="border p-2 rounded w-full" />
+                                            <input type="text" value={employee?.attrition?.reas || ''} className="border p-2 rounded w-full" />
                                         </div>
                                     </div>
                                 </div>
@@ -80,11 +88,12 @@ export default function ExitClearanceForm() {
                                             <td className="border border-gray-300 py-2">
                                                 Immediate Supervisor
                                             </td>
-                                            <td className="border border-gray-300 py-2 p-4">
+                                            <td className="flex gap-2 border border-gray-300 py-2 p-4">
                                                 <input type="text" className="border p-2 rounded w-full" />
+                                                <UploadSignatureSection />
                                             </td>
                                             <td className="border border-gray-300 py-2 p-4">
-                                                <input type="text" className="border p-2 rounded w-full" />
+                                                <input type="date" className="border p-2 rounded w-full" />
                                             </td>
                                             <td className="border border-gray-300 py-2 p-4">
                                                 <input type="text" className="border p-2 rounded w-full" />
@@ -94,11 +103,12 @@ export default function ExitClearanceForm() {
                                             <td className="border border-gray-300 py-2">
                                                 Employee Dept. Head
                                             </td>
-                                            <td className="border border-gray-300 py-2 p-4">
+                                            <td className="flex gap-2 border border-gray-300 py-2 p-4">
                                                 <input type="text" className="border p-2 rounded w-full" />
+                                                <UploadSignatureSection />
                                             </td>
                                             <td className="border border-gray-300 py-2 p-4">
-                                                <input type="text" className="border p-2 rounded w-full" />
+                                                <input type="date" className="border p-2 rounded w-full" />
                                             </td>
                                             <td className="border border-gray-300 py-2 p-4">
                                                 <input type="text" className="border p-2 rounded w-full" />
@@ -108,11 +118,12 @@ export default function ExitClearanceForm() {
                                             <td className="border border-gray-300 py-2">
                                                 HR/Admin
                                             </td>
-                                            <td className="border border-gray-300 py-2 p-4">
+                                            <td className="flex gap-2 border border-gray-300 py-2 p-4">
                                                 <input type="text" className="border p-2 rounded w-full" />
+                                                <UploadSignatureSection />
                                             </td>
                                             <td className="border border-gray-300 py-2 p-4">
-                                                <input type="text" className="border p-2 rounded w-full" />
+                                                <input type="date" className="border p-2 rounded w-full" />
                                             </td>
                                             <td className="border border-gray-300 py-2 p-4">
                                                 <input type="text" className="border p-2 rounded w-full" />
@@ -122,11 +133,12 @@ export default function ExitClearanceForm() {
                                             <td className="border border-gray-300 py-2">
                                                 IT (Biometrics, Laptop)
                                             </td>
-                                            <td className="border border-gray-300 py-2 p-4">
+                                            <td className="flex gap-2 border border-gray-300 py-2 p-4">
                                                 <input type="text" className="border p-2 rounded w-full" />
+                                                <UploadSignatureSection />
                                             </td>
                                             <td className="border border-gray-300 py-2 p-4">
-                                                <input type="text" className="border p-2 rounded w-full" />
+                                                <input type="date" className="border p-2 rounded w-full" />
                                             </td>
                                             <td className="border border-gray-300 py-2 p-4">
                                                 <input type="text" className="border p-2 rounded w-full" />
@@ -141,7 +153,7 @@ export default function ExitClearanceForm() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Exit Clearance Conducted By:</b></label>
-                                            <input type="text" value={"System Administrator"} className="border p-2 rounded w-full" />
+                                            <input type="text" className="border p-2 rounded w-full" />
                                         </div>
                                     </div>
                                 </div>

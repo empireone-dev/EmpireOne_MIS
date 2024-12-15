@@ -3,12 +3,22 @@ import { Tooltip } from 'antd';
 import React from 'react'
 import { useSelector } from 'react-redux';
 import UploadSignatureSection from './upload-signature-section';
+import { useEffect } from 'react';
+import { get_user_thunk } from '@/app/redux/app-thunk';
+import { get_users_thunk } from '@/app/pages/redux/app-thunk';
+import store from '@/app/store/store';
 
 export default function ExitClearanceForm() {
     const { employee } = useSelector((state) => state.employees);
     const { user } = useSelector((state) => state.app);
 
-    console.log('user', user)
+    useEffect(() => {
+        store.dispatch(get_users_thunk());
+        console.log('waaaa', user)
+        store.dispatch(get_user_thunk());
+    }, [user.id]);
+
+    console.log('usersss', user)
     return (
         <div className="h-screen overflow-hidden ">
             <div className="bg-cover bg-[url('/images/SCemp.jpg')] transition-colors duration-300 h-full overflow-y-scroll">
@@ -89,7 +99,9 @@ export default function ExitClearanceForm() {
                                                 Immediate Supervisor
                                             </td>
                                             <td className="flex gap-2 border border-gray-300 py-2 p-4">
-                                                <input type="text" className="border p-2 rounded w-full" />
+                                                <div className="border p-2 rounded w-full">
+                                                    <canvas id="signatureCanvas" className="w-24 h-8"></canvas>
+                                                </div>
                                                 <UploadSignatureSection />
                                             </td>
                                             <td className="border border-gray-300 py-2 p-4">
@@ -104,7 +116,9 @@ export default function ExitClearanceForm() {
                                                 Employee Dept. Head
                                             </td>
                                             <td className="flex gap-2 border border-gray-300 py-2 p-4">
-                                                <input type="text" className="border p-2 rounded w-full" />
+                                                <div className="border p-2 rounded w-full">
+                                                    <canvas id="signatureCanvas" className="w-24 h-8"></canvas>
+                                                </div>
                                                 <UploadSignatureSection />
                                             </td>
                                             <td className="border border-gray-300 py-2 p-4">
@@ -119,7 +133,9 @@ export default function ExitClearanceForm() {
                                                 HR/Admin
                                             </td>
                                             <td className="flex gap-2 border border-gray-300 py-2 p-4">
-                                                <input type="text" className="border p-2 rounded w-full" />
+                                                <div className="border p-2 rounded w-full">
+                                                    <canvas id="signatureCanvas" className="w-full h-8"></canvas>
+                                                </div>
                                                 <UploadSignatureSection />
                                             </td>
                                             <td className="border border-gray-300 py-2 p-4">
@@ -134,7 +150,9 @@ export default function ExitClearanceForm() {
                                                 IT (Biometrics, Laptop)
                                             </td>
                                             <td className="flex gap-2 border border-gray-300 py-2 p-4">
-                                                <input type="text" className="border p-2 rounded w-full" />
+                                                <div className="border p-2 rounded w-full">
+                                                    <canvas id="signatureCanvas" className="w-full h-8"></canvas>
+                                                </div>
                                                 <UploadSignatureSection />
                                             </td>
                                             <td className="border border-gray-300 py-2 p-4">
@@ -153,7 +171,7 @@ export default function ExitClearanceForm() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Exit Clearance Conducted By:</b></label>
-                                            <input type="text" className="border p-2 rounded w-full" />
+                                            <input type="text" value={`${user?.employee_fname || ''} ${user?.employee_lname || ''}`} className="border p-2 rounded w-full" />
                                         </div>
                                     </div>
                                 </div>
@@ -161,7 +179,7 @@ export default function ExitClearanceForm() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Conforme:</b></label>
-                                            <input type="text" value={"HR"} className="border p-2 rounded w-full" />
+                                            <input type="text" value={user?.department || ''} className="border p-2 rounded w-full" readOnly />
                                         </div>
                                     </div>
                                 </div>

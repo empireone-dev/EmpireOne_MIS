@@ -18,6 +18,22 @@ export default function ExitClearanceForm() {
         store.dispatch(get_user_thunk());
     }, [user.id]);
 
+    const isHR = user?.department === "Human Resource";
+
+    const handleSendClearance = async () => {
+        try {
+            const emailData = {
+                employee_name: `${employee?.applicant?.fname || ''} ${employee?.applicant?.mname || ''} ${employee?.applicant?.lname || ''}`,
+                departments: ['Immediate Supervisor', 'Employee Dept. Head', 'HR/Admin', 'IT (Biometrics, Laptop)'],
+                clearance_date: new Date().toISOString().split('T')[0],  
+            };
+            const response = await axios.post('/api/send-clearance-email', emailData);
+            console.log(response.data.message);
+        } catch (error) {
+            console.error('Error sending email:', error);
+        }
+    };
+
     console.log('usersss', user)
     return (
         <div className="h-screen overflow-hidden ">
@@ -179,18 +195,25 @@ export default function ExitClearanceForm() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Conforme:</b></label>
-                                            <input type="text" value={user?.department || ''} className="border p-2 rounded w-full" readOnly />
+                                            <input type="text" value="Human Resource" className="border p-2 rounded w-full" readOnly />
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
 
-                            <div className="flex justify-end mt-2.5">
-                                <button type="button" id="theme-toggle" className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
-                                    SUBMIT EXIT CLEARANCE
-                                </button>
-                            </div>
+                            {isHR && (
+                                <div className="flex gap-2 justify-end mt-2.5">
+                                    <button
+                                        onClick={handleSendClearance}
+                                        type="button" className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
+                                        SEND CLEARANCE (TO DEPARTMENTS)
+                                    </button>
+                                    <button type="button" className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
+                                        SUBMIT EXIT CLEARANCE
+                                    </button>
+                                </div>
+                            )}
                         </form>
                     </div>
                 </div>

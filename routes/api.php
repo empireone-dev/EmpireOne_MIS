@@ -106,6 +106,7 @@ Route::post('/reupload_file', [PreEmploymentFileController::class, 'reupload_fil
 Route::resource('attrition', AttritionController::class);
 Route::resource('exit_int', ExitInterviewController::class);
 Route::resource('exit_clr', ExitClearanceController::class);
+Route::post('/send-clearance-email', [ExitClearanceController::class, 'sendClearanceEmail']);
 
 
 

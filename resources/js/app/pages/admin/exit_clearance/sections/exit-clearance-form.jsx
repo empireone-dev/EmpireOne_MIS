@@ -1,5 +1,5 @@
-import { SignatureOutlined } from '@ant-design/icons';
-import { Tooltip } from 'antd';
+import { LoadingOutlined, SendOutlined, SignatureOutlined } from '@ant-design/icons';
+import { message, Tooltip } from 'antd';
 import React from 'react'
 import { useSelector } from 'react-redux';
 import UploadSignatureSection from './upload-signature-section';
@@ -7,10 +7,12 @@ import { useEffect } from 'react';
 import { get_user_thunk } from '@/app/redux/app-thunk';
 import { get_users_thunk } from '@/app/pages/redux/app-thunk';
 import store from '@/app/store/store';
+import { useState } from 'react';
 
 export default function ExitClearanceForm() {
     const { employee } = useSelector((state) => state.employees);
     const { user } = useSelector((state) => state.app);
+    const [loading, setLoading] = useState()
 
     useEffect(() => {
         store.dispatch(get_users_thunk());
@@ -21,16 +23,21 @@ export default function ExitClearanceForm() {
     const isHR = user?.department === "Human Resource";
 
     const handleSendClearance = async () => {
+        setLoading(true);
         try {
             const emailData = {
                 employee_name: `${employee?.applicant?.fname || ''} ${employee?.applicant?.mname || ''} ${employee?.applicant?.lname || ''}`,
                 departments: ['Immediate Supervisor', 'Employee Dept. Head', 'HR/Admin', 'IT (Biometrics, Laptop)'],
-                clearance_date: new Date().toISOString().split('T')[0],  
+                clearance_date: new Date().toISOString().split('T')[0],
             };
             const response = await axios.post('/api/send-clearance-email', emailData);
+            message.success('Exit Clearance sent successfully')
             console.log(response.data.message);
+            setLoading(false);
         } catch (error) {
             console.error('Error sending email:', error);
+            message.error('Failed to send Exit Clearance')
+            setLoading(false);
         }
     };
 
@@ -206,9 +213,32 @@ export default function ExitClearanceForm() {
                                 <div className="flex gap-2 justify-end mt-2.5">
                                     <button
                                         onClick={handleSendClearance}
-                                        type="button" className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
-                                        SEND CLEARANCE (TO DEPARTMENTS)
+                                        type="button" className={` px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors ${loading ? "cursor-not-allowed opacity-75" : ""
+                                            }`}
+                                        disabled={loading}
+                                    >
+                                        {loading ? (
+                                            <LoadingOutlined spin />
+                                        ) : (
+                                            <SendOutlined />
+                                        )}
+                                        {loading ? " SENDING..." : " SIGN CLEARANCE"}
+
                                     </button>
+                                    {/* <button
+                                        type="submit"
+                                        className={` bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
+                                            }`}
+                                        onClick={submitApplicant}
+                                        disabled={loading}
+                                    >
+                                        {loading ? (
+                                            <LoadingOutlined spin />
+                                        ) : (
+                                            <SendOutlined />
+                                        )}
+                                        {loading ? " SUBMITTING..." : " SUBMIT APPLICATION"}
+                                    </button> */}
                                     <button type="button" className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
                                         SUBMIT EXIT CLEARANCE
                                     </button>

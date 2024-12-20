@@ -23,7 +23,7 @@
     • Barangay Clearance with the purpose of bank application
     • Police Clearance
     • NBI Clearance
-    
+
     ---HEALTH CERTIFICATE WITH THE FF. TESTS:---
     • Chest X-ray
     • Drug Test

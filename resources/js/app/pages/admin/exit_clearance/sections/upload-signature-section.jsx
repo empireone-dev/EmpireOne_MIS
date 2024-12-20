@@ -3,7 +3,7 @@ import { Modal, Tooltip } from 'antd'
 import React from 'react'
 import { useState } from 'react';
 
-export default function UploadSignatureSection() {
+export default function UploadSignatureSection({ name }) {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false)
 
@@ -30,6 +30,7 @@ export default function UploadSignatureSection() {
                     <form action="">
                         <div className='flex items-center justify-center'>
                             <i className='text-xl'>signature</i>
+                            <input type="text" name={name} />
                         </div>
                     </form>
                 </Modal>

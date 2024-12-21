@@ -1,5 +1,5 @@
-import { LoadingOutlined, SendOutlined, SignatureOutlined } from '@ant-design/icons';
-import { message, Tooltip } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import { message } from 'antd';
 import React from 'react'
 import { useSelector } from 'react-redux';
 import UploadSignatureSection from './upload-signature-section';
@@ -209,41 +209,44 @@ export default function ExitClearanceForm() {
                             </div>
 
 
-                            {isHR && (
+                            {isHR ? (
                                 <div className="flex gap-2 justify-end mt-2.5">
                                     <button
                                         onClick={handleSendClearance}
-                                        type="button" className={` px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors ${loading ? "cursor-not-allowed opacity-75" : ""
+                                        type="button"
+                                        className={`px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors ${loading ? "cursor-not-allowed opacity-75" : ""
                                             }`}
                                         disabled={loading}
                                     >
                                         {loading ? (
-                                            <LoadingOutlined spin />
+                                            <>
+                                                <LoadingOutlined spin />
+                                                &nbsp;SENDING...
+                                            </>
                                         ) : (
-                                            <SendOutlined />
+                                            <>
+                                                FORWARD CLEARANCE
+                                            </>
                                         )}
-                                        {loading ? " SENDING..." : " SIGN CLEARANCE"}
-
                                     </button>
-                                    {/* <button
-                                        type="submit"
-                                        className={` bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
-                                            }`}
-                                        onClick={submitApplicant}
-                                        disabled={loading}
+                                    <button
+                                        type="button"
+                                        className="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors"
                                     >
-                                        {loading ? (
-                                            <LoadingOutlined spin />
-                                        ) : (
-                                            <SendOutlined />
-                                        )}
-                                        {loading ? " SUBMITTING..." : " SUBMIT APPLICATION"}
-                                    </button> */}
-                                    <button type="button" className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
                                         SUBMIT EXIT CLEARANCE
                                     </button>
                                 </div>
+                            ) : (
+                                <div className="flex gap-2 justify-end mt-2.5">
+                                    <button
+                                        type="button"
+                                        className="px-4 py-2 rounded-md bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors"
+                                    >
+                                        DONE
+                                    </button>
+                                </div>
                             )}
+
                         </form>
                     </div>
                 </div>

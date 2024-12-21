@@ -9,8 +9,9 @@
 
     I hope this message finds you well.
 
-    We kindly request your department to review and sign the exit clearance for {employee_name}, who is completing their employment with us. Your signature is essential to ensure that all obligations and responsibilities are properly addressed before their departure.
+    We kindly request that your department reviews and signs the exit clearance for the employee listed below, who is completing their employment with us. Your signature is essential to ensure that all responsibilities and obligations are addressed properly before their departure.
 
+    Employee Name: {{$employee_name}}
     Clearance Link: http://127.0.0.1:8000/admin/exit_clearance/24022201
 
     If you have any pending matters or require clarification regarding this clearance, please do not hesitate to contact us.

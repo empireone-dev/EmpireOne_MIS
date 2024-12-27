@@ -330,8 +330,8 @@ const AdminLayout = ({ children }) => {
                             <div className="mr-5">
                                 <div className="inline-block relative shrink-0 cursor-pointer rounded-[.95rem]">
                                     <img
-                                        className="w-[40px] h-[40px] shrink-0 inline-block rounded-[.95rem]"
-                                        src="https://www.transparentpng.com/thumb/user/gray-user-profile-icon-png-fP8Q1P.png"
+                                        className="w-[45px] h-[40px] shrink-0 inline-block rounded-[.95rem]"
+                                        src="/images/pngegg.png"
                                         alt="avatar image"
                                     />
                                 </div>

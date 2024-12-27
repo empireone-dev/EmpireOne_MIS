@@ -128,7 +128,7 @@ export default function AddApplicantsSection() {
             await store.dispatch(store_applicant_thunk(fd));
             await store.dispatch(get_applicant_thunk())
             setOpen(false)
-            message.success('')
+            message.success('Application has been submitted successfully')
             // const result = await store.dispatch(get_applicant_thunk());
             // if (fd.status === 200) {
             //     // message.success('Application has been submitted successfully');
@@ -138,7 +138,7 @@ export default function AddApplicantsSection() {
             //     console.log('resultsss', fd.response);
             // }
         } catch (error) {
-            // message.error('Failed to submit application');
+            message.error('Failed to submit application');
             console.error(error);
         } finally {
             setLoading(false);

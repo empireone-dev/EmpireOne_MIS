@@ -75,7 +75,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                 />
                                 <input
                                     type="text"
-                                    value={data?.suffix}
+                                    value={data?.suffix === "undefined" ? "--" : data?.suffix ?? ""}
                                     placeholder="(Suffix)"
                                     className="border p-2 rounded w-1/5"
                                     readOnly
@@ -184,7 +184,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                         </label>
                         <input
                             type="text"
-                            value={data?.mmname}
+                            value={data?.mmname === "undefined" ? "--" : data?.mmname ?? ""}
                             placeholder="N/A"
                             className="border p-2 rounded w-full "
                             readOnly
@@ -196,7 +196,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                         </label>
                         <input
                             type="text"
-                            value={data?.ffname}
+                            value={data?.ffname === "undefined" ? "--" : data?.ffname ?? ""}
                             placeholder="N/A"
                             className="border p-2 rounded w-full "
                             readOnly
@@ -221,7 +221,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data?.courset}
+                                value={data?.courset === "undefined" ? "--" : data?.courset ?? ""}
                                 placeholder="N/A"
                                 className="border p-2 rounded w-full "
                                 readOnly
@@ -256,7 +256,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data?.sss ?? "--"}
+                                value={data?.sss === "undefined" ? "--" : data?.sss ?? ""}
                                 className="border p-2 rounded w-full "
                                 readOnly
                             />
@@ -267,7 +267,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data?.pagibig ?? "--"}
+                                value={data?.pagibig === "undefined" ? "--" : data?.pagibig ?? ""}
                                 className="border p-2 rounded w-full "
                                 readOnly
                             />
@@ -280,7 +280,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data?.tin ?? "--"}
+                                value={data?.tin === "undefined" ? "--" : data?.tin ?? ""}
                                 className="border p-2 rounded w-full "
                                 readOnly
                             />
@@ -291,7 +291,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data?.philh ?? "--"}
+                                value={data?.philh === "undefined" ? "--" : data?.philh ?? ""}
                                 className="border p-2 rounded w-full "
                                 readOnly
                             />
@@ -306,7 +306,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                         </label>
                         <input
                             type="text"
-                            value={data?.ename}
+                            value={data?.ename === "undefined" ? "--" : data?.ename ?? ""}
                             placeholder="N/A"
                             className="border p-2 rounded w-full "
                             readOnly
@@ -318,7 +318,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                         </label>
                         <input
                             type="text"
-                            value={data?.eaddress}
+                            value={data?.eaddress === "undefined" ? "--" : data?.eaddress ?? ""}
                             placeholder="N/A"
                             className="border p-2 rounded w-full "
                             readOnly
@@ -331,7 +331,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data?.relationship}
+                                value={data?.relationship === "undefined" ? "--" : data?.relationship ?? ""}
                                 placeholder="N/A"
                                 className="border p-2 rounded w-full "
                                 readOnly
@@ -343,7 +343,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             </label>
                             <input
                                 type="number"
-                                value={data?.ephone}
+                                value={data?.ephone === "undefined" ? "--" : data?.ephone ?? ""}
                                 placeholder="N/A"
                                 className="border p-2 rounded w-full "
                                 readOnly

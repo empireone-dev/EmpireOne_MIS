@@ -2,13 +2,13 @@ import { Menu, Modal } from "antd";
 import React from "react";
 import { useState } from "react";
 
-export default function ApplicantDetaillsComponent({ data,item }) {
+export default function ApplicantDetaillsComponent({ data, item }) {
     const [open, setOpen] = useState(false);
 
     function openHandler(params) {
         setOpen(true);
     }
-    console.log('data',data)
+    console.log('data', data)
     return (
         <>
             <Menu.Item onClick={() => openHandler(true)} icon={item.icon}>
@@ -29,7 +29,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                 </div>
                 <div className="flex justify-end">
                     <h1 className="text-lg mb-2">
-                        <b>Status:</b> {data.status}
+                        <b>Status:</b> {data?.status}
                     </h1>
                 </div>
                 <form className="border rounded-lg p-3.5">
@@ -40,7 +40,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                         </label>
                         <input
                             type="number"
-                            value={data.app_id}
+                            value={data?.app_id}
                             placeholder="N/A"
                             className="border p-2 rounded w-full"
                             readOnly
@@ -54,28 +54,28 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                             <div className="flex flex-1 gap-3">
                                 <input
                                     type="text"
-                                    value={data.fname}
+                                    value={data?.fname}
                                     placeholder="N/A"
                                     className="border p-2 rounded w-full"
                                     readOnly
                                 />
                                 <input
                                     type="text"
-                                    value={data.mname}
+                                    value={data?.mname}
                                     placeholder="N/A"
                                     className="border p-2 rounded w-full"
                                     readOnly
                                 />
                                 <input
                                     type="text"
-                                    value={data.lname}
+                                    value={data?.lname}
                                     placeholder="N/A"
                                     className="border p-2 rounded w-full"
                                     readOnly
                                 />
                                 <input
                                     type="text"
-                                    value={data.suffix}
+                                    value={data?.suffix}
                                     placeholder="(Suffix)"
                                     className="border p-2 rounded w-1/5"
                                     readOnly
@@ -92,7 +92,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                                     </label>
                                     <input
                                         type="text"
-                                        value={data.gender}
+                                        value={data?.gender}
                                         placeholder="N/A"
                                         className="border p-2 rounded w-full"
                                         readOnly
@@ -104,7 +104,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                                     </label>
                                     <input
                                         type="date"
-                                        value={data.dob}
+                                        value={data?.dob}
                                         placeholder="N/A"
                                         className="border p-2 rounded w-full"
                                         readOnly
@@ -116,7 +116,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                                     </label>
                                     <input
                                         type="email"
-                                        value={data.email}
+                                        value={data?.email}
                                         placeholder="N/A"
                                         className="border p-2 rounded w-full "
                                         readOnly
@@ -128,7 +128,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                                     </label>
                                     <input
                                         type="number"
-                                        value={data.phone}
+                                        value={data?.phone}
                                         placeholder="N/A"
                                         className="border p-2 rounded w-full "
                                         readOnly
@@ -145,7 +145,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                                     </label>
                                     <input
                                         type="text"
-                                        value={data.marital}
+                                        value={data?.marital}
                                         placeholder="N/A"
                                         className="border p-2 rounded w-full "
                                         readOnly
@@ -157,7 +157,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                                     </label>
                                     <input
                                         type="text"
-                                        value={data.religion}
+                                        value={data?.religion}
                                         placeholder="N/A"
                                         className="border p-2 rounded w-full"
                                         readOnly
@@ -169,7 +169,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                                     </label>
                                     <input
                                         type="text"
-                                        value={data.nationality}
+                                        value={data?.nationality}
                                         placeholder="N/A"
                                         className="border p-2 rounded w-full"
                                         readOnly
@@ -184,7 +184,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                         </label>
                         <input
                             type="text"
-                            value={data.mmname}
+                            value={data?.mmname}
                             placeholder="N/A"
                             className="border p-2 rounded w-full "
                             readOnly
@@ -196,7 +196,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                         </label>
                         <input
                             type="text"
-                            value={data.ffname}
+                            value={data?.ffname}
                             placeholder="N/A"
                             className="border p-2 rounded w-full "
                             readOnly
@@ -209,7 +209,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data.educ}
+                                value={data?.educ}
                                 placeholder="N/A"
                                 className="border p-2 rounded w-full "
                                 readOnly
@@ -221,7 +221,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data.courset}
+                                value={data?.courset}
                                 placeholder="N/A"
                                 className="border p-2 rounded w-full "
                                 readOnly
@@ -240,7 +240,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                         </label>
                         <input
                             type="text"
-                            value={data.caddress}
+                            value={data?.caddress}
                             placeholder="N/A"
                             className="border p-2 rounded w-full"
                             readOnly
@@ -256,7 +256,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data.sss}
+                                value={data?.sss}
                                 placeholder="N/A"
                                 className="border p-2 rounded w-full "
                                 readOnly
@@ -268,7 +268,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data.pagibig}
+                                value={data?.pagibig}
                                 placeholder="N/A"
                                 className="border p-2 rounded w-full "
                                 readOnly
@@ -282,7 +282,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data.tin}
+                                value={data?.tin}
                                 placeholder="N/A"
                                 className="border p-2 rounded w-full "
                                 readOnly
@@ -294,7 +294,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data.philh}
+                                value={data?.philh}
                                 placeholder="N/A"
                                 className="border p-2 rounded w-full "
                                 readOnly
@@ -310,7 +310,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                         </label>
                         <input
                             type="text"
-                            value={data.ename}
+                            value={data?.ename}
                             placeholder="N/A"
                             className="border p-2 rounded w-full "
                             readOnly
@@ -322,7 +322,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                         </label>
                         <input
                             type="text"
-                            value={data.eaddress}
+                            value={data?.eaddress}
                             placeholder="N/A"
                             className="border p-2 rounded w-full "
                             readOnly
@@ -335,7 +335,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data.relationship}
+                                value={data?.relationship}
                                 placeholder="N/A"
                                 className="border p-2 rounded w-full "
                                 readOnly
@@ -347,7 +347,7 @@ export default function ApplicantDetaillsComponent({ data,item }) {
                             </label>
                             <input
                                 type="number"
-                                value={data.ephone}
+                                value={data?.ephone}
                                 placeholder="N/A"
                                 className="border p-2 rounded w-full "
                                 readOnly

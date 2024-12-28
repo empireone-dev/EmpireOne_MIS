@@ -539,7 +539,7 @@ export default function AddApplicantsSection() {
                         <div className="w-full">
                             <Input
                                 onChange={(event) => data_handler(event)}
-                                value={applicantForm.sss ?? ""}
+                                value={applicantForm.sss || ""}
                                 name="sss"
                                 label="SSS No."
                                 type="text"
@@ -548,7 +548,7 @@ export default function AddApplicantsSection() {
                         <div className="w-full">
                             <Input
                                 onChange={(event) => data_handler(event)}
-                                value={applicantForm.pagibig ?? ""}
+                                value={applicantForm.pagibig || ""}
                                 name="pagibig"
                                 label="Pag-IBIG No."
                                 type="text"
@@ -559,7 +559,7 @@ export default function AddApplicantsSection() {
                         <div className="w-full">
                             <Input
                                 onChange={(event) => data_handler(event)}
-                                value={applicantForm.tin ?? ""}
+                                value={applicantForm.tin || ""}
                                 name="tin"
                                 label="Tin No."
                                 type="text"
@@ -568,7 +568,7 @@ export default function AddApplicantsSection() {
                         <div className="w-full">
                             <Input
                                 onChange={(event) => data_handler(event)}
-                                value={applicantForm.philh ?? ""}
+                                value={applicantForm.philh || ""}
                                 name="philh"
                                 label="Philhealth No."
                                 type="text"

@@ -256,8 +256,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data?.sss}
-                                placeholder="N/A"
+                                value={data?.sss ?? "--"}
                                 className="border p-2 rounded w-full "
                                 readOnly
                             />
@@ -268,8 +267,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data?.pagibig}
-                                placeholder="N/A"
+                                value={data?.pagibig ?? "--"}
                                 className="border p-2 rounded w-full "
                                 readOnly
                             />
@@ -282,8 +280,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data?.tin}
-                                placeholder="N/A"
+                                value={data?.tin ?? "--"}
                                 className="border p-2 rounded w-full "
                                 readOnly
                             />
@@ -294,8 +291,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             </label>
                             <input
                                 type="text"
-                                value={data?.philh}
-                                placeholder="N/A"
+                                value={data?.philh ?? "--"}
                                 className="border p-2 rounded w-full "
                                 readOnly
                             />

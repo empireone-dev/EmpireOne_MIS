@@ -31,5 +31,6 @@ class ExitClearance extends Model
         'equipments',
         'ext_inter',
         'ext_status',
+        'conductor'
     ];
 }

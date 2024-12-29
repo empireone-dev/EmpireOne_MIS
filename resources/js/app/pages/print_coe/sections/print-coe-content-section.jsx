@@ -77,7 +77,7 @@ export default function PrintCOEContentSection() {
                                     <i>{employee?.position}</i>
                                 </li>
                                 <li>
-                                    <b>Department:</b> <i>{employee?.dept}</i>
+                                    <b>Department:</b> <i>{employee?.dept?.dept}</i>
                                 </li>
                                 <li>
                                     <b>Employee ID:</b>{" "}

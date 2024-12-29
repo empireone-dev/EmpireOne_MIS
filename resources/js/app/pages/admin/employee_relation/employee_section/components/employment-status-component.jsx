@@ -36,6 +36,8 @@ export default function EmploymentStatusComponent({ data, item }) {
     //         depthead: data?.user?.id || "",
     //     }); 
     // };
+
+    console.log('data', data)
     return (
         <>
             <Menu.Item onClick={() => openHandler(true)} icon={item.icon}>
@@ -94,7 +96,7 @@ export default function EmploymentStatusComponent({ data, item }) {
                                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
                                     Supervisor
                                 </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={data?.sup_id} readOnly />
+                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={`${data?.user?.employee_fname || ''} ${data?.user?.employee_lname || ''}`} readOnly />
                             </div>
                             <div class="w-full px-3">
                                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">

@@ -1,1 +1,0 @@
-import{j as t}from"./app-fece3207.js";import o from"./engagement-layout-2c99686f.js";import"./engagement-sidenav-section-ea793e80.js";import"./engagement-sidenav-components-02c8dc1e.js";import"./UsersIcon-8e2c1bf6.js";import"./ShieldCheckIcon-56e6e903.js";import"./UserCircleIcon-70b64313.js";function s(){return t.jsx(o,{children:"Employee Relation"})}export{s as default};

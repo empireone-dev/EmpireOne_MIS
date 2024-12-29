@@ -19,6 +19,8 @@ export default function PrintCOEContentSection() {
             return "Cebu";
         }
     }
+
+    console.log('employee', employee)
     return (
         <div>
             <div className="container mt-5 flex items-center justify-center">
@@ -47,7 +49,7 @@ export default function PrintCOEContentSection() {
                                     {employee?.applicant?.lname}
                                 </b>{" "}
                                 has been employed with EmpireOne BPO Solutions
-                                Inc. from <b>July 11, 2023</b>{" "}
+                                Inc. from <b>{employee?.hired}</b>{" "}
                                 {employee?.attrition ? (
                                     <>
                                         to{" "}

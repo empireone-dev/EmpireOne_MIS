@@ -22,7 +22,7 @@
   The management will review your performance during your probationary employment and your continued employment will depend on your ability to meet all required expectation and performance set by the company.
 
   5. Working Schedule
-  Your working schedule is for 9 hours every weekday during which one (1) hour is allotted for lunch break and weekdays for restdays.
+  Your working schedule will be discussed with you upon the start of your employment.
 
   To accept/decline this job offer you may click on this link: https://empireone-hris.com/job_offer/{{$data['app_id']}}?id={{$data['id']}} EmpireOne BPO Solutions Inc - Job Offer
 

@@ -28,7 +28,7 @@
 
     If you have any questions or require any additional information before the interview, please do not
     hesitate to contact our HR department at hiring@empireonegroup.com for our San Carlos Site and
-    carcar@empireonegroup.com for CarCar Site.
+    career@empireonegroup.com for CarCar Site.
 
     As part of this commitment, we invite you to explore our various social media platforms to stay updated
     on the latest news and insights about our company.

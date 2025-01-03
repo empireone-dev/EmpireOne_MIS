@@ -20,7 +20,7 @@
 
     We eagerly anticipate meeting you and delving further into your application. Thank you for considering EmpireOne BPO Solutions Inc. as your potential employer. We look forward to this next step in the selection process.
 
-    Should you have any questions or require further information before the interview, please do not hesitate to contact our HR department at hiring@empireonegroup.com for our San Carlos Site and carcar@empireonegroup.com for CarCar Site.
+    Should you have any questions or require further information before the interview, please do not hesitate to contact our HR department at hiring@empireonegroup.com for our San Carlos Site and career@empireonegroup.com for CarCar Site.
 
     Warm regards,
 

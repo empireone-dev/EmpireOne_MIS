@@ -197,7 +197,8 @@ class ApplicantController extends Controller
         $user = User::where('employee_id', '=', $request->app_id)->first();
 
         if ($user) {
-            $user->update($request->all());
+            $userData = $request->except(['id']); 
+            $user->update($userData);
         }
     }
 

@@ -60,7 +60,7 @@ class ApplicantController extends Controller
             $applicant->where('status', '=', $request->status);
         }
 
-        
+
 
 
         return response()->json([
@@ -194,23 +194,11 @@ class ApplicantController extends Controller
 
         $employee->update($request->all());
 
-        // // Update Job Offer
-        // $jo = JobOffer::where('app_id', '=', $request->app_id)->first();
+        $user = User::where('employee_id', '=', $request->app_id)->first();
 
-        // if (!$jo) {
-        //     return response()->json([
-        //         'message' => 'Job offer not found.',
-        //     ], 404);
-        // }
-
-        // $jo->update([
-        //     'jobPos' => $request->status,
-        //     'salary' => $request->reas,
-        // ]);
-
-        // return response()->json([
-        //     'data' => 'success'
-        // ], 200);
+        if ($user) {
+            $user->update($request->all());
+        }
     }
 
     public function update_applicant_status(Request $request, $id)

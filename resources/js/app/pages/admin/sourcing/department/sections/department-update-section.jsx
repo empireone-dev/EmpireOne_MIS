@@ -98,16 +98,27 @@ export default function DepartmentUpdateSection({ data }) {
                             {/* <option value="">
                                 {data?.user?.employee_fname ?? ''} {data?.user?.employee_lname ?? ''}
                             </option> */}
-                            {Array.isArray(users) &&
-                                users
-                                    .filter((res) =>
-                                        ["Manager", "Account Manager", 'Supervisor', "Operations Manager", "Director", "CEO", "HR Lead", "HR Manager", "I.T Manager", "Accounting Head",].includes(res.position)
-                                    )
-                                    .map((res) => (
-                                        <option value={res.id} key={res.id}>
-                                            {`${res.employee_fname} ${res.employee_lname}`}
-                                        </option>
-                                    ))}
+                            {Array.isArray(users) && users
+                                .filter((res) =>
+                                    [
+                                        "Manager",
+                                        "Account Manager",
+                                        "Supervisor",
+                                        "Operations Manager",
+                                        "Director",
+                                        "CEO",
+                                        "HR Lead",
+                                        "HR Manager",
+                                        "I.T Manager",
+                                        "Accounting Head",
+                                    ].includes(res.position)
+                                )
+                                .sort((a, b) => a.employee_fname.localeCompare(b.employee_fname))
+                                .map((res) => (
+                                    <option value={res.id} key={res.id}>
+                                        {`${res.employee_fname} ${res.employee_lname}`}
+                                    </option>
+                                ))}
                         </select>
                     </div>
                 </form>

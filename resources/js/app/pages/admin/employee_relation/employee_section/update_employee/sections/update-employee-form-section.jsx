@@ -43,7 +43,7 @@ export default function UpdateEmployeeFormSection() {
             educ: applicant?.educ || "",
             courset: applicant?.courset || "",
             position: employee?.position || "",
-            dept: employee?.dept || "",
+            dept: employee?.dept?.dept || "",
             account: employee?.account || "",
             sup_id: employee?.sup_id || "",
             hired: employee?.hired || "",
@@ -67,7 +67,7 @@ export default function UpdateEmployeeFormSection() {
         e.preventDefault();
         setLoading(true);
         try {
-            await store.dispatch(update_applicant_thunk(form)); // Pass form as an object
+            await store.dispatch(update_applicant_thunk(form));
             await store.dispatch(get_applicant_by_app_id_thunk(app_id));
             await store.dispatch(get_employee_by_id_thunk(app_id));
             message.success('Updated Successfully');

@@ -315,113 +315,125 @@ export default function UpdateEmployeeFormSection() {
 
                 <div className='flex flex-1 gap-4'>
                     <div className='flex flex-col w-full mb-4'>
+
                         <div className='flex flex-1 gap-3'>
-                            <select
-                                value={form?.position ?? ''}
-                                onChange={(e) =>
-                                    setForm({
-                                        ...form,
-                                        position: e.target.value,
-                                    })
-                                }
-                                name='position'
-                                className="border p-2 rounded  w-full">
-                                <option disabled selected>Job Position</option>
-                                {
-                                    job_positions
-                                        .filter(res =>
-                                            user?.role_id === 1 || res.site === user?.site
-                                        )
-                                        .map((res, i) => (
-                                            <option value={res.jPosition} key={i}>
-                                                {res.jPosition}
-                                            </option>
-                                        ))
-                                }
+                            <div className='w-full'>
+                                <label htmlFor=""><b>Job Position</b></label>
+                                <select
+                                    value={form?.position ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            position: e.target.value,
+                                        })
+                                    }
+                                    name='position'
+                                    className="border p-2 rounded  w-full">
+                                    <option disabled selected>Job Position</option>
+                                    {
+                                        job_positions
+                                            .filter(res =>
+                                                user?.role_id === 1 || res.site === user?.site
+                                            )
+                                            .map((res, i) => (
+                                                <option value={res.jPosition} key={i}>
+                                                    {res.jPosition}
+                                                </option>
+                                            ))
+                                    }
 
 
-                            </select>
-                            <select
-                                value={form?.dept ?? ''}
-                                onChange={(e) =>
-                                    setForm({
-                                        ...form,
-                                        dept: e.target.value,
-                                    })
-                                }
-                                name='dept'
-                                className="border p-2 rounded  w-full">
-                                <option disabled selected>Department</option>
-                                {
-                                    departments
-                                        .filter(res =>
-                                            user?.role_id === 1 || res.site === user?.site
-                                        )
-                                        .map((res, i) => (
-                                            <option value={res.dept} key={i}>
-                                                {res.dept}
-                                            </option>
-                                        ))
-                                }
+                                </select>
+                            </div>
+                            <div className='w-full'>
+                                <label htmlFor=""><b>Department</b></label>
+                                <select
+                                    value={form?.dept ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            dept: e.target.value,
+                                        })
+                                    }
+                                    name='dept'
+                                    className="border p-2 rounded  w-full">
+                                    <option disabled selected>Department</option>
+                                    {
+                                        departments
+                                            .filter(res =>
+                                                user?.role_id === 1 || res.site === user?.site
+                                            )
+                                            .map((res, i) => (
+                                                <option value={res.dept} key={i}>
+                                                    {res.dept}
+                                                </option>
+                                            ))
+                                    }
 
-                            </select>
-                            <select
-                                value={form?.account ?? ''}
-                                onChange={(e) =>
-                                    setForm({
-                                        ...form,
-                                        account: e.target.value,
-                                    })
-                                }
-                                name='account'
-                                className="border p-2 rounded  w-full">
-                                <option disabled selected>Account (If Applicable)</option>
-                                <option value="">--</option>
-                                {
-                                    accounts
-                                        // .filter(res => res.site === "San Carlos")
-                                        .map((res, i) => (
-                                            <option value={res.acc} key={i}>
-                                                {res.acc}
-                                            </option>
-                                        ))
-                                }
-                            </select>
+                                </select>
+                            </div>
+                            <div className='w-full'>
+                                <label htmlFor=""><b>Account (If Applicable)</b></label>
+                                <select
+                                    value={form?.account ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            account: e.target.value,
+                                        })
+                                    }
+                                    name='account'
+                                    className="border p-2 rounded  w-full">
+                                    <option disabled selected>Account (If Applicable)</option>
+                                    <option value="">--</option>
+                                    {
+                                        accounts
+                                            // .filter(res => res.site === "San Carlos")
+                                            .map((res, i) => (
+                                                <option value={res.acc} key={i}>
+                                                    {res.acc}
+                                                </option>
+                                            ))
+                                    }
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className='flex flex-1 gap-4'>
                     <div className='flex flex-col w-full mb-4'>
                         <div className='flex flex-1 gap-3'>
-                            <select
-                                value={form?.sup_id ?? ''}
-                                onChange={(e) =>
-                                    setForm({
-                                        ...form,
-                                        sup_id: e.target.value,
-                                    })
-                                }
-                                name='sup_id'
-                                className="border p-2 rounded  w-full">
-                                <option disabled selected>Supervisor</option>
-                                {
-                                    users
-                                        .filter(res =>
-                                            user?.role_id === 1 ||
-                                            (res.site === user?.site && res.role_id === user?.role_id)
-                                        )
-                                        .filter(res =>
-                                            ["Manager", "Account Manager", "Supervisor", "Team Leader", "Director", "CEO"].includes(res.position)
-                                        )
-                                        .map((res, i) => (
-                                            <option value={res.id} key={res.id}>
-                                                {res.employee_fname} {res.employee_lname}
-                                            </option>
-                                        ))
-                                }
+                            <div className='w-full'>
+                                <label htmlFor=""><b>Supervisor</b></label>
+                                <select
+                                    value={form?.sup_id ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            sup_id: e.target.value,
+                                        })
+                                    }
+                                    name='sup_id'
+                                    className="border p-2 rounded  w-full">
+                                    <option disabled selected>Supervisor</option>
+                                    {
+                                        users
+                                            .filter(res =>
+                                                user?.role_id === 1 ||
+                                                (res.site === user?.site && res.role_id === user?.role_id)
+                                            )
+                                            .filter(res =>
+                                                ["Manager", "Account Manager", "Supervisor", "Team Leader", "Director", "CEO"].includes(res.position)
+                                            )
+                                            .map((res, i) => (
+                                                <option value={res.id} key={res.id}>
+                                                    {res.employee_fname} {res.employee_lname}
+                                                </option>
+                                            ))
+                                    }
 
 
-                                {/* {
+                                    {/* {
                                     departments
                                         .filter(res => user?.role_id === 1 || (res.site === user?.site && res.role_id === user?.role_id))
                                         .map((res, i) => (
@@ -430,33 +442,40 @@ export default function UpdateEmployeeFormSection() {
                                             </option>
                                         ))
                                 } */}
-                            </select>
-                            <Input
-                                value={form?.hired ?? ''}
-                                onChange={(e) =>
-                                    setForm({
-                                        ...form,
-                                        hired: e.target.value,
-                                    })
-                                }
-                                name="hired"
-                                label="Hired Date"
-                                type="date"
-                            />
-                            <select
-                                value={form?.status ?? ''}
-                                onChange={(e) =>
-                                    setForm({
-                                        ...form,
-                                        status: e.target.value,
-                                    })
-                                }
-                                name='status'
-                                className="border p-2 rounded  w-full">
-                                <option disabled selected>{employee?.status}</option>
-                                <option> Probationary</option>
-                                <option> Regular</option>
-                            </select>
+                                </select>
+                            </div>
+                            <div className='w-full mt-4'>
+                                <label htmlFor=""><b></b></label>
+                                <Input
+                                    value={form?.hired ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            hired: e.target.value,
+                                        })
+                                    }
+                                    name="hired"
+                                    label="Hired Date"
+                                    type="date"
+                                />
+                            </div>
+                            <div className='w-full'>
+                                <label htmlFor=""><b>Status</b></label>
+                                <select
+                                    value={form?.status ?? ''}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            status: e.target.value,
+                                        })
+                                    }
+                                    name='status'
+                                    className="border p-2 rounded  w-full">
+                                    <option disabled selected>{employee?.status}</option>
+                                    <option> Probationary</option>
+                                    <option> Regular</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>

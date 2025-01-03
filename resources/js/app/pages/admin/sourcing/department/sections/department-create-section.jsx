@@ -108,7 +108,7 @@ const DepartmentCreateSection = () => {
                         <option value="">Select Department Head</option>
                         {Array.isArray(users) && users
                             .filter((res) =>
-                                ["Manager", "Account Manager", 'Supervisor', "Operations Manager", "Director", "CEO"].includes(res.position)
+                                ["Manager", "Account Manager", 'Supervisor', "Operations Manager", "Director", "CEO", "HR Lead", "HR Manager", "I.T Manager", "Accounting Head",].includes(res.position)
                             )
                             .map((res) => (
                                 <option value={res.id} key={res.id}>

@@ -333,7 +333,7 @@ export default function UpdateEmployeeFormSection() {
                                     {
                                         job_positions
                                             .filter(res =>
-                                                user?.role_id === 1 || res.site === user?.site
+                                                user?.role_id === 1 || user?.role_id === 2 || res.site === user?.site
                                             )
                                             .map((res, i) => (
                                                 <option value={res.jPosition} key={i}>
@@ -361,7 +361,7 @@ export default function UpdateEmployeeFormSection() {
                                     {
                                         departments
                                             .filter(res =>
-                                                user?.role_id === 1 || res.site === user?.site
+                                                user?.role_id === 1 || user?.role_id === 2 || res.site === user?.site
                                             )
                                             .map((res, i) => (
                                                 <option value={res.dept} key={i}>
@@ -419,8 +419,7 @@ export default function UpdateEmployeeFormSection() {
                                     {
                                         users
                                             .filter(res =>
-                                                user?.role_id === 1 ||
-                                                (res.site === user?.site && res.role_id === user?.role_id)
+                                                user?.role_id === 1 || user?.role_id === 2 || res.site === user?.site
                                             )
                                             .filter(res =>
                                                 ["Manager", "Account Manager", "Supervisor", "Team Leader", "Director", "CEO"].includes(res.position)

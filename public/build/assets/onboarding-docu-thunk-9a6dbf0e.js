@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/onboarding-docu-thunk-9a6dbf0e.js
-import{a as e,g as i,c as r,u as s}from"./onboading-doc-service-28aea3eb.js";import{L as a}from"./app-9ccb6e50.js";function d(){return async function(n,o){const t=(await i()).data;console.log("result",t),n(a.actions.setOnboardingDocus(t))}}function g(n){return async function(o,t){await r(n)}}function b(n){return async function(o,t){const c=await e(n);o(a.actions.setOnboardingDoc(c))}}function f(n){return async function(o,t){await s(n)}}export{d as a,g as c,b as g,f as u};
-========
-import{a as e,g as i,c as r,u as s}from"./onboading-doc-service-e7cf4469.js";import{L as a}from"./app-3b84976d.js";function d(){return async function(n,o){const t=(await i()).data;console.log("result",t),n(a.actions.setOnboardingDocus(t))}}function g(n){return async function(o,t){await r(n)}}function b(n){return async function(o,t){const c=await e(n);o(a.actions.setOnboardingDoc(c))}}function f(n){return async function(o,t){await s(n)}}export{d as a,g as c,b as g,f as u};
->>>>>>>> d0daf5eeaaa72b604a736ea838c882062311add9:public/build/assets/onboarding-docu-thunk-bfc1cc05.js

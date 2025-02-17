@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/exit-interview-slice-4e2ad258.js
-import{C as r}from"./app-9ccb6e50.js";const i=r({name:"exit_int",initialState:{exitInterviews:[],exitInterviewForm:{factors:[]}},reducers:{setExitInterviews:(e,t)=>{e.exitInterviews=t.payload},setExitInterviewForm:(e,t)=>{e.exitInterviewForm=t.payload},resetExitInterview:(e,t)=>{e.exitInterviews=t.payload}}}),{setExitInterview:n,setExitInterviewForm:a,resetExitInterview:o}=i.actions;i.reducer;export{i as e,a as s};
-========
-import{C as r}from"./app-3b84976d.js";const i=r({name:"exit_int",initialState:{exitInterviews:[],exitInterviewForm:{factors:[]}},reducers:{setExitInterviews:(e,t)=>{e.exitInterviews=t.payload},setExitInterviewForm:(e,t)=>{e.exitInterviewForm=t.payload},resetExitInterview:(e,t)=>{e.exitInterviews=t.payload}}}),{setExitInterview:n,setExitInterviewForm:a,resetExitInterview:o}=i.actions;i.reducer;export{i as e,a as s};
->>>>>>>> d0daf5eeaaa72b604a736ea838c882062311add9:public/build/assets/exit-interview-slice-55edaa79.js

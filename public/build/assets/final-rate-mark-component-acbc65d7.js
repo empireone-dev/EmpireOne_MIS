@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/final-rate-mark-component-f5a6ac79.js
-import{j as e}from"./app-9ccb6e50.js";function d({rate:r,value:a,name:t,onChange:s,score:l}){return e.jsxs("div",{className:"flex items-center w-full",children:[e.jsx("input",{onChange:i=>s(i),id:"default-radio-1",type:"radio",value:a,name:t,checked:a==l,defaultChecked:a==l,className:"w-4 h-4 text-blue-600 bg-gray-100 border-black focus:ring-blue-500 focus:ring-2 mr-1"}),e.jsx("label",{htmlFor:"default-radio-1",className:"w-full",children:e.jsx("b",{children:r})})]})}export{d as default};
-========
-import{j as e}from"./app-3b84976d.js";function d({rate:r,value:a,name:t,onChange:s,score:l}){return e.jsxs("div",{className:"flex items-center w-full",children:[e.jsx("input",{onChange:i=>s(i),id:"default-radio-1",type:"radio",value:a,name:t,checked:a==l,defaultChecked:a==l,className:"w-4 h-4 text-blue-600 bg-gray-100 border-black focus:ring-blue-500 focus:ring-2 mr-1"}),e.jsx("label",{htmlFor:"default-radio-1",className:"w-full",children:e.jsx("b",{children:r})})]})}export{d as default};
->>>>>>>> d0daf5eeaaa72b604a736ea838c882062311add9:public/build/assets/final-rate-mark-component-acbc65d7.js

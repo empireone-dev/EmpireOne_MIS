@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/engagement-sidenav-components-76fd7d85.js
-import{q as o,j as t,a}from"./app-9ccb6e50.js";function x({link:e,name:r,icon:s}){const{url:n}=o();return t.jsxs(a,{href:e,className:`select-none flex gap-2 items-center px-4 py-2 ${n==e?"bg-blue-500 text-white":"text-stone-500 hover:bg-blue-100"} cursor-pointer my-1 rounded-md`,children:[s," ",t.jsx("div",{className:"flex items-center flex-grow text-[1.15rem] ",children:r})]})}export{x as default};
-========
-import{q as o,j as t,a}from"./app-3b84976d.js";function x({link:e,name:r,icon:s}){const{url:n}=o();return t.jsxs(a,{href:e,className:`select-none flex gap-2 items-center px-4 py-2 ${n==e?"bg-blue-500 text-white":"text-stone-500 hover:bg-blue-100"} cursor-pointer my-1 rounded-md`,children:[s," ",t.jsx("div",{className:"flex items-center flex-grow text-[1.15rem] ",children:r})]})}export{x as default};
->>>>>>>> d0daf5eeaaa72b604a736ea838c882062311add9:public/build/assets/engagement-sidenav-components-f7af0c7a.js

@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/employee-service-1aadb1c1.js
-import{h as a}from"./app-9ccb6e50.js";async function o(){return(await a.get("/api/employee"+window.location.search)).data}async function r(e){return(await a.get("/api/employee/"+e)).data}async function n(e){return(await a.post("/api/employee",e)).data}async function i(e){return(await a.post("/api/store_new_employee",e)).data}async function c(e){return(await a.put(`/api/employee/${e.id}`,e)).data}export{r as a,i as b,o as g,n as s,c as u};
-========
-import{h as a}from"./app-3b84976d.js";async function o(){return(await a.get("/api/employee"+window.location.search)).data}async function r(e){return(await a.get("/api/employee/"+e)).data}async function n(e){return(await a.post("/api/employee",e)).data}async function i(e){return(await a.post("/api/store_new_employee",e)).data}async function c(e){return(await a.put(`/api/employee/${e.id}`,e)).data}export{r as a,i as b,o as g,n as s,c as u};
->>>>>>>> d0daf5eeaaa72b604a736ea838c882062311add9:public/build/assets/employee-service-02df6b5e.js

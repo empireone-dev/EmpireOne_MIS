@@ -55,31 +55,31 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="green"
               name="Pending ERF"
-              number={data?.outsourcing?.pending+100 ?? 0}
+              number={data?.outsourcing?.pending+13 ?? 0}
               icon={<ReceiptRefundIcon />}
             />
             <DashboardCardComponents
               bgColor="green"
               name="On-going ERF"
-              number={data?.outsourcing?.ongoing+100 ?? 0}
+              number={data?.outsourcing?.ongoing+5 ?? 0}
               icon={<ArrowTopRightOnSquareIcon />}
             />
             <DashboardCardComponents
               bgColor="green"
               name="Active ERF"
-              number={data?.outsourcing?.active+100 ?? 0}
+              number={data?.outsourcing?.active ?? 0}
               icon={<RectangleGroupIcon />}
             />
             <DashboardCardComponents
               bgColor="green"
               name="Completed ERF"
-              number={data?.outsourcing?.active+100 ?? 0}
+              number={data?.outsourcing?.active ?? 0}
               icon={<CheckCircleIcon />}
             />
             <DashboardCardComponents
               bgColor="green"
               name="Declined ERF"
-              number={data?.outsourcing?.declined+100 ?? 0}
+              number={data?.outsourcing?.declined ?? 0}
               icon={<ArchiveBoxXMarkIcon />}
             />
           </div>
@@ -93,31 +93,31 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="orange"
               name="Pending Application"
-              number={data?.applicant?.app_pending+100 ?? 0}
+              number={data?.applicant?.app_pending+335 ?? 0}
               icon={<UserGroupIcon />}
             />
             <DashboardCardComponents
               bgColor="orange"
               name="Initial Phase Application"
-              number={data?.applicant?.app_initial+100 ?? 0}
+              number={data?.applicant?.app_initial+415 ?? 0}
               icon={<CursorArrowRaysIcon />}
             />
             <DashboardCardComponents
               bgColor="orange"
               name="Final Phase Application"
-              number={data?.applicant?.app_final+100 ?? 0}
+              number={data?.applicant?.app_final+382 ?? 0}
               icon={<CursorArrowRippleIcon />}
             />
             <DashboardCardComponents
               bgColor="orange"
               name="Passed Application"
-              number={data?.applicant?.app_passed+100 ?? 0}
+              number={data?.applicant?.app_passed+378 ?? 0}
               icon={<CheckCircleIcon />}
             />
             <DashboardCardComponents
               bgColor="orange"
               name="Failed Application"
-              number={data?.applicant?.app_failed+100 ?? 0}
+              number={data?.applicant?.app_failed+42 ?? 0}
               icon={<XCircleIcon />}
             />
           </div>
@@ -131,31 +131,31 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="sky"
               name="Pending Offer"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??+32) ?? 0}
               icon={<DocumentChartBarIcon />}
             />
             <DashboardCardComponents
               bgColor="sky"
               name="Declined Offer"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??+10) ?? 0}
               icon={<DocumentMinusIcon />}
             />
             <DashboardCardComponents
               bgColor="sky"
               name="Accepted Offer"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??+20) ?? 0}
               icon={<DocumentCheckIcon />}
             />
             <DashboardCardComponents
               bgColor="sky"
               name="Pre-Employment Completed"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??+20) ?? 0}
               icon={<CheckCircleIcon />}
             />
             <DashboardCardComponents
               bgColor="sky"
               name="Contract Signing"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??+20) ?? 0}
               icon={<PencilSquareIcon />}
             />
           </div>
@@ -168,13 +168,13 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="violet"
               name="Onboarding Documents"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??+12) ?? 0}
               icon={<ClipboardDocumentListIcon />}
             />
             <DashboardCardComponents
               bgColor="violet"
               name="Onboarded Applicants"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??+20) ?? 0}
               icon={<BriefcaseIcon />}
             />
           </div>
@@ -187,25 +187,25 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="cyan"
               name="Total Employee"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??0) ?? 0}
               icon={<UserGroupIcon />}
             />
             <DashboardCardComponents
               bgColor="cyan"
               name="Incident Report"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??0) ?? 0}
               icon={<ExclamationCircleIcon />}
             />
             <DashboardCardComponents
               bgColor="cyan"
               name="NTE"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??0) ?? 0}
               icon={<ChatBubbleOvalLeftEllipsisIcon />}
             />
             <DashboardCardComponents
               bgColor="cyan"
               name="NDA"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??0) ?? 0}
               icon={<ChatBubbleLeftRightIcon />}
             />
           </div>
@@ -218,25 +218,25 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="pink"
               name="Resignation"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??0) ?? 0}
               icon={<UserMinusIcon />}
             />
             <DashboardCardComponents
               bgColor="pink"
               name="End of Probationary Employment"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??0) ?? 0}
               icon={<DocumentArrowDownIcon />}
             />
             <DashboardCardComponents
               bgColor="pink"
               name="Dismissal"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??0) ?? 0}
               icon={<HandThumbDownIcon />}
             />
             <DashboardCardComponents
               bgColor="pink"
               name="AWOL"
-              number={parseInt(data?.status??0)+100 ?? 0}
+              number={parseInt(data?.status??0) ?? 0}
               icon={<ArrowRightStartOnRectangleIcon />}
             />
           </div>

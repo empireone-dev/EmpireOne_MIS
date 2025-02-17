@@ -131,31 +131,31 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="sky"
               name="Pending Offer"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<DocumentChartBarIcon />}
             />
             <DashboardCardComponents
               bgColor="sky"
               name="Declined Offer"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<DocumentMinusIcon />}
             />
             <DashboardCardComponents
               bgColor="sky"
               name="Accepted Offer"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<DocumentCheckIcon />}
             />
             <DashboardCardComponents
               bgColor="sky"
               name="Pre-Employment Completed"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<CheckCircleIcon />}
             />
             <DashboardCardComponents
               bgColor="sky"
               name="Contract Signing"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<PencilSquareIcon />}
             />
           </div>
@@ -168,13 +168,13 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="violet"
               name="Onboarding Documents"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<ClipboardDocumentListIcon />}
             />
             <DashboardCardComponents
               bgColor="violet"
               name="Onboarded Applicants"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<BriefcaseIcon />}
             />
           </div>
@@ -187,25 +187,25 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="cyan"
               name="Total Employee"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<UserGroupIcon />}
             />
             <DashboardCardComponents
               bgColor="cyan"
               name="Incident Report"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<ExclamationCircleIcon />}
             />
             <DashboardCardComponents
               bgColor="cyan"
               name="NTE"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<ChatBubbleOvalLeftEllipsisIcon />}
             />
             <DashboardCardComponents
               bgColor="cyan"
               name="NDA"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<ChatBubbleLeftRightIcon />}
             />
           </div>
@@ -218,25 +218,25 @@ export default function DashboardSection() {
             <DashboardCardComponents
               bgColor="pink"
               name="Resignation"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<UserMinusIcon />}
             />
             <DashboardCardComponents
               bgColor="pink"
               name="End of Probationary Employment"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<DocumentArrowDownIcon />}
             />
             <DashboardCardComponents
               bgColor="pink"
               name="Dismissal"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<HandThumbDownIcon />}
             />
             <DashboardCardComponents
               bgColor="pink"
               name="AWOL"
-              number={data?.status+100 ?? 0}
+              number={parseInt(data?.status??0)+100 ?? 0}
               icon={<ArrowRightStartOnRectangleIcon />}
             />
           </div>

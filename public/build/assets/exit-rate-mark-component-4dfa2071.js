@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/exit-rate-mark-component-4dfa2071.js
-import{j as e}from"./app-9ccb6e50.js";function n({rate:l,value:s,name:r,onChange:t}){return e.jsxs("div",{className:"flex items-center w-full",children:[e.jsx("input",{onChange:a=>t(a),id:r,type:"radio",value:s,name:r,className:"w-4 h-4 text-blue-600 bg-gray-100 border-black focus:ring-blue-500 focus:ring-2 mr-1"}),e.jsx("label",{htmlFor:r,className:"w-full",children:e.jsx("b",{children:l})})]})}export{n as default};
-========
-import{j as e}from"./app-3b84976d.js";function n({rate:l,value:s,name:r,onChange:t}){return e.jsxs("div",{className:"flex items-center w-full",children:[e.jsx("input",{onChange:a=>t(a),id:r,type:"radio",value:s,name:r,className:"w-4 h-4 text-blue-600 bg-gray-100 border-black focus:ring-blue-500 focus:ring-2 mr-1"}),e.jsx("label",{htmlFor:r,className:"w-full",children:e.jsx("b",{children:l})})]})}export{n as default};
->>>>>>>> d0daf5eeaaa72b604a736ea838c882062311add9:public/build/assets/exit-rate-mark-component-d22d82ee.js

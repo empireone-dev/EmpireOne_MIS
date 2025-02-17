@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/applicant-record-service-70af7c42.js
-import{h as s}from"./app-9ccb6e50.js";async function e(){return(await s.get("/api/applicant"+window.location.search)).data}async function i(a){return(await s.get("/api/applicant/"+a)).data}async function r(a){try{return(await s.post("/api/applicant",a)).data}catch(t){return t}}async function p(a){return(await s.put(`/api/applicant/${a.id}`,a)).data}async function c(a){return(await s.put(`/api/update_applicant_status/${a.id}`,a)).data}export{c as a,i as b,e as g,r as s,p as u};
-========
-import{h as s}from"./app-3b84976d.js";async function e(){return(await s.get("/api/applicant"+window.location.search)).data}async function i(a){return(await s.get("/api/applicant/"+a)).data}async function r(a){try{return(await s.post("/api/applicant",a)).data}catch(t){return t}}async function p(a){return(await s.put(`/api/applicant/${a.id}`,a)).data}async function c(a){return(await s.put(`/api/update_applicant_status/${a.id}`,a)).data}export{c as a,i as b,e as g,r as s,p as u};
->>>>>>>> d0daf5eeaaa72b604a736ea838c882062311add9:public/build/assets/applicant-record-service-756024aa.js

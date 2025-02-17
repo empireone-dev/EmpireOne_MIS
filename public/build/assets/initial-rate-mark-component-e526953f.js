@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/initial-rate-mark-component-64fe23dc.js
-import{j as e}from"./app-9ccb6e50.js";function n({rate:r,value:s,name:l,onChange:t}){return e.jsxs("div",{className:"flex items-center w-full",children:[e.jsx("input",{onChange:a=>t(a),id:l,type:"radio",value:s,name:l,className:"w-4 h-4 text-blue-600 bg-gray-100 border-black focus:ring-blue-500 focus:ring-2 mr-1"}),e.jsx("label",{htmlFor:l,className:"w-full",children:e.jsx("b",{children:r})})]})}export{n as default};
-========
-import{j as e}from"./app-3b84976d.js";function n({rate:r,value:s,name:l,onChange:t}){return e.jsxs("div",{className:"flex items-center w-full",children:[e.jsx("input",{onChange:a=>t(a),id:l,type:"radio",value:s,name:l,className:"w-4 h-4 text-blue-600 bg-gray-100 border-black focus:ring-blue-500 focus:ring-2 mr-1"}),e.jsx("label",{htmlFor:l,className:"w-full",children:e.jsx("b",{children:r})})]})}export{n as default};
->>>>>>>> d0daf5eeaaa72b604a736ea838c882062311add9:public/build/assets/initial-rate-mark-component-e526953f.js

@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/onboading-doc-service-28aea3eb.js
-import{h as o}from"./app-9ccb6e50.js";async function r(){return(await o.get("/api/onboarding_doc?app_id="+window.location.pathname.split("/")[2])).data}async function t(a){return(await o.get("/api/onboarding_doc_by_id/"+a)).data}async function e(a){return(await o.post("/api/onboarding_doc",a)).data}async function s(a){return(await o.put("/api/onboarding_doc/"+a.id,a)).data}export{t as a,e as c,r as g,s as u};
-========
-import{h as o}from"./app-3b84976d.js";async function r(){return(await o.get("/api/onboarding_doc?app_id="+window.location.pathname.split("/")[2])).data}async function t(a){return(await o.get("/api/onboarding_doc_by_id/"+a)).data}async function e(a){return(await o.post("/api/onboarding_doc",a)).data}async function s(a){return(await o.put("/api/onboarding_doc/"+a.id,a)).data}export{t as a,e as c,r as g,s as u};
->>>>>>>> d0daf5eeaaa72b604a736ea838c882062311add9:public/build/assets/onboading-doc-service-e7cf4469.js

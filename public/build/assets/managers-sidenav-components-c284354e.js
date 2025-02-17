@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/managers-sidenav-components-c284354e.js
-import{q as a,j as e,a as o}from"./app-9ccb6e50.js";function l({link:t,name:r,icon:s}){const{url:n}=a();return e.jsx(e.Fragment,{children:e.jsxs(o,{href:t,className:`select-none flex gap-2 items-center px-4 py-2 ${n==t?"bg-blue-500 text-white":"text-stone-500 hover:bg-blue-100"} cursor-pointer my-1 rounded-md`,children:[s,"  ",e.jsx("div",{className:"flex items-center flex-grow text-[1.15rem] ",children:r})]})})}export{l as default};
-========
-import{q as a,j as e,a as o}from"./app-3b84976d.js";function l({link:t,name:r,icon:s}){const{url:n}=a();return e.jsx(e.Fragment,{children:e.jsxs(o,{href:t,className:`select-none flex gap-2 items-center px-4 py-2 ${n==t?"bg-blue-500 text-white":"text-stone-500 hover:bg-blue-100"} cursor-pointer my-1 rounded-md`,children:[s,"  ",e.jsx("div",{className:"flex items-center flex-grow text-[1.15rem] ",children:r})]})})}export{l as default};
->>>>>>>> d0daf5eeaaa72b604a736ea838c882062311add9:public/build/assets/managers-sidenav-components-333d9d94.js

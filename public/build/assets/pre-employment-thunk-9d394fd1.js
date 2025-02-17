@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/pre-employment-thunk-1d98931b.js
-import{h as a,D as c}from"./app-9ccb6e50.js";async function i(){return(await a.get("/api/checklist")).data}async function o(t){return(await a.post("/api/checklist",t)).data}function l(){return async function(t,s){const e=(await i()).data;console.log("result",e),t(c.actions.setChecklists(e))}}function u(t){return async function(s,e){const n=await o(t);s(c.actions.setChecklists(n.data)),s(c.actions.setChecklistForm({}))}}export{l as g,u as s};
-========
-import{h as a,D as c}from"./app-3b84976d.js";async function i(){return(await a.get("/api/checklist")).data}async function o(t){return(await a.post("/api/checklist",t)).data}function l(){return async function(t,s){const e=(await i()).data;console.log("result",e),t(c.actions.setChecklists(e))}}function u(t){return async function(s,e){const n=await o(t);s(c.actions.setChecklists(n.data)),s(c.actions.setChecklistForm({}))}}export{l as g,u as s};
->>>>>>>> d0daf5eeaaa72b604a736ea838c882062311add9:public/build/assets/pre-employment-thunk-9d394fd1.js

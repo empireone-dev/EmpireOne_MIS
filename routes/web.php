@@ -41,7 +41,7 @@ Route::get('/online_application', function () {
     return Inertia::render('online_application/page');
 });
 
-Route::get('/video/{id}', function () {
+Route::get('/video', function () {
     return Inertia::render('video/page');
 });
 

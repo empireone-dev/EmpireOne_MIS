@@ -3,11 +3,9 @@ import React, { useState, useRef, useEffect } from 'react';
 export default function Page() {
   const [currentVideo, setCurrentVideo] = useState(0);
   const videoRefs = useRef([]);
-
+  const video_item = window.location.pathname.split('/')[2]
   const videoSources = [
-    "/images/1.mp4",
-    "/images/2.mp4",
-    "/images/3.mp4"
+    `/images/${video_item}.mp4`,
   ];
 
   const handleVideoEnd = () => {

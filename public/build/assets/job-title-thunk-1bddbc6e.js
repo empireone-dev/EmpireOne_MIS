@@ -1,0 +1,1 @@
+import{f as s,p as i}from"./app-b3c445f1.js";async function n(){return(await s.get("/api/job_position")).data}function r(){return async function(t,a){const o=(await n()).data;console.log("result",o),t(i.actions.setJobPositions(o))}}export{r as g};

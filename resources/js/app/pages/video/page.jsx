@@ -5,8 +5,8 @@ export default function Page() {
   const videoRefs = useRef([]);
 
   const videoSources = [
-    "/images/1.mp4",
-    "/images/2.mp4",
+    "/images/Logo(Horizontal).mp4",
+    // "/images/2.mp4",
     // "/images/3.mp4"
   ];
 

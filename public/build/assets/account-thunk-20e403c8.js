@@ -1,0 +1,1 @@
+import{f as n,n as a}from"./app-b3c445f1.js";function e(){try{return n.get("/api/account")}catch{}}function s(){return async function(t,o){const c=await e();t(a.actions.setAccounts(c.data.result))}}export{s as g};

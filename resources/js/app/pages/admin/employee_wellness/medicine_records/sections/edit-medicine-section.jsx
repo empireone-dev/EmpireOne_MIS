@@ -21,7 +21,7 @@ export default function EditMedicineSection({ data, label, icon }) {
             setShowModal(false)
         } catch (error) {
             messageApi.error('error');
-        }   
+        }
     }
     return (
         <div>
@@ -76,7 +76,7 @@ export default function EditMedicineSection({ data, label, icon }) {
                                         med_desc: e.target.value
                                     })}
                                     name='med_desc'
-                                    class="appearance-none block w-full  border border-gray-400 rounded py-6 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text"  />
+                                    class="appearance-none block w-full  border border-gray-400 rounded py-6 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" />
                             </div>
                         </div>
                         <div className='flex flex-1 gap-1.5 justify-end mt-1'>

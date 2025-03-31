@@ -11,6 +11,7 @@ import {
     MedicineBoxOutlined,
     RiseOutlined,
     ScheduleOutlined,
+    SolutionOutlined,
     TeamOutlined,
 } from "@ant-design/icons";
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
@@ -23,6 +24,7 @@ import ApplicantJobOfferComponent from "../components/applicant-job-offer-compon
 import ApplicantDetaillsComponent from "../components/applicant-detaills-component";
 import ApplicantSetScheduleComponent from "../components/applicant-set-schedule-component";
 import ApplicantPoolingComponent from "../components/applicant-pooling-component";
+import ApplicantCvFileComponent from "../components/applicant-cv-file-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
@@ -33,6 +35,18 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                         label: "Application Details",
                         key: "1",
                         icon: <AuditOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
+        {
+            component: (
+                <ApplicantCvFileComponent
+                    item={{
+                        label: "CV FIle",
+                        key: "1",
+                        icon: <SolutionOutlined />,
                     }}
                     data={data}
                 />

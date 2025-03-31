@@ -38,14 +38,13 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                 {item.label}
             </Menu.Item>
             <Modal
-                title="Application Details"
                 visible={open}
                 onOk={() => setOpen(false)}
                 onCancel={() => setOpen(false)}
                 width={1200}
                 footer={null}
             >
-                <div className="flex text-2xl items-center justify-center">
+                <div className="flex text-2xl items-center justify-center mb-2">
                     <h1>
                         <b>APPLICATION DETAILS</b>
                     </h1>

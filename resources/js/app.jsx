@@ -10,7 +10,7 @@ import store from './app/store/store';
 const appName = import.meta.env.VITE_APP_NAME || 'EmpireOne HRIS';
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
+    title: (title) => `${title} ${appName}`,
     resolve: (name) => resolvePageComponent(`./app/pages/${name}.jsx`, import.meta.glob('./app/pages/**/*.jsx')),
     setup({ el, App, props }) {
         const root = createRoot(el);

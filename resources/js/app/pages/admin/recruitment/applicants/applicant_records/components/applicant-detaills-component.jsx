@@ -1,6 +1,9 @@
-import { Menu, Modal } from "antd";
+import { FilePdfOutlined } from "@ant-design/icons";
+import { Menu, Modal, Tooltip } from "antd";
 import React from "react";
 import { useState } from "react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 export default function ApplicantDetaillsComponent({ data, item }) {
     const [open, setOpen] = useState(false);
@@ -8,6 +11,26 @@ export default function ApplicantDetaillsComponent({ data, item }) {
     function openHandler(params) {
         setOpen(true);
     }
+
+    const handleConvertToPDF = () => {
+        const formElement = document.getElementById("form-to-pdf");
+
+        if (!formElement) {
+            console.error("Form element not found");
+            return;
+        }
+
+        html2canvas(formElement, { scale: 4 }).then((canvas) => {
+            const imgData = canvas.toDataURL("image/png");
+            const pdf = new jsPDF("p", "mm", "a4");
+            const imgWidth = 210; // A4 width in mm
+            const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+            pdf.save(`${data?.lname}_${data?.fname}.pdf`);
+        });
+    };
+
     console.log('data', data)
     return (
         <>
@@ -24,16 +47,23 @@ export default function ApplicantDetaillsComponent({ data, item }) {
             >
                 <div className="flex text-2xl items-center justify-center">
                     <h1>
-                        <b>Personal Information</b>
+                        <b>APPLICATION DETAILS</b>
                     </h1>
                 </div>
-                <div className="flex justify-end">
+                <div className="flex justify-between">
                     <h1 className="text-lg mb-2">
                         <b>Status:</b> {data?.status}
                     </h1>
+                    <div>
+                        <Tooltip title="Convert to PDF">
+                            <button onClick={handleConvertToPDF}>
+                                <FilePdfOutlined className="text-4xl px-3 mb-2" />
+                            </button>
+                        </Tooltip>
+                    </div>
                 </div>
-                <form className="border rounded-lg p-3.5">
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900  text-center"></h1>
+                <form id="form-to-pdf" className="border rounded-lg p-3.5 px-7 py-6">
+                    <h1 className="text-xl font-semibold mb-1 text-gray-900  text-center">Personal Information </h1>
                     <div className="mb-4">
                         <label htmlFor="">
                             <b>Application No.</b>
@@ -42,7 +72,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             type="number"
                             value={data?.app_id}
                             placeholder="N/A"
-                            className="border p-2 rounded w-full"
+                            className="border p-2 rounded w-full h-12 mt-2"
                             readOnly
                         />
                     </div>
@@ -56,28 +86,28 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                     type="text"
                                     value={data?.fname}
                                     placeholder="N/A"
-                                    className="border p-2 rounded w-full"
+                                    className="border p-2 rounded w-full h-12 mt-2"
                                     readOnly
                                 />
                                 <input
                                     type="text"
                                     value={data?.mname}
                                     placeholder="N/A"
-                                    className="border p-2 rounded w-full"
+                                    className="border p-2 rounded w-full h-12 mt-2"
                                     readOnly
                                 />
                                 <input
                                     type="text"
                                     value={data?.lname}
                                     placeholder="N/A"
-                                    className="border p-2 rounded w-full"
+                                    className="border p-2 rounded w-full h-12 mt-2"
                                     readOnly
                                 />
                                 <input
                                     type="text"
                                     value={data?.suffix === "undefined" ? "--" : data?.suffix ?? ""}
                                     placeholder="(Suffix)"
-                                    className="border p-2 rounded w-1/5"
+                                    className="border p-2 rounded w-1/5 h-12 mt-2"
                                     readOnly
                                 />
                             </div>
@@ -94,7 +124,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                         type="text"
                                         value={data?.gender}
                                         placeholder="N/A"
-                                        className="border p-2 rounded w-full"
+                                        className="border p-2 rounded w-full h-12 mt-2"
                                         readOnly
                                     />
                                 </div>
@@ -106,7 +136,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                         type="date"
                                         value={data?.dob}
                                         placeholder="N/A"
-                                        className="border p-2 rounded w-full"
+                                        className="border p-2 rounded w-full h-12 mt-2"
                                         readOnly
                                     />
                                 </div>
@@ -118,7 +148,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                         type="email"
                                         value={data?.email}
                                         placeholder="N/A"
-                                        className="border p-2 rounded w-full "
+                                        className="border p-2 rounded w-full h-12 mt-2 "
                                         readOnly
                                     />
                                 </div>
@@ -130,7 +160,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                         type="number"
                                         value={data?.phone}
                                         placeholder="N/A"
-                                        className="border p-2 rounded w-full "
+                                        className="border p-2 rounded w-full h-12 mt-2 "
                                         readOnly
                                     />
                                 </div>
@@ -138,7 +168,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                         </div>
 
                         <div className="flex w-full">
-                            <div className="flex flex-col gap-4 mb-4 w-full">
+                            <div className="flex flex-col gap-4 mb-4 w-full h-12 mt-2">
                                 <div className="flex flex-col w-full">
                                     <label htmlFor="">
                                         <b>Marital Status</b>
@@ -147,7 +177,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                         type="text"
                                         value={data?.marital}
                                         placeholder="N/A"
-                                        className="border p-2 rounded w-full "
+                                        className="border p-2 rounded w-full h-12 mt-2 "
                                         readOnly
                                     />
                                 </div>
@@ -159,7 +189,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                         type="text"
                                         value={data?.religion}
                                         placeholder="N/A"
-                                        className="border p-2 rounded w-full"
+                                        className="border p-2 rounded w-full h-12 mt-2"
                                         readOnly
                                     />
                                 </div>
@@ -171,7 +201,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                         type="text"
                                         value={data?.nationality}
                                         placeholder="N/A"
-                                        className="border p-2 rounded w-full"
+                                        className="border p-2 rounded w-full h-12 mt-2"
                                         readOnly
                                     />
                                 </div>
@@ -186,7 +216,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             type="text"
                             value={data?.mmname === "undefined" ? "--" : data?.mmname ?? ""}
                             placeholder="N/A"
-                            className="border p-2 rounded w-full "
+                            className="border p-2 rounded w-full h-12 mt-2 "
                             readOnly
                         />
                     </div>
@@ -198,7 +228,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             type="text"
                             value={data?.ffname === "undefined" ? "--" : data?.ffname ?? ""}
                             placeholder="N/A"
-                            className="border p-2 rounded w-full "
+                            className="border p-2 rounded w-full h-12 mt-2"
                             readOnly
                         />
                     </div>
@@ -211,7 +241,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                 type="text"
                                 value={data?.educ}
                                 placeholder="N/A"
-                                className="border p-2 rounded w-full "
+                                className="border p-2 rounded w-full h-12 mt-2"
                                 readOnly
                             />
                         </div>
@@ -223,12 +253,12 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                 type="text"
                                 value={data?.courset === "undefined" ? "--" : data?.courset ?? ""}
                                 placeholder="N/A"
-                                className="border p-2 rounded w-full "
+                                className="border p-2 rounded w-full h-12 mt-2"
                                 readOnly
                             />
                         </div>
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-5">
                         Address Information
                     </h1>
                     <div className="mb-4">
@@ -242,11 +272,11 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             type="text"
                             value={data?.caddress}
                             placeholder="N/A"
-                            className="border p-2 rounded w-full"
+                            className="border p-2 rounded w-full h-12 mt-2"
                             readOnly
                         />
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-5">
                         Government ID Information
                     </h1>
                     <div className="flex flex-1 gap-4 mb-4">
@@ -257,7 +287,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             <input
                                 type="text"
                                 value={data?.sss === "undefined" ? "--" : data?.sss ?? ""}
-                                className="border p-2 rounded w-full "
+                                className="border p-2 rounded w-full h-12 mt-2"
                                 readOnly
                             />
                         </div>
@@ -268,7 +298,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             <input
                                 type="text"
                                 value={data?.pagibig === "undefined" ? "--" : data?.pagibig ?? ""}
-                                className="border p-2 rounded w-full "
+                                className="border p-2 rounded w-full h-12 mt-2 "
                                 readOnly
                             />
                         </div>
@@ -281,7 +311,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             <input
                                 type="text"
                                 value={data?.tin === "undefined" ? "--" : data?.tin ?? ""}
-                                className="border p-2 rounded w-full "
+                                className="border p-2 rounded w-full h-12 mt-2"
                                 readOnly
                             />
                         </div>
@@ -292,7 +322,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             <input
                                 type="text"
                                 value={data?.philh === "undefined" ? "--" : data?.philh ?? ""}
-                                className="border p-2 rounded w-full "
+                                className="border p-2 rounded w-full h-12 mt-2"
                                 readOnly
                             />
                         </div>
@@ -308,7 +338,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             type="text"
                             value={data?.ename === "undefined" ? "--" : data?.ename ?? ""}
                             placeholder="N/A"
-                            className="border p-2 rounded w-full "
+                            className="border p-2 rounded w-full h-12 mt-2"
                             readOnly
                         />
                     </div>
@@ -320,7 +350,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                             type="text"
                             value={data?.eaddress === "undefined" ? "--" : data?.eaddress ?? ""}
                             placeholder="N/A"
-                            className="border p-2 rounded w-full "
+                            className="border p-2 rounded w-full h-12 mt-2"
                             readOnly
                         />
                     </div>
@@ -333,7 +363,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                 type="text"
                                 value={data?.relationship === "undefined" ? "--" : data?.relationship ?? ""}
                                 placeholder="N/A"
-                                className="border p-2 rounded w-full "
+                                className="border p-2 rounded w-full h-12 mt-2"
                                 readOnly
                             />
                         </div>
@@ -345,7 +375,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                                 type="number"
                                 value={data?.ephone === "undefined" ? "--" : data?.ephone ?? ""}
                                 placeholder="N/A"
-                                className="border p-2 rounded w-full "
+                                className="border p-2 rounded w-full h-12 mt-2"
                                 readOnly
                             />
                         </div>

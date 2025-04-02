@@ -292,12 +292,15 @@ export default function ApplicationFormSection() {
                       <option disabled selected>
                         Suffix
                       </option>
+                      <option></option>
                       <option> Sr.</option>
                       <option> Jr.</option>
                       <option> II</option>
                       <option> III</option>
                       <option> IV</option>
                       <option> V</option>
+                      <option> VI</option>
+                      <option> VII</option>
                     </select>
                   </div>
                 </div>

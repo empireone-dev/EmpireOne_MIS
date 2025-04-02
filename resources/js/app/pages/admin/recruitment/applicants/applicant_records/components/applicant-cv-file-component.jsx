@@ -4,7 +4,7 @@ import React from "react";
 export default function ApplicantCvFileComponent({ data, item }) {
     function openHandler() {
         if (data?.cvfile?.file) {
-            window.open(data.cvfile.file, "_blank"); // Opens the file in a new tab
+            window.open(data.cvfile.file, "_blank");
         } else {
             alert("No CV file available.");
         }

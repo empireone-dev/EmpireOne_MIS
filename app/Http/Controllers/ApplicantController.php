@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewApplication;
 use App\Models\Applicant;
 use App\Models\CVFile;
 use App\Models\Employee;
@@ -9,6 +10,7 @@ use App\Models\JobOffer;
 use App\Models\User;
 use App\Models\WorkingExperience;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class ApplicantController extends Controller
@@ -143,6 +145,7 @@ class ApplicantController extends Controller
             }
         }
 
+        $url = null; // Initialize URL variable
         if ($request->hasFile('files')) {
             $path = $request->file('files')->store(date("Y"), 's3');
             $url = Storage::disk('s3')->url($path);
@@ -150,6 +153,18 @@ class ApplicantController extends Controller
                 'app_id' => $date_unique,
                 'file' => $url,
             ]);
+        }
+
+        // Send email with the URL as part of the data if it exists
+        if ($url) {
+            Mail::to('hiring@empireonegroup.com')
+                ->send(new NewApplication(
+                    array_merge(
+                        $request->all(),
+                        ['submitted' => now()->format('L')]
+                    ),
+                    $url
+                ));
         }
 
         return response()->json([

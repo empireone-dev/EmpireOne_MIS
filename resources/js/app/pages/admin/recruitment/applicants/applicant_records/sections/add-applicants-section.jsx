@@ -84,36 +84,36 @@ export default function AddApplicantsSection() {
 
         const fd = new FormData();
         fd.append('files', uploadedFile)
-        fd.append('site', user?.site);
-        fd.append('fname', applicantForm.fname);
-        fd.append('mname', applicantForm.mname);
-        fd.append('lname', applicantForm.lname);
-        fd.append('suffix', applicantForm.suffix);
-        fd.append('dob', applicantForm.dob);
-        fd.append('religion', applicantForm.religion);
-        fd.append('email', applicantForm.email);
-        fd.append('nationality', applicantForm.nationality);
-        fd.append('phone', applicantForm.phone);
-        fd.append('mmname', applicantForm.mmname);
-        fd.append('ffname', applicantForm.ffname);
-        fd.append('educ', applicantForm.educ);
-        fd.append('courset', applicantForm.courset);
-        fd.append('hired', applicantForm.hired);
-        fd.append('lot', applicantForm.lot);
-        fd.append('sss', applicantForm.sss);
-        fd.append('pagibig', applicantForm.pagibig);
-        fd.append('tin', applicantForm.tin);
-        fd.append('philh', applicantForm.philh);
-        fd.append('ename', applicantForm.ename);
-        fd.append('eaddress', applicantForm.eaddress);
-        fd.append('relationship', applicantForm.relationship);
-        fd.append('ephone', applicantForm.ephone);
-        fd.append('marital', applicantForm.marital);
-        fd.append('gender', applicantForm.gender);
-        fd.append('region', applicantForm.region);
-        fd.append('city', applicantForm.city);
-        fd.append('brgy', applicantForm.brgy);
-        fd.append('province', applicantForm.province);
+        fd.append('site', user.site ?? '');
+        fd.append('fname', applicantForm.fname ?? '');
+        fd.append('mname', applicantForm.mname ?? '');
+        fd.append('lname', applicantForm.lname ?? '');
+        fd.append('suffix', applicantForm.suffix ?? '');
+        fd.append('dob', applicantForm.dob ?? moment().format('YYYY-MM-DD'));
+        fd.append('religion', applicantForm.religion ?? '');
+        fd.append('email', applicantForm.email ?? '');
+        fd.append('nationality', applicantForm.nationality ?? '');
+        fd.append('phone', applicantForm.phone ?? '');
+        fd.append('mmname', applicantForm.mmname ?? '');
+        fd.append('ffname', applicantForm.ffname ?? '');
+        fd.append('educ', applicantForm.educ ?? '');
+        fd.append('courset', applicantForm.courset ?? '');
+        fd.append('hired', applicantForm.hired ?? '');
+        fd.append('lot', applicantForm.lot ?? '');
+        fd.append('sss', applicantForm.sss ?? '');
+        fd.append('pagibig', applicantForm.pagibig ?? '');
+        fd.append('tin', applicantForm.tin ?? '');
+        fd.append('philh', applicantForm.philh ?? '');
+        fd.append('ename', applicantForm.ename ?? '');
+        fd.append('eaddress', applicantForm.eaddress ?? '');
+        fd.append('relationship', applicantForm.relationship ?? '');
+        fd.append('ephone', applicantForm.ephone ?? '');
+        fd.append('marital', applicantForm.marital ?? '');
+        fd.append('gender', applicantForm.gender ?? '');
+        fd.append('region', applicantForm.region ?? '');
+        fd.append('city', applicantForm.city ?? '');
+        fd.append('brgy', applicantForm.brgy ?? '');
+        fd.append('province', applicantForm.province ?? '');
 
         applicantForm.work_experience.forEach((value) => {
             fd.append("work_experience[]", JSON.stringify({
@@ -125,20 +125,16 @@ export default function AddApplicantsSection() {
         });
 
         try {
-            await store.dispatch(store_applicant_thunk(fd));
-            await store.dispatch(get_applicant_thunk())
-            setOpen(false)
-            message.success('Application has been submitted successfully')
-            // const result = await store.dispatch(get_applicant_thunk());
-            // if (fd.status === 200) {
-            //     // message.success('Application has been submitted successfully');
-            // } else {
-            //     setError(fd.response.data.errors);
-            //     // message.error('Failed to submit Application');
-            //     console.log('resultsss', fd.response);
-            // }
+            const result = await store.dispatch(store_applicant_thunk(fd));
+
+            if (result.status === 200) {
+                message.success('Application has been submitted successfully');
+            } else {
+                setError(result.response.data.errors);
+                message.error('Failed to submit Application');
+            }
         } catch (error) {
-            message.error('Failed to submit application');
+            // message.error('Failed to submit application');
             console.error(error);
         } finally {
             setLoading(false);
@@ -223,7 +219,7 @@ export default function AddApplicantsSection() {
                 title=" "
                 // centered
                 open={open}
-                onOk={(e) => submitApplicant(e)}
+                onOk={submitApplicant}
                 onCancel={() => setOpen(false)}
                 confirmLoading={loading}
                 width={1500}

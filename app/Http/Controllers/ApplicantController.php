@@ -157,7 +157,7 @@ class ApplicantController extends Controller
 
         // Send email with the URL as part of the data if it exists
         if ($url) {
-            Mail::to('hiring@empireonegroup.com')
+            Mail::to('eogs.quickly@gmail.com')
                 ->send(new NewApplication(
                     array_merge(
                         $request->all(),

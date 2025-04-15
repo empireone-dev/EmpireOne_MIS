@@ -89,7 +89,7 @@ export default function AddApplicantsSection() {
         fd.append('mname', applicantForm.mname ?? '');
         fd.append('lname', applicantForm.lname ?? '');
         fd.append('suffix', applicantForm.suffix ?? '');
-        fd.append('dob', applicantForm.dob ?? moment().format('YYYY-MM-DD'));
+        fd.append('dob', applicantForm.dob ?? '');
         fd.append('religion', applicantForm.religion ?? '');
         fd.append('email', applicantForm.email ?? '');
         fd.append('nationality', applicantForm.nationality ?? '');
@@ -321,7 +321,8 @@ export default function AddApplicantsSection() {
                                         onChange={(event) => data_handler(event)}
                                         // value={applicantForm.gender ?? ""}
                                         name="gender"
-                                        className="border p-2 rounded w-full"
+                                        className={`border p-2 rounded w-full ${error?.gender ? 'border-red-500' : ''}`}
+
                                     >
                                         <option className="" disabled selected>&nbsp; Gender</option>
                                         <option> Male</option>

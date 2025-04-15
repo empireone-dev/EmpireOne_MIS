@@ -313,7 +313,7 @@ export default function ApplicationFormSection() {
                         onChange={(event) => data_handler(event)}
                         // value={applicantForm.gender ?? ""}
                         name="gender"
-                        className="border p-2 rounded w-full"
+                        className={`border p-2 rounded w-full ${error?.gender ? 'border-red-500' : ''}`}
                       >
                         <option className="" disabled selected>&nbsp; Gender</option>
                         <option> Male</option>

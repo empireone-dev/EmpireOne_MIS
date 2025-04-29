@@ -18,6 +18,8 @@ import {
     PoweroffOutlined,
     SettingOutlined,
     CheckCircleFilled,
+    TeamOutlined,
+    QuestionOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
@@ -104,8 +106,8 @@ const AdminLayout = ({ children }) => {
             children: [
                 {
                     key: "guide_question",
-                    icon: <HolderOutlined />,
-                    label: "Guide Question",
+                    icon: <QuestionOutlined />,
+                    label: "Guide Questions",
                     onClick: () =>
                         router.visit("/admin/recruitment/guide_question"),
                 },
@@ -127,12 +129,44 @@ const AdminLayout = ({ children }) => {
                 // },
                 {
                     key: "applicant_records",
-                    icon: <HolderOutlined />,
+                    icon: <TeamOutlined />,
                     label: "Application Records",
                     onClick: () =>
                         router.visit(
                             "/admin/recruitment/applicant_records?page=1"
                         ),
+                    children: [
+                        {
+                            key: "pending",
+                            icon: <HolderOutlined />,
+                            label: "Pending",
+                            onClick: () => router.visit("/admin/recruitment/applicant_records"),
+                        },
+                        {
+                            key: "initial_phase",
+                            icon: <HolderOutlined />,
+                            label: "Initial Phase",
+                            onClick: () => router.visit("/admin/recruitment/applicant_records"),
+                        },
+                        {
+                            key: "final_phase",
+                            icon: <HolderOutlined />,
+                            label: "Final Phase",
+                            onClick: () => router.visit("/admin/recruitment/applicant_records"),
+                        },
+                        {
+                            key: "pooling",
+                            icon: <HolderOutlined />,
+                            label: "Pooling",
+                            onClick: () => router.visit("/admin/recruitment/applicant_records"),
+                        },
+                        {
+                            key: "shortlisted",
+                            icon: <HolderOutlined />,
+                            label: "Short Listed",
+                            onClick: () => router.visit("/admin/recruitment/applicant_records"),
+                        },
+                    ],
                 },
             ],
         },

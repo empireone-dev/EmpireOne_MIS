@@ -249,6 +249,13 @@ export default function ApplicantsTableSection() {
             dataIndex: "submitted",
             key: "submitted",
             // ...getColumnSearchProps("submitted"),
+            render: (_, record) => {
+                return (
+                    <div className="gap-1.5 flex">
+                        {moment(record.submitted).format("L")}
+                    </div>
+                );
+            },
         },
         {
             title: <div>

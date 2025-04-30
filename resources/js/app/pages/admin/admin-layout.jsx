@@ -137,6 +137,12 @@ const AdminLayout = ({ children }) => {
                         ),
                     children: [
                         {
+                            key: "applicant_recordss",
+                            icon: <HolderOutlined />,
+                            label: "All Records",
+                            onClick: () => router.visit("/admin/recruitment/applicant_records"),
+                        },
+                        {
                             key: "pending",
                             icon: <HolderOutlined />,
                             label: "Pending",

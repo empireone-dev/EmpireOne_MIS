@@ -131,46 +131,46 @@ const AdminLayout = ({ children }) => {
                     key: "applicant_records",
                     icon: <TeamOutlined />,
                     label: "Application Records",
-                    onClick: () =>
-                        router.visit(
-                            "/admin/recruitment/applicant_records?page=1"
-                        ),
+                    // onClick: () =>
+                    //     router.visit(
+                    //         "/admin/recruitment/applicant_records?page=1"
+                    //     ),
                     children: [
                         {
                             key: "applicant_recordss",
                             icon: <HolderOutlined />,
                             label: "All Records",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records"),
+                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1"),
                         },
                         {
                             key: "pending",
                             icon: <HolderOutlined />,
                             label: "Pending",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records"),
+                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Pending&site=null"),
                         },
                         {
                             key: "initial_phase",
                             icon: <HolderOutlined />,
                             label: "Initial Phase",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records"),
+                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null"),
                         },
                         {
                             key: "final_phase",
                             icon: <HolderOutlined />,
                             label: "Final Phase",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records"),
+                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null"),
                         },
                         {
                             key: "pooling",
                             icon: <HolderOutlined />,
                             label: "Pooling",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records"),
+                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Pooling&site=nul"),
                         },
                         {
                             key: "shortlisted",
                             icon: <HolderOutlined />,
                             label: "Short Listed",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records"),
+                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Shortlisted&site=null"),
                         },
                     ],
                 },

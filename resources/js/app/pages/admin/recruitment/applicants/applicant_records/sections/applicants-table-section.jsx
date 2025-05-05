@@ -276,6 +276,7 @@ export default function ApplicantsTableSection() {
                             { text: "Final Phase", value: "Final Phase" },
                             { text: "Passed", value: "Passed" },
                             { text: "Pooling", value: "Pooling" },
+                            { text: "Shortlisted", value: "Shortlisted" },
                             { text: "Failed", value: "Failed" },
                             { text: "Hired", value: "Hired" },
                             { text: "Regular", value: "Regular" },

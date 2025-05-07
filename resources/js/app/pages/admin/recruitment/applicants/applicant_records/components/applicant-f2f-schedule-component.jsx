@@ -63,7 +63,7 @@ export default function ApplicantF2fScheduleComponent({
                 <li className="bg-gray-300 h-0.5"></li>
                 <div className="flex justify-end mt-1.5">
                     <h1>
-                        <b>Status:</b> ({status})
+                        <b>Status:</b> ({data?.status})
                     </h1>
                 </div>
                 <form onSubmit={send_f2f_schedule} className="w-full h-full">
@@ -208,9 +208,8 @@ export default function ApplicantF2fScheduleComponent({
                     </div>
                     <button
                         type="submit"
-                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${
-                            loading ? "cursor-not-allowed opacity-75" : ""
-                        }`}
+                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
+                            }`}
                         onClick={send_f2f_schedule}
                         disabled={loading}
                     >

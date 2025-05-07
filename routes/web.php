@@ -37,6 +37,10 @@ Route::middleware('redirectBasedOnRole')->get('/login/change_password', function
     return Inertia::render('login/change_password/page');
 })->name('login.change_password.page');
 
+Route::get('/confirmation/{app_id}', function () {
+    return Inertia::render('confirmation/page');
+});
+
 Route::get('/online_application', function () {
     return Inertia::render('online_application/page');
 });

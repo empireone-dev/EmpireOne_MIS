@@ -31,9 +31,9 @@ class EmailController extends Controller
                     'intertime' => $request->ivtime,
                     'glink' => $request->meet_link,
                 ]);
-                Applicant::where('app_id', $data['app_id'])->update([
-                    'status' => 'Initial Phase'
-                ]);
+                // Applicant::where('app_id', $data['app_id'])->update([
+                //     'status' => 'Initial Phase'
+                // ]);
             } else {
                 Mail::to($request->email)->send(new FinalvEmail($data));
                 FinalRate::create([
@@ -52,9 +52,9 @@ class EmailController extends Controller
                     'interdate' => $request->iffdate,
                     'intertime' => $request->ifftime,
                 ]);
-                Applicant::where('app_id', $data['app_id'])->update([
-                    'status' => 'Initial Phase'
-                ]);
+                // Applicant::where('app_id', $data['app_id'])->update([
+                //     'status' => 'Initial Phase'
+                // ]);
             } else if ($request->phase_status == 'physical_contract_signing') {
                 Mail::to($request->email)->send(new ContractPhysical($data));
             } else if ($request->phase_status == 'virtual_contract_signing') {

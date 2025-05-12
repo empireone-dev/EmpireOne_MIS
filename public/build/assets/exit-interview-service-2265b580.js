@@ -1,1 +1,0 @@
-import{f as s}from"./app-1e737b1f.js";async function e(t){return(await s.post("/api/exit_int",t)).data}export{e as s};

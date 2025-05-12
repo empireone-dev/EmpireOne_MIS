@@ -42,8 +42,8 @@ export default function DeclinedSection() {
                 <XMarkIcon className="h-5 w-5 inline-block text-white" />
                 No
             </button>
-            <div>
-                <Modal open={isModalOpen} setOpen={setIsModalOpen} width="w-1/4">
+            <div className=''>
+                <Modal open={isModalOpen} setOpen={setIsModalOpen} width="w-20 mx-96">
                     <h2 className="text-xl font-semibold mb-4">
                         Kindly provide your reason for declining the interview invitation.
                     </h2>
@@ -53,24 +53,25 @@ export default function DeclinedSection() {
                                 // onChange={(event) => data_handler(event)}
                                 // value={applicantForm.fname ?? ""}
                                 // required={error?.fname ? true : false}
-                                className='w-full h-20 mb-4'
+                                className='w-full h-20 mb-'
                                 name="fname"
                                 label="First Name"
                                 type="text"
+                                placeholder='Your reason..'
                             />
                         </div>
-                        <div className="flex w-full gap-5">
+                        <div className="flex w-full gap-2 items-center justify-end mt-4">
                             <button
                                 type="button"
                                 onClick={handleClose}
-                                className="bg-blue-400 p-2 w-full rounded-md text-white hover:bg-blue-300"
+                                className="p-2 px-4 rounded-md hover:text-blue-400"
                             >
                                 Cancel
                             </button>
                             <button
                                 disabled={loading}
                                 type="submit"
-                                className="bg-green-400 p-2 w-full rounded-md text-white hover:bg-green-300"
+                                className="bg-blue-500 p-2 px-4 rounded-md text-white hover:bg-blue-400"
                             >
 
                                 {

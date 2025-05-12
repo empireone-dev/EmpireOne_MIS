@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ConfirmationInitialPhysical;
 use App\Mail\NewApplication;
 use App\Models\Applicant;
 use App\Models\CVFile;
@@ -253,5 +254,38 @@ class ApplicantController extends Controller
         return response()->json([
             'data' => 'success'
         ], 200);
+    }
+
+
+    public function update_applicant_after_confirmation_status(Request $request, $app_id)
+    {
+
+        $applicant = Applicant::where('app_id', $app_id)->first();
+
+        if (!$applicant) {
+            return response()->json([
+                'message' => 'Applicant not found.',
+            ], 404);
+        }
+
+        $applicant->update([
+            'status' => $request->status,
+        ]);
+
+        $data = [
+            'fname' => $applicant->fname,
+            'lname' => $applicant->lname,
+            'status' => $request->status,
+            'app_id' => $applicant->app_id,
+            'iffdate' => $request->iffdate,
+            'ifftime' => $request->ifftime,
+        ];
+
+        Mail::to('quicklydeguzman@gmail.com')->send(new ConfirmationInitialPhysical($data));
+
+        return response()->json([
+            'message' => 'Applicant status updated successfully.',
+            'app_id' => $applicant->app_id,
+        ]);
     }
 }

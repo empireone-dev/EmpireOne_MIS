@@ -11,6 +11,7 @@ import { router } from "@inertiajs/react";
 import AddApplicantsSection from "./add-applicants-section";
 import ApplicantMenuSection from "./applicant-menu-section";
 import ApplicantSearchSection from "./applicant-search-section";
+import CreateApplicantSection from "./create-applicant-section";
 
 export default function ApplicantsTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -410,7 +411,7 @@ export default function ApplicantsTableSection() {
                     <ApplicantSearchSection />
                 </div>
                 <div className="flex justify-end items-center mr-5">
-                    <AddApplicantsSection />
+                    <CreateApplicantSection />
                 </div>
             </div>
 

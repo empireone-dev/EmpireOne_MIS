@@ -192,7 +192,7 @@ export default function CreateApplicantSection() {
                         Personal Information
                     </h1>
 
-                    <div className="flex gap-3">
+                    <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
                             <Input
                                 register={{
@@ -253,7 +253,7 @@ export default function CreateApplicantSection() {
                         </div>
                     </div>
 
-                    <div className="flex gap-3">
+                    <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
                             <Select
                                 register={{
@@ -283,7 +283,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
                             <Input
                                 register={{
@@ -312,7 +312,7 @@ export default function CreateApplicantSection() {
                         </div>
                     </div>
 
-                    <div className="flex gap-3">
+                    <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
                             <Select
                                 register={{
@@ -358,7 +358,7 @@ export default function CreateApplicantSection() {
                         </div>
                     </div>
 
-                    <div className="flex gap-3">
+                    <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
                             <Input
                                 register={{
@@ -387,7 +387,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
                             <Select
                                 register={{
@@ -458,7 +458,7 @@ export default function CreateApplicantSection() {
                     <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                         Address Information
                     </h1>
-                    <div className="flex gap-3">
+                    <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
                             <Select
                                 register={{
@@ -517,7 +517,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
                             <Select
                                 register={{
@@ -552,7 +552,7 @@ export default function CreateApplicantSection() {
                     <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                         Government ID Information
                     </h1>
-                    <div className="flex gap-3">
+                    <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
                             <Input
                                 register={{
@@ -581,7 +581,7 @@ export default function CreateApplicantSection() {
                         </div>
                     </div>
 
-                    <div className="flex gap-3">
+                    <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
                             <Input
                                 register={{
@@ -623,13 +623,15 @@ export default function CreateApplicantSection() {
                                     setHasExperience(e.target.checked)
                                 }
                             />
-                            <button
-                                type="button"
-                                onClick={() => append({ name: "" })}
-                                className="bg-blue-600 text-white px-4 flex gap-2 py-2 rounded"
-                            >
-                                <PlusIcon className="h-6" /> Experience
-                            </button>
+                            {hasExperience && (
+                                <button
+                                    type="button"
+                                    onClick={() => append({ name: "" })}
+                                    className="bg-blue-600 text-white px-4 flex gap-2 py-2 rounded"
+                                >
+                                    <PlusIcon className="h-6" /> Experience
+                                </button>
+                            )}
                         </div>
                         {hasExperience && (
                             <div className="flex gap-3 flex-col">
@@ -739,7 +741,7 @@ export default function CreateApplicantSection() {
                     <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                         Emergency Contact Information
                     </h1>
-                    <div className="flex gap-3">
+                    <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
                             <Input
                                 register={{
@@ -768,7 +770,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                     </div>
-                    <div className="flex gap-3">
+                    <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
                             <Input
                                 register={{

@@ -510,7 +510,6 @@ export default function AddApplicantsSection() {
                         <div className="flex flex-col  w-1/2">
                             <Select
                                 onChange={(event) => data_handler(event)}
-                                // value={applicantForm.barangay ?? ""}
                                 options={newBarangay.map(res => ({
                                     label: res.brgy_name,
                                     value: res.brgy_name,

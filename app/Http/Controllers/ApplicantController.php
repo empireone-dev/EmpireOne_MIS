@@ -75,107 +75,90 @@ class ApplicantController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'courset' => 'nullable',
-            'eaddress' => 'nullable',
-            'dob' => 'required',
-            'email' => 'required|email|unique:applicant,email',
-            'ename' => 'nullable',
-            'ephone' => 'nullable',
-            'ffname' => 'nullable',
-            'fname' => 'required',
-            'gender' => 'required',
-            'lname' => 'required',
-            'lot' => 'nullable',
-            'marital' => 'nullable',
-            'mmname' => 'nullable',
-            'mname' => 'required',
-            'nationality' => 'nullable',
-            'pagibig' => 'nullable',
-            'philh' => 'nullable',
-            'phone' => 'required',
-            'relationship' => 'nullable',
-            'religion' => 'nullable',
-            'sss' => 'nullable',
-            'status' => 'nullable',
-            'tin' => 'nullable',
-            'site' => 'required',
-            'uniqueAppId' => 'nullable',
-            'work_experience' => 'nullable',
-        ]);
-
-
-
+        // Prepare full address
         $data = $request->all();
-        $data['caddress'] = $request->lot . ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province;
+        $data['caddress'] = trim("{$request->lot} {$request->brgy} {$request->city} {$request->province}");
 
+        // Create applicant record
         $applicant = Applicant::create($data);
-        $site = ['site'];
 
-        $date = date("y-m-d");
-        $count = Applicant::whereDate('submitted', $date)->count();
-        $count_number = ($count >= 10) ? $count : '0' . ($count);
-        $date_unique = date("ymd") . $count_number;
+        // Generate unique application ID
+        $today = date('Y-m-d');
+        $count = Applicant::whereDate('submitted', $today)->count();
+        $countNumber = $count >= 10 ? $count : '0' . $count;
+        $dateUnique = date('ymd') . $countNumber;
+
+        // Update applicant with app_id and status
         $applicant->update([
-            'app_id' => $date_unique,
+            'app_id' => $dateUnique,
             'status' => 'Pending',
         ]);
 
-        if (!is_array($request->work_experience)) {
-            // If work_experience is not an array, try to decode it as JSON
-            $workExperience = json_decode($request->work_experience, true);
-        } else {
-            $workExperience = $request->work_experience;
-        }
-
-        if (is_array($workExperience) && count($workExperience) !== 0) {
-            foreach ($workExperience as $jsonValue) {
-                // Decode the JSON string to an associative array
-                $value = json_decode($jsonValue, true);
-
-                // Check if decoding was successful
-                if (is_array($value)) {
+        // Save work experience records
+        if (is_array($request->work_experience)) {
+            foreach ($request->work_experience as $experience) {
+                if (is_array($experience)) {
                     WorkingExperience::create([
-                        'app_id' => $date_unique,
-                        'company' => $value['company'],
-                        'end_at' => $value['end_at'],
-                        'position' => $value['position'],
-                        'started_at' => $value['started_at'],
+                        'app_id'    => $dateUnique,
+                        'company'   => $experience['company'] ?? null,
+                        'position'  => $experience['position'] ?? null,
+                        'started_at' => $experience['started_at'] ?? null,
+                        'end_at'    => $experience['end_at'] ?? null,
                     ]);
                 }
             }
         }
 
-        $url = null; // Initialize URL variable
-        if ($request->hasFile('files')) {
-            $path = $request->file('files')->store(date("Y"), 's3');
-            $url = Storage::disk('s3')->url($path);
+        // Upload base64 files to S3 and store URLs
+        $base64Files = $request->input('files', []);
+        $uploadedFiles = [];
+
+        foreach ($base64Files as $base64) {
+            if (!preg_match('/^data:(.*?);base64,/', $base64, $matches)) {
+                return response()->json(['error' => 'Invalid base64 file format'], 400);
+            }
+
+            $mimeType = $matches[1];
+            $extension = explode('/', $mimeType)[1] ?? 'bin'; // fallback to bin if missing
+
+            $fileData = base64_decode(substr($base64, strpos($base64, ',') + 1));
+            if ($fileData === false) {
+                return response()->json(['error' => 'Base64 decode failed'], 400);
+            }
+
+            $filename = date('Y') . '/' . $dateUnique . '_' . uniqid() . '.' . $extension;
+            Storage::disk('s3')->put($filename, $fileData);
+            $url = Storage::disk('s3')->url($filename);
+
+            $uploadedFiles[] = $url;
+
+            // Save file record
             CVFile::create([
-                'app_id' => $date_unique,
-                'file' => $url,
+                'app_id' => $dateUnique,
+                'file'   => $url,
             ]);
         }
 
-        // Send email with the URL as part of the data if it exists
-        if ($url) {
-            Mail::to('eogs.quickly@gmail.com')
-                ->send(new NewApplication(
-                    array_merge(
-                        $request->all(),
-                        ['submitted' => now()->format('L')]
-                    ),
-                    $url
-                ));
-        }
+        // Send notification email if files were uploaded
+        $fileUrl = $uploadedFiles[0] ?? null;
 
+        if ($fileUrl) {
+            Mail::to('eogs.quickly@gmail.com')->send(new NewApplication(
+                array_merge(
+                    $request->all(),
+                    ['submitted' => now()->format('Y-m-d')]
+                ),
+                $fileUrl
+            ));
+        }
         return response()->json([
-            'count' => $count,
-            'date' => $date,
+            'count'  => $count,
+            'date'   => $today,
             'status' => 200,
-            'site' => $site,
-            'data' => 'success',
+            'data'   => 'success',
         ], 200);
     }
+
 
     public function show($app_id)
     {

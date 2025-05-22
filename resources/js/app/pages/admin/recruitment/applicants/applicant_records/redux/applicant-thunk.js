@@ -13,11 +13,6 @@ export function get_applicant_thunk() {
 export function store_applicant_thunk(fd) {
   return async function (dispatch, getState) {
     const result = await store_applicant_service(fd)
-    if (result.status == 200) {
-      dispatch(applicantSlice.actions.setApplicantForm({
-        work_experience: []
-      }));
-    }
     return result
   };
 }

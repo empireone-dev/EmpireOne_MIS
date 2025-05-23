@@ -112,6 +112,7 @@ export default function CreateApplicantSection() {
         // },
     };
     const onSubmit = async (data) => {
+        // data.prevent.defaultValues
         console.log("Form Submitted:");
         try {
             const result = await store.dispatch(
@@ -123,7 +124,7 @@ export default function CreateApplicantSection() {
             );
             reset();
             setFiles([]);
-            setOpen(false);
+            // setOpen(false);
         } catch (error) { }
         // reset(); // optional: reset the form after submit
     };
@@ -558,10 +559,8 @@ export default function CreateApplicantSection() {
                             <Input
                                 register={{
                                     ...register("sss", {
-                                        required: "SSS is required",
                                     }),
                                 }}
-                                errorMessage={errors?.sss?.message}
                                 name="sss"
                                 label="SSS"
                                 type="number"
@@ -571,10 +570,8 @@ export default function CreateApplicantSection() {
                             <Input
                                 register={{
                                     ...register("pagibig", {
-                                        required: "Pagibig is required",
                                     }),
                                 }}
-                                errorMessage={errors?.pagibig?.message}
                                 name="pagibig"
                                 label="Pagibig"
                                 type="number"
@@ -587,10 +584,8 @@ export default function CreateApplicantSection() {
                             <Input
                                 register={{
                                     ...register("tin", {
-                                        required: "Tin is required",
                                     }),
                                 }}
-                                errorMessage={errors?.tin?.message}
                                 name="tin"
                                 label="Tin"
                                 type="number"
@@ -600,10 +595,8 @@ export default function CreateApplicantSection() {
                             <Input
                                 register={{
                                     ...register("philh", {
-                                        required: "Philhealth No. is required",
                                     }),
                                 }}
-                                errorMessage={errors?.philh?.message}
                                 name="philh"
                                 label="Philhealth No."
                                 type="number"

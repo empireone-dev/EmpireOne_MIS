@@ -123,7 +123,8 @@ export default function CreateApplicantSection() {
             );
             reset();
             setFiles([]);
-        } catch (error) {}
+            setOpen(false);
+        } catch (error) { }
         // reset(); // optional: reset the form after submit
     };
 
@@ -369,7 +370,7 @@ export default function CreateApplicantSection() {
                                 }}
                                 errorMessage={errors?.mmname?.message}
                                 name="mmname"
-                                label="Mothers Maiden Name"
+                                label="Mother's maiden name"
                                 type="text"
                             />
                         </div>
@@ -382,7 +383,7 @@ export default function CreateApplicantSection() {
                                 }}
                                 errorMessage={errors?.ffname?.message}
                                 name="ffname"
-                                label="Fathers Nullname"
+                                label="Father's fullname"
                                 type="text"
                             />
                         </div>
@@ -437,7 +438,7 @@ export default function CreateApplicantSection() {
                                         value: "Doctoral Degree",
                                     },
                                 ]}
-                                label="Marital Status"
+                                label="Highest Educational Attainment"
                                 name="educ"
                             />
                         </div>
@@ -818,7 +819,7 @@ export default function CreateApplicantSection() {
                             type="submit"
                             className="bg-blue-600 text-white px-4 py-2 rounded"
                         >
-                            {isSubmitting ? "Loading..." : "Submit"}
+                            {isSubmitting ? "Submitting..." : "Submit"}
                         </button>
                     </div>
                 </form>

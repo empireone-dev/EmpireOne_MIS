@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\ConfirmationInitialPhysical;
+use App\Mail\GreetingsApplication;
 use App\Mail\NewApplication;
 use App\Models\Applicant;
 use App\Models\CVFile;
@@ -151,6 +152,13 @@ class ApplicantController extends Controller
                 $fileUrl
             ));
         }
+
+        Mail::to($request->email)->send(new GreetingsApplication(array_merge(
+            $request->all(),
+            // ['id' => $jo->id],
+        )));
+
+
         return response()->json([
             'count'  => $count,
             'date'   => $today,

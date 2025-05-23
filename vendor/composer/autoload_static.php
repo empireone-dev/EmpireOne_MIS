@@ -330,13 +330,13 @@ class ComposerStaticInit44d8185187ad62ec42dc2fe932715ec5
         ),
         'Spatie\\LaravelIgnition\\' => 
         array (
-            0 => __DIR__ . '/..' . '/spatie/laravel-ignition/src',
-            1 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/laravel-ignition',
+            0 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/laravel-ignition',
+            1 => __DIR__ . '/..' . '/spatie/laravel-ignition/src',
         ),
         'Spatie\\Ignition\\' => 
         array (
-            0 => __DIR__ . '/..' . '/spatie/ignition/src',
-            1 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/ignition',
+            0 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/ignition',
+            1 => __DIR__ . '/..' . '/spatie/ignition/src',
         ),
         'Spatie\\FlareClient\\' => 
         array (
@@ -653,6 +653,7 @@ class ComposerStaticInit44d8185187ad62ec42dc2fe932715ec5
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\Auth\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Auth/LoginRequest.php',
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
+        'App\\Mail\\ConfirmationInitialPhysical' => __DIR__ . '/../..' . '/app/Mail/ConfirmationInitialPhysical.php',
         'App\\Mail\\ContractPhysical' => __DIR__ . '/../..' . '/app/Mail/ContractPhysical.php',
         'App\\Mail\\ContractVirtual' => __DIR__ . '/../..' . '/app/Mail/ContractVirtual.php',
         'App\\Mail\\DeclinedContract' => __DIR__ . '/../..' . '/app/Mail/DeclinedContract.php',
@@ -662,6 +663,7 @@ class ComposerStaticInit44d8185187ad62ec42dc2fe932715ec5
         'App\\Mail\\InitialEmail' => __DIR__ . '/../..' . '/app/Mail/InitialEmail.php',
         'App\\Mail\\InitialvEmail' => __DIR__ . '/../..' . '/app/Mail/InitialvEmail.php',
         'App\\Mail\\JobOffer' => __DIR__ . '/../..' . '/app/Mail/JobOffer.php',
+        'App\\Mail\\NewApplication' => __DIR__ . '/../..' . '/app/Mail/NewApplication.php',
         'App\\Mail\\NewJobOffer' => __DIR__ . '/../..' . '/app/Mail/NewJobOffer.php',
         'App\\Mail\\OnboardingAck' => __DIR__ . '/../..' . '/app/Mail/OnboardingAck.php',
         'App\\Mail\\PreEmploymentEmail' => __DIR__ . '/../..' . '/app/Mail/PreEmploymentEmail.php',

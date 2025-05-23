@@ -29,20 +29,24 @@ class InitialRateController extends Controller
             'interviewer' => 'nullable',
             'conducted' => 'nullable',
         ]);
-        foreach ($request->guideqss as  $value) {
+
+        
+        foreach ($request->guideqss as $item) {
             GuideQuestions::create([
                 'int_id' => $request->int_id,
                 'app_id' => $request->app_id,
-                'guideqs' => $value
+                'guideqs' => $item['question'],
+                'answer' => $item['answer'],
             ]);
         }
 
+
         if ($request->oavg < 3) {
-            Applicant::where('app_id',$request->app_id)->update([
+            Applicant::where('app_id', $request->app_id)->update([
                 'status' => 'Failed'
             ]);
         } else {
-            Applicant::where('app_id',$request->app_id)->update([
+            Applicant::where('app_id', $request->app_id)->update([
                 'status' => 'Final Phase'
             ]);
         }

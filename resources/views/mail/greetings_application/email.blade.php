@@ -57,7 +57,7 @@
 
             <p>Dear <b>{{$data['fname']}} {{$data['lname']}}</b>,</p>
 
-            <p>Thank you for applying for the [Job Title] position at EmpireOne BPO Solutions Inc.. We appreciate your interest in joining our team.</p>
+            <p>Thank you for applying at EmpireOne BPO Solutions Inc.. We appreciate your interest in joining our team.</p>
 
             <p> Your application has been received and is currently under review. We kindly ask you to keep an eye on your email in the coming days, as we will be sending any updates or next steps regarding your application through this channel.</p>
 
@@ -69,20 +69,20 @@
 
             <p>Warm regards,</p>
             <p>HR Team</p>
-            <p><strong>EmpireOne BPO Solutions Inc.</strong></p>
+            <p><strong>EmpireOne BPO Solutions Inc.</strong></p><br>
 
-            <p>visit us on our social media accounts</p>
-            <p style="text-align: center; margin-top: 20px;">
-                <a href="https://www.facebook.com/yourpage" style="margin: 0 10px;">
+            <p>Visit us on our social media accounts:</p>
+            <p >
+                <a href="https://www.facebook.com/profile.php?id=100089467625882" style="margin: 0 10px;">
                     <img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook" style="width: 24px; height: 24px;">
                 </a>
-                <a href="https://www.instagram.com/yourprofile" style="margin: 0 10px;">
+                <a href="https://www.instagram.com/empireonebposolutions/" style="margin: 0 10px;">
                     <img src="https://cdn-icons-png.flaticon.com/24/2111/2111463.png" alt="Instagram" style="width: 24px; height: 24px;">
                 </a>
-                <a href="https://www.tiktok.com/@yourprofile" style="margin: 0 10px;">
+                <a href="https://www.tiktok.com/@empireonebposolutions" style="margin: 0 10px;">
                     <img src="https://cdn-icons-png.flaticon.com/24/3046/3046122.png" alt="TikTok" style="width: 24px; height: 24px;">
                 </a>
-            </p>
+            </p><br>
             <img src="https://empireone-hris.com/images/SCemp2.jpg" alt="">
         </div>
     </div>

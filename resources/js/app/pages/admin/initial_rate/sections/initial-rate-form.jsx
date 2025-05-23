@@ -33,6 +33,7 @@ export default function InitialRateForm({ data }) {
                         parseInt(initialRate.pscore ?? 0) +
                         parseInt(initialRate.cscore ?? 0)) /
                     3,
+                interdata: applicant.inter
                 //tier condition
             })
         );
@@ -97,10 +98,10 @@ export default function InitialRateForm({ data }) {
                         />
                     </div>
                 </div>
+                <GuideQuestionSection />
                 <TeamworkSection />
                 <ProblemSolvingSection />
                 <CustomerServiceSection />
-                <GuideQuestionSection />
                 <div className="flex flex-col w-full mt-3">
                     <label htmlFor="">
                         <b>OVERALL RESULT</b>

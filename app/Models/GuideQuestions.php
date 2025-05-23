@@ -14,5 +14,6 @@ class GuideQuestions extends Model
         'int_id',
         'app_id',
         'guideqs',
+        'answer',
     ];
 }

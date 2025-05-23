@@ -14,9 +14,11 @@ export default function InitialResultSection() {
         (state) => state.final_rate
     );
     const app_id = window.location.pathname.split('/')[3]
-    useEffect(()=>{
+    useEffect(() => {
         store.dispatch(get_applicant_by_app_id_thunk(app_id))
-    },[])
+    }, [])
+
+    console.log('applicant', applicant)
     return (
         <div className='font-sans'>
             <div className='flex text-xl items-center justify-center mb-1'>
@@ -33,17 +35,17 @@ export default function InitialResultSection() {
                         <input type="text" placeholder="" value={`${applicant?.fname} ${applicant?.lname}`} className="border p-2 rounded w-full" readOnly />
                     </div>
                 </div>
-                <TeamworkInitialResultSection data={applicant}/>
-                <ProblemSolvingInitialResultSection data={applicant}/>
+                <TeamworkInitialResultSection data={applicant} />
+                <ProblemSolvingInitialResultSection data={applicant} />
                 <CustomerServiceInitialResultSection data={applicant} />
-                <GuideQuestionInitialSection />
+                <GuideQuestionInitialSection data={applicant} />
                 <div className='flex flex-col w-full mt-3'>
                     <label htmlFor=""><b>OVERALL RESULT</b></label>
-                    <input type="number" placeholder="" value={applicant?.initial?.oavg}  className="border p-2 rounded w-full mt-1" readOnly />
+                    <input type="number" placeholder="" value={applicant?.initial?.oavg} className="border p-2 rounded w-full mt-1" readOnly />
                 </div>
                 <div className='flex flex-col w-full mt-5'>
                     <label htmlFor=""><b>INITIAL PHASE INTERVIEWER</b></label>
-                    <input type="text" placeholder="" value={applicant?.initial?.interviewer}  className="border p-2 rounded w-full mt-1" readOnly />
+                    <input type="text" placeholder="" value={applicant?.initial?.interviewer} className="border p-2 rounded w-full mt-1" readOnly />
                 </div>
                 <div className='mt-5'>
                     <label><b>OVERALL COMMENT</b></label>

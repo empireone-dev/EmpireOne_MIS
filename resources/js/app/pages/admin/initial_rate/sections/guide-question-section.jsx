@@ -2,6 +2,7 @@ import React from "react";
 import InitialGuideQuestionComponent from "../components/initial-guide-question-component";
 import { useDispatch, useSelector } from "react-redux";
 import { setInitialRate } from "../redux/initial-rate-state";
+import { QuestionCircleFilled, QuestionCircleOutlined } from "@ant-design/icons";
 
 export default function GuideQuestionSection() {
     const { guideqs } = useSelector((state) => state.guideqs);
@@ -12,37 +13,50 @@ export default function GuideQuestionSection() {
             dispatch(
                 setInitialRate({
                     ...initialRate,
-                    guideqss: [...initialRate.guideqss, e.target.value],
+                    guideqss: [
+                        ...initialRate.guideqss,
+                        { question: e.target.value, answer: '' }
+                    ],
                 })
             );
         } else {
-            const ir = initialRate.guideqss.filter(
-                (res) => res !== e.target.value
+            const updated = initialRate.guideqss.filter(
+                (res) => res.question !== e.target.value
             );
-            dispatch(
-                setInitialRate({
-                    ...initialRate,
-                    guideqss: ir,
-                })
-            );
+            dispatch(setInitialRate({ ...initialRate, guideqss: updated }));
         }
     }
+
+    function handleAnswerChange(question, answer) {
+        const updated = initialRate.guideqss.map((res) =>
+            res.question === question ? { ...res, answer } : res
+        );
+        dispatch(setInitialRate({ ...initialRate, guideqss: updated }));
+    }
+
     return (
         <div className="mt-3">
-            <h1>
-                <b>Guide questions asked during the interview:</b>
-            </h1>
+            <div className="flex items-center mt-6 mb-2">
+                <QuestionCircleOutlined className="h-6 mb-2" />
+                <h1 className="text-2xl ml-1 font-bold">Guide questions asked during the interview:</h1>
+            </div>
             <div className="flex flex-1 gap-24 mt-2">
                 <div>
                     {guideqs.map((res, i) => {
+                        const existing = initialRate.guideqss.find(
+                            (g) => g.question === res.guideqs
+                        );
                         return (
                             <InitialGuideQuestionComponent
-                            key={i}
+                                key={i}
                                 onChange={handleRate}
+                                onAnswerChange={handleAnswerChange}
                                 question={res.guideqs}
+                                answer={existing?.answer || ''}
                             />
                         );
                     })}
+
                 </div>
             </div>
         </div>

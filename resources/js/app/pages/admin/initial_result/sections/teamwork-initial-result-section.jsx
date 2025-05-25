@@ -7,7 +7,7 @@ export default function TeamworkInitialResultSection({data}) {
   
     return (
         <div>
-            <div className="flex items-center mt-6 mb-2">
+            <div className="flex items-center mt-8 mb-2">
                 <UserGroupIcon className="h-6" />
                 <h1 className="text-2xl ml-1 font-bold">TEAMWORK/ INTERPERSONAL SKILLS</h1>
             </div>

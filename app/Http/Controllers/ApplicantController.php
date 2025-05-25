@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ConfirmationInitialPhysical;
 use App\Mail\GreetingsApplication;
 use App\Mail\NewApplication;
+use App\Mail\PoolingEmail;
 use App\Models\Applicant;
 use App\Models\CVFile;
 use App\Models\Employee;
@@ -211,7 +212,7 @@ class ApplicantController extends Controller
 
     public function update_applicant_status(Request $request, $id)
     {
-        // Update Applicant
+        // Find the applicant
         $applicant = Applicant::find($id);
 
         if (!$applicant) {
@@ -220,10 +221,23 @@ class ApplicantController extends Controller
             ], 404);
         }
 
+        // Send email only if status is "Pooling"
+        if ($request->status === 'Pooling') {
+            Mail::to($request->email)->send(new PoolingEmail(array_merge(
+                $request->all()
+            )));
+        }
+
+        // Update applicant status
         $applicant->update([
             'status' => $request->status,
         ]);
+
+        return response()->json([
+            'message' => 'Applicant status updated successfully.',
+        ]);
     }
+
 
 
 

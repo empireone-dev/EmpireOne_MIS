@@ -58,7 +58,7 @@ class ContractPhysical extends Mailable
     public function build()
     {
         return $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('Physical Contract Signing - EmpireOne BPO Solutions Inc')
+            ->subject('EmpireOne BPO Solutions Inc - Physical Contract Signing')
             ->markdown('mail.contract_sign.email')
             ->with($this->data);
     }

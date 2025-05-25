@@ -164,7 +164,7 @@ const AdminLayout = ({ children }) => {
                             key: "pooling",
                             icon: <HolderOutlined />,
                             label: "Pooling",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Pooling&site=nul"),
+                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Pooling&site=null"),
                         },
                         {
                             key: "shortlisted",

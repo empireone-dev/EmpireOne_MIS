@@ -58,7 +58,7 @@ class DeclinedContract extends Mailable
     public function build()
     {
         return $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('Declined Contract - EmpireOne BPO Solutions Inc')
+            ->subject('EmpireOne BPO Solutions Inc - Declined Contract')
             ->markdown('mail.declined_contract.email')
             ->with($this->data);
     }

@@ -38,7 +38,7 @@ class NewApplication extends Mailable
     public function build()
     {
         $email =  $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('New Applicant Submission Notification - EmpireOne BPO Solutions Inc')
+            ->subject('EmpireOne BPO Solutions Inc - New Applicant Submission Notification')
             ->markdown('mail.new_application.email')
             ->with($this->data);
 

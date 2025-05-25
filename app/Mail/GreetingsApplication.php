@@ -53,7 +53,7 @@ class GreetingsApplication extends Mailable
     public function build()
     {
         return $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('Greetings - EmpireOne BPO Solutions Inc')
+            ->subject('EmpireOne BPO Solutions Inc - Greetings')
             ->markdown('mail.greetings_application.email')
             ->with($this->data);
     }

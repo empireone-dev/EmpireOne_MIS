@@ -54,7 +54,7 @@ class InitialEmail extends Mailable
     public function build()
     {
         return $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('Initial Phase Interview Schedule - EmpireOne BPO Solutions Inc')
+            ->subject('EmpireOne BPO Solutions Inc - Initial Phase Interview Schedule')
             ->markdown('mail.initial.email')
             ->with($this->data);
     }

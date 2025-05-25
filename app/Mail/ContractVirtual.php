@@ -38,7 +38,7 @@ class ContractVirtual extends Mailable
     public function build()
     {
         $email = $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('Virtual Contract Signing - EmpireOne BPO Solutions Inc')
+            ->subject('EmpireOne BPO Solutions Inc - Virtual Contract Signing')
             ->markdown('mail.contract_sign_v.email')
             ->with($this->data);
 

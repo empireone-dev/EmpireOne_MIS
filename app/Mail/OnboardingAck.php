@@ -55,7 +55,7 @@ class OnboardingAck extends Mailable
     public function build()
     {
         return $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('Onboarding Acknowledgment - EmpireOne BPO Solutions Inc')
+            ->subject('EmpireOne BPO Solutions Inc - Onboarding Acknowledgment')
             ->markdown('mail.onboarding_ack.email')
             ->with($this->data);
     }

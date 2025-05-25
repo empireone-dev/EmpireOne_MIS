@@ -38,7 +38,7 @@ class ConfirmationInitialPhysical extends Mailable
     public function build()
     {
         $email =  $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('Confirmation for Initial Interview - EmpireOne BPO Solutions Inc')
+            ->subject('EmpireOne BPO Solutions Inc - Confirmation for Initial Interview')
             ->markdown('mail.confirm-initial.email')
             ->with($this->data);
 

@@ -53,7 +53,7 @@ class JobOffer extends Mailable
     public function build()
     {
         return $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('Job Offer - EmpireOne BPO Solutions Inc')
+            ->subject('EmpireOne BPO Solutions Inc - Job Offer')
             ->markdown('mail.jo.email')
             ->with($this->data);
     }

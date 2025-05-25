@@ -53,7 +53,7 @@ class ExitClearanceToDepartment extends Mailable
     public function build()
     {
         return $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('Exit Clearance - EmpireOne BPO Solutions Inc')
+            ->subject('EmpireOne BPO Solutions Inc - Exit Clearance')
             ->markdown('mail.exit_clearance_to_departments.email')
             ->with($this->data);
     }

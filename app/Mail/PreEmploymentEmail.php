@@ -53,7 +53,7 @@ class PreEmploymentEmail extends Mailable
     public function build()
     {
         return $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('Submission of Pre-Employment Requirements - EmpireOne BPO Solutions Inc')
+            ->subject('EmpireOne BPO Solutions Inc - Submission of Pre-Employment Requirements')
             ->markdown('mail.pre_employment.email')
             ->with($this->data);
     }

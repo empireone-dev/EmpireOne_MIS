@@ -74,4 +74,8 @@ class Applicant extends Model
     {
         return $this->hasOne(CVFile::class, "app_id", "app_id");
     }
+    public function guideqs(): HasMany
+    {
+        return $this->hasMany(GuideQuestions::class, "app_id", "app_id");
+    }
 }

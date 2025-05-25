@@ -37,8 +37,8 @@ export default function GuideQuestionSection() {
     return (
         <div className="mt-3">
             <div className="flex items-center mt-6 mb-2">
-                <QuestionCircleOutlined className="h-6 mb-2" />
-                <h1 className="text-2xl ml-1 font-bold">Guide questions asked during the interview:</h1>
+                <QuestionCircleOutlined className="h-6" />
+                <h1 className="text-2xl ml-1 font-bold">GUIDE QUESTIONS:</h1>
             </div>
             <div className="flex flex-1 gap-24 mt-2">
                 <div>

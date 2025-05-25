@@ -35,10 +35,10 @@ export default function InitialResultSection() {
                         <input type="text" placeholder="" value={`${applicant?.fname} ${applicant?.lname}`} className="border p-2 rounded w-full" readOnly />
                     </div>
                 </div>
+                <GuideQuestionInitialSection data={applicant} />
                 <TeamworkInitialResultSection data={applicant} />
                 <ProblemSolvingInitialResultSection data={applicant} />
                 <CustomerServiceInitialResultSection data={applicant} />
-                <GuideQuestionInitialSection data={applicant} />
                 <div className='flex flex-col w-full mt-3'>
                     <label htmlFor=""><b>OVERALL RESULT</b></label>
                     <input type="number" placeholder="" value={applicant?.initial?.oavg} className="border p-2 rounded w-full mt-1" readOnly />

@@ -37,8 +37,15 @@ Route::middleware('redirectBasedOnRole')->get('/login/change_password', function
     return Inertia::render('login/change_password/page');
 })->name('login.change_password.page');
 
-Route::get('/confirmation/{app_id}/{iffdate}/{ifftime}', function () {
-    return Inertia::render('confirmation/page');
+Route::get('/confirmation/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function ($app_id, $iffdate, $ifftime, $meet_link = null) {
+    $meetLink = $meet_link ? base64_decode($meet_link) : null;
+
+    return Inertia::render('confirmation/page', [
+        'appId' => $app_id,
+        'date' => $iffdate,
+        'time' => $ifftime,
+        'meetLink' => $meetLink,
+    ]);
 });
 
 Route::get('/online_application', function () {

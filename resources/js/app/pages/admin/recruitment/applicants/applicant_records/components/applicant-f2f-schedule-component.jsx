@@ -210,7 +210,6 @@ export default function ApplicantF2fScheduleComponent({
                         type="submit"
                         className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
                             }`}
-                        onClick={send_f2f_schedule}
                         disabled={loading}
                     >
                         {loading ? (

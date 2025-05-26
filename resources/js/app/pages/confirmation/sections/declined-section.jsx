@@ -4,6 +4,8 @@ import React from 'react'
 import { useState } from 'react';
 import Modal from '../../_components/modal';
 import Input from '../../_components/input';
+import store from '@/app/store/store';
+import { message } from 'antd';
 
 export default function DeclinedSection() {
     const [loading, setLoading] = useState(null);
@@ -11,22 +13,30 @@ export default function DeclinedSection() {
     const openModal = () => setIsModalOpen(true);
 
     const submitDecline = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        if (confirmed) {
+            message.info("You have already confirmed your attendance.");
+            return;
+        }
         setLoading(true);
-        // try {
-        //   await store.dispatch(
-        //     create_internet_plan_thunk({
-        //       ...form,
-        //     })
-        //   );
-        //   store.dispatch(get_internet_plan_thunk())
-        //   // message.success("Successfully Added!"); 
-        //   setIsModalOpen(false);
-        // } catch (error) {
-        //   message.error("Failed to add department. Please try again."); // Show error message
-        // } finally {
-        //   setLoading(false); // Always reset loading state
-        // }
+        try {
+            await store.dispatch(
+                update_applicant_after_confirmation_status_thunk({
+                    app_id: app_id,
+                    iffdate: iffdate,
+                    ifftime: ifftime,
+                    meet_link: meet_link,
+                    status: "Initial Phase",
+                })
+            );
+            setConfirmed(true);
+            message.success("Thank you for confirming your attendance!");
+            store.dispatch(get_applicant_thunk()); 
+        } catch (error) {
+            message.error("Failed to submit confirmation. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleClose = () => {

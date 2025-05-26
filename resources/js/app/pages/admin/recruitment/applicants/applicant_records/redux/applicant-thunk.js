@@ -1,4 +1,4 @@
-import { get_applicant_service, store_applicant_service, update_applicant_after_confirmation_status_service, update_applicant_service, update_applicant_status_service } from "@/app/pages/services/applicant-record-service";
+import { declined_attendance_service, get_applicant_service, store_applicant_service, update_applicant_after_confirmation_status_service, update_applicant_service, update_applicant_status_service } from "@/app/pages/services/applicant-record-service";
 import { applicantSlice } from "./applicant-slice";
 import sendiv_email_service, { sendiv_contract_email_service } from "@/app/pages/services/email-service";
 
@@ -57,4 +57,12 @@ export function update_applicant_after_confirmation_status_thunk(data) {
     // dispatch(departmentSlice.actions.setDepartments(result.data));
   };
 }
+
+export function declined_attendance_thunk(data) {
+  return async function (dispatch, getState) {
+    const res = await declined_attendance_service(data)
+    // dispatch(departmentSlice.actions.setDepartments(result.data));
+  };
+}
+
 

@@ -38,7 +38,7 @@ class ConfirmationInitialVirtual extends Mailable
     public function build()
     {
         $email =  $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('EmpireOne BPO Solutions Inc - Confirmation for Initial Interview')
+            ->subject('EmpireOne BPO Solutions Inc - Confirmation for Virtual Initial Interview')
             ->markdown('mail.confirm-vinitial.email')
             ->with($this->data);
 

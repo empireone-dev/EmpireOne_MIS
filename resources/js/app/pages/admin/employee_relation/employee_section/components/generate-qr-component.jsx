@@ -40,8 +40,7 @@ export default function GenerateQrComponent({ data, item }) {
                 <div className="flex w-full justify-center">
                     <div className="relative">
                         <QRCode
-                        onClick={()=>window.open(`/admin/file_201/${data?.applicant.app_id}`, "_blank")}
-                            value={data?.applicant?.app_id || ""}
+                            value={`${data?.applicant.fname} ${data?.applicant.lname}`}
                             size={256} // Adjust size here
                             level="H" // High error correction level
                             includeMargin={true}

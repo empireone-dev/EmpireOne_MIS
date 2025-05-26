@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ConfirmationInitialPhysical;
 use App\Mail\ConfirmationInitialVirtual;
+use App\Mail\DeclinedConfirmation;
 use App\Mail\GreetingsApplication;
 use App\Mail\NewApplication;
 use App\Mail\PoolingEmail;
@@ -304,36 +305,32 @@ class ApplicantController extends Controller
 
     public function declined_attendance(Request $request, $app_id)
     {
-
+        $request->validate([
+            'reason' => 'required|string|max:1000',
+        ]);
+    
         $applicant = Applicant::where('app_id', $app_id)->first();
-
+    
         if (!$applicant) {
             return response()->json([
                 'message' => 'Applicant not found.',
             ], 404);
         }
-
-        $applicant->update([
-            'status' => $request->status,
-        ]);
-
-        $decodedMeetLink = $request->meet_link ? base64_decode($request->meet_link) : null;
-
+    
         $data = [
+            'app_id' => $applicant->app_id,
             'fname' => $applicant->fname,
             'lname' => $applicant->lname,
-            'status' => $request->status,
-            'app_id' => $applicant->app_id,
-            'iffdate' => $request->iffdate,
-            'ifftime' => $request->ifftime,
-            'meet_link' => $decodedMeetLink,
+            'reason' => $request->reason,
         ];
-
-        Mail::to('quicklydeguzman@gmail.com')->send(new ConfirmationInitialVirtual($data));
-
+    
+        // Send email notification
+        Mail::to('quicklydeguzman@gmail.com')->send(new DeclinedConfirmation($data));
+    
         return response()->json([
-            'message' => 'Applicant status updated successfully.',
+            'message' => 'Applicant decline reason submitted successfully.',
             'app_id' => $applicant->app_id,
         ]);
     }
+    
 }

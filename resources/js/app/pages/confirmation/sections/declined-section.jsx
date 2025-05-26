@@ -1,97 +1,95 @@
-import { CloseOutlined, LoadingOutlined } from '@ant-design/icons'
-import { XMarkIcon } from '@heroicons/react/24/outline';
-import React from 'react'
-import { useState } from 'react';
-import Modal from '../../_components/modal';
-import Input from '../../_components/input';
-import store from '@/app/store/store';
-import { message } from 'antd';
+import store from "@/app/store/store";
+import { useState } from "react";
+import { declined_attendance_thunk, get_applicant_thunk } from "../../admin/recruitment/applicants/applicant_records/redux/applicant-thunk";
+import { message } from "antd";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+import Modal from "../../_components/modal";
 
-export default function DeclinedSection() {
-    const [loading, setLoading] = useState(null);
+export default function DeclinedSection({ confirmed, setConfirmed }) {
+    const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [reason, setReason] = useState('');
+    const app_id = window.location.pathname.split('/')[2];
+
     const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
 
     const submitDecline = async (e) => {
         e.preventDefault();
+
         if (confirmed) {
-            message.info("You have already confirmed your attendance.");
+            message.info('You have already confirmed your attendance.');
             return;
         }
+
+        if (!reason.trim()) {
+            message.error('Please provide a reason for declining.');
+            return;
+        }
+
         setLoading(true);
         try {
             await store.dispatch(
-                update_applicant_after_confirmation_status_thunk({
-                    app_id: app_id,
-                    iffdate: iffdate,
-                    ifftime: ifftime,
-                    meet_link: meet_link,
-                    status: "Initial Phase",
+                declined_attendance_thunk({
+                    app_id,
+                    reason,
                 })
             );
-            setConfirmed(true);
-            message.success("Thank you for confirming your attendance!");
-            store.dispatch(get_applicant_thunk()); 
-        } catch (error) {
-            message.error("Failed to submit confirmation. Please try again.");
+
+            store.dispatch(get_applicant_thunk());
+            setConfirmed(true); // Disable buttons and show confirmation
+            message.success('Your reason for declining has been submitted. Thank you.');
+            closeModal();
+        } catch {
+            message.error('Failed to submit your response. Please try again.');
         } finally {
             setLoading(false);
         }
     };
 
-    const handleClose = () => {
-        setIsModalOpen(false);
-    };
-
     return (
         <>
             <button
-                type='button'
+                type="button"
                 onClick={openModal}
-                className='bg-red-500 hover:bg-red-600 text-white p-2 w-36 rounded-md'>
-                <XMarkIcon className="h-5 w-5 inline-block text-white" />
+                disabled={confirmed}
+                className={`bg-red-500 hover:bg-red-600 text-white p-2 w-36 rounded-md ${confirmed ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+                <XMarkIcon className="h-5 w-5 inline-block text-white mr-1" />
                 No
             </button>
-            <div className=''>
-                <Modal open={isModalOpen} setOpen={setIsModalOpen} width="w-20 mx-96">
-                    <h2 className="text-xl font-semibold mb-4">
-                        Kindly provide your reason for declining the interview invitation.
-                    </h2>
-                    <form action="" onSubmit={submitDecline}>
-                        <div>
-                            <textarea
-                                // onChange={(event) => data_handler(event)}
-                                // value={applicantForm.fname ?? ""}
-                                // required={error?.fname ? true : false}
-                                className='w-full h-20 mb-'
-                                name="fname"
-                                label="First Name"
-                                type="text"
-                                placeholder='Your reason..'
-                            />
-                        </div>
-                        <div className="flex w-full gap-2 items-center justify-end mt-4">
-                            <button
-                                type="button"
-                                onClick={handleClose}
-                                className="p-2 px-4 rounded-md hover:text-blue-400"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                disabled={loading}
-                                type="submit"
-                                className="bg-blue-500 p-2 px-4 rounded-md text-white hover:bg-blue-400"
-                            >
 
-                                {
-                                    loading ? 'Loading...' : 'Submit'
-                                }
-                            </button>
-                        </div>
-                    </form>
-                </Modal>
-            </div>
+            <Modal open={isModalOpen} setOpen={setIsModalOpen} width="w-20 mx-96">
+                <h2 className="text-xl font-semibold mb-4">
+                    Kindly provide your reason for declining the interview invitation.
+                </h2>
+                <form onSubmit={submitDecline}>
+                    <textarea
+                        value={reason}
+                        name="reason"
+                        onChange={(e) => setReason(e.target.value)}
+                        required
+                        className="w-full h-24 p-2 border rounded-md resize-none"
+                        placeholder="Your reason..."
+                    />
+                    <div className="flex justify-end gap-2 mt-4">
+                        <button
+                            type="button"
+                            onClick={closeModal}
+                            className="p-2 px-4 rounded-md hover:text-blue-400"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="bg-blue-500 p-2 px-4 rounded-md text-white hover:bg-blue-400"
+                        >
+                            {loading ? 'Submitting...' : 'Submit'}
+                        </button>
+                    </div>
+                </form>
+            </Modal>
         </>
-    )
+    );
 }

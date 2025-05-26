@@ -33,3 +33,8 @@ export async function update_applicant_after_confirmation_status_service(data) {
     return res.data;
 }
 
+export async function declined_attendance_service(data) {
+    const res = await axios.put(`/api/declined_attendance/${data.app_id}`, data);
+    return res.data;
+}
+

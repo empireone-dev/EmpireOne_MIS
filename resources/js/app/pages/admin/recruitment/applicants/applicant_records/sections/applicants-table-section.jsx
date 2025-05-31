@@ -274,6 +274,7 @@ export default function ApplicantsTableSection() {
                         [
                             { text: "Pending", value: "Pending" },
                             { text: "Initial Phase", value: "Initial Phase" },
+                            { text: "For Final Phase", value: "For Final Phase" },
                             { text: "Final Phase", value: "Final Phase" },
                             { text: "Passed", value: "Passed" },
                             { text: "Pooling", value: "Pooling" },

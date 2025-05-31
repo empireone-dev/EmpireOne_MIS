@@ -47,7 +47,7 @@ class InitialRateController extends Controller
             ]);
         } else {
             Applicant::where('app_id', $request->app_id)->update([
-                'status' => 'Final Phase'
+                'status' => 'For Final Phase'
             ]);
         }
         // Find the record by its ID

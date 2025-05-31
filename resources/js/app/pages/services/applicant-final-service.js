@@ -18,3 +18,13 @@ export async function update_address_service(data) {
   return res.data;
 }
 
+export async function final_update_applicant_after_confirmation_status_service(data) {
+  const res = await axios.put(`/api/final_update_applicant_after_confirmation_status/${data.app_id}`, data);
+  return res.data;
+}
+
+export async function final_declined_attendance_service(data) {
+  const res = await axios.put(`/api/final_declined_attendance/${data.app_id}`, data);
+  return res.data;
+}
+

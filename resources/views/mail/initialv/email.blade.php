@@ -81,7 +81,32 @@
 
             <p>Warm regards,</p>
             <p>HR Team</p>
-            <p><strong>EmpireOne BPO Solutions Inc.</strong></p>
+            <p><strong>EmpireOne BPO Solutions Inc.</strong></p><br><br>
+
+
+            <p>As part of this commitment, we invite you to explore our various social media platforms to stay updated
+                on the latest news and insights about our company.</p>
+
+            <p>Visit and follow us on our social media accounts:</p>
+            <p>
+                <a href="https://www.facebook.com/profile.php?id=100089467625882" style="margin: 0 10px;">
+                    <img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook" style="width: 24px; height: 24px;">
+                </a>
+                <a href="https://www.instagram.com/empireonebposolutions/" style="margin: 0 10px;">
+                    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111463.png" alt="Instagram" style="width: 24px; height: 24px;">
+                </a>
+                <a href="https://www.tiktok.com/@empireonebposolutions" style="margin: 0 10px;">
+                    <img src="https://cdn-icons-png.flaticon.com/24/3046/3046122.png" alt="TikTok" style="width: 24px; height: 24px;">
+                </a>
+                <a href="https://www.linkedin.com/company/empireone-contact-center-inc/?viewAsMember=true" style="margin: 0 10px;">
+                    <img src="https://cdn-icons-png.flaticon.com/24/174/174857.png" alt="LinkedIn" style="width: 24px; height: 24px;">
+                </a>
+            </p><br>
+
+            <p>Thank you for being a valuable part of the EmpireOne BPO Solutions Inc community. We look forward to
+                connecting with you across our social media channels!</p>
+
+            <img src="https://empireone-hris.com/images/SCemp2.jpg" alt="">
 
 
         </div>

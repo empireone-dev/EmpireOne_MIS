@@ -48,6 +48,18 @@ Route::get('/confirmation/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function (
     ]);
 });
 
+Route::get('/final/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function ($app_id, $iffdate, $ifftime, $meet_link = null) {
+    $meetLink = $meet_link ? base64_decode($meet_link) : null;
+
+    return Inertia::render('final/page', [
+        'appId' => $app_id,
+        'date' => $iffdate,
+        'time' => $ifftime,
+        'meetLink' => $meetLink,
+    ]);
+});
+
+
 Route::get('/online_application', function () {
     return Inertia::render('online_application/page');
 });

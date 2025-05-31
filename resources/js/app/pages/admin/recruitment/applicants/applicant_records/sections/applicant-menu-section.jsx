@@ -85,7 +85,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 },
             ]
             : []),
-        ...(data.status == "Final Phase"
+        ...(data.status == "Final Phase" || data.status == "For Final Phase"
             ? [
                 {
                     component: (
@@ -117,7 +117,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 },
             ]
             : []),
-        ...(data.status == "Final Phase" && !data.final
+        ...(data.status == "For Final Phase" 
             ? [
                 {
                     component: (

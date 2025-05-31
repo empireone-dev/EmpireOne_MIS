@@ -101,6 +101,8 @@ Route::resource('emp_memo', UploadMemoController::class);
 Route::resource('engagement', EmployeeEngagementController::class);
 Route::resource('initial_rate', InitialRateController::class);
 Route::resource('final_rate', FinalRateController::class);
+Route::put('/final_update_applicant_after_confirmation_status/{app_id}', [FinalRateController::class, 'final_update_applicant_after_confirmation_status']);
+Route::put('/final_declined_attendance/{app_id}', [FinalRateController::class, 'final_declined_attendance']);
 Route::resource('department', DepartmentController::class);
 Route::resource('account', AccountController::class);
 Route::resource('pre_employment_file', PreEmploymentFileController::class);

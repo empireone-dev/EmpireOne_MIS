@@ -303,6 +303,7 @@ export default function ApplicantsTableSection() {
                     case "Probationary":
                         color = "green";
                         break;
+                    case "For Final Phase":
                     case "Final Phase":
                     case "Regular":
                         color = "blue";

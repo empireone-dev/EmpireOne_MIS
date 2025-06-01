@@ -167,6 +167,12 @@ const AdminLayout = ({ children }) => {
                             onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null"),
                         },
                         {
+                            key: "passed",
+                            icon: <HolderOutlined />,
+                            label: "Passed",
+                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Passed&site=null"),
+                        },
+                        {
                             key: "pooling",
                             icon: <HolderOutlined />,
                             label: "Pooling",

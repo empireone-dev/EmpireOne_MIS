@@ -151,7 +151,7 @@ export default function InitialRateForm({ data }) {
                         ) : (
                             <CheckCircleFilled />
                         )}
-                        {loading ? " Loading..." : " CONFIRM"}
+                        {loading ? " SUBMITTING..." : " SUBMIT"}
                     </button>
                 </div>
             </form>

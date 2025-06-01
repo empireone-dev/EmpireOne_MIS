@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\FailedInitial;
 use App\Models\Applicant;
 use App\Models\GuideQuestion;
 use App\Models\GuideQuestions;
 use App\Models\InitialRate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class InitialRateController extends Controller
 {
@@ -28,9 +30,10 @@ class InitialRateController extends Controller
             'otherqs' => 'nullable',
             'interviewer' => 'nullable',
             'conducted' => 'nullable',
+            'email' => 'nullable|email',
         ]);
 
-        
+
         foreach ($request->guideqss as $item) {
             GuideQuestions::create([
                 'int_id' => $request->int_id,
@@ -45,6 +48,18 @@ class InitialRateController extends Controller
             Applicant::where('app_id', $request->app_id)->update([
                 'status' => 'Failed'
             ]);
+
+            // Prepare data for the email
+            $applicant = Applicant::where('app_id', $request->app_id)->first();
+
+            $mailData = [
+                'fname' => $applicant->fname,
+                'mname' => $applicant->mname,
+                'lname' => $applicant->lname,
+                'email' => $applicant->email,
+            ];
+
+            Mail::to($applicant->email)->send(new FailedInitial($mailData));
         } else {
             Applicant::where('app_id', $request->app_id)->update([
                 'status' => 'For Final Phase'

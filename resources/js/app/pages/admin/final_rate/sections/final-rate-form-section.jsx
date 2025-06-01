@@ -161,7 +161,7 @@ export default function FinalRateFormSection() {
                         ) : (
                             <CheckCircleFilled />
                         )}
-                        {loading ? " Loading..." : " CONFIRM"}
+                        {loading ? " SUBMITTING..." : " SUBMIT"}
                     </button>
                 </div>
             </form>

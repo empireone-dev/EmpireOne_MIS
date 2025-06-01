@@ -75,7 +75,13 @@
                 us with a better understanding of your potential as a valuable addition to our organization.</p>
 
             <p><b>**Please confirm your attendance by clicking the confirmation button below:**</b></p>
-            <div style="text-align: center;"><a href="https://empireone-hris.com/final/{{$data['app_id']}}/{{$data['ivdate']}}/{{$data['ivtime']}}" class="button">Confirm Attendance</a></div><br>
+            <div style="text-align: center;"><a href="https://empireone-hris.com/final/{{$data['app_id']}}/{{$data['ivdate']}}/{{$data['ivtime']}}/{{ urlencode(base64_encode($data['meet_link'])) }}"
+                    style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;"
+                    target="_blank">
+                    Confirm Attendance
+                </a>
+            </div><br>
+
 
             <p> If you have any questions or require any additional information before the interview, please do not
                 hesitate to contact our HR department at hiring@empireonegroup.com for our San Carlos Site and

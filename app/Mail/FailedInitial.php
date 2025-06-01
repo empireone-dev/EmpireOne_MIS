@@ -61,5 +61,5 @@ class FailedInitial extends Mailable
             ->subject('EmpireOne BPO Solutions Inc - Interview Update')
             ->markdown('mail.failed-initial.email')
             ->with($this->data);
-    }
+    }   
 }

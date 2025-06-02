@@ -1,6 +1,7 @@
 // MyForm.jsx
 import Input from "@/app/pages/_components/input";
 import Select from "@/app/pages/_components/select";
+import Select2 from "@/app/pages/_components/select2";
 import { PlusIcon, UserPlusIcon } from "@heroicons/react/24/outline";
 import { Modal } from "antd";
 import React from "react";
@@ -166,7 +167,7 @@ export default function CreateApplicantSection() {
             });
         }
     }
-    console.log("eeee", errors);
+    console.log("eeee", errors?.fname?.message);
     return (
         <>
             <div class="inline-flex rounded-md shadow-sm" role="group">
@@ -261,7 +262,7 @@ export default function CreateApplicantSection() {
 
                     <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
-                            <Select
+                            <Select2
                                 register={{
                                     ...register("gender", {
                                         required: "Gender is required",

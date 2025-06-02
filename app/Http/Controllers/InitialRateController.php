@@ -46,20 +46,20 @@ class InitialRateController extends Controller
 
         if ($request->oavg < 3) {
             Applicant::where('app_id', $request->app_id)->update([
-                'status' => 'Failed'
+                'status' => 'Send Rejection'
             ]);
 
-            // Prepare data for the email
-            $applicant = Applicant::where('app_id', $request->app_id)->first();
+            // // Prepare data for the email
+            // $applicant = Applicant::where('app_id', $request->app_id)->first();
 
-            $mailData = [
-                'fname' => $applicant->fname,
-                'mname' => $applicant->mname,
-                'lname' => $applicant->lname,
-                'email' => $applicant->email,
-            ];
+            // $mailData = [
+            //     'fname' => $applicant->fname,
+            //     'mname' => $applicant->mname,
+            //     'lname' => $applicant->lname,
+            //     'email' => $applicant->email,
+            // ];
 
-            Mail::to($applicant->email)->send(new FailedInitial($mailData));
+            // Mail::to($applicant->email)->send(new FailedInitial($mailData));
         } else {
             Applicant::where('app_id', $request->app_id)->update([
                 'status' => 'For Final Phase'

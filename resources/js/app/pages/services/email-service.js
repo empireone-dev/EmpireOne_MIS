@@ -21,3 +21,12 @@ export function sendiv_contract_email_service(data) {
 
     }
 }
+
+export function send_rejection_email_service(data) {
+    try {
+        const result = axios.post('/api/send_rejection_email',data)
+        return result
+    } catch (error) {
+
+    }
+}

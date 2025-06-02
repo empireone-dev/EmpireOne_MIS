@@ -167,6 +167,18 @@ const AdminLayout = ({ children }) => {
                             onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null"),
                         },
                         {
+                            key: "failed",
+                            icon: <HolderOutlined />,
+                            label: "Failed",
+                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Failed&site=null"),
+                        },
+                        {
+                            key: "send_failed",
+                            icon: <HolderOutlined />,
+                            label: "Send Rejection",
+                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Send%20Rejection&site=null"),
+                        },
+                        {
                             key: "passed",
                             icon: <HolderOutlined />,
                             label: "Passed",
@@ -178,12 +190,12 @@ const AdminLayout = ({ children }) => {
                             label: "Pooling",
                             onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Pooling&site=null"),
                         },
-                        {
-                            key: "shortlisted",
-                            icon: <HolderOutlined />,
-                            label: "Short Listed",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Shortlisted&site=null"),
-                        },
+                        // {
+                        //     key: "shortlisted",
+                        //     icon: <HolderOutlined />,
+                        //     label: "Short Listed",
+                        //     onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Shortlisted&site=null"),
+                        // },
                     ],
                 },
             ],

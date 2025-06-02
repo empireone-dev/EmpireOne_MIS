@@ -113,7 +113,7 @@ Route::resource('exit_clr', ExitClearanceController::class);
 Route::post('/send-clearance-email', [ExitClearanceController::class, 'sendClearanceEmail']);
 
 
-
 Route::post('/sendiv_email', [EmailController::class, 'sendiv_email']);
+Route::post('/send_rejection_email', [EmailController::class, 'send_rejection_email']);
 
 require __DIR__ . '/auth.php';

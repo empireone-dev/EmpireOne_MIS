@@ -279,6 +279,7 @@ export default function ApplicantsTableSection() {
                             { text: "Passed", value: "Passed" },
                             { text: "Pooling", value: "Pooling" },
                             { text: "Shortlisted", value: "Shortlisted" },
+                            { text: "Send Rejection", value: "Send Rejection" },
                             { text: "Failed", value: "Failed" },
                             { text: "Hired", value: "Hired" },
                             { text: "Regular", value: "Regular" },
@@ -293,6 +294,7 @@ export default function ApplicantsTableSection() {
                 let color = "";
                 switch (record.status) {
                     case "Failed":
+                    case "Send Rejection":
                     case "Dismissal":
                     case "Resignation":
                     case "EOPE":

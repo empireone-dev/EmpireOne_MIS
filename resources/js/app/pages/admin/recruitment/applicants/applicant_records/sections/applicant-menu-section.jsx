@@ -11,6 +11,7 @@ import {
     MedicineBoxOutlined,
     RiseOutlined,
     ScheduleOutlined,
+    SendOutlined,
     SolutionOutlined,
     TeamOutlined,
 } from "@ant-design/icons";
@@ -25,6 +26,7 @@ import ApplicantDetaillsComponent from "../components/applicant-detaills-compone
 import ApplicantSetScheduleComponent from "../components/applicant-set-schedule-component";
 import ApplicantPoolingComponent from "../components/applicant-pooling-component";
 import ApplicantCvFileComponent from "../components/applicant-cv-file-component";
+import ApplicantRejectionComponent from "../components/applicant-rejection-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
@@ -117,7 +119,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 },
             ]
             : []),
-        ...(data.status == "For Final Phase" 
+        ...(data.status == "For Final Phase"
             ? [
                 {
                     component: (
@@ -173,7 +175,22 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                     ),
                 },
             ]
-            : []),
+            : []), ...(data.status == "Send Rejection"
+                ? [
+                    {
+                        component: (
+                            <ApplicantRejectionComponent
+                                item={{
+                                    label: "Sending Rejection Email",
+                                    key: "3",
+                                    icon: <SendOutlined />,
+                                }}
+                                data={data}
+                            />
+                        ),
+                    },
+                ]
+                : []),
         ...(data.status == "Passed"
             ? [
                 {

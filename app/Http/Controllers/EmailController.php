@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContractPhysical;
 use App\Mail\ContractVirtual;
+use App\Mail\FailedInitial;
 use App\Mail\FinalEmail;
 use App\Mail\FinalvEmail;
 use App\Mail\InitialEmail;
@@ -87,6 +88,26 @@ class EmailController extends Controller
             }
         }
 
+
+        return response()->json(['message' => 'Email sent successfully!']);
+    }
+
+
+    public function send_rejection_email(Request $request)
+    {
+        Applicant::where('app_id', $request->app_id)->update([
+            'status' => 'Failed'
+        ]);
+
+        $applicant = Applicant::where('app_id', $request->app_id)->first();
+
+        $mailData = [
+            'fname' => $applicant->fname,
+            'mname' => $applicant->mname,
+            'lname' => $applicant->lname,
+            'email' => $applicant->email,
+        ];
+        Mail::to($applicant->email)->send(new FailedInitial($mailData));
 
         return response()->json(['message' => 'Email sent successfully!']);
     }

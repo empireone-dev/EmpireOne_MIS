@@ -15,9 +15,11 @@ import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import store from "@/app/store/store";
 import { store_applicant_thunk } from "../redux/applicant-thunk";
+import { useSelector } from "react-redux";
 const { Dragger } = Upload;
 
 export default function CreateApplicantSection() {
+    const { user } = useSelector((state) => state.app);
     const [newProvince, setNewProvince] = useState([]);
     const [newCity, setNewCity] = useState([]);
     const [newBarangay, setNewBarangay] = useState([]);
@@ -118,13 +120,14 @@ export default function CreateApplicantSection() {
             const result = await store.dispatch(
                 store_applicant_thunk({
                     ...data,
+                    site: user.site,
                     files: files.map((res) => res.files),
                     is_experience: hasExperience,
                 })
             );
             reset();
             setFiles([]);
-            // setOpen(false);
+            message.success('Application has been submitted successfully');
         } catch (error) { }
         // reset(); // optional: reset the form after submit
     };
@@ -242,6 +245,7 @@ export default function CreateApplicantSection() {
                                     }),
                                 }}
                                 options={[
+                                    { label: "--", value: "" },
                                     { label: "Sr.", value: "Sr." },
                                     { label: "Jr.", value: "Jr." },
                                     { label: "II", value: "II" },
@@ -260,15 +264,16 @@ export default function CreateApplicantSection() {
                             <Select
                                 register={{
                                     ...register("gender", {
-                                        required: false,
+                                        required: "Gender is required",
                                     }),
                                 }}
                                 options={[
                                     { label: "Male", value: "Male" },
                                     { label: "Female", value: "Female" },
                                 ]}
+                                errorMessage={errors?.gender?.message}
                                 label="Gender"
-                                name="name"
+                                name="gender"
                             />
                         </div>
                         <div className="flex-1">
@@ -336,10 +341,9 @@ export default function CreateApplicantSection() {
                             <Input
                                 register={{
                                     ...register("religion", {
-                                        required: "Religion is required",
+                                        required: false,
                                     }),
                                 }}
-                                errorMessage={errors?.religion?.message}
                                 name="religion"
                                 label="Religion"
                                 type="text"
@@ -349,10 +353,9 @@ export default function CreateApplicantSection() {
                             <Input
                                 register={{
                                     ...register("nationality", {
-                                        required: "Nationality is required",
+                                        required: false,
                                     }),
                                 }}
-                                errorMessage={errors?.nationality?.message}
                                 name="nationality"
                                 label="Nationality"
                                 type="text"
@@ -366,10 +369,9 @@ export default function CreateApplicantSection() {
                                 register={{
                                     ...register("mmname", {
                                         required:
-                                            "Mothers Maiden Name is required",
+                                            false,
                                     }),
                                 }}
-                                errorMessage={errors?.mmname?.message}
                                 name="mmname"
                                 label="Mother's maiden name"
                                 type="text"
@@ -379,10 +381,9 @@ export default function CreateApplicantSection() {
                             <Input
                                 register={{
                                     ...register("ffname", {
-                                        required: "Course taken is required",
+                                        required: false,
                                     }),
                                 }}
-                                errorMessage={errors?.ffname?.message}
                                 name="ffname"
                                 label="Father's fullname"
                                 type="text"
@@ -447,10 +448,9 @@ export default function CreateApplicantSection() {
                             <Input
                                 register={{
                                     ...register("courset", {
-                                        required: "Course taken is required",
+                                        required: false,
                                     }),
                                 }}
-                                errorMessage={errors?.courset?.message}
                                 name="courset"
                                 label="Course taken"
                                 type="text"
@@ -465,7 +465,7 @@ export default function CreateApplicantSection() {
                             <Select
                                 register={{
                                     ...register("region", {
-                                        required: false,
+                                        required: "Please Select Region",
                                     }),
                                 }}
                                 onChange={data_handler}
@@ -476,6 +476,7 @@ export default function CreateApplicantSection() {
                                         region_code: res.region_code,
                                     }),
                                 }))}
+                                errorMessage={errors?.region?.message}
                                 label="Region"
                                 name="region"
                             />
@@ -484,7 +485,7 @@ export default function CreateApplicantSection() {
                             <Select
                                 register={{
                                     ...register("province", {
-                                        required: false,
+                                        required: "Please Select Province"
                                     }),
                                 }}
                                 onChange={data_handler}
@@ -495,6 +496,7 @@ export default function CreateApplicantSection() {
                                         province_code: res.province_code,
                                     }),
                                 }))}
+                                errorMessage={errors?.province?.message}
                                 label="Province"
                                 name="province"
                             />
@@ -503,7 +505,7 @@ export default function CreateApplicantSection() {
                             <Select
                                 register={{
                                     ...register("city", {
-                                        required: false,
+                                        required: "Please Select City"
                                     }),
                                 }}
                                 onChange={data_handler}
@@ -514,6 +516,7 @@ export default function CreateApplicantSection() {
                                         city_code: res.city_code,
                                     }),
                                 }))}
+                                errorMessage={errors?.city?.message}
                                 name="city"
                                 label="City/Municipality"
                             />
@@ -524,7 +527,7 @@ export default function CreateApplicantSection() {
                             <Select
                                 register={{
                                     ...register("brgy", {
-                                        required: false,
+                                        required: "Please Select Barangay"
                                     }),
                                 }}
                                 onChange={data_handler}
@@ -532,6 +535,7 @@ export default function CreateApplicantSection() {
                                     label: res.brgy_name,
                                     value: res.brgy_name,
                                 }))}
+                                errorMessage={errors?.brgy?.message}
                                 name="brgy"
                                 label="Barangay"
                             />
@@ -741,10 +745,9 @@ export default function CreateApplicantSection() {
                                 register={{
                                     ...register("ename", {
                                         required:
-                                            "Emergency Contact Fullname is required",
+                                            false,
                                     }),
                                 }}
-                                errorMessage={errors?.ename?.message}
                                 name="ename"
                                 label="Emergency Contact Fullname"
                                 type="text"
@@ -754,10 +757,9 @@ export default function CreateApplicantSection() {
                             <Input
                                 register={{
                                     ...register("eaddress", {
-                                        required: "Address is required",
+                                        required: false,
                                     }),
                                 }}
-                                errorMessage={errors?.eaddress?.message}
                                 name="eaddress"
                                 label="Address"
                                 type="text"
@@ -769,10 +771,9 @@ export default function CreateApplicantSection() {
                             <Input
                                 register={{
                                     ...register("relationship", {
-                                        required: "Relationship is required",
+                                        required: false,
                                     }),
                                 }}
-                                errorMessage={errors?.relationship?.message}
                                 name="relationship"
                                 label="Relationship"
                                 type="text"
@@ -782,10 +783,9 @@ export default function CreateApplicantSection() {
                             <Input
                                 register={{
                                     ...register("ephone", {
-                                        required: "Contact No. is required",
+                                        required: false,
                                     }),
                                 }}
-                                errorMessage={errors?.ephone?.message}
                                 name="ephone"
                                 label="Contact No."
                                 type="number"

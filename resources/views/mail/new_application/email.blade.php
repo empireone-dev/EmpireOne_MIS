@@ -12,8 +12,6 @@
   Applicant Details:
 
   Name: {{$data['fname']}} {{$data['lname']}}
-  
-  Position Applied For: Sample Position
 
   Submission Date: {{$data['submitted']}}
 

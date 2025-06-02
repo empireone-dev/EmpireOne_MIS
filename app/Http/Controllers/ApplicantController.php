@@ -79,8 +79,41 @@ class ApplicantController extends Controller
 
     public function store(Request $request)
     {
-        // Prepare full address
-        $data = $request->all();
+        $validatedData = $request->validate([
+            'fname'         => 'required|string|max:255',
+            'mname'         => 'nullable|string|max:255',
+            'lname'         => 'required|string|max:255',
+            'suffix'        => 'nullable|string|max:10',
+            'dob'           => 'required|date',
+            'paddress'      => 'nullable|string|max:500',
+            'age'           => 'nullable|integer|min:0',
+            'marital'       => 'nullable|string|in:Single,Married,Widowed,Separated,Divorced',
+            'gender'        => 'required|string|in:Male,Female,Other',
+            'religion'      => 'nullable|string|max:255',
+            'nationality'   => 'nullable|string|max:255',
+            'email'         => 'required|email|max:255',
+            'phone'         => 'required|string|max:20',
+            'mmname'        => 'nullable|string|max:255',
+            'ffname'        => 'nullable|string|max:255',
+            'educ'          => 'nullable|string|max:255',
+            'courset'       => 'nullable|string|max:255',
+            'sss'           => 'nullable|string|max:20',
+            'tin'           => 'nullable|string|max:20',
+            'philh'         => 'nullable|string|max:20',
+            'pagibig'       => 'nullable|string|max:20',
+            'ename'         => 'nullable|string|max:255',
+            'eaddress'      => 'nullable|string|max:255',
+            'relationship'  => 'nullable|string|max:50',
+            'ephone'        => 'nullable|string|max:20',
+            'site'          => 'required|string|max:255',
+            'lot'           => 'nullable|string|max:255',
+            'brgy'          => 'nullable|string|max:255',
+            'city'          => 'nullable|string|max:255',
+            'province'      => 'nullable|string|max:255',
+            'submitted'     => 'nullable|date',
+        ]);
+
+        $data = $validatedData;
         $data['caddress'] = trim("{$request->lot} {$request->brgy} {$request->city} {$request->province}");
 
         // Create applicant record
@@ -308,29 +341,28 @@ class ApplicantController extends Controller
         $request->validate([
             'reason' => 'required|string|max:1000',
         ]);
-    
+
         $applicant = Applicant::where('app_id', $app_id)->first();
-    
+
         if (!$applicant) {
             return response()->json([
                 'message' => 'Applicant not found.',
             ], 404);
         }
-    
+
         $data = [
             'app_id' => $applicant->app_id,
             'fname' => $applicant->fname,
             'lname' => $applicant->lname,
             'reason' => $request->reason,
         ];
-    
+
         // Send email notification
         Mail::to('hiring@empireonegroup.com')->send(new DeclinedConfirmation($data));
-    
+
         return response()->json([
             'message' => 'Applicant decline reason submitted successfully.',
             'app_id' => $applicant->app_id,
         ]);
     }
-    
 }

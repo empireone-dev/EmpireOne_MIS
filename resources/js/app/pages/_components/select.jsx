@@ -7,6 +7,7 @@ export default function Select({
     label,
     name,
     register,
+    errorMessage,
 }) {
     return (
         <div className="w-full">
@@ -14,7 +15,8 @@ export default function Select({
                 <select
                     {...register}
                     name={name}
-                    className="peer pl-4 text-black placeholder-transparent w-full py-2.5 px-5 border-gray-500 border bg-transparent rounded-md bg-white focus-within:outline-none focus-within:border-blue-500"
+                    className={`peer pl-8 text-black placeholder-transparent w-full rounded-md py-2.5 px-5 border-gray-500 border bg-transparent bg-white focus-within:outline-none focus-within:border-blue-500 ${errorMessage ? "border-red-500" : ""
+                        }`}
                     value={value}
                     onChange={onChange}
                 >
@@ -33,6 +35,12 @@ export default function Select({
                     {label}
                 </label>
             </div>
+
+            {errorMessage && (
+                <span className="text-red-500 text-sm mt-1">
+                    {errorMessage}
+                </span>
+            )}
         </div>
     );
 }

@@ -90,9 +90,16 @@ export default function JobOfferSection() {
                                 You shall receive a monthly salary of
                                 <b> Php&nbsp;
                                     <span>
-                                        {new Intl.NumberFormat('en-PH', { style: 'decimal', minimumFractionDigits: 2 }).format(jo.salary)}
-                                        {jo.allowance ? ' + Php ' : ''}
-                                        {jo.allowance ? new Intl.NumberFormat('en-PH', { style: 'decimal', minimumFractionDigits: 2 }).format(jo.allowance) : ''}
+                                        {jo.allowance
+                                            ? <>
+                                                {new Intl.NumberFormat('en-PH', { style: 'decimal', minimumFractionDigits: 2 }).format(jo.salary)}
+                                                {' + Php '}
+                                                {new Intl.NumberFormat('en-PH', { style: 'decimal', minimumFractionDigits: 2 }).format(jo.allowance)} {jo.typea}
+                                            </>
+                                            : new Intl.NumberFormat('en-PH', { style: 'decimal', minimumFractionDigits: 2 }).format(jo.salary)
+                                        }
+
+
                                     </span></b>.
                                 <br /> <br /> 3. <b>Benefits</b>
                                 <br />
@@ -122,8 +129,8 @@ export default function JobOfferSection() {
                                         type="button"
                                         disabled={loading}
                                         className={`px-4 py-2 rounded-md transition-colors ${loading
-                                                ? "bg-gray-400 text-white cursor-not-allowed"
-                                                : "bg-red-500 hover:bg-red-600 text-white focus:outline-none"
+                                            ? "bg-gray-400 text-white cursor-not-allowed"
+                                            : "bg-red-500 hover:bg-red-600 text-white focus:outline-none"
                                             }`}
                                     >
                                         {loading ? "DECLINE" : "DECLINE"}

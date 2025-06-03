@@ -12,8 +12,8 @@ export default function PhysicalCOntractSigning({ data, setOpen }) {
         ifftime: "",
         iffdate: "",
     });
-    const jo =data.joboffer.find(res=>res.status == 'Accepted')
-    const newJo = data?.joboffer?.find(res=>res.status == 'Contract Signing')
+    const jo = data.joboffer.find(res => res.status == 'Accepted')
+    const newJo = data?.joboffer?.find(res => res.status == 'Contract Signing')
     // const [physical, setPhysical] = useState({
     //     ifftime: "",
     //     iffdate: "",
@@ -35,12 +35,12 @@ export default function PhysicalCOntractSigning({ data, setOpen }) {
                     phase_status: "physical_contract_signing",
                 })
             );
-           await message.success("Email sent successfully");
+            await message.success("Email sent successfully");
             setLoading(false);
             setOpen(false);
             setPhysicalSigningOpen(false);
         } catch (error) {
-            console.log('error',error)
+            console.log('error', error)
             message.error("There was an error sending the email!");
             setLoading(false);
         }
@@ -140,6 +140,9 @@ export default function PhysicalCOntractSigning({ data, setOpen }) {
                                     readOnly
                                 />
                             </div>
+                        </div>
+
+                        <div className="flex flex-1 ">
                             <div className="w-full px-2.5">
                                 <label
                                     className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
@@ -151,7 +154,20 @@ export default function PhysicalCOntractSigning({ data, setOpen }) {
                                     value={newJo?.salary}
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
-                                    type="text"
+                                    placeholder=""
+                                />
+                            </div>
+                            <div className="w-full px-2.5">
+                                <label
+                                    className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
+                                    for="grid-text"
+                                >
+                                    Allowance
+                                </label>
+                                <input
+                                    value={newJo?.allowance}
+                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-text"
                                     placeholder=""
                                     readOnly
                                 />
@@ -230,9 +246,8 @@ export default function PhysicalCOntractSigning({ data, setOpen }) {
                     </div>
                     <button
                         type="submit"
-                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${
-                            loading ? "cursor-not-allowed opacity-75" : ""
-                        }`}
+                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
+                            }`}
                         onClick={send_f2f_signing}
                         disabled={loading}
                     >

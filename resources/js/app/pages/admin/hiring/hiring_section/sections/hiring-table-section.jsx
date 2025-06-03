@@ -303,6 +303,16 @@ export default function HiringTableSection() {
         router.visit(newUrl);
     };
 
+    const latestJobOffers = Object.values(
+        joboffers.data.reduce((acc, curr) => {
+            const existing = acc[curr.app_id];
+            if (!existing || new Date(curr.created_at) > new Date(existing.created_at)) {
+                acc[curr.app_id] = curr;
+            }
+            return acc;
+        }, {})
+    );
+
     return (
         <div>
             <div>
@@ -318,8 +328,9 @@ export default function HiringTableSection() {
             <Table
                 pagination={false}
                 columns={columns}
-                dataSource={joboffers.data}
+                dataSource={latestJobOffers}
             />
+
             <div className="flex w-full items-center justify-end mt-2">
                 <Pagination
                     onChange={onChangePaginate}

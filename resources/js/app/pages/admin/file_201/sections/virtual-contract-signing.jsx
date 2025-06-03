@@ -136,6 +136,9 @@ export default function VirtualContractSigning({ data, setOpen }) {
                                     readOnly
                                 />
                             </div>
+                        </div>
+
+                        <div className="flex flex-1 ">
                             <div className="w-full px-2.5">
                                 <label
                                     className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
@@ -148,6 +151,21 @@ export default function VirtualContractSigning({ data, setOpen }) {
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
+                                    placeholder=""
+                                    readOnly
+                                />
+                            </div>
+                            <div className="w-full px-2.5">
+                                <label
+                                    className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
+                                    for="grid-text"
+                                >
+                                    Allowance
+                                </label>
+                                <input
+                                    value={jo?.allowance}
+                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-text"
                                     placeholder=""
                                     readOnly
                                 />

@@ -11,7 +11,8 @@ import { get_applicant_thunk } from "../redux/applicant-thunk";
 export default function ApplicantJobOfferComponent({ data, item }) {
     const { job_positions } = useSelector((state) => state.job_positions);
     const [form, setForm] = useState({
-        allowance: 0
+        allowance: "",
+        salary: ""
     });
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -154,7 +155,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                                 department: selectedJob?.outsourcing_erf?.department || "",
                                             },
                                             // salary: selectedJob?.salary || "", 
-                                            // jobPos: selectedJob?.jPosition || e.target.value, 
+                                            jobPos: selectedJob?.jPosition || e.target.value,
                                         });
                                     }}
 

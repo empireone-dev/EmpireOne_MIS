@@ -150,11 +150,11 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                         setForm({
                                             ...form,
                                             outsourcing_erf: {
-                                                ...form.outsourcing_erf, 
-                                                department: selectedJob?.outsourcing_erf?.department || "", 
+                                                ...form.outsourcing_erf,
+                                                department: selectedJob?.outsourcing_erf?.department || "",
                                             },
-                                            salary: selectedJob?.salary || "", 
-                                            jobPos: selectedJob?.jPosition || e.target.value, 
+                                            // salary: selectedJob?.salary || "", 
+                                            // jobPos: selectedJob?.jPosition || e.target.value, 
                                         });
                                     }}
 
@@ -193,8 +193,14 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                     id="grid-text"
                                     type="text"
                                     placeholder=""
-                                    readOnly
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
                                     value={form?.salary ?? ""}
+                                    name="salary"
                                 />
                             </div>
                             <div className="w-3/5 px-2.5">

@@ -24,8 +24,8 @@ export default function ApplicantRejectionComponent({ data, item }) {
         await store.dispatch(get_applicant_thunk());
         await message.success('Email sent successfully');
         router.visit('/admin/recruitment/applicant_records?searching=' + app_id)
-        setLoading(false);
-        setOpen(false);
+            (() => setLoading(false));
+        (() => setOpen(false));
     }
 
     console.log('data', data)
@@ -52,7 +52,7 @@ export default function ApplicantRejectionComponent({ data, item }) {
                                 <button type="button" onClick={() => setOpen(false)} className=" hover:bg-gray-400 rounded-md p-2 px-8">Cancel</button>
                             </div>
                             <div>
-                                <button type="submit" className="bg-blue-500 hover:bg-blue-400 text-white rounded-md p-2 px-8">
+                                <button disabled={loading} type="submit" className="bg-blue-500 hover:bg-blue-400 text-white rounded-md p-2 px-8">
                                     {loading ? (
                                         <LoadingOutlined spin />
                                     ) : (

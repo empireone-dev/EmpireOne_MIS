@@ -190,7 +190,7 @@ export default function DashboardSection() {
               number={parseInt(data?.status??+476) ?? 0}
               icon={<UserGroupIcon />}
             />
-            <DashboardCardComponents
+            {/* <DashboardCardComponents
               bgColor="cyan"
               name="Incident Report"
               number={parseInt(data?.status??+278) ?? 0}
@@ -207,7 +207,7 @@ export default function DashboardSection() {
               name="NDA"
               number={parseInt(data?.status??+269) ?? 0}
               icon={<ChatBubbleLeftRightIcon />}
-            />
+            /> */}
           </div>
         </div>
         <div>

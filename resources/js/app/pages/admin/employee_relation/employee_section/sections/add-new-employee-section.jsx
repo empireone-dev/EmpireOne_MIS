@@ -16,7 +16,7 @@ export default function AddNewEmployeeSection() {
     const [form, setForm] = useState({
         site: user?.site || '',
     });
-console.log('hiredApplicants',hiredApplicants)
+    console.log('hiredApplicants', hiredApplicants)
     // console.log('assasss', value?.applicant?.fname)
 
     async function submit_handler() {
@@ -43,11 +43,11 @@ console.log('hiredApplicants',hiredApplicants)
             setForm({
                 ...form,
                 ...value,
-                fname: value.applicant.fname,
-                mname: value.applicant.mname,
-                lname: value.applicant.lname,
-                suffix: value.applicant.suffix,
-                gender: value.applicant.gender,
+                fname: value.applicant.fname || '',
+                mname: value.applicant.mname || '',
+                lname: value.applicant.lname || '',
+                suffix: value.applicant.suffix || '',
+                gender: value.applicant.gender || '',
                 site: user?.site || '',
             });
             // console.log("Selected applicant's first name:", value.applicant.fname);

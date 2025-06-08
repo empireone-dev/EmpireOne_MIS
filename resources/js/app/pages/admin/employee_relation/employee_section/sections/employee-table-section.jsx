@@ -212,7 +212,7 @@ export default function EmployeeTableSection() {
                     showSearch
                     placeholder="Account"
                     optionFilterProp="label"
-                    value={account  == 'null'?null:account}
+                    value={account == 'null' ? null : account}
                     onChange={search_account}
                     // onSearch={onSearch}
                     options={accounts}
@@ -250,8 +250,8 @@ export default function EmployeeTableSection() {
                     showSearch
                     placeholder="Site"
                     optionFilterProp="label"
-                    
-                    value={site  == 'null'?null:site}
+
+                    value={site == 'null' ? null : site}
                     onChange={search_site}
                     // onSearch={onSearch}
                     options={
@@ -283,7 +283,7 @@ export default function EmployeeTableSection() {
                     showSearch
                     placeholder="Status"
                     optionFilterProp="label"
-                    value={status  == 'null'?null:status}
+                    value={status == 'null' ? null : status}
                     onChange={search_status}
                     // onSearch={onSearch}
                     options={[
@@ -293,7 +293,6 @@ export default function EmployeeTableSection() {
                         { text: "EOPE", value: "EOPE" },
                         { text: "End of Contract", value: "End of Contract" },
                         { text: "Terminated", value: "Terminated" },
-                        { text: "Dismissal", value: "Dismissed" },
                         { text: "AWOL", value: "AWOL" },
                         { text: "Resigned", value: "Resigned" },
                     ]}
@@ -327,9 +326,6 @@ export default function EmployeeTableSection() {
                         color = "#43BFC7";
                         break;
                     case "Terminated":
-                        color = "#FF0000";
-                        break;
-                    case "Dismissed":
                         color = "#FF0000";
                         break;
                     case "AWOL":

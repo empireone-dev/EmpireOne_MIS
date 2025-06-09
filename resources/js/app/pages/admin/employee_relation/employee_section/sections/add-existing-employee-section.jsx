@@ -15,7 +15,7 @@ import UploadResumeSection from './upload-resume-section';
 import WorkingExperienceSection from './working-experience-section';
 import { setApplicantForm } from '../../../recruitment/applicants/applicant_records/redux/applicant-slice';
 import { get_applicant_thunk, store_applicant_thunk } from '../../../recruitment/applicants/applicant_records/redux/applicant-thunk';
-import Input2 from '@/app/pages/_components/input2';
+import Input from '@/app/pages/_components/input';
 import Select from '@/app/pages/_components/select';
 import { store_employee_thunk } from '../redux/employee-section-thunk';
 import { wait } from 'ckeditor5';
@@ -83,41 +83,41 @@ export default function AddExistingEmployeeSection() {
         const fd = new FormData()
         fd.append('files', uploadedFile)
         fd.append('site', applicantForm.site ?? "")
-        fd.append('app_id', applicantForm.app_id ?? "")
-        fd.append('fname', applicantForm.fname ?? "")
-        fd.append('mname', applicantForm.mname ?? "")
-        fd.append('lname', applicantForm.lname ?? "")
-        fd.append('suffix', applicantForm.suffix ?? "")
-        fd.append('dob', applicantForm.dob ?? "")
-        fd.append('religion', applicantForm.religion ?? "")
-        fd.append('email', applicantForm.email ?? "")
-        fd.append('nationality', applicantForm.nationality ?? "")
-        fd.append('phone', applicantForm.phone ?? "")
-        fd.append('mmname', applicantForm.mmname ?? "")
-        fd.append('ffname', applicantForm.ffname ?? "")
-        fd.append('courset', applicantForm.courset ?? "")
-        fd.append('hired', applicantForm.hired ?? "")
-        fd.append('lot', applicantForm.lot ?? "")
-        fd.append('sss', applicantForm.sss ?? "")
-        fd.append('pagibig', applicantForm.pagibig ?? "")
-        fd.append('tin', applicantForm.tin ?? "")
-        fd.append('philh', applicantForm.philh ?? "")
-        fd.append('ename', applicantForm.ename ?? "")
-        fd.append('eaddress', applicantForm.eaddress ?? "")
-        fd.append('relationship', applicantForm.relationship ?? "")
-        fd.append('ephone', applicantForm.ephone ?? "")
-        fd.append('marital', applicantForm.marital ?? "")
-        fd.append('gender', applicantForm.gender ?? "")
-        fd.append('account', applicantForm.account ?? "")
-        fd.append('region', applicantForm.region ?? "")
-        fd.append('city', applicantForm.city ?? "")
-        fd.append('brgy', applicantForm.brgy ?? "")
-        fd.append('position', applicantForm.position ?? "")
-        fd.append('dept', applicantForm.dept ?? "")
-        fd.append('account', applicantForm.account ?? "")
-        fd.append('sup_id', applicantForm.sup_id ?? "")
-        fd.append('province', applicantForm.province ?? "")
-        fd.append('status', applicantForm.status ?? "")
+        fd.append('app_id', applicantForm.app_id?? "")
+        fd.append('fname', applicantForm.fname?? "")
+        fd.append('mname', applicantForm.mname?? "")
+        fd.append('lname', applicantForm.lname?? "")
+        fd.append('suffix', applicantForm.suffix?? "")
+        fd.append('dob', applicantForm.dob?? "")
+        fd.append('religion', applicantForm.religion?? "")
+        fd.append('email', applicantForm.email?? "")
+        fd.append('nationality', applicantForm.nationality?? "")
+        fd.append('phone', applicantForm.phone?? "")
+        fd.append('mmname', applicantForm.mmname?? "")
+        fd.append('ffname', applicantForm.ffname?? "")
+        fd.append('courset', applicantForm.courset?? "")
+        fd.append('hired', applicantForm.hired?? "")
+        fd.append('lot', applicantForm.lot?? "")
+        fd.append('sss', applicantForm.sss?? "")
+        fd.append('pagibig', applicantForm.pagibig?? "")
+        fd.append('tin', applicantForm.tin?? "")
+        fd.append('philh', applicantForm.philh?? "")
+        fd.append('ename', applicantForm.ename?? "")
+        fd.append('eaddress', applicantForm.eaddress?? "")
+        fd.append('relationship', applicantForm.relationship?? "")
+        fd.append('ephone', applicantForm.ephone?? "")
+        fd.append('marital', applicantForm.marital?? "")
+        fd.append('gender', applicantForm.gender?? "")
+        fd.append('account', applicantForm.account?? "")
+        fd.append('region', applicantForm.region?? "")
+        fd.append('city', applicantForm.city?? "")
+        fd.append('brgy', applicantForm.brgy?? "")
+        fd.append('position', applicantForm.position?? "")
+        fd.append('dept', applicantForm.dept?? "")
+        fd.append('account', applicantForm.account?? "")
+        fd.append('sup_id', applicantForm.sup_id?? "")
+        fd.append('province', applicantForm.province?? "")
+        fd.append('status', applicantForm.status?? "")
 
         try {
             applicantForm.work_experience.forEach((value) => {
@@ -239,7 +239,7 @@ export default function AddExistingEmployeeSection() {
                     </div>
                     <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-6 text-center">Personal Information</h1>
                     <div className="mb-4">
-                        <Input2
+                        <Input
                             onChange={(event) => data_handler(event)}
                             value={applicantForm.app_id ?? ""}
                             required={error?.app_id ? true : false}
@@ -252,7 +252,7 @@ export default function AddExistingEmployeeSection() {
                         <div className='flex flex-col w-full mb-4'>
                             <label htmlFor=""><b>Full Name</b></label>
                             <div className='flex flex-1 gap-3'>
-                                <Input2
+                                <Input
                                     onChange={(event) => data_handler(event)}
                                     value={applicantForm.fname ?? ""}
                                     required={error?.fname ? true : false}
@@ -260,14 +260,14 @@ export default function AddExistingEmployeeSection() {
                                     label="First Name"
                                     type="text"
                                 />
-                                <Input2
+                                <Input
                                     onChange={(event) => data_handler(event)}
                                     value={applicantForm.mname ?? ""}
                                     name="mname"
                                     label="Middle Name"
                                     type="text"
                                 />
-                                <Input2
+                                <Input
                                     onChange={(event) => data_handler(event)}
                                     value={applicantForm.lname ?? ""}
                                     required={error?.lname ? true : false}
@@ -304,7 +304,7 @@ export default function AddExistingEmployeeSection() {
                                     </select>
                                 </div>
                                 <div className='flex flex-col w-full'>
-                                    <Input2
+                                    <Input
                                         onChange={(event) =>
                                             data_handler(event)
                                         }
@@ -316,7 +316,7 @@ export default function AddExistingEmployeeSection() {
                                     />
                                 </div>
                                 <div className=" w-full">
-                                    <Input2
+                                    <Input
                                         onChange={(event) => data_handler(event)}
                                         value={applicantForm.email ?? ""}
                                         required={error?.email ? true : false}
@@ -326,7 +326,7 @@ export default function AddExistingEmployeeSection() {
                                     />
                                 </div>
                                 <div className="w-full">
-                                    <Input2
+                                    <Input
                                         onChange={(event) => data_handler(event)}
                                         value={applicantForm.phone ?? ""}
                                         required={error?.phone ? true : false}
@@ -352,7 +352,7 @@ export default function AddExistingEmployeeSection() {
                                     </select>
                                 </div>
                                 <div className='flex flex-col w-full'>
-                                    <Input2
+                                    <Input
                                         onChange={(event) =>
                                             data_handler(event)
                                         }
@@ -364,7 +364,7 @@ export default function AddExistingEmployeeSection() {
                                     />
                                 </div>
                                 <div className='flex flex-col w-full'>
-                                    <Input2
+                                    <Input
                                         onChange={(event) =>
                                             data_handler(event)
                                         }
@@ -380,7 +380,7 @@ export default function AddExistingEmployeeSection() {
 
                     </div>
                     <div className="mb-4">
-                        <Input2
+                        <Input
                             onChange={(event) => data_handler(event)}
                             value={applicantForm.mmname ?? ""}
                             name="mmname"
@@ -389,7 +389,7 @@ export default function AddExistingEmployeeSection() {
                         />
                     </div>
                     <div className="mb-4">
-                        <Input2
+                        <Input
                             onChange={(event) => data_handler(event)}
                             value={applicantForm.ffname ?? ""}
                             name="ffname"
@@ -416,7 +416,7 @@ export default function AddExistingEmployeeSection() {
                             </select>
                         </div>
                         <div className="w-full">
-                            <Input2
+                            <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.courset ?? ""}
                                 name="courset"
@@ -499,7 +499,7 @@ export default function AddExistingEmployeeSection() {
                                             ))
                                     }
                                 </select>
-                                <Input2
+                                <Input
                                     onChange={(event) => data_handler(event)}
                                     value={applicantForm.hired ?? ""}
                                     name="hired"
@@ -577,7 +577,7 @@ export default function AddExistingEmployeeSection() {
                             />
                         </div>
                         <div className='flex flex-col w-full'>
-                            <Input2
+                            <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.lot ?? ""}
                                 name="lot"
@@ -589,7 +589,7 @@ export default function AddExistingEmployeeSection() {
                     <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Government ID Information</h1>
                     <div className='flex flex-1 gap-4 mb-4'>
                         <div className="w-full">
-                            <Input2
+                            <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.sss ?? ""}
                                 name="sss"
@@ -598,7 +598,7 @@ export default function AddExistingEmployeeSection() {
                             />
                         </div>
                         <div className="w-full">
-                            <Input2
+                            <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.pagibig ?? ""}
                                 name="pagibig"
@@ -609,7 +609,7 @@ export default function AddExistingEmployeeSection() {
                     </div>
                     <div className='flex flex-1 gap-4 mb-4'>
                         <div className="w-full">
-                            <Input2
+                            <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.tin ?? ""}
                                 name="tin"
@@ -618,7 +618,7 @@ export default function AddExistingEmployeeSection() {
                             />
                         </div>
                         <div className="w-full">
-                            <Input2
+                            <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.philh ?? ""}
                                 name="philh"
@@ -653,7 +653,7 @@ export default function AddExistingEmployeeSection() {
                     {showWorkingExperience && <WorkingExperienceSection />}
                     <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Emergency Contact Information</h1>
                     <div className="mb-4 w-full">
-                        <Input2
+                        <Input
                             onChange={(event) => data_handler(event)}
                             value={applicantForm.ename ?? ""}
                             name="ename"
@@ -662,7 +662,7 @@ export default function AddExistingEmployeeSection() {
                         />
                     </div>
                     <div className="mb-4 w-full">
-                        <Input2
+                        <Input
                             onChange={(event) => data_handler(event)}
                             value={applicantForm.eaddress ?? ""}
                             name="eaddress"
@@ -672,7 +672,7 @@ export default function AddExistingEmployeeSection() {
                     </div>
                     <div className='flex flex-1 gap-4 mb-4'>
                         <div className="w-full">
-                            <Input2
+                            <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.relationship ?? ""}
                                 name="relationship"
@@ -681,7 +681,7 @@ export default function AddExistingEmployeeSection() {
                             />
                         </div>
                         <div className="w-full">
-                            <Input2
+                            <Input
                                 onChange={(event) => data_handler(event)}
                                 value={applicantForm.ephone ?? ""}
                                 name="ephone"

@@ -208,6 +208,7 @@ export default function HiringTableSection() {
                             { text: "Accepted", value: "Accepted" },
                             { text: "Declined", value: "Declined" },
                             { text: "Pending", value: "Pending" },
+                            { text: "For Acknowledgment", value: "For Acknowledgment" },
                             { text: "Hired", value: "Hired" },
                         ]
                     }
@@ -231,6 +232,9 @@ export default function HiringTableSection() {
                     case "Pending":
                         color = "#E1AD01";
                         break;
+                    case "For Acknowledgment":
+                        color = "#E1AD01";
+                        break;
                     case "Hired":
                         color = "#008000";
                         break;
@@ -247,6 +251,8 @@ export default function HiringTableSection() {
             title: "Action",
             dataIndex: "action",
             render: (_, record) => {
+
+                const safeJobPos = record.jobPos.replace(/\//g, '_');
                 return (
                     <div className="flex gap-1">
                         {record.status !== "Pending" &&
@@ -257,8 +263,9 @@ export default function HiringTableSection() {
                                             type="button"
                                             onClick={() =>
                                                 router.visit(
-                                                    `/admin/file_201/${record.app_id}?status=${record.status}`
+                                                    `/admin/file_201/${record.app_id}/${safeJobPos}/${record?.salary}/${record?.allowance}?status=${record.status}`
                                                 )
+
                                             }
                                             className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
                                         >
@@ -303,16 +310,6 @@ export default function HiringTableSection() {
         router.visit(newUrl);
     };
 
-    const latestJobOffers = Object.values(
-        joboffers.data.reduce((acc, curr) => {
-            const existing = acc[curr.app_id];
-            if (!existing || new Date(curr.created_at) > new Date(existing.created_at)) {
-                acc[curr.app_id] = curr;
-            }
-            return acc;
-        }, {})
-    );
-
     return (
         <div>
             <div>
@@ -328,9 +325,8 @@ export default function HiringTableSection() {
             <Table
                 pagination={false}
                 columns={columns}
-                dataSource={latestJobOffers}
+                dataSource={joboffers.data}
             />
-
             <div className="flex w-full items-center justify-end mt-2">
                 <Pagination
                     onChange={onChangePaginate}

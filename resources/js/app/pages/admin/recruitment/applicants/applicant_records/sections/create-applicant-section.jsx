@@ -1,5 +1,5 @@
 // MyForm.jsx
-import Input from "@/app/pages/_components/input";
+import Input2 from "@/app/pages/_components/input2";
 import Select from "@/app/pages/_components/select";
 import Select2 from "@/app/pages/_components/select2";
 import { PlusIcon, UserPlusIcon } from "@heroicons/react/24/outline";
@@ -15,7 +15,7 @@ import Checkbox from "@/app/pages/_components/checkbox";
 import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload } from "antd";
 import store from "@/app/store/store";
-import { store_applicant_thunk } from "../redux/applicant-thunk";
+import { get_applicant_thunk, store_applicant_thunk } from "../redux/applicant-thunk";
 import { useSelector } from "react-redux";
 const { Dragger } = Upload;
 
@@ -116,20 +116,26 @@ export default function CreateApplicantSection() {
     };
     const onSubmit = async (data) => {
         // data.prevent.defaultValues
-        console.log("Form Submitted:");
+        // console.log("Form Submitted:");
         try {
             const result = await store.dispatch(
                 store_applicant_thunk({
                     ...data,
+                    province: JSON.parse(data?.province).name,
+                    city: JSON.parse(data?.city).name,
+                    region: JSON.parse(data?.region).name,
                     site: user.site,
                     files: files.map((res) => res.files),
                     is_experience: hasExperience,
                 })
             );
+            await store.dispatch(get_applicant_thunk())
             reset();
             setFiles([]);
+            setOpen(false);
             message.success('Application has been submitted successfully');
         } catch (error) { }
+
         // reset(); // optional: reset the form after submit
     };
 
@@ -200,7 +206,7 @@ export default function CreateApplicantSection() {
 
                     <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("fname", {
                                         required: "First Name is required",
@@ -213,7 +219,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("mname", {
                                         required: "Middle Name is required",
@@ -226,7 +232,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("lname", {
                                         required: "Last Name is required",
@@ -278,7 +284,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("dob", {
                                         required: "Date of Birth is required",
@@ -293,7 +299,7 @@ export default function CreateApplicantSection() {
                     </div>
                     <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("email", {
                                         required: "Email is required",
@@ -306,7 +312,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("phone", {
                                         required: "Phone is required",
@@ -339,7 +345,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("religion", {
                                         required: false,
@@ -351,7 +357,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("nationality", {
                                         required: false,
@@ -366,7 +372,7 @@ export default function CreateApplicantSection() {
 
                     <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("mmname", {
                                         required:
@@ -379,7 +385,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("ffname", {
                                         required: false,
@@ -446,7 +452,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("courset", {
                                         required: false,
@@ -469,7 +475,8 @@ export default function CreateApplicantSection() {
                                         required: "Please Select Region",
                                     }),
                                 }}
-                                onChange={data_handler}
+                                onChange={(event) => data_handler(event)}
+
                                 options={region.map((res) => ({
                                     label: res.region_name,
                                     value: JSON.stringify({
@@ -477,6 +484,7 @@ export default function CreateApplicantSection() {
                                         region_code: res.region_code,
                                     }),
                                 }))}
+                                // value={address.region}
                                 errorMessage={errors?.region?.message}
                                 label="Region"
                                 name="region"
@@ -489,7 +497,8 @@ export default function CreateApplicantSection() {
                                         required: "Please Select Province"
                                     }),
                                 }}
-                                onChange={data_handler}
+                                onChange={(event) => data_handler(event)}
+
                                 options={newProvince.map((res) => ({
                                     label: res.province_name,
                                     value: JSON.stringify({
@@ -509,7 +518,8 @@ export default function CreateApplicantSection() {
                                         required: "Please Select City"
                                     }),
                                 }}
-                                onChange={data_handler}
+                                onChange={(event) => data_handler(event)}
+
                                 options={newCity.map((res) => ({
                                     label: res.city_name,
                                     value: JSON.stringify({
@@ -531,7 +541,8 @@ export default function CreateApplicantSection() {
                                         required: "Please Select Barangay"
                                     }),
                                 }}
-                                onChange={data_handler}
+                                onChange={(event) => data_handler(event)}
+
                                 options={newBarangay.map((res) => ({
                                     label: res.brgy_name,
                                     value: res.brgy_name,
@@ -542,7 +553,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("lot", {
                                         required:
@@ -561,7 +572,7 @@ export default function CreateApplicantSection() {
                     </h1>
                     <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("sss", {
                                     }),
@@ -572,7 +583,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("pagibig", {
                                     }),
@@ -586,7 +597,7 @@ export default function CreateApplicantSection() {
 
                     <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("tin", {
                                     }),
@@ -597,7 +608,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("philh", {
                                     }),
@@ -654,7 +665,7 @@ export default function CreateApplicantSection() {
                                         )}
 
                                         <div className="w-full flex gap-3">
-                                            <Input
+                                            <Input2
                                                 register={{
                                                     ...register(
                                                         `work_experience.${index}.company`,
@@ -673,7 +684,7 @@ export default function CreateApplicantSection() {
                                                 label="Company"
                                                 type="text"
                                             />
-                                            <Input
+                                            <Input2
                                                 register={{
                                                     ...register(
                                                         `work_experience.${index}.position`,
@@ -695,7 +706,7 @@ export default function CreateApplicantSection() {
                                         </div>
 
                                         <div className="w-full flex gap-3">
-                                            <Input
+                                            <Input2
                                                 register={{
                                                     ...register(
                                                         `work_experience.${index}.started_at`,
@@ -713,7 +724,7 @@ export default function CreateApplicantSection() {
                                                 label="Started At"
                                                 type="date"
                                             />
-                                            <Input
+                                            <Input2
                                                 register={{
                                                     ...register(
                                                         `work_experience.${index}.end_at`,
@@ -742,7 +753,7 @@ export default function CreateApplicantSection() {
                     </h1>
                     <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("ename", {
                                         required:
@@ -755,7 +766,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("eaddress", {
                                         required: false,
@@ -769,7 +780,7 @@ export default function CreateApplicantSection() {
                     </div>
                     <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("relationship", {
                                         required: false,
@@ -781,7 +792,7 @@ export default function CreateApplicantSection() {
                             />
                         </div>
                         <div className="flex-1">
-                            <Input
+                            <Input2
                                 register={{
                                     ...register("ephone", {
                                         required: false,

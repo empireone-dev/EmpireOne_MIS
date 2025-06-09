@@ -1,4 +1,4 @@
-    import { LoadingOutlined, SendOutlined } from '@ant-design/icons';
+import { LoadingOutlined, SendOutlined } from '@ant-design/icons';
 import { message, Modal } from 'antd';
 import React from 'react'
 import { useState } from 'react';
@@ -12,6 +12,10 @@ export default function OnboardingAcknowledgeSection({ data, setOpen }) {
         allowance: 0
     });
     const [loading, setLoading] = useState(false);
+    const rawJobPos = window.location.pathname.split('/')[4];
+    const salary = window.location.pathname.split('/')[5];
+    const allowance = window.location.pathname.split('/')[6];
+    const job_pos = rawJobPos.replace(/_/g, '/').replace(/%20/g, ' ');
 
     console.log('data', data)
 
@@ -23,7 +27,9 @@ export default function OnboardingAcknowledgeSection({ data, setOpen }) {
                 create_onboarding_ack_thunk({
                     ...form,
                     ...data,
-                    // status: 'Pending'
+                    job_pos: job_pos ?? "",
+                    salary: salary ?? "",
+                    allowance: allowance ?? "",
                 })
             );
             await store.dispatch(get_applicant_thunk());
@@ -120,13 +126,13 @@ export default function OnboardingAcknowledgeSection({ data, setOpen }) {
                             disabled={loading}
                             className="bg-blue-500 hover:bg-blue-700 text-white py-1.5 px-2 rounded-lg"
                         >
-                            <div className="flex flex-1 items-center justify-center">
+                            <div className="flex flex-1 px-2 items-center justify-center">
                                 {loading ? (
-                                    <LoadingOutlined spin />
+                                    <LoadingOutlined className='mr-1' spin />
                                 ) : (
                                     <></>
                                 )}
-                                {loading ? " SENDING..." : "Ok, Send"}
+                                {loading ? " Sending..." : " Send"}
                             </div>
                         </button>
                     </div>

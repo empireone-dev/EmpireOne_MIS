@@ -231,13 +231,13 @@ const AdminLayout = ({ children }) => {
                     onClick: () =>
                         router.visit("/admin/onboarding/onboarding_docu"),
                 },
-                {
-                    key: "acknowledgement",
-                    icon: <HolderOutlined />,
-                    label: "Acknowledgement",
-                    onClick: () =>
-                        router.visit("/admin/onboarding/acknowledgement"),
-                },
+                // {
+                //     key: "acknowledgement",
+                //     icon: <HolderOutlined />,
+                //     label: "Acknowledgement",
+                //     onClick: () =>
+                //         router.visit("/admin/onboarding/acknowledgement"),
+                // },
             ],
         },
         {

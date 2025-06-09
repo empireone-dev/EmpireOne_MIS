@@ -29,6 +29,16 @@ class OnboardingAckController extends Controller
                 'status' => 'Sent'
             ]);
         }
+
+        JobOffer::where('app_id', $request->app_id)
+            ->where('jobPos', $request->job_pos)
+            ->where('salary', $request->salary)
+            ->where('allowance', $request->allowance)
+            ->update([
+                'status' => "For Acknowledgment",
+            ]);
+
+
         Mail::to($request->email)->send(new MailOnboardingAck($request->all()));
 
         return response()->json([
@@ -41,7 +51,7 @@ class OnboardingAckController extends Controller
     {
         JobOffer::where([
             ['app_id', '=', $id],
-            ['status', '=', 'Accepted']
+            ['status', '=', 'For Acknowledgment']
         ])->update([
             'status' => 'Contract Signing'
         ]);

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class JobOffer extends Model
@@ -32,5 +33,9 @@ class JobOffer extends Model
     public function employee(): HasOne
     {
         return $this->hasOne(Employee::class,"app_id","app_id");
+    }
+    public function onboarding_app(): HasMany
+    {
+        return $this->hasMany(OnboardingAck::class,"app_id","app_id");
     }
 }

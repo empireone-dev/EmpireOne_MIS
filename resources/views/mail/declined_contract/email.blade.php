@@ -16,6 +16,8 @@
         
     Re-upload Link
 
+    https://empireone-hris.com/pre-employment/{{$data['app_id']}}?id={{$data['id']}}
+
     If you encounter any issues or require assistance during this process, please do not hesitate to reach out. We are committed to providing support to ensure a smooth and successful contract submission.
 
     Thank you for your prompt attention to this matter. We are eager to move forward once the corrected document is received and we remain enthusiastic about the opportunity to have you join our team.

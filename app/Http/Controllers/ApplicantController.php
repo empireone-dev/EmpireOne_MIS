@@ -114,7 +114,19 @@ class ApplicantController extends Controller
         ]);
 
         $data = $validatedData;
-        $data['caddress'] = trim("{$request->lot} {$request->brgy} {$request->city} {$request->province}");
+        $existingApplicant = Applicant::where('fname', $request->fname)
+            ->where('mname', $request->mname)
+            ->where('lname', $request->lname)
+            ->where('suffix', $request->suffix)
+            ->first();
+
+        if ($existingApplicant) {
+            return response()->json([
+                'error' => 'An applicant with the same full name already exists.',
+            ], 422);
+        }
+
+        $data['caddress'] = trim("{$request->lot}, {$request->brgy}, {$request->city}, {$request->province}");
 
         // Create applicant record
         $applicant = Applicant::create($data);

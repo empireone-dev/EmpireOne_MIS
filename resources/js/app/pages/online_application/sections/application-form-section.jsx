@@ -71,13 +71,13 @@ export default function ApplicationFormSection() {
   }
 
   async function submitApplicant(e) {
-    e.preventDefault();
+    // e.preventDefault();
     setLoading(true);
 
     const dob = calculateAge(applicantForm.dob ?? new Date());
 
     const fd = new FormData();
-    fd.append('files', uploadedFile)
+    fd.append('files', uploadedFile ?? '')
     fd.append('site', applicantForm.site ?? '');
     fd.append('fname', applicantForm.fname ?? '');
     fd.append('mname', applicantForm.mname ?? '');
@@ -125,7 +125,7 @@ export default function ApplicationFormSection() {
         message.success('Application has been submitted successfully');
       } else {
         setError(result.response.data.errors);
-        message.error('Failed to submit Application');
+        message.error('Failed to submit Application/Application Exist');
       }
     } catch (error) {
       // message.error('Failed to submit application');
@@ -267,6 +267,7 @@ export default function ApplicationFormSection() {
                       name="fname"
                       label="First Name"
                       type="text"
+                      errorMessage={error?.fname}
                     />
                     <Input
                       onChange={(event) => data_handler(event)}
@@ -283,6 +284,7 @@ export default function ApplicationFormSection() {
                       name="lname"
                       label="Last Name"
                       type="text"
+                      errorMessage={error?.lname}
                     />
                     <select
                       onChange={(event) => data_handler(event)}
@@ -359,7 +361,7 @@ export default function ApplicationFormSection() {
                         name="phone"
                         label="Phone Number"
                         type="number"
-                        errorMessage={error?.email}
+                        errorMessage={error?.phone}
                       />
                     </div>
                   </div>

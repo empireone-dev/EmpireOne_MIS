@@ -203,7 +203,7 @@ export default function ApplicantsTableSection() {
 
                 return (
                     <div key={i}>
-                        {record.lname}, {record.fname}
+                        {record.lname}, {record.fname} {record.suffix}
                     </div>
                 );
             },

@@ -67,6 +67,10 @@ Route::get('/online_application', function () {
 Route::get('/video', function () {
     return Inertia::render('video/page');
 });
+Route::get('/video_quiz', function () {
+    return Inertia::render('video_quiz/page');
+});
+
 
 Route::get('/onboarding-documents/{app_id}', function () {
     return Inertia::render('onboarding-documents/page');

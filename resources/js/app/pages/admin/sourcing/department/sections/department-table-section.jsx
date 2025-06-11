@@ -17,12 +17,13 @@ const DepartmentTableSection = () => {
     // Filter departments by user's site
     const filteredDepartments = user.role_id === 1
         ? departments // Show all departments for admin users
-        : departments?.filter((dept) => dept.site === user.site); 
+        : departments?.filter((dept) => dept.site === user.site);
 
     // Prepare the data for the table
     const data = filteredDepartments?.map((res) => ({
         dept: res?.dept,
         depthead: `${res?.user?.employee_fname ?? ''} ${res?.user?.employee_lname ?? ''}`,
+        site: res?.site,
         action: res,
     }));
 
@@ -38,6 +39,11 @@ const DepartmentTableSection = () => {
             title: "Department Head",
             dataIndex: "depthead",
             key: "depthead",
+        },
+        {
+            title: "Site",
+            dataIndex: "site",
+            key: "site",
         },
         {
             title: "Action",

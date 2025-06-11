@@ -9,7 +9,10 @@ class DepartmentController extends Controller
 {
     public function index()
     {
-        $department = Department::with(['user'])->get();
+        $department = Department::with(['user'])
+            ->orderBy('site', 'desc')
+            ->orderBy('dept', 'asc')
+            ->get();
         return response()->json([
             'result' => $department
         ], 200);
@@ -19,7 +22,7 @@ class DepartmentController extends Controller
     {
         Department::create($request->all());
     }
-    
+
     public function show($id)
     {
         $department = Department::where('id', $id)->with(['user'])->first();
@@ -39,7 +42,7 @@ class DepartmentController extends Controller
 
     public function update(Request $request, $id)
     {
-        $department = Department::where('id',$id)->first();
+        $department = Department::where('id', $id)->first();
 
         if (!$department) {
             return response()->json([

@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import {
+    FileTextFilled,
     FolderOpenFilled,
     LineOutlined,
     SearchOutlined,
@@ -254,7 +255,7 @@ export default function HiringTableSection() {
 
                 const safeJobPos = record.jobPos.replace(/\//g, '_');
                 return (
-                    <div className="flex gap-1">
+                    <div className="flex gap-2 items-center">
                         {record.status !== "Pending" &&
                             record.status !== "Declined" && (
                                 <Tooltip title="201 File">
@@ -267,7 +268,7 @@ export default function HiringTableSection() {
                                                 )
 
                                             }
-                                            className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
+                                            className="text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 shadow-lg shadow-yellow-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
                                         >
                                             <FolderOpenFilled />
                                         </button>
@@ -281,11 +282,27 @@ export default function HiringTableSection() {
                                 </div>
                             </Tooltip>
                         )}
-                        {record.status === "Pending" && (
+                        {/* {record.status === "Pending" && (
                             <div className="ml-4">
                                 <LineOutlined />
                             </div>
-                        )}
+                        )} */}
+                        <Tooltip title="Job Offer">
+                            <div>
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        router.visit(
+                                            `/admin/hiring/${record.app_id}?id=${record.id}`
+                                        )
+
+                                    }
+                                    className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
+                                >
+                                    <FileTextFilled />
+                                </button>
+                            </div>
+                        </Tooltip>
                     </div>
                 );
             },

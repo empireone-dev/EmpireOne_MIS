@@ -275,6 +275,9 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         Route::get('/hiring_section', function () {
             return Inertia::render('admin/hiring/hiring_section/page');
         });
+        Route::get('/{id}', function () {
+            return Inertia::render('admin/hiring/id/page');
+        });
     });
     Route::prefix('onboarding')->group(function () {
         Route::prefix('onboarding_docu')->group(function () {

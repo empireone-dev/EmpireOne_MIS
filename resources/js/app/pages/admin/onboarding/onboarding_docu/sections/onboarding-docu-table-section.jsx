@@ -140,11 +140,17 @@ export default function OnboardingDocuTableSection() {
             render: (_, record) => {
                 return (
                     <div className="gap-1.5 flex">
-                      {moment(record.created).format('LLL')}
+                        {moment(record.created).format('LLL')}
                     </div>
                 );
             },
 
+        },
+        {
+            title: 'Site',
+            dataIndex: 'site',
+            key: 'site',
+            ...getColumnSearchProps('site'),
         },
         {
             title: 'Action',
@@ -163,7 +169,7 @@ export default function OnboardingDocuTableSection() {
                 <div className="flex items-center gap-x-3 mb-4">
                     <h2 className="text-lg font-medium text-gray-800">
                         <b>Onboarding Documents</b>
-                        <AddOnboardingDocuSection/>
+                        <AddOnboardingDocuSection />
                     </h2>
                 </div>
             </div>

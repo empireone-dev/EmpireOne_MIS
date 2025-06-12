@@ -69,7 +69,7 @@ export default function DeclinedSection({ confirmed, setConfirmed }) {
 
             <Modal open={isModalOpen} setOpen={setIsModalOpen} width="w-20 mx-96">
                 <h2 className="text-xl font-semibold mb-4">
-                    Kindly provide your reason for declining the interview invitation.
+                    Kindly provide your reason for declining the Initial interview invitation.
                 </h2>
                 <form onSubmit={submitDecline}>
                     <textarea
@@ -83,7 +83,7 @@ export default function DeclinedSection({ confirmed, setConfirmed }) {
 
                     <div className="mt-5">
                         <h2 className="text-xl font-semibold mb-2">
-                            Would you be open to being scheduled for another interview?
+                            Would you be open to being scheduled for another Initial interview?
                         </h2>
                         <div className="flex gap-6">
                             <label className="flex items-center gap-2">

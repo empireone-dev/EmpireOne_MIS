@@ -1,1 +1,0 @@
-import{j as r}from"./app-77c27130.js";import t from"./engagement-layout-7cb26df3.js";import"./engagement-sidenav-section-7dae89fc.js";import"./engagement-sidenav-components-6e325706.js";import"./UsersIcon-b6394b91.js";import"./ShieldCheckIcon-9b4090bf.js";import"./UserCircleIcon-a58636a1.js";function f(){return r.jsx(t,{children:"Profile Page"})}export{f as default};

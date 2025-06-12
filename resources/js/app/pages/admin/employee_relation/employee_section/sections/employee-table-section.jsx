@@ -292,12 +292,11 @@ export default function EmployeeTableSection() {
                         { text: "End of Contract", value: "End of Contract" },
                         { text: "EOPE", value: "EOPE" },
                         { text: "Extended Probationary", value: "Extended Probationary" },
-                        { text: "Fallout", value: "Fallout" },
                         { text: "Probationary", value: "Probationary" },
                         { text: "Regular", value: "Regular" },
                         { text: "Resigned", value: "Resigned" },
                         { text: "Terminated", value: "Terminated" },
-                        { text: "Trainee", value: "Trainee" },
+                        { text: "Trainee Fallout", value: "Trainee Fallout" },
                     ]}
                 />
             </div>,
@@ -343,10 +342,7 @@ export default function EmployeeTableSection() {
                     case "Contractual":
                         color = "#58d68d";
                         break;
-                    case "Trainee":
-                        color = "#f4d03f";
-                        break;
-                    case "Fallout":
+                    case "Trainee Fallout":
                         color = "#FF0000";
                         break;
                 }

@@ -287,14 +287,17 @@ export default function EmployeeTableSection() {
                     onChange={search_status}
                     // onSearch={onSearch}
                     options={[
+                        { text: "AWOL", value: "AWOL" },
+                        { text: "Contractual", value: "Contractual" },
+                        { text: "End of Contract", value: "End of Contract" },
+                        { text: "EOPE", value: "EOPE" },
+                        { text: "Extended Probationary", value: "Extended Probationary" },
+                        { text: "Fallout", value: "Fallout" },
                         { text: "Probationary", value: "Probationary" },
                         { text: "Regular", value: "Regular" },
-                        { text: "Extended Probationary", value: "Extended Probationary" },
-                        { text: "EOPE", value: "EOPE" },
-                        { text: "End of Contract", value: "End of Contract" },
-                        { text: "Terminated", value: "Terminated" },
-                        { text: "AWOL", value: "AWOL" },
                         { text: "Resigned", value: "Resigned" },
+                        { text: "Terminated", value: "Terminated" },
+                        { text: "Trainee", value: "Trainee" },
                     ]}
                 />
             </div>,
@@ -335,6 +338,15 @@ export default function EmployeeTableSection() {
                         color = "#FF0000";
                         break;
                     case "Resigned":
+                        color = "#FF0000";
+                        break;
+                    case "Contractual":
+                        color = "#58d68d";
+                        break;
+                    case "Trainee":
+                        color = "#f4d03f";
+                        break;
+                    case "Fallout":
                         color = "#FF0000";
                         break;
                 }

@@ -515,6 +515,9 @@ export default function AddExistingEmployeeSection() {
                                     <option disabled selected>Status</option>
                                     <option> Probationary</option>
                                     <option> Regular</option>
+                                    <option> Contractual</option>
+                                    <option> Trainee</option>
+                                    <option> Fallout</option>
                                 </select>
                             </div>
                         </div>

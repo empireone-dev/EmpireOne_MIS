@@ -1,0 +1,1 @@
+import{r as i,j as e}from"./app-d4e4bca1.js";import o from"./video-section-b5eec61b.js";import c from"./register-section-3ceb6983.js";function d(){const[s,t]=i.useState(!1),r=()=>{t(!0)};return e.jsx("div",{children:s?e.jsx(o,{}):e.jsx(c,{onRegisterSuccess:r})})}export{d as default};

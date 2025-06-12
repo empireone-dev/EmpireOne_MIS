@@ -473,6 +473,9 @@ export default function UpdateEmployeeFormSection() {
                                     <option disabled selected>{employee?.status}</option>
                                     <option> Probationary</option>
                                     <option> Regular</option>
+                                    <option> Contractual</option>
+                                    <option> Trainee</option>
+                                    <option> Fallout</option>
                                 </select>
                             </div>
                         </div>

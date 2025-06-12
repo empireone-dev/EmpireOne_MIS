@@ -40,7 +40,7 @@ export default function GenerateQrComponent({ data, item }) {
                 <div className="flex w-full justify-center">
                     <div className="relative">
                         <QRCode
-                            value={`${data?.applicant.fname} ${data?.applicant.lname}`}
+                            value={`${data?.applicant?.fname} ${data?.applicant?.lname}`}
                             size={256} // Adjust size here
                             level="H" // High error correction level
                             includeMargin={true}

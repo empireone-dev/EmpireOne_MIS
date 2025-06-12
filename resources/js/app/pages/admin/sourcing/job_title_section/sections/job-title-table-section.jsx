@@ -153,6 +153,12 @@ export default function JobTitleTableSection() {
                 );
             },
         },
+        // {
+        //     title: "Site",
+        //     dataIndex: "site",
+        //     key: "site",
+        //     ...getColumnSearchProps("site"),
+        // },
         {
             title: "Action",
             dataIndex: "action",

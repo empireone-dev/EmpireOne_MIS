@@ -272,18 +272,19 @@ export default function ApplicantsTableSection() {
                     // onSearch={onSearch}
                     options={
                         [
-                            { text: "Pending", value: "Pending" },
-                            { text: "Initial Phase", value: "Initial Phase" },
-                            { text: "For Final Phase", value: "For Final Phase" },
-                            { text: "Final Phase", value: "Final Phase" },
-                            { text: "Passed", value: "Passed" },
-                            { text: "Pooling", value: "Pooling" },
-                            { text: "Shortlisted", value: "Shortlisted" },
-                            { text: "Send Rejection", value: "Send Rejection" },
+                            { text: "Declined", value: "Declined" },
                             { text: "Failed", value: "Failed" },
+                            { text: "Final Phase", value: "Final Phase" },
+                            { text: "For Final Phase", value: "For Final Phase" },
                             { text: "Hired", value: "Hired" },
-                            { text: "Regular", value: "Regular" },
+                            { text: "Initial Phase", value: "Initial Phase" },
+                            { text: "Passed", value: "Passed" },
+                            { text: "Pending", value: "Pending" },
+                            { text: "Pooling", value: "Pooling" },
                             { text: "Probationary", value: "Probationary" },
+                            { text: "Regular", value: "Regular" },
+                            { text: "Send Rejection", value: "Send Rejection" },
+                            { text: "Shortlisted", value: "Shortlisted" },
                         ]
                     }
                 />
@@ -296,6 +297,7 @@ export default function ApplicantsTableSection() {
                     case "Failed":
                     case "Send Rejection":
                     case "Dismissal":
+                    case "Declined":
                     case "Resignation":
                     case "EOPE":
                     case "AWOL":

@@ -12,6 +12,11 @@ export default function DepartmentPage() {
   }, [])
   return (
     <AdminLayout>
+      <div className="flex items-center gap-x-3">
+        <h2 className="text-lg font-medium text-gray-800 mb-3">
+          <b>Departments</b>
+        </h2>
+      </div>
       <DepartmentCreateSection />
       <DepartmentTableSection />
     </AdminLayout>

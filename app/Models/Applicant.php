@@ -65,7 +65,7 @@ class Applicant extends Model
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class, "app_id", "app_id")->with('user');
-    }
+    }   
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

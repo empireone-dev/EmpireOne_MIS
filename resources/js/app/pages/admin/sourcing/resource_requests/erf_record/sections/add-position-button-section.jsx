@@ -6,7 +6,7 @@ export default function AddPositionButtonSection() {
         <div className="my-2">
             <div class="inline-flex rounded-md shadow-sm" role="group">
                 <AddNewPositionSection/>
-                <AddExistingPositionSection/>
+                {/* <AddExistingPositionSection/> */}
             </div>
         </div>
     );

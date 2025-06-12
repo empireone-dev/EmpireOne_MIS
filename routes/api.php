@@ -19,6 +19,7 @@ use App\Http\Controllers\FinalRateController;
 use App\Http\Controllers\GuideQuestionController;
 use App\Http\Controllers\IncidentReportController;
 use App\Http\Controllers\InitialRateController;
+use App\Http\Controllers\InterviewConfirmationController;
 use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\JobPositionController;
 use App\Http\Controllers\MedicineRecordController;
@@ -115,5 +116,7 @@ Route::post('/send-clearance-email', [ExitClearanceController::class, 'sendClear
 
 Route::post('/sendiv_email', [EmailController::class, 'sendiv_email']);
 Route::post('/send_rejection_email', [EmailController::class, 'send_rejection_email']);
+
+Route::resource('interview_confirmation', InterviewConfirmationController::class);
 
 require __DIR__ . '/auth.php';

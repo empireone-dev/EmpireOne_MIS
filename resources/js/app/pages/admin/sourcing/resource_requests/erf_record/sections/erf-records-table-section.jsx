@@ -256,7 +256,7 @@ export default function ErfRecordsTableSection() {
             <div>
                 <div className="flex items-center gap-x-3">
                     <h2 className="text-lg font-medium text-gray-800">
-                        <b>Employee Section</b>
+                        <b>ERF Records</b>
                     </h2>
                 </div>
                 <div className="flex flex-1 justify-between">

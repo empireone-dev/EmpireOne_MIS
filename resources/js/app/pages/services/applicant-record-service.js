@@ -38,3 +38,12 @@ export async function declined_attendance_service(data) {
     return res.data;
 }
 
+export function get_interview_applicant_service() {
+    try {
+        const result = axios.get('/api/interview_confirmation')
+        return result
+    } catch (error) {
+
+    }
+}
+

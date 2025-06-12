@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import DeclinedSection from './declined-section';
 import ConfirmAttendanceSection from './confirm-attendance-section';
+import { useSelector } from 'react-redux';
 
 export default function ConfirmationSection() {
     const [confirmed, setConfirmed] = useState(false);
+    const { interview_confirmations } = useSelector((state) => state.applicants);
 
+    console.log('interview_confirmations', interview_confirmations)
     return (
         <div className="h-screen overflow-hidden">
             <div className="bg-sky-400 transition-colors duration-300 h-full overflow-y-scroll">

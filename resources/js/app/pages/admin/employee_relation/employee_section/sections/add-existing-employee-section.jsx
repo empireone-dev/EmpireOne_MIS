@@ -573,7 +573,6 @@ export default function AddExistingEmployeeSection() {
                                     label: res.brgy_name,
                                     value: res.brgy_name,
                                 }))}
-                                required="true"
                                 name="brgy"
                                 label="Barangay"
                             />

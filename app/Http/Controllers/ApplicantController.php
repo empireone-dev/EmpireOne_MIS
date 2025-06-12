@@ -12,6 +12,7 @@ use App\Mail\Rescheduled;
 use App\Models\Applicant;
 use App\Models\CVFile;
 use App\Models\Employee;
+use App\Models\InterviewConfirmation;
 use App\Models\JobOffer;
 use App\Models\User;
 use App\Models\WorkingExperience;
@@ -343,6 +344,12 @@ class ApplicantController extends Controller
             Mail::to('quicklydeguzman@gmail.com')->send(new ConfirmationInitialPhysical($data));
         }
 
+        InterviewConfirmation::create([
+            'app_id' => $applicant->app_id,
+            'initial' => "confirmed",
+        ]);
+
+
         return response()->json([
             'message' => 'Applicant status updated successfully.',
             'app_id' => $applicant->app_id,
@@ -379,6 +386,11 @@ class ApplicantController extends Controller
 
             Mail::to('quicklydeguzman@gmail.com')->send(new DeclinedConfirmation($data));
         }
+
+        InterviewConfirmation::create([
+            'app_id' => $applicant->app_id,
+            'initial' => "declined",
+        ]);
 
 
         return response()->json([

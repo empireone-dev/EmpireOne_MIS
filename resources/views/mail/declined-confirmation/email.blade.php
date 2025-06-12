@@ -7,7 +7,6 @@
     Name: {{ $data['fname'] }} {{ $data['lname'] }}
     Reason for Declining: {{ $data['reason'] }}
 
-
     Please take note and update the applicant's status accordingly.
 
     Thank you.

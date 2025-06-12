@@ -21,7 +21,7 @@ class OnboardingAckController extends Controller
 
     public function store(Request $request)
     {
-        $ods =  OnboardingDoc::get();
+        $ods =  OnboardingDoc::where('site', $request->site)->get();
         foreach ($ods as $key => $od) {
             OnboardingAck::create([
                 'app_id' => $request->app_id,

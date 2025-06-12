@@ -9,7 +9,7 @@
 
     We hope this message finds you well. Congratulations once again on your successful application for the position of I.T Staff at EmpireOne BPO Solution Inc. We are delighted to welcome you to our team.
 
-    To facilitate the onboarding process, we kindly request you to submit the following pre-employment requirements through the provided link: https://empireone-hris.com/pre-employment/{{$data['app_id']}}?id={{$data['id']}}
+    To facilitate the onboarding process, we kindly request you to submit the following pre-employment requirements through the provided link: https://empireone-hris.com/pre-employment/{{$data['app_id']}}/{{$data['site']}}?id={{$data['id']}}
 
     • Birth Certificate
     • SSS Form E1/SSS ID

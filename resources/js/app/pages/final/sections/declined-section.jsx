@@ -1,14 +1,16 @@
+import store from "@/app/store/store";
 import { useState } from "react";
+import { declined_attendance_thunk, get_applicant_thunk } from "../../admin/recruitment/applicants/applicant_records/redux/applicant-thunk";
 import { message } from "antd";
 import { XMarkIcon } from "@heroicons/react/24/outline";
-import Modal from "@/app/pages/_components/modal";
-import store from "@/app/store/store";
-import { final_declined_attendance_thunk, get_applicant_thunk } from "@/app/pages/admin/recruitment/applicants/applicant_records/redux/applicant-thunk";
+import Modal from "../../_components/modal";
 
 export default function DeclinedSection({ confirmed, setConfirmed }) {
     const [loading, setLoading] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [reason, setReason] = useState('');
+    const [reschedDecision, setReschedDecision] = useState(null); // YES or NO
+
     const app_id = window.location.pathname.split('/')[2];
 
     const openModal = () => setIsModalOpen(true);
@@ -27,18 +29,24 @@ export default function DeclinedSection({ confirmed, setConfirmed }) {
             return;
         }
 
+        if (reschedDecision === null) {
+            message.error('Please indicate if you’re open to rescheduling.');
+            return;
+        }
+
         setLoading(true);
         try {
             await store.dispatch(
-                final_declined_attendance_thunk({
+                declined_attendance_thunk({
                     app_id,
                     reason,
+                    reschedule: reschedDecision === 'yes' ? 'Yes' : 'No'
                 })
             );
 
             store.dispatch(get_applicant_thunk());
-            setConfirmed(true); // Disable buttons and show confirmation
-            message.success('Your reason for declining has been submitted. Thank you.');
+            setConfirmed(true);
+            message.success('Your response has been submitted. Thank you.');
             closeModal();
         } catch {
             message.error('Failed to submit your response. Please try again.');
@@ -61,7 +69,7 @@ export default function DeclinedSection({ confirmed, setConfirmed }) {
 
             <Modal open={isModalOpen} setOpen={setIsModalOpen} width="w-20 mx-96">
                 <h2 className="text-xl font-semibold mb-4">
-                    Kindly provide your reason for declining the interview invitation.
+                    Kindly provide your reason for declining the Final interview invitation.
                 </h2>
                 <form onSubmit={submitDecline}>
                     <textarea
@@ -72,7 +80,36 @@ export default function DeclinedSection({ confirmed, setConfirmed }) {
                         className="w-full h-24 p-2 border rounded-md resize-none"
                         placeholder="Your reason..."
                     />
-                    <div className="flex justify-end gap-2 mt-4">
+
+                    <div className="mt-5">
+                        <h2 className="text-xl font-semibold mb-2">
+                            Would you be open to being scheduled for another Final interview?
+                        </h2>
+                        <div className="flex gap-6">
+                            <label className="flex items-center gap-2">
+                                <input
+                                    type="radio"
+                                    name="resched"
+                                    value="yes"
+                                    checked={reschedDecision === 'yes'}
+                                    onChange={() => setReschedDecision('yes')}
+                                />
+                                Yes
+                            </label>
+                            <label className="flex items-center gap-2">
+                                <input
+                                    type="radio"
+                                    name="resched"
+                                    value="no"
+                                    checked={reschedDecision === 'no'}
+                                    onChange={() => setReschedDecision('no')}
+                                />
+                                No
+                            </label>
+                        </div>
+                    </div>
+
+                    <div className="flex justify-end gap-2 mt-6">
                         <button
                             type="button"
                             onClick={closeModal}

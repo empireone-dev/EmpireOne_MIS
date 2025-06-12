@@ -12,6 +12,7 @@ export default function JobOfferSection() {
     const [form, setForm] = useState({});
 
     const jo_id = window.location.search.split('=')[1]
+    const site = window.location.pathname.split('/')[3]
 
     const handleAccept = async () => {
         setLoading(true);
@@ -21,6 +22,7 @@ export default function JobOfferSection() {
                 ...form,
                 id: jo_id,
                 status: "Accepted",
+                site: site ?? "",
             });
             window.location.reload();
         } finally {

@@ -76,7 +76,7 @@ Route::get('/onboarding-documents/{app_id}', function () {
     return Inertia::render('onboarding-documents/page');
 });
 
-Route::get('/pre-employment/{app_id}', function () {
+Route::get('/pre-employment/{app_id}/{site}', function () {
     return Inertia::render('pre-employment/page');
 });
 Route::get('/virtual-contract/{app_id}', function () {
@@ -93,7 +93,7 @@ Route::get('/print_coe/{app_id}', function () {
 });
 
 Route::prefix('job_offer')->group(function () {
-    Route::get('/{app_id}', function () {
+    Route::get('/{app_id}/{site}', function () {
         return Inertia::render('job_offer/page');
     });
     Route::get('/confirmation', function () {

@@ -12,12 +12,14 @@ import { get_applicant_by_app_id_thunk } from '../../admin/final_rate/redux/fina
 export default function UploadRequirementsSection() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [reqs, setReqs] = useState('')
+    const { user } = useSelector((state) => state.app);
     const { checklists } = useSelector((state) => state.checklists);
     const [fileList, setFileList] = useState([])
     const [loading, setLoading] = useState(false)
     const app_id = window.location.pathname.split('/')[2]
     const { applicant } = useSelector((state) => state.final_rate);
-
+    const site = decodeURIComponent(window.location.pathname.split('/')[3].replace(/\+/g, ' '))
+    
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -68,6 +70,7 @@ export default function UploadRequirementsSection() {
             file
         ])
     }
+
     return (
         <div>
 
@@ -93,13 +96,20 @@ export default function UploadRequirementsSection() {
                         onChange={(e) => setReqs(e.target.value)}
                     >
                         {
-                            !reqs && <option value=""  selected disabled></option>
+                            !reqs && <option value="" selected disabled></option>
                         }
                         {
-                            filteredEntries?.filter(res => res.site === "San Carlos")
+                            // filteredEntries?.filter(res => res.site === "San Carlos")
+                            //     .map((res, i) => (
+                            //         <option value={res.reqs} key={i}>
+                            //             {res.reqs} {res.remarks === "Yes" ? "*" : ""}
+                            //         </option>
+                            //     ))
+                            filteredEntries
+                                .filter(res => !site || res?.site === site)
                                 .map((res, i) => (
                                     <option value={res.reqs} key={i}>
-                                        {res.reqs} {res.remarks === "Yes" ? "*" : ""}
+                                        {res.reqs} {!site ? ` (${res.site})` : ''} {res.remarks === "Yes" ? "*" : ""}
                                     </option>
                                 ))
                         }

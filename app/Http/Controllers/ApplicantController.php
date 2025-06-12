@@ -8,6 +8,7 @@ use App\Mail\DeclinedConfirmation;
 use App\Mail\GreetingsApplication;
 use App\Mail\NewApplication;
 use App\Mail\PoolingEmail;
+use App\Mail\Rescheduled;
 use App\Models\Applicant;
 use App\Models\CVFile;
 use App\Models\Employee;
@@ -352,6 +353,7 @@ class ApplicantController extends Controller
     {
         $request->validate([
             'reason' => 'required|string|max:1000',
+            'reschedule' => 'nullable|string',
         ]);
 
         $applicant = Applicant::where('app_id', $app_id)->first();
@@ -369,11 +371,15 @@ class ApplicantController extends Controller
             'reason' => $request->reason,
         ];
 
-        // Send email notification
-        Mail::to('hiring@empireonegroup.com')->send(new DeclinedConfirmation($data));
+        if (strtolower($request->reschedule) === "yes") {
+            Mail::to('hiring@empireonegroup.com')->send(new Rescheduled($data));
+        } else {
+            Mail::to('hiring@empireonegroup.com')->send(new DeclinedConfirmation($data));
+        }
+
 
         return response()->json([
-            'message' => 'Applicant decline reason submitted successfully.',
+            'message' => 'Applicant response submitted successfully.',
             'app_id' => $applicant->app_id,
         ]);
     }

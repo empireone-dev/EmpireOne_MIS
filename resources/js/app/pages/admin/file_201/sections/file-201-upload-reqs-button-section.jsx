@@ -11,6 +11,7 @@ import { get_applicant_by_app_id_thunk } from '../../final_rate/redux/final-rate
 export default function File201UploadReqsButtonSection() {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false)
+    const { user } = useSelector((state) => state.app);
     const { applicant } = useSelector((state) => state.final_rate);
     const { checklists } = useSelector((state) => state.checklists);
     const [fileList, setFileList] = useState([])
@@ -97,10 +98,12 @@ export default function File201UploadReqsButtonSection() {
                                     }
                                     {
                                         filteredEntries
-                                            .filter(res => res.site === "San Carlos")
-                                            .map((res, i) => {
-                                                return <option value={res.reqs} key={i}>{res.reqs}</option>;
-                                            })
+                                            .filter(res => !user?.site || res?.site === user?.site)
+                                            .map((res, i) => (
+                                                <option value={res.reqs} key={i}>
+                                                    {res.reqs} {!user?.site ? ` (${res.site})` : ''} {res.remarks === "Yes" ? "*" : ""}
+                                                </option>
+                                            ))
                                     }
                                 </select>
                             </div>

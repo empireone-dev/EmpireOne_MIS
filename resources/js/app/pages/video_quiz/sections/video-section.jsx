@@ -24,24 +24,29 @@ export default function VideoSection() {
     }, [currentVideo]);
 
     return (
-        <div style={{ width: '100%', height: 'auto' }}>
+        <div style={{
+            width: '100%', height: 'auto',
+            backgroundColor: 'skyblue'
+        }}>
             {videoSources.map((src, index) => (
                 <video
                     key={index}
                     ref={(el) => (videoRefs.current[index] = el)}
                     controls
                     onEnded={handleVideoEnd}
-                    // loop
                     style={{
                         display: currentVideo === index ? 'block' : 'none',
                         width: '100%',
-                        height: 'auto',
-                        objectFit: 'contain'
+                        height: '100%',
+                        objectFit: 'contain',
+                        padding: '40px',
+                        boxSizing: 'border-box',
                     }}
                 >
                     <source src={src} type="video/mp4" />
                     Your browser does not support the video tag.
                 </video>
+
             ))}
         </div>
     );

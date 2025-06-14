@@ -38,7 +38,10 @@ export default function OccupationalSafetySection({ type }) {
                 )}
             </div>
             {formSubmitted && (
-                <TrainingVideoPlayerComponent videoSrc={videoSources} />
+                <TrainingVideoPlayerComponent
+                    videoSrc={videoSources}
+                    link="https://forms.gle/VxgTZVAmN68NT2KGA"
+                />
             )}
         </>
 

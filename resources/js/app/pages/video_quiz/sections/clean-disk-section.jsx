@@ -37,7 +37,10 @@ export default function CleanDiskSection({ type }) {
                 )}
             </div>
             {formSubmitted && (
-                <TrainingVideoPlayerComponent videoSrc={videoSources} />
+                <TrainingVideoPlayerComponent
+                    videoSrc={videoSources}
+                    link="https://forms.gle/HE4wRtc7Tq47RTZm8"
+                />
             )}
         </>
 

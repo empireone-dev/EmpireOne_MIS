@@ -38,7 +38,10 @@ export default function AntiSexualSection({ type }) {
                 )}
             </div>
             {formSubmitted && (
-                <TrainingVideoPlayerComponent videoSrc={videoSources} />
+                <TrainingVideoPlayerComponent
+                    videoSrc={videoSources}
+                    link="https://forms.gle/cj41uX5Mvkz6qgxU7"
+                />
             )}
         </>
 

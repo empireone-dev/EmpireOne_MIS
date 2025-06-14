@@ -67,7 +67,7 @@ Route::get('/online_application', function () {
 Route::get('/video', function () {
     return Inertia::render('video/page');
 });
-Route::get('/video_quiz', function () {
+Route::get('/video_quiz/{type}', function () {
     return Inertia::render('video_quiz/page');
 });
 

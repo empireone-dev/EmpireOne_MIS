@@ -30,6 +30,7 @@ use App\Http\Controllers\OutSourcingErfController;
 use App\Http\Controllers\PreEmploymentFileController;
 use App\Http\Controllers\UploadMemoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VideoQuizController;
 use App\Mail\InitialEmail;
 use App\Mail\InitialvEmail;
 use App\Mail\SendInitialEmail;
@@ -118,5 +119,6 @@ Route::post('/sendiv_email', [EmailController::class, 'sendiv_email']);
 Route::post('/send_rejection_email', [EmailController::class, 'send_rejection_email']);
 
 Route::resource('interview_confirmation', InterviewConfirmationController::class);
+Route::resource('video_quiz', VideoQuizController::class);
 
 require __DIR__ . '/auth.php';

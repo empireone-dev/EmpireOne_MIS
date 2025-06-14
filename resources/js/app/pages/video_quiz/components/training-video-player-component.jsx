@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import Modal from "../../_components/modal"; // Assumes your Modal is a wrapper that can be controlled
+import Modal from "../../_components/modal"; // likely a wrapper around Dialog + Transition
 
 export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
     const [currentVideo, setCurrentVideo] = useState(0);
@@ -8,7 +8,7 @@ export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
 
     const handleVideoEnd = () => {
         if (currentVideo === videoSrc.length - 1) {
-            setShowQuizLink(true); // Show modal after last video ends
+            setShowQuizLink(true);
         } else {
             setCurrentVideo((prev) => prev + 1);
         }
@@ -36,21 +36,23 @@ export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
                     </video>
                 ))}
 
-            {showQuizLink && (
-                <Modal disableClose backdropClickDisabled>
-                    <div className="mt-6 text-center">
-                        <h2 className="text-xl font-semibold mb-4">Training Complete</h2>
-                        <a
-                            href={link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-block rounded-md bg-green-600 px-8 py-4 text-white font-medium hover:bg-green-500 transition"
-                        >
-                            Proceed to Quiz
-                        </a>
-                    </div>
-                </Modal>
-            )}
+            <Modal
+                show={showQuizLink}
+                static // prevents closing on click outside
+                onClose={() => { }} // disables closing via ESC key or close button
+            >
+                <div className="mt-6 text-center">
+                    <h2 className="text-xl font-semibold mb-4">Training Complete</h2>
+                    <a
+                        href={link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block rounded-md bg-green-600 px-8 py-4 text-white font-medium hover:bg-green-500 transition"
+                    >
+                        Proceed to Quiz
+                    </a>
+                </div>
+            </Modal>
         </div>
     );
 }

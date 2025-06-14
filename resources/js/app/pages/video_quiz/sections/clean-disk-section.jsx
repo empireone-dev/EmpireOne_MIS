@@ -1,9 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import RegisterFormComponents from '../components/register-form-component';
+import TrainingVideoPlayerComponent from '../components/training-video-player-component';
 
 export default function CleanDiskSection({ type }) {
+    const [formSubmitted, setFormSubmitted] = useState(false);
     const [currentVideo, setCurrentVideo] = useState(0);
     const videoRefs = useRef([]);
+
 
     const videoSources = [
         "/images/EO - Compliance Training -  Clean Desk and Clear Screen policy.mp4",
@@ -14,40 +17,30 @@ export default function CleanDiskSection({ type }) {
     };
 
     useEffect(() => {
-        videoRefs.current[currentVideo].play();
-    }, [currentVideo]);
+        if (formSubmitted && videoRefs.current[currentVideo]) {
+            videoRefs.current[currentVideo].play();
+        }
+    }, [currentVideo, formSubmitted]);
+
+    const handleFormSubmit = () => {
+        setFormSubmitted(true);
+    };
 
     return (
         <>
             <div>
-                <RegisterFormComponents type={type} />
+                {!formSubmitted && (
+                    <RegisterFormComponents
+                        type={type}
+                        onSubmitSuccess={handleFormSubmit}
+                    />
+                )}
             </div>
-            <div style={{
-                width: '100%', height: 'auto',
-                backgroundColor: 'skyblue'
-            }}>
-                {videoSources.map((src, index) => (
-                    <video
-                        key={index}
-                        ref={(el) => (videoRefs.current[index] = el)}
-                        controls
-                        onEnded={handleVideoEnd}
-                        style={{
-                            display: currentVideo === index ? 'block' : 'none',
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'contain',
-                            padding: '40px',
-                            boxSizing: 'border-box',
-                        }}
-                    >
-                        <source src={src} type="video/mp4" />
-                        Your browser does not support the video tag.
-                    </video>
-
-                ))}
-            </div>
+            {formSubmitted && (
+                <TrainingVideoPlayerComponent videoSrc={videoSources} />
+            )}
         </>
+
 
     );
 }

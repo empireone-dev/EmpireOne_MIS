@@ -1,1 +1,0 @@
-import{j as t}from"./app-fa1042d4.js";import o from"./engagement-layout-430696e9.js";import"./engagement-sidenav-section-c044a3c3.js";import"./engagement-sidenav-components-6eae955e.js";import"./UsersIcon-43d00d45.js";import"./ShieldCheckIcon-cdeadf86.js";import"./UserCircleIcon-5325e5dd.js";function a(){return t.jsx(o,{children:"Employee Wellness"})}export{a as default};

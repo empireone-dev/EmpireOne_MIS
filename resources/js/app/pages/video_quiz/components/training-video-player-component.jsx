@@ -7,7 +7,7 @@ export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
 
     const handleVideoEnd = () => {
         if (currentVideo === videoSrc.length - 1) {
-            // Last video ended
+            // Last video ended, show only the quiz link
             setShowQuizLink(true);
         } else {
             setCurrentVideo((prev) => prev + 1);
@@ -15,12 +15,14 @@ export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
     };
 
     useEffect(() => {
-        videoRefs.current[currentVideo]?.play();
-    }, [currentVideo]);
+        if (!showQuizLink) {
+            videoRefs.current[currentVideo]?.play();
+        }
+    }, [currentVideo, showQuizLink]);
 
     return (
         <div style={{ width: "100%", height: "auto", backgroundColor: "skyblue", padding: "40px" }}>
-            {videoSrc.map((src, index) => (
+            {!showQuizLink && videoSrc.map((src, index) => (
                 <video
                     key={index}
                     ref={(el) => (videoRefs.current[index] = el)}
@@ -45,7 +47,7 @@ export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
                         href={link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block rounded-md bg-green-600 px-4 py-2 text-white font-medium hover:bg-green-500 transition"
+                        className="inline-block rounded-md bg-green-600 px-8 py-4 text-white font-medium hover:bg-green-500 transition"
                     >
                         Proceed to Quiz
                     </a>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 
 export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
     const [currentVideo, setCurrentVideo] = useState(0);
@@ -7,18 +7,11 @@ export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
 
     const handleVideoEnd = () => {
         if (currentVideo === videoSrc.length - 1) {
-            // Last video ended, show only the quiz link
             setShowQuizLink(true);
         } else {
             setCurrentVideo((prev) => prev + 1);
         }
     };
-
-    useEffect(() => {
-        if (!showQuizLink) {
-            videoRefs.current[currentVideo]?.play();
-        }
-    }, [currentVideo, showQuizLink]);
 
     return (
         <div style={{ width: "100%", height: "auto", backgroundColor: "skyblue", padding: "40px" }}>

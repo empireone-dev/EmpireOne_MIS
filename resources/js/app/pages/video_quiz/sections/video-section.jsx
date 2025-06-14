@@ -5,13 +5,18 @@ export default function VideoSection() {
     const videoRefs = useRef([]);
 
     const videoSources = [
-        "/images/Logo(Horizontal).mp4",
+        "/images/EO - Compliance Training -  Acceptable Use Policy.mp4",
+        "/images/EO - Compliance Training -  Anti-Sexual Harassment & Workplace Misconduct Policy.mp4",
+        "/images/EO - Compliance Training -  Clean Desk and Clear Screen policy.mp4",
+        "/images/EO - Compliance Training -  Occupational Safety and Health (OSH) Policy Training.mp4",
+        "/images/EO - Compliance Training - Anti-Phishing.mp4",
+        "/images/EO - Compliance Training - ISMS Awareness.mp4",
         // "/images/2.mp4",
         // "/images/3.mp4"
     ];
 
     const handleVideoEnd = () => {
-        setCurrentVideo((prev) => (prev + 1) % videoSources.length); // Go to next video or loop back to the first
+        setCurrentVideo((prev) => (prev + 1) % videoSources.length);
     };
 
     useEffect(() => {
@@ -26,7 +31,7 @@ export default function VideoSection() {
                     ref={(el) => (videoRefs.current[index] = el)}
                     controls
                     onEnded={handleVideoEnd}
-                    loop // Adding the loop attribute to ensure the video loops
+                    // loop
                     style={{
                         display: currentVideo === index ? 'block' : 'none',
                         width: '100%',

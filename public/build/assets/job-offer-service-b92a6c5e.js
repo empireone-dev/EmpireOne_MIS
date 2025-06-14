@@ -1,0 +1,1 @@
+import{h as e}from"./app-887f32f2.js";async function s(){return(await e.get("/api/joboffer"+window.location.search)).data}async function t(a){return(await e.post("/api/joboffer",a)).data}async function n(a){return(await e.put("/api/joboffer/"+a.app_id+window.location.search,a)).data}export{n as a,t as c,s as g};

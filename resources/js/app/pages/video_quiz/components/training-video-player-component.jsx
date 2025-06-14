@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import Modal from "../../_components/modal"; // likely a wrapper around Dialog + Transition
+import ModalQuiz from "../../_components/modal_quiz";
 
 export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
     const [currentVideo, setCurrentVideo] = useState(0);
@@ -36,11 +36,7 @@ export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
                     </video>
                 ))}
 
-            <Modal
-                show={showQuizLink}
-                static // prevents closing on click outside
-                onClose={() => { }} // disables closing via ESC key or close button
-            >
+            <ModalQuiz show={showQuizLink} static onClose={() => { }}>
                 <div className="mt-6 text-center">
                     <h2 className="text-xl font-semibold mb-4">Training Complete</h2>
                     <a
@@ -52,7 +48,7 @@ export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
                         Proceed to Quiz
                     </a>
                 </div>
-            </Modal>
+            </ModalQuiz>
         </div>
     );
 }

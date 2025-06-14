@@ -20,6 +20,7 @@ import departmentSlice from "../pages/admin/sourcing/department/redux/department
 import appSlice from "../pages/redux/app-slice";
 import accountSlice from "../pages/admin/employee_relation/employee_section/redux/account-slice";
 import exitInterviewSlice from "../pages/exit_interview/redux/exit-interview-slice";
+import videoQuizSlice from "../pages/video_quiz/redux/video-quiz-slice";
 const store = configureStore({
     reducer: {
         app: appSlice,
@@ -42,7 +43,8 @@ const store = configureStore({
         preemploymentfiles: preEmploymentFilesSlice,
         departments: departmentSlice,
         accounts: accountSlice,
-        exit_int: exitInterviewSlice
+        exit_int: exitInterviewSlice,
+        video_quizzes: videoQuizSlice,
     },
 });
 

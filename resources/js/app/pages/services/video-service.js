@@ -11,7 +11,7 @@ export function get_video_quiz_service() {
 
 export function create_video_quiz_service(data) {
   try {
-    const result = axios.post('/api/video_quiz', data)
+    const result = axios.post(`/api/video_quiz`, data)
     return result
   } catch (error) {
 

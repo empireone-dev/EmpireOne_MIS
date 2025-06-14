@@ -17,6 +17,15 @@ class VideoQuizController extends Controller
 
     public function store(Request $request)
     {
-        VideoQuiz::create($request->all());
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'emp_id' => 'required|numeric',
+            'email' => 'required|email|max:255',
+            'type' => 'required|string|max:255',
+        ]);
+
+        VideoQuiz::create($validated);
+
+        return response()->json(['message' => 'Saved successfully'], 200);
     }
 }

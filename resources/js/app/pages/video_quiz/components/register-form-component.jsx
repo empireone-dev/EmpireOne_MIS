@@ -24,16 +24,23 @@ export default function RegisterFormComponents({ type, onSubmitSuccess }) {
             );
             message.success("You may now proceed!");
 
-            // ✅ Notify parent component that form submission succeeded
             if (onSubmitSuccess) {
                 onSubmitSuccess();
             }
         } catch (error) {
-            message.error("Failed to add information. Please try again.");
+            if (
+                error.response?.status === 422 &&
+                error.response?.data?.errors?.emp_id?.includes("duplicate")
+            ) {
+                message.warning("You've already taken this training.");
+            } else {
+                message.error("Failed to add information. Please try again.");
+            }
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">

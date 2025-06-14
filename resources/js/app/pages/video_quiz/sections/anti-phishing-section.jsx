@@ -37,7 +37,10 @@ export default function AntiPhishingSection({ type }) {
                 )}
             </div>
             {formSubmitted && (
-                <TrainingVideoPlayerComponent videoSrc={videoSources} />
+                <TrainingVideoPlayerComponent
+                    videoSrc={videoSources}
+                    link="https://forms.gle/bFmRhnx9e5kAX2p57"
+                />
             )}
         </>
 

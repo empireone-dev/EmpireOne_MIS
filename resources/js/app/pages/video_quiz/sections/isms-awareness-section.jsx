@@ -38,7 +38,10 @@ export default function IsmsAwarenessSection({ type }) {
                 )}
             </div>
             {formSubmitted && (
-                <TrainingVideoPlayerComponent videoSrc={videoSources} />
+                <TrainingVideoPlayerComponent
+                    videoSrc={videoSources}
+                    link="https://forms.gle/BnvrZ3oJ5r4rdxYJA"
+                />
             )}
         </>
 

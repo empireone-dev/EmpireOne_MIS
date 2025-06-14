@@ -40,7 +40,7 @@ export default function AcceptableUseSection({ type }) {
             {formSubmitted && (
                 <TrainingVideoPlayerComponent
                     videoSrc={videoSources}
-                    link="https://forms.gle/VxgTZVAmN68NT2KGA"
+                    link="https://forms.gle/nMgfsfszE1gTQZku7"
                 />
             )}
         </>

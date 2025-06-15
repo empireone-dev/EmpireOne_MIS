@@ -176,8 +176,8 @@ const AdminLayout = ({ children }) => {
                         {
                             key: "send_failed",
                             icon: <HolderOutlined />,
-                            label: "Send Rejection",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Send%20Rejection&site=null"),
+                            label: "Send Failed",
+                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null"),
                         },
                         {
                             key: "passed",

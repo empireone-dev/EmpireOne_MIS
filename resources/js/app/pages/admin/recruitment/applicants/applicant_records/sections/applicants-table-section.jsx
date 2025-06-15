@@ -283,7 +283,7 @@ export default function ApplicantsTableSection() {
                             { text: "Pooling", value: "Pooling" },
                             { text: "Probationary", value: "Probationary" },
                             { text: "Regular", value: "Regular" },
-                            { text: "Send Rejection", value: "Send Rejection" },
+                            { text: "Send Failed", value: "Send Failed" },
                             { text: "Shortlisted", value: "Shortlisted" },
                         ]
                     }
@@ -295,7 +295,7 @@ export default function ApplicantsTableSection() {
                 let color = "";
                 switch (record.status) {
                     case "Failed":
-                    case "Send Rejection":
+                    case "Send Failed":
                     case "Dismissal":
                     case "Declined":
                     case "Resignation":

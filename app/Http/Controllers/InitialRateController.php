@@ -46,7 +46,7 @@ class InitialRateController extends Controller
 
         if ($request->oavg < 3) {
             Applicant::where('app_id', $request->app_id)->update([
-                'status' => 'Send Rejection'
+                'status' => 'Send Failed'
             ]);
 
             // // Prepare data for the email

@@ -340,9 +340,9 @@ class ApplicantController extends Controller
         ];
 
         if ($decodedMeetLink) {
-            Mail::to('quicklydeguzman@gmail.com')->send(new ConfirmationInitialVirtual($data));
+            Mail::to('hiring@empireonegroup.com')->send(new ConfirmationInitialVirtual($data));
         } else {
-            Mail::to('quicklydeguzman@gmail.com')->send(new ConfirmationInitialPhysical($data));
+            Mail::to('hiring@empireonegroup.com')->send(new ConfirmationInitialPhysical($data));
         }
 
         InterviewConfirmation::create([
@@ -380,12 +380,12 @@ class ApplicantController extends Controller
         ];
 
         if (strtolower($request->reschedule) === "yes") {
-            Mail::to('quicklydeguzman@gmail.com')->send(new Rescheduled($data));
+            Mail::to('hiring@empireonegroup.com')->send(new Rescheduled($data));
         } else {
             $applicant->status = 'Declined';
             $applicant->save();
 
-            Mail::to('quicklydeguzman@gmail.com')->send(new DeclinedConfirmation($data));
+            Mail::to('hiring@empireonegroup.com')->send(new DeclinedConfirmation($data));
         }
 
         InterviewConfirmation::create([

@@ -15,6 +15,7 @@ import { useEffect } from 'react';
 import { message } from 'antd';
 import UploadResumeSection from '../../admin/employee_relation/employee_section/sections/upload-resume-section';
 import { LoadingOutlined, SendOutlined } from '@ant-design/icons';
+import { router } from '@inertiajs/react';
 
 export default function ApplicationFormSection() {
   const [open, setOpen] = useState(false);
@@ -109,21 +110,24 @@ export default function ApplicationFormSection() {
     fd.append('brgy', applicantForm.brgy ?? '');
     fd.append('province', applicantForm.province ?? '');
 
-    applicantForm.work_experience.forEach((value) => {
-      fd.append("work_experience[]", JSON.stringify({
-        company: value.company,
-        position: value.position,
-        started_at: value.started_at,
-        end_at: value.end_at,
-      }));
-    });
+    if (Array.isArray(applicantForm.work_experience)) {
+      applicantForm.work_experience.forEach((value) => {
+        fd.append("work_experience[]", JSON.stringify({
+          company: value.company,
+          position: value.position,
+          started_at: value.started_at,
+          end_at: value.end_at,
+        }));
+      });
+    }
+
 
     try {
       const result = await store.dispatch(store_applicant_thunk(fd));
 
       if (result.status === 200) {
         message.success('Application has been submitted successfully');
-        dispatch(setApplicantForm({}));
+        router.visit("/online_application")
       } else {
         setError(result.response.data.errors);
         message.error('Failed to submit Application/Application Exist');

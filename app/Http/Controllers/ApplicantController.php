@@ -115,6 +115,7 @@ class ApplicantController extends Controller
             'submitted'     => 'nullable|date',
         ]);
 
+        $experiences = $request->work_experience ?? [];
         $data = $validatedData;
         $existingApplicant = Applicant::where('fname', $request->fname)
             ->where('mname', $request->mname)
@@ -146,48 +147,48 @@ class ApplicantController extends Controller
         ]);
 
         // Save work experience records
-        if (is_array($request->work_experience)) {
-            foreach ($request->work_experience as $experience) {
-                if (is_array($experience)) {
-                    WorkingExperience::create([
-                        'app_id'    => $dateUnique,
-                        'company'   => $experience['company'] ?? null,
-                        'position'  => $experience['position'] ?? null,
-                        'started_at' => $experience['started_at'] ?? null,
-                        'end_at'    => $experience['end_at'] ?? null,
-                    ]);
-                }
+
+        if ($experiences) {
+            foreach ($experiences as $experience) {
+                WorkingExperience::create([
+                    'app_id'    => $dateUnique,
+                    'company'   => $experience['company'] ?? null,
+                    'position'  => $experience['position'] ?? null,
+                    'started_at' => $experience['started_at'] ?? null,
+                    'end_at'    => $experience['end_at'] ?? null,
+                ]);
             }
         }
 
         // Upload base64 files to S3 and store URLs
-        $base64Files = $request->input('files', []);
+        $base64Files = $request->input('files');
         $uploadedFiles = [];
+        if ($base64Files) {
+            foreach ($base64Files as $base64) {
+                if (!preg_match('/^data:(.*?);base64,/', $base64, $matches)) {
+                    return response()->json(['error' => 'Invalid base64 file format'], 400);
+                }
 
-        foreach ($base64Files as $base64) {
-            if (!preg_match('/^data:(.*?);base64,/', $base64, $matches)) {
-                return response()->json(['error' => 'Invalid base64 file format'], 400);
+                $mimeType = $matches[1];
+                $extension = explode('/', $mimeType)[1] ?? 'bin'; // fallback to bin if missing
+
+                $fileData = base64_decode(substr($base64, strpos($base64, ',') + 1));
+                if ($fileData === false) {
+                    return response()->json(['error' => 'Base64 decode failed'], 400);
+                }
+
+                $filename = date('Y') . '/' . $dateUnique . '_' . uniqid() . '.' . $extension;
+                Storage::disk('s3')->put($filename, $fileData);
+                $url = Storage::disk('s3')->url($filename);
+
+                $uploadedFiles[] = $url;
+
+                // Save file record
+                CVFile::create([
+                    'app_id' => $dateUniquwe,
+                    'file'   => $url,
+                ]);
             }
-
-            $mimeType = $matches[1];
-            $extension = explode('/', $mimeType)[1] ?? 'bin'; // fallback to bin if missing
-
-            $fileData = base64_decode(substr($base64, strpos($base64, ',') + 1));
-            if ($fileData === false) {
-                return response()->json(['error' => 'Base64 decode failed'], 400);
-            }
-
-            $filename = date('Y') . '/' . $dateUnique . '_' . uniqid() . '.' . $extension;
-            Storage::disk('s3')->put($filename, $fileData);
-            $url = Storage::disk('s3')->url($filename);
-
-            $uploadedFiles[] = $url;
-
-            // Save file record
-            CVFile::create([
-                'app_id' => $dateUnique,
-                'file'   => $url,
-            ]);
         }
 
         // Send notification email if files were uploaded

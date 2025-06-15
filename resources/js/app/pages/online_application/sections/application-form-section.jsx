@@ -123,6 +123,7 @@ export default function ApplicationFormSection() {
 
       if (result.status === 200) {
         message.success('Application has been submitted successfully');
+        dispatch(setApplicantForm({}));
       } else {
         setError(result.response.data.errors);
         message.error('Failed to submit Application/Application Exist');

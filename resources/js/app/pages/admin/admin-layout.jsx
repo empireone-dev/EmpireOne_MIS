@@ -20,6 +20,7 @@ import {
     CheckCircleFilled,
     TeamOutlined,
     QuestionOutlined,
+    AuditOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
@@ -276,6 +277,12 @@ const AdminLayout = ({ children }) => {
                         router.visit("/admin/attrition/attrition_section"),
                 },
             ],
+        },
+        {
+            key: "compliance_training",
+            icon: <AuditOutlined />,
+            label: "Compliance Training",
+            onClick: () => router.visit("/admin/compliance"),
         },
         // {
         //     key: "employee_wellness",

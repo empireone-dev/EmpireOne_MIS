@@ -7,7 +7,6 @@ import AddEmployeeButtonSection from "./add-employee-button-section";
 import EmployeeMenuSection from "./employee-menu-section";
 import { router } from "@inertiajs/react";
 import EmployeeSearchSection from "./employee-search-section";
-import SearchBranchSection from "./search-branch-section";
 
 export default function EmployeeTableSection() {
     const [searchText, setSearchText] = useState("");

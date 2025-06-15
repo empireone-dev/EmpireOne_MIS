@@ -175,13 +175,13 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                     ),
                 },
             ]
-            : []), ...(data.status == "Send Rejection"
+            : []), ...(data.status == "Send Failed"
                 ? [
                     {
                         component: (
                             <ApplicantRejectionComponent
                                 item={{
-                                    label: "Sending Rejection Email",
+                                    label: "Sending Failed Email",
                                     key: "3",
                                     icon: <SendOutlined />,
                                 }}

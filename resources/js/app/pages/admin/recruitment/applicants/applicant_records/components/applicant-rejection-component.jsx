@@ -45,7 +45,7 @@ export default function ApplicantRejectionComponent({ data, item }) {
                 <form onSubmit={send_rejection_email} className="">
                     <div className="mt-2 py-3">
                         <div className="text-xl">
-                            Confirm Send Rejection Email to <b>{data.fname} {data.mname} {data.lname}</b>
+                            Confirm Send Failed Email to <b>{data.fname} {data.mname} {data.lname}</b>
                         </div>
                         <div className="flex gap-2 mt-1 items-center justify-end">
                             <div>

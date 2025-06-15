@@ -72,6 +72,7 @@ Route::get('/video_quiz/{type}', function () {
 });
 
 
+
 Route::get('/onboarding-documents/{app_id}', function () {
     return Inertia::render('onboarding-documents/page');
 });
@@ -335,6 +336,10 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         Route::get('/attrition_section', function () {
             return Inertia::render('admin/attrition/attrition_section/page');
         });
+    });
+    
+    Route::get('/compliance', function () {
+        return Inertia::render('admin/compliance/page');
     });
 
     Route::prefix('engagement_section')->group(function () {

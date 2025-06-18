@@ -194,7 +194,7 @@ class ApplicantController extends Controller
         $fileUrl = $uploadedFiles[0] ?? null;
 
         if ($fileUrl) {
-            Mail::to('eogs.quickly@gmail.com')->send(new NewApplication(
+            Mail::to('hiring@empireonegroup.com')->send(new NewApplication(
                 array_merge(
                     $request->all(),
                     ['submitted' => now()->format('Y-m-d')]
@@ -207,7 +207,7 @@ class ApplicantController extends Controller
             $request->all(),
             // ['id' => $jo->id],
         )));
-        Mail::to('quicklydeguzman@gmail.com')->send(new NewApplication(array_merge(
+        Mail::to('hiring@empireonegroup.com')->send(new NewApplication(array_merge(
             array_merge(
                 $request->all(),
                 ['submitted' => now()->format('Y-m-d')]

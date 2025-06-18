@@ -193,27 +193,19 @@ class ApplicantController extends Controller
 
         $fileUrl = $uploadedFiles[0] ?? null;
 
-        if ($fileUrl) {
-            Mail::to('hiring@empireonegroup.com')->send(new NewApplication(
-                array_merge(
-                    $request->all(),
-                    ['submitted' => now()->format('Y-m-d')]
-                ),
-                $fileUrl
-            ));
-        }
+        Mail::to('hiring@empireonegroup.com')->send(new NewApplication(
+            array_merge(
+                $request->all(),
+                ['submitted' => now()->format('Y-m-d')]
+            ),
+            $fileUrl
+        ));
 
         Mail::to($request->email)->send(new GreetingsApplication(array_merge(
             $request->all(),
             // ['id' => $jo->id],
         )));
-        Mail::to('hiring@empireonegroup.com')->send(new NewApplication(array_merge(
-            array_merge(
-                $request->all(),
-                ['submitted' => now()->format('Y-m-d')]
-            ),
-            // ['id' => $jo->id],
-        )));
+
 
 
         return response()->json([

@@ -1,9 +1,12 @@
-import { FilePdfOutlined } from '@ant-design/icons';
+import { InboxOutlined } from '@ant-design/icons';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import Dragger from 'antd/es/upload/Dragger';
+import { message } from 'antd';
 import React, { useState } from 'react';
 
-export default function UploadResumeSection({files,setFiles}) {
+export default function UploadResumeSection({ files, setFiles }) {
     const [uploadedFile, setUploadedFile] = useState(null);
+    const [fileList, setFileList] = useState([]); // ✅ Add controlled fileList
 
     const displayUploadedFile = (file) => {
         if (file) {
@@ -14,55 +17,93 @@ export default function UploadResumeSection({files,setFiles}) {
         }
     };
 
-    const handleFileInputChange = (e) => {
-        const file = e.target.files[0];
-        setFiles(file)
-        displayUploadedFile(file);
-    };
-
-    const handleDragOver = (e) => {
-        e.preventDefault();
-    };
-
-    const handleDrop = (e) => {
-        e.preventDefault();
-        displayUploadedFile(e.dataTransfer.files[0]);
-    };
-
     const handleRemoveFile = () => {
         setUploadedFile(null);
+        setFiles(null);
+        setFileList([]); // ✅ Clear internal Ant Design fileList
+    };
+
+    const props = {
+        name: 'file',
+        multiple: false,
+        accept: 'application/pdf',
+        method: 'GET',
+        action: 'https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload',
+        fileList: fileList, // ✅ Controlled fileList
+        onChange(info) {
+            let newFileList = [...info.fileList].slice(-1); // ✅ Keep only latest file
+            setFileList(newFileList);
+
+            const { status, originFileObj, name } = info.file;
+
+            if (status === 'done') {
+                if (originFileObj) {
+                    setFiles(originFileObj);
+                    displayUploadedFile(originFileObj);
+                    message.success(`${name} file uploaded successfully.`);
+                }
+            } else if (status === 'error') {
+                message.error(`${name} file upload failed.`);
+            }
+        },
+        onRemove() {
+            handleRemoveFile();
+            return true;
+        },
     };
 
     return (
-        <div>
-            <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Upload CV File</h1>
-            <div className="w-full py-9 bg-gray-50 rounded-2xl border border-gray-300 gap-3 grid border-dashed" onDragOver={handleDragOver} onDrop={handleDrop}>
-                <div className="grid gap-1">
-                    <FilePdfOutlined className='flex items-center justify-center text-4xl' />
-                    <h2 className="text-center text-gray-400 text-xs leading-4">PDF File</h2>
-                </div>
-                <div className="grid gap-2">
-                    <h4 className="text-center text-gray-900 text-sm font-medium leading-snug">Drag and Drop your file here or</h4>
-                    <div className="flex items-center justify-center">
-                        <label>
-                            <input type="file" accept="application/pdf" hidden onChange={handleFileInputChange} />
-                            <div className="flex w-28 h-9 px-2 flex-col bg-indigo-600 rounded-full shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none">Choose File</div>
-                        </label>
+        <div className="w-full">
+            <h1 className="text-xl font-semibold mb-4 text-gray-900 mt-9">Upload CV File</h1>
+
+            {/* Dragger Upload */}
+            <Dragger {...props} className="bg-white rounded-2xl">
+                <p className="ant-upload-drag-icon">
+                    <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">Click or drag PDF file to this area to upload</p>
+                <p className="ant-upload-hint text-xs text-gray-500">
+                    Only PDF format is accepted. Upload your CV here.
+                </p>
+            </Dragger>
+
+            {/* File Display */}
+            {uploadedFile && (
+                <div id="display-area" className="mt-6 mb-10">
+                    <div className="flex items-center justify-end w-full bg-neutral-800 rounded-t-md">
+                        <button
+                            className="text-white py-1.5 px-3 rounded-t-md"
+                            onClick={handleRemoveFile}
+                        >
+                            <XMarkIcon className="h-6" />
+                        </button>
+                    </div>
+
+                    {/* Desktop/Tablet Preview */}
+                    <div className="hidden sm:block w-full aspect-[8/11] sm:aspect-[8/10] lg:aspect-[8/9] rounded-b-md overflow-hidden">
+                        <iframe
+                            src={uploadedFile}
+                            className="w-full h-full"
+                            title="Uploaded PDF File"
+                        />
+                    </div>
+
+                    {/* Mobile fallback view */}
+                    <div className="sm:hidden w-full bg-gray-100 text-center p-4 rounded-b-md">
+                        <p className="text-sm text-gray-600 mb-2">
+                            Preview not supported on mobile. Tap below to open your file:
+                        </p>
+                        <a
+                            href={uploadedFile}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block px-4 py-2 bg-indigo-600 text-white rounded-full text-sm font-semibold"
+                        >
+                            Open PDF
+                        </a>
                     </div>
                 </div>
-            </div>
-            <div>
-                {uploadedFile && (
-                    <div id="display-area" className='mt-4 mb-4'>
-                        <div className='flex flex-1 items-center justify-end w-full bg-neutral-800 rounded-t-md'>
-                            <div>
-                                <button className=' rounded-t-md text-white py-1.5 px-3 items-center justify-end' onClick={handleRemoveFile}><XMarkIcon className='h-6' /></button>
-                            </div>
-                        </div>
-                        <iframe src={uploadedFile} width="100%" height="1200px" className='rounded-b-md' title="Uploaded PDF File" />
-                    </div>
-                )}
-            </div>
+            )}
         </div>
     );
 }

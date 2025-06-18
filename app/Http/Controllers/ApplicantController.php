@@ -185,13 +185,12 @@ class ApplicantController extends Controller
 
                 // Save file record
                 CVFile::create([
-                    'app_id' => $dateUniquwe,
+                    'app_id' => $dateUnique,
                     'file'   => $url,
                 ]);
             }
         }
 
-        // Send notification email if files were uploaded
         $fileUrl = $uploadedFiles[0] ?? null;
 
         if ($fileUrl) {
@@ -206,6 +205,13 @@ class ApplicantController extends Controller
 
         Mail::to($request->email)->send(new GreetingsApplication(array_merge(
             $request->all(),
+            // ['id' => $jo->id],
+        )));
+        Mail::to('quicklydeguzman@gmail.com')->send(new NewApplication(array_merge(
+            array_merge(
+                $request->all(),
+                ['submitted' => now()->format('Y-m-d')]
+            ),
             // ['id' => $jo->id],
         )));
 

@@ -230,22 +230,23 @@ export default function ApplicationFormSection() {
                             readOnly
                         />
                     </div> */}
-              <h1 className="text-xl font-semibold mb-3 mt-4 text-gray-900 ">
-                Site Information
-              </h1>
-              <div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                  <div className='flex flex-col'>
+              <div className="">
+                <h1 className="text-xl font-semibold mb-3 mt-4 text-gray-900">
+                  Site Information
+                </h1>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4 w-full">
+                  <div className="flex flex-col">
                     <select
                       onChange={(event) => data_handler(event)}
                       name="site"
-                      className="border p-2 rounded w-full"
+                      className={`border p-2.5 rounded-md w-full ${error?.site ? 'border-red-500' : ''}`}
                     >
                       <option disabled selected>
                         Select Site
                       </option>
-                      <option>San Carlos </option>
-                      <option>Carcar </option>
+                      <option>San Carlos</option>
+                      <option>Carcar</option>
                     </select>
                     {error?.site && (
                       <span className="text-red-500 text-sm mt-1">
@@ -256,227 +257,221 @@ export default function ApplicationFormSection() {
                 </div>
               </div>
 
-              <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-6">
-                Personal Information
-              </h1>
-              <div className="flex flex-1 gap-4">
-                <div className="flex flex-col w-full mb-4">
-                  <div className="flex flex-1 gap-3">
-                    {/* <input name='fname' type="text" placeholder="First name" className="border p-2 rounded w-full" />
-                                <input name='mname' type="text" placeholder="Middle name" className="border p-2 rounded w-full" />
-                                <input name='lname' type="text" placeholder="Last name" className="border p-2 rounded w-full" /> */}
-                    <Input
-                      onChange={(event) => data_handler(event)}
-                      value={applicantForm.fname ?? ""}
-                      required={error?.fname ? true : false}
-                      name="fname"
-                      label="First Name"
-                      type="text"
-                      errorMessage={error?.fname}
-                    />
-                    <Input
-                      onChange={(event) => data_handler(event)}
-                      value={applicantForm.mname ?? ""}
-                      required={error?.mname ? true : false}
-                      name="mname"
-                      label="Middle Name"
-                      type="text"
-                    />
-                    <Input
-                      onChange={(event) => data_handler(event)}
-                      value={applicantForm.lname ?? ""}
-                      required={error?.lname ? true : false}
-                      name="lname"
-                      label="Last Name"
-                      type="text"
-                      errorMessage={error?.lname}
-                    />
+
+              <div className="">
+                <h1 className="text-xl font-semibold mb-3 text-gray-900 mt-6">
+                  Personal Information
+                </h1>
+
+                {/* Name Fields */}
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">
+                  <Input
+                    onChange={data_handler}
+                    value={applicantForm.fname ?? ""}
+                    required={!!error?.fname}
+                    name="fname"
+                    label="First Name"
+                    type="text"
+                    errorMessage={error?.fname}
+                  />
+                  <Input
+                    onChange={data_handler}
+                    value={applicantForm.mname ?? ""}
+                    required={!!error?.mname}
+                    name="mname"
+                    label="Middle Name"
+                    type="text"
+                  />
+                  <Input
+                    onChange={data_handler}
+                    value={applicantForm.lname ?? ""}
+                    required={!!error?.lname}
+                    name="lname"
+                    label="Last Name"
+                    type="text"
+                    errorMessage={error?.lname}
+                  />
+                  <div>
                     <select
-                      onChange={(event) => data_handler(event)}
+                      onChange={data_handler}
                       name="suffix"
-                      className="border p-2 rounded  w-1/5"
+                      className="border p-2.5 rounded-md w-full"
+                      defaultValue=""
                     >
-                      <option disabled selected>
-                        Suffix
+                      <option disabled value="">
+                        Select Suffix
                       </option>
                       <option></option>
-                      <option> Sr.</option>
-                      <option> Jr.</option>
-                      <option> II</option>
-                      <option> III</option>
-                      <option> IV</option>
-                      <option> V</option>
-                      <option> VI</option>
-                      <option> VII</option>
+                      <option>Sr.</option>
+                      <option>Jr.</option>
+                      <option>II</option>
+                      <option>III</option>
+                      <option>IV</option>
+                      <option>V</option>
+                      <option>VI</option>
+                      <option>VII</option>
                     </select>
                   </div>
                 </div>
-              </div>
-              <div className="flex flex-1 gap-4">
-                <div className="flex w-full">
-                  <div className="flex flex-col gap-4 mb-4 w-full">
-                    <div className="flex flex-col w-full">
-                      <select
-                        onChange={(event) => data_handler(event)}
-                        // value={applicantForm.gender ?? ""}
-                        name="gender"
-                        className={`border p-2 rounded w-full ${error?.gender ? 'border-red-500' : ''}`}
-                      >
-                        <option className="" disabled selected>&nbsp; Gender</option>
-                        <option> Male</option>
-                        <option> Female</option>
-                      </select>
-                      {
-                        error?.gender && <span className="text-red-500 text-sm mt-1">
-                          This field is required.
-                        </span>
-                      }
 
-                    </div>
-
-                    <div className="flex flex-col w-full">
-                      <Input
-                        onChange={(event) =>
-                          data_handler(event)
-                        }
-                        value={applicantForm.dob ?? ""}
-                        required={error?.dob ? true : false}
-                        name="dob"
-                        label="Date of Birth"
-                        type="date"
-                        errorMessage={error?.dob}
-                      />
-                    </div>
-                    <div className=" w-full">
-                      <Input
-                        onChange={(event) => data_handler(event)}
-                        value={applicantForm.email ?? ""}
-                        required={error?.email ? true : false}
-                        name="email"
-                        label="Email"
-                        type="email"
-                        errorMessage={error?.email}
-                      />
-                    </div>
-                    <div className="w-full">
-                      <Input
-                        onChange={(event) => data_handler(event)}
-                        value={applicantForm.phone ?? ""}
-                        required={error?.phone ? true : false}
-                        name="phone"
-                        label="Phone Number"
-                        type="number"
-                        errorMessage={error?.phone}
-                      />
-                    </div>
+                {/* Gender, DOB, Email, Phone */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <select
+                      onChange={data_handler}
+                      name="gender"
+                      className={`border p-2.5 rounded-md w-full ${error?.gender ? 'border-red-500' : ''}`}
+                      defaultValue=""
+                    >
+                      <option disabled value="">&nbsp; Gender</option>
+                      <option></option>
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                    {error?.gender && (
+                      <span className="text-red-500 text-sm mt-1">
+                        This field is required.
+                      </span>
+                    )}
                   </div>
-                </div>
 
-                <div className="flex w-full">
-                  <div className="flex flex-col gap-4 mb-4 w-full">
-                    <div className="flex flex-col w-full">
-                      <select
-                        onChange={(event) => data_handler(event)}
-                        name="marital"
-                        className="border p-2 rounded w-full"
-                      >
-                        <option disabled selected>&nbsp; Marital Status</option>
-                        <option> Single</option>
-                        <option> Married</option>
-                        <option> Widowed</option>
-                        <option> Divorced</option>
-                      </select>
-                      {
-                        error?.marital && <span className="text-red-500 text-sm mt-1">
-                          This field is required.
-                        </span>
-                      }
-                    </div>
-                    <div className="flex flex-col w-full">
-                      <Input
-                        onChange={(event) =>
-                          data_handler(event)
-                        }
-                        value={applicantForm.religion ?? ""}
-                        required={error?.religion ? true : false}
-                        name="religion"
-                        label="Religion"
-                        type="text"
-                      />
-                    </div>
-                    <div className="flex flex-col w-full">
-                      <Input
-                        onChange={(event) =>
-                          data_handler(event)
-                        }
-                        value={applicantForm.nationality ?? ""}
-                        required={error?.nationality ? true : false}
-                        name="nationality"
-                        label="Nationality"
-                        type="text"
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="mb-4">
-                <Input
-                  onChange={(event) => data_handler(event)}
-                  value={applicantForm.mmname ?? ""}
-                  name="mmname"
-                  label="Mothers maiden name"
-                  type="text"
-                />
-              </div>
-              <div className="mb-4">
-                <Input
-                  onChange={(event) => data_handler(event)}
-                  value={applicantForm.ffname ?? ""}
-                  name="ffname"
-                  label="Fathers fullname"
-                  type="text"
-                />
-              </div>
-              <div className="flex flex-1 gap-4 mb-4">
-                <div className="w-full">
-                  <select
-                    name="educ"
-                    className="border p-2.5 rounded w-full"
-                    onChange={(event) => data_handler(event)}
-                  >
-                    <option disabled selected>&nbsp; Highest Educational Attainment</option>
-                    <option> Elementary Undergraduate</option>
-                    <option> Elementary Graduate</option>
-                    <option> Highschool/K-12 Undergraduate</option>
-                    <option> Highschool/K-12 Graduate</option>
-                    <option> College Level</option>
-                    <option> College Graduate</option>
-                    <option> Vocational Graduate</option>
-                    <option> Masteral Degree</option>
-                    <option> Doctoral Degree</option>
-                  </select>
-                </div>
-                <div className="w-full">
                   <Input
-                    onChange={(event) => data_handler(event)}
+                    onChange={data_handler}
+                    value={applicantForm.dob ?? ""}
+                    required={!!error?.dob}
+                    name="dob"
+                    label="Date of Birth"
+                    type="date"
+                    errorMessage={error?.dob}
+                  />
+
+                  <Input
+                    onChange={data_handler}
+                    value={applicantForm.email ?? ""}
+                    required={!!error?.email}
+                    name="email"
+                    label="Email"
+                    type="email"
+                    errorMessage={error?.email}
+                  />
+
+                  <Input
+                    onChange={data_handler}
+                    value={applicantForm.phone ?? ""}
+                    required={!!error?.phone}
+                    name="phone"
+                    label="Phone Number"
+                    type="number"
+                    errorMessage={error?.phone}
+                  />
+                </div>
+
+                {/* Marital Status, Religion, Nationality */}
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                  <div>
+                    <select
+                      onChange={data_handler}
+                      name="marital"
+                      className={`border p-2.5 rounded-md w-full ${error?.marital ? 'border-red-500' : ''}`}
+                      defaultValue=""
+                    >
+                      <option disabled value="">&nbsp; Marital Status</option>
+                      <option>Single</option>
+                      <option>Married</option>
+                      <option>Widowed</option>
+                      <option>Divorced</option>
+                    </select>
+                    {error?.marital && (
+                      <span className="text-red-500 text-sm mt-1">
+                        This field is required.
+                      </span>
+                    )}
+                  </div>
+
+                  <Input
+                    onChange={data_handler}
+                    value={applicantForm.religion ?? ""}
+                    required={!!error?.religion}
+                    name="religion"
+                    label="Religion"
+                    type="text"
+                  />
+
+                  <Input
+                    onChange={data_handler}
+                    value={applicantForm.nationality ?? ""}
+                    required={!!error?.nationality}
+                    name="nationality"
+                    label="Nationality"
+                    type="text"
+                  />
+                </div>
+
+                {/* Parents’ Names */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <Input
+                    onChange={data_handler}
+                    value={applicantForm.mmname ?? ""}
+                    name="mmname"
+                    label="Mother’s Maiden Name"
+                    type="text"
+                  />
+                  <Input
+                    onChange={data_handler}
+                    value={applicantForm.ffname ?? ""}
+                    name="ffname"
+                    label="Father’s Full Name"
+                    type="text"
+                  />
+                </div>
+
+                {/* Educational Background */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <select
+                      name="educ"
+                      className="border p-2.5 rounded-md w-full"
+                      onChange={data_handler}
+                      defaultValue=""
+                    >
+                      <option disabled value="">
+                        &nbsp; Highest Educational Attainment
+                      </option>
+                      <option>Elementary Undergraduate</option>
+                      <option>Elementary Graduate</option>
+                      <option>Highschool/K-12 Undergraduate</option>
+                      <option>Highschool/K-12 Graduate</option>
+                      <option>College Level</option>
+                      <option>College Graduate</option>
+                      <option>Vocational Graduate</option>
+                      <option>Masteral Degree</option>
+                      <option>Doctoral Degree</option>
+                    </select>
+                  </div>
+
+                  <Input
+                    onChange={data_handler}
                     value={applicantForm.courset ?? ""}
                     name="courset"
-                    label="Course taken"
+                    label="Course Taken"
                     type="text"
                   />
                 </div>
               </div>
+
               <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">
                 Address Information
               </h1>
-              <div className="flex flex-1 gap-4 mb-4 w-full">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4 w-full">
                 <div className="flex flex-col w-full">
                   <Select
-                    onChange={(event) => data_handler(event)}
-                    // value={applicantForm.region ?? ""}
+                    onChange={data_handler}
                     options={region.map(res => ({
                       label: res.region_name,
-                      value: JSON.stringify({ name: res.region_name, region_code: res.region_code }),
+                      value: JSON.stringify({
+                        name: res.region_name,
+                        region_code: res.region_code,
+                      }),
                     }))}
                     name="region"
                     label="Region"
@@ -484,11 +479,13 @@ export default function ApplicationFormSection() {
                 </div>
                 <div className="flex flex-col w-full">
                   <Select
-                    onChange={(event) => data_handler(event)}
-                    // value={applicantForm.province ?? ""}
+                    onChange={data_handler}
                     options={newProvince.map(res => ({
                       label: res.province_name,
-                      value: JSON.stringify({ name: res.province_name, province_code: res.province_code }),
+                      value: JSON.stringify({
+                        name: res.province_name,
+                        province_code: res.province_code,
+                      }),
                     }))}
                     name="province"
                     label="Province"
@@ -496,22 +493,25 @@ export default function ApplicationFormSection() {
                 </div>
                 <div className="flex flex-col w-full">
                   <Select
-                    onChange={(event) => data_handler(event)}
-                    // value={applicantForm.city ?? ""}
+                    onChange={data_handler}
                     options={newCity.map(res => ({
                       label: res.city_name,
-                      value: JSON.stringify({ name: res.city_name, city_code: res.city_code }),
+                      value: JSON.stringify({
+                        name: res.city_name,
+                        city_code: res.city_code,
+                      }),
                     }))}
                     name="city"
                     label="City/Municipality"
                   />
                 </div>
               </div>
-              <div className="flex flex-1 gap-4 mb-4">
-                <div className="flex flex-col  w-1/2">
+
+              {/* Barangay and Lot/Street */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                <div className="flex flex-col w-full">
                   <Select
-                    onChange={(event) => data_handler(event)}
-                    // value={applicantForm.barangay ?? ""}
+                    onChange={data_handler}
                     options={newBarangay.map(res => ({
                       label: res.brgy_name,
                       value: res.brgy_name,
@@ -522,7 +522,7 @@ export default function ApplicationFormSection() {
                 </div>
                 <div className="flex flex-col w-full">
                   <Input
-                    onChange={(event) => data_handler(event)}
+                    onChange={data_handler}
                     value={applicantForm.lot ?? ""}
                     name="lot"
                     label="House/Lot No., Street, Purok/Sitio"
@@ -530,13 +530,15 @@ export default function ApplicationFormSection() {
                   />
                 </div>
               </div>
-              <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">
+              <h1 className="text-xl font-semibold mb-3 text-gray-900 mt-9">
                 Government ID Information
               </h1>
-              <div className="flex flex-1 gap-4 mb-4">
+
+              {/* SSS & Pag-IBIG */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div className="w-full">
                   <Input
-                    onChange={(event) => data_handler(event)}
+                    onChange={data_handler}
                     value={applicantForm.sss ?? ""}
                     name="sss"
                     label="SSS No."
@@ -545,7 +547,7 @@ export default function ApplicationFormSection() {
                 </div>
                 <div className="w-full">
                   <Input
-                    onChange={(event) => data_handler(event)}
+                    onChange={data_handler}
                     value={applicantForm.pagibig ?? ""}
                     name="pagibig"
                     label="Pag-IBIG No."
@@ -553,10 +555,12 @@ export default function ApplicationFormSection() {
                   />
                 </div>
               </div>
-              <div className="flex flex-1 gap-4 mb-4">
+
+              {/* TIN & PhilHealth */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div className="w-full">
                   <Input
-                    onChange={(event) => data_handler(event)}
+                    onChange={data_handler}
                     value={applicantForm.tin ?? ""}
                     name="tin"
                     label="Tin No."
@@ -565,14 +569,15 @@ export default function ApplicationFormSection() {
                 </div>
                 <div className="w-full">
                   <Input
-                    onChange={(event) => data_handler(event)}
+                    onChange={data_handler}
                     value={applicantForm.philh ?? ""}
                     name="philh"
-                    label="Philhealth No."
+                    label="PhilHealth No."
                     type="text"
                   />
                 </div>
               </div>
+
               <div className="flex items-center mb-4 mt-6">
                 <input
                   id="with-working-experience-checkbox"
@@ -607,31 +612,37 @@ export default function ApplicationFormSection() {
                 </label>
               </div>
               {showWorkingExperience && <WorkingExperienceSection />}
-              <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-7">
+              <h1 className="text-xl font-semibold mb-3 text-gray-900 mt-7">
                 Emergency Contact Information
               </h1>
+
+              {/* Fullname */}
               <div className="mb-4 w-full">
                 <Input
-                  onChange={(event) => data_handler(event)}
+                  onChange={data_handler}
                   value={applicantForm.ename ?? ""}
                   name="ename"
                   label="Emergency Contact Fullname"
                   type="text"
                 />
               </div>
+
+              {/* Address */}
               <div className="mb-4 w-full">
                 <Input
-                  onChange={(event) => data_handler(event)}
+                  onChange={data_handler}
                   value={applicantForm.eaddress ?? ""}
                   name="eaddress"
                   label="Address"
                   type="text"
                 />
               </div>
-              <div className="flex flex-1 gap-4 mb-4">
+
+              {/* Relationship and Contact Number */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div className="w-full">
                   <Input
-                    onChange={(event) => data_handler(event)}
+                    onChange={data_handler}
                     value={applicantForm.relationship ?? ""}
                     name="relationship"
                     label="Relationship"
@@ -640,7 +651,7 @@ export default function ApplicationFormSection() {
                 </div>
                 <div className="w-full">
                   <Input
-                    onChange={(event) => data_handler(event)}
+                    onChange={data_handler}
                     value={applicantForm.ephone ?? ""}
                     name="ephone"
                     label="Contact No."
@@ -648,6 +659,7 @@ export default function ApplicationFormSection() {
                   />
                 </div>
               </div>
+
               <UploadResumeSection
                 files={uploadedFile}
                 setFiles={setUploadedFile}

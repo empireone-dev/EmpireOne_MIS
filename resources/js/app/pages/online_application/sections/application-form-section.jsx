@@ -14,8 +14,9 @@ import Select from '../../_components/select';
 import { useEffect } from 'react';
 import { message } from 'antd';
 import UploadResumeSection from '../../admin/employee_relation/employee_section/sections/upload-resume-section';
-import { LoadingOutlined, SendOutlined } from '@ant-design/icons';
+import { InboxOutlined, LoadingOutlined, SendOutlined } from '@ant-design/icons';
 import { router } from '@inertiajs/react';
+import Dragger from 'antd/es/upload/Dragger';
 
 export default function ApplicationFormSection() {
   const [open, setOpen] = useState(false);
@@ -31,6 +32,69 @@ export default function ApplicationFormSection() {
     setOpen(false);
   };
 
+  const [files, setFiles] = useState([]);
+
+  const handleFiles = async (fileList) => {
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (err) => reject(err);
+        reader.readAsDataURL(file);
+      });
+
+    const fileArray = Array.from(fileList);
+
+    // Remove files that already exist in state
+    const newUniqueFiles = fileArray.filter(
+      (file) =>
+        !files.some(
+          (existing) =>
+            existing.file.name === file.name &&
+            existing.file.size === file.size &&
+            existing.file.lastModified === file.lastModified
+        )
+    );
+
+    const base64Files = await Promise.all(
+      newUniqueFiles.map(async (file) => ({
+        file,
+        files: await toBase64(file),
+      }))
+    );
+
+    setFiles((prevFiles) => [...prevFiles, ...base64Files]);
+  };
+
+  const props = {
+    name: "file",
+    multiple: true,
+    method: "GET",
+    action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
+    onChange(info) {
+      const { status } = info.file;
+      if (status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+      if (status === "done") {
+        const newFiles = info.fileList
+          .map((file) => file.originFileObj)
+          .filter(Boolean);
+        handleFiles(newFiles);
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === "error") {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    onRemove(file) {
+      setFiles((prevFiles) =>
+        prevFiles.filter((f) => f.file.name !== file.name)
+      );
+      return true;
+    },
+  };
+
+
   useEffect(() => {
     const fetchApplicationCount = async () => {
       const count = 0;
@@ -39,24 +103,6 @@ export default function ApplicationFormSection() {
     fetchApplicationCount();
   }, []);
 
-  function changeHandler(e) {
-    const data = e.target.name;
-    if (data == "image") {
-      dispatch(
-        setApplicantForm({
-          ...applicantForm,
-          [data]: e.target.files,
-        })
-      );
-    } else {
-      dispatch(
-        setApplicantForm({
-          ...applicantForm,
-          [data]: e.target.value,
-        })
-      );
-    }
-  }
   function calculateAge(dob) {
     // Parse the date of birth (YYYY-MM-DD format) into a Date object
     const birthDate = new Date(dob);
@@ -78,7 +124,9 @@ export default function ApplicationFormSection() {
     const dob = calculateAge(applicantForm.dob ?? new Date());
 
     const fd = new FormData();
-    fd.append('files', uploadedFile ?? '')
+    files.forEach((fileObj) => {
+      fd.append("files", fileObj.file); // ✅ appending raw files
+    });
     fd.append('site', applicantForm.site ?? '');
     fd.append('fname', applicantForm.fname ?? '');
     fd.append('mname', applicantForm.mname ?? '');
@@ -122,12 +170,13 @@ export default function ApplicationFormSection() {
     }
 
 
+
     try {
       const result = await store.dispatch(store_applicant_thunk(fd));
-
       if (result.status === 200) {
         message.success('Application has been submitted successfully');
         router.visit("/online_application")
+        setFiles([]);
       } else {
         setError(result.response.data.errors);
         message.error('Failed to submit Application/Application Exist');
@@ -204,10 +253,11 @@ export default function ApplicationFormSection() {
 
 
 
+
   return (
     <div className="h-screen overflow-hidden ">
       <div className="bg-cover bg-[url('/images/SCemp.jpg')] transition-colors duration-300 h-full overflow-y-scroll">
-        <div className="container mx-auto px-10 flex justify-center">
+        <div className="container mx-auto px-2 flex justify-center">
           <div className="bg-white shadow-2xl shadow-black rounded-lg p-6 mt-12 w-full">
             <div className="flex items-center justify-center p-3">
               <img className="w-60" src="images/newlogo.png" alt="logo" />
@@ -520,15 +570,17 @@ export default function ApplicationFormSection() {
                     label="Barangay"
                   />
                 </div>
-                <div className="flex flex-col w-full">
+                <div className="flex flex-col w-full space-y-1 sm:space-y-2">
                   <Input
                     onChange={data_handler}
                     value={applicantForm.lot ?? ""}
                     name="lot"
                     label="House/Lot No., Street, Purok/Sitio"
                     type="text"
+                    className="w-full"
                   />
                 </div>
+
               </div>
               <h1 className="text-xl font-semibold mb-3 text-gray-900 mt-9">
                 Government ID Information
@@ -659,11 +711,23 @@ export default function ApplicationFormSection() {
                   />
                 </div>
               </div>
-
-              <UploadResumeSection
+              <Dragger {...props}>
+                <p className="ant-upload-drag-icon">
+                  <InboxOutlined />
+                </p>
+                <p className="ant-upload-text">
+                  Click or drag file to this area to upload your CV
+                </p>
+                <p className="ant-upload-hint">
+                  Support for a single or bulk upload. Strictly
+                  prohibited from uploading company data or other
+                  banned files.
+                </p>
+              </Dragger>
+              {/* <UploadResumeSection
                 files={uploadedFile}
                 setFiles={setUploadedFile}
-              />
+              /> */}
               <div className="flex justify-end mt-2.5">
 
                 <button

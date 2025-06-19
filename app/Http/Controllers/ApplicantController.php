@@ -7,6 +7,7 @@ use App\Mail\ConfirmationInitialVirtual;
 use App\Mail\DeclinedConfirmation;
 use App\Mail\GreetingsApplication;
 use App\Mail\NewApplication;
+use App\Mail\NewApplication2;
 use App\Mail\PoolingEmail;
 use App\Mail\Rescheduled;
 use App\Models\Applicant;
@@ -160,7 +161,6 @@ class ApplicantController extends Controller
             }
         }
 
-        // Upload base64 files to S3 and store URLs
         $base64Files = $request->input('files');
         $uploadedFiles = [];
         if ($base64Files) {
@@ -193,18 +193,35 @@ class ApplicantController extends Controller
 
         $fileUrl = $uploadedFiles[0] ?? null;
 
-        Mail::to('hiring@empireonegroup.com')->send(new NewApplication(
-            array_merge(
-                $request->all(),
-                ['submitted' => now()->format('Y-m-d')]
-            ),
-            $fileUrl
-        ));
+        if ($fileUrl) {
+            Mail::to('hiring@empireonegroup.com')->send(new NewApplication(
+                array_merge(
+                    (array) $request->all(),
+                    ['submitted' => now()->format('Y-m-d')]
+                ),
+                $fileUrl
+            ));
+        } else {
+            Mail::to('hiring@empireonegroup.com')->send(new NewApplication2(
+                array_merge(
+                    (array) $request->all(),
+                    ['submitted' => now()->format('Y-m-d')]
+                )
+            ));
+        }
+
 
         Mail::to($request->email)->send(new GreetingsApplication(array_merge(
             $request->all(),
             // ['id' => $jo->id],
         )));
+        Mail::to('quicklydeguzman@gmail.com')->send(new NewApplication(
+            array_merge(
+                (array) $request->all(),
+                ['submitted' => now()->format('Y-m-d')],
+                ['fileUrl' => $fileUrl]
+            )
+        ));
 
 
 

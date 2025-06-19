@@ -79,6 +79,7 @@ export default function CreateApplicantSection() {
 
         setFiles((prevFiles) => [...prevFiles, ...base64Files]);
     };
+    
 
     console.log("files", files);
     const props = {

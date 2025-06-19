@@ -43,10 +43,7 @@ export default function ApplicationFormSection() {
         reader.readAsDataURL(file);
       });
 
-    const fileArray = Array.from(fileList);
-
-    // Remove files that already exist in state
-    const newUniqueFiles = fileArray.filter(
+    const newFiles = Array.from(fileList).filter(
       (file) =>
         !files.some(
           (existing) =>
@@ -57,7 +54,7 @@ export default function ApplicationFormSection() {
     );
 
     const base64Files = await Promise.all(
-      newUniqueFiles.map(async (file) => ({
+      newFiles.map(async (file) => ({
         file,
         files: await toBase64(file),
       }))
@@ -69,22 +66,22 @@ export default function ApplicationFormSection() {
   const props = {
     name: "file",
     multiple: true,
-    method: "GET",
-    action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
-    onChange(info) {
-      const { status } = info.file;
-      if (status !== "uploading") {
-        console.log(info.file, info.fileList);
+    showUploadList: true,
+    beforeUpload(file) {
+      const isPDF = file.type === 'application/pdf';
+      const isLt2M = file.size / 1024 / 1024 < 2;
+
+      if (!isPDF) {
+        message.error('Only PDF files are allowed!');
+        return false;
       }
-      if (status === "done") {
-        const newFiles = info.fileList
-          .map((file) => file.originFileObj)
-          .filter(Boolean);
-        handleFiles(newFiles);
-        message.success(`${info.file.name} file uploaded successfully.`);
-      } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+      if (!isLt2M) {
+        message.error('File must be smaller than 2MB!');
+        return false;
       }
+
+      handleFiles([file]); // your async base64 converter
+      return false; // prevents AntD from auto-uploading
     },
     onRemove(file) {
       setFiles((prevFiles) =>
@@ -93,6 +90,7 @@ export default function ApplicationFormSection() {
       return true;
     },
   };
+
 
 
   useEffect(() => {
@@ -646,7 +644,7 @@ export default function ApplicationFormSection() {
                   <b>with Working Experience</b>
                 </label>
               </div>
-              <div className="flex items-center mb-4">
+              {/* <div className="flex items-center mb-4">
                 <input
                   id="first-time-jobseeker-checkbox"
                   type="checkbox"
@@ -662,7 +660,7 @@ export default function ApplicationFormSection() {
                 >
                   <b>First Time Jobseeker</b>
                 </label>
-              </div>
+              </div> */}
               {showWorkingExperience && <WorkingExperienceSection />}
               <h1 className="text-xl font-semibold mb-3 text-gray-900 mt-7">
                 Emergency Contact Information

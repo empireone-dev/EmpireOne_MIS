@@ -187,7 +187,7 @@ export default function ApplicationFormSection() {
               </div>
               <form
                 onSubmit={handleSubmit(onSubmit)}
-                className="space-y-4 px-8 py-8"
+                className="space-y-4 px-1 py-8"
               >
                 <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                   Site Information
@@ -640,30 +640,19 @@ export default function ApplicationFormSection() {
                         setHasExperience(e.target.checked)
                       }
                     />
-                    {hasExperience && (
-                      <button
-                        type="button"
-                        onClick={() => append({ name: "" })}
-                        className="bg-blue-600 text-white px-4 flex gap-2 py-2 rounded"
-                      >
-                        <PlusIcon className="h-6" /> Experience
-                      </button>
-                    )}
                   </div>
                   {hasExperience && (
-                    <div className="flex gap-3 flex-col">
+                    <div className="flex flex-col gap-3 w-full">
                       {fields.map((field, index) => (
                         <div
                           key={field.id}
-                          className="flex items-center border border-blue-500 rounded-lg p-3 flex-col w-full gap-4"
+                          className="flex flex-col border border-blue-500 rounded-lg p-4 w-full gap-4"
                         >
-                          {index != 0 && (
-                            <div className="flex w-full items-end justify-end">
+                          {index !== 0 && (
+                            <div className="flex w-full justify-end">
                               <button
                                 type="button"
-                                onClick={() =>
-                                  remove(index)
-                                }
+                                onClick={() => remove(index)}
                                 className="bg-red-500 text-white px-2 py-1 rounded"
                               >
                                 ✕
@@ -671,88 +660,70 @@ export default function ApplicationFormSection() {
                             </div>
                           )}
 
-                          <div className="w-full flex gap-3">
+                          <div className="flex flex-col md:flex-row gap-3 w-full">
                             <Input2
                               register={{
-                                ...register(
-                                  `work_experience.${index}.company`,
-                                  {
-                                    required:
-                                      "Company is required",
-                                  }
-                                ),
+                                ...register(`work_experience.${index}.company`, {
+                                  required: "Company is required",
+                                }),
                               }}
-                              errorMessage={
-                                errors?.work_experience?.[
-                                  index
-                                ]?.company?.message
-                              }
+                              errorMessage={errors?.work_experience?.[index]?.company?.message}
                               name="company"
                               label="Company"
                               type="text"
+                              className="w-full"
                             />
                             <Input2
                               register={{
-                                ...register(
-                                  `work_experience.${index}.position`,
-                                  {
-                                    required:
-                                      "Position is required",
-                                  }
-                                ),
+                                ...register(`work_experience.${index}.position`, {
+                                  required: "Position is required",
+                                }),
                               }}
-                              errorMessage={
-                                errors?.work_experience?.[
-                                  index
-                                ]?.position?.message
-                              }
+                              errorMessage={errors?.work_experience?.[index]?.position?.message}
                               name="position"
                               label="Position"
                               type="text"
+                              className="w-full"
                             />
                           </div>
 
-                          <div className="w-full flex gap-3">
+                          <div className="flex flex-col md:flex-row gap-3 w-full">
                             <Input2
                               register={{
-                                ...register(
-                                  `work_experience.${index}.started_at`,
-                                  {
-                                    required:
-                                      "Started at is required",
-                                  }
-                                ),
+                                ...register(`work_experience.${index}.started_at`, {
+                                  required: "Started at is required",
+                                }),
                               }}
-                              errorMessage={
-                                errors?.work_experience?.[
-                                  index
-                                ]?.started_at?.message
-                              }
+                              errorMessage={errors?.work_experience?.[index]?.started_at?.message}
                               label="Started At"
                               type="date"
+                              className="w-full"
                             />
                             <Input2
                               register={{
-                                ...register(
-                                  `work_experience.${index}.end_at`,
-                                  {
-                                    required:
-                                      "End at is required",
-                                  }
-                                ),
+                                ...register(`work_experience.${index}.end_at`, {
+                                  required: "End at is required",
+                                }),
                               }}
-                              errorMessage={
-                                errors?.work_experience?.[
-                                  index
-                                ]?.end_at?.message
-                              }
+                              errorMessage={errors?.work_experience?.[index]?.end_at?.message}
                               label="End At"
                               type="date"
+                              className="w-full"
                             />
                           </div>
                         </div>
                       ))}
                     </div>
+
+                  )}
+                  {hasExperience && (
+                    <button
+                      type="button"
+                      onClick={() => append({ name: "" })}
+                      className="bg-blue-600 text-white justify-center items-center px-4 flex gap-2 py-2 rounded-md w-full mt-4"
+                    >
+                      <PlusIcon className="h-6" /> Experience
+                    </button>
                   )}
                 </div>
                 <h1 className="text-xl font-semibold mb-3 text-gray-900 ">

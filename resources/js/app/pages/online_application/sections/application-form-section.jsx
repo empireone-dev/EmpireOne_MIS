@@ -183,7 +183,7 @@ export default function ApplicationFormSection() {
                 <img className="w-60" src="images/newlogo.png" alt="logo" />
               </div>
               <div className='flex text-2xl items-center justify-center'>
-                <h1><b>ONLINE APPLICATION FORM</b></h1>
+                <h1 className="text-center"><b>ONLINE APPLICATION FORM</b></h1>
               </div>
               <form
                 onSubmit={handleSubmit(onSubmit)}
@@ -192,7 +192,7 @@ export default function ApplicationFormSection() {
                 <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                   Site Information
                 </h1>
-                <div className="flex-none w-1/2">
+                <div className="w-full lg:w-1/2 lg:flex-row flex-none">
                   <Select
                     register={{
                       ...register("site", {
@@ -251,7 +251,7 @@ export default function ApplicationFormSection() {
                       type="text"
                     />
                   </div>
-                  <div className="flex-none w-24">
+                  <div className="flex-none lg:w-24 lg:flex-row">
                     <Select
                       register={{
                         ...register("suffix", {

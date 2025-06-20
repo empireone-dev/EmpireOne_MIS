@@ -54,7 +54,7 @@ export default function RegisterFormComponents({ type, onSubmitSuccess }) {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label htmlFor="name" className="block text-sm/6 font-medium text-gray-900">
-                            Name
+                            Fullname
                         </label>
                         <div className="mt-2">
                             <input

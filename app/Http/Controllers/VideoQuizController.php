@@ -7,13 +7,33 @@ use Illuminate\Http\Request;
 
 class VideoQuizController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $video_quiz = VideoQuiz::get();
+        $query = VideoQuiz::query();
+
+        if ($request->has('emp_id') && $request->emp_id !== 'null') {
+            $query->where('emp_id', 'LIKE', '%' . $request->emp_id . '%');
+        }
+
+        if ($request->has('name') && $request->name !== 'null') {
+            $query->whereHas('video_quiz', function ($q) use ($request) {
+                $q->where('name', 'LIKE', '%' . $request->name . '%');
+            });
+        }
+
+        if ($request->has('email') && $request->email !== 'null') {
+            $query->whereHas('video_quiz', function ($q) use ($request) {
+                $q->where('email', 'LIKE', '%' . $request->email . '%');
+            });
+        }
+
+        $video_quiz = $query->paginate(10);
+
         return response()->json([
             'result' => $video_quiz
         ], 200);
     }
+
 
     public function store(Request $request)
     {

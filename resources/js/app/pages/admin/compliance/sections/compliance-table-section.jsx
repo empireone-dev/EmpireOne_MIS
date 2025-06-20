@@ -11,7 +11,9 @@ export default function ComplianceTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
-    const { employees } = useSelector((state) => state.employees);
+    const { video_quizzes } = useSelector((state) => state.video_quizzes);
+
+    console.log('video_quizzesss', video_quizzes)
 
     const url = window.location.pathname + window.location.search;
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -139,19 +141,21 @@ export default function ComplianceTableSection() {
     const urls = new URL(window.location.href);
     const searchParams = new URLSearchParams(urls.search);
     const pages = searchParams.get('page');
-    const account = searchParams.get('account');
-    const status = searchParams.get('status');
-    const site = searchParams.get('site');
-    function search_account(value) {
+    const name = searchParams.get('name');
+    const emp_id = searchParams.get('emp_id');
+    const email = searchParams.get('email');
+    function search_name(value) {
+        router.visit(`?page=1&name=${value || ''}&emp_id=${emp_id || ''}&email=${email || ''}`);
+    }
 
-        router.visit('?page=' + pages + '&account=' + (value || 'null') + '&status=' + status + '&site=' + site)
+    function search_emp_id(value) {
+        router.visit(`?page=1&name=${name || ''}&emp_id=${value || ''}&email=${email || ''}`);
     }
-    function search_status(value) {
-        router.visit('?page=' + pages + '&account=' + account + '&status=' + (value || 'null') + '&site=' + site)
+
+    function search_email(value) {
+        router.visit(`?page=1&name=${name || ''}&emp_id=${emp_id || ''}&email=${value || ''}`);
     }
-    function search_site(value) {
-        router.visit('?page=' + pages + '&account=' + account + '&status=' + status + '&site=' + (value || 'null'))
-    }
+
 
     const columns = [
         {
@@ -170,8 +174,7 @@ export default function ComplianceTableSection() {
 
                 return (
                     <div key={i}>
-                        {record?.applicant?.fname} {record?.applicant?.mname}{" "}
-                        {record?.applicant?.lname}
+                        {record?.name}
                     </div>
                 );
             },
@@ -230,23 +233,21 @@ export default function ComplianceTableSection() {
             <Table
                 pagination={false}
                 columns={columns}
-                dataSource={employees.data}
+                dataSource={video_quizzes?.data ?? []}
             />
             <div className="flex">
                 <div className="w-full mt-3.5">
-                    {employees.total > 0
+                    {video_quizzes?.total > 0
                         ? `Showing ${(currentPage - 1) * pageSize + 1
-                        } to ${Math.min(
-                            currentPage * pageSize,
-                            employees.total
-                        )} of ${employees.total} entries`
+                        } to ${Math.min(currentPage * pageSize, video_quizzes.total)} of ${video_quizzes.total
+                        } entries`
                         : "No entries available"}
                 </div>
                 <div className="flex w-full items-center justify-end mt-2">
                     <Pagination
                         onChange={onChangePaginate}
                         defaultCurrent={currentPage}
-                        total={employees.total}
+                        total={video_quizzes.total}
                         pageSize={pageSize}
                         showSizeChanger={false}
                     />

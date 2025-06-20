@@ -13,17 +13,7 @@ class VideoQuizController extends Controller
         // First, apply filters
         $filtered = VideoQuiz::query();
 
-        if ($request->filled('emp_id')) {
-            $filtered->where('emp_id', 'LIKE', '%' . $request->emp_id . '%');
-        }
 
-        if ($request->filled('name')) {
-            $filtered->where('name', 'LIKE', '%' . $request->name . '%');
-        }
-
-        if ($request->filled('email')) {
-            $filtered->where('email', 'LIKE', '%' . $request->email . '%');
-        }
 
         // Get latest record per emp_id
         $latestPerEmp = $filtered
@@ -33,18 +23,13 @@ class VideoQuizController extends Controller
                     ->selectRaw('MAX(id)')
                     ->groupBy('emp_id');
 
-                // Apply filters to subquery to ensure consistency
-                if ($request->filled('emp_id')) {
-                    $sub->where('emp_id', 'LIKE', '%' . $request->emp_id . '%');
+
+                if ($request->filled('searching')) {
+                    $sub->where('name', 'LIKE', '%' . $request->searching . '%');
+                    $sub->orWhere('emp_id', 'LIKE', '%' . $request->searching . '%');
+                    $sub->orWhere('email', 'LIKE', '%' . $request->searching . '%');
                 }
 
-                if ($request->filled('name')) {
-                    $sub->where('name', 'LIKE', '%' . $request->name . '%');
-                }
-
-                if ($request->filled('email')) {
-                    $sub->where('email', 'LIKE', '%' . $request->email . '%');
-                }
 
                 $query->fromSub($sub, 'latest_ids');
             })

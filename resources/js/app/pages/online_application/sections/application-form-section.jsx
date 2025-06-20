@@ -84,7 +84,8 @@ export default function ApplicationFormSection() {
   console.log("files", files);
   const props = {
     name: "file",
-    multiple: true,
+    multiple: false,
+    accept: "application/pdf",
     method: "GET",
     action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
     onChange(info) {

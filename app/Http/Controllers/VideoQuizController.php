@@ -11,26 +11,36 @@ class VideoQuizController extends Controller
     {
         $query = VideoQuiz::query();
 
-        if ($request->has('emp_id') && $request->emp_id !== 'null') {
+        if ($request->filled('emp_id')) {
             $query->where('emp_id', 'LIKE', '%' . $request->emp_id . '%');
         }
 
-        if ($request->has('name') && $request->name !== 'null') {
-            $query->whereHas('video_quiz', function ($q) use ($request) {
-                $q->where('name', 'LIKE', '%' . $request->name . '%');
-            });
+        if ($request->filled('name')) {
+            $query->where('name', 'LIKE', '%' . $request->name . '%');
         }
 
-        if ($request->has('email') && $request->email !== 'null') {
-            $query->whereHas('video_quiz', function ($q) use ($request) {
-                $q->where('email', 'LIKE', '%' . $request->email . '%');
-            });
+        if ($request->filled('email')) {
+            $query->where('email', 'LIKE', '%' . $request->email . '%');
         }
 
-        $video_quiz = $query->paginate(10);
+        // Get all distinct entries
+        $distinctEntries = $query
+            ->select('emp_id', 'name', 'email')
+            ->distinct()
+            ->get();
+
+        // Manual pagination
+        $page = $request->get('page', 1);
+        $perPage = $request->get('per_page', 10);
+        $pagedData = $distinctEntries->forPage($page, $perPage)->values();
 
         return response()->json([
-            'result' => $video_quiz
+            'result' => [
+                'data' => $pagedData,
+                'total' => $distinctEntries->count(),
+                'current_page' => (int) $page,
+                'per_page' => (int) $perPage,
+            ]
         ], 200);
     }
 

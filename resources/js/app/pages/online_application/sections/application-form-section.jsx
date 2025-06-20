@@ -130,12 +130,17 @@ export default function ApplicationFormSection() {
           is_experience: hasExperience,
         })
       );
-      await store.dispatch(get_applicant_thunk())
+      // await store.dispatch(get_applicant_thunk())
       reset();
       setFiles([]);
-      setOpen(false);
       message.success('Application has been submitted successfully');
-    } catch (error) { }
+    } catch (error) {
+      if (error?.response?.status === 422) {
+        message.error("Application failed: Data validation error or already exists");
+      } else {
+        message.error("Something went wrong. Please try again later.");
+      }
+    }
 
     // reset(); // optional: reset the form after submit
   };
@@ -801,7 +806,7 @@ export default function ApplicationFormSection() {
                   <button
                     disabled={isSubmitting}
                     type="submit"
-                    className="bg-blue-600 text-white px-4 py-2 rounded"
+                    className="bg-blue-600 w-full hover:bg-blue-500 text-white px-4 py-2 rounded"
                   >
                     {isSubmitting ? "Submitting..." : "Submit"}
                   </button>

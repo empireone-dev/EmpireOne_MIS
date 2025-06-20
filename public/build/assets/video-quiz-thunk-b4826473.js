@@ -1,0 +1,1 @@
+import{h as r,v as o}from"./app-dcb98a23.js";function n(){try{return r.get("/api/video_quiz"+window.location.search)}catch{}}function a(t){try{return r.post("/api/video_quiz",t)}catch{}}function u(t){return async function(e,i){await a(t)}}function s(){return async function(t,e){const i=await n();t(o.actions.setVideoQuizzes(i.data.result))}}export{u as c,s as g};

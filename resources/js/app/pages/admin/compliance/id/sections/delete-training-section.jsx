@@ -1,5 +1,6 @@
 
 import Modal from "@/app/pages/_components/modal";
+import { delete_video_quiz_thunk, get_video_quiz_by_emp_id_thunk } from "@/app/pages/video_quiz/redux/video-quiz-thunk";
 import store from "@/app/store/store";
 import { TrashIcon } from "@heroicons/react/24/outline";
 import { message, Tooltip } from "antd";
@@ -9,22 +10,24 @@ export default function DeleteTrainingSection({ data }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const openModal = () => setIsModalOpen(true);
     const [loading, setLoading] = useState(false);
+    const emp_id = window.location.pathname.split('/')[3]
+
 
     const deleteTraining = async (e) => {
         e.preventDefault();
         setLoading(true);
-        // try {
-        //     await store.dispatch(
-        //         delete_supplier_thunk(data.id)
-        //     );
-        //     store.dispatch(get_supplier_thunk())
-        //     message.success("Removed Successfully!");
-        //     setIsModalOpen(false);
-        // } catch (error) {
-        //     message.error("Failed to Delete Supplier. Please try again."); // Show error message
-        // } finally {
-        //     setLoading(false); // Always reset loading state
-        // }
+        try {
+            await store.dispatch(
+                delete_video_quiz_thunk(data.id)
+            );
+            store.dispatch(get_video_quiz_by_emp_id_thunk(emp_id))
+            message.success("Removed Successfully!");
+            setIsModalOpen(false);
+        } catch (error) {
+            message.error("Failed to Delete Training. Please try again.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     const handleClose = () => {

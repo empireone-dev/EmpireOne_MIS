@@ -42,8 +42,15 @@ export default function DeleteTrainingSection({ data }) {
                 </button>
             </Tooltip>
             <Modal open={isModalOpen} setOpen={setIsModalOpen} onClose={() => setIsModalOpen(false)}>
-                <h2 className="text-xl font-semibold mb-4">
-                    Are you sure you want to remove this training?
+                <h2 className="text-xl mb-4">
+                    Are you sure you want to remove <b>{{
+                        AcceptableUsePolicy: "Acceptable Use Policy",
+                        AntiPhishing: "Anti-Phishing",
+                        AntiSexual: "Anti-Sexual Harassment & Workplace Misconduct Policy",
+                        CleanDisk: "Clean Desk and Clear Screen Policy",
+                        IsmsAwareness: "ISMS Awareness Training",
+                        OccupationalSafety: "Occupational Safety and Health (OSH) Policy Training",
+                    }[data?.type] || data?.type}</b> training of <b>{data?.name}</b>?
                 </h2>
                 <form action="" onSubmit={deleteTraining}>
                     <div className="flex w-full gap-5">

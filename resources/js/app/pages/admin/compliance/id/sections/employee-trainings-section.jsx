@@ -25,7 +25,16 @@ export default function EmployeeTrainingsSection() {
 
                 return (
                     <div key={i}>
-                        <b>{record?.type}</b>
+                        <b>
+                            {{
+                                AcceptableUsePolicy: "Acceptable Use Policy",
+                                AntiPhishing: "Anti-Phishing",
+                                AntiSexual: "Anti-Sexual Harassment & Workplace Misconduct Policy",
+                                CleanDisk: "Clean Desk and Clear Screen Policy",
+                                IsmsAwareness: "ISMS Awareness Training",
+                                OccupationalSafety: "Occupational Safety and Health (OSH) Policy Training",
+                            }[record?.type] || record?.type}
+                        </b>
                     </div>
                 );
             },
@@ -52,7 +61,7 @@ export default function EmployeeTrainingsSection() {
             render: (_, record, i) => {
                 return (
                     <div key={i}>
-                        <DeleteTrainingSection data={record.id} />
+                        <DeleteTrainingSection data={record} />
                     </div>
                 );
             },

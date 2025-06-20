@@ -61,71 +61,74 @@ export default function DeclinedSection({ confirmed, setConfirmed }) {
                 type="button"
                 onClick={openModal}
                 disabled={confirmed}
-                className={`bg-red-500 hover:bg-red-600 text-white p-2 w-36 rounded-md ${confirmed ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`bg-red-500 hover:bg-red-600 text-white p-2 w-36 rounded-md ${confirmed ? 'opacity-50 cursor-not-allowed' : ''
+                    }`}
             >
                 <XMarkIcon className="h-5 w-5 inline-block text-white mr-1" />
                 No
             </button>
 
-            <Modal open={isModalOpen} setOpen={setIsModalOpen} width="w-20 mx-96">
-                <h2 className="text-xl font-semibold mb-4">
-                    Kindly provide your reason for declining the Initial interview invitation.
-                </h2>
-                <form onSubmit={submitDecline}>
-                    <textarea
-                        value={reason}
-                        name="reason"
-                        onChange={(e) => setReason(e.target.value)}
-                        required
-                        className="w-full h-24 p-2 border rounded-md resize-none"
-                        placeholder="Your reason..."
-                    />
+            <Modal open={isModalOpen} setOpen={setIsModalOpen} width="max-w-lg">
+                <div className="text-base">
+                    <h2 className="text-lg font-semibold mb-4">
+                        Kindly provide your reason for declining the Initial interview invitation.
+                    </h2>
+                    <form onSubmit={submitDecline}>
+                        <textarea
+                            value={reason}
+                            name="reason"
+                            onChange={(e) => setReason(e.target.value)}
+                            required
+                            className="w-full h-24 p-2 border rounded-md resize-none"
+                            placeholder="Your reason..."
+                        />
 
-                    <div className="mt-5">
-                        <h2 className="text-xl font-semibold mb-2">
-                            Would you be open to being scheduled for another Initial interview?
-                        </h2>
-                        <div className="flex gap-6">
-                            <label className="flex items-center gap-2">
-                                <input
-                                    type="radio"
-                                    name="resched"
-                                    value="yes"
-                                    checked={reschedDecision === 'yes'}
-                                    onChange={() => setReschedDecision('yes')}
-                                />
-                                Yes
-                            </label>
-                            <label className="flex items-center gap-2">
-                                <input
-                                    type="radio"
-                                    name="resched"
-                                    value="no"
-                                    checked={reschedDecision === 'no'}
-                                    onChange={() => setReschedDecision('no')}
-                                />
-                                No
-                            </label>
+                        <div className="mt-5">
+                            <h2 className="text-lg font-semibold mb-2">
+                                Would you be open to being scheduled for another Initial interview?
+                            </h2>
+                            <div className="flex flex-col sm:flex-row gap-4">
+                                <label className="flex items-center gap-2">
+                                    <input
+                                        type="radio"
+                                        name="resched"
+                                        value="yes"
+                                        checked={reschedDecision === 'yes'}
+                                        onChange={() => setReschedDecision('yes')}
+                                    />
+                                    Yes
+                                </label>
+                                <label className="flex items-center gap-2">
+                                    <input
+                                        type="radio"
+                                        name="resched"
+                                        value="no"
+                                        checked={reschedDecision === 'no'}
+                                        onChange={() => setReschedDecision('no')}
+                                    />
+                                    No
+                                </label>
+                            </div>
                         </div>
-                    </div>
 
-                    <div className="flex justify-end gap-2 mt-6">
-                        <button
-                            type="button"
-                            onClick={closeModal}
-                            className="p-2 px-4 rounded-md hover:text-blue-400"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className="bg-blue-500 p-2 px-4 rounded-md text-white hover:bg-blue-400"
-                        >
-                            {loading ? 'Submitting...' : 'Submit'}
-                        </button>
-                    </div>
-                </form>
+                        <div className="flex flex-col sm:flex-row justify-end gap-2 mt-6">
+                            <button
+                                type="button"
+                                onClick={closeModal}
+                                className="p-2 px-4 rounded-md hover:text-blue-500"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="bg-blue-500 p-2 px-4 rounded-md text-white hover:bg-blue-600 disabled:opacity-50"
+                            >
+                                {loading ? 'Submitting...' : 'Submit'}
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </Modal>
         </>
     );

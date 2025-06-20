@@ -120,5 +120,6 @@ Route::post('/send_rejection_email', [EmailController::class, 'send_rejection_em
 
 Route::resource('interview_confirmation', InterviewConfirmationController::class);
 Route::resource('video_quiz', VideoQuizController::class);
+Route::get('get_video_quiz_by_emp_id/{emp_id}', [VideoQuizController::class, 'get_video_quiz_by_emp_id']);
 
 require __DIR__ . '/auth.php';

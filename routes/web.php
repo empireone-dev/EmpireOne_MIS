@@ -337,9 +337,14 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
             return Inertia::render('admin/attrition/attrition_section/page');
         });
     });
-    
-    Route::get('/compliance', function () {
-        return Inertia::render('admin/compliance/page');
+
+    Route::prefix('compliance')->group(function () {
+        Route::get('/', function () {
+            return Inertia::render('admin/compliance/page');
+        });
+        Route::get('/{id}', function () {
+            return Inertia::render('admin/compliance/id/page');
+        });
     });
 
     Route::prefix('engagement_section')->group(function () {

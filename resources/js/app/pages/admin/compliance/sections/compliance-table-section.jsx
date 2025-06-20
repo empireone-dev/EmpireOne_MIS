@@ -192,7 +192,7 @@ export default function ComplianceTableSection() {
             render: (_, record, i) => {
                 return (
                     <div key={i}>
-                        <button className="bg-sky-400 hover:bg-sky-600 text-white p-2 px-4 rounded-md">
+                        <button onClick={() => router.visit(`/admin/compliance/${record.emp_id}`)} className="bg-sky-400 hover:bg-sky-600 text-white p-2 px-4 rounded-md">
                             <Tooltip title="Show Trainings Taken">
                                 <EyeIcon className="h-5" />
                             </Tooltip>

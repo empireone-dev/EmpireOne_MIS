@@ -54,8 +54,6 @@ class VideoQuizController extends Controller
 
 
 
-
-
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -82,5 +80,12 @@ class VideoQuizController extends Controller
         VideoQuiz::create($validated);
 
         return response()->json(['message' => 'Saved successfully'], 200);
+    }
+
+
+    public function get_video_quiz_by_emp_id($id){
+
+
+        
     }
 }

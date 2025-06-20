@@ -4,45 +4,71 @@ namespace App\Http\Controllers;
 
 use App\Models\VideoQuiz;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VideoQuizController extends Controller
 {
     public function index(Request $request)
     {
-        $query = VideoQuiz::query();
+        // First, apply filters
+        $filtered = VideoQuiz::query();
 
         if ($request->filled('emp_id')) {
-            $query->where('emp_id', 'LIKE', '%' . $request->emp_id . '%');
+            $filtered->where('emp_id', 'LIKE', '%' . $request->emp_id . '%');
         }
 
         if ($request->filled('name')) {
-            $query->where('name', 'LIKE', '%' . $request->name . '%');
+            $filtered->where('name', 'LIKE', '%' . $request->name . '%');
         }
 
         if ($request->filled('email')) {
-            $query->where('email', 'LIKE', '%' . $request->email . '%');
+            $filtered->where('email', 'LIKE', '%' . $request->email . '%');
         }
 
-        // Get all distinct entries
-        $distinctEntries = $query
-            ->select('emp_id', 'name', 'email')
-            ->distinct()
-            ->get();
+        // Get latest record per emp_id
+        $latestPerEmp = $filtered
+            ->select('video_quiz.*')
+            ->whereIn('id', function ($query) use ($request) {
+                $sub = DB::table('video_quiz')
+                    ->selectRaw('MAX(id)')
+                    ->groupBy('emp_id');
 
-        // Manual pagination
+                // Apply filters to subquery to ensure consistency
+                if ($request->filled('emp_id')) {
+                    $sub->where('emp_id', 'LIKE', '%' . $request->emp_id . '%');
+                }
+
+                if ($request->filled('name')) {
+                    $sub->where('name', 'LIKE', '%' . $request->name . '%');
+                }
+
+                if ($request->filled('email')) {
+                    $sub->where('email', 'LIKE', '%' . $request->email . '%');
+                }
+
+                $query->fromSub($sub, 'latest_ids');
+            })
+            ->orderByDesc('id');
+
+        // Paginate result manually (since it's a collection)
         $page = $request->get('page', 1);
         $perPage = $request->get('per_page', 10);
-        $pagedData = $distinctEntries->forPage($page, $perPage)->values();
+        $all = $latestPerEmp->get();
+        $pagedData = $all->forPage($page, $perPage)->values();
 
         return response()->json([
             'result' => [
                 'data' => $pagedData,
-                'total' => $distinctEntries->count(),
+                'total' => $all->count(),
                 'current_page' => (int) $page,
                 'per_page' => (int) $perPage,
             ]
         ], 200);
     }
+
+
+
+
 
 
     public function store(Request $request)

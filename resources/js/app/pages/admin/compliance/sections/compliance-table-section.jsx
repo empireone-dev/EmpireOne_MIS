@@ -235,6 +235,7 @@ export default function ComplianceTableSection() {
                 columns={columns}
                 dataSource={video_quizzes?.data ?? []}
             />
+
             <div className="flex">
                 <div className="w-full mt-3.5">
                     {video_quizzes?.total > 0
@@ -246,9 +247,9 @@ export default function ComplianceTableSection() {
                 <div className="flex w-full items-center justify-end mt-2">
                     <Pagination
                         onChange={onChangePaginate}
-                        defaultCurrent={currentPage}
-                        total={video_quizzes.total}
-                        pageSize={pageSize}
+                        current={video_quizzes?.current_page || 1}
+                        total={video_quizzes?.total || 0}
+                        pageSize={video_quizzes?.per_page || pageSize}
                         showSizeChanger={false}
                     />
                 </div>

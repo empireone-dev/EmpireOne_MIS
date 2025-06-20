@@ -1,1 +1,0 @@
-import{h as r,v as o}from"./app-d89d4302.js";function u(){try{return r.get("/api/video_quiz")}catch{}}function n(t){try{return r.post("/api/video_quiz",t)}catch{}}function c(t){return async function(e,i){await n(t)}}function s(){return async function(t,e){const i=await u();t(o.actions.setVideoQuizzes(i.data.result))}}export{c,s as g};

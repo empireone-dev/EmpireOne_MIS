@@ -2,7 +2,7 @@ import axios from "axios"
 
 export function get_video_quiz_service() {
   try {
-    const result = axios.get('/api/video_quiz')
+    const result = axios.get('/api/video_quiz'+window.location.search)
     return result
   } catch (error) {
 

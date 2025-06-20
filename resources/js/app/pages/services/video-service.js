@@ -33,11 +33,11 @@ export function get_video_quiz_by_emp_id_service() {
 // }
 
 
-// export function delete_department_service(id) {
-//   try {
-//       const result = axios.delete('/api/department/'+id)
-//       return result
-//   } catch (error) {
+export function delete_video_quiz_service(id) {
+  try {
+    const result = axios.delete('/api/video_quiz/' + id)
+    return result
+  } catch (error) {
 
-//   }
-// }
+  }
+}

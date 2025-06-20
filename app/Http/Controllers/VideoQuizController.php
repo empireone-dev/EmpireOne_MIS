@@ -70,7 +70,7 @@ class VideoQuizController extends Controller
 
                     if ($exists) {
                         $fail("duplicate");
-                    }   
+                    }
                 }
             ],
             'email' => 'required|email|max:255',
@@ -87,5 +87,15 @@ class VideoQuizController extends Controller
     {
         $video_quiz = VideoQuiz::where('emp_id', $emp_id)->get();
         return response()->json($video_quiz, 200);
+    }
+
+    public function destroy($id)
+    {
+        $video_quiz = VideoQuiz::where('id', $id)->first();
+        if ($video_quiz) {
+            $video_quiz->delete();
+        }
+
+        return response()->json(['message' => 'Video quiz deleted successfully']);
     }
 }

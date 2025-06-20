@@ -1,4 +1,4 @@
-import { create_video_quiz_service, get_video_quiz_by_emp_id_service, get_video_quiz_service } from "../../services/video-service";
+import { create_video_quiz_service, delete_video_quiz_service, get_video_quiz_by_emp_id_service, get_video_quiz_service } from "../../services/video-service";
 import { videoQuizSlice } from "./video-quiz-slice";
 
 
@@ -30,3 +30,8 @@ export function get_video_quiz_by_emp_id_thunk() {
   };
 }
 
+export function delete_video_quiz_thunk(id) {
+  return async function (dispatch, getState) {
+    const res = await delete_video_quiz_service(id)
+  };
+}

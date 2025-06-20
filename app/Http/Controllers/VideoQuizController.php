@@ -70,7 +70,7 @@ class VideoQuizController extends Controller
 
                     if ($exists) {
                         $fail("duplicate");
-                    }
+                    }   
                 }
             ],
             'email' => 'required|email|max:255',
@@ -83,9 +83,9 @@ class VideoQuizController extends Controller
     }
 
 
-    public function get_video_quiz_by_emp_id($id){
-
-
-        
+    public function get_video_quiz_by_emp_id($emp_id)
+    {
+        $video_quiz = VideoQuiz::where('emp_id', $emp_id)->get();
+        return response()->json($video_quiz, 200);
     }
 }

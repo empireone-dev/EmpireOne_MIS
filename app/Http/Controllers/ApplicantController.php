@@ -138,7 +138,7 @@ class ApplicantController extends Controller
         // Generate unique application ID
         $today = date('Y-m-d');
         $count = Applicant::whereDate('submitted', $today)->count();
-        $countNumber = $count >= 10 ? $count : '0' . $count;
+        $countNumber = str_pad($count, 2, '0', STR_PAD_LEFT);
         $dateUnique = date('ymd') . $countNumber;
 
         // Update applicant with app_id and status

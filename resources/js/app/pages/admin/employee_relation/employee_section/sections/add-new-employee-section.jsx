@@ -164,12 +164,20 @@ export default function AddNewEmployeeSection() {
                                 >
                                     <option value="">Select Supervisor</option>
                                     {users
-                                        .filter((res) => res.site === "San Carlos" && ["Manager", "Supervisor", "Team Leader", "Director", "CEO"].includes(res.position))
+                                        .filter((res) =>
+                                            (
+                                                !user?.site ||
+                                                res.site === user.site ||
+                                                !res.site
+                                            ) &&
+                                            ["Manager", "Account Manager", "Supervisor", "Team Leader", "Director", "CEO", "HR Lead", "Compliance Officer", "Site Admin"].includes(res.position)
+                                        )
                                         .map((res) => (
                                             <option key={res.id} value={res.id}>
                                                 {res.employee_fname} {res.employee_lname}
                                             </option>
                                         ))}
+
                                 </select>
                             </div>
                             <div className="w-full px-3">

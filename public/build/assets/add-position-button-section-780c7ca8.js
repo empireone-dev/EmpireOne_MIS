@@ -1,0 +1,1 @@
+import{j as o}from"./app-7506f624.js";import i from"./add-new-position-section-59a4c3e7.js";import"./presets-e42779d2.js";import"./AntdIcon-4e44e5b5.js";function n(){return o.jsx("div",{className:"my-2",children:o.jsx("div",{class:"inline-flex rounded-md shadow-sm",role:"group",children:o.jsx(i,{})})})}export{n as default};

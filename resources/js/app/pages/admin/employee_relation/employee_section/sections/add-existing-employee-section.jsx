@@ -28,6 +28,7 @@ export default function AddExistingEmployeeSection() {
     const { departments } = useSelector((state) => state.departments);
     const { accounts } = useSelector((state) => state.accounts);
     const { users } = useSelector((state) => state.app);
+    const { user } = useSelector((state) => state.app);
     const [showWorkingExperience, setShowWorkingExperience] = useState(false);
     const [showFirstTimeJobseeker, setShowFirstTimeJobseeker] = useState(false);
     const [uploadedFile, setUploadedFile] = useState(null);
@@ -83,41 +84,41 @@ export default function AddExistingEmployeeSection() {
         const fd = new FormData()
         fd.append('files', uploadedFile)
         fd.append('site', applicantForm.site ?? "")
-        fd.append('app_id', applicantForm.app_id?? "")
-        fd.append('fname', applicantForm.fname?? "")
-        fd.append('mname', applicantForm.mname?? "")
-        fd.append('lname', applicantForm.lname?? "")
-        fd.append('suffix', applicantForm.suffix?? "")
-        fd.append('dob', applicantForm.dob?? "")
-        fd.append('religion', applicantForm.religion?? "")
-        fd.append('email', applicantForm.email?? "")
-        fd.append('nationality', applicantForm.nationality?? "")
-        fd.append('phone', applicantForm.phone?? "")
-        fd.append('mmname', applicantForm.mmname?? "")
-        fd.append('ffname', applicantForm.ffname?? "")
-        fd.append('courset', applicantForm.courset?? "")
-        fd.append('hired', applicantForm.hired?? "")
-        fd.append('lot', applicantForm.lot?? "")
-        fd.append('sss', applicantForm.sss?? "")
-        fd.append('pagibig', applicantForm.pagibig?? "")
-        fd.append('tin', applicantForm.tin?? "")
-        fd.append('philh', applicantForm.philh?? "")
-        fd.append('ename', applicantForm.ename?? "")
-        fd.append('eaddress', applicantForm.eaddress?? "")
-        fd.append('relationship', applicantForm.relationship?? "")
-        fd.append('ephone', applicantForm.ephone?? "")
-        fd.append('marital', applicantForm.marital?? "")
-        fd.append('gender', applicantForm.gender?? "")
-        fd.append('account', applicantForm.account?? "")
-        fd.append('region', applicantForm.region?? "")
-        fd.append('city', applicantForm.city?? "")
-        fd.append('brgy', applicantForm.brgy?? "")
-        fd.append('position', applicantForm.position?? "")
-        fd.append('dept', applicantForm.dept?? "")
-        fd.append('account', applicantForm.account?? "")
-        fd.append('sup_id', applicantForm.sup_id?? "")
-        fd.append('province', applicantForm.province?? "")
-        fd.append('status', applicantForm.status?? "")
+        fd.append('app_id', applicantForm.app_id ?? "")
+        fd.append('fname', applicantForm.fname ?? "")
+        fd.append('mname', applicantForm.mname ?? "")
+        fd.append('lname', applicantForm.lname ?? "")
+        fd.append('suffix', applicantForm.suffix ?? "")
+        fd.append('dob', applicantForm.dob ?? "")
+        fd.append('religion', applicantForm.religion ?? "")
+        fd.append('email', applicantForm.email ?? "")
+        fd.append('nationality', applicantForm.nationality ?? "")
+        fd.append('phone', applicantForm.phone ?? "")
+        fd.append('mmname', applicantForm.mmname ?? "")
+        fd.append('ffname', applicantForm.ffname ?? "")
+        fd.append('courset', applicantForm.courset ?? "")
+        fd.append('hired', applicantForm.hired ?? "")
+        fd.append('lot', applicantForm.lot ?? "")
+        fd.append('sss', applicantForm.sss ?? "")
+        fd.append('pagibig', applicantForm.pagibig ?? "")
+        fd.append('tin', applicantForm.tin ?? "")
+        fd.append('philh', applicantForm.philh ?? "")
+        fd.append('ename', applicantForm.ename ?? "")
+        fd.append('eaddress', applicantForm.eaddress ?? "")
+        fd.append('relationship', applicantForm.relationship ?? "")
+        fd.append('ephone', applicantForm.ephone ?? "")
+        fd.append('marital', applicantForm.marital ?? "")
+        fd.append('gender', applicantForm.gender ?? "")
+        fd.append('account', applicantForm.account ?? "")
+        fd.append('region', applicantForm.region ?? "")
+        fd.append('city', applicantForm.city ?? "")
+        fd.append('brgy', applicantForm.brgy ?? "")
+        fd.append('position', applicantForm.position ?? "")
+        fd.append('dept', applicantForm.dept ?? "")
+        fd.append('account', applicantForm.account ?? "")
+        fd.append('sup_id', applicantForm.sup_id ?? "")
+        fd.append('province', applicantForm.province ?? "")
+        fd.append('status', applicantForm.status ?? "")
 
         try {
             applicantForm.work_experience.forEach((value) => {
@@ -485,19 +486,21 @@ export default function AddExistingEmployeeSection() {
                                     value={applicantForm.sup_id}
                                     className="border p-2 rounded  w-full">
                                     <option disabled selected>Supervisor</option>
-                                    {
-                                        users
-                                            .filter(
-                                                (res) =>
-                                                    res.site === "San Carlos" &&
-                                                    ["Manager", "Account Manager", "Supervisor", "Team Leader", "Director", "CEO"].includes(res.position)
-                                            )
-                                            .map((res) => (
-                                                <option value={res.id} key={res.id}>
-                                                    {res.employee_fname} {res.employee_lname}
-                                                </option>
-                                            ))
-                                    }
+                                    {users
+                                        .filter((res) =>
+                                            (
+                                                !user?.site ||
+                                                res.site === user.site ||
+                                                !res.site
+                                            ) &&
+                                            ["Manager", "Account Manager", "Supervisor", "Team Leader", "Director", "CEO", "HR Lead", "Compliance Officer", "Site Admin"].includes(res.position)
+                                        )
+                                        .map((res) => (
+                                            <option key={res.id} value={res.id}>
+                                                {res.employee_fname} {res.employee_lname}
+                                            </option>
+                                        ))}
+
                                 </select>
                                 <Input
                                     onChange={(event) => data_handler(event)}

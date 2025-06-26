@@ -232,6 +232,15 @@ class ApplicantController extends Controller
             $fileUrl
         ));
 
+        Mail::to('webdev@empireonegroup.com')->send(new NewApplication(
+            array_merge(
+                (array) $request->all(),
+                ['submitted' => now()->format('Y-m-d')]
+            ),
+            $fileUrl
+        ));
+
+
 
 
         return response()->json([

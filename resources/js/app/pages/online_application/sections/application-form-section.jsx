@@ -119,6 +119,10 @@ export default function ApplicationFormSection() {
   const onSubmit = async (data) => {
     // data.prevent.defaultValues
     // console.log("Form Submitted:");
+    if (files.length === 0) {
+      message.error("CV file is required. Please upload your CV.");
+      return;
+    }
     try {
       const result = await store.dispatch(
         store_applicant_thunk({
@@ -789,19 +793,25 @@ export default function ApplicationFormSection() {
                   </div>
                 </div>
                 <br />
-                <Dragger {...props}>
-                  <p className="ant-upload-drag-icon">
-                    <InboxOutlined />
-                  </p>
-                  <p className="ant-upload-text">
-                    Click or drag file to this area to upload your CV
-                  </p>
-                  <p className="ant-upload-hint">
-                    Support for a single or bulk upload. Strictly
-                    prohibited from uploading company data or other
-                    banned files.
-                  </p>
-                </Dragger>
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium text-gray-700">
+                    CV Upload <span className="text-red-500">*</span>
+                  </label>
+                  <Dragger {...props}>
+                    <p className="ant-upload-drag-icon">
+                      <InboxOutlined />
+                    </p>
+                    <p className="ant-upload-text">
+                      Click or drag PDF file to this area to upload your CV
+                    </p>
+                    <p className="ant-upload-hint">
+                      Support for a single or bulk upload. Only PDF files are allowed.
+                    </p>
+                  </Dragger>
+                  {files.length === 0 && (
+                    <p className="text-red-500 text-sm">Please upload your CV or resume here in PDF format.</p>
+                  )}
+                </div>
                 <div className="flex items-end justify-end">
                   <button
                     disabled={isSubmitting}

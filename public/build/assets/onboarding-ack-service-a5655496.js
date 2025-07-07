@@ -1,0 +1,1 @@
+import{h as n}from"./app-0ed07ca7.js";async function t(a){return(await n.post("/api/onboarding_ack",a)).data}async function s(a){return(await n.put("/api/onboarding_ack/"+a)).data}export{t as c,s as u};

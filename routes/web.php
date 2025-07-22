@@ -130,6 +130,10 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         return Inertia::render('admin/file_201/page');
     });
 
+    Route::get('/file_201/{app_id}', function () {
+        return Inertia::render('admin/file_201/page');
+    });
+
     Route::get('/exit_interview/{app_id}', function () {
         return Inertia::render('admin/exit_interview/page');
     });

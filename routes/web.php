@@ -348,6 +348,15 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         });
     });
 
+    Route::prefix('coaching_logs')->group(function () {
+        Route::get('/', function () {
+            return Inertia::render('admin/coaching_logs/page');
+        });
+        Route::get('/{id}', function () {
+            return Inertia::render('admin/coaching_logs/id/page');
+        });
+    });
+
     Route::prefix('engagement_section')->group(function () {
         Route::get('/engagement_dashboard', function () {
             return Inertia::render('admin/engagement_section/engagement_dashboard/page');

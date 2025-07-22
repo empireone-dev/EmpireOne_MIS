@@ -21,6 +21,8 @@ import {
     TeamOutlined,
     QuestionOutlined,
     AuditOutlined,
+    HistoryOutlined,
+    FieldTimeOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
@@ -283,6 +285,12 @@ const AdminLayout = ({ children }) => {
             icon: <AuditOutlined />,
             label: "Compliance Training",
             onClick: () => router.visit("/admin/compliance"),
+        },
+        {
+            key: "coaching_logs",
+            icon: <FieldTimeOutlined />,
+            label: "Coaching Logs",
+            onClick: () => router.visit("/admin/coaching_logs"),
         },
         // {
         //     key: "employee_wellness",

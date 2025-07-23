@@ -157,7 +157,7 @@ export default function FileNteComponent({ data, item }) {
                         </div>
                         <div className='flex items-center justify-center p-1.5 px-2 mt-1'>
                             <button className='bg-blue-500 hover:bg-blue-600 text-white w-full p-1.5 rounded-md'>
-                                GENERATE INCIDENT REPORT
+                                GENERATE NTE
                             </button>
                         </div>
                     </div>

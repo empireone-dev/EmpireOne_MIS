@@ -64,7 +64,7 @@ export default function DashboardSection() {
                 <p className="text-2xl">Hiring Rate</p>
               </div>
             </div>
-            <div className="shadow-lg rounded-md border border-gray-300 flex items-center bg-gray-100 justify-between p-6 text-black font-medium group">
+            {/* <div className="shadow-lg rounded-md border border-gray-300 flex items-center bg-gray-100 justify-between p-6 text-black font-medium group">
               <div className="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
                 <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="stroke-current text-blue-900 transform transition-transform duration-500 ease-in-out">
                   <PercentBadgeIcon />
@@ -74,7 +74,7 @@ export default function DashboardSection() {
                 <p className="text-4xl">{(Number(data?.outsourcing?.attrition_rate || 0))}%</p>
                 <p className="text-2xl">Attrition Rate</p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
         <div>

@@ -53,6 +53,6 @@ class Employee extends Model
     }
     public function dept_user(): BelongsTo
     {
-        // return $this->BelongsTo(Department::class, "depthead", "app_id");
+        return $this->BelongsTo(Department::class, "depthead", "app_id");
     }
 }

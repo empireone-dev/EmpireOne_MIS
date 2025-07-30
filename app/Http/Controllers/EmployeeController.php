@@ -34,7 +34,7 @@ class EmployeeController extends Controller
         if ($request->status != 'null' && $request->status) {
             $query->where('status', '=', $request->status);
         }
-       
+
         // Apply searching if the searching parameter is present
         if ($request->searching) {
             $query->where(function ($subQuery) use ($request) {
@@ -62,34 +62,23 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $experiences = $request->work_experience ?? [];
         $data['caddress'] = $request->lot . ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province;
         $data['app_id'] = $request->app_id;
         Applicant::create($data);
 
-        if (!is_array($request->work_experience)) {
-            // If work_experience is not an array, try to decode it as JSON
-            $workExperience = json_decode($request->work_experience, true);
-        } else {
-            $workExperience = $request->work_experience;
-        }
-
-        if (is_array($workExperience) && count($workExperience) !== 0) {
-            foreach ($workExperience as $jsonValue) {
-                // Decode the JSON string to an associative array
-                $value = json_decode($jsonValue, true);
-
-                // Check if decoding was successful
-                if (is_array($value)) {
-                    WorkingExperience::create([
-                        'app_id' => $value['app_id'],
-                        'company' => $value['company'],
-                        'end_at' => $value['end_at'],
-                        'position' => $value['position'],
-                        'started_at' => $value['started_at'],
-                    ]);
-                }
+        if ($experiences) {
+            foreach ($experiences as $experience) {
+                WorkingExperience::create([
+                    'app_id'    => $data['app_id'],
+                    'company'   => $experience['company'] ?? null,
+                    'position'  => $experience['position'] ?? null,
+                    'started_at' => $experience['started_at'] ?? null,
+                    'end_at'    => $experience['end_at'] ?? null,
+                ]);
             }
         }
+
         // $employee = Employee::with('applicant')->get();
         Employee::create([
             'app_id' => $request->app_id,
@@ -122,13 +111,36 @@ class EmployeeController extends Controller
             'password' => Hash::make('Business12'),
         ]);
 
-        if ($request->hasFile('files')) {
-            $path = $request->file('files')->store(date("Y"), 's3');
-            $url = Storage::disk('s3')->url($path);
-            CVFile::create([
-                'app_id' => $request->app_id,
-                'file' => $url,
-            ]);
+
+
+        $base64Files = $request->input('files');
+        $uploadedFiles = [];
+        if ($base64Files) {
+            foreach ($base64Files as $base64) {
+                if (!preg_match('/^data:(.*?);base64,/', $base64, $matches)) {
+                    return response()->json(['error' => 'Invalid base64 file format'], 400);
+                }
+
+                $mimeType = $matches[1];
+                $extension = explode('/', $mimeType)[1] ?? 'bin'; // fallback to bin if missing
+
+                $fileData = base64_decode(substr($base64, strpos($base64, ',') + 1));
+                if ($fileData === false) {
+                    return response()->json(['error' => 'Base64 decode failed'], 400);
+                }
+
+                $filename = date('Y') . '/' .  $request->app_id . '_' . uniqid() . '.' . $extension;
+                Storage::disk('s3')->put($filename, $fileData);
+                $url = Storage::disk('s3')->url($filename);
+
+                $uploadedFiles[] = $url;
+
+                // Save file record
+                CVFile::create([
+                    'app_id' =>  $request->app_id,
+                    'file'   => $url,
+                ]);
+            }
         }
         return response()->json([
             'data' => 'success',
@@ -195,7 +207,7 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user','dept'])->first();
+        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'dept'])->first();
         return response()->json([
             'data' => $employee
         ], 200);

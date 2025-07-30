@@ -7,8 +7,9 @@ import barangay from "@/app/address/barangay.json"
 import moment from 'moment';
 // import Input from '../../_components/input';
 // import Select from '../../_components/select';
+import Select2 from "@/app/pages/_components/select2";
 import { useEffect } from 'react';
-import { UserAddOutlined } from '@ant-design/icons'
+import { InboxOutlined, UserAddOutlined } from '@ant-design/icons'
 import { message, Modal } from 'antd';
 import React, { useState } from 'react'
 import UploadResumeSection from './upload-resume-section';
@@ -21,6 +22,10 @@ import { store_employee_thunk } from '../redux/employee-section-thunk';
 import { wait } from 'ckeditor5';
 import { get_job_position_thunk } from '../../../sourcing/job_title_section/redux/job-title-thunk';
 import { get_department_thunk } from '../../../sourcing/department/redux/department-thunk';
+import { useForm } from 'react-hook-form';
+import Dragger from 'antd/es/upload/Dragger';
+import Input2 from '@/app/pages/_components/input2';
+import Checkbox from '@/app/pages/_components/checkbox';
 
 export default function AddExistingEmployeeSection() {
     const [open, setOpen] = useState(false);
@@ -35,12 +40,30 @@ export default function AddExistingEmployeeSection() {
     const [loading, setLoading] = useState(null);
     const [error, setError] = useState({})
 
+    const [files, setFiles] = useState([]);
+
     const [applicationCount, setApplicationCount] = useState(0);
     const { applicantForm } = useSelector((state) => state.applicants);
     const [newProvince, setNewProvince] = useState([])
     const [newCity, setNewCity] = useState([])
     const [newBarangay, setNewBarangay] = useState([])
+
+    const [hasExperience, setHasExperience] = useState(false);
     const dispatch = useDispatch();
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+        reset,
+        control,
+    } = useForm({
+        defaultValues: {
+            work_experience: [
+                { company: "", position: "", started_at: "", end_at: "" },
+            ],
+        },
+    });
 
     useEffect(() => {
         if (open) {
@@ -78,86 +101,95 @@ export default function AddExistingEmployeeSection() {
     }
     console.log('query', applicantForm)
 
-    async function submitApplicant(e) {
-        e.preventDefault();
-        setLoading(true)
-        const fd = new FormData()
-        fd.append('files', uploadedFile)
-        fd.append('site', applicantForm.site ?? "")
-        fd.append('app_id', applicantForm.app_id ?? "")
-        fd.append('fname', applicantForm.fname ?? "")
-        fd.append('mname', applicantForm.mname ?? "")
-        fd.append('lname', applicantForm.lname ?? "")
-        fd.append('suffix', applicantForm.suffix ?? "")
-        fd.append('dob', applicantForm.dob ?? "")
-        fd.append('religion', applicantForm.religion ?? "")
-        fd.append('email', applicantForm.email ?? "")
-        fd.append('nationality', applicantForm.nationality ?? "")
-        fd.append('phone', applicantForm.phone ?? "")
-        fd.append('mmname', applicantForm.mmname ?? "")
-        fd.append('ffname', applicantForm.ffname ?? "")
-        fd.append('courset', applicantForm.courset ?? "")
-        fd.append('hired', applicantForm.hired ?? "")
-        fd.append('lot', applicantForm.lot ?? "")
-        fd.append('sss', applicantForm.sss ?? "")
-        fd.append('pagibig', applicantForm.pagibig ?? "")
-        fd.append('tin', applicantForm.tin ?? "")
-        fd.append('philh', applicantForm.philh ?? "")
-        fd.append('ename', applicantForm.ename ?? "")
-        fd.append('eaddress', applicantForm.eaddress ?? "")
-        fd.append('relationship', applicantForm.relationship ?? "")
-        fd.append('ephone', applicantForm.ephone ?? "")
-        fd.append('marital', applicantForm.marital ?? "")
-        fd.append('gender', applicantForm.gender ?? "")
-        fd.append('account', applicantForm.account ?? "")
-        fd.append('region', applicantForm.region ?? "")
-        fd.append('city', applicantForm.city ?? "")
-        fd.append('brgy', applicantForm.brgy ?? "")
-        fd.append('position', applicantForm.position ?? "")
-        fd.append('dept', applicantForm.dept ?? "")
-        fd.append('account', applicantForm.account ?? "")
-        fd.append('sup_id', applicantForm.sup_id ?? "")
-        fd.append('province', applicantForm.province ?? "")
-        fd.append('status', applicantForm.status ?? "")
+    async function submitApplicant(data) {
+        console.log('aaaaaaaaaaaaaaaaa', data)
+        // const fd = new FormData()
+        // fd.append('files', uploadedFile)
+        // fd.append('site', user.site ?? "")
+        // fd.append('app_id', applicantForm.app_id ?? "")
+        // fd.append('fname', applicantForm.fname ?? "")
+        // fd.append('mname', applicantForm.mname ?? "")
+        // fd.append('lname', applicantForm.lname ?? "")
+        // fd.append('suffix', applicantForm.suffix ?? "")
+        // fd.append('dob', applicantForm.dob ?? "")
+        // fd.append('religion', applicantForm.religion ?? "")
+        // fd.append('email', applicantForm.email ?? "")
+        // fd.append('nationality', applicantForm.nationality ?? "")
+        // fd.append('phone', applicantForm.phone ?? "")
+        // fd.append('mmname', applicantForm.mmname ?? "")
+        // fd.append('ffname', applicantForm.ffname ?? "")
+        // fd.append('courset', applicantForm.courset ?? "")
+        // fd.append('hired', applicantForm.hired ?? "")
+        // fd.append('lot', applicantForm.lot ?? "")
+        // fd.append('sss', applicantForm.sss ?? "")
+        // fd.append('pagibig', applicantForm.pagibig ?? "")
+        // fd.append('tin', applicantForm.tin ?? "")
+        // fd.append('philh', applicantForm.philh ?? "")
+        // fd.append('ename', applicantForm.ename ?? "")
+        // fd.append('eaddress', applicantForm.eaddress ?? "")
+        // fd.append('relationship', applicantForm.relationship ?? "")
+        // fd.append('ephone', applicantForm.ephone ?? "")
+        // fd.append('marital', applicantForm.marital ?? "")
+        // fd.append('gender', applicantForm.gender ?? "")
+        // fd.append('account', applicantForm.account ?? "")
+        // fd.append('region', applicantForm.region ?? "")
+        // fd.append('city', applicantForm.city ?? "")
+        // fd.append('brgy', applicantForm.brgy ?? "")
+        // fd.append('position', applicantForm.position ?? "")
+        // fd.append('dept', applicantForm.dept ?? "")
+        // fd.append('account', applicantForm.account ?? "")
+        // fd.append('sup_id', applicantForm.sup_id ?? "")
+        // fd.append('province', applicantForm.province ?? "")
+        // fd.append('status', applicantForm.status ?? "")
 
         try {
-            applicantForm.work_experience.forEach((value) => {
-                fd.append("work_experience[]", JSON.stringify({
-                    app_id: applicantForm.app_id,
-                    company: value.company,
-                    position: value.position,
-                    started_at: value.started_at,
-                    end_at: value.end_at,
-                }));
-            });
-            await dispatch(
-                setApplicantForm({
-                    ...applicantForm,
-                    submitted: moment().format('YYYY-MM-DD'),
-                    app_id: applicantForm.app_id
-                })
-            );
-            await store.dispatch(store_employee_thunk(fd));
+            // applicantForm.work_experience.forEach((value) => {
+            //     fd.append("work_experience[]", JSON.stringify({
+            //         app_id: applicantForm.app_id,
+            //         company: value.company,
+            //         position: value.position,
+            //         started_at: value.started_at,
+            //         end_at: value.end_at,
+            //     }));
+            // });
+            // await dispatch(
+            //     setApplicantForm({
+            //         ...applicantForm,
+            //         submitted: moment().format('YYYY-MM-DD'),
+            //         app_id: applicantForm.app_id
+            //     })
+            // );
+            await store.dispatch(store_employee_thunk({
+                ...data,
+                province: JSON.parse(data?.province).name,
+                city: JSON.parse(data?.city).name,
+                region: JSON.parse(data?.region).name,
+                site: user.site,
+                files: files.map((res) => res.files),
+                is_experience: hasExperience,
+            }));
             await store.dispatch(get_applicant_thunk())
             message.success('Employee Saved successfully')
-            setLoading(false)
+            reset();
+            setFiles([]);
             setOpen(false);
         } catch (error) {
+            console.log("bbbbbb", error)
             message.error('Employee failed to saved')
-            setLoading(false)
+
         }
     }
 
 
-    const handleWorkingExperienceChange = (e) => {
-        setShowWorkingExperience(e.target.checked);
-        setShowFirstTimeJobseeker(false);
-    };
+    // const handleWorkingExperienceChange = (e) => {
+    //     setShowWorkingExperience(e.target.checked);
+    //     setShowFirstTimeJobseeker(false);
+    // };
 
-    const handleFirstTimeJobseekerChange = (e) => {
-        setShowFirstTimeJobseeker(e.target.checked);
-        setShowWorkingExperience(false);
-    };
+    // const handleFirstTimeJobseekerChange = (e) => {
+    //     setShowFirstTimeJobseeker(e.target.checked);
+    //     setShowWorkingExperience(false);
+    // };
 
     function data_handler(e) {
         if (e.target.name == 'region') {
@@ -201,6 +233,73 @@ export default function AddExistingEmployeeSection() {
 
 
     }
+
+
+    const handleFiles = async (fileList) => {
+        const toBase64 = (file) =>
+            new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = (err) => reject(err);
+                reader.readAsDataURL(file);
+            });
+
+        const fileArray = Array.from(fileList);
+
+        // Remove files that already exist in state
+        const newUniqueFiles = fileArray.filter(
+            (file) =>
+                !files.some(
+                    (existing) =>
+                        existing.file.name === file.name &&
+                        existing.file.size === file.size &&
+                        existing.file.lastModified === file.lastModified
+                )
+        );
+
+        const base64Files = await Promise.all(
+            newUniqueFiles.map(async (file) => ({
+                file,
+                files: await toBase64(file),
+            }))
+        );
+
+        setFiles((prevFiles) => [...prevFiles, ...base64Files]);
+    };
+
+    const props = {
+        name: "file",
+        multiple: true,
+        method: "GET",
+        action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
+        onChange(info) {
+            const { status } = info.file;
+            if (status !== "uploading") {
+                console.log(info.file, info.fileList);
+            }
+            if (status === "done") {
+                const newFiles = info.fileList
+                    .map((file) => file.originFileObj)
+                    .filter(Boolean);
+                handleFiles(newFiles);
+                message.success(
+                    `${info.file.name} file uploaded successfully.`
+                );
+            } else if (status === "error") {
+                message.error(`${info.file.name} file upload failed.`);
+            }
+        },
+        onRemove(file) {
+            setFiles((prevFiles) =>
+                prevFiles.filter((f) => f.file.name !== file.name)
+            );
+            return true; // allow UI to remove it too
+        },
+
+        // onDrop(e) {
+        //     console.log("Dropped files", e.dataTransfer.files);
+        // },
+    };
     console.log("ssssssssss", users);
     return (
         <div className="my-2">
@@ -224,213 +323,296 @@ export default function AddExistingEmployeeSection() {
                 width={1200}
                 okText="Save"
                 cancelText="Cancel"
+                footer={null}
             >
-                <form className='border rounded-lg p-3.5' onSubmit={submitApplicant}>
-                    <div>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                            <select
-                                onChange={(event) => data_handler(event)}
-                                name='site'
-                                className="border p-2 rounded w-full">
-                                <option disabled selected>Select Site</option>
-                                <option value="San Carlos">San Carlos </option>
-                                <option value="Carcar">Carcar </option>
-                            </select>
-                        </div>
-                    </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-6 text-center">Personal Information</h1>
-                    <div className="mb-4">
-                        <Input
-                            onChange={(event) => data_handler(event)}
-                            value={applicantForm.app_id ?? ""}
-                            required={error?.app_id ? true : false}
+                <form
+                    onSubmit={handleSubmit(submitApplicant)}
+                    className="space-y-4 px-8 py-8"
+                >
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
+                        Personal Information
+                    </h1>
+                    <div className="flex-1">
+                        <Input2
+                            register={{
+                                ...register("app_id", {
+                                    required: "Employee ID is required",
+                                }),
+                            }}
+                            errorMessage={errors?.app_id?.message}
                             name="app_id"
-                            label="Employee No."
+                            label="Employee ID"
                             type="text"
                         />
                     </div>
-                    <div className='flex flex-1 gap-4'>
-                        <div className='flex flex-col w-full mb-4'>
-                            <label htmlFor=""><b>Full Name</b></label>
-                            <div className='flex flex-1 gap-3'>
-                                <Input
-                                    onChange={(event) => data_handler(event)}
-                                    value={applicantForm.fname ?? ""}
-                                    required={error?.fname ? true : false}
-                                    name="fname"
-                                    label="First Name"
-                                    type="text"
-                                />
-                                <Input
-                                    onChange={(event) => data_handler(event)}
-                                    value={applicantForm.mname ?? ""}
-                                    name="mname"
-                                    label="Middle Name"
-                                    type="text"
-                                />
-                                <Input
-                                    onChange={(event) => data_handler(event)}
-                                    value={applicantForm.lname ?? ""}
-                                    required={error?.lname ? true : false}
-                                    name="lname"
-                                    label="Last Name"
-                                    type="text"
-                                />
-                                <select
-                                    onChange={(event) => data_handler(event)}
-                                    name='suffix'
-                                    className="border p-2 rounded  w-1/5">
-                                    <option disabled selected>Suffix</option>
-                                    <option> Sr.</option>
-                                    <option> Jr.</option>
-                                    <option> II</option>
-                                    <option> III</option>
-                                    <option> IV</option>
-                                    <option> V</option>
-                                </select>
-                            </div>
+                    <div className="flex flex-col gap-3 lg:flex-row">
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("fname", {
+                                        required: "First Name is required",
+                                    }),
+                                }}
+                                errorMessage={errors?.fname?.message}
+                                name="fname"
+                                label="First Name"
+                                type="text"
+                            />
+                        </div>
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("mname", {
+                                        // required: "Middle Name is required",
+                                    }),
+                                }}
+                                // errorMessage={errors?.mname?.message}
+                                name="mname"
+                                label="Middle Name"
+                                type="text"
+                            />
+                        </div>
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("lname", {
+                                        required: "Last Name is required",
+                                    }),
+                                }}
+                                errorMessage={errors?.lname?.message}
+                                name="lname"
+                                label="Last Name"
+                                type="text"
+                            />
+                        </div>
+                        <div className="flex-none w-24">
+                            <Select2
+                                register={{
+                                    ...register("suffix", {
+                                        required: false,
+                                    }),
+                                }}
+                                options={[
+                                    { label: "--", value: "" },
+                                    { label: "Sr.", value: "Sr." },
+                                    { label: "Jr.", value: "Jr." },
+                                    { label: "II", value: "II" },
+                                    { label: "III", value: "III" },
+                                    { label: "IV", value: "IV" },
+                                    { label: "V", value: "V" },
+                                ]}
+                                label="Suffix"
+                                name="suffix"
+                            />
                         </div>
                     </div>
-                    <div className='flex flex-1 gap-4'>
-                        <div className='flex w-full'>
-                            <div className="flex flex-col gap-4 mb-4 w-full">
-                                <div className='flex flex-col w-full'>
-                                    <select
-                                        onChange={(event) => data_handler(event)}
-                                        name='gender'
-                                        className="border p-2 rounded w-full">
-                                        <option disabled selected>Gender</option>
-                                        <option> Male</option>
-                                        <option> Female</option>
-                                    </select>
-                                </div>
-                                <div className='flex flex-col w-full'>
-                                    <Input
-                                        onChange={(event) =>
-                                            data_handler(event)
-                                        }
-                                        value={applicantForm.dob ?? ""}
-                                        required={error?.dob ? true : false}
-                                        name="dob"
-                                        label="Date of Birth"
-                                        type="date"
-                                    />
-                                </div>
-                                <div className=" w-full">
-                                    <Input
-                                        onChange={(event) => data_handler(event)}
-                                        value={applicantForm.email ?? ""}
-                                        required={error?.email ? true : false}
-                                        name="email"
-                                        label="Email"
-                                        type="email"
-                                    />
-                                </div>
-                                <div className="w-full">
-                                    <Input
-                                        onChange={(event) => data_handler(event)}
-                                        value={applicantForm.phone ?? ""}
-                                        required={error?.phone ? true : false}
-                                        name="phone"
-                                        label="Phone Number"
-                                        type="number"
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                        <div className='flex w-full'>
-                            <div className="flex flex-col gap-4 mb-4 w-full">
-                                <div className='flex flex-col w-full'>
-                                    <select
-                                        onChange={(event) => data_handler(event)}
-                                        name='marital'
-                                        className="border p-2 rounded w-full">
-                                        <option disabled selected>Marital Status</option>
-                                        <option> Single</option>
-                                        <option> Married</option>
-                                        <option> Widowed</option>
-                                        <option> Divorced</option>
-                                    </select>
-                                </div>
-                                <div className='flex flex-col w-full'>
-                                    <Input
-                                        onChange={(event) =>
-                                            data_handler(event)
-                                        }
-                                        value={applicantForm.religion ?? ""}
-                                        required={error?.religion ? true : false}
-                                        name="religion"
-                                        label="Religion"
-                                        type="text"
-                                    />
-                                </div>
-                                <div className='flex flex-col w-full'>
-                                    <Input
-                                        onChange={(event) =>
-                                            data_handler(event)
-                                        }
-                                        value={applicantForm.nationality ?? ""}
-                                        required={error?.nationality ? true : false}
-                                        name="nationality"
-                                        label="Nationality"
-                                        type="text"
-                                    />
-                                </div>
-                            </div>
-                        </div>
 
-                    </div>
-                    <div className="mb-4">
-                        <Input
-                            onChange={(event) => data_handler(event)}
-                            value={applicantForm.mmname ?? ""}
-                            name="mmname"
-                            label="Mothers maiden name"
-                            type="text"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <Input
-                            onChange={(event) => data_handler(event)}
-                            value={applicantForm.ffname ?? ""}
-                            name="ffname"
-                            label="Fathers fullname"
-                            type="text"
-                        />
-                    </div>
-                    <div className='flex flex-1 gap-4 mb-4'>
-                        <div className="w-full">
-                            <select
-                                onChange={(event) => data_handler(event)}
-                                name='educ'
-                                className="border p-2 rounded w-full">
-                                <option disabled selected>Select Educational Attainment</option>
-                                <option> Elementary Undergraduate</option>
-                                <option> Elementary Graduate</option>
-                                <option> Highschool/K-12 Undergraduate</option>
-                                <option> Highschool/K-12 Graduate</option>
-                                <option> College Level</option>
-                                <option> College Graduate</option>
-                                <option> Vocational Graduate</option>
-                                <option> Masteral Degree</option>
-                                <option> Doctoral Degree</option>
-                            </select>
+                    <div className="flex flex-col gap-3 lg:flex-row">
+                        <div className="flex-1">
+                            <Select2
+                                register={{
+                                    ...register("gender", {
+                                        required: "Gender is required",
+                                    }),
+                                }}
+                                options={[
+                                    { label: "Male", value: "Male" },
+                                    { label: "Female", value: "Female" },
+                                ]}
+                                errorMessage={errors?.gender?.message}
+                                label="Gender"
+                                name="gender"
+                            />
                         </div>
-                        <div className="w-full">
-                            <Input
-                                onChange={(event) => data_handler(event)}
-                                value={applicantForm.courset ?? ""}
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("dob", {
+                                        required: "Date of Birth is required",
+                                    }),
+                                }}
+                                errorMessage={errors?.dob?.message}
+                                name="dob"
+                                label="Date of Birth"
+                                type="date"
+                            />
+                        </div>
+                    </div>
+                    <div className="flex flex-col gap-3 lg:flex-row">
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("email", {
+                                        required: "Email is required",
+                                    }),
+                                }}
+                                errorMessage={errors?.email?.message}
+                                name="email"
+                                label="Email"
+                                type="email"
+                            />
+                        </div>
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("phone", {
+                                        required: "Phone is required",
+                                    }),
+                                }}
+                                errorMessage={errors?.phone?.message}
+                                name="phone"
+                                label="Phone"
+                                type="number"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-3 lg:flex-row">
+                        <div className="flex-1">
+                            <Select
+                                register={{
+                                    ...register("marital", {
+                                        required: false,
+                                    }),
+                                }}
+                                options={[
+                                    { label: "Single", value: "Single" },
+                                    { label: "Married", value: "Married" },
+                                    { label: "Widowed", value: "Widowed" },
+                                    { label: "Divorced", value: "Divorced" },
+                                ]}
+                                label="Marital Status"
+                                name="marital"
+                            />
+                        </div>
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("religion", {
+                                        required: false,
+                                    }),
+                                }}
+                                name="religion"
+                                label="Religion"
+                                type="text"
+                            />
+                        </div>
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("nationality", {
+                                        required: false,
+                                    }),
+                                }}
+                                name="nationality"
+                                label="Nationality"
+                                type="text"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-3 lg:flex-row">
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("mmname", {
+                                        required:
+                                            false,
+                                    }),
+                                }}
+                                name="mmname"
+                                label="Mother's maiden name"
+                                type="text"
+                            />
+                        </div>
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("ffname", {
+                                        required: false,
+                                    }),
+                                }}
+                                name="ffname"
+                                label="Father's fullname"
+                                type="text"
+                            />
+                        </div>
+                    </div>
+                    <div className="flex flex-col gap-3 lg:flex-row">
+                        <div className="flex-1">
+                            <Select
+                                register={{
+                                    ...register("educ", {
+                                        required: false,
+                                    }),
+                                }}
+                                options={[
+                                    {
+                                        label: "Highest Educational Attainmen",
+                                        value: "Highest Educational Attainmen",
+                                    },
+                                    {
+                                        label: "Elementary Undergraduate",
+                                        value: "Elementary Undergraduate",
+                                    },
+                                    {
+                                        label: "Elementary Graduate",
+                                        value: "Elementary Graduate",
+                                    },
+                                    {
+                                        label: "Highschool/K-12 Undergraduate",
+                                        value: "Highschool/K-12 Undergraduate",
+                                    },
+                                    {
+                                        label: "Highschool/K-12 Graduate",
+                                        value: "Highschool/K-12 Graduate",
+                                    },
+                                    {
+                                        label: "College Level",
+                                        value: "College Level",
+                                    },
+                                    {
+                                        label: "College Graduate",
+                                        value: "College Graduate",
+                                    },
+                                    {
+                                        label: "Vocational Graduate",
+                                        value: "Vocational Graduate",
+                                    },
+                                    {
+                                        label: "Masteral Degree",
+                                        value: "Masteral Degree",
+                                    },
+                                    {
+                                        label: "Doctoral Degree",
+                                        value: "Doctoral Degree",
+                                    },
+                                ]}
+                                label="Highest Educational Attainment"
+                                name="educ"
+                            />
+                        </div>
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("courset", {
+                                        required: false,
+                                    }),
+                                }}
                                 name="courset"
                                 label="Course taken"
                                 type="text"
                             />
                         </div>
                     </div>
+
                     <div className='flex flex-1 gap-4'>
                         <div className='flex flex-col w-full mb-4'>
                             <div className='flex flex-1 gap-3'>
                                 <select
-                                    onChange={(event) => data_handler(event)}
+                                    {...register("position", {
+                                        required: false,
+                                    })}
                                     name='position'
                                     className="border p-2 rounded  w-full">
                                     <option disabled selected>Job Position</option>
@@ -445,7 +627,9 @@ export default function AddExistingEmployeeSection() {
                                     }
                                 </select>
                                 <select
-                                    onChange={(event) => data_handler(event)}
+                                    {...register("dept", {
+                                        required: false,
+                                    })}
                                     name='dept'
                                     className="border p-2 rounded  w-full">
                                     <option disabled selected>Department</option>
@@ -460,7 +644,9 @@ export default function AddExistingEmployeeSection() {
                                     }
                                 </select>
                                 <select
-                                    onChange={(event) => data_handler(event)}
+                                    {...register("account", {
+                                        required: false,
+                                    })}
                                     name='account'
                                     className="border p-2 rounded  w-full">
                                     <option disabled selected>Account (If Applicable)</option>
@@ -481,11 +667,13 @@ export default function AddExistingEmployeeSection() {
                         <div className='flex flex-col w-full mb-4'>
                             <div className='flex flex-1 gap-3'>
                                 <select
-                                    onChange={(event) => data_handler(event)}
+                                    {...register("sup_id", {
+                                        required: false,
+                                    })}
                                     name='sup_id'
                                     value={applicantForm.sup_id}
                                     className="border p-2 rounded  w-full">
-                                    <option disabled selected>Supervisor</option>
+                                    <option disabled selected value="">Supervisor</option>
                                     {users
                                         .filter((res) =>
                                             (
@@ -502,15 +690,21 @@ export default function AddExistingEmployeeSection() {
                                         ))}
 
                                 </select>
-                                <Input
-                                    onChange={(event) => data_handler(event)}
+                                <Input2
+                                    register={{
+                                        ...register("hired", {
+                                            required: false,
+                                        }),
+                                    }}
                                     value={applicantForm.hired ?? ""}
                                     name="hired"
                                     label="Hired Date"
                                     type="date"
                                 />
                                 <select
-                                    onChange={(event) => data_handler(event)}
+                                    {...register("status", {
+                                        required: false,
+                                    })}
                                     name='status'
                                     className="border p-2 rounded  w-full"
                                     required
@@ -524,186 +718,369 @@ export default function AddExistingEmployeeSection() {
                             </div>
                         </div>
                     </div>
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
+                        Address Information
+                    </h1>
+                    <div className="flex flex-col gap-3 lg:flex-row">
+                        <div className="flex-1">
+                            <Select
+                                register={{
+                                    ...register("region", {
+                                        required: "Please Select Region",
+                                    }),
+                                }}
+                                onChange={(event) => data_handler(event)}
 
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Address Information</h1>
-                    <div className="flex flex-1 gap-4 mb-4 w-full">
-                        <div className='flex flex-col w-full'>
-                            <Select
-                                onChange={(event) => data_handler(event)}
-                                // value={applicantForm.region ?? ""}
-                                options={region.map(res => ({
+                                options={region.map((res) => ({
                                     label: res.region_name,
-                                    value: JSON.stringify({ name: res.region_name, region_code: res.region_code }),
+                                    value: JSON.stringify({
+                                        name: res.region_name,
+                                        region_code: res.region_code,
+                                    }),
                                 }))}
-                                required="true"
-                                name="region"
+                                // value={address.region}
+                                errorMessage={errors?.region?.message}
                                 label="Region"
+                                name="region"
                             />
                         </div>
-                        <div className='flex flex-col w-full'>
+                        <div className="flex-1">
                             <Select
+                                register={{
+                                    ...register("province", {
+                                        required: "Please Select Province"
+                                    }),
+                                }}
                                 onChange={(event) => data_handler(event)}
-                                // value={applicantForm.province ?? ""}
-                                options={newProvince.map(res => ({
+
+                                options={newProvince.map((res) => ({
                                     label: res.province_name,
-                                    value: JSON.stringify({ name: res.province_name, province_code: res.province_code }),
+                                    value: JSON.stringify({
+                                        name: res.province_name,
+                                        province_code: res.province_code,
+                                    }),
                                 }))}
-                                required="true"
-                                name="province"
+                                errorMessage={errors?.province?.message}
                                 label="Province"
+                                name="province"
                             />
                         </div>
-                        <div className='flex flex-col w-full'>
+                        <div className="flex-1">
                             <Select
+                                register={{
+                                    ...register("city", {
+                                        required: "Please Select City"
+                                    }),
+                                }}
                                 onChange={(event) => data_handler(event)}
-                                // value={applicantForm.city ?? ""}
-                                options={newCity.map(res => ({
+
+                                options={newCity.map((res) => ({
                                     label: res.city_name,
-                                    value: JSON.stringify({ name: res.city_name, city_code: res.city_code }),
+                                    value: JSON.stringify({
+                                        name: res.city_name,
+                                        city_code: res.city_code,
+                                    }),
                                 }))}
-                                required="true"
+                                errorMessage={errors?.city?.message}
                                 name="city"
                                 label="City/Municipality"
                             />
                         </div>
                     </div>
-                    <div className="flex flex-1 gap-4 mb-4">
-                        <div className='flex flex-col  w-1/2'>
+                    <div className="flex flex-col gap-3 lg:flex-row">
+                        <div className="flex-1">
                             <Select
+                                register={{
+                                    ...register("brgy", {
+                                        required: "Please Select Barangay"
+                                    }),
+                                }}
                                 onChange={(event) => data_handler(event)}
-                                // value={applicantForm.barangay ?? ""}
-                                options={newBarangay.map(res => ({
+
+                                options={newBarangay.map((res) => ({
                                     label: res.brgy_name,
                                     value: res.brgy_name,
                                 }))}
+                                errorMessage={errors?.brgy?.message}
                                 name="brgy"
                                 label="Barangay"
                             />
                         </div>
-                        <div className='flex flex-col w-full'>
-                            <Input
-                                onChange={(event) => data_handler(event)}
-                                value={applicantForm.lot ?? ""}
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("lot", {
+                                        required:
+                                            "House/Lot No., Street, Purok/Sitio is required",
+                                    }),
+                                }}
+                                errorMessage={errors?.lot?.message}
                                 name="lot"
                                 label="House/Lot No., Street, Purok/Sitio"
                                 type="text"
                             />
                         </div>
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Government ID Information</h1>
-                    <div className='flex flex-1 gap-4 mb-4'>
-                        <div className="w-full">
-                            <Input
-                                onChange={(event) => data_handler(event)}
-                                value={applicantForm.sss ?? ""}
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
+                        Government ID Information
+                    </h1>
+                    <div className="flex flex-col gap-3 lg:flex-row">
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("sss", {
+                                    }),
+                                }}
                                 name="sss"
-                                label="SSS No."
-                                type="text"
+                                label="SSS"
+                                type="number"
                             />
                         </div>
-                        <div className="w-full">
-                            <Input
-                                onChange={(event) => data_handler(event)}
-                                value={applicantForm.pagibig ?? ""}
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("pagibig", {
+                                    }),
+                                }}
                                 name="pagibig"
-                                label="Pag-IBIG No."
-                                type="text"
+                                label="Pagibig"
+                                type="number"
                             />
                         </div>
                     </div>
-                    <div className='flex flex-1 gap-4 mb-4'>
-                        <div className="w-full">
-                            <Input
-                                onChange={(event) => data_handler(event)}
-                                value={applicantForm.tin ?? ""}
+
+                    <div className="flex flex-col gap-3 lg:flex-row">
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("tin", {
+                                    }),
+                                }}
                                 name="tin"
-                                label="Tin No."
-                                type="text"
+                                label="Tin"
+                                type="number"
                             />
                         </div>
-                        <div className="w-full">
-                            <Input
-                                onChange={(event) => data_handler(event)}
-                                value={applicantForm.philh ?? ""}
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("philh", {
+                                    }),
+                                }}
                                 name="philh"
                                 label="Philhealth No."
+                                type="number"
+                            />
+                        </div>
+                    </div>
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
+                        Working Experience
+                    </h1>
+
+                    <div className="flex-col">
+                        <div className="flex items-center mb-3 justify-between">
+                            <Checkbox
+                                label="With Working Experience?"
+                                name="hasExperience"
+                                // error=""
+                                onChange={(e) =>
+                                    setHasExperience(e.target.checked)
+                                }
+                            />
+                            {hasExperience && (
+                                <button
+                                    type="button"
+                                    onClick={() => append({ name: "" })}
+                                    className="bg-blue-600 text-white px-4 flex gap-2 py-2 rounded"
+                                >
+                                    <PlusIcon className="h-6" /> Experience
+                                </button>
+                            )}
+                        </div>
+                        {hasExperience && (
+                            <div className="flex gap-3 flex-col">
+                                {fields.map((field, index) => (
+                                    <div
+                                        key={field.id}
+                                        className="flex items-center border border-blue-500 rounded-lg p-3 flex-col w-full gap-4"
+                                    >
+                                        {index != 0 && (
+                                            <div className="flex w-full items-end justify-end">
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        remove(index)
+                                                    }
+                                                    className="bg-red-500 text-white px-2 py-1 rounded"
+                                                >
+                                                    ✕
+                                                </button>
+                                            </div>
+                                        )}
+
+                                        <div className="w-full flex gap-3">
+                                            <Input2
+                                                register={{
+                                                    ...register(
+                                                        `work_experience.${index}.company`,
+                                                        {
+                                                            required:
+                                                                "Company is required",
+                                                        }
+                                                    ),
+                                                }}
+                                                errorMessage={
+                                                    errors?.work_experience?.[
+                                                        index
+                                                    ]?.company?.message
+                                                }
+                                                name="company"
+                                                label="Company"
+                                                type="text"
+                                            />
+                                            <Input2
+                                                register={{
+                                                    ...register(
+                                                        `work_experience.${index}.position`,
+                                                        {
+                                                            required:
+                                                                "Position is required",
+                                                        }
+                                                    ),
+                                                }}
+                                                errorMessage={
+                                                    errors?.work_experience?.[
+                                                        index
+                                                    ]?.position?.message
+                                                }
+                                                name="position"
+                                                label="Position"
+                                                type="text"
+                                            />
+                                        </div>
+
+                                        <div className="w-full flex gap-3">
+                                            <Input2
+                                                register={{
+                                                    ...register(
+                                                        `work_experience.${index}.started_at`,
+                                                        {
+                                                            required:
+                                                                "Started at is required",
+                                                        }
+                                                    ),
+                                                }}
+                                                errorMessage={
+                                                    errors?.work_experience?.[
+                                                        index
+                                                    ]?.started_at?.message
+                                                }
+                                                label="Started At"
+                                                type="date"
+                                            />
+                                            <Input2
+                                                register={{
+                                                    ...register(
+                                                        `work_experience.${index}.end_at`,
+                                                        {
+                                                            required:
+                                                                "End at is required",
+                                                        }
+                                                    ),
+                                                }}
+                                                errorMessage={
+                                                    errors?.work_experience?.[
+                                                        index
+                                                    ]?.end_at?.message
+                                                }
+                                                label="End At"
+                                                type="date"
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
+                        Emergency Contact Information
+                    </h1>
+                    <div className="flex flex-col gap-3 lg:flex-row">
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("ename", {
+                                        required:
+                                            false,
+                                    }),
+                                }}
+                                name="ename"
+                                label="Emergency Contact Fullname"
+                                type="text"
+                            />
+                        </div>
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("eaddress", {
+                                        required: false,
+                                    }),
+                                }}
+                                name="eaddress"
+                                label="Address"
                                 type="text"
                             />
                         </div>
                     </div>
-                    <div className="flex items-center mb-4">
-                        <input
-                            id="with-working-experience-checkbox"
-                            type="checkbox"
-                            value=""
-                            checked={showWorkingExperience}
-                            onChange={handleWorkingExperienceChange}
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  -gray-800 focus:ring-2  "
-                        />
-                        <label htmlFor="with-working-experience-checkbox" className="ms-2 text-md font-medium text-gray-900 "><b>with Working Experience</b></label>
-                    </div>
-                    <div className="flex items-center mb-4">
-                        <input
-                            id="first-time-jobseeker-checkbox"
-                            type="checkbox"
-                            value=""
-                            checked={showFirstTimeJobseeker}
-                            onChange={handleFirstTimeJobseekerChange}
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500  -gray-800 focus:ring-2  "
-                            disabled={showWorkingExperience}
-                        />
-                        <label htmlFor="first-time-jobseeker-checkbox" className="ms-2 text-md font-medium text-gray-900 "><b>First Time Jobseeker</b></label>
-                    </div>
-                    {showWorkingExperience && <WorkingExperienceSection />}
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Emergency Contact Information</h1>
-                    <div className="mb-4 w-full">
-                        <Input
-                            onChange={(event) => data_handler(event)}
-                            value={applicantForm.ename ?? ""}
-                            name="ename"
-                            label="Emergency Contact Fullname"
-                            type="text"
-                        />
-                    </div>
-                    <div className="mb-4 w-full">
-                        <Input
-                            onChange={(event) => data_handler(event)}
-                            value={applicantForm.eaddress ?? ""}
-                            name="eaddress"
-                            label="Address"
-                            type="text"
-                        />
-                    </div>
-                    <div className='flex flex-1 gap-4 mb-4'>
-                        <div className="w-full">
-                            <Input
-                                onChange={(event) => data_handler(event)}
-                                value={applicantForm.relationship ?? ""}
+                    <div className="flex flex-col gap-3 lg:flex-row">
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("relationship", {
+                                        required: false,
+                                    }),
+                                }}
                                 name="relationship"
                                 label="Relationship"
                                 type="text"
                             />
                         </div>
-                        <div className="w-full">
-                            <Input
-                                onChange={(event) => data_handler(event)}
-                                value={applicantForm.ephone ?? ""}
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("ephone", {
+                                        required: false,
+                                    }),
+                                }}
                                 name="ephone"
                                 label="Contact No."
                                 type="number"
                             />
                         </div>
                     </div>
-                    <UploadResumeSection
-                        files={uploadedFile}
-                        setFiles={setUploadedFile}
-                    />
-                    {/* <div className="flex justify-end mt-2.5">
-                                <button
-                                    type="submit" id="theme-toggle" className="px-4 py-2 rounded bg-blue-500 text-white hover:bg-blue-600 focus:outline-none transition-colors">
-                                    SUBMIT
-                                </button>
-                            </div> */}
+                    <br />
+                    <Dragger {...props}>
+                        <p className="ant-upload-drag-icon">
+                            <InboxOutlined />
+                        </p>
+                        <p className="ant-upload-text">
+                            Click or drag file to this area to upload your CV
+                        </p>
+                        <p className="ant-upload-hint">
+                            Support for a single or bulk upload. Strictly
+                            prohibited from uploading company data or other
+                            banned files.
+                        </p>
+                    </Dragger>
+                    <div className="flex items-end justify-end">
+                        <button
+                            disabled={isSubmitting}
+                            type="submit"
+                            className="bg-blue-600 text-white px-4 py-2 rounded"
+                        >
+                            {isSubmitting ? "Submitting..." : "Submit"}
+                        </button>
+                    </div>
                 </form>
             </Modal>
         </div>

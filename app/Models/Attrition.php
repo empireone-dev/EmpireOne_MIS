@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Attrition extends Model
 {
@@ -30,6 +31,10 @@ class Attrition extends Model
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class,"sup_id","id");
+        return $this->belongsTo(User::class, "sup_id", "id");
+    }
+    public function applicant(): HasOne
+    {
+        return $this->hasOne(Applicant::class, "app_id", "emp_id");
     }
 }

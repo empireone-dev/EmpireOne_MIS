@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { ArchiveBoxXMarkIcon, ArrowRightStartOnRectangleIcon, ArrowTopRightOnSquareIcon, BookOpenIcon, BriefcaseIcon, CalendarDaysIcon, ChatBubbleLeftRightIcon, ChatBubbleOvalLeftEllipsisIcon, CheckBadgeIcon, CheckCircleIcon, CheckIcon, ClipboardDocumentIcon, ClipboardDocumentListIcon, CursorArrowRaysIcon, CursorArrowRippleIcon, DocumentArrowDownIcon, DocumentChartBarIcon, DocumentCheckIcon, DocumentMagnifyingGlassIcon, DocumentMinusIcon, DocumentPlusIcon, ExclamationCircleIcon, HandThumbDownIcon, PencilSquareIcon, ReceiptRefundIcon, RectangleGroupIcon, UserGroupIcon, UserIcon, UserMinusIcon, XCircleIcon } from '@heroicons/react/24/outline'
+import { ArchiveBoxXMarkIcon, ArrowRightStartOnRectangleIcon, ArrowTopRightOnSquareIcon, BookOpenIcon, BriefcaseIcon, CalendarDaysIcon, ChatBubbleLeftRightIcon, ChatBubbleOvalLeftEllipsisIcon, CheckBadgeIcon, CheckCircleIcon, CheckIcon, ClipboardDocumentIcon, ClipboardDocumentListIcon, CursorArrowRaysIcon, CursorArrowRippleIcon, DocumentArrowDownIcon, DocumentChartBarIcon, DocumentCheckIcon, DocumentMagnifyingGlassIcon, DocumentMinusIcon, DocumentPlusIcon, ExclamationCircleIcon, HandThumbDownIcon, PencilSquareIcon, PercentBadgeIcon, ReceiptRefundIcon, RectangleGroupIcon, UserGroupIcon, UserIcon, UserMinusIcon, XCircleIcon } from '@heroicons/react/24/outline'
 import DashboardCardComponents from '../components/dashboard-card-components';
 import { administrator_dashboard_service } from '@/app/pages/services/dashboard-service';
 import { useSelector } from 'react-redux';
@@ -47,6 +47,36 @@ export default function DashboardSection() {
         </div>
       </div>
       <div className='flex flex-col gap-9 mt-7'>
+        <div>
+          {/* <h2 className="text-xl font-medium text-gray-800 ml-1">
+            <img src="/images/Outsourcing.webp" alt="Outsourcing.png" className='h-20' />
+
+          </h2> */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-2 p-4 gap-5">
+            <div className="shadow-lg rounded-md border border-gray-300 flex items-center bg-gray-100 justify-between p-6 text-black font-medium group">
+              <div className="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
+                <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="stroke-current text-blue-900 transform transition-transform duration-500 ease-in-out">
+                  <PercentBadgeIcon />
+                </svg>
+              </div>
+              <div className="text-right">
+                <p className="text-4xl">{(Number(data?.outsourcing?.hiring_rate || 0))}%</p>
+                <p className="text-2xl">Hiring Rate</p>
+              </div>
+            </div>
+            <div className="shadow-lg rounded-md border border-gray-300 flex items-center bg-gray-100 justify-between p-6 text-black font-medium group">
+              <div className="flex justify-center items-center w-14 h-14 bg-white rounded-full transition-all duration-300 transform group-hover:rotate-12">
+                <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="stroke-current text-blue-900 transform transition-transform duration-500 ease-in-out">
+                  <PercentBadgeIcon />
+                </svg>
+              </div>
+              <div className="text-right">
+                <p className="text-4xl">{(Number(data?.outsourcing?.attrition_rate || 0))}%</p>
+                <p className="text-2xl">Attrition Rate</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div>
           <h2 className="text-xl font-medium text-gray-800 ml-1">
             <img src="/images/Outsourcing.webp" alt="Outsourcing.png" className='h-20' />

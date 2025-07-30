@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
+use App\Models\Attrition;
 use App\Models\Employee;
 use App\Models\JobOffer;
 use App\Models\OnboardingDoc;
@@ -94,12 +95,12 @@ class DashboardController extends Controller
                     $query->where('site', $site);
                 })
                 ->count();
-            $eope = Employee::where('status', ['EOPE', 'End of Contract'])
+            $eope = Employee::whereIn('status', ['EOPE', 'End of Contract'])
                 ->whereHas('applicant', function ($query) use ($site) {
                     $query->where('site', $site);
                 })
                 ->count();
-            $dismissed = Employee::where('status', ['Dismissed', 'Terminated'])
+            $dismissed = Employee::whereIn('status', ['Dismissed', 'Terminated'])
                 ->whereHas('applicant', function ($query) use ($site) {
                     $query->where('site', $site);
                 })
@@ -109,6 +110,25 @@ class DashboardController extends Controller
                     $query->where('site', $site);
                 })
                 ->count();
+            $hiring_rate = round(
+                (Employee::whereHas('applicant', function ($query) use ($site) {
+                    $query->where('site', $site);
+                })->count() /
+                    Applicant::where('site', $site)->count()) * 100,
+                2
+            );
+            $attrition_statuses = ['AWOL', 'Resigned', 'EOPE', 'End of Contract', 'Dismissed', 'Terminated'];
+            $attrition_count = Employee::whereIn('status', $attrition_statuses)
+                ->whereHas('applicant', function ($query) use ($site) {
+                    $query->where('site', $site);
+                })
+                ->count();
+            $total_employee_count = Employee::whereHas('applicant', function ($query) use ($site) {
+                $query->where('site', $site);
+            })->count();
+            $attrition_rate = $total_employee_count > 0
+                ? round(($attrition_count / $total_employee_count) * 100, 2)
+                : 0;
         } else {
 
             $active = OutSourcingErf::whereIn('status', ['Approved', 'Active'])->count();
@@ -137,6 +157,8 @@ class DashboardController extends Controller
             $eope = Employee::whereIn('status', ['EOPE', 'End of Contract'])->count();
             $dismissed = Employee::whereIn('status', ['Dismissed', 'Terminated'])->count();
             $awol = Employee::where('status', '=', 'AWOL')->count();
+            $hiring_rate = round((Employee::count() / Applicant::count()) * 100, 2);
+            $attrition_rate = round((Attrition::count() / Employee::count()) * 100, 2);
         }
 
         return response()->json([
@@ -161,6 +183,8 @@ class DashboardController extends Controller
             'eope' => $eope,
             'dismissed' => $dismissed,
             'awol' => $awol,
+            'hiring_rate' => $hiring_rate,
+            'attrition_rate' => $attrition_rate,
         ], 200);
     }
 }

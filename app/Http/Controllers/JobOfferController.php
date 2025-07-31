@@ -68,10 +68,13 @@ class JobOfferController extends Controller
             'status' => $request->status,
             'reas' => $request->reas
         ]);
+        Applicant::where('app_id', $request->app_id)->update([
+            'status' => 'Counter Offer'
+        ]);
         if ($request->status == 'Accepted') {
-            // Applicant::where('app_id', $id)->update([
-            //     'status' => 'Contract Signing'
-            // ]);
+            Applicant::where('app_id', $id)->update([
+                'status' => 'Accepted Offer'
+            ]);
             Mail::to($request->email)->send(new PreEmploymentEmail(array_merge(
                 $request->all(),
                 ['id' => $jo->id],

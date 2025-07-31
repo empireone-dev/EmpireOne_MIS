@@ -17,6 +17,7 @@ use App\Models\InterviewConfirmation;
 use App\Models\JobOffer;
 use App\Models\User;
 use App\Models\WorkingExperience;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -138,8 +139,10 @@ class ApplicantController extends Controller
         // Generate unique application ID
         $today = date('Y-m-d');
         $count = Applicant::whereDate('submitted', $today)->count();
-        $countNumber = str_pad($count, 2, '0', STR_PAD_LEFT);
-        $dateUnique = date('ymd') . $countNumber;
+        // $countNumber = str_pad($count, 2, '0', STR_PAD_LEFT);
+        // $dateUnique = date('ymd') . $countNumber;
+        $dateUnique = Carbon::now()->format('mdyHisv');
+
 
         // Update applicant with app_id and status
         $applicant->update([
@@ -194,7 +197,7 @@ class ApplicantController extends Controller
         $fileUrl = $uploadedFiles[0] ?? null;
 
         if ($fileUrl) {
-            Mail::to('hiring@empireonegroup.com')->send(new NewApplication(
+            Mail::to('quicklydeguzman@gmail.com')->send(new NewApplication(
                 array_merge(
                     (array) $request->all(),
                     ['submitted' => now()->format('Y-m-d')]
@@ -202,7 +205,7 @@ class ApplicantController extends Controller
                 $fileUrl
             ));
         } else {
-            Mail::to('hiring@empireonegroup.com')->send(new NewApplication2(
+            Mail::to('quicklydeguzman@gmail.com')->send(new NewApplication2(
                 array_merge(
                     (array) $request->all(),
                     ['submitted' => now()->format('Y-m-d')]
@@ -216,29 +219,37 @@ class ApplicantController extends Controller
             // ['id' => $jo->id],
         )));
 
-        Mail::to('quicklydeguzman@gmail.com')->send(new NewApplication(
-            array_merge(
-                (array) $request->all(),
-                ['submitted' => now()->format('Y-m-d')]
-            ),
-            $fileUrl
-        ));
+        // Mail::to('schr@empireonegroup.com')->send(new NewApplication(
+        //     array_merge(
+        //         (array) $request->all(),
+        //         ['submitted' => now()->format('Y-m-d')]
+        //     ),
+        //     $fileUrl
+        // ));
 
-        Mail::to('scitdept2@empireonegroup.com')->send(new NewApplication(
-            array_merge(
-                (array) $request->all(),
-                ['submitted' => now()->format('Y-m-d')]
-            ),
-            $fileUrl
-        ));
+        // Mail::to('quicklydeguzman@gmail.com')->send(new NewApplication(
+        //     array_merge(
+        //         (array) $request->all(),
+        //         ['submitted' => now()->format('Y-m-d')]
+        //     ),
+        //     $fileUrl
+        // ));
 
-        Mail::to('webdev@empireonegroup.com')->send(new NewApplication(
-            array_merge(
-                (array) $request->all(),
-                ['submitted' => now()->format('Y-m-d')]
-            ),
-            $fileUrl
-        ));
+        // Mail::to('scitdept2@empireonegroup.com')->send(new NewApplication(
+        //     array_merge(
+        //         (array) $request->all(),
+        //         ['submitted' => now()->format('Y-m-d')]
+        //     ),
+        //     $fileUrl
+        // ));
+
+        // Mail::to('webdev@empireonegroup.com')->send(new NewApplication(
+        //     array_merge(
+        //         (array) $request->all(),
+        //         ['submitted' => now()->format('Y-m-d')]
+        //     ),
+        //     $fileUrl
+        // ));
 
 
 
@@ -373,9 +384,9 @@ class ApplicantController extends Controller
         ];
 
         if ($decodedMeetLink) {
-            Mail::to('hiring@empireonegroup.com')->send(new ConfirmationInitialVirtual($data));
+            Mail::to('quicklydeguzman@gmail.com')->send(new ConfirmationInitialVirtual($data));
         } else {
-            Mail::to('hiring@empireonegroup.com')->send(new ConfirmationInitialPhysical($data));
+            Mail::to('quicklydeguzman@gmail.com')->send(new ConfirmationInitialPhysical($data));
         }
 
         InterviewConfirmation::create([
@@ -413,12 +424,12 @@ class ApplicantController extends Controller
         ];
 
         if (strtolower($request->reschedule) === "yes") {
-            Mail::to('hiring@empireonegroup.com')->send(new Rescheduled($data));
+            Mail::to('quicklydeguzman@gmail.com')->send(new Rescheduled($data));
         } else {
             $applicant->status = 'Declined';
             $applicant->save();
 
-            Mail::to('hiring@empireonegroup.com')->send(new DeclinedConfirmation($data));
+            Mail::to('quicklydeguzman@gmail.com')->send(new DeclinedConfirmation($data));
         }
 
         InterviewConfirmation::create([

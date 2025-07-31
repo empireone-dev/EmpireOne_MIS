@@ -46,6 +46,7 @@ class EmailController extends Controller
                 ]);
             } else if ($request->phase_status == 'Reschedule Initial Phase') {
                 Mail::to($request->email)->send(new RescheduleInitialEmail($data));
+                InitialRate::where('app_id', $request->app_id)->delete();
                 InitialRate::create([
                     'app_id' => $request->app_id,
                     'interdate' => $request->ivdate,
@@ -54,6 +55,9 @@ class EmailController extends Controller
                 ]);
             } else if ($request->phase_status == 'Reschedule Final Phase') {
                 Mail::to($request->email)->send(new RescheduleFinalvEmail($data));
+                FinalRate::destroy([
+                    'app_id' => $request->app_id,
+                ]);
                 FinalRate::create([
                     'app_id' => $request->app_id,
                     'interdate' => $request->ivdate,
@@ -72,6 +76,7 @@ class EmailController extends Controller
                 ]);
             } else if ($request->phase_status == 'Reschedule Initial Phase') {
                 Mail::to($request->email)->send(new RescheduleInitialEmail($data));
+                InitialRate::where('app_id', $request->app_id)->delete();
                 InitialRate::create([
                     'app_id' => $request->app_id,
                     'interdate' => $request->iffdate,
@@ -86,6 +91,9 @@ class EmailController extends Controller
                 ]);
             } else if ($request->phase_status == 'Reschedule Final Phase') {
                 Mail::to($request->email)->send(new RescheduleFinalEmail($data));
+                FinalRate::destroy([
+                    'app_id' => $request->app_id,
+                ]);
                 FinalRate::create([
                     'app_id' => $request->app_id,
                     'interdate' => $request->iffdate,

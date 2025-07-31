@@ -196,7 +196,9 @@ export default function ApplicantMenuSection({ data, interviewer }) {
             data.status == "EOPE" ||
             data.status == "AWOL" ||
             data.status == "Probationary" ||
-            data.status == "Regular"
+            data.status == "Regular" ||
+            data.status == "Counter Offer" ||
+            data.status == "Accepted Offer"
             ? [
                 {
                     component: (
@@ -243,7 +245,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 },
             ]
             : []),
-        ...(data.status == "Passed" || data.status == "Pooling"
+        ...(data.status == "Passed" || data.status == "Pooling" || data.status == "Counter Offer" || data.status == "Accepted Offer"
             ? [
                 {
                     component: (

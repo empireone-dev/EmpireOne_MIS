@@ -61,6 +61,7 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
+
         $data = $request->all();
         $experiences = $request->work_experience ?? [];
         $data['caddress'] = $request->lot . ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province;
@@ -82,7 +83,7 @@ class EmployeeController extends Controller
         // $employee = Employee::with('applicant')->get();
         Employee::create([
             'app_id' => $request->app_id,
-            'emp_id' => $request->app_id,
+            'emp_id' => $request->emp_id,
             'position' => $request->position,
             'dept' => $request->dept,
             'account' => $request->account,
@@ -150,10 +151,15 @@ class EmployeeController extends Controller
 
     public function store_new_employee(Request $request)
     {
+
+        $today = date('Y-m-d');
+        $count = Employee::whereDate('submitted', $today)->count();
+        $countNumber = str_pad($count, 2, '0', STR_PAD_LEFT);
+        $dateUnique = date('ymd') . $countNumber;
         // $employee = Employee::with('applicant')->get();
         Employee::create([
             'app_id' => $request->app_id,
-            'emp_id' => $request->app_id,
+            'emp_id' => $dateUnique,
             'position' => $request->jobPos,
             'dept' => $request->department,
             'account' => $request->account,

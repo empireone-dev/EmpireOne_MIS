@@ -54,6 +54,18 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 />
             ),
         },
+        {
+            component: (
+                <ApplicantDetaillsComponent
+                    item={{
+                        label: "Reschedule Interview",
+                        key: "1",
+                        icon: <AuditOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
         ...(data.status == "Pending"
             ? [
                 {

@@ -73,6 +73,23 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 },
             ]
             : []),
+        ...(data.status == "Final Phase"
+            ? [
+                {
+                    component: (
+                        <ApplicantSetRescheduleComponent
+                            status="Reschedule Final Phase"
+                            item={{
+                                label: "Reschedule Interview",
+                                key: "1",
+                                icon: <ReconciliationOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
+            : []),
         ...(data.status == "Pending"
             ? [
                 {

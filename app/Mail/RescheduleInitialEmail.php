@@ -9,7 +9,7 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class InitialEmail extends Mailable
+class RescheduleInitialEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -54,8 +54,8 @@ class InitialEmail extends Mailable
     public function build()
     {
         return $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('EmpireOne BPO Solutions Inc - Initial Phase Interview Schedule')
-            ->markdown('mail.initial.email')
+            ->subject('EmpireOne BPO Solutions Inc - Rescheduled Initial Phase Interview Schedule')
+            ->markdown('mail.reschedule_initial.email')
             ->with($this->data);
     }
 }

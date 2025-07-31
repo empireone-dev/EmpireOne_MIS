@@ -272,6 +272,8 @@ export default function ApplicantsTableSection() {
                     // onSearch={onSearch}
                     options={
                         [
+                            { text: "Accepted Offer", value: "Accepted Offer" },
+                            { text: "Counter Offer", value: "Counter Offer" },
                             { text: "Declined", value: "Declined" },
                             { text: "Failed", value: "Failed" },
                             { text: "Final Phase", value: "Final Phase" },
@@ -284,7 +286,6 @@ export default function ApplicantsTableSection() {
                             { text: "Probationary", value: "Probationary" },
                             { text: "Regular", value: "Regular" },
                             { text: "Send Failed", value: "Send Failed" },
-                            { text: "Shortlisted", value: "Shortlisted" },
                         ]
                     }
                 />
@@ -304,6 +305,7 @@ export default function ApplicantsTableSection() {
                         color = "red";
                         break;
                     case "Passed":
+                    case "Accepted Offer":
                     case "Hired":
                     case "Probationary":
                         color = "green";
@@ -314,6 +316,7 @@ export default function ApplicantsTableSection() {
                         color = "blue";
                         break;
                     case "Pending":
+                    case "Counter Offer":
                         color = "yellow";
                         break;
                     case "Initial Phase":

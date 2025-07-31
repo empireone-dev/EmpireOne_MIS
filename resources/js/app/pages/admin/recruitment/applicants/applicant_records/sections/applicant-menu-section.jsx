@@ -9,6 +9,7 @@ import {
     InfoCircleOutlined,
     LoadingOutlined,
     MedicineBoxOutlined,
+    ReconciliationOutlined,
     RiseOutlined,
     ScheduleOutlined,
     SendOutlined,
@@ -27,6 +28,7 @@ import ApplicantSetScheduleComponent from "../components/applicant-set-schedule-
 import ApplicantPoolingComponent from "../components/applicant-pooling-component";
 import ApplicantCvFileComponent from "../components/applicant-cv-file-component";
 import ApplicantRejectionComponent from "../components/applicant-rejection-component";
+import ApplicantSetRescheduleComponent from "../components/applicant-set-reschedule-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
@@ -54,18 +56,23 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 />
             ),
         },
-        {
-            component: (
-                <ApplicantDetaillsComponent
-                    item={{
-                        label: "Reschedule Interview",
-                        key: "1",
-                        icon: <AuditOutlined />,
-                    }}
-                    data={data}
-                />
-            ),
-        },
+        ...(data.status == "Initial Phase"
+            ? [
+                {
+                    component: (
+                        <ApplicantSetRescheduleComponent
+                            status="Reschedule Initial Phase"
+                            item={{
+                                label: "Reschedule Interview",
+                                key: "1",
+                                icon: <ReconciliationOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
+            : []),
         ...(data.status == "Pending"
             ? [
                 {

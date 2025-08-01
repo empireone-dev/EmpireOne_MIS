@@ -13,6 +13,29 @@ export function OnboardingDocsStepper() {
     const [agree, setAgree] = useState([]);
 
     console.log('onboarding_ackdoc', onboarding_ackdoc)
+    
+    // Add guard clause to handle case where onboarding_ackdoc is not available
+    if (!onboarding_ackdoc || !Array.isArray(onboarding_ackdoc)) {
+        return (
+            <div className="bg-cover bg-[url('/images/SCemp.jpg')] bg-center transition-colors duration-300 overflow-y-scroll h-screen p-14">
+                <div className="container mx-auto items-center justify-center w-full px-6 py-9 shadow-2xl shadow-black bg-white rounded-lg">
+                    <div className="flex items-center justify-center p-3 mb-6">
+                        <img
+                            className="w-72"
+                            src="/images/newlogo.png"
+                            alt="logo"
+                        />
+                    </div>
+                    <div className="items-center justify-center text-center">
+                        <h3 className="text-2xl mb-6">
+                            <b>Loading onboarding documents...</b>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     const handleNext = () => {
         if (!isLastStep) {
             setActiveStep((cur) => cur + 1);
@@ -102,7 +125,7 @@ export function OnboardingDocsStepper() {
                         })}
                     </Stepper>
                     <div className="mb-2 mt-4">
-                        {onboarding_ackdoc.map((res, i) => {
+                        {onboarding_ackdoc?.map((res, i) => {
                             if (i === activeStep) {
                                 return (
                                     <>
@@ -151,12 +174,12 @@ export function OnboardingDocsStepper() {
                                                 <Button
                                                     disabled={
                                                         agree.length !==
-                                                        onboarding_ackdoc.length
+                                                        (onboarding_ackdoc?.length || 0)
                                                     }
                                                     onClick={finish_handler}
                                                     className={
                                                         agree.length ==
-                                                            onboarding_ackdoc.length
+                                                            (onboarding_ackdoc?.length || 0)
                                                             ? "bg-blue-600 hover:bg-blue-700 "
                                                             : "disabledNextButton bg-blue-400"
                                                     }

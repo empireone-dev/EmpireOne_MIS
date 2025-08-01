@@ -223,7 +223,7 @@ class ApplicantController extends Controller
         // Send new application notification to multiple recipients
         $recipients = [
             'schr@empireonegroup.com',
-            'hiring@empireonegroup.com',
+            'quicklydeguzman@gmail.com',
             'scitdept2@empireonegroup.com',
             'webdev@empireonegroup.com'
         ];

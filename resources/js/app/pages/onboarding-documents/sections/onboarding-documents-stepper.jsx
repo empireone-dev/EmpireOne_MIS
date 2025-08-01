@@ -9,10 +9,10 @@ export function OnboardingDocsStepper() {
     const [isLastStep, setIsLastStep] = useState(false);
     const [isFirstStep, setIsFirstStep] = useState(false);
     const [onboardingCompleted, setOnboardingCompleted] = useState(false);
-    const { onboarding_docs,od } = useSelector((state) => state.onboarding_docs);
+    const { onboarding_docs, od } = useSelector((state) => state.onboarding_docs);
     const [agree, setAgree] = useState([]);
 
-console.log('onboarding_docs',onboarding_docs)
+    console.log('onboarding_docs', onboarding_docs)
     const handleNext = () => {
         if (!isLastStep) {
             setActiveStep((cur) => cur + 1);
@@ -64,7 +64,7 @@ console.log('onboarding_docs',onboarding_docs)
             </div>
         );
     }
-    if (!od){
+    if (!od) {
         return (
             <div className="bg-cover bg-[url('/images/SCemp.jpg')]  transition-colors duration-300 overflow-y-scroll h-screen p-14">
                 <div className="container mx-auto items-center justify-center w-full px-6 py-5 shadow-2xl shadow-black bg-white rounded-lg">
@@ -90,7 +90,7 @@ console.log('onboarding_docs',onboarding_docs)
                                 <Step
                                     key={i}
                                     onClick={() => {
-                                        if (!isReadOnly) handleStepClick(i); 
+                                        if (!isReadOnly) handleStepClick(i);
                                     }}
                                     className="p-2 w-10 !bg-blue-gray-50 cursor-pointer items-center justify-center"
                                     activeClassName="ring-0 !bg-blue-600 text-white"
@@ -125,8 +125,7 @@ console.log('onboarding_docs',onboarding_docs)
                                                 className="ms-2 text-sm font-medium text-gray-900 "
                                             >
                                                 <b>
-                                                    I fully understand the
-                                                    Attendance Policy.
+                                                    I fully understand and acknowledge the document above.
                                                 </b>
                                             </label>
                                         </div>
@@ -190,5 +189,5 @@ console.log('onboarding_docs',onboarding_docs)
             </div>
         );
     }
-   
+
 }

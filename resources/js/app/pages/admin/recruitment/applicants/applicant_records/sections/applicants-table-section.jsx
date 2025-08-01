@@ -299,7 +299,8 @@ export default function ApplicantsTableSection() {
                     case "Send Failed":
                     case "Dismissal":
                     case "Declined":
-                    case "Resignation":
+                    case "Resigned":
+                    case "Terminated":
                     case "EOPE":
                     case "AWOL":
                         color = "red";

@@ -28,6 +28,7 @@ export default function ApplicationFormSection() {
   const [open, setOpen] = useState(false);
   const [hasExperience, setHasExperience] = useState(false);
   const [files, setFiles] = useState([]);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const {
     register,
@@ -137,7 +138,8 @@ export default function ApplicationFormSection() {
       // await store.dispatch(get_applicant_thunk())
       reset();
       setFiles([]);
-      message.success('Application has been submitted successfully');
+      setShowSuccessModal(true);
+      message.success('Application has been submitted successfully! Please check your email regularly for updates on your application status.');
     } catch (error) {
       if (error?.response?.status === 422) {
         message.error("Application failed: Data validation error or already exists");
@@ -185,6 +187,71 @@ export default function ApplicationFormSection() {
   }
   return (
     <>
+      {/* Success Modal */}
+      <Modal
+        title={null}
+        open={showSuccessModal}
+        onCancel={() => setShowSuccessModal(false)}
+        footer={null}
+        centered
+        width={600}
+      >
+        <div className="text-center p-6">
+          <div className="mb-4">
+            <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-green-100">
+              <svg
+                className="h-8 w-8 text-green-600"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+            </div>
+          </div>
+          
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            🎉 Application Submitted Successfully!
+          </h3>
+          
+          <div className="text-left bg-blue-50 p-4 rounded-lg mb-6">
+            <p className="text-gray-700 mb-3">
+              <strong>Dear Applicant,</strong>
+            </p>
+            <p className="text-gray-700 mb-3">
+              Thank you for your interest in joining <strong>EmpireOne</strong>! 
+              Your application has been successfully submitted and is now being reviewed by our HR team.
+            </p>
+            <p className="text-gray-700 mb-3">
+              <strong>What happens next:</strong>
+            </p>
+            <ul className="list-disc list-inside text-gray-700 space-y-2 mb-3">
+              <li>Our HR team will review your application</li>
+              <li>You'll receive email updates about your application status</li>
+              <li>If shortlisted, we'll contact you for the next steps</li>
+            </ul>
+            <div className="bg-yellow-100 p-3 rounded border-l-4 border-yellow-400">
+              <p className="text-yellow-800 text-sm">
+                <strong>📧 Important:</strong> Please check your email regularly (including spam/junk folder) 
+                for updates and further instructions.
+              </p>
+            </div>
+          </div>
+          
+          <button
+            onClick={() => setShowSuccessModal(false)}
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+          >
+            Close
+          </button>
+        </div>
+      </Modal>
+
       <div className="h-screen overflow-hidden ">
         <div className="bg-cover bg-[url('/images/SCemp.jpg')] transition-colors duration-300 h-full overflow-y-scroll">
           <div className="container mx-auto px-2 flex justify-center">
@@ -195,6 +262,20 @@ export default function ApplicationFormSection() {
               <div className='flex text-2xl items-center justify-center'>
                 <h1 className="text-center"><b>ONLINE APPLICATION FORM</b></h1>
               </div>
+              
+              {/* Greeting Message */}
+              <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mt-6 mb-6">
+                <div className="flex">
+                  <div className="ml-3">
+                    <p className="text-sm text-blue-700">
+                      <strong>Welcome to EmpireOne!</strong> Thank you for your interest in joining our team. 
+                      Please fill out this application form completely and accurately. 
+                      After submission, please check your email regularly for updates on your application status.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <form
                 onSubmit={handleSubmit(onSubmit)}
                 className="space-y-4 px-1 py-8"
@@ -320,6 +401,10 @@ export default function ApplicationFormSection() {
                       register={{
                         ...register("email", {
                           required: "Email is required",
+                          pattern: {
+                            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                            message: "Please enter a valid email address"
+                          }
                         }),
                       }}
                       errorMessage={errors?.email?.message}
@@ -812,6 +897,20 @@ export default function ApplicationFormSection() {
                     <p className="text-red-500 text-sm">Please upload your CV or resume here in PDF format.</p>
                   )}
                 </div>
+                
+                {/* Email Check Reminder */}
+                <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
+                  <div className="flex">
+                    <div className="ml-3">
+                      <p className="text-sm text-yellow-700">
+                        <strong>Important Reminder:</strong> Please ensure your email address is correct. 
+                        After submitting your application, regularly check your email (including spam/junk folder) 
+                        for updates regarding your application status and any further instructions.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="flex items-end justify-end">
                   <button
                     disabled={isSubmitting}

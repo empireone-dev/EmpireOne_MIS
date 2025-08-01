@@ -27,6 +27,7 @@ export default function UpdateEmployeeFormSection() {
         setForm({
             app_id: applicant?.app_id,
             id: applicant?.id,
+            emp_id: applicant?.employee?.emp_id || "",
             fname: applicant?.fname || "",
             mname: applicant?.mname || "",
             lname: applicant?.lname || "",
@@ -90,7 +91,15 @@ export default function UpdateEmployeeFormSection() {
                 <div className='mb-4'>
                     <div className='flex flex-col w-full'>
                         <label htmlFor=""><b>Employee No.</b></label>
-                        <input type="text" value={applicant?.app_id} className="border p-2 rounded w-full" readOnly />
+                        <input type="text"
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    emp_id: e.target.value,
+                                })
+                            }
+                            value={form?.emp_id ?? ''}
+                        />
                     </div>
                 </div>
                 <div className='flex flex-1 gap-4'>

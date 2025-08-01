@@ -123,7 +123,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 },
             ]
             : []),
-        ...(data.status == "Final Phase" || data.status == "For Final Phase"
+        ...(data.status == "Final Phase" || data.status == "For Final Phase" 
             ? [
                 {
                     component: (
@@ -198,7 +198,8 @@ export default function ApplicantMenuSection({ data, interviewer }) {
             data.status == "Probationary" ||
             data.status == "Regular" ||
             data.status == "Counter Offer" ||
-            data.status == "Accepted Offer"
+            data.status == "Accepted Offer" ||
+            data.status == "Send Failed"
             ? [
                 {
                     component: (

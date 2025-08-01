@@ -7,6 +7,7 @@ use App\Models\CVFile;
 use App\Models\Employee;
 use App\Models\User;
 use App\Models\WorkingExperience;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
@@ -62,16 +63,21 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
 
+        $today = date('Y-m-d');
+        $count = Applicant::whereDate('submitted', $today)->count();
+        $dateUnique = Carbon::now()->format('mdyHisv');
+
         $data = $request->all();
         $experiences = $request->work_experience ?? [];
         $data['caddress'] = $request->lot . ' ' . $request->brgy . ' ' . $request->city . ' ' . $request->province;
-        $data['app_id'] = $request->app_id;
+        $data['app_id'] = $dateUnique;
+
         Applicant::create($data);
 
         if ($experiences) {
             foreach ($experiences as $experience) {
                 WorkingExperience::create([
-                    'app_id'    => $data['app_id'],
+                    'app_id'    => $dateUnique,
                     'company'   => $experience['company'] ?? null,
                     'position'  => $experience['position'] ?? null,
                     'started_at' => $experience['started_at'] ?? null,
@@ -82,8 +88,8 @@ class EmployeeController extends Controller
 
         // $employee = Employee::with('applicant')->get();
         Employee::create([
-            'app_id' => $request->app_id,
-            'emp_id' => $request->emp_id,
+            'app_id' => $dateUnique,
+            'emp_id' => $request->app_id,
             'position' => $request->position,
             'dept' => $request->dept,
             'account' => $request->account,
@@ -130,7 +136,7 @@ class EmployeeController extends Controller
                     return response()->json(['error' => 'Base64 decode failed'], 400);
                 }
 
-                $filename = date('Y') . '/' .  $request->app_id . '_' . uniqid() . '.' . $extension;
+                $filename = date('Y') . '/' .  $dateUnique . '_' . uniqid() . '.' . $extension;
                 Storage::disk('s3')->put($filename, $fileData);
                 $url = Storage::disk('s3')->url($filename);
 
@@ -138,12 +144,13 @@ class EmployeeController extends Controller
 
                 // Save file record
                 CVFile::create([
-                    'app_id' =>  $request->app_id,
+                    'app_id' =>  $dateUnique,
                     'file'   => $url,
                 ]);
             }
         }
         return response()->json([
+            'count'  => $count,
             'data' => 'success',
         ], 200);
     }

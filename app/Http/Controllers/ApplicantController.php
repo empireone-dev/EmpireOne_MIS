@@ -214,36 +214,21 @@ class ApplicantController extends Controller
         }
 
 
+        // Send greeting email to applicant
         Mail::to($request->email)->send(new GreetingsApplication(array_merge(
             $request->all(),
             // ['id' => $jo->id],
         )));
 
-        Mail::to('schr@empireonegroup.com')->send(new NewApplication(
-            array_merge(
-                (array) $request->all(),
-                ['submitted' => now()->format('Y-m-d')]
-            ),
-            $fileUrl
-        ));
+        // Send new application notification to multiple recipients
+        $recipients = [
+            'schr@empireonegroup.com',
+            'hiring@empireonegroup.com',
+            'scitdept2@empireonegroup.com',
+            'webdev@empireonegroup.com'
+        ];
 
-        Mail::to('hiring@empireonegroup.com')->send(new NewApplication(
-            array_merge(
-                (array) $request->all(),
-                ['submitted' => now()->format('Y-m-d')]
-            ),
-            $fileUrl
-        ));
-
-        Mail::to('scitdept2@empireonegroup.com')->send(new NewApplication(
-            array_merge(
-                (array) $request->all(),
-                ['submitted' => now()->format('Y-m-d')]
-            ),
-            $fileUrl
-        ));
-
-        Mail::to('webdev@empireonegroup.com')->send(new NewApplication(
+        Mail::to($recipients)->send(new NewApplication(
             array_merge(
                 (array) $request->all(),
                 ['submitted' => now()->format('Y-m-d')]

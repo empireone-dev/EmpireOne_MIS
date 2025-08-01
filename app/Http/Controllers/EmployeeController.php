@@ -153,7 +153,7 @@ class EmployeeController extends Controller
     {
 
         $today = date('Y-m-d');
-        $count = Employee::whereDate('submitted', $today)->count();
+        $count = Employee::whereDate('created', $today)->count();
         $countNumber = str_pad($count, 2, '0', STR_PAD_LEFT);
         $dateUnique = date('ymd') . $countNumber;
         // $employee = Employee::with('applicant')->get();
@@ -172,7 +172,7 @@ class EmployeeController extends Controller
 
         User::create([
             'role_id' => '7',
-            'employee_id' => $request->app_id,
+            'employee_id' => $dateUnique,
             'employee_fname' => $request->fname,
             'employee_mname' => $request->mname,
             'employee_lname' => $request->lname,

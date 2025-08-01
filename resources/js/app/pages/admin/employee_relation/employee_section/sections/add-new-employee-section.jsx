@@ -99,7 +99,7 @@ export default function AddNewEmployeeSection() {
                         </div>
                         <div className="w-full px-3">
                             <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
-                                Employee No.
+                                Application No.
                             </label>
                             <input
                                 value={form?.app_id || ""}

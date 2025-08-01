@@ -21,6 +21,7 @@ import appSlice from "../pages/redux/app-slice";
 import accountSlice from "../pages/admin/employee_relation/employee_section/redux/account-slice";
 import exitInterviewSlice from "../pages/exit_interview/redux/exit-interview-slice";
 import videoQuizSlice from "../pages/video_quiz/redux/video-quiz-slice";
+import onboardingAckDocSlice from "../pages/admin/file_201/redux/file-201-slice";
 const store = configureStore({
     reducer: {
         app: appSlice,
@@ -32,6 +33,7 @@ const store = configureStore({
         checklists: checklistSlice,
         joboffers: jobOfferSlice,
         onboarding_docs: onboardingDocuSlice,
+        onboarding_ackdocs: onboardingAckDocSlice,
         employees: employeeSlice,
         medicine_records: medicineRecordSlice,
         employee_healths: employeeHealthDataSlice,

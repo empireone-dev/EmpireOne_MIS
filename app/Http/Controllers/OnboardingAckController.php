@@ -26,6 +26,7 @@ class OnboardingAckController extends Controller
             OnboardingAck::create([
                 'app_id' => $request->app_id,
                 'doc_name' => $od['doc_name'],
+                'doc_id' => $od['id'],
                 'status' => 'Sent'
             ]);
         }
@@ -58,5 +59,20 @@ class OnboardingAckController extends Controller
         OnboardingAck::where('app_id', $id)->update([
             'status' => 'Acknowledged'
         ]);
+    }
+
+    public function onboarding_ackdoc_by_id($app_id)
+    {
+        $res = OnboardingAck::with('onboardingDoc')->where('app_id', $app_id)->get();
+
+        if ($res->isEmpty()) {
+            return response()->json([
+                'message' => 'Document not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => $res
+        ], 200);
     }
 }

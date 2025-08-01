@@ -16,7 +16,7 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         // Start with the base query, eager loading relationships
-        $query = Employee::query()->with(['applicant', 'user', 'department']);
+        $query = Employee::query()->with(['applicant', 'user', 'department'])->orderBy('id', 'desc');
 
         if ($request->site != 'null' && $request->site) {
             // $query->where('site', '=', $request->site);

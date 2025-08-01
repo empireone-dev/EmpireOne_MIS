@@ -13,7 +13,7 @@ class JobOfferController extends Controller
 {
     public function index(Request $request)
     {
-        $jobofferQuery = JobOffer::with('applicant', 'onboarding_app');
+        $jobofferQuery = JobOffer::with('applicant', 'onboarding_app')->orderBy('id', 'desc');
 
         if ($request->search) {
             $jobofferQuery->where('status', $request->search);

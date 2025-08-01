@@ -42,7 +42,7 @@ export default function JobOfferDocumentSection() {
           Name: <b>{applicant?.fname} {applicant?.lname}</b>,<br /><br />
           Job Position: <b>{jo?.jobPos}</b><br /><br />
           1. <b>Employment Status</b><br />
-          You Employment Status is Probationary...<br /><br />
+          Your employment status with EmpireOne Global Solution Inc. will be Probationary for a period of 3 to 6 months from the start of your employment.<br /><br />
           2. <b>Compensation</b><br />
           You shall receive a monthly salary of <b>Php&nbsp;
             {jo?.allowance ? (

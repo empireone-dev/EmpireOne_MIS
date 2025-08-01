@@ -9,10 +9,10 @@ export function OnboardingDocsStepper() {
     const [isLastStep, setIsLastStep] = useState(false);
     const [isFirstStep, setIsFirstStep] = useState(false);
     const [onboardingCompleted, setOnboardingCompleted] = useState(false);
-    const { onboarding_docs, od } = useSelector((state) => state.onboarding_docs);
+    const { onboarding_ackdoc } = useSelector((state) => state.onboarding_ackdocs);
     const [agree, setAgree] = useState([]);
 
-    console.log('onboarding_docs', onboarding_docs)
+    console.log('onboarding_ackdoc', onboarding_ackdoc)
     const handleNext = () => {
         if (!isLastStep) {
             setActiveStep((cur) => cur + 1);
@@ -37,7 +37,7 @@ export function OnboardingDocsStepper() {
         update_onboarding_ack_service(window.location.pathname.split('/')[2])
         setOnboardingCompleted(true);
     }
-    if (onboardingCompleted || od) {
+    if (onboardingCompleted) {
         return (
             <div class="bg-cover bg-[url('/images/SCemp.jpg')] bg-center transition-colors duration-300 overflow-y-scroll h-screen p-14">
                 <div className="container mx-auto items-center justify-center w-full px-6 py-9 shadow-2xl shadow-black bg-white rounded-lg">
@@ -64,7 +64,7 @@ export function OnboardingDocsStepper() {
             </div>
         );
     }
-    if (!od) {
+    if (!onboardingCompleted) {
         return (
             <div className="bg-cover bg-[url('/images/SCemp.jpg')]  transition-colors duration-300 overflow-y-scroll h-screen p-14">
                 <div className="container mx-auto items-center justify-center w-full px-6 py-5 shadow-2xl shadow-black bg-white rounded-lg">
@@ -85,7 +85,7 @@ export function OnboardingDocsStepper() {
                         lineClassName="bg-gray-300"
                         activeLineClassName="bg-blue-600"
                     >
-                        {onboarding_docs?.map((res, i) => {
+                        {onboarding_ackdoc?.map((res, i) => {
                             return (
                                 <Step
                                     key={i}
@@ -102,14 +102,14 @@ export function OnboardingDocsStepper() {
                         })}
                     </Stepper>
                     <div className="mb-2 mt-4">
-                        {onboarding_docs.map((res, i) => {
+                        {onboarding_ackdoc.map((res, i) => {
                             if (i === activeStep) {
                                 return (
                                     <>
                                         <div
                                             key={i}
                                             dangerouslySetInnerHTML={{
-                                                __html: res.doc_content,
+                                                __html: res.onboarding_doc?.doc_content,
                                             }}
                                         />
                                         <div className="flex items-center mb-2 mt-11 pt-4">
@@ -151,12 +151,12 @@ export function OnboardingDocsStepper() {
                                                 <Button
                                                     disabled={
                                                         agree.length !==
-                                                        onboarding_docs.length
+                                                        onboarding_ackdoc.length
                                                     }
                                                     onClick={finish_handler}
                                                     className={
                                                         agree.length ==
-                                                            onboarding_docs.length
+                                                            onboarding_ackdoc.length
                                                             ? "bg-blue-600 hover:bg-blue-700 "
                                                             : "disabledNextButton bg-blue-400"
                                                     }

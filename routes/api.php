@@ -93,6 +93,7 @@ Route::resource('onboarding_doc', OnboardingDocController::class);
 Route::get('/onboarding_doc_by_id/{id}', [OnboardingDocController::class, 'onboarding_doc_by_id']);
 
 Route::resource('onboarding_ack', OnboardingAckController::class);
+Route::get('/onboarding_ackdoc_by_id/{app_id}', [OnboardingAckController::class, 'onboarding_ackdoc_by_id']);
 Route::resource('employee', EmployeeController::class);
 Route::post('/store_new_employee', [EmployeeController::class, 'store_new_employee']);
 

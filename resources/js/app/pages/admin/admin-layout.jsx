@@ -63,6 +63,12 @@ const AdminLayout = ({ children }) => {
             label: "Sourcing",
             children: [
                 {
+                    key: "account",
+                    icon: <HolderOutlined />,
+                    label: "Accounts",
+                    onClick: () => router.visit("/admin/sourcing/account"),
+                },
+                {
                     key: "department",
                     icon: <HolderOutlined />,
                     label: "Department",

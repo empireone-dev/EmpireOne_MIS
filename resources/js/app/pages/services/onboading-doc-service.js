@@ -21,3 +21,12 @@ export async function update_onboarding_doc_service(data) {
     const res = await axios.put('/api/onboarding_doc/' + data.id, data)
     return res.data
 }
+
+export function delete_onboarding_doc_service(id) {
+    try {
+        const result = axios.delete('/api/onboarding_doc/' + id)
+        return result
+    } catch (error) {
+        console.error("Error deleting document:", error)
+    }
+}

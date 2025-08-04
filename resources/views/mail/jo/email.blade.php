@@ -60,7 +60,7 @@
       </p>
 
       <p> 1. Employment Status
-        Your employment status with EmpireOne Global Solution Inc. will be Probationary for a period of 3 to 6 months from the start of your employment.</p>
+        Your employment status with EmpireOne BPO Solutions Inc. will be Probationary for a period of 3 to 6 months from the start of your employment.</p>
 
       <p> 2. Compensation
         You shall receive a monthly salary Package of <b>Php {{$data['salary']}} {{$data['allowance'] != 0?'+ Php':''}} {{$data['allowance'] != 0?$data['allowance']:''}} {{$data['typea']??''}}</b>.</p>

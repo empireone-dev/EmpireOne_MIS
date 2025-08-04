@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Dropdown, message, Space, Modal, Menu } from "antd";
 import {
+    ArrowRightOutlined,
     AuditOutlined,
     CalendarOutlined,
     CheckCircleFilled,
@@ -29,6 +30,7 @@ import ApplicantPoolingComponent from "../components/applicant-pooling-component
 import ApplicantCvFileComponent from "../components/applicant-cv-file-component";
 import ApplicantRejectionComponent from "../components/applicant-rejection-component";
 import ApplicantSetRescheduleComponent from "../components/applicant-set-reschedule-component";
+import ApplicantImmediateInitialComponent from "../components/applicant-immediate-initial-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
@@ -97,9 +99,26 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                         <ApplicantSetScheduleComponent
                             status="Initial Phase"
                             item={{
-                                label: "Proceed to Initial Phase",
+                                label: "Set Initial Phase Interview",
                                 key: "2",
                                 icon: <RiseOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
+            : []),
+        ...(data.status == "Pending"
+            ? [
+                {
+                    component: (
+                        <ApplicantImmediateInitialComponent
+                            status="Initial Phase"
+                            item={{
+                                label: "Proceed Interview Immediately",
+                                key: "2",
+                                icon: <ArrowRightOutlined />,
                             }}
                             data={data}
                         />
@@ -123,7 +142,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 },
             ]
             : []),
-        ...(data.status == "Final Phase" || data.status == "For Final Phase" 
+        ...(data.status == "Final Phase" || data.status == "For Final Phase"
             ? [
                 {
                     component: (

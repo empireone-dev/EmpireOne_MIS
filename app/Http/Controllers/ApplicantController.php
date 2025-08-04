@@ -445,4 +445,23 @@ class ApplicantController extends Controller
             'app_id' => $applicant->app_id,
         ]);
     }
+
+    public function proceed_initial_immediate(Request $request, $id)
+    {
+        $applicant = Applicant::find($id);
+
+        if (!$applicant) {
+            return response()->json([
+                'message' => 'Applicant not found.',
+            ], 404);
+        }
+
+        $applicant->update([
+            'status' => "Initial Phase",
+        ]);
+
+        return response()->json([
+            'data' => 'success'
+        ], 200);
+    }
 }

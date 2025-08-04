@@ -47,3 +47,8 @@ export function get_interview_applicant_service() {
     }
 }
 
+export async function proceed_initial_immediate_service(data) {
+    const res = await axios.put(`/api/proceed_initial_immediate/${data.id}`, data);
+    return res.data;
+}
+

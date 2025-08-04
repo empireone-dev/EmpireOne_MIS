@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { FileTextFilled, PictureFilled, SearchOutlined } from '@ant-design/icons';
+import { FileTextFilled, FormOutlined, PictureFilled, SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag, Modal, Tooltip } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { useSelector } from 'react-redux';
@@ -11,6 +11,9 @@ import { useEffect } from 'react';
 import File201ImageSection from './file-201-image-section';
 import File201ContractSection from './file-201-contract-section';
 import ContractApprovalButtonSection from './contract-approval-button-section';
+import OnboardingAcknowledgeSection from './onboarding-acknowledge-section';
+import PhysicalCOntractSigning from './physical-contract-signing';
+import VirtualContractSigning from './virtual-contract-signing';
 
 export default function File201TableSection() {
     const [searchText, setSearchText] = useState('');
@@ -18,7 +21,7 @@ export default function File201TableSection() {
     const [modalVisible, setModalVisible] = useState(false);
     const searchInput = useRef(null);
     const { applicant } = useSelector((state) => state.final_rate);
-   console.log('applicant',applicant)
+    console.log('applicant', applicant)
 
     useEffect(() => {
         store.dispatch(get_checklist_thunk())
@@ -201,6 +204,26 @@ export default function File201TableSection() {
 
     const dataSource = applicant?.requirements ?? [];
     // console.log("preemploymentfile",preemploymentfile)
+
+    const url = window.location.pathname + window.location.search;
+    function getQueryParam(url, param) {
+        const queryString = url.split("?")[1]; // Get the query string
+        if (!queryString) return null; // Return null if no query string
+
+        const params = new URLSearchParams(queryString); // Create a URLSearchParams object
+        return params.get(param); // Get the value of the specified parameter
+    }
+
+    // Get the search status
+    const status = getQueryParam(url, "status");
+
+    const [openChecklistModal, setOpenChecklistModal] = useState(false);
+    const [openConfirmationModal, setOpenConfirmationModal] = useState(false);
+    async function send_contract_signing() {
+        // Trigger any logic to send the contract signing
+        setOpenConfirmationModal(true);
+        setOpenChecklistModal(false);
+    }
     return (
         <div>
             {/* Modal component */}
@@ -211,9 +234,52 @@ export default function File201TableSection() {
                         Pre-Employment Requirements of<b> {applicant?.fname ?? ''} {applicant?.lname ?? ''}</b>
                     </h2>
                 </div>
-                <div className='flex flex-1 justify-between'>
-                    <File201ButtonSection data={applicant} />
+
+
+                <div className='flex flex-1 gap-2 justify-between'>
+                    <div>
+                        <File201ButtonSection data={applicant} />
+                    </div>
+                    <div className="w-1/8 p-4">
+                        {status == "Accepted" && (
+                            <OnboardingAcknowledgeSection data={applicant} setOpen={setOpenChecklistModal} />
+                        )}
+                        {status == "Contract Signing" && (
+                            <button
+                                onClick={send_contract_signing}
+                                className="flex items-center justify-center gap-1 bg-blue-500 hover:bg-blue-600 w-full p-2 text-white rounded-md"
+                            >
+                                <FormOutlined />
+                                <div>Set Contract Signing</div>
+                            </button>
+                        )}
+                        {status == "Signed" && (
+                            <div className=" text-slate-500 text-md">
+                                <i>Contract signing completed.</i>
+                            </div>
+                        )}
+                    </div>
                 </div>
+                <Modal
+                    title={`Contract Signing for ${applicant?.fname ?? ""} ${applicant?.lname ?? ""
+                        }`}
+                    centered
+                    open={openConfirmationModal}
+                    width={650}
+                    onCancel={() => setOpenConfirmationModal(false)}
+                    footer={null}
+                >
+                    <div className="flex flex-1 gap-4 w-full mt-4">
+                        <PhysicalCOntractSigning
+                            setOpen={setOpenConfirmationModal}
+                            data={applicant}
+                        />
+                        <VirtualContractSigning
+                            setOpen={setOpenConfirmationModal}
+                            data={applicant}
+                        />
+                    </div>
+                </Modal>
             </div>
             <Table columns={columns} dataSource={dataSource} />
         </div>

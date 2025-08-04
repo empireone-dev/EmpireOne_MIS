@@ -113,7 +113,7 @@ export default function File201ChecklistButtonSection({ data }) {
                         </div>
                     </div>
                 </form>
-                <div className="w-full">
+                {/* <div className="w-full">
                     {status == "Accepted" && (
                         <OnboardingAcknowledgeSection data={data} setOpen={setOpenChecklistModal} />
                     )}
@@ -131,29 +131,9 @@ export default function File201ChecklistButtonSection({ data }) {
                             <i>Contract signing completed.</i>
                         </div>
                     )}
-                </div>
+                </div> */}
             </Modal>
 
-            <Modal
-                title={`Contract Signing for ${applicant?.fname ?? ""} ${applicant?.lname ?? ""
-                    }`}
-                centered
-                open={openConfirmationModal}
-                width={650}
-                onCancel={() => setOpenConfirmationModal(false)}
-                footer={null}
-            >
-                <div className="flex flex-1 gap-4 w-full mt-4">
-                    <PhysicalCOntractSigning
-                        setOpen={setOpenConfirmationModal}
-                        data={data}
-                    />
-                    <VirtualContractSigning
-                        setOpen={setOpenConfirmationModal}
-                        data={data}
-                    />
-                </div>
-            </Modal>
         </div>
     );
 }

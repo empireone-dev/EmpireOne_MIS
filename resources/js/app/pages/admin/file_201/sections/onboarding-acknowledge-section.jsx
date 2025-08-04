@@ -53,7 +53,7 @@ export default function OnboardingAcknowledgeSection({ data, setOpen }) {
         <div>
             <button
                 onClick={open_onboarding_ack}
-                className="flex items-center justify-center gap-1 bg-blue-500 w-full p-2 text-white rounded-md"
+                className="flex items-center justify-center gap-1 bg-blue-500 hover:bg-blue-600 w-full p-3 text-white rounded-md"
             >
                 <SendOutlined />
                 <div>Send Onboarding Acknowledgement</div>

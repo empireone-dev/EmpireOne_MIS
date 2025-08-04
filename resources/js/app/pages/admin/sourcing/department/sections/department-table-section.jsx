@@ -51,7 +51,7 @@ const DepartmentTableSection = () => {
             key: "action",
             render: (_record) => {
                 return (
-                    <div className="flex flex-1 gap-1.5">
+                    <div className="flex flex-1 gap-2">
                         <div>
                             <Tooltip title="Update Department">
                                 <div>

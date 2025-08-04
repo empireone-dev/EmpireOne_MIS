@@ -147,6 +147,9 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         Route::get('/department', function () {
             return Inertia::render('admin/sourcing/department/page');
         });
+        Route::get('/account', function () {
+            return Inertia::render('admin/sourcing/account/page');
+        });
         Route::prefix('job_title_section')->group(function () {
             Route::get('/', function () {
                 return Inertia::render('admin/sourcing/job_title_section/page');

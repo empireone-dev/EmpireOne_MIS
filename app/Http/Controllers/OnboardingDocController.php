@@ -15,7 +15,7 @@ class OnboardingDocController extends Controller
             ['status', '=', 'Acknowledged'],
         ])->first();
 
-        $onboardingdoc = OnboardingDoc::get();
+        $onboardingdoc = OnboardingDoc::orderBy('id', 'desc')->get();
         return response()->json([
             'od' => $od,
             'data' => $onboardingdoc
@@ -61,6 +61,15 @@ class OnboardingDocController extends Controller
         ]);
         return response()->json([
             'data' => 'success'
+        ], 200);
+    }
+
+    public function destroy($id)
+    {
+        $document = OnboardingDoc::where('id', $id)->first();
+        $document->delete();
+        return response()->json([
+            'result' => $document
         ], 200);
     }
 }

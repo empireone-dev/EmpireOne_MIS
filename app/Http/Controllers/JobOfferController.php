@@ -73,7 +73,7 @@ class JobOfferController extends Controller
             'status' => 'Counter Offer'
         ]);
 
-        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'quicklydeguzman@gmail.com';
+        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
 
         Mail::to($emailRecipient)->send(new DeclinedOffer(array_merge(
             $request->all(),

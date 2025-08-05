@@ -1,4 +1,4 @@
-import { CheckCircleFilled, LoadingOutlined } from "@ant-design/icons";
+import { CheckCircleFilled, LoadingOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import React from "react";
 import CustomerServiceFinalSection from "./customer-service-final-rate-section";
 import WorkEffectivenessFinalRateSection from "./work-effectiveness-final-rate-section";
@@ -54,16 +54,27 @@ export default function FinalRateFormSection() {
 
     return (
         <div className="font-sans">
-            <div className="flex text-xl items-center justify-center mb-1">
-                <h1>
-                    <b>Final Rating Scale</b>
-                </h1>
+            <div className="flex items-center justify-between mb-4">
+                <button
+                    type="button"
+                    onClick={() => window.history.back()}
+                    className="flex items-center gap-2 px-4 py-2 text-lg hover:text-gray-600  transition-colors duration-200"
+                >
+                    <ArrowLeftOutlined />
+                    Back
+                </button>
+                <div className="flex text-xl items-center justify-center">
+                    <h1>
+                        <b>Final Rating Scale</b>
+                    </h1>
+                </div>
+                <div className="w-48"></div> {/* Spacer for centering */}
             </div>
-            <div className="flex flex-1 justify-end pr-4">
-                <h1 className="text-lg mb-2 bg-ge">
+            <div className="flex flex-1 justify-end pr-4 mb-2">
+                <h1 className="text-lg">
                     <b>Status:</b>
-                </h1>{" "}
-                <h1 className="bg-green-500 text-lg rounded-md p-1 text-white ml-1">
+                </h1>
+                <h1 className="bg-green-500 text-lg rounded-md px-1.5 text-white ml-1">
                     {applicant.status}
                 </h1>
             </div>

@@ -1,4 +1,4 @@
-import { CheckCircleFilled, LoadingOutlined } from "@ant-design/icons";
+import { CheckCircleFilled, LoadingOutlined, ArrowLeftOutlined } from "@ant-design/icons";
 import React from "react";
 import TeamworkSection from "./teamwork-section";
 import ProblemSolvingSection from "./problem-solving-section";
@@ -61,10 +61,21 @@ export default function InitialRateForm({ data }) {
     }
     return (
         <div className="font-sans">
-            <div className="flex text-xl items-center justify-center mb-1">
-                <h1>
-                    <b>Initial Rating Scale</b>
-                </h1>
+            <div className="flex items-center justify-between mb-4">
+                <button
+                    type="button"
+                    onClick={() => window.history.back()}
+                    className="flex items-center text-lg gap-2 px-4 py-2 hover:text-gray-600  transition-colors duration-200"
+                >
+                    <ArrowLeftOutlined />
+                    Back
+                </button>
+                <div className="flex text-xl items-center justify-center">
+                    <h1>
+                        <b>Initial Rating Scale</b>
+                    </h1>
+                </div>
+                <div className="w-48"></div> {/* Spacer for centering */}
             </div>
             <form
                 onSubmit={submit_initial_rate}

@@ -471,4 +471,23 @@ class ApplicantController extends Controller
             'data' => 'success'
         ], 200);
     }
+
+    public function proceed_final_immediate(Request $request, $id)
+    {
+        $applicant = Applicant::find($id);
+
+        if (!$applicant) {
+            return response()->json([
+                'message' => 'Applicant not found.',
+            ], 404);
+        }
+
+        $applicant->update([
+            'status' => "Final Phase",
+        ]);
+
+        return response()->json([
+            'data' => 'success'
+        ], 200);
+    }
 }

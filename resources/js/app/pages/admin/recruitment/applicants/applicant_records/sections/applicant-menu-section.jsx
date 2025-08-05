@@ -31,6 +31,7 @@ import ApplicantCvFileComponent from "../components/applicant-cv-file-component"
 import ApplicantRejectionComponent from "../components/applicant-rejection-component";
 import ApplicantSetRescheduleComponent from "../components/applicant-set-reschedule-component";
 import ApplicantImmediateInitialComponent from "../components/applicant-immediate-initial-component";
+import ApplicantImmediateFinalComponent from "../components/applicant-immediate-final-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
@@ -158,7 +159,24 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 },
             ]
             : []),
-        ...(data.status == "Final Phase" && data.final
+        ...(data.status == "For Final Phase"
+            ? [
+                {
+                    component: (
+                        <ApplicantImmediateFinalComponent
+                            status="Final Phase"
+                            item={{
+                                label: "Proceed Interview Immediately",
+                                key: "2",
+                                icon: <ArrowRightOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
+            : []),
+        ...(data.status == "Final Phase" 
             ? [
                 {
                     component: (

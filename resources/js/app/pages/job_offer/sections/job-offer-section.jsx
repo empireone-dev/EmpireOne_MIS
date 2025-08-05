@@ -42,7 +42,9 @@ export default function JobOfferSection() {
                 ...applicant,
                 ...form,
                 id: jo_id,
+                jobPos: applicant.joboffer.find((res) => res.id == jo_id).jobPos,
                 status: "Declined",
+                site: site ?? "",
             });
             window.location.reload();
         } finally {

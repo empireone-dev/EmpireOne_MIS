@@ -107,6 +107,7 @@ class EmployeeController extends Controller
             'employee_mname' => $request->mname,
             'employee_lname' => $request->lname,
             'employee_suffix' => $request->suffix,
+            'email' => $request->email,
             'department' => $request->dept,
             'account' => $request->account,
             'sup_id' => $request->sup_id,

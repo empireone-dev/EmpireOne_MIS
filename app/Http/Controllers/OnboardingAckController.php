@@ -21,7 +21,7 @@ class OnboardingAckController extends Controller
 
     public function store(Request $request)
     {
-        $ods =  OnboardingDoc::where('site', $request->site)->get();
+        $ods =  OnboardingDoc::get();
         foreach ($ods as $key => $od) {
             OnboardingAck::create([
                 'app_id' => $request->app_id,
@@ -31,10 +31,7 @@ class OnboardingAckController extends Controller
             ]);
         }
 
-        JobOffer::where('app_id', $request->app_id)
-            ->where('jobPos', $request->job_pos)
-            ->where('salary', $request->salary)
-            ->where('allowance', $request->allowance)
+        JobOffer::where('id', $request->id)
             ->update([
                 'status' => "For Acknowledgment",
             ]);
@@ -51,8 +48,8 @@ class OnboardingAckController extends Controller
     public function update(Request $request, $id)
     {
         JobOffer::where([
-            ['app_id', '=', $id],
-            ['status', '=', 'For Acknowledgment']
+            ['id', '=', $id],
+            ['status', '=', 'For Acknowledgment'],
         ])->update([
             'status' => 'Contract Signing'
         ]);

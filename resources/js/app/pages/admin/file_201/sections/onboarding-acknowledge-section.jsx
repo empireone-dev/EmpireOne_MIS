@@ -12,9 +12,10 @@ export default function OnboardingAcknowledgeSection({ data, setOpen }) {
         allowance: 0
     });
     const [loading, setLoading] = useState(false);
-    const rawJobPos = window.location.pathname.split('/')[4];
-    const salary = window.location.pathname.split('/')[5];
-    const allowance = window.location.pathname.split('/')[6];
+    const id = window.location.pathname.split('/')[4];
+    const rawJobPos = window.location.pathname.split('/')[5];
+    const salary = window.location.pathname.split('/')[6];
+    const allowance = window.location.pathname.split('/')[7];
     const job_pos = rawJobPos.replace(/_/g, '/').replace(/%20/g, ' ');
 
     console.log('data', data)
@@ -27,6 +28,7 @@ export default function OnboardingAcknowledgeSection({ data, setOpen }) {
                 create_onboarding_ack_thunk({
                     ...form,
                     ...data,
+                    id: id,
                     job_pos: job_pos ?? "",
                     salary: salary ?? "",
                     allowance: allowance ?? "",
@@ -49,6 +51,8 @@ export default function OnboardingAcknowledgeSection({ data, setOpen }) {
         setOpen(false);
 
     }
+
+    console.log('data', data)
     return (
         <div>
             <button

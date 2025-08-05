@@ -74,7 +74,7 @@ Route::get('/video_quiz/{type}', function () {
 
 
 
-Route::get('/onboarding-documents/{app_id}', function () {
+Route::get('/onboarding-documents/{app_id}/{id}', function () {
     return Inertia::render('onboarding-documents/page');
 });
 
@@ -126,7 +126,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         return Inertia::render('admin/dashboard/page');
     });
 
-    Route::get('/file_201/{app_id}/{jobPos}/{salary}/{allowance}', function () {
+    Route::get('/file_201/{app_id}/{id}/{jobPos}/{salary}/{allowance}', function () {
         return Inertia::render('admin/file_201/page');
     });
 

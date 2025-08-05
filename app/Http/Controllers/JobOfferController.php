@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DeclinedOffer;
 use App\Mail\JobOffer as MailJobOffer;
 use App\Mail\PreEmploymentEmail;
 use App\Models\Applicant;
@@ -71,6 +72,14 @@ class JobOfferController extends Controller
         Applicant::where('app_id', $request->app_id)->update([
             'status' => 'Counter Offer'
         ]);
+
+        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+
+        Mail::to($emailRecipient)->send(new DeclinedOffer(array_merge(
+            $request->all(),
+            ['id' => $jo->id],
+        )));
+
         if ($request->status == 'Accepted') {
             Applicant::where('app_id', $id)->update([
                 'status' => 'Accepted Offer'

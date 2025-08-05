@@ -33,8 +33,14 @@ class Attrition extends Model
     {
         return $this->belongsTo(User::class, "sup_id", "id");
     }
-    public function applicant(): HasOne
+
+    public function applicant(): BelongsTo
     {
-        return $this->hasOne(Applicant::class, "app_id", "emp_id");
+        return $this->belongsTo(Applicant::class, "app_id", "app_id");
+    }
+
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class, "emp_id", "emp_id");
     }
 }

@@ -25,7 +25,7 @@ export default function AddAttritionSection() {
     const [error, setError] = useState({})
     const [loading, setLoading] = useState(false)
 
-    const [form, setForm] = useState({ reason: '', resignationReasonSelect: '', dismissalReasonSelect: '', });
+    const [form, setForm] = useState({ reason: '', resignationReasonSelect: '', dismissalReasonSelect: '', emp_id: applicant?.employee?.emp_id || '', separation: '' });
 
     const handleReasonChange = (e) => {
         const { value } = e.target;
@@ -178,7 +178,7 @@ export default function AddAttritionSection() {
                                 class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 id="grid-text"
                                 type="text"
-                                value={applicant.app_id}
+                                value={applicant?.employee?.emp_id}
                                 placeholder=""
                                 readOnly
                             />

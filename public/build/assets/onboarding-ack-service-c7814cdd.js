@@ -1,0 +1,1 @@
+import{h as n}from"./app-ecf86278.js";async function t(a){return(await n.post("/api/onboarding_ack",a)).data}async function c(a){return(await n.put("/api/onboarding_ack/"+a)).data}async function i(a){return(await n.get("/api/onboarding_ackdoc_by_id/"+a)).data}export{t as c,i as g,c as u};

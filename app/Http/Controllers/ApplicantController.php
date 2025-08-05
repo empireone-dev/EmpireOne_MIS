@@ -196,8 +196,11 @@ class ApplicantController extends Controller
 
         $fileUrl = $uploadedFiles[0] ?? null;
 
+        // Determine email recipient based on site
+        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+
         if ($fileUrl) {
-            Mail::to('hiring@empireonegroup.com')->send(new NewApplication(
+            Mail::to($emailRecipient)->send(new NewApplication(
                 array_merge(
                     (array) $request->all(),
                     ['submitted' => now()->format('Y-m-d')]
@@ -205,7 +208,7 @@ class ApplicantController extends Controller
                 $fileUrl
             ));
         } else {
-            Mail::to('hiring@empireonegroup.com')->send(new NewApplication2(
+            Mail::to($emailRecipient)->send(new NewApplication2(
                 array_merge(
                     (array) $request->all(),
                     ['submitted' => now()->format('Y-m-d')]
@@ -385,10 +388,12 @@ class ApplicantController extends Controller
             'meet_link' => $decodedMeetLink,
         ];
 
+        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+
         if ($decodedMeetLink) {
-            Mail::to('hiring@empireonegroup.com')->send(new ConfirmationInitialVirtual($data));
+            Mail::to($emailRecipient)->send(new ConfirmationInitialVirtual($data));
         } else {
-            Mail::to('hiring@empireonegroup.com')->send(new ConfirmationInitialPhysical($data));
+            Mail::to($emailRecipient)->send(new ConfirmationInitialPhysical($data));
         }
 
         InterviewConfirmation::create([
@@ -425,13 +430,15 @@ class ApplicantController extends Controller
             'reason' => $request->reason,
         ];
 
+        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+
         if (strtolower($request->reschedule) === "yes") {
-            Mail::to('hiring@empireonegroup.com')->send(new Rescheduled($data));
+            Mail::to($emailRecipient)->send(new Rescheduled($data));
         } else {
             $applicant->status = 'Declined';
             $applicant->save();
 
-            Mail::to('hiring@empireonegroup.com')->send(new DeclinedConfirmation($data));
+            Mail::to($emailRecipient)->send(new DeclinedConfirmation($data));
         }
 
         InterviewConfirmation::create([

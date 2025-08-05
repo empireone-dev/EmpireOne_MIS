@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class EmployeeAttrition extends Model
@@ -29,7 +30,11 @@ class EmployeeAttrition extends Model
 
     public function applicant(): HasOne
     {
-        return $this->hasOne(Applicant::class,"app_id","emp_id");
+        return $this->hasOne(Applicant::class, "app_id", "app_id");
     }
 
+    public function employee(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class, "emp_id", "emp_id");
+    }
 }

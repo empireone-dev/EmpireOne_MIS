@@ -231,7 +231,7 @@ export default function File201TableSection() {
             <div>
                 <div className="flex items-center gap-x-3 mb-4">
                     <h2 className="text-lg font-medium text-gray-800">
-                        Pre-Employment Requirements of<b> {applicant?.fname ?? ''} {applicant?.lname ?? ''}</b>
+                        201 File of<b> {applicant?.fname ?? ''} {applicant?.lname ?? ''}</b>
                     </h2>
                 </div>
 

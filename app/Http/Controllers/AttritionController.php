@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\Attrition as MailAttrition;
 use App\Models\Attrition;
+use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AttritionController extends Controller
 {
@@ -26,7 +29,7 @@ class AttritionController extends Controller
         } else {
             Attrition::create([
                 'app_id' => $request->app_id,
-                'emp_id' => $request->app_id,
+                'emp_id' => $request->employee['emp_id'],
                 'position' => $request->employee['position'],
                 'dept' => $request->employee['dept'],
                 'account' => $request->employee['account'],
@@ -38,6 +41,23 @@ class AttritionController extends Controller
                 'reas' => $request->reason,
                 'separation' => $request->separation,
             ]);
+
+            // Update Employee status
+            $employee = Employee::where('emp_id', $request->employee['emp_id'])->first();
+
+            if (!$employee) {
+                return response()->json([
+                    'message' => 'Employee not found.',
+                ], 404);
+            }
+
+            $employee->update([
+                'status' => $request->reason,
+            ]);
+
+            Mail::to($request->email)->send(new MailAttrition(array_merge(
+                $request->all(),
+            )));
 
             return response()->json([
                 'status' => 'success',

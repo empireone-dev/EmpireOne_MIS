@@ -52,7 +52,16 @@ class ApplicantController extends Controller
             $applicant->where('site', '=', $request->site);
         }
 
-        $user = User::whereIn('position', ['CEO', 'Manager', 'Director'])->get();
+        $user = User::with('employee')
+            // ->where('employee_id', '!=', '24010101')
+            ->whereIn('position', ['CEO', 'Account Manager', 'Director', 'HR Manager', 'I.T Manager', 'Operations Manager'])
+            ->where(function ($query) {
+                $query->where('position', 'CEO')
+                    ->orWhereHas('employee', function ($subQuery) {
+                        $subQuery->whereIn('status', ['Regular', 'Probationary']);
+                    });
+            })
+            ->get();
 
         if ($request->search) {
             $applicant->where('status', $request->search);

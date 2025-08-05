@@ -13,7 +13,7 @@ export function OnboardingDocsStepper() {
     const [agree, setAgree] = useState([]);
 
     console.log('onboarding_ackdoc', onboarding_ackdoc)
-    
+
     // Add guard clause to handle case where onboarding_ackdoc is not available
     if (!onboarding_ackdoc || !Array.isArray(onboarding_ackdoc)) {
         return (
@@ -57,7 +57,9 @@ export function OnboardingDocsStepper() {
     }
 
     function finish_handler(e) {
-        update_onboarding_ack_service(window.location.pathname.split('/')[2])
+        update_onboarding_ack_service(
+            window.location.pathname.split('/')[3]
+        )
         setOnboardingCompleted(true);
     }
     if (onboardingCompleted) {
@@ -134,7 +136,31 @@ export function OnboardingDocsStepper() {
                                             dangerouslySetInnerHTML={{
                                                 __html: res.onboarding_doc?.doc_content,
                                             }}
+                                            className="mb-7"
                                         />
+                                        <Stepper
+                                            activeStep={activeStep}
+                                            isLastStep={(value) => setIsLastStep(value)}
+                                            isFirstStep={(value) => setIsFirstStep(value)}
+                                            lineClassName="bg-gray-300"
+                                            activeLineClassName="bg-blue-600"
+                                        >
+                                            {onboarding_ackdoc?.map((res, i) => {
+                                                return (
+                                                    <Step
+                                                        key={i}
+                                                        onClick={() => {
+                                                            if (!isReadOnly) handleStepClick(i);
+                                                        }}
+                                                        className="p-2 w-10 !bg-blue-gray-50 cursor-pointer items-center justify-center"
+                                                        activeClassName="ring-0 !bg-blue-600 text-white"
+                                                        completedClassName="!bg-blue-600 text-white"
+                                                    >
+                                                        {i + 1}
+                                                    </Step>
+                                                );
+                                            })}
+                                        </Stepper>
                                         <div className="flex items-center mb-2 mt-11 pt-4">
                                             <input
                                                 onChange={agree_handler}

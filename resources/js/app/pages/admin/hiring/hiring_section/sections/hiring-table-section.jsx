@@ -264,7 +264,7 @@ export default function HiringTableSection() {
                                             type="button"
                                             onClick={() =>
                                                 router.visit(
-                                                    `/admin/file_201/${record.app_id}/${safeJobPos}/${record?.salary}/${record?.allowance}?status=${record.status}`
+                                                    `/admin/file_201/${record.app_id}/${record.id}/${safeJobPos}/${record?.salary}/${record?.allowance}?status=${record.status}`
                                                 )
 
                                             }

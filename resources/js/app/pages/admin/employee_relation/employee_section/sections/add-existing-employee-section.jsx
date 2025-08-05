@@ -615,7 +615,7 @@ export default function AddExistingEmployeeSection() {
                                     })}
                                     name='position'
                                     className="border p-2 rounded  w-full">
-                                    <option disabled selected>Job Position</option>
+                                    <option disabled selected value="">Job Position</option>
                                     {
                                         job_positions
                                             .filter(res => res.site === "San Carlos")
@@ -632,7 +632,7 @@ export default function AddExistingEmployeeSection() {
                                     })}
                                     name='dept'
                                     className="border p-2 rounded  w-full">
-                                    <option disabled selected>Department</option>
+                                    <option disabled selected value="">Department</option>
                                     {
                                         departments
                                             .filter(res => res.site === "San Carlos")
@@ -649,7 +649,7 @@ export default function AddExistingEmployeeSection() {
                                     })}
                                     name='account'
                                     className="border p-2 rounded  w-full">
-                                    <option disabled selected>Account (If Applicable)</option>
+                                    <option disabled selected value="">Account (If Applicable)</option>
                                     {
                                         accounts
                                             // .filter(res => res.site === "San Carlos")

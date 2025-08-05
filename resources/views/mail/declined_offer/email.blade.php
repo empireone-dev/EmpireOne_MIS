@@ -7,7 +7,7 @@
     Applicant Details:
 
     **Name:** {{$data['fname']}} {{$data['lname']}}
-    **Reason:** {{$data['decline_reason'] ?? 'No reason provided'}}
+    **Reason:** {{$data['reas'] ?? 'No reason provided'}}
 
     You may consider extending a counter offer to retain the applicant's interest and potentially re-engage them in the hiring process.
 

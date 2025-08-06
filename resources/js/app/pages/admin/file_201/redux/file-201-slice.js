@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { set } from 'react-hook-form'
 
 export const onboardingAckDocSlice = createSlice({
     name: 'onboarding_ackdoc',
@@ -6,7 +7,8 @@ export const onboardingAckDocSlice = createSlice({
         onboarding_ackdocs: [],
         onboarding_ackdocForm: {},
         od: {},
-        onboarding_ackdoc: {}
+        onboarding_ackdoc: {},
+        job_offer: {}
     },
     reducers: {
         setOnboardingAckDocs: (state, action) => {
@@ -24,8 +26,12 @@ export const onboardingAckDocSlice = createSlice({
         setOnboardingAckDoc: (state, action) => {
             state.onboarding_ackdoc = action.payload
         },
+        setJobOffer: (state, action) => {
+            state.job_offer = action.payload        
+
+        }
     },
 })
-export const { setOnboardingAckDocs, setOnboardingAckDocForm, resetOnboardingAckDoc, setOd, setOnboardingAckDoc } = onboardingAckDocSlice.actions
+export const { setOnboardingAckDocs, setJobOffer,setOnboardingAckDocForm, resetOnboardingAckDoc, setOd, setOnboardingAckDoc } = onboardingAckDocSlice.actions
 
 export default onboardingAckDocSlice.reducer

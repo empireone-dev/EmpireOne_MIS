@@ -3,14 +3,41 @@
 namespace App\Http\Controllers;
 
 use App\Mail\OnboardingAck as MailOnboardingAck;
+use App\Models\ESignature;
 use App\Models\JobOffer;
 use App\Models\OnboardingAck;
 use App\Models\OnboardingDoc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class OnboardingAckController extends Controller
 {
+
+    public function uploadBase64Image($signature)
+    {
+        try {
+            list($type, $data) = explode(';', $signature);
+            list(, $data) = explode(',', $data);
+
+            $decodedImage = base64_decode($data);
+            if ($decodedImage === false) {
+                return 'none';
+            }
+
+            if (!str_contains($type, 'image/')) {
+                return 'none';
+            }
+
+            $filename = uniqid() . '.png';
+            $path = 'empireone-financing/' . date("Y") . '/' . $filename;
+
+            Storage::disk('s3')->put($path, $decodedImage);
+            return Storage::disk('s3')->url($path);
+        } catch (\Exception $e) {
+            return 'none';
+        }
+    }
     public function index()
     {
         $onboardingack = OnboardingAck::get();
@@ -47,21 +74,27 @@ class OnboardingAckController extends Controller
 
     public function update(Request $request, $id)
     {
+        $signature = $this->uploadBase64Image($request->signature);
         JobOffer::where([
             ['id', '=', $id],
             ['status', '=', 'For Acknowledgment'],
         ])->update([
             'status' => 'Contract Signing'
         ]);
-        OnboardingAck::where('app_id', $id)->update([
+        OnboardingAck::where('app_id', $request->app_id)->update([
             'status' => 'Acknowledged'
         ]);
+        ESignature::create([
+            'app_id' => $request->app_id,
+            'signature' => $signature,
+        ]);
+        return response()->json($request->all(), 200);
     }
 
-    public function onboarding_ackdoc_by_id($app_id)
+    public function onboarding_ackdoc_by_id(Request $request,$app_id)
     {
-        $res = OnboardingAck::with('onboardingDoc')->where('app_id', $app_id)->get();
-
+        $res = OnboardingAck::whereNotNull('doc_id')->with('onboardingDoc')->where('app_id', $app_id)->get();
+        $jo = JobOffer::where('id', $request->job_offer_id)->first();
         if ($res->isEmpty()) {
             return response()->json([
                 'message' => 'Document not found'
@@ -69,7 +102,8 @@ class OnboardingAckController extends Controller
         }
 
         return response()->json([
-            'data' => $res
+            'data' => $res,
+            'job_offer' => $jo
         ], 200);
     }
 }

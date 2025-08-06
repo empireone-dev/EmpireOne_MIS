@@ -3,16 +3,20 @@ import { Stepper, Step, Button } from "@material-tailwind/react";
 import Wysiwyg from "../../_components/wysiwyg";
 import { useSelector } from "react-redux";
 import { create_onboarding_ack_service, update_onboarding_ack_service } from "../../services/onboarding-ack-service";
+import SignaturePadSection from "./signature-pad-section";
 
 export function OnboardingDocsStepper() {
     const [activeStep, setActiveStep] = useState(0);
     const [isLastStep, setIsLastStep] = useState(false);
     const [isFirstStep, setIsFirstStep] = useState(false);
     const [onboardingCompleted, setOnboardingCompleted] = useState(false);
-    const { onboarding_ackdoc } = useSelector((state) => state.onboarding_ackdocs);
+    const [isSignaturePadVisible, setIsSignaturePadVisible] = useState(false);
+    const { onboarding_ackdoc, job_offer } = useSelector((state) => state.onboarding_ackdocs);
+    const [form, setForm] = useState({ signature: "" });
     const [agree, setAgree] = useState([]);
+    const isReadOnly = false; // Add this if it's meant to control read-only mode
 
-    console.log('onboarding_ackdoc', onboarding_ackdoc)
+    console.log('job_offer', job_offer?.status)
 
     // Add guard clause to handle case where onboarding_ackdoc is not available
     if (!onboarding_ackdoc || !Array.isArray(onboarding_ackdoc)) {
@@ -56,15 +60,35 @@ export function OnboardingDocsStepper() {
         }
     }
 
-    function finish_handler(e) {
-        update_onboarding_ack_service(
-            window.location.pathname.split('/')[3]
-        )
-        setOnboardingCompleted(true);
+    async function finish_handler(data) {
+
+        console.log('form', data);
+        await update_onboarding_ack_service({
+            ...data,
+            job_offer_id: window.location.pathname.split('/')[3],
+            app_id: window.location.pathname.split('/')[2],
+        })
+        setIsSignaturePadVisible(false);
+        setOnboardingCompleted(false);
     }
-    if (onboardingCompleted) {
+
+    function esignature_handler(e) {
+        setIsSignaturePadVisible(true);
+    }
+  
+    if (job_offer?.status == "For Acknowledgment" && !onboardingCompleted && isSignaturePadVisible) {
         return (
-            <div class="bg-cover bg-[url('/images/SCemp.jpg')] bg-center transition-colors duration-300 overflow-y-scroll h-screen p-14">
+            <SignaturePadSection
+                submit={finish_handler}
+                data={form}
+                setForm={setForm}
+
+            />
+        );
+    }
+    if (job_offer?.status != "For Acknowledgment") {
+        return (
+            <div className="bg-cover bg-[url('/images/SCemp.jpg')] bg-center transition-colors duration-300 overflow-y-scroll h-screen p-14">
                 <div className="container mx-auto items-center justify-center w-full px-6 py-9 shadow-2xl shadow-black bg-white rounded-lg">
                     <div className="flex items-center justify-center p-3 mb-6">
                         <img
@@ -89,7 +113,8 @@ export function OnboardingDocsStepper() {
             </div>
         );
     }
-    if (!onboardingCompleted) {
+
+    if (job_offer?.status == "For Acknowledgment" && !onboardingCompleted && !isSignaturePadVisible) {
         return (
             <div className="bg-cover bg-[url('/images/SCemp.jpg')]  transition-colors duration-300 overflow-y-scroll h-screen p-14">
                 <div className="container mx-auto items-center justify-center w-full px-6 py-5 shadow-2xl shadow-black bg-white rounded-lg">
@@ -113,7 +138,7 @@ export function OnboardingDocsStepper() {
                         {onboarding_ackdoc?.map((res, i) => {
                             return (
                                 <Step
-                                    key={i}
+                                    key={`step-${i}-${res.id || i}`}
                                     onClick={() => {
                                         if (!isReadOnly) handleStepClick(i);
                                     }}
@@ -130,7 +155,7 @@ export function OnboardingDocsStepper() {
                         {onboarding_ackdoc?.map((res, i) => {
                             if (i === activeStep) {
                                 return (
-                                    <>
+                                    <div key={`content-${i}-${res.id || i}`}>
                                         <div
                                             key={i}
                                             dangerouslySetInnerHTML={{
@@ -148,7 +173,7 @@ export function OnboardingDocsStepper() {
                                             {onboarding_ackdoc?.map((res, i) => {
                                                 return (
                                                     <Step
-                                                        key={i}
+                                                        key={`inner-step-${i}-${res.id || i}`}
                                                         onClick={() => {
                                                             if (!isReadOnly) handleStepClick(i);
                                                         }}
@@ -202,7 +227,7 @@ export function OnboardingDocsStepper() {
                                                         agree.length !==
                                                         (onboarding_ackdoc?.length || 0)
                                                     }
-                                                    onClick={finish_handler}
+                                                    onClick={esignature_handler}
                                                     className={
                                                         agree.length ==
                                                             (onboarding_ackdoc?.length || 0)
@@ -228,7 +253,7 @@ export function OnboardingDocsStepper() {
                                                 </>
                                             )}
                                         </div>
-                                    </>
+                                    </div>
                                 );
                             }
                             return null; // Return null for non-matching steps

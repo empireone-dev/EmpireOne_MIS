@@ -13,5 +13,6 @@ export function get_onboarding_ackdoc_by_id_thunk(app_id) {
         const res = await get_onboarding_ackdoc_by_id_service(app_id)
         // Extract the data array from the response
         dispatch(onboardingAckDocSlice.actions.setOnboardingAckDoc(res.data));
+        dispatch(onboardingAckDocSlice.actions.setJobOffer(res.job_offer));
     };
 }

@@ -75,7 +75,7 @@ export function OnboardingDocsStepper() {
     function esignature_handler(e) {
         setIsSignaturePadVisible(true);
     }
-  
+
     if (job_offer?.status == "For Acknowledgment" && !onboardingCompleted && isSignaturePadVisible) {
         return (
             <SignaturePadSection

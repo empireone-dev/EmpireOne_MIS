@@ -69,7 +69,7 @@ export function OnboardingDocsStepper() {
             app_id: window.location.pathname.split('/')[2],
         })
         setIsSignaturePadVisible(false);
-        setOnboardingCompleted(false);
+        // setOnboardingCompleted(true);
     }
 
     function esignature_handler(e) {
@@ -126,8 +126,31 @@ export function OnboardingDocsStepper() {
                         />
                     </div>
                     <p className="mb-3 sm:mb-4 text-sm sm:text-base">
-                        <b>ONBOARDING</b>
+                        <b>ONBOARDING DOCUMENTS</b>
                     </p>
+                    <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-lg">
+                        <div className="flex">
+                            <div className="flex-shrink-0">
+                                <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                </svg>
+                            </div>
+                            <div className="ml-3">
+                                <h3 className="text-sm font-medium text-yellow-800">
+                                    Important Reminders Before Acknowledging
+                                </h3>
+                                <div className="mt-2 text-sm text-yellow-700">
+                                    <ul className="list-disc list-inside space-y-1">
+                                        <li><strong>Read Carefully:</strong> Please read the entire document thoroughly before acknowledging.</li>
+                                        <li><strong>Understand Terms:</strong> Ensure you fully understand all terms, conditions, and requirements outlined in this document.</li>
+                                        <li><strong>Ask Questions:</strong> If you have any questions or concerns, please contact HR before proceeding.</li>
+                                        <li><strong>Legal Implications:</strong> Your acknowledgment confirms that you have read, understood, and agree to comply with the document contents.</li>
+                                        <li>Following the acknowledgment, you will be asked to provide your e-signature using a signature pad.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div className="overflow-x-auto">
                         <Stepper
                             activeStep={activeStep}
@@ -158,6 +181,9 @@ export function OnboardingDocsStepper() {
                             if (i === activeStep) {
                                 return (
                                     <div key={`content-${i}-${res.id || i}`}>
+                                        {/* Important Reminders Section */}
+
+
                                         <div
                                             key={i}
                                             dangerouslySetInnerHTML={{
@@ -211,11 +237,10 @@ export function OnboardingDocsStepper() {
                                             <Button
                                                 onClick={handlePrev}
                                                 disabled={isFirstStep}
-                                                className={`w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 ${
-                                                    isFirstStep
-                                                        ? "disabledPrevButton bg-blue-400"
-                                                        : "bg-blue-600 hover:bg-blue-700"
-                                                }`}
+                                                className={`w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 ${isFirstStep
+                                                    ? "disabledPrevButton bg-blue-400"
+                                                    : "bg-blue-600 hover:bg-blue-700"
+                                                    }`}
                                             >
                                                 Prev
                                             </Button>
@@ -226,12 +251,11 @@ export function OnboardingDocsStepper() {
                                                         (onboarding_ackdoc?.length || 0)
                                                     }
                                                     onClick={esignature_handler}
-                                                    className={`w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 ${
-                                                        agree.length ==
-                                                            (onboarding_ackdoc?.length || 0)
-                                                            ? "bg-blue-600 hover:bg-blue-700"
-                                                            : "disabledNextButton bg-blue-400"
-                                                    }`}
+                                                    className={`w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 ${agree.length ==
+                                                        (onboarding_ackdoc?.length || 0)
+                                                        ? "bg-blue-600 hover:bg-blue-700"
+                                                        : "disabledNextButton bg-blue-400"
+                                                        }`}
                                                 >
                                                     Finish
                                                 </Button>
@@ -239,11 +263,10 @@ export function OnboardingDocsStepper() {
                                                 <Button
                                                     disabled={agree.length <= i}
                                                     onClick={handleNext}
-                                                    className={`w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 ${
-                                                        agree.length > i
-                                                            ? "bg-blue-600 hover:bg-blue-700"
-                                                            : "disabledNextButton bg-blue-400"
-                                                    }`}
+                                                    className={`w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 ${agree.length > i
+                                                        ? "bg-blue-600 hover:bg-blue-700"
+                                                        : "disabledNextButton bg-blue-400"
+                                                        }`}
                                                 >
                                                     Next
                                                 </Button>

@@ -57,3 +57,7 @@ export async function proceed_final_immediate_service(data) {
     return res.data;
 }
 
+export async function proceed_final_phase_service(data) {
+    const res = await axios.put(`/api/proceed_final_phase/${data.id}`, data);
+    return res.data;
+}

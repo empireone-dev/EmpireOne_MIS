@@ -9,6 +9,7 @@ use App\Mail\FinalEmail;
 use App\Mail\FinalvEmail;
 use App\Mail\InitialEmail;
 use App\Mail\InitialvEmail;
+use App\Mail\InterviewerFinalV;
 use App\Mail\RescheduleFinalEmail;
 use App\Mail\RescheduleFinalvEmail;
 use App\Mail\RescheduleInitialEmail;
@@ -16,6 +17,7 @@ use App\Models\Applicant;
 use App\Models\FinalRate;
 use App\Models\InitialRate;
 use App\Models\PreEmploymentFile;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
@@ -37,13 +39,16 @@ class EmailController extends Controller
                     'glink' => $request->meet_link,
                 ]);
             } else if ($request->phase_status == 'Final Phase') {
+                $interviewer = User::where('employee_id', $request->interviewer_id)->first();
                 Mail::to($request->email)->send(new FinalvEmail($data));
                 FinalRate::create([
                     'app_id' => $request->app_id,
                     'interdate' => $request->ivdate,
                     'intertime' => $request->ivtime,
                     'glink' => $request->meet_link,
+                    'interviewer' => $request->interviewer_id,
                 ]);
+                Mail::to($interviewer->email)->send(new InterviewerFinalV($data, $interviewer));
             } else if ($request->phase_status == 'Reschedule Initial Phase') {
                 Mail::to($request->email)->send(new RescheduleInitialEmail($data));
                 InitialRate::where('app_id', $request->app_id)->delete();

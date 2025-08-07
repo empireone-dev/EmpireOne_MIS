@@ -32,6 +32,7 @@ import ApplicantRejectionComponent from "../components/applicant-rejection-compo
 import ApplicantSetRescheduleComponent from "../components/applicant-set-reschedule-component";
 import ApplicantImmediateInitialComponent from "../components/applicant-immediate-initial-component";
 import ApplicantImmediateFinalComponent from "../components/applicant-immediate-final-component";
+import ApplicantProceedFinalComponent from "../components/applicant-proceed-final-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
@@ -117,7 +118,24 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                         <ApplicantImmediateInitialComponent
                             status="Initial Phase"
                             item={{
-                                label: "Proceed Interview Immediately",
+                                label: "Proceed Initial Interview",
+                                key: "2",
+                                icon: <ArrowRightOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
+            : []),
+        ...(data.status == "Pending" || data.status == "Initial Phase"
+            ? [
+                {
+                    component: (
+                        <ApplicantProceedFinalComponent
+                            status="Initial Phase"
+                            item={{
+                                label: "Proceed Final Phase",
                                 key: "2",
                                 icon: <ArrowRightOutlined />,
                             }}
@@ -176,7 +194,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 },
             ]
             : []),
-        ...(data.status == "Final Phase" 
+        ...(data.status == "Final Phase"
             ? [
                 {
                     component: (

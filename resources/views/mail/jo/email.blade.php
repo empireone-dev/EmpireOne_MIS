@@ -77,9 +77,13 @@
         Your working schedule will be discussed with you upon the start of your employment.
       </p>
 
-      <p>
-        To accept/decline this job offer you may click on this link: <br> https://empireone-hris.com/job_offer/{{$data['app_id']}}/{{ urlencode($data['site']) }}?id={{ $data['id'] }}
-      </p>
+      <p><b>**You can accept or decline the offer by clicking the button below.**</b></p>
+      <div style="text-align: center;"><a href="https://empireone-hris.com/job_offer/{{$data['app_id']}}/{{ urlencode($data['site']) }}?id={{ $data['id'] }}"
+          style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;"
+          target="_blank">
+          View Job Offer
+        </a>
+      </div><br>
 
       <p>
         We expect you to follow all the policies and provisions indicated in the company Code of Conduct and Discipline of EmpireOne Global Solution Inc. which will be issued to you when you start your career with us.

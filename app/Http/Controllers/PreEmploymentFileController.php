@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\DeclinedContract;
+use App\Mail\DeclinedRequirements;
 use App\Mail\FinalvEmail;
 use App\Models\Applicant;
 use App\Models\JobOffer;
@@ -114,6 +115,11 @@ class PreEmploymentFileController extends Controller
                         'status' => 'Declined',
                         'reas' => $request->reas,
                     ]);
+
+                    $data = array_merge($preempfile->toArray(), $applicant->toArray(), $request->all());
+                    $data['reason'] = $request->reas;
+
+                    Mail::to($applicant->email)->send(new DeclinedRequirements($data));
                 }
             }
         }

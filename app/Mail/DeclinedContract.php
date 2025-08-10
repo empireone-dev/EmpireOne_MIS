@@ -14,52 +14,42 @@ class DeclinedContract extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * Create a new message instance.
+     * The data passed to the mailable.
      */
     public $data;
-    public function __construct($data)
+
+    /**
+     * The file path of the attachment.
+     */
+    public $filePath;
+
+    /**
+     * Create a new message instance.
+     */
+    public function __construct($data, $filePath = null)
     {
         $this->data = $data;
+        $this->filePath = $filePath;
     }
-    // public function __construct()
-    // {
-    //     //
-    // }
 
-    // /**
-    //  * Get the message envelope.
-    //  */
-    // public function envelope(): Envelope
-    // {
-    //     return new Envelope(
-    //         subject: 'Declined Contract',
-    //     );
-    // }
-
-    // /**
-    //  * Get the message content definition.
-    //  */
-    // public function content(): Content
-    // {
-    //     return new Content(
-    //         markdown: 'mail.declined_contract.email',
-    //     );
-    // }
-
-    // /**
-    //  * Get the attachments for the message.
-    //  *
-    //  * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-    //  */
-    // public function attachments(): array
-    // {
-    //     return [];
-    // }
+    /**
+     * Build the message.
+     */
     public function build()
     {
-        return $this->from('hrisempireone@gmail.com', 'No Reply')
+        $email = $this->from('hrisempireone@gmail.com', 'No Reply')
             ->subject('EmpireOne BPO Solutions Inc - Declined Contract')
             ->markdown('mail.declined_contract.email')
             ->with($this->data);
+
+        // Add the attachment from the URL
+        if ($this->filePath) {
+            $email->attach($this->filePath, [
+                'as' => 'attached-contract.pdf', // Renaming the file to a PDF format
+                'mime' => 'application/pdf', // Specify the mime type for PDF
+            ]);
+        }
+
+        return $email;
     }
 }

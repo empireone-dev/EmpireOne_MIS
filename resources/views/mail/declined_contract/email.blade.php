@@ -63,7 +63,7 @@
 
             <p>In light of this, we kindly request that you re-upload the corrected or signed contract document to proceed with the next steps in the process. Please follow the instructions below:</p>
             <p>
-                • Download and print the PDF Document Contract. <br>
+                • Download and print the PDF Document Contract on the Virtual Contract Signing email notification. <br>
                 • Sign the printed contract. <br>
                 • Scan and ensure the document is clear and legible. <br>
                 • Convert the scanned file into PDF format. <br>

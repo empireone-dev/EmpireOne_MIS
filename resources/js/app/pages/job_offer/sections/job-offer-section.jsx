@@ -81,15 +81,15 @@ export default function JobOfferSection() {
                             <form className="border rounded-lg p-3.5">
                                 Dear Mr./Ms. <b>{applicant.lname}</b>,<br />
                                 <br /> Thank you for your interest in EmpireOne
-                                Global Solution Inc. We’d like to offer you the
+                                BPO Solutions Inc. We’d like to offer you the
                                 position of <b>{jo?.jobPos}</b>. Below is our Job
                                 Offer:
                                 <br /> <br />
                                 1. <b>Employment Status</b>
                                 <br />
                                 You Employment Status is Probationary upon the
-                                start of your employment with EmpireOne Global
-                                Solution Inc.
+                                start of your employment with EmpireOne BPO
+                                Solutions Inc.
                                 <br /> <br /> 2. <b>Compensation</b>
                                 <br />
                                 You shall receive a monthly salary of
@@ -122,10 +122,10 @@ export default function JobOfferSection() {
                                 <br /> <br /> We expect you to follow all the
                                 policies and provisions indicated in the company
                                 Code of Conduct and Discipline of EmpireOne
-                                Global Solution Inc. which will be issued to you
+                                BPO Solutions Inc. which will be issued to you
                                 when you start your career with us.
                                 <br /> <br /> We are excited to welcome you to
-                                our EmpireOne Global Solution Inc. family! Thank
+                                our EmpireOne BPO Solutions Inc. family! Thank
                                 you.
                                 <br /> <br />
                                 <div className="flex gap-2 justify-end mt-2.5">

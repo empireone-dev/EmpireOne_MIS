@@ -4,21 +4,26 @@ import { get_applicant_by_app_id_thunk } from '../../final_rate/redux/final-rate
 import store from '@/app/store/store'
 import { useSelector } from 'react-redux'
 import { LoadingOutlined, SendOutlined } from '@ant-design/icons'
+import { message } from 'antd'
 
 export default function ContractDeclineSection({ data, setOpen }) {
     const [reason, setReason] = useState('')
     const app_id = window.location.pathname.split('/')[3]
     const { applicant } = useSelector((state) => state.final_rate);
     const [loading, setLoading] = useState(false);
+    const job_offer_id = window.location.pathname.split('/')[4]
 
     async function on_handler(params) {
         await update_pre_employment_file_service({
             ...data,
             ...reason,
             email: applicant.email,
-            status: 'Declined'
+            status: 'Declined',
+            site: applicant.site,
+            id: job_offer_id
         })
         await store.dispatch(get_applicant_by_app_id_thunk(app_id))
+        message.success('Declined email sent!')
         setOpen(false)
         setLoading(false)
     }

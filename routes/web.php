@@ -81,6 +81,9 @@ Route::get('/onboarding-documents/{app_id}/{id}', function () {
 Route::get('/pre-employment/{app_id}/{site}', function () {
     return Inertia::render('pre-employment/page');
 });
+Route::get('/pre-employment/{app_id}', function () {
+    return Inertia::render('pre-employment/page');
+});
 Route::get('/virtual-contract/{app_id}', function () {
     return Inertia::render('virtual-contract/page');
 });

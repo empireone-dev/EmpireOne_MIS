@@ -70,7 +70,7 @@ class PreEmploymentFileController extends Controller
     {
         $preempfile = PreEmploymentFile::where('id', $request->id)->first();
         $applicant = Applicant::where('app_id', $request->app_id)->first();
-        $job_offer = JobOffer::where('app_id', $request->app_id)->first();
+        $job_offer = JobOffer::where('id', $request->id)->first();
         if (!$preempfile) {
             return response()->json(['error' => 'File not found'], 404);
         }
@@ -132,6 +132,8 @@ class PreEmploymentFileController extends Controller
         } else if ($request->reqs == 'Contract' && $request->status == 'Declined') {
             if ($applicant) {
                 $data = array_merge($job_offer->toArray(), $applicant->toArray(), $request->all());
+                $data['reason'] = $request->reas;
+                $data['site'] = $request->site;
                 Mail::to($request->email)->send(new DeclinedContract($data));
             }
         }

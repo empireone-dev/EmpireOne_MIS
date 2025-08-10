@@ -19,7 +19,7 @@ export default function UploadRequirementsSection() {
     const app_id = window.location.pathname.split('/')[2]
     const { applicant } = useSelector((state) => state.final_rate);
     const site = decodeURIComponent(window.location.pathname.split('/')[3].replace(/\+/g, ' '))
-    
+
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -29,6 +29,8 @@ export default function UploadRequirementsSection() {
     const toRemove = applicant?.requirements?.map(res => res.reqs) ?? [];
 
     const filteredEntries = checklists.filter(entry => !toRemove.includes(entry.reqs));
+
+    console.log('filteredEntries', filteredEntries)
 
 
 

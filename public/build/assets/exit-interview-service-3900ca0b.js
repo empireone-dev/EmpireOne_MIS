@@ -1,0 +1,1 @@
+import{h as s}from"./app-4f91279b.js";async function e(t){return(await s.post("/api/exit_int",t)).data}export{e as s};

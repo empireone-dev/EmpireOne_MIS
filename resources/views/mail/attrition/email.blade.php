@@ -56,7 +56,7 @@
             <div style="text-align: center;"><img src="https://empireone-hris.com/images/newlogo.png" alt="EmpireOne Logo" style="max-width: 200px;"></div>
 
             <p>Dear <b>{{$data['fname']}} {{$data['lname']}}</b>,</p>
-            
+
             <p>We hope this message finds you well.</p>
 
             <p>As part of our offboarding process, we would like to invite you to attend an <strong>Exit Interview</strong>. This is a valuable opportunity for you to share your experiences and provide feedback that will help us improve our workplace.</p>
@@ -79,6 +79,9 @@
                 </a>
                 <a href="https://www.tiktok.com/@empireonebposolutions" style="margin: 0 10px;">
                     <img src="https://cdn-icons-png.flaticon.com/24/3046/3046122.png" alt="TikTok" style="width: 24px; height: 24px;">
+                </a>
+                <a href="https://www.linkedin.com/company/empireone-contact-center-inc/?viewAsMember=true" style="margin: 0 10px;">
+                    <img src="https://cdn-icons-png.flaticon.com/24/174/174857.png" alt="LinkedIn" style="width: 24px; height: 24px;">
                 </a>
             </p><br>
             <img src="https://empireone-hris.com/images/SCemp2.jpg" alt="">

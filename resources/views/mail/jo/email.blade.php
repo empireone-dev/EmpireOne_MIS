@@ -84,7 +84,6 @@
           View Job Offer
         </a>
       </div><br>
-
       <p>
         We expect you to follow all the policies and provisions indicated in the company Code of Conduct and Discipline of EmpireOne Global Solution Inc. which will be issued to you when you start your career with us.
       </p>

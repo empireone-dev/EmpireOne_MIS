@@ -12,7 +12,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
     const { job_positions } = useSelector((state) => state.job_positions);
     const [form, setForm] = useState({
         allowance: "",
-        salary: ""
+        salary: "",
     });
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);

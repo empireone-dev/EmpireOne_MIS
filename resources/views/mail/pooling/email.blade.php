@@ -84,6 +84,9 @@
                 <a href="https://www.tiktok.com/@empireonebposolutions" style="margin: 0 10px;">
                     <img src="https://cdn-icons-png.flaticon.com/24/3046/3046122.png" alt="TikTok" style="width: 24px; height: 24px;">
                 </a>
+                <a href="https://www.linkedin.com/company/empireone-contact-center-inc/?viewAsMember=true" style="margin: 0 10px;">
+                    <img src="https://cdn-icons-png.flaticon.com/24/174/174857.png" alt="LinkedIn" style="width: 24px; height: 24px;">
+                </a>
             </p><br>
             <img src="https://empireone-hris.com/images/SCemp2.jpg" alt="">
         </div>

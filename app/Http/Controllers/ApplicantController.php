@@ -13,6 +13,8 @@ use App\Mail\Rescheduled;
 use App\Models\Applicant;
 use App\Models\CVFile;
 use App\Models\Employee;
+use App\Models\FinalRate;
+use App\Models\InitialRate;
 use App\Models\InterviewConfirmation;
 use App\Models\JobOffer;
 use App\Models\User;
@@ -476,6 +478,12 @@ class ApplicantController extends Controller
             'status' => "Initial Phase",
         ]);
 
+        InitialRate::create([
+            'app_id' => $request->app_id,
+            // 'interdate' => $request->iffdate,
+            // 'intertime' => $request->ifftime,
+        ]);
+
         return response()->json([
             'data' => 'success'
         ], 200);
@@ -493,6 +501,12 @@ class ApplicantController extends Controller
 
         $applicant->update([
             'status' => "Final Phase",
+        ]);
+
+        FinalRate::create([
+            'app_id' => $request->app_id,
+            // 'interdate' => $request->iffdate,
+            // 'intertime' => $request->ifftime,
         ]);
 
         return response()->json([
@@ -513,6 +527,17 @@ class ApplicantController extends Controller
         $applicant->update([
             'status' => "For Final Phase",
         ]);
+
+        // Check if InitialRate record already exists for this app_id
+        $existingInitialRate = InitialRate::where('app_id', $request->app_id)->first();
+
+        if (!$existingInitialRate) {
+            InitialRate::create([
+                'app_id' => $request->app_id,
+                // 'interdate' => $request->iffdate,
+                // 'intertime' => $request->ifftime,
+            ]);
+        }
 
         return response()->json([
             'data' => 'success'

@@ -13,6 +13,7 @@ export default function EmployeeTableSection() {
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
     const { employees } = useSelector((state) => state.employees);
+    const { accounts } = useSelector((state) => state.accounts);
 
     const url = window.location.pathname + window.location.search;
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -137,17 +138,6 @@ export default function EmployeeTableSection() {
             ),
     });
 
-    const accounts = [
-        { label: "JTV", value: "JTV" },
-        { label: "Service Market", value: "Service Market" },
-        { label: "Curtis", value: "Curtis" },
-        { label: "Aifi", value: "Aifi" },
-        { label: "Latham Pool (Designer) ", value: "Latham Pool (Designer)" },
-        { label: "Latham Pool (Order Entry) ", value: "Latham Pool (Order Entry)" },
-        { label: "Weby", value: "Weby" },
-        { label: "N/A", value: "N/A" },
-    ]
-
     const urls = new URL(window.location.href);
     const searchParams = new URLSearchParams(urls.search);
     const pages = searchParams.get('page');
@@ -214,7 +204,10 @@ export default function EmployeeTableSection() {
                     value={account == 'null' ? null : account}
                     onChange={search_account}
                     // onSearch={onSearch}
-                    options={accounts}
+                    options={[
+                        { label: "N/A", value: "N/A" },
+                        ...(accounts?.map(acc => ({ label: acc.acc, value: acc.acc })) || [])
+                    ]}
                 />
             </div>,
             dataIndex: "account",

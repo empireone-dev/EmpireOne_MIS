@@ -57,14 +57,14 @@
 
             <p>Dear <b>{{$data['fname']}} {{$data['lname']}}</b>,</p>
 
-            <p> I hope this message finds you well. After a thorough review, we regret to inform you that the {{$data['file_201'] ?? ''}} that you uploaded has been declined due to the following reason:</p>
+            <p> I hope this message finds you well. After a thorough review, we regret to inform you that the <strong>{{$data['reqs'] ?? ''}}</strong> that you uploaded has been declined due to the following reason:</p>
 
             <p><strong>Reason: {{$data['reason'] ?? ''}}</strong></p>
 
             <p>In light of this, we kindly request that you re-upload the corrected requirements to proceed with the next steps in the process.</p>
             <p>You may find and re-upload the new version of the requirements by clicking the button below:</p>
             <div style="text-align: center;">
-                <a href="https://empireone-hris.com/pre-employment/{{$data['app_id']}}/{{ str_replace(' ', '+', $data['site']) }}?id={{$data['id']}}"
+                <a href="https://empireone-hris.com/pre-employment/{{$data['app_id']}}/{{ str_replace(' ', '+', $data['site']) }}?id={{$data['job_offer_id']}}"
                     style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;"
                     target="_blank">
                     Re-upload Requirements

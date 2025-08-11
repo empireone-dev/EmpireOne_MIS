@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class ChecklistController extends Controller
 {
-    public function index(){
-        $checklist = Checklist::get();
+    public function index()
+    {
+        $checklist = Checklist::orderBy('id', 'desc')->get();
         return response()->json([
             'data' => $checklist
         ], 200);
@@ -22,7 +23,7 @@ class ChecklistController extends Controller
         ]));
         return response()->json([
             'status' => 'success',
-           'data'=>$this->index()->original['data']
+            'data' => $this->index()->original['data']
         ], 200);
     }
 }

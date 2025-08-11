@@ -1,12 +1,12 @@
 import { UploadOutlined } from '@ant-design/icons'
-import { Button, message, Modal, Upload } from 'antd'
+import { Button, message, Modal, Tooltip, Upload } from 'antd'
 import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { update_pre_employment_file_service } from '../../services/pre-employment-file-service';
 import store from '@/app/store/store';
 import { get_applicant_by_app_id_thunk } from '../../admin/final_rate/redux/final-rate-thunk';
 
-export default function ReUploadRequirementsSection({data}) {
+export default function ReUploadRequirementsSection({ data }) {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [reqs, setReqs] = useState('')
     const [fileList, setFileList] = useState([])
@@ -40,7 +40,7 @@ export default function ReUploadRequirementsSection({data}) {
             }
         } catch (error) {
             setLoading(false)
-            
+
         }
     };
 
@@ -56,16 +56,18 @@ export default function ReUploadRequirementsSection({data}) {
 
     return (
         <div>
-            <button
-                type="button"
-                onClick={showModal}
-                className="text-2xl ml-2.5 text-red-500"
-            >
-                <UploadOutlined />
-            </button>
+            <Tooltip title="Re-upload Requirement">
+                <button
+                    type="button"
+                    onClick={showModal}
+                    className="text-2xl text-red-500"
+                >
+                    <UploadOutlined />
+                </button>
+            </Tooltip>
             <Modal
-            confirmLoading={loading}
-            title="REUPLOAD REQUIREMENTS" open={isModalVisible} onOk={handleOk} okText="Submit" onCancel={handleCancel}>
+                confirmLoading={loading}
+                title="REUPLOAD REQUIREMENTS" open={isModalVisible} onOk={handleOk} okText="Submit" onCancel={handleCancel}>
                 <div className='w-full'>
                     <label
                         className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"

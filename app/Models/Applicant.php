@@ -60,7 +60,7 @@ class Applicant extends Model
     }
     public function requirements(): HasMany
     {
-        return $this->hasMany(PreEmploymentFile::class, "app_id", "app_id");
+        return $this->hasMany(PreEmploymentFile::class, "app_id", "app_id")->orderBy('id', 'desc');
     }
     public function employee(): BelongsTo
     {

@@ -16,7 +16,7 @@ class PreEmploymentFileController extends Controller
 {
     public function index()
     {
-        $preempfile = PreEmploymentFile::get();
+        $preempfile = PreEmploymentFile::orderBy('id', 'desc')->get();
         return response()->json([
             'data' => $preempfile
         ], 200);
@@ -118,6 +118,8 @@ class PreEmploymentFileController extends Controller
 
                     $data = array_merge($preempfile->toArray(), $applicant->toArray(), $request->all());
                     $data['reason'] = $request->reas;
+                    $data['reqs'] = $request->reqs;
+                    $data['job_offer_id'] = $request->job_offer_id;
 
                     Mail::to($applicant->email)->send(new DeclinedRequirements($data));
                 }
@@ -140,6 +142,7 @@ class PreEmploymentFileController extends Controller
                 $data = array_merge($job_offer->toArray(), $applicant->toArray(), $request->all());
                 $data['reason'] = $request->reas;
                 $data['site'] = $request->site;
+                $data['job_offer_id'] = $request->job_offer_id;
                 Mail::to($request->email)->send(new DeclinedContract($data));
             }
         }

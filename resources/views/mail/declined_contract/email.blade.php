@@ -70,7 +70,7 @@
                 • Find and re-upload the new version of the signed contract by clicking the button below:
             </p>
             <div style="text-align: center;">
-                <a href="https://empireone-hris.com/pre-employment/{{$data['app_id']}}/{{ str_replace(' ', '+', $data['site']) }}?id={{$data['id']}}"
+                <a href="https://empireone-hris.com/pre-employment/{{$data['app_id']}}/{{ str_replace(' ', '+', $data['site']) }}?id={{$data['job_offer_id']}}"
                     style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;"
                     target="_blank">
                     Upload Signed Contract

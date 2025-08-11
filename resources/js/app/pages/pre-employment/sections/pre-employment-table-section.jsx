@@ -162,17 +162,37 @@ export default function PreEmploymentTableSection() {
 
 
     const columns = [
-        {
-            title: "App ID",
-            dataIndex: "app_id",
-            key: "app_id",
-            ...getColumnSearchProps("app_id"),
-        },
+        // {
+        //     title: "App ID",
+        //     dataIndex: "app_id",
+        //     key: "app_id",
+        //     width: 120,
+        //     responsive: ['lg'],
+        //     ...getColumnSearchProps("app_id"),
+        // },
         {
             title: "Requirements",
             dataIndex: "reqs",
             key: "reqs",
+            ellipsis: true,
             ...getColumnSearchProps("reqs"),
+            render: (text) => (
+                <div className="text-xs sm:text-sm md:text-base">
+                    {searchedColumn === "reqs" ? (
+                        <Highlighter
+                            highlightStyle={{
+                                backgroundColor: "#ffc069",
+                                padding: 0,
+                            }}
+                            searchWords={[searchText]}
+                            autoEscape
+                            textToHighlight={text ? text.toString() : ""}
+                        />
+                    ) : (
+                        text
+                    )}
+                </div>
+            ),
         },
         {
             title: "Status",
@@ -195,8 +215,21 @@ export default function PreEmploymentTableSection() {
                                             'blue'
                         }
                         key={i}
+                        className="text-xs sm:text-sm break-words"
+                        style={{ 
+                            maxWidth: '100%',
+                            whiteSpace: 'normal',
+                            height: 'auto',
+                            lineHeight: '1.2'
+                        }}
                     >
-                        {statusText}
+                        <span className="hidden md:inline">{statusText}</span>
+                        <span className="md:hidden">
+                            {record.status === 'Declined' 
+                                ? `${record.status}${record.reas ? ` - ${record.reas}` : ''}`
+                                : record.status
+                            }
+                        </span>
                     </Tag>
                 );
             }
@@ -204,20 +237,22 @@ export default function PreEmploymentTableSection() {
         {
             title: 'Action',
             dataIndex: 'action',
+            width: 80,
+            align: 'center',
             render: (_, record) => {
 
                 return (
-                    <div className='flex gap-1'>
+                    <div className='flex justify-center items-center gap-1'>
                         {record.status === 'Approved' && (
                             <div className="text-green-500">
-                                <CheckCircleOutlined className="text-2xl ml-2.5" />
+                                <CheckCircleOutlined className="text-lg sm:text-xl md:text-2xl" />
                             </div>
                         )}
                         {record.status === 'Declined' && (
                             <ReUploadRequirementsSection data={record} />
                         )}
                         {record.status === 'Uploaded' && (
-                            <div className='ml-2.5 text-2xl text-orange-500'>
+                            <div className='text-lg sm:text-xl md:text-2xl text-orange-500'>
                                 <CheckSquareOutlined />
                             </div>
                         )}
@@ -230,7 +265,48 @@ export default function PreEmploymentTableSection() {
     console.log('applicant', applicant)
     return (
         <div className="mt-2">
-            <Table columns={columns} dataSource={applicant?.requirements ?? []} />;
+            <div className="overflow-x-auto">
+                <Table 
+                    columns={columns} 
+                    dataSource={applicant?.requirements ?? []} 
+                    scroll={{ x: 350 }}
+                    size="small"
+                    className="responsive-table"
+                    pagination={{
+                        pageSize: 10,
+                        showSizeChanger: false,
+                        showQuickJumper: false,
+                        showTotal: (total, range) => 
+                            `${range[0]}-${range[1]} of ${total} items`,
+                        responsive: true,
+                    }}
+                />
+            </div>
+            <style jsx>{`
+                @media (max-width: 640px) {
+                    .responsive-table .ant-table-thead > tr > th {
+                        padding: 8px 4px !important;
+                        font-size: 12px !important;
+                    }
+                    .responsive-table .ant-table-tbody > tr > td {
+                        padding: 8px 4px !important;
+                        font-size: 12px !important;
+                    }
+                    .responsive-table .ant-table-filter-trigger {
+                        margin-right: 2px !important;
+                    }
+                }
+                @media (max-width: 480px) {
+                    .responsive-table .ant-table-thead > tr > th {
+                        padding: 6px 2px !important;
+                        font-size: 11px !important;
+                    }
+                    .responsive-table .ant-table-tbody > tr > td {
+                        padding: 6px 2px !important;
+                        font-size: 11px !important;
+                    }
+                }
+            `}</style>
         </div>
     );
 }

@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('onboarding_doc_edit_logs', function (Blueprint $table) {
             $table->id();
+            $table->string('emp_id')->nullable();
+            $table->string('name')->nullable();
+            $table->string('doc_id')->nullable();
             $table->timestamps();
         });
     }

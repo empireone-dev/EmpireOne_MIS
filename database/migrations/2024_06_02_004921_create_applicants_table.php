@@ -41,6 +41,7 @@ return new class extends Migration
             $table->string('relationship')->nullable();
             $table->string('ephone')->nullable();
             $table->string('status')->nullable();
+            $table->string('call_status')->nullable();
             $table->string('site')->nullable();
             $table->string('submitted')->nullable();
             $table->timestamps();

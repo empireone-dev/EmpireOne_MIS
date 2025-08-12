@@ -14,18 +14,25 @@ export default function ContractDeclineSection({ data, setOpen }) {
     const job_offer_id = window.location.pathname.split('/')[4]
 
     async function on_handler(params) {
-        await update_pre_employment_file_service({
-            ...data,
-            ...reason,
-            email: applicant.email,
-            status: 'Declined',
-            site: applicant.site,
-            id: job_offer_id
-        })
-        await store.dispatch(get_applicant_by_app_id_thunk(app_id))
-        message.success('Declined email sent!')
-        setOpen(false)
-        setLoading(false)
+        setLoading(true)
+        try {
+            await update_pre_employment_file_service({
+                ...data,
+                ...reason,
+                email: applicant.email,
+                status: 'Declined',
+                site: applicant.site,
+                reqs: data.reqs,
+                job_offer_id: job_offer_id
+            })
+            await store.dispatch(get_applicant_by_app_id_thunk(app_id))
+            message.success('Declined email sent!')
+            setOpen(false)
+        } catch (error) {
+            message.error('Failed to send declination')
+        } finally {
+            setLoading(false)
+        }
     }
     return (
         <div className="w-full">

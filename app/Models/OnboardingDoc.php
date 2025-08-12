@@ -16,4 +16,9 @@ class OnboardingDoc extends Model
         'doc_content',
         'site',
     ];
+
+    public function editLogs()
+    {
+        return $this->hasMany(OnboardingDocEditLogs::class, 'doc_id', 'id')->orderBy('id', 'desc');
+    }
 }

@@ -12,9 +12,12 @@ export default function EditDocumentSection() {
     const [form, setForm] = useState({});
     const [loading, setLoading] = useState(false);
     const id = window.location.pathname.split('/')[5]
+    const { user } = useSelector((state) => state.app);
 
+    console.log('asdasdasdasd', user)
     async function update_onboarding_doc() {
         setLoading(true);
+
 
         // Validate that form contains doc_content
         if (!form.doc_content) {
@@ -27,6 +30,8 @@ export default function EditDocumentSection() {
             await store.dispatch(update_onboarding_doc_thunk({
                 ...onboarding_doc.data,
                 ...form,
+                name: `${user?.employee_fname} ${user?.employee_mname} ${user?.employee_lname}`,
+                emp_id: user?.employee_id,
             }));
             await message.success("Updated Successfully!");
             setLoading(true);

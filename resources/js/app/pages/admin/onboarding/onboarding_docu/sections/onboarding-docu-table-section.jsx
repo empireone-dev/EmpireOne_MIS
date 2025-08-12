@@ -146,12 +146,12 @@ export default function OnboardingDocuTableSection() {
             },
 
         },
-        {
-            title: 'Site',
-            dataIndex: 'site',
-            key: 'site',
-            ...getColumnSearchProps('site'),
-        },
+        // {
+        //     title: 'Site',
+        //     dataIndex: 'site',
+        //     key: 'site',
+        //     ...getColumnSearchProps('site'),
+        // },
         {
             title: 'Action',
             dataIndex: 'action',

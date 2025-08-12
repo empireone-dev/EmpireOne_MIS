@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\OnboardingAck;
 use App\Models\OnboardingDoc;
+use App\Models\OnboardingDocEditLogs;
 use Illuminate\Http\Request;
 
 class OnboardingDocController extends Controller
@@ -15,7 +16,7 @@ class OnboardingDocController extends Controller
             ['status', '=', 'Acknowledged'],
         ])->first();
 
-        $onboardingdoc = OnboardingDoc::orderBy('id', 'desc')->get();
+        $onboardingdoc = OnboardingDoc::with('editLogs')->orderBy('id', 'desc')->get();
         return response()->json([
             'od' => $od,
             'data' => $onboardingdoc
@@ -59,6 +60,13 @@ class OnboardingDocController extends Controller
         $res->update([
             'doc_content' => $request->doc_content
         ]);
+
+        OnboardingDocEditLogs::create([
+            'emp_id' => $request->emp_id,
+            'doc_id' => $id,
+            'name' => $request->name,
+        ]);
+
         return response()->json([
             'data' => 'success'
         ], 200);

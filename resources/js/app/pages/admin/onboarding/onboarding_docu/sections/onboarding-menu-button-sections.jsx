@@ -5,10 +5,12 @@ import {
     DownOutlined,
     EditOutlined,
     EyeOutlined,
+    HistoryOutlined,
 } from "@ant-design/icons";
 import EditOnboardingDocumentComponent from "../components/edit-onboarding-document-component";
 import ViewOnboardingDocument from "../components/view-onboarding-document";
 import RemoveDocumentComponent from "../components/remove-document-component";
+import EditDocumentHistoryComponent from "../components/edit-document-history-component";
 
 export default function OnboardingMenuButtonSection({ data, interviewer }) {
     const items = [
@@ -43,6 +45,18 @@ export default function OnboardingMenuButtonSection({ data, interviewer }) {
                         label: "View Document",
                         key: "2",
                         icon: <EyeOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
+        {
+            component: (
+                <EditDocumentHistoryComponent
+                    item={{
+                        label: "Edit History",
+                        key: "2",
+                        icon: <HistoryOutlined />,
                     }}
                     data={data}
                 />

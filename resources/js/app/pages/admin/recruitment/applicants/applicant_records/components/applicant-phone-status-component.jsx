@@ -55,7 +55,7 @@ export default function ApplicantPhoneStatusComponent({ record, open, setOpen })
                 <Modal open={open} setOpen={setOpen} title="Contact Status">
                     <div>
                         <h3>Contact No.: {record.phone}</h3>
-                        <h3>Contact Status: {record.status}</h3>
+                        <h3>Applicant Status: {record.status}</h3>
                         <form onSubmit={handleCallStatus}>
                             <div className='mt-2'>
                                 <select

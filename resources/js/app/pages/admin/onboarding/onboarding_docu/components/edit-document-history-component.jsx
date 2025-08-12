@@ -3,6 +3,7 @@ import React from "react";
 import { useState } from "react";
 import store from "@/app/store/store";
 import { delete_onboarding_doc_thunk, get_onboarding_docu_thunk } from "../redux/onboarding-docu-thunk";
+import moment from "moment";
 
 export default function EditDocumentHistoryComponent({ data, item, status }) {
     const [open, setOpen] = useState(false);
@@ -64,7 +65,7 @@ export default function EditDocumentHistoryComponent({ data, item, status }) {
                                             <tr className="hover:bg-gray-50" key={res.id}>
                                                 <td className="px-4 py-2 border-b">{res.emp_id}</td>
                                                 <td className="px-4 py-2 border-b">{res?.name}</td>
-                                                <td className="px-4 py-2 border-b">{res?.created_at}</td>
+                                                <td className="px-4 py-2 border-b">{res?.created_at ? moment(res.created_at).format('LLL') : 'N/A'}</td>
                                             </tr>
                                         );
                                     })}

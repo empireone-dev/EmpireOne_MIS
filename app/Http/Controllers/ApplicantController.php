@@ -543,4 +543,23 @@ class ApplicantController extends Controller
             'data' => 'success'
         ], 200);
     }
+
+    public function phone_call_status(Request $request, $id)
+    {
+        $applicant = Applicant::find($id);
+
+        if (!$applicant) {
+            return response()->json([
+                'message' => 'Applicant not found.',
+            ], 404);
+        }
+
+        $applicant->update([
+            'call_status' => $request->status,
+        ]);
+
+        return response()->json([
+            'data' => 'success'
+        ], 200);
+    }
 }

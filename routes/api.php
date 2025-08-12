@@ -65,6 +65,7 @@ Route::get('/get_hired_applicant', [ApplicantController::class, 'get_hired_appli
 Route::put('/proceed_initial_immediate/{id}', [ApplicantController::class, 'proceed_initial_immediate']);
 Route::put('/proceed_final_immediate/{id}', [ApplicantController::class, 'proceed_final_immediate']);
 Route::put('/proceed_final_phase/{id}', [ApplicantController::class, 'proceed_final_phase']);
+Route::put('/phone_call_status/{id}', [ApplicantController::class, 'phone_call_status']);
 Route::put('/update_address/{id}', [ApplicantController::class, 'update_address']);
 Route::put('/update_applicant_status/{id}', [ApplicantController::class, 'update_applicant_status']);
 Route::put('/update_applicant_after_confirmation_status/{app_id}', [ApplicantController::class, 'update_applicant_after_confirmation_status']);

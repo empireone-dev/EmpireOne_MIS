@@ -42,6 +42,7 @@ class Applicant extends Model
         'relationship',
         'ephone',
         'status',
+        'call_status',
         'site',
         'submitted',
     ];

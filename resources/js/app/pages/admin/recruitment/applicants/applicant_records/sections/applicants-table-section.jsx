@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
-import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Select, Space, Table, Tag } from "antd";
+import { PhoneFilled, SearchOutlined } from "@ant-design/icons";
+import { Button, Input, Select, Space, Table, Tag, Tooltip } from "antd";
 import Highlighter from "react-highlight-words";
 import ButtonComponents from "../components/button-components";
 import ApplicantsDropdownFilterComponents from "../components/applicants-dropdown-filter-components";
@@ -12,6 +12,16 @@ import AddApplicantsSection from "./add-applicants-section";
 import ApplicantMenuSection from "./applicant-menu-section";
 import ApplicantSearchSection from "./applicant-search-section";
 import CreateApplicantSection from "./create-applicant-section";
+import Modal from "@/app/pages/_components/modal";
+import ApplicantPhoneStatusComponent from "../components/applicant-phone-status-component";
+
+// ContactCell component to handle modal state properly
+const ContactCell = ({ record }) => {
+    const [open, setOpen] = useState(false);
+    return (
+        <ApplicantPhoneStatusComponent record={record} open={open} setOpen={setOpen} />
+    );
+};
 
 export default function ApplicantsTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -244,6 +254,9 @@ export default function ApplicantsTableSection() {
             dataIndex: "phone",
             key: "contact",
             // ...getColumnSearchProps("contact"),
+            render: (_, record) => {
+                return <ContactCell record={record} />;
+            },
         },
         {
             title: "Date Submitted",

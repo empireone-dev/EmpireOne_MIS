@@ -22,6 +22,7 @@ export default function UpdateEmployeeFormSection() {
     const [loading, setLoading] = useState(null);
     const [form, setForm] = useState({});
     const app_id = window.location.pathname.split('/')[5]
+    const employee_id = window.location.pathname.split('/')[6]
 
     useEffect(() => {
         setForm({
@@ -62,13 +63,22 @@ export default function UpdateEmployeeFormSection() {
 
 
 
-    console.log('emploeesss', employee)
+    console.log('emploeesss', applicant)
 
     async function edit_information(e) {
         e.preventDefault();
         setLoading(true);
         try {
-            await store.dispatch(update_applicant_thunk(form));
+            await store.dispatch(update_applicant_thunk(
+                {
+                    ...form,
+                    employee_id: employee_id,
+                    fname: form.fname,
+                    mname: form.mname,
+                    lname: form.lname,
+                    suffix: form.suffix,
+                }
+            ));
             await store.dispatch(get_applicant_by_app_id_thunk(app_id));
             await store.dispatch(get_employee_by_id_thunk(app_id));
             message.success('Updated Successfully');

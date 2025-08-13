@@ -317,7 +317,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
             Route::get('/', function () {
                 return Inertia::render('admin/employee_relation/employee_section/page');
             });
-            Route::get('/update_employee/{app_id}', function () {
+            Route::get('/update_employee/{app_id}/{emp_id}', function () {
                 return Inertia::render('admin/employee_relation/employee_section/update_employee/page');
             });
         });

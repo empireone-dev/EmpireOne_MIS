@@ -312,12 +312,23 @@ class ApplicantController extends Controller
 
         $employee->update($request->all());
 
-        $user = User::where('employee_id', '=', $request->app_id)->first();
+        $user = User::where('employee_id', '=', $request->employee_id)->first();
 
         if ($user) {
             $userData = $request->except(['id']);
+            // Update specific user fields to match applicant data
+            $userData['employee_id'] = $request->emp_id;
+            $userData['employee_fname'] = $request->fname;
+            $userData['employee_mname'] = $request->mname;
+            $userData['employee_lname'] = $request->lname;
+            $userData['employee_suffix'] = $request->suffix;
             $user->update($userData);
         }
+
+        return response()->json([
+            'message' => 'Applicant updated successfully.',
+            'data' => $applicant
+        ], 200);
     }
 
     public function update_applicant_status(Request $request, $id)

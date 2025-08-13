@@ -709,7 +709,7 @@ export default function AddExistingEmployeeSection() {
                                     className="border p-2 rounded  w-full"
                                     required
                                 >
-                                    <option disabled selected>Status</option>
+                                    <option disabled selected>Employee Status</option>
                                     <option> Probationary</option>
                                     <option> Regular</option>
                                     <option> Contractual</option>

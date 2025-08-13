@@ -213,6 +213,13 @@ class EmployeeController extends Controller
 
         $employee->update($request->all());
 
+        $employeeByEmpId = User::where('employee_id', $request->employee_id)->first();
+        if ($employeeByEmpId) {
+            $employeeByEmpId->update([
+                'employee_id' => $request->employee_id,
+            ]);
+        }
+
         return response()->json([
             'data' => Employee::with('user')->get()
         ], 200);

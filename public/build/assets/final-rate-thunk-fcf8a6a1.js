@@ -1,0 +1,1 @@
+import{s as i}from"./applicant-final-service-a1d04fab.js";import{w as n}from"./app-2886a328.js";import{i as r}from"./applicant-record-service-e8cd737a.js";function p(t){return async function(a,e){const s=await r(t);console.log("result",s.status),a(n.actions.setApplicant(s.status))}}function u(t){return async function(a,e){await i(t)}}export{p as g,u as s};

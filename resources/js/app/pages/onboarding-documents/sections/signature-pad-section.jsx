@@ -9,7 +9,6 @@ import { useState } from "react";
 export default function SignaturePadSection({ submit, data, setForm }) {
     const sigPadRef = useRef(null);
     const [loading, setLoading] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
 
     useEffect(() => {
         if (data.signature && sigPadRef.current) {
@@ -28,46 +27,23 @@ export default function SignaturePadSection({ submit, data, setForm }) {
             ...data,
             signature: dataURL,
         });
-        setSubmitted(true);
         setLoading(false);
     };
 
     return (
         <>
             <div className="bg-cover bg-[url('/images/SCemp.jpg')] bg-center transition-colors duration-300 overflow-y-scroll h-screen p-4">
-                {submitted ? (
-                    <div className="container mx-auto items-center justify-center w-full px-4 sm:px-6 py-6 sm:py-9 shadow-2xl shadow-black bg-white rounded-lg max-w-4xl">
-                        <div className="flex items-center justify-center p-3 mb-6">
-                            <img
-                                className="w-48 sm:w-64 md:w-72"
-                                src="/images/newlogo.png"
-                                alt="logo"
-                            />
-                        </div>
-                        <div className="items-center justify-center text-center px-2">
-                            <h3 className="text-lg sm:text-xl md:text-2xl mb-6">
-                                <b>ONBOARDING - EmpireOne BPO Solutions Inc.</b>
-                            </h3>
-                            <h3 className="text-sm sm:text-base md:text-xl">
-                                <i>
-                                    Thank you for cooperating and acknowledging the
-                                    Onboarding documents of EmpireOne BPO Solutions
-                                    Inc.
-                                </i>
-                            </h3>
-                        </div>
+                <div className="bg-white border-2 border-gray-500 rounded-lg p-7 animate-[slideInUp_0.8s_ease-out,fadeIn_0.8s_ease-out] opacity-0 translate-y-8 [animation-fill-mode:forwards]">
+                    <div className="mb-1 text-sm text-gray-600 animate-[fadeIn_1.0s_ease-out_0.3s] opacity-0 [animation-fill-mode:forwards]">
+                        <p className="mb-2">Please sign in the box below using your mouse, trackpad, or touch screen:</p>
+                        <ul className="list-disc list-inside space-y-1 text-xs">
+                            <li>Draw your signature clearly within the designated area</li>
+                            <li>Use the "CLEAR" button to start over if needed</li>
+                            <li>Click "SUBMIT" when you're satisfied with your signature</li>
+                        </ul>
+                        <div className=" font-bold text-lg capitalize text-black bg-white text-center rounded-t-md">Signature Pad</div>
                     </div>
-                ) : (
-                    <div className="bg-white border-2 border-gray-500 rounded-lg p-7">
-                        <div className="mb-1 text-sm text-gray-600">
-                            <p className="mb-2">Please sign in the box below using your mouse, trackpad, or touch screen:</p>
-                            <ul className="list-disc list-inside space-y-1 text-xs">
-                                <li>Draw your signature clearly within the designated area</li>
-                                <li>Use the "CLEAR" button to start over if needed</li>
-                                <li>Click "SUBMIT" when you're satisfied with your signature</li>
-                            </ul>
-                            <div className=" font-bold text-lg capitalize text-black bg-white text-center rounded-t-md">Signature Pad</div>
-                        </div>
+                    <div className="animate-[fadeIn_0.5s_ease-out_0.5s] opacity-0 [animation-fill-mode:forwards]">
                         <SignatureCanvas
                             className="w-full"
                             ref={sigPadRef}
@@ -77,24 +53,24 @@ export default function SignaturePadSection({ submit, data, setForm }) {
                                 className: "signature-canvas",
                             }}
                         />
-
-                        <div className="flex gap-3 mt-3">
-                            <Button
-                                className={`bg-red-500 hover:bg-red-600 text-white`}
-                                onClick={clearSignature}>
-                                CLEAR
-                            </Button>
-                            <Button
-                                className={`bg-blue-500 hover:bg-blue-600 text-white`}
-                                onClick={saveSignature}
-                                loading={loading}
-                                setLoading={setLoading}
-                            >
-                                SUBMIT
-                            </Button>
-                        </div>
                     </div>
-                )}
+
+                    <div className="flex gap-3 mt-3 animate-[fadeIn_0.5s_ease-out_0.7s] opacity-0 [animation-fill-mode:forwards]">
+                        <Button
+                            className={`bg-red-500 hover:bg-red-600 text-white transform transition-all duration-200 hover:scale-105`}
+                            onClick={clearSignature}>
+                            CLEAR
+                        </Button>
+                        <Button
+                            className={`bg-blue-500 hover:bg-blue-600 text-white transform transition-all duration-200 hover:scale-105`}
+                            onClick={saveSignature}
+                            loading={loading}
+                            disabled={loading}
+                        >
+                            SUBMIT
+                        </Button>
+                    </div>
+                </div>
             </div>
         </>
     );

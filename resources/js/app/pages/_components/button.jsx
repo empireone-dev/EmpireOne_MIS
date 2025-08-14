@@ -14,7 +14,6 @@ export default function Button({
         <button
             type={type}
             disabled={loading}
-            setLoading
             onClick={onClick}
             className={`px-4 py-2 flex gap-2 bg-blue-500 text-white rounded hover:bg-blue-700 ${className}`}
             {...props}
@@ -22,7 +21,7 @@ export default function Button({
             {loading && (
                 <svg
                     aria-hidden="true"
-                    class="w-6 h-6 text-gray-200 animate-spin  fill-blue-600"
+                    className="w-6 h-6 text-gray-200 animate-spin  fill-blue-600"
                     viewBox="0 0 100 101"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"

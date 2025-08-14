@@ -326,6 +326,17 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         });
     });
 
+    // QR Code Scanner Route (accessible without admin middleware for external scanning)
+    Route::get('/admin/employee-qr-scan', function () {
+        return Inertia::render('admin/employee_relation/employee_qr_scan/page');
+    });
+
+    Route::get('/admin/employee-qr-scan/{emp_id}', function ($emp_id) {
+        return Inertia::render('admin/employee_relation/employee_qr_scan/page', [
+            'emp_id' => $emp_id
+        ]);
+    });
+
     Route::prefix('employee_wellness')->group(function () {
         Route::get('/medicine_records', function () {
             return Inertia::render('admin/employee_wellness/medicine_records/page');

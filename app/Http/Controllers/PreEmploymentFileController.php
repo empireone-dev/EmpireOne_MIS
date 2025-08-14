@@ -75,17 +75,17 @@ class PreEmploymentFileController extends Controller
                     'role_id' => '7',
                     'employee_id' => $dateUnique,
                     'employee_fname' => $applicant->fname,
-                    'employee_mname' => $applicant->mname,
-                    'employee_lname' => $applicant->lname,
-                    'employee_suffix' => $applicant->suffix,
+                    'employee_mname' => $applicant->mname ?? '',
+                    'employee_lname' => $applicant->lname ?? '',
+                    'employee_suffix' => $applicant->suffix ?? '',
                     // 'department' => $applicant->department,
                     // 'account' => $applicant->account,
                     // 'sup_id' => $request->sup_id,
                     // 'position' => $request->jobPos,
                     // 'profile' => $request->profile, // Ensure this is either a URL or valid path if it's an image or file
-                    'site' => $applicant->site,
+                    'site' => $applicant->site ?? '',
                     // 'googlecal' => $request->googlecal,
-                    'gender' => $applicant->gender,
+                    'gender' => $applicant->gender ?? '',
                     'password' => Hash::make('Business12'),
                 ]);
             }

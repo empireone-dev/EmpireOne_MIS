@@ -66,3 +66,12 @@ export async function phone_call_status_service(data) {
     const res = await axios.put(`/api/phone_call_status/${data.id}`, data);
     return res.data;
 }
+
+export function delete_applicant_service(id) {
+    try {
+        const result = axios.delete('/api/applicant/' + id)
+        return result
+    } catch (error) {
+
+    }
+}

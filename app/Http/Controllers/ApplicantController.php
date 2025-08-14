@@ -573,4 +573,13 @@ class ApplicantController extends Controller
             'data' => 'success'
         ], 200);
     }
+
+    public function destroy($id)
+    {
+        $applicant = Applicant::where('id', $id)->first();
+        $applicant->delete();
+        return response()->json([
+            'result' => $applicant
+        ], 200);
+    }
 }

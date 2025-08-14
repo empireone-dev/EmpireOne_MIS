@@ -5,6 +5,8 @@ import {
     AuditOutlined,
     CalendarOutlined,
     CheckCircleFilled,
+    DeleteFilled,
+    DeleteOutlined,
     DotChartOutlined,
     DownOutlined,
     InfoCircleOutlined,
@@ -33,6 +35,7 @@ import ApplicantSetRescheduleComponent from "../components/applicant-set-resched
 import ApplicantImmediateInitialComponent from "../components/applicant-immediate-initial-component";
 import ApplicantImmediateFinalComponent from "../components/applicant-immediate-final-component";
 import ApplicantProceedFinalComponent from "../components/applicant-proceed-final-component";
+import ApplicantDeleteComponent from "../components/applicant-delete-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
@@ -43,6 +46,18 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                         label: "Application Details",
                         key: "1",
                         icon: <AuditOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
+        {
+            component: (
+                <ApplicantDeleteComponent
+                    item={{
+                        label: "Delete Application",
+                        key: "1",
+                        icon: <DeleteOutlined />,
                     }}
                     data={data}
                 />

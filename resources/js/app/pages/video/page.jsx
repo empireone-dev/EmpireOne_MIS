@@ -12,26 +12,26 @@ export default function Page() {
     "/images/3.mp4",
     "/images/4.mp4",
     "/images/5.mp4",
-    // "/images/6.mp4",
-    // "/images/7.mp4",
-    // "/images/8.mp4",
+    "/images/6.mp4",
+    "/images/7.mp4",
+    "/images/8.mp4",
     // "/images/9.mp4",
     // "/images/10.mp4",
     // "/images/11.mp4",
     // "/images/12.mp4",
     // "/images/13.mp4",
-    // "/images/14.mp4",
+    "/images/14.mp4",
     // "/images/15.mp4",
-    // "/images/16.mp4",
+    "/images/16.mp4",
     // "/images/17.mp4",
     // "/images/18.mp4",
     // "/images/19.mp4",
     // "/images/20.mp4",
-    // "/images/21.mp4",
+    "/images/21.mp4",
     // "/images/22.mp4",
-    // "/images/23.mp4",
-    // "/images/24.mp4",
-    // "/images/25.mp4",
+    "/images/23.mp4",
+    "/images/24.mp4",
+    "/images/25.mp4",
     // "/images/26.mp4",
     // "/images/27.mp4",
     // "/images/28.mp4",
@@ -47,7 +47,14 @@ export default function Page() {
   }, [currentVideo]);
 
   return (
-    <div style={{ width: '100%', height: 'auto' }}>
+    <div style={{ 
+      width: '100%', 
+      height: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#000'
+    }}>
       {videoSources.map((src, index) => (
         <video
           key={index}
@@ -56,7 +63,9 @@ export default function Page() {
           onEnded={handleVideoEnd}
           style={{
             display: currentVideo === index ? 'block' : 'none',
-            width: '100%',
+            maxWidth: '100%',
+            maxHeight: '100%',
+            width: 'auto',
             height: 'auto',
             objectFit: 'contain'
           }}

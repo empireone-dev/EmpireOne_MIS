@@ -69,7 +69,7 @@ export function OnboardingDocsStepper() {
             app_id: window.location.pathname.split('/')[2],
         })
         setIsSignaturePadVisible(false);
-        // setOnboardingCompleted(true);
+        setOnboardingCompleted(true);
     }
 
     function esignature_handler(e) {
@@ -86,18 +86,47 @@ export function OnboardingDocsStepper() {
             />
         );
     }
-    if (job_offer?.status != "For Acknowledgment") {
+    
+    if (job_offer?.status == "For Acknowledgment" && onboardingCompleted) {
         return (
             <div className="bg-cover bg-[url('/images/SCemp.jpg')] bg-center transition-colors duration-300 overflow-y-scroll h-screen p-4 sm:p-8 md:p-14">
-                <div className="container mx-auto items-center justify-center w-full px-4 sm:px-6 py-6 sm:py-9 shadow-2xl shadow-black bg-white rounded-lg max-w-4xl">
-                    <div className="flex items-center justify-center p-3 mb-6">
+                <div className="container mx-auto items-center justify-center w-full px-4 sm:px-6 py-6 sm:py-9 shadow-2xl shadow-black bg-white rounded-lg max-w-4xl animate-[slideInUp_0.8s_ease-out,fadeIn_0.8s_ease-out] opacity-0 translate-y-8 [animation-fill-mode:forwards]">
+                    <div className="flex items-center justify-center p-3 mb-6 animate-[fadeIn_1.2s_ease-out_0.3s] opacity-0 [animation-fill-mode:forwards]">
                         <img
                             className="w-48 sm:w-64 md:w-72"
                             src="/images/newlogo.png"
                             alt="logo"
                         />
                     </div>
-                    <div className="items-center justify-center text-center px-2">
+                    <div className="items-center justify-center text-center px-2 animate-[fadeIn_1.2s_ease-out_0.6s] opacity-0 [animation-fill-mode:forwards]">
+                        <h3 className="text-lg sm:text-xl md:text-2xl mb-6">
+                            <b>ONBOARDING - EmpireOne BPO Solutions Inc.</b>
+                        </h3>
+                        <h3 className="text-sm sm:text-base md:text-xl">
+                            <i>
+                                Thank you for cooperating and acknowledging the
+                                Onboarding documents of EmpireOne BPO Solutions
+                                Inc.
+                            </i>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+    
+    if (job_offer?.status != "For Acknowledgment") {
+        return (
+            <div className="bg-cover bg-[url('/images/SCemp.jpg')] bg-center transition-colors duration-300 overflow-y-scroll h-screen p-4 sm:p-8 md:p-14">
+                <div className="container mx-auto items-center justify-center w-full px-4 sm:px-6 py-6 sm:py-9 shadow-2xl shadow-black bg-white rounded-lg max-w-4xl animate-[slideInUp_0.8s_ease-out,fadeIn_0.8s_ease-out] opacity-0 translate-y-8 [animation-fill-mode:forwards]">
+                    <div className="flex items-center justify-center p-3 mb-6 animate-[fadeIn_1.2s_ease-out_0.3s] opacity-0 [animation-fill-mode:forwards]">
+                        <img
+                            className="w-48 sm:w-64 md:w-72"
+                            src="/images/newlogo.png"
+                            alt="logo"
+                        />
+                    </div>
+                    <div className="items-center justify-center text-center px-2 animate-[fadeIn_1.2s_ease-out_0.6s] opacity-0 [animation-fill-mode:forwards]">
                         <h3 className="text-lg sm:text-xl md:text-2xl mb-6">
                             <b>ONBOARDING - EmpireOne BPO Solutions Inc.</b>
                         </h3>

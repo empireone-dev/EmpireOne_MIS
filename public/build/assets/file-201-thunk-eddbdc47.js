@@ -1,0 +1,1 @@
+import{g as e,c as r}from"./onboarding-ack-service-2cb3cc59.js";import{H as a}from"./app-2886a328.js";function _(o){return async function(n,c){await r(o),console.log("result",o)}}function g(o){return async function(n,c){const t=await e(o);n(a.actions.setOnboardingAckDoc(t.data)),n(a.actions.setJobOffer(t.job_offer))}}export{_ as c,g};

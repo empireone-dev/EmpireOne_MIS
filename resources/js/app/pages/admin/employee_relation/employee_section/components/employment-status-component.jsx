@@ -121,7 +121,7 @@ export default function EmploymentStatusComponent({ data, item }) {
                                 <input
                                     className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     type="text"
-                                    value={data?.job_offer && data?.job_offer.length > 0 ? data.job_offer[0]?.jobPos || '' : ''}
+                                    value={data?.job_offer && data?.job_offer.length > 0 ? data.job_offer[0]?.jobPos : data?.position || ''}
                                     readOnly
                                 />
                             </div>

@@ -44,7 +44,7 @@ class PreEmploymentFileController extends Controller
 
             // Store the file on S3 and retrieve the path
             $path = $uploadedFile->store(date("Y"), 's3');
-            $url = Storage::disk('s3')->url($path);
+            $url = config('filesystems.disks.s3.url') . '/' . $path;
 
             // Optionally, you can save the URL or file info to the database here
             PreEmploymentFile::create([
@@ -70,6 +70,13 @@ class PreEmploymentFileController extends Controller
                 Employee::create([
                     'app_id' => $request->app_id,
                     'emp_id' => $dateUnique,
+                    'position' => $request->jobPos,
+                    'dept' => $jo->department ?? null,
+                    'account' => $jo->account ?? null,
+                    'sup_id' => null,
+                    'hired' => date('Y-m-d'),
+                    'eogs' => $applicant->email ?? '',
+                    'status' => 'Probationary',
                 ]);
                 User::create([
                     'role_id' => '7',
@@ -78,13 +85,11 @@ class PreEmploymentFileController extends Controller
                     'employee_mname' => $applicant->mname ?? '',
                     'employee_lname' => $applicant->lname ?? '',
                     'employee_suffix' => $applicant->suffix ?? '',
-                    // 'department' => $applicant->department,
-                    // 'account' => $applicant->account,
-                    // 'sup_id' => $request->sup_id,
+                    'department' => $jo->department ?? null,
+                    'account' => $jo->account ?? null,
+                    'sup_id' => null,
                     'position' => $request->jobPos,
-                    // 'profile' => $request->profile, // Ensure this is either a URL or valid path if it's an image or file
                     'site' => $applicant->site ?? '',
-                    // 'googlecal' => $request->googlecal,
                     'gender' => $applicant->gender ?? '',
                     'password' => Hash::make('Business12'),
                 ]);
@@ -120,7 +125,7 @@ class PreEmploymentFileController extends Controller
             if ($request->hasFile('file')) {
                 $uploadedFile = $request->file('file');
                 $path = $uploadedFile->store(date("Y"), 's3');
-                $url = Storage::disk('s3')->url($path);
+                $url = config('filesystems.disks.s3.url') . '/' . $path;
 
                 if ($preempfile) {
                     $preempfile->update([
@@ -135,7 +140,7 @@ class PreEmploymentFileController extends Controller
             if ($request->hasFile('file')) {
                 $uploadedFile = $request->file('file');
                 $path = $uploadedFile->store(date("Y"), 's3');
-                $url = Storage::disk('s3')->url($path);
+                $url = config('filesystems.disks.s3.url') . '/' . $path;
 
                 if ($preempfile) {
                     $preempfile->update([

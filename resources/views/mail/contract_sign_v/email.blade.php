@@ -75,7 +75,7 @@
             </p>
 
             <div style="text-align: center;">
-                <a href="https://empireone-hris.com/virtual-contract/{{$data['app_id']}}"
+                <a href="https://empireone-hris.com/virtual-contract/{{$data['app_id']}}/{{$data['job_offer_id']}}"
                     style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;"
                     target="_blank">
                     Upload Signed Contract

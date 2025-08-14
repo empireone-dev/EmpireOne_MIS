@@ -12,6 +12,7 @@ export default function VirtualContractSection() {
     const [uploadedFile, setUploadedFile] = useState(null);
     const [file, setFile] = useState(null);
     const jo = applicant?.joboffer?.find((res) => res.status == "Contract Signing");
+    const job_offer_id = window.location.pathname.split('/')[3];
     console.log('file', file)
     async function upload_contract(e) {
         e.preventDefault();
@@ -25,9 +26,9 @@ export default function VirtualContractSection() {
         fd.append('fname', applicant?.fname);
         fd.append('lname', applicant?.lname);
         fd.append('email', applicant?.email);
+        fd.append('job_offer_id', job_offer_id);
 
         try {
-
             await store.dispatch(
                 sendiv_contract_email_thunk(fd)
             );

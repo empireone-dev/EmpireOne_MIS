@@ -17,6 +17,7 @@ export default function File201UploadReqsButtonSection() {
     const [fileList, setFileList] = useState([])
     const [reqs, setReqs] = useState('')
     const app_id = window.location.pathname.split('/')[3]
+    const job_offer_id = window.location.pathname.split('/')[4]
 
     const handleOk = async () => {
         setLoading(true)
@@ -25,7 +26,8 @@ export default function File201UploadReqsButtonSection() {
         fd.append('status', 'Uploaded')
         fd.append('reqs', reqs)
         fd.append('created', moment().format('YYYY-MM-DD HH:mm:ss'))
-        fd.append('app_id', window.location.pathname.split('/')[3])
+        fd.append('app_id', app_id)
+        fd.append('job_offer_id', job_offer_id)
         try {
             if (fileList[0].status == 'done') {
                 await store_pre_employment_file_service(fd)

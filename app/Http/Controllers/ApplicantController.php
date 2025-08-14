@@ -312,6 +312,13 @@ class ApplicantController extends Controller
 
         $employee->update($request->all());
 
+        $jobOffer = JobOffer::where('app_id', '=', $request->app_id)->where('status', '=', "Hired")->first();
+        $jobOffer->update([
+            'jobPos' => $request->position,
+            'department' => $request->dept,
+            'account' => $request->account,
+        ]);
+
         $user = User::where('employee_id', '=', $request->employee_id)->first();
 
         if ($user) {

@@ -84,7 +84,7 @@ class PreEmploymentFileController extends Controller
                     'employee_fname' => $applicant->fname,
                     'employee_mname' => $applicant->mname ?? '',
                     'employee_lname' => $applicant->lname ?? '',
-                    'employee_suffix' => $applicant->suffix ?? '',
+                    'employee_suffix' => $applicant->suffix ?? null,
                     'department' => $jo->department ?? null,
                     'account' => $jo->account ?? null,
                     'sup_id' => null,
@@ -109,6 +109,13 @@ class PreEmploymentFileController extends Controller
 
     public function reupload_file(Request $request)
     {
+
+        $today = date('Y-m-d');
+        $count = Employee::whereDate('created', $today)->count() + 1;
+        $countNumber = str_pad($count, 2, '0', STR_PAD_LEFT);
+        $dateUnique = date('ymd') . $countNumber;
+
+
         $preempfile = PreEmploymentFile::where('id', $request->id)->first();
         $applicant = Applicant::where('app_id', $request->app_id)->first();
         $job_offer = JobOffer::where('id', $request->id)->first();
@@ -177,6 +184,32 @@ class PreEmploymentFileController extends Controller
                     'status' => 'Hired'
                 ]);
             }
+            Employee::create([
+                'app_id' => $request->app_id,
+                'emp_id' => $dateUnique,
+                'position' => $request->jobPos,
+                'dept' => $jo->department ?? null,
+                'account' => $jo->account ?? null,
+                'sup_id' => null,
+                'hired' => date('Y-m-d'),
+                'eogs' => $applicant->email ?? '',
+                'status' => 'Probationary',
+            ]);
+            User::create([
+                'role_id' => '7',
+                'employee_id' => $dateUnique,
+                'employee_fname' => $applicant->fname,
+                'employee_mname' => $applicant->mname ?? '',
+                'employee_lname' => $applicant->lname ?? '',
+                'employee_suffix' => $applicant->suffix ?? null,
+                'department' => $jo->department ?? null,
+                'account' => $jo->account ?? null,
+                'sup_id' => null,
+                'position' => $request->jobPos,
+                'site' => $applicant->site ?? '',
+                'gender' => $applicant->gender ?? '',
+                'password' => Hash::make('Business12'),
+            ]);
         } else if ($request->reqs == 'Contract' && $request->status == 'Declined') {
             if ($applicant) {
                 $data = array_merge($job_offer->toArray(), $applicant->toArray(), $request->all());

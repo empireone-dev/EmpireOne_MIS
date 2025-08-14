@@ -58,6 +58,7 @@ export default function UpdateEmployeeFormSection() {
             eaddress: applicant?.eaddress || "",
             relationship: applicant?.relationship || "",
             ephone: applicant?.ephone || "",
+            // position: employee?.position || "",
         });
     }, [applicant, employee]);
 

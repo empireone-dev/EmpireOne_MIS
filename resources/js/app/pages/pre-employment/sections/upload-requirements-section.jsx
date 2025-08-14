@@ -19,6 +19,7 @@ export default function UploadRequirementsSection() {
     const app_id = window.location.pathname.split('/')[2]
     const { applicant } = useSelector((state) => state.final_rate);
     const site = decodeURIComponent(window.location.pathname.split('/')[3].replace(/\+/g, ' '))
+    const job_offer_id = window.location.pathname.split('/')[4]
 
     const showModal = () => {
         setIsModalOpen(true);

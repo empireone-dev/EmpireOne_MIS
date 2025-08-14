@@ -55,4 +55,9 @@ class Employee extends Model
     {
         return $this->BelongsTo(Department::class, "depthead", "app_id");
     }
+
+    public function job_offer(): HasMany
+    {
+        return $this->hasMany(JobOffer::class, "app_id", "app_id")->where('status', 'Hired');
+    }
 }

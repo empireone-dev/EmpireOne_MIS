@@ -6,9 +6,13 @@ use App\Mail\DeclinedContract;
 use App\Mail\DeclinedRequirements;
 use App\Mail\FinalvEmail;
 use App\Models\Applicant;
+use App\Models\Employee;
 use App\Models\JobOffer;
 use App\Models\PreEmploymentFile;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -25,6 +29,15 @@ class PreEmploymentFileController extends Controller
 
     public function store(Request $request)
     {
+
+        $today = date('Y-m-d');
+        $count = Employee::whereDate('created', $today)->count() + 1;
+        $countNumber = str_pad($count, 2, '0', STR_PAD_LEFT);
+        $dateUnique = date('ymd') . $countNumber;
+
+        $applicant = Applicant::where([
+            ['app_id', '=', $request->app_id],
+        ])->first();
 
         if ($request->hasFile('file')) {
             $uploadedFile = $request->file('file');
@@ -54,10 +67,32 @@ class PreEmploymentFileController extends Controller
                         'status' => 'Hired',
                     ]);
                 }
+                Employee::create([
+                    'app_id' => $request->app_id,
+                    'emp_id' => $dateUnique,
+                ]);
+                User::create([
+                    'role_id' => '7',
+                    'employee_id' => $dateUnique,
+                    'employee_fname' => $applicant->fname,
+                    'employee_mname' => $applicant->mname,
+                    'employee_lname' => $applicant->lname,
+                    'employee_suffix' => $applicant->suffix,
+                    // 'department' => $applicant->department,
+                    // 'account' => $applicant->account,
+                    // 'sup_id' => $request->sup_id,
+                    // 'position' => $request->jobPos,
+                    // 'profile' => $request->profile, // Ensure this is either a URL or valid path if it's an image or file
+                    'site' => $applicant->site,
+                    // 'googlecal' => $request->googlecal,
+                    'gender' => $applicant->gender,
+                    'password' => Hash::make('Business12'),
+                ]);
             }
             return response()->json([
+                'count'  => $count,
                 'data' => 'success',
-                'url' => $url, // Return the URL of the uploaded file,
+                'url' => $url, // Return the URL of the uploaded file
                 'path' => $path
             ], 200);
         }

@@ -8,15 +8,17 @@ export default function EmploymentStatusComponent({ data, item }) {
     const [statusModalOpen, setStatusModalOpen] = useState(false);
     const [form, setForm] = useState({
         id: data?.id,
-        position: data?.position || '',
+        position: data?.job_offer?.[0]?.jobPos || '',
         dept: data?.dept || '',
         account: data?.account || '',
         sup_id: data?.user?.id || '',
         eogs: data?.eogs || '',
         status: data?.status || '',
         hired: data?.hired || '',
+        app_id: data?.app_id || '',
     });
     const [loading, setLoading] = useState(false);
+
 
     // Get data from Redux store
     const { accounts } = useSelector((state) => state.accounts);
@@ -24,20 +26,21 @@ export default function EmploymentStatusComponent({ data, item }) {
     const { users } = useSelector((state) => state.app);
     const { user } = useSelector((state) => state.app);
 
-    console.log('department', departments);
+    console.log('departmeqweqeqwnt', data);
 
     function openHandler(params) {
         setStatusModalOpen(true);
         // Reset form with current data when opening modal
         setForm({
             id: data?.id,
-            position: data?.position || '',
+            position: data?.job_offer?.[0]?.jobPos || '',
             dept: data?.dept || '',
             account: data?.account || '',
             sup_id: data?.user?.id || '',
             eogs: data?.eogs || '',
             status: data?.status || '',
             hired: data?.hired || '',
+            app_id: data?.app_id || '',
         });
     }
 
@@ -121,7 +124,8 @@ export default function EmploymentStatusComponent({ data, item }) {
                                 <input
                                     className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     type="text"
-                                    value={data?.job_offer && data?.job_offer.length > 0 ? data.job_offer[0]?.jobPos : data?.position || ''}
+                                    onChange={(e) => setForm({ ...form, position: e.target.value })}
+                                    value={form?.position || ""}
                                     readOnly
                                 />
                             </div>

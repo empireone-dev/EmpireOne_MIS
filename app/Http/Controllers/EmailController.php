@@ -111,7 +111,12 @@ class EmailController extends Controller
                     $path = $request->file('file')->store(date("Y"), 's3');
                     $url = Storage::disk('s3')->url($path);
                     if ($url) {
-                        Mail::to($request->email)->send(new ContractVirtual($data, $url));
+                        // Ensure job_offer_id is included in the data
+                        $emailData = $data;
+                        if ($request->job_offer_id) {
+                            $emailData['job_offer_id'] = $request->job_offer_id;
+                        }
+                        Mail::to($request->email)->send(new ContractVirtual($emailData, $url));
                     }
                 }
             } else if ($request->phase_status == 'upload_contract') {

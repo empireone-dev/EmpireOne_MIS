@@ -29,13 +29,15 @@ export default function VirtualContractSigning({ data, setOpen }) {
         fd.append('fname', data?.fname);
         fd.append('lname', data?.lname);
         fd.append('email', data?.email);
+        fd.append('email', data?.email);
+        fd.append('job_offer_id', jo?.id);
 
         try {
             await store.dispatch(
                 sendiv_contract_email_thunk(fd)
             );
             setLoading(false);
-            setOpen(false);
+            setVirtualSigningOpen(false);
             message.success("Email sent successfully");
         } catch (error) {
             message.error("There was an error sending the email!");

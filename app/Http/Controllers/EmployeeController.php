@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\JobOffer;
 use App\Models\Applicant;
 use App\Models\CVFile;
 use App\Models\Employee;
+use App\Models\JobOffer as ModelsJobOffer;
 use App\Models\User;
 use App\Models\WorkingExperience;
 use Carbon\Carbon;
@@ -212,6 +214,15 @@ class EmployeeController extends Controller
         }
 
         $employee->update($request->all());
+
+        $jobOffer = ModelsJobOffer::where('app_id', '=', $request->app_id)
+            ->where('status', '=', 'Hired')
+            ->first();
+        $jobOffer->update([
+            'jobPos' => $request->position,
+            'department' => $request->dept,
+            'account' => $request->account,
+        ]);
 
         $employeeByEmpId = User::where('employee_id', $request->employee_id)->first();
         if ($employeeByEmpId) {

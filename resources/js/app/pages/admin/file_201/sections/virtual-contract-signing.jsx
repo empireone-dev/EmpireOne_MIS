@@ -17,6 +17,8 @@ export default function VirtualContractSigning({ data, setOpen }) {
     //     (state) => state.applicants
     // );
 
+    console.log("daasdadta", data.joboffer);
+
     async function send_virtual_signing(e) {
         e.preventDefault();
         setLoading(true);

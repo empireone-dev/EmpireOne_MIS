@@ -115,6 +115,7 @@ class EmailController extends Controller
                         $emailData = $data;
                         if ($request->job_offer_id) {
                             $emailData['job_offer_id'] = $request->job_offer_id;
+                            $emailData['jobPos'] = $request->jobPos;
                         }
                         Mail::to($request->email)->send(new ContractVirtual($emailData, $url));
                     }

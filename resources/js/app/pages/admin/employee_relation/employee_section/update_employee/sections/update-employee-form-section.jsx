@@ -44,12 +44,12 @@ export default function UpdateEmployeeFormSection() {
             ffname: applicant?.ffname || "",
             educ: applicant?.educ || "",
             courset: applicant?.courset || "",
-            position: employee?.position || "",
-            dept: employee?.dept?.dept || "",
-            account: employee?.account || "",
-            sup_id: employee?.sup_id || "",
-            hired: employee?.hired || "",
-            status: employee?.status || "",
+            position: applicant?.joboffer?.find(offer => offer.status === "Hired")?.jobPos || employee?.position || "",
+            dept: applicant?.joboffer?.find(offer => offer.status === "Hired")?.department || employee?.dept?.dept || "",
+            account: applicant?.joboffer?.find(offer => offer.status === "Hired")?.account || employee?.account || "",
+            sup_id: applicant?.employee?.sup_id || employee?.sup_id || "",
+            hired: applicant?.employee?.hired || employee?.hired || "",
+            status: applicant?.employee?.status || employee?.status || "",
             sss: applicant?.sss || "",
             tin: applicant?.tin || "",
             pagibig: applicant?.pagibig || "",
@@ -58,7 +58,6 @@ export default function UpdateEmployeeFormSection() {
             eaddress: applicant?.eaddress || "",
             relationship: applicant?.relationship || "",
             ephone: applicant?.ephone || "",
-            // position: employee?.position || "",
         });
     }, [applicant, employee]);
 

@@ -42,8 +42,20 @@ export default function Page() {
     setCurrentVideo((prev) => (prev + 1) % videoSources.length); // Go to next video or loop back to the first
   };
 
+  const playVideo = async (videoElement) => {
+    try {
+      await videoElement.play();
+    } catch (error) {
+      console.log('Autoplay prevented:', error);
+      // Fallback: The video will be ready to play when user interacts
+    }
+  };
+
   useEffect(() => {
-    videoRefs.current[currentVideo].play();
+    const currentVideoElement = videoRefs.current[currentVideo];
+    if (currentVideoElement) {
+      playVideo(currentVideoElement);
+    }
   }, [currentVideo]);
 
   return (
@@ -60,6 +72,7 @@ export default function Page() {
           key={index}
           ref={(el) => (videoRefs.current[index] = el)}
           controls
+          playsInline
           onEnded={handleVideoEnd}
           style={{
             display: currentVideo === index ? 'block' : 'none',

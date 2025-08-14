@@ -106,6 +106,16 @@ Route::prefix('job_offer')->group(function () {
     });
 });
 
+// QR Code Scanner Routes (accessible without admin middleware for external scanning)
+Route::get('/admin/employee-qr-scan', function () {
+    return Inertia::render('admin/employee_relation/employee_qr_scan/page');
+});
+
+Route::get('/admin/employee-qr-scan/{emp_id}', function ($emp_id) {
+    return Inertia::render('admin/employee_relation/employee_qr_scan/page', [
+        'emp_id' => $emp_id
+    ]);
+});
 
 // admin = 1
 Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
@@ -324,17 +334,6 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         Route::get('/upload_memo', function () {
             return Inertia::render('admin/employee_relation/upload_memo/page');
         });
-    });
-
-    // QR Code Scanner Route (accessible without admin middleware for external scanning)
-    Route::get('/admin/employee-qr-scan', function () {
-        return Inertia::render('admin/employee_relation/employee_qr_scan/page');
-    });
-
-    Route::get('/admin/employee-qr-scan/{emp_id}', function ($emp_id) {
-        return Inertia::render('admin/employee_relation/employee_qr_scan/page', [
-            'emp_id' => $emp_id
-        ]);
     });
 
     Route::prefix('employee_wellness')->group(function () {

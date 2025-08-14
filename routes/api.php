@@ -58,6 +58,9 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 Route::put('/user/{id}', [UserController::class, 'update']);
 
+// Public API route for QR code scanning (no authentication required)
+Route::get('/employee-qr/{emp_id}', [EmployeeController::class, 'showForQR']);
+
 Route::post('/search_applicant', [ApplicantController::class, 'search_applicant']);
 Route::resource('applicant', ApplicantController::class);
 Route::post('/get_applicant', [ApplicantController::class, 'get_applicant']);

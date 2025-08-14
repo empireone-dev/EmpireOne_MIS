@@ -17,7 +17,9 @@ export default function EmployeeQRScanPage() {
             try {
                 if (empId) {
                     // Fetch employee data from backend using employee ID
+                    console.log('Fetching employee data for ID:', empId);
                     const response = await axios.get(`/api/employee/${empId}`);
+                    console.log('API Response:', response.data);
                     const employee = response.data.data;
                     
                     if (employee && employee.applicant) {
@@ -83,8 +85,21 @@ export default function EmployeeQRScanPage() {
                 }
             } catch (err) {
                 console.error('Error fetching employee data:', err);
-                if (err.response && err.response.status === 404) {
-                    setError('Employee not found. Please check the employee ID.');
+                console.error('Error response:', err.response);
+                console.error('Error request:', err.request);
+                
+                if (err.response) {
+                    if (err.response.status === 404) {
+                        setError(`Employee with ID "${empId}" not found. Please check the employee ID.`);
+                    } else if (err.response.status === 401) {
+                        setError('Authentication required. Please log in to view employee data.');
+                    } else if (err.response.status === 403) {
+                        setError('Access denied. You do not have permission to view this employee data.');
+                    } else {
+                        setError(`Server error (${err.response.status}): ${err.response.data?.message || 'Failed to load employee data'}`);
+                    }
+                } else if (err.request) {
+                    setError('Network error: Unable to connect to the server. Please check your internet connection.');
                 } else {
                     setError('Failed to load employee data. Please try again.');
                 }

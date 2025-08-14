@@ -233,4 +233,21 @@ class EmployeeController extends Controller
             'data' => $employee
         ], 200);
     }
+
+    public function showForQR($id)
+    {
+        // Public endpoint for QR code scanning - no authentication required
+        $employee = Employee::where('emp_id', $id)->with(['applicant', 'dept'])->first();
+        
+        if (!$employee) {
+            return response()->json([
+                'error' => 'Employee not found',
+                'message' => 'No employee found with the provided ID'
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => $employee
+        ], 200);
+    }
 }

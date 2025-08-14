@@ -8,6 +8,7 @@ import { get_applicant_thunk } from '../../recruitment/applicants/applicant_reco
 import Skeleton from '@/app/pages/_components/skeleton';
 import { useState } from 'react';
 import { get_account_thunk } from './redux/account-thunk';
+import { get_department_thunk } from '../../sourcing/department/redux/department-thunk';
 
 export default function EmployeeRelationPage() {
 
@@ -19,11 +20,12 @@ export default function EmployeeRelationPage() {
       // await store.dispatch(get_applicant_thunk())
       await store.dispatch(get_hired_applicant_thunk())
       await store.dispatch(get_account_thunk())
+      await store.dispatch(get_department_thunk())
       setLoading(false)
     }
     loadData()
   }, []);
-  
+
   return (
     <AdminLayout>
       {loading ? (

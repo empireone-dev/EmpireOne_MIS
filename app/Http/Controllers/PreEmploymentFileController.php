@@ -81,7 +81,7 @@ class PreEmploymentFileController extends Controller
                     // 'department' => $applicant->department,
                     // 'account' => $applicant->account,
                     // 'sup_id' => $request->sup_id,
-                    // 'position' => $request->jobPos,
+                    'position' => $request->jobPos,
                     // 'profile' => $request->profile, // Ensure this is either a URL or valid path if it's an image or file
                     'site' => $applicant->site ?? '',
                     // 'googlecal' => $request->googlecal,

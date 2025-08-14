@@ -17,7 +17,7 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         // Start with the base query, eager loading relationships
-        $query = Employee::query()->with(['applicant', 'user', 'department'])->orderBy('id', 'desc');
+        $query = Employee::query()->with(['applicant', 'user', 'department', 'job_offer'])->orderBy('id', 'desc');
 
         if ($request->site != 'null' && $request->site) {
             // $query->where('site', '=', $request->site);
@@ -238,7 +238,7 @@ class EmployeeController extends Controller
     {
         // Public endpoint for QR code scanning - no authentication required
         $employee = Employee::where('emp_id', $id)->with(['applicant', 'dept'])->first();
-        
+
         if (!$employee) {
             return response()->json([
                 'error' => 'Employee not found',

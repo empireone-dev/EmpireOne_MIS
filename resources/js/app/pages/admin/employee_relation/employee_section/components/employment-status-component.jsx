@@ -2,16 +2,43 @@ import { Menu, message, Modal } from 'antd';
 import React, { useState } from 'react'
 import { get_employee_thunk, update_employee_thunk } from '../redux/employee-section-thunk';
 import store from '@/app/store/store';
+import { useSelector } from 'react-redux';
 
 export default function EmploymentStatusComponent({ data, item }) {
     const [statusModalOpen, setStatusModalOpen] = useState(false);
     const [form, setForm] = useState({
         id: data?.id,
-        status: data?.status,
+        position: data?.position || '',
+        dept: data?.dept || '',
+        account: data?.account || '',
+        sup_id: data?.user?.id || '',
+        eogs: data?.eogs || '',
+        status: data?.status || '',
+        hired: data?.hired || '',
     });
     const [loading, setLoading] = useState(false);
+
+    // Get data from Redux store
+    const { accounts } = useSelector((state) => state.accounts);
+    const { departments } = useSelector((state) => state.departments);
+    const { users } = useSelector((state) => state.app);
+    const { user } = useSelector((state) => state.app);
+
+    console.log('department', departments);
+
     function openHandler(params) {
         setStatusModalOpen(true);
+        // Reset form with current data when opening modal
+        setForm({
+            id: data?.id,
+            position: data?.position || '',
+            dept: data?.dept || '',
+            account: data?.account || '',
+            sup_id: data?.user?.id || '',
+            eogs: data?.eogs || '',
+            status: data?.status || '',
+            hired: data?.hired || '',
+        });
     }
 
     async function edit_status(e) {
@@ -32,8 +59,14 @@ export default function EmploymentStatusComponent({ data, item }) {
     // const handleCancel = () => {
     //     setStatusModalOpen(false);
     //     setForm({
-    //         dept: data?.dept || "",
-    //         depthead: data?.user?.id || "",
+    //         id: data?.id,
+    //         position: data?.position || '',
+    //         dept: data?.dept || '',
+    //         account: data?.account || '',
+    //         sup_id: data?.user?.id || '',
+    //         eogs: data?.eogs || '',
+    //         status: data?.status || '',
+    //         hired: data?.hired || '',
     //     }); 
     // };
 
@@ -44,9 +77,9 @@ export default function EmploymentStatusComponent({ data, item }) {
                 {item.label}
             </Menu.Item>
             <Modal
-                title="Employee Status"
+                title="Update Employee Information"
                 centered
-                visible={statusModalOpen}
+                open={statusModalOpen}
                 onOk={edit_status}
                 onCancel={() => setStatusModalOpen(false)}
                 confirmLoading={loading}
@@ -54,71 +87,133 @@ export default function EmploymentStatusComponent({ data, item }) {
                 okText="Update"
                 cancelText="Cancel"
             >
-                <form class="w-full h-full" onSubmit={edit_status}>
-                    <div class="flex flex-col -mx-3 mb-6">
-                        <div class="w-full px-3">
-                            <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
+                <div className="w-full h-full">
+                    <div className="flex flex-col -mx-3 mb-6">
+                        <div className="w-full px-3">
+                            <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                 Employee's Name
                             </label>
-                            <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={`${data?.applicant?.fname} ${data?.applicant?.mname} ${data?.applicant?.lname}`} readOnly />
-
+                            <input
+                                className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                type="text"
+                                value={`${data?.applicant?.fname || ''} ${data?.applicant?.mname || ''} ${data?.applicant?.lname || ''}`}
+                                readOnly
+                            />
                         </div>
-                        <div class="w-full px-3">
-                            <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
+
+                        <div className="w-full px-3">
+                            <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                 Employee No.
                             </label>
-                            <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={data?.emp_id} readOnly />
+                            <input
+                                className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                type="text"
+                                value={data?.emp_id || ''}
+                                readOnly
+                            />
                         </div>
 
-                        <div className='flex flex-1 '>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                    job Position
+                        <div className="flex flex-1">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
+                                    Job Position
                                 </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={data?.position} readOnly />
+                                <input
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    type="text"
+                                    value={data?.job_offer && data?.job_offer.length > 0 ? data.job_offer[0]?.jobPos || '' : ''}
+                                    readOnly
+                                />
                             </div>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     Department
                                 </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={data?.dept} readOnly />
+                                <select
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    value={form?.dept || ""}
+                                    onChange={(e) => setForm({ ...form, dept: e.target.value })}
+                                >
+                                    <option value="">Select Department</option>
+                                    {departments
+                                        ?.filter((res) =>
+                                            !user?.site ||
+                                            res.site === user.site ||
+                                            !res.site
+                                        )
+                                        .map((res, i) => (
+                                            <option key={i} value={res.dept}>
+                                                {res.dept}
+                                            </option>
+                                        ))}
+                                </select>
                             </div>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     Account <i>(If Applicable)</i>
                                 </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={data?.account} readOnly />
+                                <select
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    value={form?.account || ""}
+                                    onChange={(e) => setForm({ ...form, account: e.target.value })}
+                                >
+                                    <option value="">Select an Account</option>
+                                    {accounts?.map((res, i) => (
+                                        <option key={i} value={res.acc}>
+                                            {res.acc}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                         </div>
 
-                        <div className='flex flex-1'>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
+                        <div className="flex flex-1">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     Supervisor
                                 </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={`${data?.user?.employee_fname || ''} ${data?.user?.employee_lname || ''}`} readOnly />
+                                <select
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    value={form?.sup_id || ""}
+                                    onChange={(e) => setForm({ ...form, sup_id: e.target.value })}
+                                >
+                                    <option value="">Select Supervisor</option>
+                                    {users
+                                        .filter((res) =>
+                                            (
+                                                !user?.site ||
+                                                res.site === user.site ||
+                                                !res.site
+                                            ) &&
+                                            ["Manager", "Account Manager", "Supervisor", "Team Leader", "Director", "CEO", "HR Lead", "Compliance Officer", "Site Admin"].includes(res.position)
+                                        )
+                                        .map((res) => (
+                                            <option key={res.id} value={res.id}>
+                                                {res.employee_fname} {res.employee_lname}
+                                            </option>
+                                        ))}
+                                </select>
                             </div>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     EOGS Email
                                 </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="email" value={data?.eogs} readOnly />
+                                <input
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    type="email"
+                                    value={form?.eogs || ''}
+                                    placeholder="Input email"
+                                    onChange={(e) => setForm({ ...form, eogs: e.target.value })}
+                                />
                             </div>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     Status
                                 </label>
                                 <select
                                     className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    value={form?.status}
-                                    name="employmentStatus"
-                                    onChange={(e) =>
-                                        setForm({
-                                            ...form,
-                                            status: e.target.value,
-                                        })
-                                    }
-                                // onChange={(e) => handleStatusChange(e.target.value)} 
+                                    value={form?.status || ''}
+                                    onChange={(e) => setForm({ ...form, status: e.target.value })}
                                 >
                                     <option value="" disabled>Select status</option>
                                     <option value="Probationary">Probationary</option>
@@ -133,22 +228,32 @@ export default function EmploymentStatusComponent({ data, item }) {
                             </div>
                         </div>
 
-                        <div className='flex flex-1'>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
+                        <div className="flex flex-1">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     Hired Date
                                 </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={data?.hired} readOnly />
+                                <input
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    type="date"
+                                    value={form?.hired || ''}
+                                    onChange={(e) => setForm({ ...form, hired: e.target.value })}
+                                />
                             </div>
-                            <div class="w-full px-3">
-                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
+                            <div className="w-full px-3">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                     Date of Regularization
                                 </label>
-                                <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={data?.due ?? ""} readOnly />
+                                <input
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    type="text"
+                                    value={data?.due ?? ""}
+                                    readOnly
+                                />
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </Modal>
         </>
     )

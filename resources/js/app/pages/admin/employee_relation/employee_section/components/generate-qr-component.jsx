@@ -28,9 +28,8 @@ export default function GenerateQrComponent({ data, item }) {
     const createQRUrl = () => {
         const baseUrl = window.location.origin;
         const employeeId = data?.emp_id;
-        const appId = data?.applicant?.app_id;
         
-        // Use a much shorter URL with just employee ID
+        // Use the correct URL path that matches our route
         return `${baseUrl}/admin/employee-qr-scan/${employeeId}`;
     };
 

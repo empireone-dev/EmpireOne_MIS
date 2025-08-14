@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Modal, Alert, Card, Input, Space } from 'antd';
 import { QrcodeOutlined, LinkOutlined, FileTextOutlined, SearchOutlined } from '@ant-design/icons';
 
-export default function QRScannerComponent() {
+export default function QRScannerComponent({ data }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [manualInput, setManualInput] = useState('');
     const [error, setError] = useState(null);
@@ -31,7 +31,7 @@ export default function QRScannerComponent() {
                 // Extract employee ID from URL
                 const parts = manualInput.split('/admin/employee-qr-scan/');
                 const empId = parts[1]?.split('?')[0]?.split('#')[0];
-                
+
                 if (empId) {
                     setIsModalOpen(false);
                     window.open(`/admin/employee-qr-scan/${empId}`, '_blank');
@@ -55,7 +55,7 @@ export default function QRScannerComponent() {
 
     const openSamplePage = () => {
         // Use a sample employee ID - you might want to change this to a real one
-        const sampleEmpId = "240814001"; // This should be a real employee ID from your database
+        const sampleEmpId = "25080405"; // This should be a real employee ID from your database
         window.open(`/admin/employee-qr-scan/${sampleEmpId}`, '_blank');
     };
 
@@ -132,7 +132,7 @@ export default function QRScannerComponent() {
                             <p className="mb-3 text-gray-600">
                                 Want to see how the employee information page looks?
                             </p>
-                            <Button 
+                            <Button
                                 icon={<FileTextOutlined />}
                                 onClick={openSamplePage}
                                 type="dashed"

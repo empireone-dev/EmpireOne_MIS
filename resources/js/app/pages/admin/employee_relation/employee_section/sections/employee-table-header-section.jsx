@@ -2,7 +2,7 @@ import React from 'react';
 import { Space, Divider } from 'antd';
 import QRScannerComponent from '../components/qr-scanner-component';
 
-export default function EmployeeTableHeaderSection() {
+export default function EmployeeTableHeaderSection({ data }) {
     return (
         <div className="mb-6">
             <div className="flex justify-between items-center">
@@ -12,7 +12,7 @@ export default function EmployeeTableHeaderSection() {
                     </h2>
                 </div>
                 <div className="flex items-center gap-3">
-                    <QRScannerComponent />
+                    <QRScannerComponent data={data} />
                     {/* Other existing buttons can go here */}
                 </div>
             </div>

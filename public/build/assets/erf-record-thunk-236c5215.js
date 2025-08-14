@@ -1,1 +1,0 @@
-import{c,d as a,e as n}from"./erf-record-service-039de165.js";import{P as o}from"./app-c76e6466.js";function i(){return async function(t,r){const e=(await c()).data;console.log("result",e),t(o.actions.setErfRecords(e))}}function _(t){return async function(r,e){await a(t)}}function f(t){return async function(r,e){await n(t)}}export{_ as c,i as g,f as u};

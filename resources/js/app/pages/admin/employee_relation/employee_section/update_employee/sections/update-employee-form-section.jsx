@@ -348,7 +348,7 @@ export default function UpdateEmployeeFormSection() {
                                     }
                                     name='position'
                                     className="border p-2 rounded  w-full">
-                                    <option disabled selected>Job Position</option>
+                                    <option value="">Select Job Position</option>
                                     {
                                         job_positions
                                             .filter(res =>
@@ -376,7 +376,7 @@ export default function UpdateEmployeeFormSection() {
                                     }
                                     name='dept'
                                     className="border p-2 rounded  w-full">
-                                    <option disabled selected>Department</option>
+                                    <option value="">Select Department</option>
                                     {
                                         departments
                                             .filter(res =>
@@ -434,7 +434,7 @@ export default function UpdateEmployeeFormSection() {
                                     }
                                     name='sup_id'
                                     className="border p-2 rounded  w-full">
-                                    <option disabled selected>Supervisor</option>
+                                    <option value="">Select Supervisor</option>
                                     {
                                         users
                                             .filter(res =>

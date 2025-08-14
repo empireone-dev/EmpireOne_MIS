@@ -7,6 +7,23 @@ import { LinkOutlined, CopyOutlined, EyeOutlined } from '@ant-design/icons';
 export default function GenerateQrComponent({ data, item }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     
+    // Helper function to handle undefined, null, and empty values
+    const formatValue = (value) => {
+        if (value === undefined || value === null || value === '' || value === 'undefined') {
+            return '--';
+        }
+        return value;
+    };
+
+    // Helper function to calculate age from date of birth
+    const calculateAge = (dob) => {
+        if (!dob) return '--';
+        const today = moment();
+        const birthDate = moment(dob);
+        if (!birthDate.isValid()) return '--';
+        return today.diff(birthDate, 'years');
+    };
+    
     function openHandler(params) {
         // setOpen(true);
         window.open(`/admin/file_201/${data.app_id}`, "_blank");
@@ -40,51 +57,51 @@ export default function GenerateQrComponent({ data, item }) {
         
         const employeeInfo = {
             // Employee Information
-            employeeId: employee?.emp_id || 'N/A',
-            applicationId: applicant?.app_id || 'N/A',
+            employeeId: formatValue(employee?.emp_id),
+            applicationId: formatValue(applicant?.app_id),
             
             // Personal Information
             fullName: `${applicant?.fname || ''} ${applicant?.mname || ''} ${applicant?.lname || ''} ${applicant?.suffix || ''}`.trim(),
-            dateOfBirth: applicant?.dob ? moment(applicant.dob).format('YYYY-MM-DD') : 'N/A',
-            age: applicant?.age || 'N/A',
-            gender: applicant?.gender || 'N/A',
-            maritalStatus: applicant?.marital || 'N/A',
-            religion: applicant?.religion || 'N/A',
-            nationality: applicant?.nationality || 'N/A',
+            dateOfBirth: applicant?.dob ? moment(applicant.dob).format('LL') : '--',
+            age: calculateAge(applicant?.dob),
+            gender: formatValue(applicant?.gender),
+            maritalStatus: formatValue(applicant?.marital),
+            religion: formatValue(applicant?.religion),
+            nationality: formatValue(applicant?.nationality),
             
             // Contact Information
-            email: applicant?.email || 'N/A',
-            phone: applicant?.phone || 'N/A',
-            currentAddress: applicant?.caddress || 'N/A',
-            permanentAddress: applicant?.paddress || 'N/A',
+            email: formatValue(applicant?.email),
+            phone: formatValue(applicant?.phone),
+            currentAddress: formatValue(applicant?.caddress),
+            permanentAddress: formatValue(applicant?.paddress),
             
             // Government IDs
-            sss: applicant?.sss || 'N/A',
-            tin: applicant?.tin || 'N/A',
-            philhealth: applicant?.philh || 'N/A',
-            pagibig: applicant?.pagibig || 'N/A',
+            sss: formatValue(applicant?.sss),
+            tin: formatValue(applicant?.tin),
+            philhealth: formatValue(applicant?.philh),
+            pagibig: formatValue(applicant?.pagibig),
             
             // Family Information
-            motherName: applicant?.mmname || 'N/A',
-            fatherName: applicant?.ffname || 'N/A',
+            motherName: formatValue(applicant?.mmname),
+            fatherName: formatValue(applicant?.ffname),
             
             // Emergency Contact
-            emergencyContactName: applicant?.ename || 'N/A',
-            emergencyContactAddress: applicant?.eaddress || 'N/A',
-            emergencyContactPhone: applicant?.ephone || 'N/A',
-            relationship: applicant?.relationship || 'N/A',
+            emergencyContactName: formatValue(applicant?.ename),
+            emergencyContactAddress: formatValue(applicant?.eaddress),
+            emergencyContactPhone: formatValue(applicant?.ephone),
+            relationship: formatValue(applicant?.relationship),
             
             // Work Information
-            position: employee?.position || 'N/A',
-            department: employee?.dept || 'N/A',
-            account: employee?.account || 'N/A',
-            site: applicant?.site || 'N/A',
-            hiredDate: employee?.hired ? moment(employee.hired).format('YYYY-MM-DD') : 'N/A',
-            status: employee?.status || 'N/A',
+            position: formatValue(employee?.position),
+            department: formatValue(employee?.dept),
+            account: formatValue(employee?.account),
+            site: formatValue(applicant?.site),
+            hiredDate: employee?.hired ? moment(employee.hired).format('YYYY-MM-DD') : '--',
+            status: formatValue(employee?.status),
             
             // Education
-            education: applicant?.educ || 'N/A',
-            course: applicant?.courset || 'N/A',
+            education: formatValue(applicant?.educ),
+            course: formatValue(applicant?.courset),
         };
         
         return employeeInfo;
@@ -172,15 +189,15 @@ export default function GenerateQrComponent({ data, item }) {
                         <div className="space-y-3">
                             <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">Personal Information</h3>
                             <div className="space-y-2 text-sm">
-                                <div><span className="font-medium">Employee ID:</span> {data?.emp_id || 'N/A'}</div>
-                                <div><span className="font-medium">Application ID:</span> {data?.applicant?.app_id || 'N/A'}</div>
-                                <div><span className="font-medium">Full Name:</span> {`${data?.applicant?.fname || ''} ${data?.applicant?.mname || ''} ${data?.applicant?.lname || ''} ${data?.applicant?.suffix || ''}`.trim()}</div>
-                                <div><span className="font-medium">Date of Birth:</span> {data?.applicant?.dob ? moment(data.applicant.dob).format('LL') : 'N/A'}</div>
-                                <div><span className="font-medium">Age:</span> {data?.applicant?.age || 'N/A'}</div>
-                                <div><span className="font-medium">Gender:</span> {data?.applicant?.gender || 'N/A'}</div>
-                                <div><span className="font-medium">Marital Status:</span> {data?.applicant?.marital || 'N/A'}</div>
-                                <div><span className="font-medium">Religion:</span> {data?.applicant?.religion || 'N/A'}</div>
-                                <div><span className="font-medium">Nationality:</span> {data?.applicant?.nationality || 'N/A'}</div>
+                                <div><span className="font-medium">Employee ID:</span> {formatValue(data?.emp_id)}</div>
+                                <div><span className="font-medium">Application ID:</span> {formatValue(data?.applicant?.app_id)}</div>
+                                <div><span className="font-medium">Full Name:</span> {`${formatValue(data?.applicant?.fname)} ${formatValue(data?.applicant?.mname)} ${formatValue(data?.applicant?.lname)} ${formatValue(data?.applicant?.suffix)}`.trim()}</div>
+                                <div><span className="font-medium">Date of Birth:</span> {data?.applicant?.dob ? moment(data.applicant.dob).format('LL') : '--'}</div>
+                                <div><span className="font-medium">Age:</span> {calculateAge(data?.applicant?.dob)}</div>
+                                <div><span className="font-medium">Gender:</span> {formatValue(data?.applicant?.gender)}</div>
+                                <div><span className="font-medium">Marital Status:</span> {formatValue(data?.applicant?.marital)}</div>
+                                <div><span className="font-medium">Religion:</span> {formatValue(data?.applicant?.religion)}</div>
+                                <div><span className="font-medium">Nationality:</span> {formatValue(data?.applicant?.nationality)}</div>
                             </div>
                         </div>
 
@@ -188,10 +205,9 @@ export default function GenerateQrComponent({ data, item }) {
                         <div className="space-y-3">
                             <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">Contact Information</h3>
                             <div className="space-y-2 text-sm">
-                                <div><span className="font-medium">Email:</span> {data?.applicant?.email || 'N/A'}</div>
-                                <div><span className="font-medium">Phone:</span> {data?.applicant?.phone || 'N/A'}</div>
-                                <div><span className="font-medium">Current Address:</span> {data?.applicant?.caddress || 'N/A'}</div>
-                                <div><span className="font-medium">Permanent Address:</span> {data?.applicant?.paddress || 'N/A'}</div>
+                                <div><span className="font-medium">Email:</span> {formatValue(data?.applicant?.email)}</div>
+                                <div><span className="font-medium">Phone:</span> {formatValue(data?.applicant?.phone)}</div>
+                                <div><span className="font-medium">Address:</span> {formatValue(data?.applicant?.caddress)}</div>
                             </div>
                         </div>
 
@@ -199,10 +215,10 @@ export default function GenerateQrComponent({ data, item }) {
                         <div className="space-y-3">
                             <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">Government IDs</h3>
                             <div className="space-y-2 text-sm">
-                                <div><span className="font-medium">SSS:</span> {data?.applicant?.sss || 'N/A'}</div>
-                                <div><span className="font-medium">TIN:</span> {data?.applicant?.tin || 'N/A'}</div>
-                                <div><span className="font-medium">PhilHealth:</span> {data?.applicant?.philh || 'N/A'}</div>
-                                <div><span className="font-medium">Pag-IBIG:</span> {data?.applicant?.pagibig || 'N/A'}</div>
+                                <div><span className="font-medium">SSS:</span> {formatValue(data?.applicant?.sss)}</div>
+                                <div><span className="font-medium">TIN:</span> {formatValue(data?.applicant?.tin)}</div>
+                                <div><span className="font-medium">PhilHealth:</span> {formatValue(data?.applicant?.philh)}</div>
+                                <div><span className="font-medium">Pag-IBIG:</span> {formatValue(data?.applicant?.pagibig)}</div>
                             </div>
                         </div>
 
@@ -210,12 +226,12 @@ export default function GenerateQrComponent({ data, item }) {
                         <div className="space-y-3">
                             <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">Work Information</h3>
                             <div className="space-y-2 text-sm">
-                                <div><span className="font-medium">Position:</span> {data?.position || 'N/A'}</div>
-                                <div><span className="font-medium">Department:</span> {data?.dept || 'N/A'}</div>
-                                <div><span className="font-medium">Account:</span> {data?.account || 'N/A'}</div>
-                                <div><span className="font-medium">Site:</span> {data?.applicant?.site || 'N/A'}</div>
-                                <div><span className="font-medium">Hired Date:</span> {data?.hired ? moment(data.hired).format('LL') : 'N/A'}</div>
-                                <div><span className="font-medium">Status:</span> {data?.status || 'N/A'}</div>
+                                <div><span className="font-medium">Position:</span> {formatValue(data?.position)}</div>
+                                <div><span className="font-medium">Department:</span> {formatValue(data?.dept)}</div>
+                                <div><span className="font-medium">Account:</span> {formatValue(data?.account)}</div>
+                                <div><span className="font-medium">Site:</span> {formatValue(data?.applicant?.site)}</div>
+                                <div><span className="font-medium">Hired Date:</span> {data?.hired ? moment(data.hired).format('LL') : '--'}</div>
+                                <div><span className="font-medium">Status:</span> {formatValue(data?.status)}</div>
                             </div>
                         </div>
 
@@ -223,8 +239,8 @@ export default function GenerateQrComponent({ data, item }) {
                         <div className="space-y-3">
                             <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">Family Information</h3>
                             <div className="space-y-2 text-sm">
-                                <div><span className="font-medium">Mother's Name:</span> {data?.applicant?.mmname || 'N/A'}</div>
-                                <div><span className="font-medium">Father's Name:</span> {data?.applicant?.ffname || 'N/A'}</div>
+                                <div><span className="font-medium">Mother's Name:</span> {formatValue(data?.applicant?.mmname)}</div>
+                                <div><span className="font-medium">Father's Name:</span> {formatValue(data?.applicant?.ffname)}</div>
                             </div>
                         </div>
 
@@ -232,10 +248,10 @@ export default function GenerateQrComponent({ data, item }) {
                         <div className="space-y-3">
                             <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">Emergency Contact</h3>
                             <div className="space-y-2 text-sm">
-                                <div><span className="font-medium">Name:</span> {data?.applicant?.ename || 'N/A'}</div>
-                                <div><span className="font-medium">Address:</span> {data?.applicant?.eaddress || 'N/A'}</div>
-                                <div><span className="font-medium">Phone:</span> {data?.applicant?.ephone || 'N/A'}</div>
-                                <div><span className="font-medium">Relationship:</span> {data?.applicant?.relationship || 'N/A'}</div>
+                                <div><span className="font-medium">Name:</span> {formatValue(data?.applicant?.ename)}</div>
+                                <div><span className="font-medium">Address:</span> {formatValue(data?.applicant?.eaddress)}</div>
+                                <div><span className="font-medium">Phone:</span> {formatValue(data?.applicant?.ephone)}</div>
+                                <div><span className="font-medium">Relationship:</span> {formatValue(data?.applicant?.relationship)}</div>
                             </div>
                         </div>
 
@@ -243,8 +259,8 @@ export default function GenerateQrComponent({ data, item }) {
                         <div className="space-y-3 md:col-span-2">
                             <h3 className="font-semibold text-lg text-gray-800 border-b pb-2">Education Information</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-                                <div><span className="font-medium">Education Level:</span> {data?.applicant?.educ || 'N/A'}</div>
-                                <div><span className="font-medium">Course/Field:</span> {data?.applicant?.courset || 'N/A'}</div>
+                                <div><span className="font-medium">Education Level:</span> {formatValue(data?.applicant?.educ)}</div>
+                                <div><span className="font-medium">Course/Field:</span> {formatValue(data?.applicant?.courset)}</div>
                             </div>
                         </div>
                     </div>

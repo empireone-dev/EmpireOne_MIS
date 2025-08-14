@@ -54,7 +54,6 @@ export default function Page() {
           ref={(el) => (videoRefs.current[index] = el)}
           controls
           onEnded={handleVideoEnd}
-          loop // Adding the loop attribute to ensure the video loops
           style={{
             display: currentVideo === index ? 'block' : 'none',
             width: '100%',

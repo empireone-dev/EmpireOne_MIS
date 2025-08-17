@@ -253,7 +253,7 @@ export default function HiringTableSection() {
             dataIndex: "action",
             render: (_, record) => {
 
-                const safeJobPos = record.jobPos.replace(/\//g, '_');
+                const safeJobPos = record?.jobPos?.replace(/\//g, '_');
                 return (
                     <div className="flex gap-2 items-center">
                         {record.status !== "Pending" &&

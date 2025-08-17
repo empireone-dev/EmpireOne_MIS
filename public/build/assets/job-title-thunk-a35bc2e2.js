@@ -1,0 +1,1 @@
+import{h as s,w as i}from"./app-2757336f.js";async function n(){return(await s.get("/api/job_position")).data}function r(){return async function(t,a){const o=(await n()).data;console.log("result",o),t(i.actions.setJobPositions(o))}}export{r as g};

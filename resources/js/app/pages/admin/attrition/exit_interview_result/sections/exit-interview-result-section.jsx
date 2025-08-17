@@ -5,10 +5,9 @@ import { message, Modal } from 'antd';
 import { router } from '@inertiajs/react';
 import { useEffect } from 'react';
 import { setExitInterviewForm } from '../../../exit_interview/redux/exit-interview-slice';
-import ExitFactorsSection from '../../../exit_interview/sections/exit-factors-section';
-import RateJobSection from '../../../exit_interview/sections/rate-job-section';
-import RateSupWorkerSection from '../../../exit_interview/sections/rate-sup-worker-section';
 import { store_exit_int_thunk } from '../../../exit_interview/redux/exit-interview-thunk';
+import RateJobSection from './rate-job-section';
+import RateSupWorkerSection from './rate-sup-worker-section';
 
 export default function ExitInterviewResultSection() {
     const { exitInterviewForm } = useSelector(
@@ -17,11 +16,11 @@ export default function ExitInterviewResultSection() {
     const dispatch = useDispatch();
     const { employee } = useSelector((state) => state.employees);
     const { user } = useSelector((state) => state.app);
-    const app_id = window.location.pathname.split("/")[4];
-    const emp_id = window.location.pathname.split("/")[3];
+    const app_id = window.location.pathname.split("/")[5];
+    const emp_id = window.location.pathname.split("/")[4];
     const [loading, setLoading] = useState(false);
 
-    console.log('user', user);
+    console.log('employee', employee);
     useEffect(() => {
         dispatch(
             setExitInterviewForm({
@@ -98,8 +97,8 @@ export default function ExitInterviewResultSection() {
                         <div className='flex text-2xl items-center justify-center'>
                             <h1><b>EXIT INTERVIEW RESULT</b></h1>
                         </div>
-                        <div className='text-lg mb-4 mt-4'>
-                            <h1>INTERVIEWER:</h1>
+                        <div className='text-lg mb-2 mt-4'>
+                            <h1>INTERVIEWER: <b>{employee?.attrition?.ext_rate_int?.user?.employee_fname || ''} {employee?.attrition?.ext_rate_int?.user?.employee_lname || ''}</b></h1>
                         </div>
                         <div className='border rounded-lg p-3.5' >
                             <div className='flex flex-1 gap-4 border-4 border-gray-400 p-4 mb-3'>
@@ -133,7 +132,7 @@ export default function ExitInterviewResultSection() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>ID Number:</b></label>
-                                            <input type="text" name='app_id' value={employee?.app_id || ''} className="border p-2 rounded w-full" />
+                                            <input type="text" name='app_id' value={employee?.emp_id || ''} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Position Title:</b></label>
@@ -161,8 +160,7 @@ export default function ExitInterviewResultSection() {
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>1. Main reason for leaving your current position.</b></label>
                                             <textarea
-                                                onChange={handleRate}
-                                                // value={form?.mreas || ''}
+                                                value={employee?.attrition?.ext_int?.mreas || ''}
                                                 type="text"
                                                 name="mreas"
                                                 placeholder="" className="border p-2 h-40 rounded w-full" />
@@ -177,9 +175,24 @@ export default function ExitInterviewResultSection() {
                                         <div className='flex flex-col w-full'>
                                             {/* <ExitFactorsSection /> */}
                                             <h1 htmlFor=""><b>2. Factors that influence decision to leave.</b></h1>
+                                            <div className="mt-2">
+                                                {employee?.attrition?.ext_factor && employee.attrition.ext_factor.length > 0 ? (
+                                                    <ul className="list-disc pl-5 space-y-1">
+                                                        {employee.attrition.ext_factor.map((factorObj, index) => (
+                                                            <li key={index} className="text-gray-700">
+                                                                {factorObj.factors}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                ) : (
+                                                    <div className="text-gray-500 italic">
+                                                        No factors specified
+                                                    </div>
+                                                )}
+                                            </div>
                                             <label htmlFor="" className='mt-1'>Others:</label>
                                             <input
-                                                onChange={handleRate}
+                                                value={employee?.attrition?.ext_int?.factsOther || ''}
                                                 name="factsOther"
                                                 type="text" placeholder="" className="border p-2 rounded w-full " />
                                         </div>
@@ -193,7 +206,7 @@ export default function ExitInterviewResultSection() {
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>3. Wish/wishes he/she had known before taking the job</b></label>
                                             <textarea
-                                                onChange={handleRate}
+                                                value={employee?.attrition?.ext_int?.wish || ''}
                                                 name="wish"
                                                 type="text" placeholder="" className="border p-2 h-40  rounded w-full" />
                                         </div>
@@ -207,7 +220,7 @@ export default function ExitInterviewResultSection() {
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>4.Suggestion to the management to make the organization a better place to work</b></label>
                                             <textarea
-                                                onChange={handleRate}
+                                                value={employee?.attrition?.ext_int?.suggest || ''}
                                                 name="suggest"
                                                 type="text" placeholder="" className="border p-2 h-40  rounded w-full" />
                                         </div>
@@ -221,7 +234,7 @@ export default function ExitInterviewResultSection() {
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>5. He/She appreciates the support that enables him/her to perform the job..</b></label>
                                             <textarea
-                                                onChange={handleRate}
+                                                value={employee?.attrition?.ext_int?.apprec || ''}
                                                 name="apprec"
                                                 type="text" placeholder="" className="border p-2 rounded w-full" />
                                         </div>
@@ -235,8 +248,8 @@ export default function ExitInterviewResultSection() {
                                 <h1><b>4. Dissatisfied,</b></h1>
                                 <h1><b>5. Very Dissatisfied</b></h1>
                             </div>
-                            <RateJobSection />
-                            <RateSupWorkerSection />
+                            <RateJobSection data={employee} />
+                            <RateSupWorkerSection data={employee} />
                         </div>
                     </div>
                 </div>

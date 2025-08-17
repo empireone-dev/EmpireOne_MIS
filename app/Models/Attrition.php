@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Attrition extends Model
@@ -42,5 +43,20 @@ class Attrition extends Model
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class, "emp_id", "emp_id");
+    }
+
+    public function ext_int(): BelongsTo
+    {
+        return $this->belongsTo(ExitInterview::class, "app_id", "app_id");
+    }
+
+    public function ext_rate_int(): BelongsTo
+    {
+        return $this->belongsTo(ExitRateInt::class, "app_id", "app_id");
+    }
+
+    public function ext_factor(): HasMany
+    {
+        return $this->hasMany(ExitFactor::class, "app_id", "app_id");
     }
 }

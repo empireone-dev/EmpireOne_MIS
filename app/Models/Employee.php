@@ -44,8 +44,15 @@ class Employee extends Model
 
     public function attrition(): BelongsTo
     {
-        return $this->belongsTo(Attrition::class, "emp_id", "emp_id");
+        return $this->belongsTo(Attrition::class, "emp_id", "emp_id")
+            ->with([
+                'ext_int',
+                'user',
+                'ext_factor',
+                'ext_rate_int.user',
+            ]);
     }
+
 
     public function department(): BelongsTo
     {

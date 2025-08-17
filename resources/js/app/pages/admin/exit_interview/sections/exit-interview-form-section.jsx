@@ -130,7 +130,7 @@ export default function ExitInterviewFormSection() {
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>ID Number:</b></label>
-                                            <input type="text" name='app_id' value={employee?.app_id || ''} className="border p-2 rounded w-full" />
+                                            <input type="text" name='app_id' value={employee?.emp_id || ''} className="border p-2 rounded w-full" />
                                         </div>
                                         <div className='flex flex-col w-full'>
                                             <label htmlFor=""><b>Position Title:</b></label>

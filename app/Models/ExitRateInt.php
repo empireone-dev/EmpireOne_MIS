@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ExitRateInt extends Model
 {
@@ -29,4 +30,9 @@ class ExitRateInt extends Model
         'sup6',
         'sup7',
     ];
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, "int_id", "id");
+    }
 }

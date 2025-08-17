@@ -4,12 +4,14 @@ import {
     DeliveredProcedureOutlined,
     DownOutlined,
     EditOutlined,
+    FileDoneOutlined,
     FileSearchOutlined,
     FolderOpenOutlined,
 } from "@ant-design/icons";
 import File201Component from "../../../employee_relation/employee_section/components/file-201-component";
 import AttritionReasonComponent from "../components/attrition-reason-components";
 import AttritionExitInterviewComponent from "../components/attrition-exit-interview-component";
+import AttritionExitInterviewResultComponent from "../components/attrition-exit-interview-result-component";
 // import UpdateEmployeeComponent from "../components/update-employee-component";
 // import File201Component from "../components/file-201-component";
 // import EmploymentStatusComponent from "../components/employment-status-component";
@@ -45,6 +47,23 @@ export default function AttritionMenuSection({ data }) {
                 />
             ),
         },
+        ...(data?.estatus == "Pending Clearance"
+            ? [
+                {
+                    component: (
+                        <AttritionExitInterviewResultComponent
+                            // status="Initial Phase"
+                            item={{
+                                label: "Exit Interview Results",
+                                key: "3",
+                                icon: <FileDoneOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
+            : []),
         ...(data?.estatus == "Pending"
             ? [
                 {
@@ -52,7 +71,24 @@ export default function AttritionMenuSection({ data }) {
                         <AttritionExitInterviewComponent
                             // status="Initial Phase"
                             item={{
-                                label: "Procees Exit Interview & Clearance",
+                                label: "Proceed Exit Interview",
+                                key: "3",
+                                icon: <DeliveredProcedureOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
+            : []),
+        ...(data?.estatus == "Pending Clearance"
+            ? [
+                {
+                    component: (
+                        <AttritionExitInterviewComponent
+                            // status="Initial Phase"
+                            item={{
+                                label: "Upload Exit Clearance",
                                 key: "3",
                                 icon: <DeliveredProcedureOutlined />,
                             }}
@@ -186,7 +222,7 @@ export default function AttritionMenuSection({ data }) {
         //     ]
         //     : []),
     ];
-console.log('data',data)
+    console.log('data', data)
     return (
         <div>
             <Dropdown

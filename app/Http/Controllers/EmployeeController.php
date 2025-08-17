@@ -239,7 +239,7 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'dept'])->first();
+        $employee = Employee::where('app_id', $id)->with(['attrition', 'applicant', 'user', 'dept'])->first();
         return response()->json([
             'data' => $employee
         ], 200);

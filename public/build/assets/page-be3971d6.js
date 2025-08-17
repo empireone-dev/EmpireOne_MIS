@@ -1,1 +1,0 @@
-import{j as r}from"./app-69ad9ef0.js";import t from"./engagement-layout-0b260171.js";import"./engagement-sidenav-section-4eb024c7.js";import"./engagement-sidenav-components-27912bd9.js";import"./UsersIcon-6ce2119b.js";import"./ShieldCheckIcon-02a64a8d.js";import"./UserCircleIcon-8866fbfe.js";function s(){return r.jsx(t,{children:"Dashboard"})}export{s as default};

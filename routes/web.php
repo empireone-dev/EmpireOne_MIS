@@ -147,11 +147,11 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         return Inertia::render('admin/file_201/page');
     });
 
-    Route::get('/exit_interview/{app_id}', function () {
+    Route::get('/exit_interview/{emp_id}/{app_id}', function () {
         return Inertia::render('admin/exit_interview/page');
     });
 
-    Route::get('/exit_clearance/{app_id}', function () {
+    Route::get('/exit_clearance/{emp_id}/{app_id}', function () {
         return Inertia::render('admin/exit_clearance/page');
     });
 
@@ -356,6 +356,10 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::prefix('attrition')->group(function () {
         Route::get('/attrition_section', function () {
             return Inertia::render('admin/attrition/attrition_section/page');
+        });
+
+        Route::get('/exit_interview_result/{emp_id}/{app_id}', function () {
+            return Inertia::render('admin/attrition/exit_interview_result/page');
         });
     });
 

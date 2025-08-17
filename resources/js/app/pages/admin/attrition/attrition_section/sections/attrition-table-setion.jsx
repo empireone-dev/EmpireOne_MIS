@@ -224,16 +224,31 @@ export default function AttritionTableSection() {
             key: 'estatus',
             render: (_, record) => {
                 let color = '';
+                let textColor = '#000'; // default text color
+
                 switch (record.estatus) {
                     case 'Pending':
                         color = '#E1AD01';
+                        textColor = '#fff';
                         break;
                     case 'Cleared':
                         color = '#52D017';
+                        textColor = '#fff';
                         break;
+                    case 'Pending Clearance':
+                        color = '#FFFF00';   // background
+                        textColor = '#000';  // black text for yellow background
+                        break;
+                    default:
+                        color = '#d9d9d9';
+                        textColor = '#000';
                 }
+
                 return (
-                    <Tag color={color} key={record.key}>
+                    <Tag
+                        key={record.key}
+                        style={{ backgroundColor: color, color: textColor, border: 'none' }}
+                    >
                         {record.estatus}
                     </Tag>
                 );

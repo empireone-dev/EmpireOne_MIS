@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attrition;
 use App\Models\ExitFactor;
 use App\Models\ExitInterview;
 use App\Models\ExitRateInt;
@@ -28,7 +29,14 @@ class ExitInterviewController extends Controller
             ]);
         }
 
-        ExitRateInt::create($request->all());
+        ExitRateInt::create(array_merge(
+            $request->all(),
+            ['int_id' => $request->int_id]
+        ));
+
+        Attrition::where('app_id', $request->app_id)->update([
+            'estatus' => 'Pending Clearance',
+        ]);
 
         return response()->json([
             'status' => 'success',

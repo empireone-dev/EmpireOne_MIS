@@ -4,13 +4,13 @@ import store from '@/app/store/store';
 import { message, Modal } from 'antd';
 import { router } from '@inertiajs/react';
 import { useEffect } from 'react';
-import { setExitInterviewForm } from '../redux/exit-interview-slice';
-import ExitFactorsSection from './exit-factors-section';
-import RateJobSection from './rate-job-section';
-import RateSupWorkerSection from './rate-sup-worker-section';
-import { store_exit_int_thunk } from '../redux/exit-interview-thunk';
+import { setExitInterviewForm } from '../../../exit_interview/redux/exit-interview-slice';
+import ExitFactorsSection from '../../../exit_interview/sections/exit-factors-section';
+import RateJobSection from '../../../exit_interview/sections/rate-job-section';
+import RateSupWorkerSection from '../../../exit_interview/sections/rate-sup-worker-section';
+import { store_exit_int_thunk } from '../../../exit_interview/redux/exit-interview-thunk';
 
-export default function ExitInterviewFormSection() {
+export default function ExitInterviewResultSection() {
     const { exitInterviewForm } = useSelector(
         (state) => state.exit_int
     );
@@ -96,9 +96,12 @@ export default function ExitInterviewFormSection() {
                             <img className="w-60" src="/images/newlogo.png" alt="logo" />
                         </div>
                         <div className='flex text-2xl items-center justify-center'>
-                            <h1><b>EXIT INTERVIEW</b></h1>
+                            <h1><b>EXIT INTERVIEW RESULT</b></h1>
                         </div>
-                        <form className='border rounded-lg p-3.5' onSubmit={submitExitInt}>
+                        <div className='text-lg mb-4 mt-4'>
+                            <h1>INTERVIEWER:</h1>
+                        </div>
+                        <div className='border rounded-lg p-3.5' >
                             <div className='flex flex-1 gap-4 border-4 border-gray-400 p-4 mb-3'>
                                 <div className='flex w-full'>
                                     <div className="flex flex-col gap-4 mb-4 w-full">
@@ -156,7 +159,7 @@ export default function ExitInterviewFormSection() {
                                 <div className='flex w-full'>
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
-                                            <label htmlFor=""><b>1. Please describe the main reason for leaving your current position.</b></label>
+                                            <label htmlFor=""><b>1. Main reason for leaving your current position.</b></label>
                                             <textarea
                                                 onChange={handleRate}
                                                 // value={form?.mreas || ''}
@@ -172,7 +175,8 @@ export default function ExitInterviewFormSection() {
                                 <div className='flex w-full'>
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
-                                            <ExitFactorsSection />
+                                            {/* <ExitFactorsSection /> */}
+                                            <h1 htmlFor=""><b>2. Factors that influence decision to leave.</b></h1>
                                             <label htmlFor="" className='mt-1'>Others:</label>
                                             <input
                                                 onChange={handleRate}
@@ -187,7 +191,7 @@ export default function ExitInterviewFormSection() {
                                 <div className='flex w-full'>
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
-                                            <label htmlFor=""><b>3. Is there anything you wish you had known before you took the job?</b></label>
+                                            <label htmlFor=""><b>3. Wish/wishes he/she had known before taking the job</b></label>
                                             <textarea
                                                 onChange={handleRate}
                                                 name="wish"
@@ -201,7 +205,7 @@ export default function ExitInterviewFormSection() {
                                 <div className='flex w-full'>
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
-                                            <label htmlFor=""><b>4. What would you suggest to the management to make our organization a better place to work?</b></label>
+                                            <label htmlFor=""><b>4.Suggestion to the management to make the organization a better place to work</b></label>
                                             <textarea
                                                 onChange={handleRate}
                                                 name="suggest"
@@ -215,7 +219,7 @@ export default function ExitInterviewFormSection() {
                                 <div className='flex w-full'>
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
-                                            <label htmlFor=""><b>5. Do you feel you received appreciate support to enable to do your job?</b></label>
+                                            <label htmlFor=""><b>5. He/She appreciates the support that enables him/her to perform the job..</b></label>
                                             <textarea
                                                 onChange={handleRate}
                                                 name="apprec"
@@ -224,8 +228,7 @@ export default function ExitInterviewFormSection() {
                                     </div>
                                 </div>
                             </div>
-                            <p>Instructions: Please rate the following items based on your experience work in the company.</p>
-                            <div className='flex flex-1 w-full gap-8 mt-1'>
+                            <div className='flex flex-1 w-full gap-8 mt-10'>
                                 <h1><b>1. Very Satisfied,</b></h1>
                                 <h1><b>2. Satisfied,</b></h1>
                                 <h1><b>3. Neutral,</b></h1>
@@ -234,17 +237,7 @@ export default function ExitInterviewFormSection() {
                             </div>
                             <RateJobSection />
                             <RateSupWorkerSection />
-                            <div className="flex justify-end mt-2.5">
-                                <button
-                                    type="submit"
-                                    className={`px-4 py-2 rounded text-white focus:outline-none transition-colors ${loading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'
-                                        }`}
-                                    disabled={loading}
-                                >
-                                    {loading ? 'Submitting...' : 'SUBMIT EXIT INTERVIEW'}
-                                </button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

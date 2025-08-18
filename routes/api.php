@@ -118,6 +118,7 @@ Route::resource('account', AccountController::class);
 Route::resource('pre_employment_file', PreEmploymentFileController::class);
 Route::post('/reupload_file', [PreEmploymentFileController::class, 'reupload_file']);
 Route::resource('attrition', AttritionController::class);
+Route::post('/upload_exit_clearance', [AttritionController::class, 'upload_exit_clearance']);
 Route::resource('exit_int', ExitInterviewController::class);
 Route::resource('exit_clr', ExitClearanceController::class);
 Route::post('/send-clearance-email', [ExitClearanceController::class, 'sendClearanceEmail']);

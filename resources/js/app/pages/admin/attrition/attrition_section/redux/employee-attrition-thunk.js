@@ -1,4 +1,4 @@
-import { get_employee_attrition_service } from "@/app/pages/services/employee-attrition-service";
+import { get_employee_attrition_service, upload_exit_clearance_service } from "@/app/pages/services/employee-attrition-service";
 import { employeeAttritionSlice } from "./employee-attrition-slice";
 import { store_attrition_service } from "@/app/pages/services/attrition-service";
 
@@ -13,6 +13,13 @@ export function get_employee_attrition_thunk() {
 export function store_attrition_thunk(data) {
     return async function (dispatch, getState) {
         const result = (await store_attrition_service(data))
+        return result
+    };
+}
+
+export function upload_exit_clearance_thunk(data) {
+    return async function (dispatch, getState) {
+        const result = (await upload_exit_clearance_service(data))
         return result
     };
 }

@@ -12,6 +12,7 @@ import File201Component from "../../../employee_relation/employee_section/compon
 import AttritionReasonComponent from "../components/attrition-reason-components";
 import AttritionExitInterviewComponent from "../components/attrition-exit-interview-component";
 import AttritionExitInterviewResultComponent from "../components/attrition-exit-interview-result-component";
+import AttritionUploadClearanceComponent from "../components/attrition-upload-clearance-component";
 // import UpdateEmployeeComponent from "../components/update-employee-component";
 // import File201Component from "../components/file-201-component";
 // import EmploymentStatusComponent from "../components/employment-status-component";
@@ -52,7 +53,7 @@ export default function AttritionMenuSection({ data }) {
                 {
                     component: (
                         <AttritionExitInterviewResultComponent
-                            // status="Initial Phase"
+                            // status="Exit Interview Results"
                             item={{
                                 label: "Exit Interview Results",
                                 key: "3",
@@ -69,7 +70,7 @@ export default function AttritionMenuSection({ data }) {
                 {
                     component: (
                         <AttritionExitInterviewComponent
-                            // status="Initial Phase"
+                            // status="Exit Interview"
                             item={{
                                 label: "Proceed Exit Interview",
                                 key: "3",
@@ -85,8 +86,8 @@ export default function AttritionMenuSection({ data }) {
             ? [
                 {
                     component: (
-                        <AttritionExitInterviewComponent
-                            // status="Initial Phase"
+                        <AttritionUploadClearanceComponent
+                            // status="Exit Clearance"
                             item={{
                                 label: "Upload Exit Clearance",
                                 key: "3",

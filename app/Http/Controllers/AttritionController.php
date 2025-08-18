@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Attrition as MailAttrition;
+use App\Mail\Cleared;
 use App\Models\Applicant;
 use App\Models\Attrition;
 use App\Models\Employee;
@@ -91,7 +92,7 @@ class AttritionController extends Controller
 
                 $filename = date('Y') . '/' .  $dateUnique . '_' . uniqid() . '.' . $extension;
                 Storage::disk('s3')->put($filename, $fileData);
-                
+
                 // Build the URL manually using the S3 configuration
                 $bucket = config('filesystems.disks.s3.bucket');
                 $region = config('filesystems.disks.s3.region');
@@ -111,6 +112,11 @@ class AttritionController extends Controller
                 ]);
             }
         }
+
+        Mail::to($request->email)->send(new Cleared(array_merge(
+            $request->all(),
+        )));
+        
         return response()->json([
             'data' => 'success',
         ], 200);

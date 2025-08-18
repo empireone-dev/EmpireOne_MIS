@@ -97,8 +97,9 @@
       </p>
 
       <p>Truly yours,</p>
-      <p>HR Team</p>
-      <p><strong>EmpireOne BPO Solutions Inc.</strong></p><br><br>
+      <p>HR Team<br>
+        <strong>EmpireOne BPO Solutions Inc.</strong>
+      </p><br><br>
 
       <p>Visit and follow us on our social media accounts:</p>
 

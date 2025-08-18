@@ -76,8 +76,9 @@
             <p>We are excited about the prospect of you joining our team and contributing your valuable skills and expertise. We eagerly anticipate your presence at the contract signing.</p>
 
             <p>Best regards,</p>
-            <p>HR Team</p>
-            <p><strong>EmpireOne BPO Solutions Inc.</strong></p><br>
+            <p>HR Team<br>
+                <strong>EmpireOne BPO Solutions Inc.</strong>
+            </p><br><br>
 
             <p>Visit us on our social media accounts:</p>
             <p>

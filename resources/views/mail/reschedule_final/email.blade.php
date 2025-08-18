@@ -79,8 +79,9 @@
             <p>If you have any questions or need assistance, feel free to contact our HR department at hiring@empireonegroup.com for San Carlos Site or career@empireonegroup.com for CarCar Site.</p><br>
 
             <p>Best regards,</p>
-            <p>HR Team</p>
-            <p><strong>EmpireOne BPO Solutions Inc.</strong></p><br><br>
+            <p>HR Team<br>
+                <strong>EmpireOne BPO Solutions Inc.</strong>
+            </p><br><br>
 
             <p>We also invite you to connect with us on our social media platforms to stay updated with our latest news and career opportunities:</p>
 

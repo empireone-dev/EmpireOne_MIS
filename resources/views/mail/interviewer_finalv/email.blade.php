@@ -75,8 +75,9 @@
             <p>Thank you for your cooperation and support in the recruitment process.</p>
 
             <p>Best regards,</p>
-            <p>HR Team</p>
-            <p><strong>EmpireOne BPO Solutions Inc.</strong></p><br><br>
+            <p>HR Team<br>
+                <strong>EmpireOne BPO Solutions Inc.</strong>
+            </p><br><br>
 
             <p>
                 <img src="https://empireone-hris.com/images/SCemp2.jpg" alt="" style="max-width: 100%; height: auto;">

@@ -78,8 +78,9 @@
             <p></p>
 
             <p>Warm regards,</p>
-            <p>HR Team</p>
-            <p><strong>EmpireOne BPO Solutions Inc.</strong></p><br>
+            <p>HR Team<br>
+                <strong>EmpireOne BPO Solutions Inc.</strong>
+            </p><br><br>
 
             <p>Visit us on our social media accounts:</p>
             <p>

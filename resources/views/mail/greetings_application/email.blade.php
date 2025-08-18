@@ -68,11 +68,12 @@
             <p></p>
 
             <p>Warm regards,</p>
-            <p>HR Team</p>
-            <p><strong>EmpireOne BPO Solutions Inc.</strong></p><br>
+            <p>HR Team<br>
+                <strong>EmpireOne BPO Solutions Inc.</strong>
+            </p><br><br>
 
             <p>Visit us on our social media accounts:</p>
-            <p >
+            <p>
                 <a href="https://www.facebook.com/profile.php?id=100089467625882" style="margin: 0 10px;">
                     <img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook" style="width: 24px; height: 24px;">
                 </a>

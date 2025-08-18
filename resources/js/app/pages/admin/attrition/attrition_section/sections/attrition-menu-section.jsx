@@ -13,6 +13,7 @@ import AttritionReasonComponent from "../components/attrition-reason-components"
 import AttritionExitInterviewComponent from "../components/attrition-exit-interview-component";
 import AttritionExitInterviewResultComponent from "../components/attrition-exit-interview-result-component";
 import AttritionUploadClearanceComponent from "../components/attrition-upload-clearance-component";
+import AttritionQuitClaimComponent from "../components/attrition-quit-claim-component";
 // import UpdateEmployeeComponent from "../components/update-employee-component";
 // import File201Component from "../components/file-201-component";
 // import EmploymentStatusComponent from "../components/employment-status-component";
@@ -48,7 +49,7 @@ export default function AttritionMenuSection({ data }) {
                 />
             ),
         },
-        ...(data?.estatus == "Pending Clearance"
+        ...(data?.estatus == "Pending Clearance" || data?.estatus == "Cleared"
             ? [
                 {
                     component: (
@@ -90,6 +91,23 @@ export default function AttritionMenuSection({ data }) {
                             // status="Exit Clearance"
                             item={{
                                 label: "Upload Exit Clearance",
+                                key: "3",
+                                icon: <DeliveredProcedureOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
+            : []),
+        ...(data?.estatus == "Cleared"
+            ? [
+                {
+                    component: (
+                        <AttritionQuitClaimComponent
+                            // status="Quit Claim"
+                            item={{
+                                label: "Quit Claim",
                                 key: "3",
                                 icon: <DeliveredProcedureOutlined />,
                             }}

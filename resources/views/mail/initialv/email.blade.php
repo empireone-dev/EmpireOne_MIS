@@ -80,8 +80,9 @@
             <p> Should you have any questions or require further information before the interview, please do not hesitate to contact our HR department at hiring@empireonegroup.com for our San Carlos Site and career@empireonegroup.com for CarCar Site.</p><br>
 
             <p>Warm regards,</p>
-            <p>HR Team</p>
-            <p><strong>EmpireOne BPO Solutions Inc.</strong></p><br><br>
+            <p>HR Team<br>
+                <strong>EmpireOne BPO Solutions Inc.</strong>
+            </p><br><br>
 
 
             <p>As part of this commitment, we invite you to explore our various social media platforms to stay updated

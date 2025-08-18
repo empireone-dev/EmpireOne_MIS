@@ -63,8 +63,9 @@
             <p>We sincerely appreciate your interest in EmpireOne BPO Solutions Inc., and we encourage you to apply for future opportunities with us. We wish you all the best in your job search and future endeavors.</p>
 
             <p>Warm regards,</p>
-            <p>HR Team</p>
-            <p><strong>EmpireOne BPO Solutions Inc.</strong></p><br><br>
+            <p>HR Team<br>
+                <strong>EmpireOne BPO Solutions Inc.</strong>
+            </p><br><br>
 
             <div style="text-align: center;">
                 <a href="https://www.facebook.com/profile.php?id=100089467625882" style="margin: 0 10px;">

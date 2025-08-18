@@ -81,8 +81,34 @@
                 career@empireonegroup.com for CarCar Site.</p><br>
 
             <p>Best regards,</p>
-            <p>HR Team</p>
-            <p><strong>EmpireOne BPO Solutions Inc.</strong></p><br><br>
+            <p>HR Team<br>
+                <strong>EmpireOne BPO Solutions Inc.</strong>
+            </p><br><br>
+
+
+            <p><i><b>Disclaimer:</b> Please be advised to prepare the following requirements after passing the Final Interview.</i></p>
+
+            <p><i>BELOW IS THE LIST OF REQUIREMENTS YOU NEED TO PREPARE (no asterisk is optional):</i></p>
+            <p><i>
+                    • Birth Certificate *<br>
+                    • SSS Form E1/SSS ID *<br>
+                    • TIN ID *<br>
+                    • Certificate of Employment from the previous employer<br>
+                    • Phil Health MDR/ID *<br>
+                    • Photocopy of Driver’s License (if applicable)<br>
+                    • SSS & PAG-IBIG Loan Voucher (if applicable)<br>
+                    • Marriage Certificate (if married)<br>
+                    • Birth Certificates of Dependents (if Married - spouse & children; if Single - parents)<br>
+                    • Barangay Clearance with the purpose of bank application *<br>
+                    • Police Clearance *<br>
+                    • NBI Clearance *</i>
+            </p>
+
+            <p><i>
+                    --- HEALTH CERTIFICATE WITH THE FOLLOWING TESTS: ---<br>
+                    • Chest X-ray *<br>
+                    • Drug Test *</i>
+            </p><br>
 
 
             <p>As part of this commitment, we invite you to explore our various social media platforms to stay updated

@@ -9,7 +9,7 @@ export default function AttritionExitInterviewComponent({ data, item }) {
   return (
     <>
       <Menu.Item 
-      // onClick={() => openHandler(true)} 
+      onClick={() => openHandler(true)} 
       icon={item.icon}>
         {item.label}
       </Menu.Item>

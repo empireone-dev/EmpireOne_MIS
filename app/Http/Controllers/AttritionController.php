@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Mail\Attrition as MailAttrition;
+use App\Models\Applicant;
 use App\Models\Attrition;
 use App\Models\Employee;
+use App\Models\UploadExitClearance;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class AttritionController extends Controller
 {
@@ -63,5 +67,52 @@ class AttritionController extends Controller
                 'status' => 'success',
             ], 200);
         }
+    }
+
+    public function upload_exit_clearance(Request $request)
+    {
+        $dateUnique = Carbon::now()->format('mdyHisv');
+        $base64Files = $request->input('files');
+        $uploadedFiles = [];
+        if ($base64Files && is_array($base64Files)) {
+            foreach ($base64Files as $base64) {
+                // Ensure $base64 is a string before using preg_match
+                if (!is_string($base64) || !preg_match('/^data:(.*?);base64,/', $base64, $matches)) {
+                    return response()->json(['error' => 'Invalid base64 file format'], 400);
+                }
+
+                $mimeType = $matches[1];
+                $extension = explode('/', $mimeType)[1] ?? 'bin'; // fallback to bin if missing
+
+                $fileData = base64_decode(substr($base64, strpos($base64, ',') + 1));
+                if ($fileData === false) {
+                    return response()->json(['error' => 'Base64 decode failed'], 400);
+                }
+
+                $filename = date('Y') . '/' .  $dateUnique . '_' . uniqid() . '.' . $extension;
+                Storage::disk('s3')->put($filename, $fileData);
+                
+                // Build the URL manually using the S3 configuration
+                $bucket = config('filesystems.disks.s3.bucket');
+                $region = config('filesystems.disks.s3.region');
+                $url = "https://{$bucket}.s3.{$region}.amazonaws.com/{$filename}";
+
+                $uploadedFiles[] = $url;
+
+                // Save file record
+                UploadExitClearance::create([
+                    'app_id' =>  $request->app_id,
+                    'emp_id' =>  $request->emp_id,
+                    'file'   => $url,
+                ]);
+
+                Attrition::where('app_id', $request->app_id)->update([
+                    'estatus' => 'Cleared',
+                ]);
+            }
+        }
+        return response()->json([
+            'data' => 'success',
+        ], 200);
     }
 }

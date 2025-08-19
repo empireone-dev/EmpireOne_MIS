@@ -32,3 +32,69 @@ Route::post('/debug/file-upload', function (\Illuminate\Http\Request $request) {
         ]
     ]);
 });
+
+// Test route for debugging pre_employment_file specifically
+Route::post('/debug/pre-employment-file', function (\Illuminate\Http\Request $request) {
+    \Illuminate\Support\Facades\Log::info('Pre-employment file debug', [
+        'request_method' => $request->method(),
+        'content_type' => $request->header('Content-Type'),
+        'content_length' => $request->header('Content-Length'),
+        'has_file' => $request->hasFile('file'),
+        'all_files' => $request->allFiles(),
+        'request_data' => $request->except(['file']),
+        'validation_rules' => [
+            'file' => 'required|file|max:10240',
+            'app_id' => 'required',
+            'reqs' => 'required',
+        ]
+    ]);
+
+    try {
+        // Test the same validation as the actual controller
+        $request->validate([
+            'file' => 'required|file|max:10240', // 10MB max
+            'app_id' => 'required',
+            'reqs' => 'required',
+        ]);
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            \Illuminate\Support\Facades\Log::info('File validation passed', [
+                'name' => $file->getClientOriginalName(),
+                'size' => $file->getSize(),
+                'mime' => $file->getMimeType(),
+                'valid' => $file->isValid(),
+                'error' => $file->getError(),
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Validation passed',
+            'has_file' => $request->hasFile('file'),
+        ]);
+
+    } catch (\Illuminate\Validation\ValidationException $e) {
+        \Illuminate\Support\Facades\Log::error('Validation failed', [
+            'errors' => $e->errors(),
+            'message' => $e->getMessage(),
+        ]);
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Validation failed',
+            'errors' => $e->errors(),
+        ], 422);
+
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\Log::error('Unexpected error', [
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString(),
+        ]);
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Unexpected error: ' . $e->getMessage(),
+        ], 500);
+    }
+});

@@ -96,7 +96,7 @@ export default function File201UploadReqsButtonSection() {
                                         !reqs && <option selected disabled> </option>
                                     }
                                     {
-                                        !isContract && <option value="Contract">Contract Document</option>
+                                        !isContract && <option value="Contract">Employment Contract</option>
                                     }
                                     {
                                         filteredEntries

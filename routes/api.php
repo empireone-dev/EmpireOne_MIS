@@ -115,8 +115,29 @@ Route::put('/final_update_applicant_after_confirmation_status/{app_id}', [FinalR
 Route::put('/final_declined_attendance/{app_id}', [FinalRateController::class, 'final_declined_attendance']);
 Route::resource('department', DepartmentController::class);
 Route::resource('account', AccountController::class);
-Route::resource('pre_employment_file', PreEmploymentFileController::class);
-Route::post('/reupload_file', [PreEmploymentFileController::class, 'reupload_file']);
+
+// File upload routes with debugging middleware
+Route::middleware(['App\Http\Middleware\FileUploadMiddleware'])->group(function () {
+    Route::resource('pre_employment_file', PreEmploymentFileController::class);
+    Route::post('/reupload_file', [PreEmploymentFileController::class, 'reupload_file']);
+    
+    // Test route for file upload debugging
+    Route::post('/test-file-upload', function (\Illuminate\Http\Request $request) {
+        return response()->json([
+            'success' => true,
+            'has_file' => $request->hasFile('file'),
+            'files' => array_keys($request->allFiles()),
+            'file_details' => $request->hasFile('file') ? [
+                'name' => $request->file('file')->getClientOriginalName(),
+                'size' => $request->file('file')->getSize(),
+                'mime' => $request->file('file')->getMimeType(),
+                'valid' => $request->file('file')->isValid(),
+                'error' => $request->file('file')->getError(),
+            ] : null
+        ]);
+    });
+});
+
 Route::resource('attrition', AttritionController::class);
 Route::post('/upload_exit_clearance', [AttritionController::class, 'upload_exit_clearance']);
 Route::resource('exit_int', ExitInterviewController::class);

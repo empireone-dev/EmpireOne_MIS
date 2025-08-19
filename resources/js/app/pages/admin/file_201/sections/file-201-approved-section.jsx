@@ -27,7 +27,7 @@ export default function File201ApprovedSection({ data, setOpen }) {
                 onClick={on_handler}
                 loading={isLoading}
                 disabled={isLoading}
-                className="bg-green-500 w-full rounded hover:bg-green-600 p-1.5 text-white">
+                className="bg-green-500 w-full rounded hover:bg-green-600 p-2 text-white">
                 {isLoading ? 'Loading...' : 'Approved'}
             </button>
         </div>

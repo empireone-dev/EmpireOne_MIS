@@ -43,7 +43,7 @@ Route::post('/debug/pre-employment-file', function (\Illuminate\Http\Request $re
         'all_files' => $request->allFiles(),
         'request_data' => $request->except(['file']),
         'validation_rules' => [
-            'file' => 'required|file|max:10240',
+            'file' => 'required|file|max:51200', // Updated to 50MB to match controller
             'app_id' => 'required',
             'reqs' => 'required',
         ]
@@ -52,7 +52,7 @@ Route::post('/debug/pre-employment-file', function (\Illuminate\Http\Request $re
     try {
         // Test the same validation as the actual controller
         $request->validate([
-            'file' => 'required|file|max:10240', // 10MB max
+            'file' => 'required|file|max:51200', // 50MB max (updated to match controller)
             'app_id' => 'required',
             'reqs' => 'required',
         ]);

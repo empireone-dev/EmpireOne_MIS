@@ -278,6 +278,17 @@ class PreEmploymentFileController extends Controller
     public function reupload_file(Request $request)
     {
         try {
+            // Add validation for file uploads in reupload as well
+            if ($request->hasFile('file')) {
+                $request->validate([
+                    'file' => 'required|file|max:51200', // 50MB max
+                ], [
+                    'file.required' => 'A file is required.',
+                    'file.file' => 'The uploaded file is not valid.',
+                    'file.max' => 'The file size cannot exceed 50MB.',
+                ]);
+            }
+            
             $preempfile = PreEmploymentFile::where('id', $request->id)->first();
             $applicant = Applicant::where('app_id', $request->app_id)->first();
             $job_offer = JobOffer::where('app_id', $request->app_id)->first(); // Fixed: use app_id instead of id

@@ -45,7 +45,7 @@ export default function File201DeclinedSection({ data, setOpen }) {
             <button
                 onClick={on_handler}
                 disabled={isLoading}
-                className={`w-full rounded p-0.5 text-white ${
+                className={`w-full rounded p-1.5 text-white ${
                     isLoading 
                         ? 'bg-gray-400 cursor-not-allowed' 
                         : 'bg-red-500 hover:bg-red-600'

@@ -123,17 +123,31 @@ Route::middleware(['fileUpload'])->group(function () {
     
     // Test route for file upload debugging
     Route::post('/test-file-upload', function (\Illuminate\Http\Request $request) {
+        $fileInfo = null;
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $fileInfo = [
+                'name' => $file->getClientOriginalName(),
+                'size' => $file->getSize(),
+                'size_mb' => round($file->getSize() / 1024 / 1024, 2),
+                'mime' => $file->getMimeType(),
+                'valid' => $file->isValid(),
+                'error' => $file->getError(),
+                'max_allowed_mb' => 50,
+                'within_limit' => ($file->getSize() / 1024 / 1024) <= 50
+            ];
+        }
+        
         return response()->json([
             'success' => true,
             'has_file' => $request->hasFile('file'),
             'files' => array_keys($request->allFiles()),
-            'file_details' => $request->hasFile('file') ? [
-                'name' => $request->file('file')->getClientOriginalName(),
-                'size' => $request->file('file')->getSize(),
-                'mime' => $request->file('file')->getMimeType(),
-                'valid' => $request->file('file')->isValid(),
-                'error' => $request->file('file')->getError(),
-            ] : null
+            'file_details' => $fileInfo,
+            'php_limits' => [
+                'upload_max_filesize' => ini_get('upload_max_filesize'),
+                'post_max_size' => ini_get('post_max_size'),
+                'memory_limit' => ini_get('memory_limit')
+            ]
         ]);
     });
 });

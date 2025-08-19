@@ -1,7 +1,55 @@
 # File Upload Troubleshooting Guide
 
-## Current Issue
+## Current Issue - RESOLVED ✅
 Getting a 500 error with message: "File upload failed: The file failed to upload."
+
+**Root Cause**: File size exceeded the Laravel validation limit of 10MB.
+
+**Solution Applied**: 
+- Increased Laravel validation limit from 10MB to 50MB
+- Added comprehensive file size validation on frontend
+- Improved error handling with specific file size error messages
+- Added client-side validation to prevent large file uploads
+
+## File Size Limits
+
+### Current Configuration
+- **Laravel Validation**: 50MB (51200 KB)
+- **PHP upload_max_filesize**: 512MB
+- **PHP post_max_size**: 512MB  
+- **Client-side validation**: 50MB
+
+### Frontend Validation
+- Pre-upload file size checking
+- User-friendly error messages
+- Visual file size indicators
+- Prevention of oversized file uploads
+
+## Updated Components
+
+### Backend Changes
+1. **PreEmploymentFileController.php**
+   - Increased validation from 10MB to 50MB
+   - Added detailed file size logging
+   - Improved error handling with specific validation messages
+   - Added catch block for ValidationException
+
+2. **API Routes** 
+   - Enhanced test route with file size information
+   - Added PHP limits to debug response
+
+### Frontend Changes
+1. **upload-requirements-section.jsx**
+   - Added file size validation constants (50MB)
+   - Client-side validation before upload
+   - Improved error handling for different HTTP status codes
+   - Added beforeUpload validation to Upload component
+   - Visual file size limit indicator
+
+2. **Utility Functions**
+   - Created `fileUploadUtils.js` with reusable validation functions
+   - File size formatting helpers
+   - Centralized file size constants
 
 ## Debugging Routes Added
 

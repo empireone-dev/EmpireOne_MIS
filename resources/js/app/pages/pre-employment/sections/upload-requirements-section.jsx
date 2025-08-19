@@ -16,9 +16,9 @@ const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
 // File size validation function
 const validateFileSize = (file) => {
     if (!file) return { isValid: false, error: 'No file provided' };
-    
+
     const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
-    
+
     if (file.size > MAX_FILE_SIZE_BYTES) {
         return {
             isValid: false,
@@ -26,7 +26,7 @@ const validateFileSize = (file) => {
             sizeMB: fileSizeMB
         };
     }
-    
+
     return { isValid: true, sizeMB: fileSizeMB };
 };
 
@@ -62,6 +62,16 @@ export default function UploadRequirementsSection() {
             return;
         }
 
+        if (!reqs) {
+            message.error('Please select a requirement');
+            return;
+        }
+
+        if (!app_id) {
+            message.error('Application ID is missing');
+            return;
+        }
+
         // Validate file size before upload
         const validation = validateFileSize(fileList[0].originFileObj);
         if (!validation.isValid) {
@@ -70,6 +80,17 @@ export default function UploadRequirementsSection() {
         }
 
         setLoading(true);
+        
+        // Debug logging
+        console.log('Upload attempt:', {
+            fileName: fileList[0].originFileObj.name,
+            fileSize: fileList[0].originFileObj.size,
+            fileSizeMB: (fileList[0].originFileObj.size / (1024 * 1024)).toFixed(2),
+            reqs: reqs,
+            app_id: app_id,
+            fileType: fileList[0].originFileObj.type
+        });
+
         const fd = new FormData()
         fd.append('file', fileList[0].originFileObj)
         fd.append('status', 'Uploaded')
@@ -78,31 +99,43 @@ export default function UploadRequirementsSection() {
         fd.append('app_id', app_id)
 
         try {
-            if (fileList[0].status == 'done') {
-                await store_pre_employment_file_service(fd)
-                await store.dispatch(get_applicant_by_app_id_thunk(app_id))
-                message.success('Uploaded successfully!')
-                setIsModalOpen(false);
-                setFileList([])
-                setReqs('')
-                setOpen(false)
-            }
+            // Remove the status check condition - upload regardless of Antd upload status
+            await store_pre_employment_file_service(fd)
+            await store.dispatch(get_applicant_by_app_id_thunk(app_id))
+            message.success('Uploaded successfully!')
+            setIsModalOpen(false);
+            setFileList([])
+            setReqs('')
+            setOpen(false)
 
         } catch (error) {
             console.error('Upload error:', error);
-            
-            // Handle specific error types
+
+            // Enhanced error handling
             if (error.response) {
                 const { status, data } = error.response;
+                console.error('Server response:', data);
+                
                 if (status === 413) {
                     message.error('File size is too large. Maximum allowed size is 50MB.');
                 } else if (status === 422) {
-                    message.error(data.message || 'Validation failed. Please check your file and try again.');
+                    // More detailed 422 error handling
+                    if (data.details && data.details.file) {
+                        message.error(`File upload failed: ${data.details.file[0]}`);
+                    } else if (data.message) {
+                        message.error(`Validation failed: ${data.message}`);
+                    } else {
+                        message.error('Validation failed. Please check your file and try again.');
+                    }
+                } else if (status === 500) {
+                    message.error('Server error occurred. Please try again or contact support.');
                 } else {
-                    message.error(data.error || 'Upload failed. Please try again.');
+                    message.error(data.error || data.message || 'Upload failed. Please try again.');
                 }
+            } else if (error.request) {
+                message.error('Network error. Please check your connection and try again.');
             } else {
-                message.error('Upload failed. Please check your internet connection and try again.');
+                message.error('An unexpected error occurred. Please try again.');
             }
         } finally {
             setLoading(false);
@@ -112,26 +145,9 @@ export default function UploadRequirementsSection() {
 
     const handleCancel = () => {
         setIsModalOpen(false);
+        setFileList([]);
+        setReqs('');
     };
-
-    async function upload_file({ file }) {
-        // Validate file size before setting it
-        const validation = validateFileSize(file);
-        
-        if (!validation.isValid) {
-            message.error(validation.error);
-            return false; // Prevent file from being added
-        }
-        
-        // Show file size info
-        message.info(`File size: ${validation.sizeMB}MB (Max: ${MAX_FILE_SIZE_MB}MB)`);
-        
-        setFileList([
-            file
-        ]);
-        
-        return true;
-    }
 
     return (
         <div>
@@ -155,18 +171,12 @@ export default function UploadRequirementsSection() {
                         className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         name=""
                         id=""
+                        value={reqs}
                         onChange={(e) => setReqs(e.target.value)}
+                        required
                     >
+                        <option value="" disabled>Select a requirement...</option>
                         {
-                            !reqs && <option value="" selected disabled></option>
-                        }
-                        {
-                            // filteredEntries?.filter(res => res.site === "San Carlos")
-                            //     .map((res, i) => (
-                            //         <option value={res.reqs} key={i}>
-                            //             {res.reqs} {res.remarks === "Yes" ? "*" : ""}
-                            //         </option>
-                            //     ))
                             filteredEntries
                                 .filter(res => !site || res?.site === site)
                                 .map((res, i) => (
@@ -180,11 +190,8 @@ export default function UploadRequirementsSection() {
 
                 </div>
                 <Upload
-                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
                     listType="picture"
-                    method='GET'
                     maxCount={1}
-                    onChange={upload_file}
                     multiple={false}
                     fileList={fileList}
                     beforeUpload={(file) => {
@@ -193,7 +200,30 @@ export default function UploadRequirementsSection() {
                             message.error(validation.error);
                             return false;
                         }
+                        
+                        // Set the file to fileList and prevent automatic upload
+                        setFileList([{
+                            ...file,
+                            uid: file.uid || Date.now().toString(),
+                            name: file.name,
+                            status: 'done', // Set as done to show in list
+                            originFileObj: file
+                        }]);
+                        
+                        // Show file size info
+                        const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+                        message.info(`File selected: ${file.name} (${fileSizeMB}MB)`);
+                        
+                        return false; // Prevent automatic upload
+                    }}
+                    onRemove={() => {
+                        setFileList([]);
                         return true;
+                    }}
+                    showUploadList={{
+                        showPreviewIcon: true,
+                        showRemoveIcon: true,
+                        showDownloadIcon: false
                     }}
                 >
                     <Button type="primary" icon={<UploadOutlined />}>

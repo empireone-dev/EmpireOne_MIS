@@ -114,9 +114,9 @@ class AttritionController extends Controller
         }
 
         Mail::to($request->email)->send(new Cleared(array_merge(
-            $request->all(),
+            $request->all(),    
         )));
-        
+
         return response()->json([
             'data' => 'success',
         ], 200);

@@ -2,7 +2,7 @@ import { InboxOutlined } from '@ant-design/icons';
 import { Menu, message, Modal } from 'antd';
 import Dragger from 'antd/es/upload/Dragger';
 import React, { useState } from 'react'
-import { upload_exit_clearance_thunk } from '../redux/employee-attrition-thunk';
+import { get_employee_attrition_thunk, upload_exit_clearance_thunk } from '../redux/employee-attrition-thunk';
 import store from '@/app/store/store';
 
 export default function AttritionUploadClearanceComponent({ data, item }) {
@@ -80,20 +80,25 @@ export default function AttritionUploadClearanceComponent({ data, item }) {
     async function handleUpload() {
         try {
             setLoading(true); // Set loading before starting the submission
-            
+
             // Extract just the base64 strings from the files array
             const base64FilesArray = files.map(fileObj => fileObj.files);
-            
+
             console.log('Files to upload:', base64FilesArray);
             console.log('Sample base64 string:', base64FilesArray[0]?.substring(0, 50));
-            
+
             await store.dispatch(
                 upload_exit_clearance_thunk({
                     files: base64FilesArray,
                     app_id: data?.applicant?.app_id,
                     emp_id: data?.emp_id,
+                    fname: data?.applicant?.fname,
+                    mname: data?.applicant?.mname,
+                    lname: data?.applicant?.lname,
+                    email: data?.applicant?.email,
                 })
             );
+            await store.dispatch(get_employee_attrition_thunk())
             message.success("Uploaded Successfully!");
             setStatusModalOpen(false); // Close modal on success
         } catch (error) {
@@ -236,7 +241,7 @@ export default function AttritionUploadClearanceComponent({ data, item }) {
                                 loading={loading}
                                 disabled={loading || files.length === 0}
                                 onClick={handleUpload} className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-                                Upload
+                                {loading ? 'Uploading...' : 'Upload'}
                             </button>
                         </div>
                     </div>

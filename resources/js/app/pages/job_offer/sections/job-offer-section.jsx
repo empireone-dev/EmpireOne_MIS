@@ -127,7 +127,33 @@ export default function JobOfferSection() {
                                 <br /> <br /> We are excited to welcome you to
                                 our EmpireOne BPO Solutions Inc. family! Thank
                                 you.
-                                <br /> <br />
+                                <br /> <br /><br /><br />
+                                <div className="text-gray-400 px-7">
+                                    <p><i><b>Disclaimer:</b> Please be advised to prepare the following requirements after accepting the offer.</i></p>
+
+                                    <p><i>BELOW IS THE LIST OF REQUIREMENTS YOU NEED TO PREPARE (no asterisk is optional):</i></p>
+                                    <p><i>
+                                        • Birth Certificate *<br />
+                                        • SSS Form E1/SSS ID *<br />
+                                        • TIN ID *<br />
+                                        • Certificate of Employment from the previous employer<br />
+                                        • Phil Health MDR/ID *<br />
+                                        • Photocopy of Driver's License (if applicable)<br />
+                                        • SSS & PAG-IBIG Loan Voucher (if applicable)<br />
+                                        • Marriage Certificate (if married)<br />
+                                        • Birth Certificates of Dependents (if Married - spouse & children; if Single - parents)<br />
+                                        • Barangay Clearance with the purpose of bank application *<br />
+                                        • Police Clearance *<br />
+                                        • NBI Clearance *
+                                    </i></p>
+
+                                    <p><i>
+                                        --- HEALTH CERTIFICATE WITH THE FOLLOWING TESTS: ---<br />
+                                        • Chest X-ray *<br />
+                                        • Drug Test *
+                                    </i></p>
+                                    <br />
+                                </div>
                                 <div className="flex gap-2 justify-end mt-2.5">
                                     <button
                                         onClick={handleDecline}

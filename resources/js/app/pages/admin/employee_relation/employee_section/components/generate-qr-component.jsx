@@ -6,7 +6,7 @@ import { LinkOutlined, CopyOutlined, EyeOutlined } from '@ant-design/icons';
 
 export default function GenerateQrComponent({ data, item }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    
+
     // Helper function to handle undefined, null, and empty values
     const formatValue = (value) => {
         if (value === undefined || value === null || value === '' || value === 'undefined') {
@@ -23,7 +23,7 @@ export default function GenerateQrComponent({ data, item }) {
         if (!birthDate.isValid()) return '--';
         return today.diff(birthDate, 'years');
     };
-    
+
     function openHandler(params) {
         // setOpen(true);
         window.open(`/admin/file_201/${data.app_id}`, "_blank");
@@ -44,22 +44,22 @@ export default function GenerateQrComponent({ data, item }) {
     // Create URL with employee data for direct scanning
     const createQRUrl = () => {
         const baseUrl = window.location.origin;
-        const employeeId = data?.emp_id;
-        
+        const applicationId = data?.app_id;
+
         // Use the correct URL path that matches our route
-        return `${baseUrl}/admin/employee-qr-scan/${employeeId}`;
+        return `${baseUrl}/admin/employee-qr-scan/${applicationId}`;
     };
 
     // Fallback: Create comprehensive employee information for preview
     const createEmployeeInfo = () => {
         const applicant = data?.applicant;
         const employee = data;
-        
+
         const employeeInfo = {
             // Employee Information
             employeeId: formatValue(employee?.emp_id),
             applicationId: formatValue(applicant?.app_id),
-            
+
             // Personal Information
             fullName: `${applicant?.fname || ''} ${applicant?.mname || ''} ${applicant?.lname || ''} ${applicant?.suffix || ''}`.trim(),
             dateOfBirth: applicant?.dob ? moment(applicant.dob).format('LL') : '--',
@@ -68,29 +68,29 @@ export default function GenerateQrComponent({ data, item }) {
             maritalStatus: formatValue(applicant?.marital),
             religion: formatValue(applicant?.religion),
             nationality: formatValue(applicant?.nationality),
-            
+
             // Contact Information
             email: formatValue(applicant?.email),
             phone: formatValue(applicant?.phone),
             currentAddress: formatValue(applicant?.caddress),
             permanentAddress: formatValue(applicant?.paddress),
-            
+
             // Government IDs
             sss: formatValue(applicant?.sss),
             tin: formatValue(applicant?.tin),
             philhealth: formatValue(applicant?.philh),
             pagibig: formatValue(applicant?.pagibig),
-            
+
             // Family Information
             motherName: formatValue(applicant?.mmname),
             fatherName: formatValue(applicant?.ffname),
-            
+
             // Emergency Contact
             emergencyContactName: formatValue(applicant?.ename),
             emergencyContactAddress: formatValue(applicant?.eaddress),
             emergencyContactPhone: formatValue(applicant?.ephone),
             relationship: formatValue(applicant?.relationship),
-            
+
             // Work Information
             position: formatValue(employee?.position),
             department: formatValue(employee?.dept),
@@ -98,12 +98,12 @@ export default function GenerateQrComponent({ data, item }) {
             site: formatValue(applicant?.site),
             hiredDate: employee?.hired ? moment(employee.hired).format('YYYY-MM-DD') : '--',
             status: formatValue(employee?.status),
-            
+
             // Education
             education: formatValue(applicant?.educ),
             course: formatValue(applicant?.courset),
         };
-        
+
         return employeeInfo;
     };
 
@@ -124,7 +124,7 @@ export default function GenerateQrComponent({ data, item }) {
     };
 
     console.log("data", data);
-    
+
     return (
         <>
             <Menu.Item
@@ -156,33 +156,33 @@ export default function GenerateQrComponent({ data, item }) {
                             />
                         </div>
                     </div>
-                    
+
                     {/* QR Code Actions */}
                     <div className="flex justify-center">
                         <Space>
-                            <Button 
-                                icon={<EyeOutlined />} 
+                            <Button
+                                icon={<EyeOutlined />}
                                 onClick={handleOpenPage}
                                 type="primary"
                             >
                                 Preview Page
                             </Button>
-                            <Button 
-                                icon={<CopyOutlined />} 
+                            <Button
+                                icon={<CopyOutlined />}
                                 onClick={handleCopyUrl}
                             >
                                 Copy URL
                             </Button>
                         </Space>
                     </div>
-                    
+
                     <div className="text-center text-gray-600 text-sm">
                         <p><strong>QR Code URL:</strong></p>
                         <code className="bg-gray-100 p-1 rounded text-xs break-all">{createQRUrl()}</code>
                     </div>
-                    
+
                     <Divider>Employee Information Preview</Divider>
-                    
+
                     {/* Employee Information Display */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-h-96 overflow-y-auto">
                         {/* Personal Information */}

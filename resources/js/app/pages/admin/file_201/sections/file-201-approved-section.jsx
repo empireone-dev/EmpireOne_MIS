@@ -9,7 +9,7 @@ export default function File201ApprovedSection({ data, setOpen }) {
 
     const app_id = window.location.pathname.split('/')[3]
     const jobPos = window.location.pathname.split('/')[5]
-    const job_pos = jobPos.replace(/_/g, '/').replace(/%20/g, ' ');
+    const job_pos = jobPos?.replace(/_/g, '/').replace(/%20/g, ' ');
     console.log('datassssssss', data)
     async function on_handler(params) {
         await update_pre_employment_file_service({

@@ -106,7 +106,6 @@ export default function UploadRequirementsSection() {
             setIsModalOpen(false);
             setFileList([])
             setReqs('')
-            setOpen(false)
 
         } catch (error) {
             console.error('Upload error:', error);
@@ -134,8 +133,6 @@ export default function UploadRequirementsSection() {
                 }
             } else if (error.request) {
                 message.error('Network error. Please check your connection and try again.');
-            } else {
-                message.error('An unexpected error occurred. Please try again.');
             }
         } finally {
             setLoading(false);

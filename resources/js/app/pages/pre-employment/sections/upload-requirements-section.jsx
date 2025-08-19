@@ -9,6 +9,27 @@ import store from '@/app/store/store';
 import { store_pre_employment_file_thunk } from '../redux/pre-employment-files-thunk';
 import { get_applicant_by_app_id_thunk } from '../../admin/final_rate/redux/final-rate-thunk';
 
+// File size validation constants
+const MAX_FILE_SIZE_MB = 50;
+const MAX_FILE_SIZE_BYTES = MAX_FILE_SIZE_MB * 1024 * 1024;
+
+// File size validation function
+const validateFileSize = (file) => {
+    if (!file) return { isValid: false, error: 'No file provided' };
+    
+    const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+    
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+        return {
+            isValid: false,
+            error: `File size (${fileSizeMB}MB) exceeds the maximum allowed size of ${MAX_FILE_SIZE_MB}MB`,
+            sizeMB: fileSizeMB
+        };
+    }
+    
+    return { isValid: true, sizeMB: fileSizeMB };
+};
+
 export default function UploadRequirementsSection() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [reqs, setReqs] = useState('')
@@ -36,6 +57,18 @@ export default function UploadRequirementsSection() {
 
 
     const handleOk = async () => {
+        if (!fileList[0] || !fileList[0].originFileObj) {
+            message.error('Please select a file to upload');
+            return;
+        }
+
+        // Validate file size before upload
+        const validation = validateFileSize(fileList[0].originFileObj);
+        if (!validation.isValid) {
+            message.error(validation.error);
+            return;
+        }
+
         setLoading(true);
         const fd = new FormData()
         fd.append('file', fileList[0].originFileObj)
@@ -56,8 +89,21 @@ export default function UploadRequirementsSection() {
             }
 
         } catch (error) {
-            // message.error('Failed to submit application');
-            console.error(error);
+            console.error('Upload error:', error);
+            
+            // Handle specific error types
+            if (error.response) {
+                const { status, data } = error.response;
+                if (status === 413) {
+                    message.error('File size is too large. Maximum allowed size is 50MB.');
+                } else if (status === 422) {
+                    message.error(data.message || 'Validation failed. Please check your file and try again.');
+                } else {
+                    message.error(data.error || 'Upload failed. Please try again.');
+                }
+            } else {
+                message.error('Upload failed. Please check your internet connection and try again.');
+            }
         } finally {
             setLoading(false);
         }
@@ -69,9 +115,22 @@ export default function UploadRequirementsSection() {
     };
 
     async function upload_file({ file }) {
+        // Validate file size before setting it
+        const validation = validateFileSize(file);
+        
+        if (!validation.isValid) {
+            message.error(validation.error);
+            return false; // Prevent file from being added
+        }
+        
+        // Show file size info
+        message.info(`File size: ${validation.sizeMB}MB (Max: ${MAX_FILE_SIZE_MB}MB)`);
+        
         setFileList([
             file
-        ])
+        ]);
+        
+        return true;
     }
 
     return (
@@ -128,6 +187,14 @@ export default function UploadRequirementsSection() {
                     onChange={upload_file}
                     multiple={false}
                     fileList={fileList}
+                    beforeUpload={(file) => {
+                        const validation = validateFileSize(file);
+                        if (!validation.isValid) {
+                            message.error(validation.error);
+                            return false;
+                        }
+                        return true;
+                    }}
                 >
                     <Button type="primary" icon={<UploadOutlined />}>
                         Upload Scanned Image
@@ -135,6 +202,7 @@ export default function UploadRequirementsSection() {
                 </Upload>
                 <div className='mt-3 text-zinc-400 text-sm'>
                     <p><i>Note: Requirements marked with an asterisk (*) are mandatory and must be submitted or uploaded to proceed to the next step of the application process.</i></p>
+                    <p className='mt-1'><i>Maximum file size: {MAX_FILE_SIZE_MB}MB</i></p>
                 </div>
             </Modal>
         </div>

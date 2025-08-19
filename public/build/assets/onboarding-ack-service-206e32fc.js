@@ -1,1 +1,0 @@
-import{h as o}from"./app-5a01b650.js";async function r(a){return(await o.post("/api/onboarding_ack",a)).data}async function t(a){return(await o.put("/api/onboarding_ack/"+a.job_offer_id,a)).data}async function e(a){return(await o.get("/api/onboarding_ackdoc_by_id/"+a+"?job_offer_id="+window.location.pathname.split("/")[3])).data}export{r as c,e as g,t as u};

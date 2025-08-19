@@ -31,12 +31,40 @@ class PreEmploymentFileController extends Controller
     public function store(Request $request)
     {
         try {
-            // Add validation for required fields
+            // Add validation for required fields - increased file size limit
             $request->validate([
-                'file' => 'required|file|max:10240', // 10MB max
+                'file' => 'required|file|max:51200', // 50MB max (increased from 10MB)
                 'app_id' => 'required',
                 'reqs' => 'required',
+            ], [
+                'file.required' => 'A file is required.',
+                'file.file' => 'The uploaded file is not valid.',
+                'file.max' => 'The file size cannot exceed 50MB.',
+                'app_id.required' => 'Application ID is required.',
+                'reqs.required' => 'Requirements field is required.',
             ]);
+
+            // Check if the file size exceeds PHP limits before processing
+            if ($request->hasFile('file')) {
+                $file = $request->file('file');
+                $fileSizeInMB = round($file->getSize() / 1024 / 1024, 2);
+                
+                Log::info('File upload attempt', [
+                    'file_name' => $file->getClientOriginalName(),
+                    'file_size_mb' => $fileSizeInMB,
+                    'file_size_bytes' => $file->getSize(),
+                    'app_id' => $request->app_id,
+                    'reqs' => $request->reqs,
+                    'max_allowed_mb' => 50
+                ]);
+                
+                // Additional check for very large files
+                if ($fileSizeInMB > 50) {
+                    return response()->json([
+                        'error' => "File size ({$fileSizeInMB}MB) exceeds the maximum allowed size of 50MB."
+                    ], 413);
+                }
+            }
 
             $today = date('Y-m-d');
             $count = Employee::whereDate('created', $today)->count() + 1;
@@ -217,6 +245,23 @@ class PreEmploymentFileController extends Controller
                     'all_files' => array_keys($request->allFiles())
                 ]
             ], 400);
+            
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            Log::error('File upload validation failed', [
+                'errors' => $e->errors(),
+                'request_data' => $request->except(['file']),
+                'file_info' => $request->hasFile('file') ? [
+                    'name' => $request->file('file')->getClientOriginalName(),
+                    'size' => $request->file('file')->getSize(),
+                    'size_mb' => round($request->file('file')->getSize() / 1024 / 1024, 2),
+                ] : null
+            ]);
+            
+            return response()->json([
+                'error' => 'Validation failed',
+                'details' => $e->errors(),
+                'message' => $e->validator->errors()->first()
+            ], 422);
             
         } catch (\Exception $e) {
             Log::error('File upload error', [

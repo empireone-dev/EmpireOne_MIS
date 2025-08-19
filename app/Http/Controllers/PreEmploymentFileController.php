@@ -48,7 +48,7 @@ class PreEmploymentFileController extends Controller
             if ($request->hasFile('file')) {
                 $file = $request->file('file');
                 $fileSizeInMB = round($file->getSize() / 1024 / 1024, 2);
-                
+
                 Log::info('File upload attempt', [
                     'file_name' => $file->getClientOriginalName(),
                     'file_size_mb' => $fileSizeInMB,
@@ -57,7 +57,7 @@ class PreEmploymentFileController extends Controller
                     'reqs' => $request->reqs,
                     'max_allowed_mb' => 50
                 ]);
-                
+
                 // Additional check for very large files
                 if ($fileSizeInMB > 50) {
                     return response()->json([
@@ -91,14 +91,14 @@ class PreEmploymentFileController extends Controller
 
             if ($request->hasFile('file')) {
                 $uploadedFile = $request->file('file');
-                
+
                 // Check if file is valid
                 if (!$uploadedFile->isValid()) {
                     Log::error('Invalid file upload', [
                         'error' => $uploadedFile->getError(),
                         'error_message' => $uploadedFile->getErrorMessage()
                     ]);
-                    
+
                     return response()->json([
                         'error' => 'Invalid file upload: ' . $uploadedFile->getErrorMessage()
                     ], 400);
@@ -108,13 +108,12 @@ class PreEmploymentFileController extends Controller
                 try {
                     $path = $uploadedFile->store(date("Y"), 's3');
                     $url = 'https://s3.amazonaws.com/' . config('filesystems.disks.s3.bucket') . '/' . $path;
-                    
+
                     Log::info('S3 upload successful', [
                         'path' => $path,
                         'url' => $url,
                         'file_name' => $uploadedFile->getClientOriginalName()
                     ]);
-                    
                 } catch (\Exception $s3Exception) {
                     Log::error('S3 upload failed, trying local storage', [
                         'error' => $s3Exception->getMessage(),
@@ -127,23 +126,22 @@ class PreEmploymentFileController extends Controller
                             'secret_exists' => !empty(config('filesystems.disks.s3.secret')),
                         ]
                     ]);
-                    
+
                     // Fallback to local storage
                     try {
                         $path = $uploadedFile->store(date("Y"), 'public');
                         $url = asset('storage/' . $path);
-                        
+
                         Log::info('Local storage fallback successful', [
                             'path' => $path,
                             'url' => $url
                         ]);
-                        
                     } catch (\Exception $localException) {
                         Log::error('Both S3 and local storage failed', [
                             's3_error' => $s3Exception->getMessage(),
                             'local_error' => $localException->getMessage()
                         ]);
-                        
+
                         return response()->json([
                             'error' => 'File upload failed completely',
                             'details' => [
@@ -175,7 +173,7 @@ class PreEmploymentFileController extends Controller
                             'status' => $request->status ?? 'Uploaded',
                         ]
                     ]);
-                    
+
                     return response()->json([
                         'error' => 'Database insert failed: ' . $dbException->getMessage()
                     ], 500);
@@ -186,13 +184,13 @@ class PreEmploymentFileController extends Controller
                         ['app_id', '=', $request->app_id],
                         ['status', '=', 'Contract Signing']
                     ])->first();
-                    
+
                     if ($jo) {
                         $jo->update([
                             'status' => 'Hired',
                         ]);
                     }
-                    
+
                     Employee::create([
                         'app_id' => $request->app_id,
                         'emp_id' => $dateUnique,
@@ -204,7 +202,7 @@ class PreEmploymentFileController extends Controller
                         'eogs' => $applicant->email ?? '',
                         'status' => 'Probationary',
                     ]);
-                    
+
                     User::create([
                         'role_id' => '7',
                         'employee_id' => $dateUnique,
@@ -221,7 +219,7 @@ class PreEmploymentFileController extends Controller
                         'password' => Hash::make('Business12'),
                     ]);
                 }
-                
+
                 return response()->json([
                     'count' => $count,
                     'data' => 'success',
@@ -245,7 +243,6 @@ class PreEmploymentFileController extends Controller
                     'all_files' => array_keys($request->allFiles())
                 ]
             ], 400);
-            
         } catch (\Illuminate\Validation\ValidationException $e) {
             Log::error('File upload validation failed', [
                 'errors' => $e->errors(),
@@ -256,19 +253,18 @@ class PreEmploymentFileController extends Controller
                     'size_mb' => round($request->file('file')->getSize() / 1024 / 1024, 2),
                 ] : null
             ]);
-            
+
             return response()->json([
                 'error' => 'Validation failed',
                 'details' => $e->errors(),
                 'message' => $e->validator->errors()->first()
             ], 422);
-            
         } catch (\Exception $e) {
             Log::error('File upload error', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-            
+
             return response()->json([
                 'error' => 'File upload failed: ' . $e->getMessage()
             ], 500);
@@ -277,6 +273,12 @@ class PreEmploymentFileController extends Controller
 
     public function reupload_file(Request $request)
     {
+
+        $today = date('Y-m-d');
+        $count = Employee::whereDate('created', $today)->count() + 1;
+        $countNumber = str_pad($count, 2, '0', STR_PAD_LEFT);
+        $dateUnique = date('ymd') . $countNumber;
+
         try {
             // Add validation for file uploads in reupload as well
             if ($request->hasFile('file')) {
@@ -288,15 +290,15 @@ class PreEmploymentFileController extends Controller
                     'file.max' => 'The file size cannot exceed 50MB.',
                 ]);
             }
-            
+
             $preempfile = PreEmploymentFile::where('id', $request->id)->first();
             $applicant = Applicant::where('app_id', $request->app_id)->first();
             $job_offer = JobOffer::where('app_id', $request->app_id)->first(); // Fixed: use app_id instead of id
-            
+
             if (!$preempfile) {
                 return response()->json(['error' => 'File not found'], 404);
             }
-            
+
             if (!$applicant) {
                 return response()->json(['error' => 'Applicant not found'], 404);
             }
@@ -308,14 +310,14 @@ class PreEmploymentFileController extends Controller
             } else if ($request->status !== 'Declined') {
                 if ($request->hasFile('file')) {
                     $uploadedFile = $request->file('file');
-                    
+
                     // Check if file is valid
                     if (!$uploadedFile->isValid()) {
                         return response()->json([
                             'error' => 'Invalid file upload: ' . $uploadedFile->getErrorMessage()
                         ], 400);
                     }
-                    
+
                     $path = $uploadedFile->store(date("Y"), 's3');
                     $url = 'https://s3.amazonaws.com/' . config('filesystems.disks.s3.bucket') . '/' . $path;
 
@@ -328,14 +330,14 @@ class PreEmploymentFileController extends Controller
             } else if ($request->status === 'Declined') {
                 if ($request->hasFile('file')) {
                     $uploadedFile = $request->file('file');
-                    
+
                     // Check if file is valid
                     if (!$uploadedFile->isValid()) {
                         return response()->json([
                             'error' => 'Invalid file upload: ' . $uploadedFile->getErrorMessage()
                         ], 400);
                     }
-                    
+
                     $path = $uploadedFile->store(date("Y"), 's3');
                     $url = 'https://s3.amazonaws.com/' . config('filesystems.disks.s3.bucket') . '/' . $path;
 
@@ -369,6 +371,33 @@ class PreEmploymentFileController extends Controller
                         'status' => 'Hired'
                     ]);
                 }
+                Employee::create([
+                    'app_id' => $request->app_id,
+                    'emp_id' => $dateUnique,
+                    'position' => $request->jobPos,
+                    'dept' => $jo->department ?? null,
+                    'account' => $jo->account ?? null,
+                    'sup_id' => null,
+                    'hired' => date('Y-m-d'),
+                    'eogs' => $applicant->email ?? '',
+                    'status' => 'Probationary',
+                ]);
+
+                User::create([
+                    'role_id' => '7',
+                    'employee_id' => $dateUnique,
+                    'employee_fname' => $applicant->fname,
+                    'employee_mname' => $applicant->mname ?? '',
+                    'employee_lname' => $applicant->lname ?? '',
+                    'employee_suffix' => $applicant->suffix ?? '',
+                    'department' => $jo->department ?? null,
+                    'account' => $jo->account ?? null,
+                    'sup_id' => null,
+                    'position' => $request->jobPos,
+                    'site' => $applicant->site ?? '',
+                    'gender' => $applicant->gender ?? '',
+                    'password' => Hash::make('Business12'),
+                ]);
             } else if ($request->reqs == 'Contract' && $request->status == 'Declined') {
                 if ($job_offer && $applicant) {
                     $data = array_merge($job_offer->toArray(), $applicant->toArray(), $request->all());
@@ -384,14 +413,13 @@ class PreEmploymentFileController extends Controller
                 'hasFile' => $request->hasFile('file'),
                 'data' => $this->index()->original['data']
             ], 200);
-            
         } catch (\Exception $e) {
             Log::error('File reupload error', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
                 'request_data' => $request->all()
             ]);
-            
+
             return response()->json([
                 'error' => 'File reupload failed: ' . $e->getMessage()
             ], 500);

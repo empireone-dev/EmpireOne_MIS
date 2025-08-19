@@ -117,7 +117,7 @@ Route::resource('department', DepartmentController::class);
 Route::resource('account', AccountController::class);
 
 // File upload routes with debugging middleware
-Route::middleware(['App\Http\Middleware\FileUploadMiddleware'])->group(function () {
+Route::middleware(['fileUpload'])->group(function () {
     Route::resource('pre_employment_file', PreEmploymentFileController::class);
     Route::post('/reupload_file', [PreEmploymentFileController::class, 'reupload_file']);
     

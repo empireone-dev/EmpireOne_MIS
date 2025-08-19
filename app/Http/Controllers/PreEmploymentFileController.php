@@ -77,18 +77,81 @@ class PreEmploymentFileController extends Controller
                 }
 
                 // Store the file on S3 and retrieve the path
-                $path = $uploadedFile->store(date("Y"), 's3');
-                $url = 'https://s3.amazonaws.com/' . config('filesystems.disks.s3.bucket') . '/' . $path;
+                try {
+                    $path = $uploadedFile->store(date("Y"), 's3');
+                    $url = 'https://s3.amazonaws.com/' . config('filesystems.disks.s3.bucket') . '/' . $path;
+                    
+                    Log::info('S3 upload successful', [
+                        'path' => $path,
+                        'url' => $url,
+                        'file_name' => $uploadedFile->getClientOriginalName()
+                    ]);
+                    
+                } catch (\Exception $s3Exception) {
+                    Log::error('S3 upload failed, trying local storage', [
+                        'error' => $s3Exception->getMessage(),
+                        'file_name' => $uploadedFile->getClientOriginalName(),
+                        'file_size' => $uploadedFile->getSize(),
+                        's3_config' => [
+                            'bucket' => config('filesystems.disks.s3.bucket'),
+                            'region' => config('filesystems.disks.s3.region'),
+                            'key_exists' => !empty(config('filesystems.disks.s3.key')),
+                            'secret_exists' => !empty(config('filesystems.disks.s3.secret')),
+                        ]
+                    ]);
+                    
+                    // Fallback to local storage
+                    try {
+                        $path = $uploadedFile->store(date("Y"), 'public');
+                        $url = asset('storage/' . $path);
+                        
+                        Log::info('Local storage fallback successful', [
+                            'path' => $path,
+                            'url' => $url
+                        ]);
+                        
+                    } catch (\Exception $localException) {
+                        Log::error('Both S3 and local storage failed', [
+                            's3_error' => $s3Exception->getMessage(),
+                            'local_error' => $localException->getMessage()
+                        ]);
+                        
+                        return response()->json([
+                            'error' => 'File upload failed completely',
+                            'details' => [
+                                's3_error' => $s3Exception->getMessage(),
+                                'local_error' => $localException->getMessage(),
+                                'file_name' => $uploadedFile->getClientOriginalName(),
+                                'file_size' => $uploadedFile->getSize(),
+                            ]
+                        ], 500);
+                    }
+                }
 
                 // Save the URL or file info to the database
-                PreEmploymentFile::create([
-                    'app_id' => $request->app_id,
-                    'reqs' => $request->reqs,
-                    'reqs_img' => $url,
-                    'status' => $request->status ?? 'Uploaded',
-                    'reas' => $request->reas ?? '',
-                    'created' => $request->created ?? now(),
-                ]);
+                try {
+                    PreEmploymentFile::create([
+                        'app_id' => $request->app_id,
+                        'reqs' => $request->reqs,
+                        'reqs_img' => $url,
+                        'status' => $request->status ?? 'Uploaded',
+                        'reas' => $request->reas ?? '',
+                        'created' => $request->created ?? now(),
+                    ]);
+                } catch (\Exception $dbException) {
+                    Log::error('Database insert failed', [
+                        'error' => $dbException->getMessage(),
+                        'data' => [
+                            'app_id' => $request->app_id,
+                            'reqs' => $request->reqs,
+                            'status' => $request->status ?? 'Uploaded',
+                        ]
+                    ]);
+                    
+                    return response()->json([
+                        'error' => 'Database insert failed: ' . $dbException->getMessage()
+                    ], 500);
+                }
 
                 if ($request->reqs == 'Contract') {
                     $jo = JobOffer::where([

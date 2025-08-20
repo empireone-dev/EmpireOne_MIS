@@ -17,6 +17,7 @@ export default function HiringTableSection() {
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
     const { joboffers } = useSelector((state) => state.joboffers)
+    const { user } = useSelector((state) => state.app);
 
     // const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -150,10 +151,14 @@ export default function HiringTableSection() {
     const searchParams = new URLSearchParams(urls.search);
     const pages = searchParams.get('page');
     const status = searchParams.get('status');
+    const site = searchParams.get('site');
 
     function search_status(value) {
 
         router.visit('?page=' + pages + '&status=' + (value || 'null'))
+    }
+    function search_site(value) {
+        router.visit('?page=1' + '&status=' + status + '&site=' + (value || 'null'))
     }
 
     const columns = [
@@ -248,21 +253,38 @@ export default function HiringTableSection() {
                 );
             },
         },
-        {
-            title: "Site",
-            dataIndex: "site",
-            key: "site",
-            ...getColumnSearchProps("site"),
-            render: (_, record, i) => {
-                console.log("record", record);
-
-                return (
-                    <div key={i}>
-                        {record?.applicant?.site}
-                    </div>
-                );
-            },
-        },
+        ...(user?.position === "CEO" || user?.position === "Director"
+            ? [
+                {
+                    title: (
+                        <div className="flex gap-3 items-center justify-center">
+                            <Select
+                                allowClear
+                                className="w-28"
+                                showSearch
+                                placeholder="Site"
+                                optionFilterProp="label"
+                                value={site === "null" ? null : site}
+                                onChange={search_site}
+                                options={[
+                                    { label: "San Carlos", value: "San Carlos" },
+                                    { label: "Carcar", value: "Carcar" },
+                                ]}
+                            />
+                        </div>
+                    ),
+                    dataIndex: "site",
+                    key: "site",
+                    render: (_, record, i) => {
+                        return (
+                            <div key={i} className="flex items-center justify-center">
+                                {record?.applicant?.site}
+                            </div>
+                        );
+                    },
+                },
+            ]
+            : []),
         {
             title: "Action",
             dataIndex: "action",

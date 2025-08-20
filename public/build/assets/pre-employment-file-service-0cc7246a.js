@@ -1,1 +1,0 @@
-import{h as t}from"./app-9aa0ccfc.js";async function s(e){return(await t.post("/api/pre_employment_file",e)).data}async function i(){return(await t.get("/api/pre_employment_file")).data}async function n(e){return(await t.post("/api/reupload_file",e)).data}export{i as g,s,n as u};

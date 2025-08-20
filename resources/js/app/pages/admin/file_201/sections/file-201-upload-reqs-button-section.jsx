@@ -50,10 +50,17 @@ export default function File201UploadReqsButtonSection() {
 
 
 
-    async function upload_file({ file }) {
-        setFileList([
-            file
-        ])
+    async function upload_file({ file, fileList }) {
+        if (file.status === 'removed') {
+            setFileList([]);
+        } else {
+            // Set the file status to 'done' to prevent loading state
+            const updatedFile = {
+                ...file,
+                status: 'done'
+            };
+            setFileList([updatedFile]);
+        }
     }
     const toRemove = applicant?.requirements?.map(res => res.reqs) ?? [];
     const filteredEntries = checklists.filter(entry => !toRemove.includes(entry.reqs));
@@ -109,19 +116,35 @@ export default function File201UploadReqsButtonSection() {
                                     }
                                 </select>
                             </div>
-                            <Upload
-                                action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                                listType="picture"
-                                method='GET'
-                                maxCount={1}
-                                onChange={upload_file}
-                                multiple={false}
-                                fileList={fileList}
-                            >
-                                <Button type="primary" icon={<UploadOutlined />}>
-                                    Upload Scanned Image
-                                </Button>
-                            </Upload>
+                            {fileList.length === 0 && (
+                                <Upload
+                                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+                                    listType="picture"
+                                    method='GET'
+                                    maxCount={1}
+                                    onChange={upload_file}
+                                    multiple={false}
+                                    fileList={fileList}
+                                >
+                                    <Button type="primary" icon={<UploadOutlined />}>
+                                        Upload Scanned Image
+                                    </Button>
+                                </Upload>
+                            )}
+                            {fileList.length > 0 && (
+                                <Upload
+                                    action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+                                    listType="picture"
+                                    method='GET'
+                                    maxCount={1}
+                                    onChange={upload_file}
+                                    multiple={false}
+                                    fileList={fileList}
+                                    showUploadList={{
+                                        showRemoveIcon: true,
+                                    }}
+                                />
+                            )}
                             <div className='mt-3 text-zinc-400 text-sm'>
                                 <p><i>Note: Requirements marked with an asterisk (*) are mandatory and must be submitted or uploaded to proceed to the next step of the application process.</i></p>
                             </div>

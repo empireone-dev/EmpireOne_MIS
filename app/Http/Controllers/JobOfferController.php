@@ -24,6 +24,12 @@ class JobOfferController extends Controller
             $jobofferQuery->where('status', '=', $request->status);
         }
 
+        if ($request->site && $request->site !== 'null') {
+            $jobofferQuery->whereHas('applicant', function ($query) use ($request) {
+                $query->where('site', '=', $request->site);
+            });
+        }
+
         if ($request->searching) {
             $jobofferQuery->where(function ($subQuery) use ($request) {
                 // Search by applicant ID

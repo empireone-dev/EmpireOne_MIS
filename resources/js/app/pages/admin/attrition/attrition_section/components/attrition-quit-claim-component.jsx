@@ -20,17 +20,24 @@ export default function AttritionQuitClaimComponent({ data, item }) {
 
     async function send_quit_claim(e) {
         e.preventDefault();
+        
+        // Validate that a file is selected
+        if (!file) {
+            message.error("Please select a file before sending the quit claim.");
+            return;
+        }
+        
         setLoading(true);
         const fd = new FormData();
         fd.append('file', file);
         // fd.append('phase_status', 'virtual_contract_signing');
         // fd.append('jobPos', jo?.jobPos);
         // fd.append('salary', jo?.salary);
-        fd.append('app_id', data?.app_id);
-        fd.append('fname', data?.fname);
-        fd.append('lname', data?.lname);
-        fd.append('email', data?.email);
-        fd.append('email', data?.email);
+        fd.append('app_id', data?.applicant?.app_id);
+        fd.append('emp_id', data?.employee?.emp_id);
+        fd.append('fname', data?.applicant?.fname);
+        fd.append('lname', data?.applicant?.lname);
+        fd.append('email', data?.applicant?.email);
         // fd.append('job_offer_id', jo?.id);
 
         try {
@@ -38,15 +45,25 @@ export default function AttritionQuitClaimComponent({ data, item }) {
                 send_quit_claim_thunk(fd)
             );
             setLoading(false);
+            setFile(null);
+            setUploadedFile(null);
             setStatusModalOpen(false);
-            message.success("Email sent successfully");
+            message.success("Email sent successfully with attachment");
         } catch (error) {
-            message.error("There was an error sending the email!");
+            console.error("Error sending quit claim:", error);
+            const errorMessage = error.response?.data?.error || "There was an error sending the email!";
+            message.error(errorMessage);
             setLoading(false);
         }
     }
     function openHandler(params) {
         setStatusModalOpen(true);
+    }
+
+    function closeModalHandler() {
+        setStatusModalOpen(false);
+        setFile(null);
+        setUploadedFile(null);
     }
     return (
         <>
@@ -57,8 +74,8 @@ export default function AttritionQuitClaimComponent({ data, item }) {
                 title="Send Quit Claim"
                 centered
                 visible={statusModalOpen}
-                onOk={() => setStatusModalOpen(false)}
-                onCancel={() => setStatusModalOpen(false)}
+                onOk={closeModalHandler}
+                onCancel={closeModalHandler}
                 width={1000}
                 footer={null}
             >

@@ -2,7 +2,7 @@ import { FilePdfOutlined } from '@ant-design/icons';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import React, { useState } from 'react';
 
-export default function SendUploadQuitClaimSection({uploadedFile, setUploadedFile,setFile}) {
+export default function UploadQuitClaimSection({ uploadedFile, setUploadedFile, setFile }) {
     // const [uploadedFile, setUploadedFile] = useState(null);
 
     const displayUploadedFile = (file) => {
@@ -14,12 +14,10 @@ export default function SendUploadQuitClaimSection({uploadedFile, setUploadedFil
         }
     };
 
-    console.log('uploadedFile',uploadedFile)
-
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
         displayUploadedFile(file);
-        setFile(file)
+        setFile(file);
     };
 
     const handleDragOver = (e) => {
@@ -28,19 +26,16 @@ export default function SendUploadQuitClaimSection({uploadedFile, setUploadedFil
 
     const handleDrop = (e) => {
         e.preventDefault();
-        const file = e.dataTransfer.files[0];
-        displayUploadedFile(file);
-        setFile(file);
+        displayUploadedFile(e.dataTransfer.files[0]);
     };
 
     const handleRemoveFile = () => {
         setUploadedFile(null);
-        setFile(null);
     };
-    console.log('uploadedFile',uploadedFile)
+
     return (
-        <div className='px-3 mb-2'>
-            <h1 className="block uppercase tracking-wide  text-xs font-bold mb-3">Upload Quit Claim</h1>
+        <div>
+            <h1 className="text-xl font-semibold mb-3 text-gray-900  mt-9">Upload your signed and cleared Quit Claim PDF file here.</h1>
             <div className="w-full py-9 bg-gray-50 rounded-2xl border border-gray-300 gap-3 grid border-dashed" onDragOver={handleDragOver} onDrop={handleDrop}>
                 <div className="grid gap-1">
                     <FilePdfOutlined className='flex items-center justify-center text-4xl' />
@@ -50,7 +45,7 @@ export default function SendUploadQuitClaimSection({uploadedFile, setUploadedFil
                     <h4 className="text-center text-gray-900 text-sm font-medium leading-snug">Drag and Drop your file here or</h4>
                     <div className="flex items-center justify-center">
                         <label>
-                            <input type="file" accept="application/pdf" hidden onChange={handleFileInputChange} required/>
+                            <input type="file" accept="application/pdf" hidden onChange={handleFileInputChange} />
                             <div className="flex w-28 h-9 px-2 flex-col bg-green-600 rounded-full shadow text-white text-xs font-semibold leading-4 items-center justify-center cursor-pointer focus:outline-none">Choose File</div>
                         </label>
                     </div>
@@ -58,7 +53,7 @@ export default function SendUploadQuitClaimSection({uploadedFile, setUploadedFil
             </div>
             <div>
                 {uploadedFile && (
-                    <div id="PDFDisplay" className='mt-4 mb-4'>
+                    <div id="display-area" className='mt-4 mb-4'>
                         <div className='flex flex-1 items-center justify-end w-full bg-neutral-800 rounded-t-md'>
                             <div>
                                 <button className=' rounded-t-md text-white py-1.5 px-3 items-center justify-end' onClick={handleRemoveFile}><XMarkIcon className='h-6' /></button>

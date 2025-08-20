@@ -42,6 +42,14 @@ class QuitClaim extends Mailable
             ->markdown('mail.quit_claim.email')
             ->with($this->data);
 
+        // Attach the file if it exists
+        if ($this->filePath) {
+            $email->attach($this->filePath, [
+                'as' => 'quit_claim_document.pdf',
+                'mime' => 'application/pdf',
+            ]);
+        }
+
         return $email;
     }
 }

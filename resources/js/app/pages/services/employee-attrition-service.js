@@ -12,6 +12,10 @@ export async function upload_exit_clearance_service(data) {
 }
 
 export async function send_quit_claim_service(data) {
-    const res = await axios.post('/api/send_quit_claim', data)
+    const res = await axios.post('/api/send_quit_claim', data, {
+        headers: {
+            'Content-Type': 'multipart/form-data',
+        },
+    })
     return res.data
 }

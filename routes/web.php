@@ -44,10 +44,10 @@ Route::get('/test-s3', function () {
         // Test S3 connection by trying to put a simple file
         $testContent = 'Test file created at ' . now();
         $path = Storage::disk('s3')->put('test/test-' . time() . '.txt', $testContent);
-        
+
         if ($path) {
             $url = 'https://s3.amazonaws.com/' . config('filesystems.disks.s3.bucket') . '/' . $path;
-            
+
             return response()->json([
                 'success' => true,
                 'message' => 'S3 connection successful',
@@ -71,7 +71,7 @@ Route::get('/test-s3', function () {
             'error' => $e->getMessage(),
             'trace' => $e->getTraceAsString()
         ]);
-        
+
         return response()->json([
             'success' => false,
             'error' => $e->getMessage(),
@@ -165,6 +165,9 @@ Route::get('/pre-employment/{app_id}', function () {
 });
 Route::get('/virtual-contract/{app_id}/{job_offer_id}', function () {
     return Inertia::render('virtual-contract/page');
+});
+Route::get('/quit-claim/{emp_id}', function () {
+    return Inertia::render('quit-claim/page');
 });
 // Route::get('/exit_interview/{app_id}', function () {
 //     return Inertia::render('exit_interview/page');

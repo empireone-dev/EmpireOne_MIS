@@ -218,11 +218,14 @@ class EmployeeController extends Controller
         $jobOffer = ModelsJobOffer::where('app_id', '=', $request->app_id)
             ->where('status', '=', 'Hired')
             ->first();
-        $jobOffer->update([
-            'jobPos' => $request->position,
-            'department' => $request->dept,
-            'account' => $request->account,
-        ]);
+        
+        if ($jobOffer) {
+            $jobOffer->update([
+                'jobPos' => $request->position,
+                'department' => $request->dept,
+                'account' => $request->account,
+            ]);
+        }
 
         $employeeByEmpId = User::where('employee_id', $request->employee_id)->first();
         if ($employeeByEmpId) {

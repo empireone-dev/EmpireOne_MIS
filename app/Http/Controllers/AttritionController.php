@@ -127,21 +127,42 @@ class AttritionController extends Controller
     public function send_quit_claim(Request $request)
     {
         $data = $request->all();
-        if ($request->hasFile('file')) {
-            $path = $request->file('file')->store(date("Y"), 's3');
-            $url = Storage::disk('s3')->url($path);
-            if ($url) {
+        
+        // Validate that a file is uploaded
+        if (!$request->hasFile('file')) {
+            return response()->json([
+                'error' => 'File is required',
+            ], 400);
+        }
+
+        try {
+            $file = $request->file('file');
+            $path = $file->store(date("Y"), 's3');
+            
+            // Get the full S3 URL for the uploaded file
+            $url = 'https://' . config('filesystems.disks.s3.bucket') . '.s3.' . config('filesystems.disks.s3.region') . '.amazonaws.com/' . $path;
+            
+            if ($path) {
                 $emailData = $data;
                 if ($request->job_offer_id) {
                     $emailData['job_offer_id'] = $request->job_offer_id;
                     $emailData['jobPos'] = $request->jobPos;
                 }
                 Mail::to($request->email)->send(new QuitClaim($emailData, $url));
+                
+                return response()->json([
+                    'data' => 'success',
+                    'message' => 'Email sent successfully with attachment',
+                ], 200);
+            } else {
+                return response()->json([
+                    'error' => 'Failed to upload file to S3',
+                ], 500);
             }
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to process file upload: ' . $e->getMessage(),
+            ], 500);
         }
-
-        return response()->json([
-            'data' => 'success',
-        ], 200);
     }
 }

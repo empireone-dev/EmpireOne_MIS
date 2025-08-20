@@ -32,7 +32,8 @@ class JobOfferController extends Controller
                         // Search by last name, first name, or middle name in the applicant relation
                         $query->where('lname', 'LIKE', '%' . $request->searching . '%')
                             ->orWhere('fname', 'LIKE', '%' . $request->searching . '%')
-                            ->orWhere('mname', 'LIKE', '%' . $request->searching . '%');
+                            ->orWhere('mname', 'LIKE', '%' . $request->searching . '%')
+                            ->orWhere('site', 'LIKE', '%' . $request->searching . '%');
                     });
             });
         }

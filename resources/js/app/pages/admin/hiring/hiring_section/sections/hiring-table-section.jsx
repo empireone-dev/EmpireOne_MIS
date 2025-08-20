@@ -155,7 +155,7 @@ export default function HiringTableSection() {
 
     function search_status(value) {
 
-        router.visit('?page=' + pages + '&status=' + (value || 'null'))
+        router.visit('?page=' + pages + '&status=' + (value || 'null') + site)
     }
     function search_site(value) {
         router.visit('?page=1' + '&status=' + status + '&site=' + (value || 'null'))

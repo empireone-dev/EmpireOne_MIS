@@ -249,6 +249,21 @@ export default function HiringTableSection() {
             },
         },
         {
+            title: "Site",
+            dataIndex: "site",
+            key: "site",
+            ...getColumnSearchProps("site"),
+            render: (_, record, i) => {
+                console.log("record", record);
+
+                return (
+                    <div key={i}>
+                        {record?.applicant?.site}
+                    </div>
+                );
+            },
+        },
+        {
             title: "Action",
             dataIndex: "action",
             render: (_, record) => {

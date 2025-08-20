@@ -257,27 +257,25 @@ export default function HiringTableSection() {
             ? [
                 {
                     title: (
-                        <div className="flex gap-3 items-center justify-center">
-                            <Select
-                                allowClear
-                                className="w-28"
-                                showSearch
-                                placeholder="Site"
-                                optionFilterProp="label"
-                                value={site === "null" ? null : site}
-                                onChange={search_site}
-                                options={[
-                                    { label: "San Carlos", value: "San Carlos" },
-                                    { label: "Carcar", value: "Carcar" },
-                                ]}
-                            />
-                        </div>
+                        <Select
+                            allowClear
+                            className="w-28"
+                            showSearch
+                            placeholder="Site"
+                            optionFilterProp="label"
+                            value={site === "null" ? null : site}
+                            onChange={search_site}
+                            options={[
+                                { label: "San Carlos", value: "San Carlos" },
+                                { label: "Carcar", value: "Carcar" },
+                            ]}
+                        />
                     ),
                     dataIndex: "site",
                     key: "site",
                     render: (_, record, i) => {
                         return (
-                            <div key={i} className="flex items-center justify-center">
+                            <div key={i}>
                                 {record?.applicant?.site}
                             </div>
                         );

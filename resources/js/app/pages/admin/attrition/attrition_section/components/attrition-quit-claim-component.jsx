@@ -1,107 +1,52 @@
-import { InboxOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, InboxOutlined, LoadingOutlined } from '@ant-design/icons';
 import { Menu, message, Modal } from 'antd';
 import Dragger from 'antd/es/upload/Dragger';
 import React, { useState } from 'react'
-import { upload_exit_clearance_thunk } from '../redux/employee-attrition-thunk';
+import { send_quit_claim_thunk, upload_exit_clearance_thunk } from '../redux/employee-attrition-thunk';
 import store from '@/app/store/store';
+import SendUploadQuitClaimSection from '../sections/send-upload-quit-claim-section';
 
 export default function AttritionQuitClaimComponent({ data, item }) {
     const [statusModalOpen, setStatusModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [files, setFiles] = useState([]);
+    const [uploadedFile, setUploadedFile] = useState(null);
+    const [file, setFile] = useState(null);
+
+    // const { applicants, interviewer } = useSelector(
+    //     (state) => state.applicants
+    // );
+
+    console.log("daasdadta", data);
+
+    async function send_quit_claim(e) {
+        e.preventDefault();
+        setLoading(true);
+        const fd = new FormData();
+        fd.append('file', file);
+        // fd.append('phase_status', 'virtual_contract_signing');
+        // fd.append('jobPos', jo?.jobPos);
+        // fd.append('salary', jo?.salary);
+        fd.append('app_id', data?.app_id);
+        fd.append('fname', data?.fname);
+        fd.append('lname', data?.lname);
+        fd.append('email', data?.email);
+        fd.append('email', data?.email);
+        // fd.append('job_offer_id', jo?.id);
+
+        try {
+            await store.dispatch(
+                send_quit_claim_thunk(fd)
+            );
+            setLoading(false);
+            setStatusModalOpen(false);
+            message.success("Email sent successfully");
+        } catch (error) {
+            message.error("There was an error sending the email!");
+            setLoading(false);
+        }
+    }
     function openHandler(params) {
         setStatusModalOpen(true);
-    }
-
-    const handleFiles = async (fileList) => {
-        const toBase64 = (file) =>
-            new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = (err) => reject(err);
-                reader.readAsDataURL(file);
-            });
-
-        const fileArray = Array.from(fileList);
-
-        // Remove files that already exist in state
-        const newUniqueFiles = fileArray.filter(
-            (file) =>
-                !files.some(
-                    (existing) =>
-                        existing.file.name === file.name &&
-                        existing.file.size === file.size &&
-                        existing.file.lastModified === file.lastModified
-                )
-        );
-
-        const base64Files = await Promise.all(
-            newUniqueFiles.map(async (file) => ({
-                file,
-                files: await toBase64(file),
-            }))
-        );
-
-        setFiles((prevFiles) => [...prevFiles, ...base64Files]);
-    };
-
-    const props = {
-        name: "file",
-        multiple: true, // Changed to true to allow multiple files
-        // accept: "application/pdf",
-        showUploadList: true,
-        beforeUpload() {
-            return false; // Prevent automatic upload
-        },
-        onChange(info) {
-            const { fileList } = info;
-            // Handle files when they are added
-            const newFiles = fileList
-                .map((file) => file.originFileObj || file)
-                .filter(Boolean);
-            handleFiles(newFiles);
-        },
-        onRemove(file) {
-            setFiles((prevFiles) =>
-                prevFiles.filter((f) => f.file.name !== file.name)
-            );
-            return true; // allow UI to remove it too
-        },
-
-        // onDrop(e) {
-        //     console.log("Dropped files", e.dataTransfer.files);
-        // },
-    };
-
-    const handleCancel = () => {
-        setStatusModalOpen(false);
-    };
-
-    async function handleUpload() {
-        try {
-            setLoading(true); // Set loading before starting the submission
-
-            // Extract just the base64 strings from the files array
-            const base64FilesArray = files.map(fileObj => fileObj.files);
-
-            console.log('Files to upload:', base64FilesArray);
-            console.log('Sample base64 string:', base64FilesArray[0]?.substring(0, 50));
-
-            await store.dispatch(
-                upload_exit_clearance_thunk({
-                    files: base64FilesArray,
-                    app_id: data?.applicant?.app_id,
-                    emp_id: data?.emp_id,
-                })
-            );
-            message.success("Email Sent Successfully!");
-            setStatusModalOpen(false); // Close modal on success
-        } catch (error) {
-            console.error('Upload error:', error);
-            message.error("Failed to send email. Please try again.");
-        } finally {
-            setLoading(false); // Reset loading after submission
-        }
     }
     return (
         <>
@@ -211,32 +156,25 @@ export default function AttritionQuitClaimComponent({ data, item }) {
                                 <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={data?.estatus} readOnly />
                             </div>
                         </div>
-                        <div className="space-y-2 px-3">
-                            <label className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                Quit Claim
-                            </label>
-                            <Dragger {...props}>
-                                <p className="ant-upload-drag-icon">
-                                    <InboxOutlined />
-                                </p>
-                                <p className="ant-upload-text">
-                                    Click or drag file to this area to upload Quit Claim
-                                </p>
-                                <p className="ant-upload-hint">
-                                    Support for a single or bulk upload.
-                                </p>
-                            </Dragger>
-                        </div>
+                        <SendUploadQuitClaimSection
+                            setFile={setFile}
+                            uploadedFile={uploadedFile}
+                            setUploadedFile={setUploadedFile}
+                        />
                         <div className="flex justify-end space-x-2 px-3 mt-1">
-                            <button type='button' onClick={handleCancel} className="mt-4 bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded">
-                                Cancel
-                            </button>
                             <button
-                                type='submit'
-                                loading={loading}
-                                disabled={loading || files.length === 0}
-                                onClick={handleUpload} className="mt-4 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-                                Send
+                                type="submit"
+                                className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
+                                    }`}
+                                onClick={send_quit_claim}
+                                disabled={loading}
+                            >
+                                {loading ? (
+                                    <LoadingOutlined spin />
+                                ) : (
+                                    <CheckCircleFilled />
+                                )}
+                                {loading ? " SENDING..." : " SEND QUIT CLAIM"}
                             </button>
                         </div>
                     </div>

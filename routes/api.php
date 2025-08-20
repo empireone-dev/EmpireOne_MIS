@@ -120,7 +120,7 @@ Route::resource('account', AccountController::class);
 Route::middleware(['fileUpload'])->group(function () {
     Route::resource('pre_employment_file', PreEmploymentFileController::class);
     Route::post('/reupload_file', [PreEmploymentFileController::class, 'reupload_file']);
-    
+
     // Test route for file upload debugging
     Route::post('/test-file-upload', function (\Illuminate\Http\Request $request) {
         $fileInfo = null;
@@ -137,7 +137,7 @@ Route::middleware(['fileUpload'])->group(function () {
                 'within_limit' => ($file->getSize() / 1024 / 1024) <= 50
             ];
         }
-        
+
         return response()->json([
             'success' => true,
             'has_file' => $request->hasFile('file'),
@@ -157,6 +157,8 @@ Route::post('/upload_exit_clearance', [AttritionController::class, 'upload_exit_
 Route::resource('exit_int', ExitInterviewController::class);
 Route::resource('exit_clr', ExitClearanceController::class);
 Route::post('/send-clearance-email', [ExitClearanceController::class, 'sendClearanceEmail']);
+
+Route::post('/send_quit_claim', [AttritionController::class, 'send_quit_claim']);
 
 
 Route::post('/sendiv_email', [EmailController::class, 'sendiv_email']);

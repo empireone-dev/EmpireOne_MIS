@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\Attrition as MailAttrition;
 use App\Mail\Cleared;
+use App\Mail\QuitClaim;
 use App\Models\Applicant;
 use App\Models\Attrition;
 use App\Models\Employee;
@@ -114,8 +115,30 @@ class AttritionController extends Controller
         }
 
         Mail::to($request->email)->send(new Cleared(array_merge(
-            $request->all(),    
+            $request->all(),
         )));
+
+        return response()->json([
+            'data' => 'success',
+        ], 200);
+    }
+
+
+    public function send_quit_claim(Request $request)
+    {
+        $data = $request->all();
+        if ($request->hasFile('file')) {
+            $path = $request->file('file')->store(date("Y"), 's3');
+            $url = Storage::disk('s3')->url($path);
+            if ($url) {
+                $emailData = $data;
+                if ($request->job_offer_id) {
+                    $emailData['job_offer_id'] = $request->job_offer_id;
+                    $emailData['jobPos'] = $request->jobPos;
+                }
+                Mail::to($request->email)->send(new QuitClaim($emailData, $url));
+            }
+        }
 
         return response()->json([
             'data' => 'success',

@@ -19,3 +19,18 @@ export async function send_quit_claim_service(data) {
     })
     return res.data
 }
+
+export async function get_employee_attrition_by_emp_id_service(emp_id) {
+    try {
+        const result = await axios.get(`/api/get_employee_attrition_by_emp_id/${emp_id}`)
+        return result.data
+    } catch (error) {
+        console.error('Error fetching employee attrition:', error);
+        throw error;
+    }
+}
+
+export async function upload_quit_claim_service(data) {
+    const res = await axios.post('/api/upload_quit_claim', data)
+    return res.data
+}

@@ -8,6 +8,7 @@ use App\Mail\QuitClaim;
 use App\Models\Applicant;
 use App\Models\Attrition;
 use App\Models\Employee;
+use App\Models\QuitClaim as ModelsQuitClaim;
 use App\Models\UploadExitClearance;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -127,7 +128,7 @@ class AttritionController extends Controller
     public function send_quit_claim(Request $request)
     {
         $data = $request->all();
-        
+
         // Validate that a file is uploaded
         if (!$request->hasFile('file')) {
             return response()->json([
@@ -138,10 +139,10 @@ class AttritionController extends Controller
         try {
             $file = $request->file('file');
             $path = $file->store(date("Y"), 's3');
-            
+
             // Get the full S3 URL for the uploaded file
             $url = 'https://' . config('filesystems.disks.s3.bucket') . '.s3.' . config('filesystems.disks.s3.region') . '.amazonaws.com/' . $path;
-            
+
             if ($path) {
                 $emailData = $data;
                 if ($request->job_offer_id) {
@@ -149,7 +150,7 @@ class AttritionController extends Controller
                     $emailData['jobPos'] = $request->jobPos;
                 }
                 Mail::to($request->email)->send(new QuitClaim($emailData, $url));
-                
+
                 return response()->json([
                     'data' => 'success',
                     'message' => 'Email sent successfully with attachment',
@@ -164,5 +165,70 @@ class AttritionController extends Controller
                 'error' => 'Failed to process file upload: ' . $e->getMessage(),
             ], 500);
         }
+    }
+
+    public function get_employee_attrition_by_emp_id($emp_id)
+    {
+        $attrition = Attrition::where('emp_id', $emp_id)->with('applicant', 'employee')->first();
+        return response()->json([
+            'data' => $attrition
+        ], 200);
+    }
+
+    public function upload_quit_claim(Request $request)
+    {
+        // Check if employee already has a quit claim uploaded
+        $existingQuitClaim = ModelsQuitClaim::where('emp_id', $request->emp_id)->first();
+        if ($existingQuitClaim) {
+            return response()->json([
+                'error' => 'Quit claim already uploaded for this employee',
+                'status' => 'already_exists'
+            ], 400);
+        }
+
+        $dateUnique = Carbon::now()->format('mdyHisv');
+        $base64Files = $request->input('files');
+        $uploadedFiles = [];
+        if ($base64Files && is_array($base64Files)) {
+            foreach ($base64Files as $base64) {
+                // Ensure $base64 is a string before using preg_match
+                if (!is_string($base64) || !preg_match('/^data:(.*?);base64,/', $base64, $matches)) {
+                    return response()->json(['error' => 'Invalid base64 file format'], 400);
+                }
+
+                $mimeType = $matches[1];
+                $extension = explode('/', $mimeType)[1] ?? 'bin'; // fallback to bin if missing
+
+                $fileData = base64_decode(substr($base64, strpos($base64, ',') + 1));
+                if ($fileData === false) {
+                    return response()->json(['error' => 'Base64 decode failed'], 400);
+                }
+
+                $filename = date('Y') . '/' .  $dateUnique . '_' . uniqid() . '.' . $extension;
+                Storage::disk('s3')->put($filename, $fileData);
+
+                // Build the URL manually using the S3 configuration
+                $bucket = config('filesystems.disks.s3.bucket');
+                $region = config('filesystems.disks.s3.region');
+                $url = "https://{$bucket}.s3.{$region}.amazonaws.com/{$filename}";
+
+                $uploadedFiles[] = $url;
+
+                // Save file record
+                ModelsQuitClaim::create([
+                    'app_id' =>  $request->app_id,
+                    'emp_id' =>  $request->emp_id,
+                    'file'   => $url,
+                ]);
+            }
+        }
+
+        // Mail::to("scaccounting@gmail.com")->send(new Cleared(array_merge(
+        //     $request->all(),
+        // )));
+
+        return response()->json([
+            'data' => 'success',
+        ], 200);
     }
 }

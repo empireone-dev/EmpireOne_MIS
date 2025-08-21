@@ -154,11 +154,13 @@ Route::middleware(['fileUpload'])->group(function () {
 
 Route::resource('attrition', AttritionController::class);
 Route::post('/upload_exit_clearance', [AttritionController::class, 'upload_exit_clearance']);
+Route::post('/upload_quit_claim', [AttritionController::class, 'upload_quit_claim']);
 Route::resource('exit_int', ExitInterviewController::class);
 Route::resource('exit_clr', ExitClearanceController::class);
 Route::post('/send-clearance-email', [ExitClearanceController::class, 'sendClearanceEmail']);
 
 Route::post('/send_quit_claim', [AttritionController::class, 'send_quit_claim']);
+Route::get('get_employee_attrition_by_emp_id/{emp_id}', [AttritionController::class, 'get_employee_attrition_by_emp_id']);
 
 
 Route::post('/sendiv_email', [EmailController::class, 'sendiv_email']);

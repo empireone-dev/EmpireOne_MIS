@@ -5,42 +5,97 @@ import store from '@/app/store/store';
 import { sendiv_contract_email_thunk } from '../../admin/recruitment/applicants/applicant_records/redux/applicant-thunk';
 import { message } from 'antd';
 import UploadQuitClaimSection from './upload-quit-claim-section';
+import { upload_quit_claim_thunk } from '../../admin/attrition/attrition_section/redux/employee-attrition-thunk';
 
 export default function QuitClaimUploadSection() {
+    const { employee_attritions } = useSelector((state) => state.employee_attritions);
     const { applicant } = useSelector((state) => state.final_rate);
     const [loading, setLoading] = useState(false);
     const [uploadedFile, setUploadedFile] = useState(null);
     const [file, setFile] = useState(null);
     const jo = applicant?.joboffer?.find((res) => res.status == "Contract Signing");
     const job_offer_id = window.location.pathname.split('/')[3];
-    console.log('file', file)
-    async function upload_contract(e) {
-        e.preventDefault();
-        setLoading(true);
-        const fd = new FormData();
-        fd.append('file', file);
-        fd.append('phase_status', 'upload_contract');
-        fd.append('jobPos', jo?.jobPos);
-        fd.append('salary', jo?.salary);
-        fd.append('app_id', applicant?.app_id);
-        fd.append('fname', applicant?.fname);
-        fd.append('lname', applicant?.lname);
-        fd.append('email', applicant?.email);
-        fd.append('job_offer_id', job_offer_id);
 
+    // Get the first (and should be only) employee attrition record
+    const employee_attrition = employee_attritions?.[0];
+
+    // Helper function to handle undefined/null/empty values
+    const getCleanValue = (value) => {
+        if (value === undefined || value === null || value === '' || value === 'undefined') {
+            return '';
+        }
+        return value;
+    };
+
+    console.log('file', file)
+    async function handleUpload() {
         try {
-            await store.dispatch(
-                sendiv_contract_email_thunk(fd)
+            setLoading(true); // Set loading before starting the submission
+
+            // Check if file is selected
+            if (!file) {
+                message.error("Please select a file to upload.");
+                setLoading(false);
+                return;
+            }
+
+            // Convert file to base64
+            const base64File = await convertFileToBase64(file);
+
+            console.log('File to upload:', file.name);
+            console.log('Base64 file size:', base64File.length);
+
+            const result = await store.dispatch(
+                upload_quit_claim_thunk({
+                    files: [base64File], // Send as array with single file
+                    app_id: employee_attrition?.applicant?.app_id,
+                    emp_id: employee_attrition?.emp_id,
+                    fname: employee_attrition?.applicant?.fname,
+                    mname: employee_attrition?.applicant?.mname,
+                    lname: employee_attrition?.applicant?.lname,
+                    email: employee_attrition?.applicant?.email,
+                })
             );
-            setLoading(false);
-            message.success("File Uploaded");
+
+            // Check if the upload was successful
+            if (result?.payload?.status === 'already_exists') {
+                message.warning("You have already uploaded a quit claim. Multiple uploads are not allowed.");
+                return;
+            }
+
+            // await store.dispatch(get_employee_attrition_thunk())
+            message.success("Quit claim uploaded successfully!");
+            // Reset file state after successful upload
+            setFile(null);
+            setUploadedFile(null);
         } catch (error) {
-            message.error("There was an error uploading the file!");
-            setLoading(false);
+            console.error('Upload error:', error);
+
+            // Check if it's a validation error for duplicate upload
+            if (error?.response?.data?.status === 'already_exists') {
+                message.warning("You have already uploaded a quit claim. Multiple uploads are not allowed.");
+            } else if (error?.response?.data?.error) {
+                message.error(error.response.data.error);
+            } else {
+                message.error("Failed to upload quit claim. Please try again.");
+            }
+        } finally {
+            setLoading(false); // Reset loading after submission
         }
     }
 
-    console.log('jo', jo)
+    // Helper function to convert file to base64
+    const convertFileToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = error => reject(error);
+        });
+    };
+
+    console.log('attrition', employee_attrition)
+    console.log('attritions', employee_attritions)
     return (
         <div>
             <div className="h-screen overflow-hidden">
@@ -54,13 +109,13 @@ export default function QuitClaimUploadSection() {
                             <div className='flex text-2xl items-center justify-center'>
                                 <h1><b>UPLOAD SIGNED QUIT CLAIM</b></h1>
                             </div>
-                            <form className='border rounded-lg p-3.5' onSubmit={upload_contract}>
+                            <form className='border rounded-lg p-3.5'>
                                 <div className='flex flex-col w-full mb-4'>
                                     <label htmlFor=""><b>Employee No.</b></label>
                                     <div className='flex flex-1 gap-3'>
                                         <input
-                                            value={applicant?.app_id}
-                                            type="text" placeholder="Employee No" className="border p-2 rounded w-full" />
+                                            value={getCleanValue(employee_attrition?.emp_id)}
+                                            type="text" placeholder="Employee No" className="border p-2 rounded w-full" readOnly />
                                     </div>
                                 </div>
                                 <div className='flex flex-col lg:flex-row flex-1 gap-4'>
@@ -70,7 +125,9 @@ export default function QuitClaimUploadSection() {
                                             <input
                                                 type="text"
                                                 className="border p-2 rounded w-full text-sm sm:text-base"
-                                                value={`${applicant?.fname || ''} ${applicant?.mname || ''} ${applicant?.lname || ''} ${applicant?.suffix || ''}`.replace(/\s+/g, ' ').trim()}
+                                                value={employee_attrition?.applicant ?
+                                                    `${getCleanValue(employee_attrition.applicant.fname)} ${getCleanValue(employee_attrition.applicant.mname)} ${getCleanValue(employee_attrition.applicant.lname)} ${getCleanValue(employee_attrition.applicant.suffix)}`.replace(/\s+/g, ' ').trim()
+                                                    : ''}
                                                 readOnly
                                                 placeholder="Full Name"
                                             />
@@ -82,13 +139,13 @@ export default function QuitClaimUploadSection() {
                                         <label className="text-sm sm:text-base">
                                             <b>Job Position</b>
                                         </label>
-                                        <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" readOnly />
+                                        <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={getCleanValue(employee_attrition?.position)} readOnly />
                                     </div>
                                     <div className="w-full">
                                         <label className="text-sm sm:text-base">
                                             <b>Department</b>
                                         </label>
-                                        <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" readOnly />
+                                        <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={getCleanValue(employee_attrition?.dept)} readOnly />
                                     </div>
                                     {/* <div class="w-full">
                                 <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
@@ -109,13 +166,13 @@ export default function QuitClaimUploadSection() {
                                         <label className="text-sm sm:text-base">
                                             <b>EOGS Email</b>
                                         </label>
-                                        <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="email" readOnly />
+                                        <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="email" value={getCleanValue(employee_attrition?.eogs)} readOnly />
                                     </div>
                                     <div className="w-full">
                                         <label className="text-sm sm:text-base">
                                             <b>Employment Status</b>
                                         </label>
-                                        <input className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="email" readOnly />
+                                        <input className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={getCleanValue(employee_attrition?.status)} readOnly />
                                     </div>
                                 </div>
 
@@ -124,13 +181,13 @@ export default function QuitClaimUploadSection() {
                                         <label className="text-sm sm:text-base">
                                             <b>Hired Date</b>
                                         </label>
-                                        <input className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" readOnly />
+                                        <input className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={getCleanValue(employee_attrition?.hired)} readOnly />
                                     </div>
                                     <div className="w-full">
                                         <label className="text-sm sm:text-base">
                                             <b>Separation Date</b>
                                         </label>
-                                        <input className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" readOnly />
+                                        <input className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={getCleanValue(employee_attrition?.separation)} readOnly />
                                     </div>
                                 </div>
 
@@ -139,19 +196,19 @@ export default function QuitClaimUploadSection() {
                                         <label className="text-sm sm:text-base">
                                             <b>Reason for Separation</b>
                                         </label>
-                                        <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" readOnly />
+                                        <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={getCleanValue(employee_attrition?.reas)} readOnly />
                                     </div>
                                     <div class="w-full">
                                         <label className="text-sm sm:text-base">
                                             <b>Reason for End of Contract</b>
                                         </label>
-                                        <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" readOnly />
+                                        <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={getCleanValue(employee_attrition?.reas)} readOnly />
                                     </div>
                                     <div className="w-full">
                                         <label className="text-sm sm:text-base">
                                             <b>Exit Interview & Clearance Status</b>
                                         </label>
-                                        <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" readOnly />
+                                        <input class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" type="text" value={getCleanValue(employee_attrition?.estatus)} readOnly />
                                     </div>
                                 </div>
                                 <UploadQuitClaimSection
@@ -163,18 +220,18 @@ export default function QuitClaimUploadSection() {
 
                                 <div className="flex mt-4">
                                     <button
-                                        type="submit"
-                                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
+                                        type="button"
+                                        className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading || !file ? "cursor-not-allowed opacity-75" : ""
                                             }`}
-                                        onClick={upload_contract}
-                                        disabled={loading}
+                                        onClick={handleUpload}
+                                        disabled={loading || !file}
                                     >
                                         {loading ? (
                                             <LoadingOutlined spin />
                                         ) : (
                                             <FileJpgOutlined />
                                         )}
-                                        {loading ? " SENDING..." : " UPLOAD"}
+                                        {loading ? " UPLOADING..." : " UPLOAD"}
                                     </button>
                                 </div>
                             </form>

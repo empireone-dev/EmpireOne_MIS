@@ -15,9 +15,11 @@ export default function UploadQuitClaimSection({ uploadedFile, setUploadedFile, 
     };
 
     const handleFileInputChange = (e) => {
-        const file = e.target.files[0];
-        displayUploadedFile(file);
-        setFile(file);
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            displayUploadedFile(selectedFile);
+            setFile(selectedFile);
+        }
     };
 
     const handleDragOver = (e) => {
@@ -26,11 +28,16 @@ export default function UploadQuitClaimSection({ uploadedFile, setUploadedFile, 
 
     const handleDrop = (e) => {
         e.preventDefault();
-        displayUploadedFile(e.dataTransfer.files[0]);
+        const droppedFile = e.dataTransfer.files[0];
+        if (droppedFile) {
+            displayUploadedFile(droppedFile);
+            setFile(droppedFile);
+        }
     };
 
     const handleRemoveFile = () => {
         setUploadedFile(null);
+        setFile(null);
     };
 
     return (

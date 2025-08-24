@@ -7,6 +7,7 @@ import {
     FileDoneOutlined,
     FileSearchOutlined,
     FolderOpenOutlined,
+    SolutionOutlined,
 } from "@ant-design/icons";
 import File201Component from "../../../employee_relation/employee_section/components/file-201-component";
 import AttritionReasonComponent from "../components/attrition-reason-components";
@@ -14,6 +15,7 @@ import AttritionExitInterviewComponent from "../components/attrition-exit-interv
 import AttritionExitInterviewResultComponent from "../components/attrition-exit-interview-result-component";
 import AttritionUploadClearanceComponent from "../components/attrition-upload-clearance-component";
 import AttritionQuitClaimComponent from "../components/attrition-quit-claim-component";
+import AttritionViewQuitClaimComponent from "../components/attirition-view-quit-claim-component";
 // import UpdateEmployeeComponent from "../components/update-employee-component";
 // import File201Component from "../components/file-201-component";
 // import EmploymentStatusComponent from "../components/employment-status-component";
@@ -100,16 +102,32 @@ export default function AttritionMenuSection({ data }) {
                 },
             ]
             : []),
-        ...(data?.estatus == "Cleared"
+        ...(data?.estatus == "Cleared" && !data?.quit_claim
             ? [
                 {
                     component: (
                         <AttritionQuitClaimComponent
                             // status="Quit Claim"
                             item={{
-                                label: "Quit Claim",
+                                label: "Send Quit Claim",
                                 key: "3",
                                 icon: <DeliveredProcedureOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
+            : []),
+        ...(data?.quit_claim
+            ? [
+                {
+                    component: (
+                        <AttritionViewQuitClaimComponent
+                            item={{
+                                label: "View Quit Claim",
+                                key: "1",
+                                icon: <SolutionOutlined />,
                             }}
                             data={data}
                         />

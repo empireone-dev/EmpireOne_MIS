@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { SearchOutlined, FilterOutlined } from '@ant-design/icons';
-import { Button, Input, Pagination, Space, Table, Tag, Select } from 'antd';
+import { SearchOutlined, FilterOutlined, CheckSquareOutlined } from '@ant-design/icons';
+import { Button, Input, Pagination, Space, Table, Tag, Select, Tooltip } from 'antd';
 import Highlighter from 'react-highlight-words';
 import AddAttritionSection from './add-attrition-section';
 import { useSelector } from 'react-redux';
@@ -399,7 +399,7 @@ export default function AttritionTableSection() {
                         key={record.key}
                         style={{ backgroundColor: color, color: textColor, border: 'none' }}
                     >
-                        {record.estatus}
+                        {record.estatus} {record.quit_claim && <Tooltip title="Signed & Uploaded Quit Claim"><CheckSquareOutlined /></Tooltip>}
                     </Tag>
                 );
             },

@@ -1,1 +1,0 @@
-import{j as e}from"./app-ca1b683e.js";function l({question:i,answer:s}){return e.jsxs("div",{className:"flex flex-col gap-1",children:[e.jsx("div",{children:e.jsx("h1",{children:e.jsxs("b",{children:["• ",i]})})}),e.jsx("div",{children:e.jsxs("h1",{children:[" - ",s]})})]})}export{l as default};

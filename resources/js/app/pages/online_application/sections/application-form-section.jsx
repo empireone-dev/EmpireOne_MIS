@@ -126,10 +126,10 @@ export default function ApplicationFormSection() {
       message.error("CV file is required. Please upload your CV.");
       return;
     }
-    
+
     setIsUploading(true);
     setUploadProgress(0);
-    
+
     try {
       // Simulate progress steps
       const progressSteps = [
@@ -139,13 +139,13 @@ export default function ApplicationFormSection() {
         { step: 80, message: "Finalizing submission..." },
         { step: 100, message: "Complete!" }
       ];
-      
+
       // Simulate progressive upload with delays
       for (let i = 0; i < progressSteps.length - 1; i++) {
         setUploadProgress(progressSteps[i].step);
         await new Promise(resolve => setTimeout(resolve, 800)); // 800ms delay between steps
       }
-      
+
       const result = await store.dispatch(
         store_applicant_thunk({
           ...data,
@@ -156,11 +156,11 @@ export default function ApplicationFormSection() {
           is_experience: hasExperience,
         })
       );
-      
+
       // Complete the progress
       setUploadProgress(100);
       await new Promise(resolve => setTimeout(resolve, 500));
-      
+
       // await store.dispatch(get_applicant_thunk())
       reset();
       setFiles([]);
@@ -314,16 +314,17 @@ export default function ApplicationFormSection() {
                   Site Information
                 </h1>
                 <div className="w-full lg:w-1/2 lg:flex-row flex-none">
-                  <Select
+                  <Select2
                     register={{
                       ...register("site", {
-                        required: false,
+                        required: "Site is required",
                       }),
                     }}
                     options={[
                       { label: "San Carlos", value: "San Carlos" },
                       { label: "Carcar", value: "Carcar" },
                     ]}
+                    errorMessage={errors?.site?.message}
                     label="Site"
                     name="site"
                   />
@@ -951,14 +952,14 @@ export default function ApplicationFormSection() {
                           <span>{uploadProgress}%</span>
                         </div>
                         <div className="w-full bg-gray-200 rounded-full h-2">
-                          <div 
+                          <div
                             className="bg-blue-600 h-2 rounded-full transition-all duration-300 ease-out"
                             style={{ width: `${uploadProgress}%` }}
                           ></div>
                         </div>
                       </div>
                     )}
-                    
+
                     <button
                       disabled={isSubmitting || isUploading}
                       type="submit"

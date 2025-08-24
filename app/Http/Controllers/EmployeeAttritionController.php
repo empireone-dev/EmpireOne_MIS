@@ -9,7 +9,7 @@ class EmployeeAttritionController extends Controller
 {
     public function index(Request $request)
     {
-        $query = EmployeeAttrition::with('applicant', 'employee');
+        $query = EmployeeAttrition::with('applicant', 'employee', 'quit_claim');
 
         // Search functionality
         if ($request->has('search') && !empty($request->search)) {

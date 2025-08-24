@@ -59,4 +59,9 @@ class Attrition extends Model
     {
         return $this->hasMany(ExitFactor::class, "app_id", "app_id");
     }
+
+    public function quit_claim(): HasOne
+    {
+        return $this->hasOne(QuitClaim::class, "emp_id", "emp_id");
+    }
 }

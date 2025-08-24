@@ -37,4 +37,9 @@ class EmployeeAttrition extends Model
     {
         return $this->belongsTo(Employee::class, "emp_id", "emp_id");
     }
+
+    public function quit_claim(): HasOne
+    {
+        return $this->hasOne(QuitClaim::class, "emp_id", "emp_id");
+    }
 }

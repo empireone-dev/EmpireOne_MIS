@@ -107,6 +107,7 @@ Route::post('/store_new_employee', [EmployeeController::class, 'store_new_employ
 Route::resource('medicine_record', MedicineRecordController::class);
 Route::resource('employee_health', EmployeeHealthController::class);
 Route::resource('employee_attrition', EmployeeAttritionController::class);
+Route::get('get_employee_attrition_by_emp_id/{emp_id}', [EmployeeAttritionController::class, 'getByEmpId']);
 Route::resource('emp_memo', UploadMemoController::class);
 Route::resource('engagement', EmployeeEngagementController::class);
 Route::resource('initial_rate', InitialRateController::class);

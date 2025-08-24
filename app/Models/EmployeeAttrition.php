@@ -22,7 +22,7 @@ class EmployeeAttrition extends Model
         'eogs',
         'hired',
         'status',
-        'etatus',
+        'estatus',
         'reas',
         'separation',
         'exitc',

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AcceptedOffer;
 use App\Mail\DeclinedOffer;
 use App\Mail\JobOffer as MailJobOffer;
 use App\Mail\PreEmploymentEmail;
@@ -80,7 +81,9 @@ class JobOfferController extends Controller
             'status' => 'Counter Offer'
         ]);
 
-        // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+
+        // $emailRecipient = 'quicklydeguzman@gmail.com';
 
         if ($request->status == 'Accepted') {
             Applicant::where('app_id', $id)->update([
@@ -90,8 +93,12 @@ class JobOfferController extends Controller
                 $request->all(),
                 ['id' => $jo->id],
             )));
+            Mail::to("$emailRecipient")->send(new AcceptedOffer(array_merge(
+                $request->all(),
+                ['id' => $jo->id],
+            )));
         } elseif ($request->status == 'Declined') {
-            Mail::to('quicklydeguzman@gmail.com')->send(new DeclinedOffer(array_merge(
+            Mail::to($emailRecipient)->send(new DeclinedOffer(array_merge(
                 $request->all(),
                 ['id' => $jo->id],
             )));

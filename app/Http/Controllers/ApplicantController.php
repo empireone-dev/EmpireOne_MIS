@@ -208,7 +208,9 @@ class ApplicantController extends Controller
         $fileUrl = $uploadedFiles[0] ?? null;
 
         // Determine email recipient based on site
-        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+
+        $emailRecipient = 'quicklydeguzman@gmail.com';
 
         if ($fileUrl) {
             Mail::to($emailRecipient)->send(new NewApplication(
@@ -313,7 +315,7 @@ class ApplicantController extends Controller
         $employee->update($request->all());
 
         $jobOffer = JobOffer::where('app_id', '=', $request->app_id)->where('status', '=', "Hired")->first();
-        
+
         if ($jobOffer) {
             $jobOffer->update([
                 'jobPos' => $request->position,

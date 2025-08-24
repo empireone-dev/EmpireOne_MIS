@@ -29,6 +29,8 @@ export default function ApplicationFormSection() {
   const [hasExperience, setHasExperience] = useState(false);
   const [files, setFiles] = useState([]);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
+  const [isUploading, setIsUploading] = useState(false);
 
   const {
     register,
@@ -124,7 +126,26 @@ export default function ApplicationFormSection() {
       message.error("CV file is required. Please upload your CV.");
       return;
     }
+    
+    setIsUploading(true);
+    setUploadProgress(0);
+    
     try {
+      // Simulate progress steps
+      const progressSteps = [
+        { step: 10, message: "Validating form data..." },
+        { step: 30, message: "Processing files..." },
+        { step: 50, message: "Uploading application..." },
+        { step: 80, message: "Finalizing submission..." },
+        { step: 100, message: "Complete!" }
+      ];
+      
+      // Simulate progressive upload with delays
+      for (let i = 0; i < progressSteps.length - 1; i++) {
+        setUploadProgress(progressSteps[i].step);
+        await new Promise(resolve => setTimeout(resolve, 800)); // 800ms delay between steps
+      }
+      
       const result = await store.dispatch(
         store_applicant_thunk({
           ...data,
@@ -135,12 +156,21 @@ export default function ApplicationFormSection() {
           is_experience: hasExperience,
         })
       );
+      
+      // Complete the progress
+      setUploadProgress(100);
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
       // await store.dispatch(get_applicant_thunk())
       reset();
       setFiles([]);
+      setUploadProgress(0);
+      setIsUploading(false);
       setShowSuccessModal(true);
       message.success('Application has been submitted successfully! Please check your email regularly for updates on your application status.');
     } catch (error) {
+      setUploadProgress(0);
+      setIsUploading(false);
       if (error?.response?.status === 422) {
         message.error("Application failed: Data validation error or already exists");
       } else {
@@ -214,17 +244,17 @@ export default function ApplicationFormSection() {
               </svg>
             </div>
           </div>
-          
+
           <h3 className="text-2xl font-bold text-gray-900 mb-4">
             🎉 Application Submitted Successfully!
           </h3>
-          
+
           <div className="text-left bg-blue-50 p-4 rounded-lg mb-6">
             <p className="text-gray-700 mb-3">
               <strong>Dear Applicant,</strong>
             </p>
             <p className="text-gray-700 mb-3">
-              Thank you for your interest in joining <strong>EmpireOne</strong>! 
+              Thank you for your interest in joining <strong>EmpireOne</strong>!
               Your application has been successfully submitted and is now being reviewed by our HR team.
             </p>
             <p className="text-gray-700 mb-3">
@@ -237,12 +267,12 @@ export default function ApplicationFormSection() {
             </ul>
             <div className="bg-yellow-100 p-3 rounded border-l-4 border-yellow-400">
               <p className="text-yellow-800 text-sm">
-                <strong>📧 Important:</strong> Please check your email regularly (including spam/junk folder) 
+                <strong>📧 Important:</strong> Please check your email regularly (including spam/junk folder)
                 for updates and further instructions.
               </p>
             </div>
           </div>
-          
+
           <button
             onClick={() => setShowSuccessModal(false)}
             className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
@@ -262,14 +292,14 @@ export default function ApplicationFormSection() {
               <div className='flex text-2xl items-center justify-center'>
                 <h1 className="text-center"><b>ONLINE APPLICATION FORM</b></h1>
               </div>
-              
+
               {/* Greeting Message */}
               <div className="bg-blue-50 border-l-4 border-blue-400 p-4 mt-6 mb-6">
                 <div className="flex">
                   <div className="ml-3">
                     <p className="text-sm text-blue-700">
-                      <strong>Welcome to EmpireOne!</strong> Thank you for your interest in joining our team. 
-                      Please fill out this application form completely and accurately. 
+                      <strong>Welcome to EmpireOne!</strong> Thank you for your interest in joining our team.
+                      Please fill out this application form completely and accurately.
                       After submission, please check your email regularly for updates on your application status.
                     </p>
                   </div>
@@ -897,14 +927,14 @@ export default function ApplicationFormSection() {
                     <p className="text-red-500 text-sm">Please upload your CV or resume here in PDF format.</p>
                   )}
                 </div>
-                
+
                 {/* Email Check Reminder */}
                 <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4">
                   <div className="flex">
                     <div className="ml-3">
                       <p className="text-sm text-yellow-700">
-                        <strong>Important Reminder:</strong> Please ensure your email address is correct. 
-                        After submitting your application, regularly check your email (including spam/junk folder) 
+                        <strong>Important Reminder:</strong> Please ensure your email address is correct.
+                        After submitting your application, regularly check your email (including spam/junk folder)
                         for updates regarding your application status and any further instructions.
                       </p>
                     </div>
@@ -912,13 +942,56 @@ export default function ApplicationFormSection() {
                 </div>
 
                 <div className="flex items-end justify-end">
-                  <button
-                    disabled={isSubmitting}
-                    type="submit"
-                    className="bg-blue-600 w-full hover:bg-blue-500 text-white px-4 py-2 rounded"
-                  >
-                    {isSubmitting ? "Submitting..." : "Submit"}
-                  </button>
+                  <div className="w-full">
+                    {/* Progress Bar */}
+                    {(isSubmitting || isUploading) && (
+                      <div className="mb-4">
+                        <div className="flex justify-between text-sm text-gray-600 mb-2">
+                          <span>Submitting Application...</span>
+                          <span>{uploadProgress}%</span>
+                        </div>
+                        <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div 
+                            className="bg-blue-600 h-2 rounded-full transition-all duration-300 ease-out"
+                            style={{ width: `${uploadProgress}%` }}
+                          ></div>
+                        </div>
+                      </div>
+                    )}
+                    
+                    <button
+                      disabled={isSubmitting || isUploading}
+                      type="submit"
+                      className={`w-full text-white px-4 py-2 rounded flex items-center justify-center gap-2 transition-all duration-200 ${(isSubmitting || isUploading)
+                        ? 'bg-blue-400 cursor-not-allowed'
+                        : 'bg-blue-600 hover:bg-blue-500 active:bg-blue-700'
+                        }`}
+                    >
+                      {(isSubmitting || isUploading) && (
+                        <svg
+                          className="animate-spin h-4 w-4 text-white"
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                        >
+                          <circle
+                            className="opacity-25"
+                            cx="12"
+                            cy="12"
+                            r="10"
+                            stroke="currentColor"
+                            strokeWidth="4"
+                          ></circle>
+                          <path
+                            className="opacity-75"
+                            fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                          ></path>
+                        </svg>
+                      )}
+                      {(isSubmitting || isUploading) ? `Submitting Application... (${uploadProgress}%)` : "Submit Application"}
+                    </button>
+                  </div>
                 </div>
               </form>
             </div>

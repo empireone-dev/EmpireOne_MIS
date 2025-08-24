@@ -9,15 +9,12 @@
 
   A new applicant has submitted their application for review. Please find the details below:
 
-  Applicant Details:
-
-  Name: {{$data['fname']}} {{$data['lname']}}
-
-  Submission Date: {{$data['submitted']}}
-
-  Email: {{$data['email']}}
-  
-  Phone Number: {{$data['phone']}}
+  **Applicant Details:**
+  - **Name:** {{$data['fname']}} {{$data['lname']}}
+  - **Submission Date:** {{$data['submitted']}}
+  - **Email:** {{$data['email']}}
+  - **Phone Number:** {{$data['phone']}}
+  - **Site:** {{$data['site']}}
 
   Please review the application and proceed with the next steps as necessary.
 

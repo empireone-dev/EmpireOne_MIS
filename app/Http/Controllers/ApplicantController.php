@@ -147,12 +147,10 @@ class ApplicantController extends Controller
         // Create applicant record
         $applicant = Applicant::create($data);
 
-        // Generate unique application ID
+        // Generate unique application ID more efficiently
         $today = date('Y-m-d');
         $count = Applicant::whereDate('submitted', $today)->count();
-        // $countNumber = str_pad($count, 2, '0', STR_PAD_LEFT);
-        // $dateUnique = date('ymd') . $countNumber;
-        $dateUnique = Carbon::now()->format('mdyHisv');
+        $dateUnique = Carbon::now()->format('mdyHis') . str_pad($count + 1, 3, '0', STR_PAD_LEFT);
 
 
         // Update applicant with app_id and status
@@ -161,59 +159,83 @@ class ApplicantController extends Controller
             'status' => 'Pending',
         ]);
 
-        // Save work experience records
-
-        if ($experiences) {
+        // Save work experience records efficiently
+        if ($experiences && !empty($experiences)) {
+            $experienceData = [];
             foreach ($experiences as $experience) {
-                WorkingExperience::create([
-                    'app_id'    => $dateUnique,
-                    'company'   => $experience['company'] ?? null,
-                    'position'  => $experience['position'] ?? null,
+                $experienceData[] = [
+                    'app_id'     => $dateUnique,
+                    'company'    => $experience['company'] ?? null,
+                    'position'   => $experience['position'] ?? null,
                     'started_at' => $experience['started_at'] ?? null,
-                    'end_at'    => $experience['end_at'] ?? null,
-                ]);
+                    'end_at'     => $experience['end_at'] ?? null,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
             }
+            WorkingExperience::insert($experienceData);
         }
 
         $base64Files = $request->input('files');
         $uploadedFiles = [];
+        $cvFileData = [];
+
         if ($base64Files) {
-            foreach ($base64Files as $base64) {
+            foreach ($base64Files as $index => $base64) {
+                // Validate base64 format
                 if (!preg_match('/^data:(.*?);base64,/', $base64, $matches)) {
                     return response()->json(['error' => 'Invalid base64 file format'], 400);
                 }
 
                 $mimeType = $matches[1];
-                $extension = explode('/', $mimeType)[1] ?? 'bin'; // fallback to bin if missing
+                $extension = explode('/', $mimeType)[1] ?? 'bin';
 
-                $fileData = base64_decode(substr($base64, strpos($base64, ',') + 1));
+                // More efficient base64 decoding
+                $base64Data = substr($base64, strpos($base64, ',') + 1);
+                $fileData = base64_decode($base64Data, true); // strict mode
+
                 if ($fileData === false) {
                     return response()->json(['error' => 'Base64 decode failed'], 400);
                 }
 
-                $filename = date('Y') . '/' . $dateUnique . '_' . uniqid() . '.' . $extension;
-                Storage::disk('s3')->put($filename, $fileData);
-                $url = Storage::disk('s3')->url($filename);
+                // Use a more efficient filename structure
+                $filename = date('Y') . '/' . $dateUnique . '_' . $index . '.' . $extension;
 
+                // Upload to S3 with streaming for better memory usage
+                $disk = Storage::disk('s3');
+                $disk->put($filename, $fileData, [
+                    'ContentType' => $mimeType,
+                    'CacheControl' => 'max-age=31536000'
+                ]);
+
+                // Generate the S3 URL manually
+                $url = "https://" . env('AWS_BUCKET') . ".s3." . env('AWS_DEFAULT_REGION') . ".amazonaws.com/" . $filename;
                 $uploadedFiles[] = $url;
 
-                // Save file record
-                CVFile::create([
+                // Prepare file record for bulk insert
+                $cvFileData[] = [
                     'app_id' => $dateUnique,
                     'file'   => $url,
-                ]);
+                    'created' => now(),
+                ];
+            }
+
+            // Bulk insert CVFile records
+            if (!empty($cvFileData)) {
+                CVFile::insert($cvFileData);
             }
         }
 
         $fileUrl = $uploadedFiles[0] ?? null;
 
         // Determine email recipient based on site
-        // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
 
-        $emailRecipient = 'quicklydeguzman@gmail.com';
+        // $emailRecipient = 'quicklydeguzman@gmail.com';
 
+        // Queue emails to improve performance
         if ($fileUrl) {
-            Mail::to($emailRecipient)->send(new NewApplication(
+            Mail::to($emailRecipient)->queue(new NewApplication(
                 array_merge(
                     (array) $request->all(),
                     ['submitted' => now()->format('Y-m-d')]
@@ -221,7 +243,7 @@ class ApplicantController extends Controller
                 $fileUrl
             ));
         } else {
-            Mail::to($emailRecipient)->send(new NewApplication2(
+            Mail::to($emailRecipient)->queue(new NewApplication2(
                 array_merge(
                     (array) $request->all(),
                     ['submitted' => now()->format('Y-m-d')]
@@ -229,13 +251,44 @@ class ApplicantController extends Controller
             ));
         }
 
-
-        // Send greeting email to applicant
-        Mail::to($request->email)->send(new GreetingsApplication(array_merge(
+        // Send greeting email to applicant (also queued)
+        Mail::to($request->email)->queue(new GreetingsApplication(array_merge(
             $request->all(),
             // ['id' => $jo->id],
         )));
 
+        // Mail::to('$emailRecipient')->send(new NewApplication(
+        //     array_merge(
+        //         (array) $request->all(),
+        //         ['submitted' => now()->format('Y-m-d')]
+        //     ),
+        //     $fileUrl
+        // ));
+
+        // Mail::to('$emailRecipient')->send(new NewApplication(
+        //     array_merge(
+        //         (array) $request->all(),
+        //         ['submitted' => now()->format('Y-m-d')]
+        //     ),
+        //     $fileUrl
+        // ));
+
+
+        // Mail::to('$emailRecipient')->send(new NewApplication(
+        //     array_merge(
+        //         (array) $request->all(),
+        //         ['submitted' => now()->format('Y-m-d')]
+        //     ),
+        //     $fileUrl
+        // ));
+
+        // Mail::to('$emailRecipient')->send(new NewApplication(
+        //     array_merge(
+        //         (array) $request->all(),
+        //         ['submitted' => now()->format('Y-m-d')]
+        //     ),
+        //     $fileUrl
+        // ));
 
         Mail::to('schr@empireonegroup.com')->send(new NewApplication(
             array_merge(

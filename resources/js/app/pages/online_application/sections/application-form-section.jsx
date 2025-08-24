@@ -137,6 +137,12 @@ export default function ApplicationFormSection() {
         { step: 30, message: "Processing files..." },
         { step: 50, message: "Uploading application..." },
         { step: 80, message: "Finalizing submission..." },
+        { step: 85, message: "Finalizing submission..." },
+        { step: 90, message: "Finalizing submission..." },
+        { step: 95, message: "Finalizing submission..." },
+        { step: 96, message: "Finalizing submission..." },
+        { step: 97, message: "Finalizing submission..." },
+        { step: 98, message: "Finalizing submission..." },
         { step: 100, message: "Complete!" }
       ];
 

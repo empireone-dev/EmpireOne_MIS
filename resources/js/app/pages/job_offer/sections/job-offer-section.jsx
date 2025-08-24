@@ -154,33 +154,35 @@ export default function JobOfferSection() {
                                     </i></p>
                                     <br />
                                 </div>
-                                <div className="flex gap-2 justify-end mt-2.5">
-                                    <button
-                                        onClick={handleDecline}
-                                        type="button"
-                                        disabled={loading}
-                                        className={`px-4 py-2 rounded-md transition-colors ${loading
-                                            ? "bg-gray-400 text-white cursor-not-allowed"
-                                            : "bg-red-500 hover:bg-red-600 text-white focus:outline-none"
-                                            }`}
-                                    >
-                                        {loading ? "DECLINE" : "DECLINE"}
-                                    </button>
-                                    <button
-                                        type="submit"
-                                        className={` bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md ${loading ? "cursor-not-allowed opacity-75" : ""
-                                            }`}
-                                        onClick={handleAccept}
-                                        disabled={loading}
-                                    >
-                                        {loading ? (
-                                            <LoadingOutlined spin />
-                                        ) : (
-                                            < ></>
-                                        )}
-                                        {loading ? " ACCEPTING..." : " ACCEPT"}
-                                    </button>
-                                </div>
+                                {!open && (
+                                    <div className="flex gap-2 justify-end mt-2.5">
+                                        <button
+                                            onClick={handleDecline}
+                                            type="button"
+                                            disabled={loading}
+                                            className={`px-4 py-2 rounded-md transition-colors ${loading
+                                                ? "bg-gray-400 text-white cursor-not-allowed"
+                                                : "bg-red-500 hover:bg-red-600 text-white focus:outline-none"
+                                                }`}
+                                        >
+                                            {loading ? "DECLINE" : "DECLINE"}
+                                        </button>
+                                        <button
+                                            type="submit"
+                                            className={` bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md ${(loading || jo?.status === "Declined") ? "cursor-not-allowed opacity-75" : ""
+                                                }`}
+                                            onClick={handleAccept}
+                                            disabled={loading || jo?.status === "Declined"}
+                                        >
+                                            {loading ? (
+                                                <LoadingOutlined spin />
+                                            ) : (
+                                                < ></>
+                                            )}
+                                            {loading ? " ACCEPTING..." : " ACCEPT"}
+                                        </button>
+                                    </div>
+                                )}
                             </form>
                             <Modal
                                 title="Decline Job Offer"

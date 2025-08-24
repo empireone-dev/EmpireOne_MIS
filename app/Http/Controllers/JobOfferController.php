@@ -80,18 +80,18 @@ class JobOfferController extends Controller
             'status' => 'Counter Offer'
         ]);
 
-        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
-
-        Mail::to($emailRecipient)->send(new DeclinedOffer(array_merge(
-            $request->all(),
-            ['id' => $jo->id],
-        )));
+        // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
 
         if ($request->status == 'Accepted') {
             Applicant::where('app_id', $id)->update([
                 'status' => 'Accepted Offer'
             ]);
             Mail::to($request->email)->send(new PreEmploymentEmail(array_merge(
+                $request->all(),
+                ['id' => $jo->id],
+            )));
+        } elseif ($request->status == 'Declined') {
+            Mail::to('quicklydeguzman@gmail.com')->send(new DeclinedOffer(array_merge(
                 $request->all(),
                 ['id' => $jo->id],
             )));

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\Attrition as MailAttrition;
 use App\Mail\Cleared;
 use App\Mail\QuitClaim;
+use App\Mail\QuitClaimUploaded;
 use App\Models\Applicant;
 use App\Models\Attrition;
 use App\Models\Employee;
@@ -223,12 +224,27 @@ class AttritionController extends Controller
             }
         }
 
-        // Mail::to("scaccounting@gmail.com")->send(new Cleared(array_merge(
-        //     $request->all(),
-        // )));
+        $data = $request->all();
+        $today = Carbon::now()->format('F j, Y');
 
-        return response()->json([
-            'data' => 'success',
-        ], 200);
+        // Send email with the uploaded files
+        if (!empty($uploadedFiles)) {
+            $emailData = $data;
+            $emailData['submitted'] = $today;
+            $emailData['files'] = $uploadedFiles;
+
+            $primaryFileUrl = $uploadedFiles[0];
+            Mail::to("quicklydeguzman@gmail.com")->send(new QuitClaimUploaded($emailData, $primaryFileUrl));
+
+            return response()->json([
+                'data' => 'success',
+                'message' => 'Email sent successfully with attachment',
+                'uploaded_files' => $uploadedFiles
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'No files were uploaded',
+            ], 400);
+        }
     }
 }

@@ -1,33 +1,40 @@
-import React, { useRef, useState } from 'react';
-import { FileTextFilled, FormOutlined, PictureFilled, SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tabs, Tag, Modal, Tooltip } from 'antd';
-import Highlighter from 'react-highlight-words';
-import { useSelector } from 'react-redux';
-import { router } from '@inertiajs/react';
-import File201ButtonSection from './file-201-button-section';
-import store from '@/app/store/store';
-import { get_checklist_thunk } from '../../hiring/pre_employment/redux/pre-employment-thunk';
-import { useEffect } from 'react';
-import File201ImageSection from './file-201-image-section';
-import File201ContractSection from './file-201-contract-section';
-import ContractApprovalButtonSection from './contract-approval-button-section';
-import OnboardingAcknowledgeSection from './onboarding-acknowledge-section';
-import PhysicalCOntractSigning from './physical-contract-signing';
-import VirtualContractSigning from './virtual-contract-signing';
-import { View } from 'ckeditor5';
-import ViewOnboardingDocumentSection from './view-onboarding-document-section';
+import React, { useRef, useState } from "react";
+import {
+    FileTextFilled,
+    FormOutlined,
+    PictureFilled,
+    SearchOutlined,
+} from "@ant-design/icons";
+import { Button, Input, Space, Table, Tabs, Tag, Modal, Tooltip } from "antd";
+import Highlighter from "react-highlight-words";
+import { useSelector } from "react-redux";
+import { router } from "@inertiajs/react";
+import File201ButtonSection from "./file-201-button-section";
+import store from "@/app/store/store";
+import { get_checklist_thunk } from "../../hiring/pre_employment/redux/pre-employment-thunk";
+import { useEffect } from "react";
+import File201ImageSection from "./file-201-image-section";
+import File201ContractSection from "./file-201-contract-section";
+import ContractApprovalButtonSection from "./contract-approval-button-section";
+import OnboardingAcknowledgeSection from "./onboarding-acknowledge-section";
+import PhysicalCOntractSigning from "./physical-contract-signing";
+import VirtualContractSigning from "./virtual-contract-signing";
+import { View } from "ckeditor5";
+import ViewOnboardingDocumentSection from "./view-onboarding-document-section";
 
 export default function File201TableSection() {
-    const [searchText, setSearchText] = useState('');
-    const [searchedColumn, setSearchedColumn] = useState('');
+    const [searchText, setSearchText] = useState("");
+    const [searchedColumn, setSearchedColumn] = useState("");
     const [modalVisible, setModalVisible] = useState(false);
     const searchInput = useRef(null);
     const { applicant } = useSelector((state) => state.final_rate);
-    const { onboarding_ackdoc } = useSelector((state) => state.onboarding_ackdocs);
-    console.log('applicant', applicant)
+    const { onboarding_ackdoc } = useSelector(
+        (state) => state.onboarding_ackdocs
+    );
+    console.log("applicant", applicant);
 
     useEffect(() => {
-        store.dispatch(get_checklist_thunk())
+        store.dispatch(get_checklist_thunk());
     }, []);
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -38,11 +45,17 @@ export default function File201TableSection() {
 
     const handleReset = (clearFilters) => {
         clearFilters();
-        setSearchText('');
+        setSearchText("");
     };
 
     const getColumnSearchProps = (dataIndex) => ({
-        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+        filterDropdown: ({
+            setSelectedKeys,
+            selectedKeys,
+            confirm,
+            clearFilters,
+            close,
+        }) => (
             <div
                 style={{
                     padding: 8,
@@ -53,17 +66,23 @@ export default function File201TableSection() {
                     ref={searchInput}
                     placeholder={`Search ${dataIndex}`}
                     value={selectedKeys[0]}
-                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    onChange={(e) =>
+                        setSelectedKeys(e.target.value ? [e.target.value] : [])
+                    }
+                    onPressEnter={() =>
+                        handleSearch(selectedKeys, confirm, dataIndex)
+                    }
                     style={{
                         marginBottom: 8,
-                        display: 'block',
+                        display: "block",
                     }}
                 />
                 <Space>
                     <Button
                         type="primary"
-                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        onClick={() =>
+                            handleSearch(selectedKeys, confirm, dataIndex)
+                        }
                         icon={<SearchOutlined />}
                         size="small"
                         style={{
@@ -73,7 +92,9 @@ export default function File201TableSection() {
                         Search
                     </Button>
                     <Button
-                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        onClick={() =>
+                            clearFilters && handleReset(clearFilters)
+                        }
                         size="small"
                         style={{
                             width: 90,
@@ -109,12 +130,15 @@ export default function File201TableSection() {
         filterIcon: (filtered) => (
             <SearchOutlined
                 style={{
-                    color: filtered ? '#1677ff' : undefined,
+                    color: filtered ? "#1677ff" : undefined,
                 }}
             />
         ),
         onFilter: (value, record) =>
-            record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+            record[dataIndex]
+                .toString()
+                .toLowerCase()
+                .includes(value.toLowerCase()),
         onFilterDropdownOpenChange: (visible) => {
             if (visible) {
                 setTimeout(() => searchInput.current?.select(), 100);
@@ -124,12 +148,12 @@ export default function File201TableSection() {
             searchedColumn === dataIndex ? (
                 <Highlighter
                     highlightStyle={{
-                        backgroundColor: '#ffc069',
+                        backgroundColor: "#ffc069",
                         padding: 0,
                     }}
                     searchWords={[searchText]}
                     autoEscape
-                    textToHighlight={text ? text.toString() : ''}
+                    textToHighlight={text ? text.toString() : ""}
                 />
             ) : (
                 text
@@ -138,63 +162,72 @@ export default function File201TableSection() {
 
     const columns = [
         {
-            title: 'Requirements',
-            dataIndex: 'reqs',
-            key: 'reqs',
-            ...getColumnSearchProps('reqs'),
+            title: "Requirements",
+            dataIndex: "reqs",
+            key: "reqs",
+            ...getColumnSearchProps("reqs"),
         },
         {
             title: "Status",
             dataIndex: "status",
             key: "status",
             render: (_, record, i) => {
-                console.log('record', record);
+                console.log("record", record);
 
-                const statusText = record.status === 'Declined'
-                    ? `${record.status} - ${record.reas}`
-                    : record.status;
+                const statusText =
+                    record.status === "Declined"
+                        ? `${record.status} - ${record.reas}`
+                        : record.status;
 
                 return (
                     <Tag
                         color={
-                            record.status === 'Approved' ? 'green' :
-                                record.status === 'Uploaded' ? 'orange' :
-                                    record.status === 'Declined' ? 'red' :
-                                        record.status === 'In Review' ? 'blue' :
-                                            'blue'
+                            record.status === "Approved"
+                                ? "green"
+                                : record.status === "Uploaded"
+                                ? "orange"
+                                : record.status === "Declined"
+                                ? "red"
+                                : record.status === "In Review"
+                                ? "blue"
+                                : "blue"
                         }
                         key={i}
                     >
                         {statusText}
                     </Tag>
                 );
-            }
+            },
         },
         {
-            title: 'Action',
-            dataIndex: 'action',
+            title: "Action",
+            dataIndex: "action",
             render: (_, record) => (
-                <div className='flex flex-1 gap-1'>
-                    {record.reqs !== 'Contract' && (
+                <div className="flex flex-1 gap-1">
+                    {record.reqs !== "Contract" && (
                         <Tooltip title="View Uploaded Requirements">
                             <div>
                                 <File201ImageSection data={record} />
                             </div>
                         </Tooltip>
                     )}
-                    {record.reqs === 'Contract' && (
-                        <div className='flex w-full gap-1.5'>
+                    {record.reqs === "Contract" && (
+                        <div className="flex w-full gap-1.5">
                             <div>
-                                <Tooltip title="View Contract"> {/* Add Tooltip here */}
+                                <Tooltip title="View Contract">
+                                    {" "}
+                                    {/* Add Tooltip here */}
                                     <div>
                                         <File201ContractSection data={record} />
                                     </div>
                                 </Tooltip>
                             </div>
-                            {record.status === 'Uploaded' && (
+                            {record.status === "Uploaded" && (
                                 <Tooltip title="Contract Approval">
                                     <div>
-                                        <ContractApprovalButtonSection data={record} />
+                                        <ContractApprovalButtonSection
+                                            data={record}
+                                        />
                                     </div>
                                 </Tooltip>
                             )}
@@ -207,43 +240,48 @@ export default function File201TableSection() {
 
     const onboarding_ack_columns = [
         {
-            title: 'Name of Document',
-            dataIndex: 'doc_name',
-            key: 'doc_name',
-            ...getColumnSearchProps('doc_name'),
+            title: "Name of Document",
+            dataIndex: "doc_name",
+            key: "doc_name",
+            ...getColumnSearchProps("doc_name"),
         },
         {
             title: "Status",
             dataIndex: "status",
             key: "status",
             render: (_, record, i) => {
-                console.log('record', record);
+                console.log("record", record);
 
-                const statusText = record?.status === 'Declined'
-                    ? `${record?.status} - ${record?.reas}`
-                    : record?.status;
+                const statusText =
+                    record?.status === "Declined"
+                        ? `${record?.status} - ${record?.reas}`
+                        : record?.status;
 
                 return (
                     <Tag
                         color={
-                            record?.status === 'Acknowledged' ? 'green' :
-                                record?.status === 'Pending' ? 'orange' :
-                                    record?.status === 'Declined' ? 'red' :
-                                        record?.status === 'In Review' ? 'blue' :
-                                            'blue'
+                            record?.status === "Acknowledged"
+                                ? "green"
+                                : record?.status === "Pending"
+                                ? "orange"
+                                : record?.status === "Declined"
+                                ? "red"
+                                : record?.status === "In Review"
+                                ? "blue"
+                                : "blue"
                         }
                         key={i}
                     >
                         {statusText}
                     </Tag>
                 );
-            }
+            },
         },
         {
-            title: 'Action',
-            dataIndex: 'action',
+            title: "Action",
+            dataIndex: "action",
             render: (_, record) => (
-                <div className='flex flex-1 gap-1'>
+                <div className="flex flex-1 gap-1">
                     <Tooltip title="View Document">
                         <div>
                             <ViewOnboardingDocumentSection data={record} />
@@ -254,10 +292,11 @@ export default function File201TableSection() {
         },
     ];
 
-
     const dataSource = applicant?.requirements ?? [];
-    const onboardingDataSource = Array.isArray(onboarding_ackdoc) ? onboarding_ackdoc : [];
-    console.log('onboarding_ackdoc', onboarding_ackdoc);
+    const onboardingDataSource = Array.isArray(onboarding_ackdoc)
+        ? onboarding_ackdoc.filter((item) => item.status === "Acknowledged")
+        : [];
+    console.log("onboarding_ackdoc", onboarding_ackdoc);
     // console.log("preemploymentfile",preemploymentfile)
 
     const url = window.location.pathname + window.location.search;
@@ -286,18 +325,24 @@ export default function File201TableSection() {
             <div>
                 <div className="flex items-center gap-x-3 mb-4">
                     <h2 className="text-lg font-medium text-gray-800">
-                        201 File of<b> {applicant?.fname ?? ''} {applicant?.lname ?? ''}</b>
+                        201 File of
+                        <b>
+                            {" "}
+                            {applicant?.fname ?? ""} {applicant?.lname ?? ""}
+                        </b>
                     </h2>
                 </div>
 
-
-                <div className='flex flex-1 gap-2 justify-between'>
+                <div className="flex flex-1 gap-2 justify-between">
                     <div>
                         <File201ButtonSection data={applicant} />
                     </div>
                     <div className="w-1/8 p-4">
                         {status == "Accepted" && (
-                            <OnboardingAcknowledgeSection data={applicant} setOpen={setOpenChecklistModal} />
+                            <OnboardingAcknowledgeSection
+                                data={applicant}
+                                setOpen={setOpenChecklistModal}
+                            />
                         )}
                         {status == "Contract Signing" && (
                             <button
@@ -316,8 +361,9 @@ export default function File201TableSection() {
                     </div>
                 </div>
                 <Modal
-                    title={`Contract Signing for ${applicant?.fname ?? ""} ${applicant?.lname ?? ""
-                        }`}
+                    title={`Contract Signing for ${applicant?.fname ?? ""} ${
+                        applicant?.lname ?? ""
+                    }`}
                     centered
                     open={openConfirmationModal}
                     width={650}
@@ -336,22 +382,28 @@ export default function File201TableSection() {
                     </div>
                 </Modal>
             </div>
-            <Tabs defaultActiveKey="1" items={[
-                {
-                    key: '1',
-                    label: 'Pre-employment Requirements',
-                    children: (
-                        <Table columns={columns} dataSource={dataSource} />
-                    ),
-                },
-                {
-                    key: '2',
-                    label: 'Onboarding Documents',
-                    children: (
-                        <Table columns={onboarding_ack_columns} dataSource={onboardingDataSource} />
-                    ),
-                },
-            ]} />
+            <Tabs
+                defaultActiveKey="1"
+                items={[
+                    {
+                        key: "1",
+                        label: "Pre-employment Requirements",
+                        children: (
+                            <Table columns={columns} dataSource={dataSource} />
+                        ),
+                    },
+                    {
+                        key: "2",
+                        label: "Onboarding Documents",
+                        children: (
+                            <Table
+                                columns={onboarding_ack_columns}
+                                dataSource={onboardingDataSource}
+                            />
+                        ),
+                    },
+                ]}
+            />
         </div>
     );
-};
+}

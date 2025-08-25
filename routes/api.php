@@ -13,6 +13,7 @@ use App\Http\Controllers\EmployeeEngagementController;
 use App\Http\Controllers\EmployeeHealthController;
 use App\Http\Controllers\ERFJaController;
 use App\Http\Controllers\ERFJdController;
+use App\Http\Controllers\ESignatureController;
 use App\Http\Controllers\ExitClearanceController;
 use App\Http\Controllers\ExitInterviewController;
 use App\Http\Controllers\FinalRateController;
@@ -84,6 +85,9 @@ Route::resource('/ERFJa', ERFJaController::class);
 Route::resource('/ERFJd', ERFJdController::class);
 
 
+Route::get('/get_e_signature_by_app_id/{app_id}', [ESignatureController::class, 'get_e_signature_by_app_id']);
+
+
 Route::resource('/incident_report', IncidentReportController::class);
 
 
@@ -101,6 +105,7 @@ Route::get('/onboarding_doc_by_id/{id}', [OnboardingDocController::class, 'onboa
 
 Route::resource('onboarding_ack', OnboardingAckController::class);
 Route::get('/onboarding_ackdoc_by_id/{app_id}', [OnboardingAckController::class, 'onboarding_ackdoc_by_id']);
+Route::get('/get_onboarding_ackdoc_by_app_id/{app_id}', [OnboardingAckController::class, 'get_onboarding_ackdoc_by_app_id']);
 Route::resource('employee', EmployeeController::class);
 Route::post('/store_new_employee', [EmployeeController::class, 'store_new_employee']);
 

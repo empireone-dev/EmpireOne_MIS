@@ -23,4 +23,9 @@ class OnboardingAck extends Model
     {
         return $this->belongsTo(OnboardingDoc::class, "doc_id", "id");
     }
+
+    public function eSignature(): BelongsTo
+    {
+        return $this->belongsTo(ESignature::class, "app_id", "app_id")->with('applicant');
+    }
 }

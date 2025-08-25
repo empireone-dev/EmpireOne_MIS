@@ -229,6 +229,10 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         return Inertia::render('admin/file_201/page');
     });
 
+    Route::get('/file_201/view-document/{app_id}/{id}', function () {
+        return Inertia::render('admin/file_201/view-document/page');
+    });
+
     Route::get('/exit_interview/{emp_id}/{app_id}', function () {
         return Inertia::render('admin/exit_interview/page');
     });

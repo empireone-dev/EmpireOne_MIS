@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { FileTextFilled, FormOutlined, PictureFilled, SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tag, Modal, Tooltip } from 'antd';
+import { Button, Input, Space, Table, Tabs, Tag, Modal, Tooltip } from 'antd';
 import Highlighter from 'react-highlight-words';
 import { useSelector } from 'react-redux';
 import { router } from '@inertiajs/react';
@@ -14,6 +14,8 @@ import ContractApprovalButtonSection from './contract-approval-button-section';
 import OnboardingAcknowledgeSection from './onboarding-acknowledge-section';
 import PhysicalCOntractSigning from './physical-contract-signing';
 import VirtualContractSigning from './virtual-contract-signing';
+import { View } from 'ckeditor5';
+import ViewOnboardingDocumentSection from './view-onboarding-document-section';
 
 export default function File201TableSection() {
     const [searchText, setSearchText] = useState('');
@@ -21,6 +23,7 @@ export default function File201TableSection() {
     const [modalVisible, setModalVisible] = useState(false);
     const searchInput = useRef(null);
     const { applicant } = useSelector((state) => state.final_rate);
+    const { onboarding_ackdoc } = useSelector((state) => state.onboarding_ackdocs);
     console.log('applicant', applicant)
 
     useEffect(() => {
@@ -202,7 +205,59 @@ export default function File201TableSection() {
         },
     ];
 
+    const onboarding_ack_columns = [
+        {
+            title: 'Name of Document',
+            dataIndex: 'doc_name',
+            key: 'doc_name',
+            ...getColumnSearchProps('doc_name'),
+        },
+        {
+            title: "Status",
+            dataIndex: "status",
+            key: "status",
+            render: (_, record, i) => {
+                console.log('record', record);
+
+                const statusText = record?.status === 'Declined'
+                    ? `${record?.status} - ${record?.reas}`
+                    : record?.status;
+
+                return (
+                    <Tag
+                        color={
+                            record?.status === 'Acknowledged' ? 'green' :
+                                record?.status === 'Pending' ? 'orange' :
+                                    record?.status === 'Declined' ? 'red' :
+                                        record?.status === 'In Review' ? 'blue' :
+                                            'blue'
+                        }
+                        key={i}
+                    >
+                        {statusText}
+                    </Tag>
+                );
+            }
+        },
+        {
+            title: 'Action',
+            dataIndex: 'action',
+            render: (_, record) => (
+                <div className='flex flex-1 gap-1'>
+                    <Tooltip title="View Document">
+                        <div>
+                            <ViewOnboardingDocumentSection data={record} />
+                        </div>
+                    </Tooltip>
+                </div>
+            ),
+        },
+    ];
+
+
     const dataSource = applicant?.requirements ?? [];
+    const onboardingDataSource = Array.isArray(onboarding_ackdoc) ? onboarding_ackdoc : [];
+    console.log('onboarding_ackdoc', onboarding_ackdoc);
     // console.log("preemploymentfile",preemploymentfile)
 
     const url = window.location.pathname + window.location.search;
@@ -281,7 +336,22 @@ export default function File201TableSection() {
                     </div>
                 </Modal>
             </div>
-            <Table columns={columns} dataSource={dataSource} />
+            <Tabs defaultActiveKey="1" items={[
+                {
+                    key: '1',
+                    label: 'Pre-employment Requirements',
+                    children: (
+                        <Table columns={columns} dataSource={dataSource} />
+                    ),
+                },
+                {
+                    key: '2',
+                    label: 'Onboarding Documents',
+                    children: (
+                        <Table columns={onboarding_ack_columns} dataSource={onboardingDataSource} />
+                    ),
+                },
+            ]} />
         </div>
     );
 };

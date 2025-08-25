@@ -40,7 +40,7 @@ class OnboardingAckController extends Controller
     }
     public function index()
     {
-        $onboardingack = OnboardingAck::get();
+        $onboardingack = OnboardingAck::with('onboardingDoc', 'eSignature')->get();
         return response()->json([
             'data' => $onboardingack
         ], 200);
@@ -91,9 +91,25 @@ class OnboardingAckController extends Controller
         return response()->json($request->all(), 200);
     }
 
-    public function onboarding_ackdoc_by_id(Request $request,$app_id)
+    public function onboarding_ackdoc_by_id(Request $request, $app_id)
     {
-        $res = OnboardingAck::whereNotNull('doc_id')->with('onboardingDoc')->where('app_id', $app_id)->get();
+        $res = OnboardingAck::whereNotNull('doc_id')->with('onboardingDoc', 'eSignature')->where('app_id', $app_id)->get();
+        $jo = JobOffer::where('id', $request->job_offer_id)->first();
+        if ($res->isEmpty()) {
+            return response()->json([
+                'message' => 'Document not found'
+            ], 404);
+        }
+
+        return response()->json([
+            'data' => $res,
+            'job_offer' => $jo
+        ], 200);
+    }
+
+    public function get_onboarding_ackdoc_by_app_id(Request $request, $app_id)
+    {
+        $res = OnboardingAck::whereNotNull('doc_id')->with('onboardingDoc', 'eSignature')->where('app_id', $app_id)->get();
         $jo = JobOffer::where('id', $request->job_offer_id)->first();
         if ($res->isEmpty()) {
             return response()->json([

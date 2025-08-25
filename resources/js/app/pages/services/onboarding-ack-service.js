@@ -13,6 +13,17 @@ export async function update_onboarding_ack_service(data) {
 
 
 export async function get_onboarding_ackdoc_by_id_service(app_id) {
-    const res = await axios.get('/api/onboarding_ackdoc_by_id/' + app_id+`?job_offer_id=` + window.location.pathname.split('/')[3])
+    const res = await axios.get('/api/onboarding_ackdoc_by_id/' + app_id + `?job_offer_id=` + window.location.pathname.split('/')[3])
+    return res.data
+}
+
+
+export async function get_onboarding_ackdoc_by_app_id_service(app_id) {
+    const res = await axios.get('/api/get_onboarding_ackdoc_by_app_id/' + app_id + `?job_offer_id=` + window.location.pathname.split('/')[3])
+    return res.data
+}
+
+export async function get_e_signature_by_app_id_service(app_id) {
+    const res = await axios.get('/api/get_e_signature_by_app_id/' + app_id + `?job_offer_id=` + window.location.pathname.split('/')[4])
     return res.data
 }

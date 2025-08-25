@@ -107,6 +107,14 @@ class OnboardingAckController extends Controller
         ], 200);
     }
 
+    public function getSignatureBase64($path)
+    {
+        $s3 = Storage::disk('s3');
+        $file = $s3->get($path); // $path should be relative to the S3 bucket, not the full URL
+        $base64 = 'data:image/png;base64,' . base64_encode($file);
+        return $base64;
+    }
+
     public function get_onboarding_ackdoc_by_app_id(Request $request, $app_id)
     {
         $res = OnboardingAck::whereNotNull('doc_id')->with('onboardingDoc', 'eSignature')->where('app_id', $app_id)->get();
@@ -116,8 +124,10 @@ class OnboardingAckController extends Controller
                 'message' => 'Document not found'
             ], 404);
         }
+        $path = str_replace("https://s3.amazonaws.com/empireone-ticketing-system/", "", $res[0]['eSignature']['signature']);
 
         return response()->json([
+            'signature' => $this->getSignatureBase64($path),
             'data' => $res,
             'job_offer' => $jo
         ], 200);

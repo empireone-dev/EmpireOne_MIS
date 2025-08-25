@@ -15,8 +15,8 @@ export default function page() {
         store.dispatch(get_onboarding_docu_by_id_thunk(id))
     }, []);
     return (
-        <AdminLayout>
+        <>
             <ViewDocumentSection />
-        </AdminLayout>
+        </>
     )
 }

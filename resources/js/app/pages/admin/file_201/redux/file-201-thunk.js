@@ -23,6 +23,7 @@ export function get_onboarding_ackdoc_by_app_id_thunk(app_id) {
         // Extract the data array from the response
         dispatch(onboardingAckDocSlice.actions.setOnboardingAckDoc(res.data));
         dispatch(onboardingAckDocSlice.actions.setJobOffer(res.job_offer));
+        dispatch(onboardingAckDocSlice.actions.setSignature(res.signature));
     };
 }
 

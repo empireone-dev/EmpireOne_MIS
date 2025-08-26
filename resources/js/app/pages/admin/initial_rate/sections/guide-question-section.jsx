@@ -35,13 +35,13 @@ export default function GuideQuestionSection() {
     }
 
     return (
-        <div className="mt-3">
+        <div className="mt-3 w-full">
             <div className="flex items-center mt-6 mb-2">
                 <QuestionCircleOutlined className="h-6" />
-                <h1 className="text-2xl ml-1 font-bold">GUIDE QUESTIONS:</h1>
+                <h1 className="text-2xl ml-1 font-bold w-full">GUIDE QUESTIONS:</h1>
             </div>
-            <div className="flex flex-1 gap-24 mt-2">
-                <div>
+            <div className="flex flex-1 mt-2 w-full">
+                <div className="w-full">
                     {guideqs.map((res, i) => {
                         const existing = initialRate.guideqss.find(
                             (g) => g.question === res.guideqs
@@ -56,7 +56,6 @@ export default function GuideQuestionSection() {
                             />
                         );
                     })}
-
                 </div>
             </div>
         </div>

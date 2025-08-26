@@ -13,7 +13,7 @@ export default function InitialGuideQuestionComponent({ question, onChange, onAn
     };
 
     return (
-        <div className='mb-4'>
+        <div className='mb-4 '>
             <div className='flex items-center mb-3 gap-1'>
                 <input
                     onChange={handleCheckboxChange}

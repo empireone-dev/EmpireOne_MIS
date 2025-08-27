@@ -8,14 +8,19 @@ import { message } from "antd";
 import { FileTextFilled } from "@ant-design/icons";
 
 export default function ViewOnboardingDocumentSection({ data }) {
-    const { onboarding_ackdoc } = useSelector((state) => state.onboarding_ackdocs);
+    const { onboarding_ackdoc } = useSelector(
+        (state) => state.onboarding_ackdocs
+    );
     const [loading, setLoading] = useState(false);
 
     const handleViewDocument = () => {
         setLoading(true);
-        router.visit(`/admin/file_201/view-document/${data.app_id}/${data.onboarding_doc.id}`, {
-            onFinish: () => setLoading(false)
-        });
+        setLoading(true);
+        window.open(
+            `/admin/file_201/view-document/${data.app_id}/${data.onboarding_doc.id}`,
+            "_blank"
+        );
+        setLoading(false);
     };
 
     return (

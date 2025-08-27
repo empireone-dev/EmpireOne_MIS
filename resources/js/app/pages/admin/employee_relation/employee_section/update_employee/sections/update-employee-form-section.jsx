@@ -546,6 +546,11 @@ export default function UpdateEmployeeFormSection() {
                                                 "CEO",
                                             ].includes(res.position)
                                         )
+                                        .sort((a, b) =>
+                                            `${a.employee_fname} ${a.employee_lname}`.localeCompare(
+                                                `${b.employee_fname} ${b.employee_lname}`
+                                            )
+                                        )
                                         .map((res, i) => (
                                             <option value={res.id} key={res.id}>
                                                 {res.employee_fname}{" "}

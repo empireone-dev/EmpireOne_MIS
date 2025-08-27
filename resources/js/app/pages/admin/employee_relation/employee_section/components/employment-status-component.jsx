@@ -227,6 +227,11 @@ export default function EmploymentStatusComponent({ data, item }) {
                                                     "CEO",
                                                 ].includes(res.position)
                                         )
+                                        .sort((a, b) =>
+                                            `${a.employee_fname} ${a.employee_lname}`.localeCompare(
+                                                `${b.employee_fname} ${b.employee_lname}`
+                                            )
+                                        )
                                         .map((res) => (
                                             <option key={res.id} value={res.id}>
                                                 {res.employee_fname}{" "}

@@ -1,0 +1,1 @@
+import{o as f}from"./app-3b4d12e4.js";const r=f({name:"joboffer",initialState:{joboffers:[],jobofferForm:{}},reducers:{setJobOffers:(o,e)=>{o.joboffers=e.payload},setJobOfferForm:(o,e)=>{o.jobofferForm=e.payload},resetJobOffer:(o,e)=>{o.joboffers=e.payload}}});r.actions;r.reducer;export{r as j};

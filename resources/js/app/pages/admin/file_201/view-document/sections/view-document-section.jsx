@@ -103,7 +103,7 @@ export default function ViewDocumentSection() {
                     </div>
                 </div>
             ) : (
-                <div className="px-24 py-20">
+                <div className="px-24 py-20 bg-gray-200">
                     <div className="mb-3 flex justify-end items-center">
                         <Button
                             type="primary"
@@ -119,7 +119,7 @@ export default function ViewDocumentSection() {
                     </div>
                     <div
                         ref={documentRef}
-                        className=" p-20 border border-gray-400 rounded-lg"
+                        className="p-4 bg-white rounded-lg"
                         // style={{
                         //     width: "100%",
                         //     maxWidth: "none",

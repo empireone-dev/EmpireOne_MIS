@@ -85,25 +85,16 @@ export default function ViewDocumentSection() {
 
     return (
         <div>
-            <div className="mb-6 flex justify-end items-center">
-                <Button
-                    type="primary"
-                    icon={<FilePdfOutlined />}
-                    onClick={handleDownloadPDF}
-                    loading={pdfLoading}
-                    disabled={isDocumentLoading}
-                    size="large"
-                    className="bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700"
-                >
-                    {pdfLoading ? "Generating PDF..." : "Download PDF"}
-                </Button>
-            </div>
-
             {isDocumentLoading ? (
                 <div className="bg-white p-8 shadow-sm border rounded-lg flex justify-center items-center min-h-[400px]">
                     <div className="text-center">
-                        <Spin 
-                            indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />}
+                        <Spin
+                            indicator={
+                                <LoadingOutlined
+                                    style={{ fontSize: 48 }}
+                                    spin
+                                />
+                            }
                             size="large"
                         />
                         <div className="mt-4 text-lg text-gray-600">
@@ -112,40 +103,56 @@ export default function ViewDocumentSection() {
                     </div>
                 </div>
             ) : (
-                <div
-                    ref={documentRef}
-                    className="bg-white p-8 shadow-sm border rounded-lg"
-                    style={{
-                        width: "100%",
-                        maxWidth: "none",
-                        minHeight: "auto",
-                        height: "auto",
-                    }}
-                >
-                    <div className="text-center mb-6">
-                        <h1 className="text-2xl font-bold text-gray-800">
-                            {onboarding_doc?.data?.doc_name ?? "No Document Title"}
-                        </h1>
+                <div className="px-24 py-20">
+                    <div className="mb-3 flex justify-end items-center">
+                        <Button
+                            type="primary"
+                            icon={<FilePdfOutlined />}
+                            onClick={handleDownloadPDF}
+                            loading={pdfLoading}
+                            disabled={isDocumentLoading}
+                            size="large"
+                            className="bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700"
+                        >
+                            {pdfLoading ? "Generating PDF..." : "Download PDF"}
+                        </Button>
                     </div>
-
-                    {/* Document Content */}
                     <div
-                        className="document-content"
-                        dangerouslySetInnerHTML={{
-                            __html: getDocumentContentWithSignature(),
-                        }}
-                        style={{
-                            fontFamily: "Arial, sans-serif",
-                            lineHeight: "1.6",
-                            color: "#333",
-                            fontSize: "14px",
-                            width: "100%",
-                            wordWrap: "break-word",
-                            overflow: "visible",
-                            display: "block",
-                            background: "white",
-                        }}
-                    />
+                        ref={documentRef}
+                        className=" p-20 border border-gray-400 rounded-lg"
+                        // style={{
+                        //     width: "100%",
+                        //     maxWidth: "none",
+                        //     minHeight: "auto",
+                        //     height: "auto",
+                        // }}
+                    >
+                        <div className="text-center mb-6">
+                            <h1 className="text-2xl font-bold text-gray-800">
+                                {onboarding_doc?.data?.doc_name ??
+                                    "No Document Title"}
+                            </h1>
+                        </div>
+
+                        {/* Document Content */}
+                        <div
+                            className="document-content"
+                            dangerouslySetInnerHTML={{
+                                __html: getDocumentContentWithSignature(),
+                            }}
+                            // style={{
+                            //     fontFamily: "Arial, sans-serif",
+                            //     lineHeight: "1.6",
+                            //     color: "#333",
+                            //     fontSize: "14px",
+                            //     width: "100%",
+                            //     wordWrap: "break-word",
+                            //     overflow: "visible",
+                            //     display: "block",
+                            //     background: "white",
+                            // }}
+                        />
+                    </div>
                 </div>
             )}
         </div>

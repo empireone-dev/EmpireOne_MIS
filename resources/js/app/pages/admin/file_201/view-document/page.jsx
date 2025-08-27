@@ -16,8 +16,8 @@ export default function page() {
         store.dispatch(get_applicant_by_app_id_thunk(app_id));
     }, []);
     return (
-        <AdminLayout>
+        <>
             <ViewDocumentSection />
-        </AdminLayout>
+        </>
     );
 }

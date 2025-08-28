@@ -20,7 +20,7 @@ export default function ApplicantRecords() {
       setLoading(false)
     }
     loadData()
-  }, [loading]);
+  }, []);
   return (
     <AdminLayout>
       {loading ? (

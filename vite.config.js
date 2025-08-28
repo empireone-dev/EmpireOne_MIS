@@ -8,7 +8,10 @@ export default defineConfig({
     },
     plugins: [
         laravel({
-            input: 'resources/js/app.jsx',
+            input: [
+                'resources/js/app.jsx',
+                'resources/js/app/pages/admin/recruitment/applicants/applicant_records/page.jsx',
+            ],
             refresh: true,
         }),
         react(),

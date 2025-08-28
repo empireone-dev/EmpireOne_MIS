@@ -179,47 +179,6 @@ class PreEmploymentFileController extends Controller
                     ], 500);
                 }
 
-                if ($request->reqs == 'Contract') {
-                    $jo = JobOffer::where([
-                        ['app_id', '=', $request->app_id],
-                        ['status', '=', 'Contract Signing']
-                    ])->first();
-
-                    if ($jo) {
-                        $jo->update([
-                            'status' => 'Hired',
-                        ]);
-                    }
-
-                    Employee::create([
-                        'app_id' => $request->app_id,
-                        'emp_id' => $dateUnique,
-                        'position' => $request->jobPos,
-                        'dept' => $jo->department ?? null,
-                        'account' => $jo->account ?? null,
-                        'sup_id' => null,
-                        'hired' => date('Y-m-d'),
-                        'eogs' => $applicant->email ?? '',
-                        'status' => 'Probationary',
-                    ]);
-
-                    User::create([
-                        'role_id' => '7',
-                        'employee_id' => $dateUnique,
-                        'employee_fname' => $applicant->fname,
-                        'employee_mname' => $applicant->mname ?? '',
-                        'employee_lname' => $applicant->lname ?? '',
-                        'employee_suffix' => $applicant->suffix ?? '',
-                        'department' => $jo->department ?? null,
-                        'account' => $jo->account ?? null,
-                        'sup_id' => null,
-                        'position' => $request->jobPos,
-                        'site' => $applicant->site ?? '',
-                        'gender' => $applicant->gender ?? '',
-                        'password' => Hash::make('Business12'),
-                    ]);
-                }
-
                 return response()->json([
                     'count' => $count,
                     'data' => 'success',

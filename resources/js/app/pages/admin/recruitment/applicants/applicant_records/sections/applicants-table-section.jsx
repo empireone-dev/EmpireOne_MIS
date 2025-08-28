@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import {  Select,Table, Tag,  } from "antd";
+import { Select, Table, Tag } from "antd";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { router } from "@inertiajs/react";
@@ -12,7 +12,11 @@ import ApplicantPhoneStatusComponent from "../components/applicant-phone-status-
 const ContactCell = ({ record }) => {
     const [open, setOpen] = useState(false);
     return (
-        <ApplicantPhoneStatusComponent record={record} open={open} setOpen={setOpen} />
+        <ApplicantPhoneStatusComponent
+            record={record}
+            open={open}
+            setOpen={setOpen}
+        />
     );
 };
 
@@ -26,19 +30,21 @@ export default function ApplicantsTableSection() {
 
     const urls = new URL(window.location.href);
     const searchParams = new URLSearchParams(urls.search);
-    const pages = searchParams.get('page');
-    const status = searchParams.get('status');
-    const site = searchParams.get('site');
+    const pages = searchParams.get("page");
+    const status = searchParams.get("status");
+    const site = searchParams.get("site");
 
-    const filteredDatas = applicants.data;
-  
-    console.log("filteredDatas", filteredDatas);
- 
+    const filteredDatas = applicants.data??[];
+
     function search_status(value) {
-        router.visit('?page=1' + '&status=' + (value || 'null') + '&site=' + site)
+        router.visit(
+            "?page=1" + "&status=" + (value || "null") + "&site=" + site
+        );
     }
     function search_site(value) {
-        router.visit('?page=1' + '&status=' + status + '&site=' + (value || 'null'))
+        router.visit(
+            "?page=1" + "&status=" + status + "&site=" + (value || "null")
+        );
     }
     const columns = [
         {
@@ -116,25 +122,27 @@ export default function ApplicantsTableSection() {
             },
         },
         {
-            title: <div>
-                <Select
-                    allowClear
-                    className="w-28"
-                    showSearch
-                    placeholder="Status"
-                    optionFilterProp="label"
-
-                    value={status == 'null' ? null : status}
-                    onChange={search_status}
-                    // onSearch={onSearch}
-                    options={
-                        [
+            title: (
+                <div>
+                    <Select
+                        allowClear
+                        className="w-28"
+                        showSearch
+                        placeholder="Status"
+                        optionFilterProp="label"
+                        value={status == "null" ? null : status}
+                        onChange={search_status}
+                        // onSearch={onSearch}
+                        options={[
                             { text: "Accepted Offer", value: "Accepted Offer" },
                             { text: "Counter Offer", value: "Counter Offer" },
                             { text: "Declined", value: "Declined" },
                             { text: "Failed", value: "Failed" },
                             { text: "Final Phase", value: "Final Phase" },
-                            { text: "For Final Phase", value: "For Final Phase" },
+                            {
+                                text: "For Final Phase",
+                                value: "For Final Phase",
+                            },
                             { text: "Hired", value: "Hired" },
                             { text: "Initial Phase", value: "Initial Phase" },
                             { text: "Passed", value: "Passed" },
@@ -143,10 +151,10 @@ export default function ApplicantsTableSection() {
                             { text: "Probationary", value: "Probationary" },
                             { text: "Regular", value: "Regular" },
                             { text: "Send Failed", value: "Send Failed" },
-                        ]
-                    }
-                />
-            </div>,
+                        ]}
+                    />
+                </div>
+            ),
             dataIndex: "status",
             key: "status",
             render: (_, record) => {
@@ -192,38 +200,33 @@ export default function ApplicantsTableSection() {
             },
         },
         {
-            title: <div className="flex gap-3 items-center justify-center">
-                {/* 
+            title: (
+                <div className="flex gap-3 items-center justify-center">
+                    {/* 
                 Account
                 <FilterOutlined /> */}
-                <Select
-                    allowClear
-                    className="w-28"
-                    showSearch
-                    placeholder="Site"
-                    optionFilterProp="label"
-
-                    value={site == 'null' ? null : site}
-                    onChange={search_site}
-                    // onSearch={onSearch}
-                    options={
-                        [
+                    <Select
+                        allowClear
+                        className="w-28"
+                        showSearch
+                        placeholder="Site"
+                        optionFilterProp="label"
+                        value={site == "null" ? null : site}
+                        onChange={search_site}
+                        // onSearch={onSearch}
+                        options={[
                             { text: "San Carlos", value: "San Carlos" },
                             { text: "Carcar", value: "Carcar" },
-                        ]
-                    }
-                />
-            </div>,
+                        ]}
+                    />
+                </div>
+            ),
             dataIndex: "site",
             key: "site",
             render: (_, record, i) => {
                 console.log("record", record);
 
-                return (
-                    <div key={i}>
-                        {record?.site}
-                    </div>
-                );
+                return <div key={i}>{record?.site}</div>;
             },
         },
         {
@@ -257,7 +260,10 @@ export default function ApplicantsTableSection() {
         pageSize: pageSize,
         total: applicants.last_page * pageSize,
         onChange: (newPage, newPageSize) => {
-            router.visit(window.location.pathname + `?page=${newPage}&status=${status}&site=${site}`);
+            router.visit(
+                window.location.pathname +
+                    `?page=${newPage}&status=${status}&site=${site}`
+            );
             setCurrent(newPage);
             setPageSize(newPageSize);
         },
@@ -282,19 +288,21 @@ export default function ApplicantsTableSection() {
                 </div>
             </div>
 
-            <Table
-                // pagination={paginationConfig}
-                columns={columns}
-                dataSource={filteredDatas}
-                className="mt-1"
-            />
+            {filteredDatas && (
+                <Table
+                    pagination={paginationConfig}
+                    columns={columns}
+                    dataSource={filteredDatas}
+                    className="mt-1"
+                />
+            )}
 
             <div className="w-full">
                 {applicants.total > 0
                     ? `Showing ${(page - 1) * pageSize + 1} to ${Math.min(
-                        page * pageSize,
-                        applicants.total
-                    )} of ${applicants.total} entries`
+                          page * pageSize,
+                          applicants.total
+                      )} of ${applicants.total} entries`
                     : "No entries available"}
             </div>
         </div>

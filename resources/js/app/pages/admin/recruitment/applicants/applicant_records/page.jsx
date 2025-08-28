@@ -23,7 +23,7 @@ export default function ApplicantRecords() {
   }, [loading]);
   return (
     <AdminLayout>
-      {/* {loading ? (
+      {loading ? (
         <div>
           <Skeleton />
         </div>
@@ -31,7 +31,7 @@ export default function ApplicantRecords() {
         !loading && (
           <ApplicantsTableSection />
         )
-      )} */}sss
+      )}
     </AdminLayout>
   )
 }

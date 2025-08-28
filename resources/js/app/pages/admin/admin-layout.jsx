@@ -46,9 +46,11 @@ const AdminLayout = ({ children }) => {
     } = theme.useToken();
 
     useEffect(() => {
-        store.dispatch(get_users_thunk());
-        console.log('waaaa', user)
-        store.dispatch(get_user_thunk());
+        async function loadData() {
+            await store.dispatch(get_users_thunk());
+            await store.dispatch(get_user_thunk());
+        }
+        loadData();
     }, [user.id]);
     const items = [
         {
@@ -85,10 +87,7 @@ const AdminLayout = ({ children }) => {
                     key: "erf_record",
                     icon: <HolderOutlined />,
                     label: "ERF Record",
-                    onClick: () =>
-                        router.visit(
-                            "/admin/sourcing/erf_record"
-                        ),
+                    onClick: () => router.visit("/admin/sourcing/erf_record"),
                 },
                 // {
                 //     key: "resource_requests",
@@ -149,55 +148,82 @@ const AdminLayout = ({ children }) => {
                             key: "applicant_recordss",
                             icon: <HolderOutlined />,
                             label: "All Records",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1"),
+                            onClick: () =>
+                                router.visit(
+                                    "/admin/recruitment/applicant_records?page=1"
+                                ),
                         },
                         {
                             key: "pending",
                             icon: <HolderOutlined />,
                             label: "Pending",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Pending&site=null"),
+                            onClick: () =>
+                                router.visit(
+                                    "/admin/recruitment/applicant_records?page=1&status=Pending&site=null"
+                                ),
                         },
                         {
                             key: "initial_phase",
                             icon: <HolderOutlined />,
                             label: "Initial Phase",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null"),
+                            onClick: () =>
+                                router.visit(
+                                    "/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null"
+                                ),
                         },
                         {
                             key: "for_final_phase",
                             icon: <HolderOutlined />,
                             label: "For Final Phase",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=For%20Final%20Phase&site=null"),
+                            onClick: () =>
+                                router.visit(
+                                    "/admin/recruitment/applicant_records?page=1&status=For%20Final%20Phase&site=null"
+                                ),
                         },
                         {
                             key: "final_phase",
                             icon: <HolderOutlined />,
                             label: "Final Phase",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null"),
+                            onClick: () =>
+                                router.visit(
+                                    "/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null"
+                                ),
                         },
                         {
                             key: "failed",
                             icon: <HolderOutlined />,
                             label: "Failed",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Failed&site=null"),
+                            onClick: () =>
+                                router.visit(
+                                    "/admin/recruitment/applicant_records?page=1&status=Failed&site=null"
+                                ),
                         },
                         {
                             key: "send_failed",
                             icon: <HolderOutlined />,
                             label: "Send Failed",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null"),
+                            onClick: () =>
+                                router.visit(
+                                    "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null"
+                                ),
                         },
                         {
                             key: "passed",
                             icon: <HolderOutlined />,
                             label: "Passed",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Passed&site=null"),
+                            onClick: () =>
+                                router.visit(
+                                    "/admin/recruitment/applicant_records?page=1&status=Passed&site=null"
+                                ),
                         },
                         {
                             key: "pooling",
                             icon: <HolderOutlined />,
                             label: "Pooling",
-                            onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Pooling&site=null"),
+                            onClick: () =>
+                                router.visit(
+                                    "/admin/recruitment/applicant_records?page=1&status=Pooling&site=null"
+                                ),
                         },
                         // {
                         //     key: "shortlisted",
@@ -437,7 +463,7 @@ const AdminLayout = ({ children }) => {
                     <Menu
                         className="text-lg font-sans"
                         mode="inline"
-                        defaultSelectedKeys={active.split('?')[0]}
+                        defaultSelectedKeys={active.split("?")[0]}
                         defaultOpenKeys={path.slice(1 - path.length)}
                         items={items}
                     />
@@ -475,8 +501,9 @@ const AdminLayout = ({ children }) => {
                                 <div
                                     ref={dropdownRef}
                                     id="dropdown"
-                                    className={`z-10 ${isOpen ? "block" : "hidden"
-                                        } absolute w-auto p-3 px-5 bg-white rounded-lg shadow-lg  mt-4`}
+                                    className={`z-10 ${
+                                        isOpen ? "block" : "hidden"
+                                    } absolute w-auto p-3 px-5 bg-white rounded-lg shadow-lg  mt-4`}
                                 >
                                     <h6 className="mb-3 text-sm font-medium ">
                                         Account Controls

@@ -1,18 +1,11 @@
 import React, { useRef, useState } from "react";
-import { PhoneFilled, SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Select, Space, Table, Tag, Tooltip } from "antd";
-import Highlighter from "react-highlight-words";
-import ButtonComponents from "../components/button-components";
-import ApplicantsDropdownFilterComponents from "../components/applicants-dropdown-filter-components";
+import {  Select,Table, Tag,  } from "antd";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import { useEffect } from "react";
 import { router } from "@inertiajs/react";
-import AddApplicantsSection from "./add-applicants-section";
 import ApplicantMenuSection from "./applicant-menu-section";
 import ApplicantSearchSection from "./applicant-search-section";
 import CreateApplicantSection from "./create-applicant-section";
-import Modal from "@/app/pages/_components/modal";
 import ApplicantPhoneStatusComponent from "../components/applicant-phone-status-component";
 
 // ContactCell component to handle modal state properly
@@ -24,8 +17,6 @@ const ContactCell = ({ record }) => {
 };
 
 export default function ApplicantsTableSection() {
-    const [searchText, setSearchText] = useState("");
-    const [searchedColumn, setSearchedColumn] = useState("");
     // const [filteredDatas, setFilteredDatas] = useState([]);
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(10);
@@ -40,156 +31,9 @@ export default function ApplicantsTableSection() {
     const site = searchParams.get('site');
 
     const filteredDatas = applicants.data;
-    // const filterDatas = (selectedStats) => {
-    //     if (selectedStats.length === 0) {
-    //         setFilteredDatas(applicants);
-    //     } else {
-    //         const filtered = applicants.filter(record => selectedStats.includes(record.status));
-    //         setFilteredDatas(filtered);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     // const storedDatas = localStorage.getItem('filteredDatas');
-    //     // if (storedDatas) {
-    //     //     setFilteredDatas(JSON.parse(storedDatas));
-    //     // } else {
-    //     //     filterDatas([]);
-    //     // }
-    // }, []);
-
-    // useEffect(() => {
-    //     // localStorage.setItem('filteredDatas', JSON.stringify(filteredDatas));
-    //     // localStorage.clear()
-    //     // setFilteredDatas(applicants);
-    // }, [applicants]);
+  
     console.log("filteredDatas", filteredDatas);
-    const searchInput = useRef(null);
-
-    const handleSearch = (selectedKeys, confirm, dataIndex) => {
-        // confirm();
-        // setSearchText(selectedKeys[0]);
-        // setSearchedColumn(dataIndex);
-        console.log("waaa", selectedKeys, dataIndex);
-    };
-    const handleReset = (clearFilters) => {
-        clearFilters();
-        setSearchText("");
-    };
-
-    const getColumnSearchProps = (dataIndex) => ({
-        filterDropdown: ({
-            setSelectedKeys,
-            selectedKeys,
-            confirm,
-            clearFilters,
-            close,
-        }) => (
-            <div
-                style={{
-                    padding: 8,
-                }}
-                onKeyDown={(e) => e.stopPropagation()}
-            >
-                <Input
-                    ref={searchInput}
-                    placeholder={`Search ${dataIndex}`}
-                    value={selectedKeys[0]}
-                    onChange={(e) =>
-                        setSelectedKeys(e.target.value ? [e.target.value] : [])
-                    }
-                    onPressEnter={() =>
-                        handleSearch(selectedKeys, confirm, dataIndex)
-                    }
-                    style={{
-                        marginBottom: 8,
-                        display: "block",
-                    }}
-                />
-                <Space>
-                    <Button
-                        type="primary"
-                        onClick={() =>
-                            handleSearch(selectedKeys, confirm, dataIndex)
-                        }
-                        icon={<SearchOutlined />}
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
-                    >
-                        Search
-                    </Button>
-                    <Button
-                        onClick={() =>
-                            clearFilters && handleReset(clearFilters)
-                        }
-                        size="small"
-                        style={{
-                            width: 90,
-                        }}
-                    >
-                        Reset
-                    </Button>
-                    <Button
-                        type="link"
-                        size="small"
-                        onClick={() => {
-                            confirm({
-                                closeDropdown: false,
-                            });
-                            setSearchText(selectedKeys[0]);
-                            setSearchedColumn(dataIndex);
-                        }}
-                    >
-                        Filter
-                    </Button>
-                    <Button
-                        type="link"
-                        size="small"
-                        onClick={() => {
-                            close();
-                        }}
-                    >
-                        close
-                    </Button>
-                </Space>
-            </div>
-        ),
-        filterIcon: (filtered) => (
-            <SearchOutlined
-                style={{
-                    color: filtered ? "#1677ff" : undefined,
-                }}
-            />
-        ),
-        onFilter: (value, record) =>
-            record[dataIndex]
-                .toString()
-                .toLowerCase()
-                .includes(value.toLowerCase()),
-        onFilterDropdownOpenChange: (visible) => {
-            if (visible) {
-                setTimeout(() => searchInput.current?.select(), 100);
-            }
-        },
-        render: (text) =>
-            searchedColumn === dataIndex ? (
-                <Highlighter
-                    highlightStyle={{
-                        backgroundColor: "#ffc069",
-                        padding: 0,
-                    }}
-                    searchWords={[searchText]}
-                    autoEscape
-                    textToHighlight={text ? text.toString() : ""}
-                />
-            ) : (
-                text
-            ),
-    });
-
-
+ 
     function search_status(value) {
         router.visit('?page=1' + '&status=' + (value || 'null') + '&site=' + site)
     }

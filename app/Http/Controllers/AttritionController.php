@@ -44,7 +44,7 @@ class AttritionController extends Controller
                 'sup_id' => $request->employee['sup_id'],
                 'hired' => $request->employee['hired'],
                 'eogs' => $request->employee['eogs'],
-                'status' => $request->status,
+                'status' => $request->employee['status'],
                 'estatus' => 'Pending',
                 'reas' => $request->reason,
                 'separation' => $request->separation,

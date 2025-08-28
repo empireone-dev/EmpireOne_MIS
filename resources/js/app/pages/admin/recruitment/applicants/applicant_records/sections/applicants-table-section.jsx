@@ -281,13 +281,13 @@ export default function ApplicantsTableSection() {
                     <CreateApplicantSection />
                 </div>
             </div>
-
+{/* 
             <Table
                 pagination={paginationConfig}
                 columns={columns}
                 dataSource={filteredDatas}
                 className="mt-1"
-            />
+            /> */}
 
             <div className="w-full">
                 {applicants.total > 0

@@ -229,20 +229,20 @@ export default function ApplicantsTableSection() {
                 return <div key={i}>{record?.site}</div>;
             },
         },
-        // {
-        //     title: "Action",
-        //     dataIndex: "action",
-        //     render: (_, record) => {
-        //         return (
-        //             <>
-        //                 <ApplicantMenuSection
-        //                     interviewer={interviewer}
-        //                     data={record}
-        //                 />
-        //             </>
-        //         );
-        //     },
-        // },
+        {
+            title: "Action",
+            dataIndex: "action",
+            render: (_, record) => {
+                return (
+                    <>
+                        <ApplicantMenuSection
+                            interviewer={interviewer}
+                            data={record}
+                        />
+                    </>
+                );
+            },
+        },
     ];
 
     const url = window.location.pathname + window.location.search;

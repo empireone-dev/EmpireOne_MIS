@@ -1,20 +1,15 @@
 import React from "react";
-import { Button, Dropdown, message, Space, Modal, Menu } from "antd";
+import { Button, Dropdown,  Space,  Menu } from "antd";
 import {
     ArrowRightOutlined,
     AuditOutlined,
     CalendarOutlined,
-    CheckCircleFilled,
-    DeleteFilled,
     DeleteOutlined,
     DotChartOutlined,
     DownOutlined,
     InfoCircleOutlined,
-    LoadingOutlined,
-    MedicineBoxOutlined,
     ReconciliationOutlined,
     RiseOutlined,
-    ScheduleOutlined,
     SendOutlined,
     SolutionOutlined,
     TeamOutlined,
@@ -63,18 +58,18 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 />
             ),
         },
-        {
-            component: (
-                <ApplicantCvFileComponent
-                    item={{
-                        label: "CV FIle",
-                        key: "1",
-                        icon: <SolutionOutlined />,
-                    }}
-                    data={data}
-                />
-            ),
-        },
+        // {
+        //     component: (
+        //         <ApplicantCvFileComponent
+        //             item={{
+        //                 label: "CV FIle",
+        //                 key: "1",
+        //                 icon: <SolutionOutlined />,
+        //             }}
+        //             data={data}
+        //         />
+        //     ),
+        // },
         ...(data.status == "Initial Phase"
             ? [
                 {

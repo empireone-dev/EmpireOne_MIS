@@ -54,11 +54,11 @@ export default function ApplicantMenuSection({ data }) {
             icon: <DeleteOutlined />,
         }, data),
 
-        renderItem(ApplicantCvFileComponent, {
-            label: "CV File",
-            key: "3",
-            icon: <SolutionOutlined />,
-        }, data),
+        // renderItem(ApplicantCvFileComponent, {
+        //     label: "CV File",
+        //     key: "3",
+        //     icon: <SolutionOutlined />,
+        // }, data),
 
         ...(status === "Initial Phase"
             ? [renderItem(ApplicantSetRescheduleComponent, {

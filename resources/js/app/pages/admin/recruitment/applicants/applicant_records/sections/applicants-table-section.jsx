@@ -331,7 +331,7 @@ export default function ApplicantsTableSection() {
                 //     className="mt-1"
                 //     loading={!applicants}
                 // />
-                sss
+                <h1>sss</h1>
             ) : (
                 <div className="flex justify-center items-center py-8">
                     <p>Loading applicants data...</p>

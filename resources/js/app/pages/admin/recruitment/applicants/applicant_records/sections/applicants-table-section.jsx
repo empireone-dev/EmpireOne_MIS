@@ -76,9 +76,11 @@ export default function ApplicantsTableSection() {
             key: "fullname",
             // ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
+                console.log("record", record);
+
                 return (
                     <div key={i}>
-                        {record?.lname || ''}, {record?.fname || ''} {record?.suffix || ''}
+                        {record.lname}, {record.fname} {record.suffix}
                     </div>
                 );
             },
@@ -91,7 +93,7 @@ export default function ApplicantsTableSection() {
             render: (_, record) => {
                 return (
                     <div className="gap-1.5 flex">
-                        {record?.dob ? moment(record.dob).format("LL") : 'N/A'}
+                        {moment(record.dob).format("LL")}
                     </div>
                 );
             },
@@ -131,7 +133,7 @@ export default function ApplicantsTableSection() {
             render: (_, record) => {
                 return (
                     <div className="gap-1.5 flex">
-                        {record?.submitted ? moment(record.submitted).format("L") : 'N/A'}
+                        {moment(record.submitted).format("L")}
                     </div>
                 );
             },
@@ -174,8 +176,7 @@ export default function ApplicantsTableSection() {
             key: "status",
             render: (_, record) => {
                 let color = "";
-                const status = record?.status || '';
-                switch (status) {
+                switch (record.status) {
                     case "Failed":
                     case "Send Failed":
                     case "Dismissal":
@@ -207,12 +208,10 @@ export default function ApplicantsTableSection() {
                     case "Pooling":
                         color = "purple";
                         break;
-                    default:
-                        color = "default";
                 }
                 return (
-                    <Tag color={color} key={record?.key || record?.id || 'status'}>
-                        {status || 'N/A'}
+                    <Tag color={color} key={record.key}>
+                        {record.status}
                     </Tag>
                 );
             },
@@ -242,7 +241,9 @@ export default function ApplicantsTableSection() {
             dataIndex: "site",
             key: "site",
             render: (_, record, i) => {
-                return <div key={i}>{record?.site || 'N/A'}</div>;
+                console.log("record", record);
+
+                return <div key={i}>{record?.site}</div>;
             },
         },
         {
@@ -288,12 +289,9 @@ export default function ApplicantsTableSection() {
     const { url, page, categories } = getUrlAndParams();
 
     const paginationConfig = {
-        current: page || 1,
-        pageSize: pageSize || 10,
-        total: applicants?.total || 0,
-        showSizeChanger: true,
-        showQuickJumper: true,
-        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+        current: page,
+        pageSize: pageSize,
+        total: (applicants?.last_page ?? 0) * pageSize,
         onChange: (newPage, newPageSize) => {
             if (typeof window !== 'undefined') {
                 router.visit(
@@ -325,17 +323,13 @@ export default function ApplicantsTableSection() {
                 </div>
             </div>
 
-            {filteredDatas && Array.isArray(filteredDatas) ? (
+            {filteredDatas && filteredDatas.length >= 0 ? (
                 <Table
                     pagination={paginationConfig}
                     columns={columns}
-                    dataSource={filteredDatas.map((item, index) => ({
-                        ...item,
-                        key: item.id || item.app_id || index
-                    }))}
+                    dataSource={filteredDatas}
                     className="mt-1"
                     loading={!applicants}
-                    rowKey={(record) => record.key || record.id || record.app_id}
                 />
             ) : (
                 <div className="flex justify-center items-center py-8">

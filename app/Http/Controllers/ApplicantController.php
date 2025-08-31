@@ -92,7 +92,7 @@ class ApplicantController extends Controller
             }
 
             // Get applicants with pagination
-            $applicantsData = $applicant->orderBy('id', 'desc')->paginate(10);
+            $applicantsData = $applicant->orderBy('id', 'desc')->paginate(20);
 
             return response()->json([
                 'interviewer' => $user,

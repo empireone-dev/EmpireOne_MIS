@@ -23,7 +23,7 @@ const ContactCell = ({ record }) => {
 export default function ApplicantsTableSection() {
     // const [filteredDatas, setFilteredDatas] = useState([]);
     const [current, setCurrent] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(20);
     const { applicants, interviewer } = useSelector(
         (state) => state.applicants
     );

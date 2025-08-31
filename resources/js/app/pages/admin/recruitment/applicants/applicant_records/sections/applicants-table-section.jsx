@@ -76,11 +76,9 @@ export default function ApplicantsTableSection() {
             key: "fullname",
             // ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
-                console.log("record", record);
-
                 return (
                     <div key={i}>
-                        {record.lname}, {record.fname} {record.suffix}
+                        {record?.lname || ''}, {record?.fname || ''} {record?.suffix || ''}
                     </div>
                 );
             },
@@ -93,7 +91,7 @@ export default function ApplicantsTableSection() {
             render: (_, record) => {
                 return (
                     <div className="gap-1.5 flex">
-                        {moment(record.dob).format("LL")}
+                        {record?.dob ? moment(record.dob).format("LL") : 'N/A'}
                     </div>
                 );
             },
@@ -133,7 +131,7 @@ export default function ApplicantsTableSection() {
             render: (_, record) => {
                 return (
                     <div className="gap-1.5 flex">
-                        {moment(record.submitted).format("L")}
+                        {record?.submitted ? moment(record.submitted).format("L") : 'N/A'}
                     </div>
                 );
             },
@@ -176,7 +174,8 @@ export default function ApplicantsTableSection() {
             key: "status",
             render: (_, record) => {
                 let color = "";
-                switch (record.status) {
+                const status = record?.status || '';
+                switch (status) {
                     case "Failed":
                     case "Send Failed":
                     case "Dismissal":
@@ -208,10 +207,12 @@ export default function ApplicantsTableSection() {
                     case "Pooling":
                         color = "purple";
                         break;
+                    default:
+                        color = "default";
                 }
                 return (
-                    <Tag color={color} key={record.key}>
-                        {record.status}
+                    <Tag color={color} key={record?.key || record?.id || 'status'}>
+                        {status || 'N/A'}
                     </Tag>
                 );
             },
@@ -241,9 +242,7 @@ export default function ApplicantsTableSection() {
             dataIndex: "site",
             key: "site",
             render: (_, record, i) => {
-                console.log("record", record);
-
-                return <div key={i}>{record?.site}</div>;
+                return <div key={i}>{record?.site || 'N/A'}</div>;
             },
         },
         {
@@ -289,9 +288,12 @@ export default function ApplicantsTableSection() {
     const { url, page, categories } = getUrlAndParams();
 
     const paginationConfig = {
-        current: page,
-        pageSize: pageSize,
-        total: (applicants?.last_page ?? 0) * pageSize,
+        current: page || 1,
+        pageSize: pageSize || 10,
+        total: applicants?.total || 0,
+        showSizeChanger: true,
+        showQuickJumper: true,
+        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
         onChange: (newPage, newPageSize) => {
             if (typeof window !== 'undefined') {
                 router.visit(
@@ -323,15 +325,18 @@ export default function ApplicantsTableSection() {
                 </div>
             </div>
 
-            {filteredDatas && filteredDatas.length >= 0 ? (
-                // <Table
-                //     pagination={paginationConfig}
-                //     columns={columns}
-                //     dataSource={filteredDatas}
-                //     className="mt-1"
-                //     loading={!applicants}
-                // />
-                <h1>sss</h1>
+            {filteredDatas && Array.isArray(filteredDatas) ? (
+                <Table
+                    pagination={paginationConfig}
+                    columns={columns}
+                    dataSource={filteredDatas.map((item, index) => ({
+                        ...item,
+                        key: item.id || item.app_id || index
+                    }))}
+                    className="mt-1"
+                    loading={!applicants}
+                    rowKey={(record) => record.key || record.id || record.app_id}
+                />
             ) : (
                 <div className="flex justify-center items-center py-8">
                     <p>Loading applicants data...</p>

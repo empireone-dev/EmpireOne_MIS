@@ -176,27 +176,4 @@ Route::resource('interview_confirmation', InterviewConfirmationController::class
 Route::resource('video_quiz', VideoQuizController::class);
 Route::get('get_video_quiz_by_emp_id/{emp_id}', [VideoQuizController::class, 'get_video_quiz_by_emp_id']);
 
-// Debug route for applicant issues
-Route::get('/debug/applicant-test', function (Request $request) {
-    try {
-        $applicant = \App\Models\Applicant::first();
-        $userCount = \App\Models\User::count();
-        
-        return response()->json([
-            'status' => 'success',
-            'applicant_count' => \App\Models\Applicant::count(),
-            'user_count' => $userCount,
-            'first_applicant' => $applicant,
-            'request_params' => $request->all(),
-            'database_connection' => 'OK'
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => $e->getMessage(),
-            'trace' => $e->getTraceAsString()
-        ], 500);
-    }
-});
-
 require __DIR__ . '/auth.php';

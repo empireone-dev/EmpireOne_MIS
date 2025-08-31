@@ -21,7 +21,6 @@ use App\Models\User;
 use App\Models\WorkingExperience;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -48,91 +47,48 @@ class ApplicantController extends Controller
 
     public function index(Request $request)
     {
-        try {
-            Log::info('ApplicantController@index called with parameters: ' . json_encode($request->all()));
-            
-            // Start with minimal query to test basic functionality
-            $applicant = Applicant::query();
-            
-            Log::info('Base query created successfully');
-            
-            // Apply filters
-            if ($request->site && $request->site !== 'null') {
-                $applicant->where('site', '=', $request->site);
-                Log::info('Applied site filter: ' . $request->site);
-            }
-
-            if ($request->search) {
-                $applicant->where('status', $request->search);
-                Log::info('Applied search filter: ' . $request->search);
-            }
-
-            if ($request->searching) {
-                $applicant->where(function ($query) use ($request) {
-                    $query->where('fname', 'LIKE', '%' . $request->searching . '%')
-                        ->orWhere('lname', 'LIKE', '%' . $request->searching . '%')
-                        ->orWhere('mname', 'LIKE', '%' . $request->searching . '%')
-                        ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%');
-                });
-                Log::info('Applied searching filter: ' . $request->searching);
-            }
-
-            if ($request->status && $request->status !== 'null') {
-                $applicant->where('status', '=', $request->status);
-                Log::info('Applied status filter: ' . $request->status);
-            }
-
-            // Get users with error handling
-            $user = [];
-            try {
-                Log::info('Fetching users...');
-                $user = User::select('id', 'name', 'position')
-                    ->whereIn('position', ['CEO', 'Account Manager', 'Director', 'HR Manager', 'I.T Manager', 'Operations Manager'])
-                    ->get();
-                Log::info('Users fetched successfully: ' . $user->count() . ' records');
-            } catch (\Exception $e) {
-                Log::error('Error fetching users in ApplicantController@index: ' . $e->getMessage());
-                Log::error('User fetch stack trace: ' . $e->getTraceAsString());
-                // Continue with empty array if user fetch fails
-            }
-
-            // Get applicants with basic fields first, then add relationships if this works
-            Log::info('Fetching applicants...');
-            $applicantsData = $applicant
-                ->select('id', 'app_id', 'fname', 'lname', 'mname', 'suffix', 'dob', 'gender', 'marital', 'email', 'phone', 'status', 'site', 'submitted')
-                ->orderBy('id', 'desc')
-                ->paginate(10);
-            Log::info('Applicants fetched successfully: ' . $applicantsData->count() . ' records, total: ' . $applicantsData->total());
-
-            $response = [
-                'interviewer' => $user,
-                'data' => $applicantsData,
-            ];
-            
-            Log::info('Returning successful response');
-            return response()->json($response, 200);
-            
-        } catch (\Exception $e) {
-            Log::error('Error in ApplicantController@index: ' . $e->getMessage());
-            Log::error('Error file: ' . $e->getFile() . ' line: ' . $e->getLine());
-            Log::error('Stack trace: ' . $e->getTraceAsString());
-            
-            return response()->json([
-                'error' => 'Failed to fetch applicants',
-                'message' => 'An error occurred while retrieving applicant data.',
-                'debug_message' => $e->getMessage(),
-                'interviewer' => [],
-                'data' => [
-                    'data' => [],
-                    'current_page' => 1,
-                    'last_page' => 1,
-                    'per_page' => 10,
-                    'total' => 0,
-                    'from' => null,
-                    'to' => null
-                ]
-            ], 500);
+        $applicant = Applicant::query()
+            ->with(['final', 'initial', 'joboffer', 'user', 'cvfile', 'guideqs', 'employee']);
+        // ->orderBy('status'); // Sort by status in ascending order
+        if ($request->site && $request->site !== 'null') {
+            $applicant->where('site', '=', $request->site);
         }
+
+        $user = User::with('employee')
+            // ->where('employee_id', '!=', '24010101')
+            ->whereIn('position', ['CEO', 'Account Manager', 'Director', 'HR Manager', 'I.T Manager', 'Operations Manager'])
+            ->where(function ($query) {
+                $query->where('position', 'CEO')
+                    ->orWhereHas('employee', function ($subQuery) {
+                        $subQuery->whereIn('status', ['Regular', 'Probationary']);
+                    });
+            })
+            ->get();
+
+        if ($request->search) {
+            $applicant->where('status', $request->search);
+        }
+
+        if ($request->searching) {
+            $applicant->where(function ($query) use ($request) {
+                $query->where('fname', 'LIKE', '%' . $request->searching . '%')
+                    ->orWhere('lname', 'LIKE', '%' . $request->searching . '%')
+                    ->orWhere('mname', 'LIKE', '%' . $request->searching . '%')
+                    ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%');
+            });
+        }
+
+        if ($request->status  && $request->status !== 'null') {
+            $applicant->where('status', '=', $request->status);
+        }
+
+
+
+
+        return response()->json([
+            'interviewer' => $user,
+            'data' => $applicant->orderBy('id', 'desc')->paginate(10),
+        ], 200);
     }
 
 

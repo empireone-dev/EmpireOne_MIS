@@ -199,36 +199,36 @@ export default function ApplicantsTableSection() {
                 );
             },
         },
-        // {
-        //     title: (
-        //         <div className="flex gap-3 items-center justify-center">
-        //             {/* 
-        //         Account
-        //         <FilterOutlined /> */}
-        //             <Select
-        //                 allowClear
-        //                 className="w-28"
-        //                 showSearch
-        //                 placeholder="Site"
-        //                 optionFilterProp="label"
-        //                 value={site == "null" ? null : site}
-        //                 onChange={search_site}
-        //                 // onSearch={onSearch}
-        //                 options={[
-        //                     { text: "San Carlos", value: "San Carlos" },
-        //                     { text: "Carcar", value: "Carcar" },
-        //                 ]}
-        //             />
-        //         </div>
-        //     ),
-        //     dataIndex: "site",
-        //     key: "site",
-        //     render: (_, record, i) => {
-        //         console.log("record", record);
+        {
+            title: (
+                <div className="flex gap-3 items-center justify-center">
+                    {/* 
+                Account
+                <FilterOutlined /> */}
+                    <Select
+                        allowClear
+                        className="w-28"
+                        showSearch
+                        placeholder="Site"
+                        optionFilterProp="label"
+                        value={site == "null" ? null : site}
+                        onChange={search_site}
+                        // onSearch={onSearch}
+                        options={[
+                            { text: "San Carlos", value: "San Carlos" },
+                            { text: "Carcar", value: "Carcar" },
+                        ]}
+                    />
+                </div>
+            ),
+            dataIndex: "site",
+            key: "site",
+            render: (_, record, i) => {
+                console.log("record", record);
 
-        //         return <div key={i}>{record?.site}</div>;
-        //     },
-        // },
+                return <div key={i}>{record?.site}</div>;
+            },
+        },
         // {
         //     title: "Action",
         //     dataIndex: "action",

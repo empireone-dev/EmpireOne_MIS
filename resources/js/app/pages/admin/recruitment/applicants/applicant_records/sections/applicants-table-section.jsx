@@ -28,23 +28,40 @@ export default function ApplicantsTableSection() {
         (state) => state.applicants
     );
 
-    const urls = new URL(window.location.href);
-    const searchParams = new URLSearchParams(urls.search);
-    const pages = searchParams.get("page");
-    const status = searchParams.get("status");
-    const site = searchParams.get("site");
+    // Safe window access for SSR compatibility
+    const getUrlParams = () => {
+        if (typeof window === 'undefined') return { pages: null, status: null, site: null };
+        
+        try {
+            const urls = new URL(window.location.href);
+            const searchParams = new URLSearchParams(urls.search);
+            return {
+                pages: searchParams.get("page"),
+                status: searchParams.get("status"),
+                site: searchParams.get("site")
+            };
+        } catch (error) {
+            console.error('Error parsing URL:', error);
+            return { pages: null, status: null, site: null };
+        }
+    };
 
-    const filteredDatas = applicants.data??[];
+    const { pages, status, site } = getUrlParams();
+    const filteredDatas = applicants?.data ?? [];
 
     function search_status(value) {
-        router.visit(
-            "?page=1" + "&status=" + (value || "null") + "&site=" + site
-        );
+        if (typeof window !== 'undefined') {
+            router.visit(
+                "?page=1" + "&status=" + (value || "null") + "&site=" + (site || "null")
+            );
+        }
     }
     function search_site(value) {
-        router.visit(
-            "?page=1" + "&status=" + status + "&site=" + (value || "null")
-        );
+        if (typeof window !== 'undefined') {
+            router.visit(
+                "?page=1" + "&status=" + (status || "null") + "&site=" + (value || "null")
+            );
+        }
     }
     const columns = [
         {
@@ -245,25 +262,43 @@ export default function ApplicantsTableSection() {
         },
     ];
 
-    const url = window.location.pathname + window.location.search;
-
-    const getQueryParam = (url, paramName) => {
-        const searchParams = new URLSearchParams(url.split("?")[1]);
-        return searchParams.get(paramName);
+    // Safe URL handling for SSR compatibility
+    const getUrlAndParams = () => {
+        if (typeof window === 'undefined') return { url: '', page: 1, categories: null };
+        
+        try {
+            const url = window.location.pathname + window.location.search;
+            const getQueryParam = (url, paramName) => {
+                const urlParts = url.split("?");
+                if (urlParts.length < 2) return null;
+                const searchParams = new URLSearchParams(urlParts[1]);
+                return searchParams.get(paramName);
+            };
+            
+            return {
+                url,
+                page: parseInt(getQueryParam(url, "page")) || 1,
+                categories: getQueryParam(url, "categories")
+            };
+        } catch (error) {
+            console.error('Error parsing URL for pagination:', error);
+            return { url: '', page: 1, categories: null };
+        }
     };
 
-    const page = getQueryParam(url, "page");
-    const categories = getQueryParam(url, "categories");
+    const { url, page, categories } = getUrlAndParams();
 
     const paginationConfig = {
         current: page,
         pageSize: pageSize,
-        total: applicants.last_page * pageSize,
+        total: (applicants?.last_page ?? 0) * pageSize,
         onChange: (newPage, newPageSize) => {
-            router.visit(
-                window.location.pathname +
-                    `?page=${newPage}&status=${status}&site=${site}`
-            );
+            if (typeof window !== 'undefined') {
+                router.visit(
+                    window.location.pathname +
+                        `?page=${newPage}&status=${status || 'null'}&site=${site || 'null'}`
+                );
+            }
             setCurrent(newPage);
             setPageSize(newPageSize);
         },
@@ -288,17 +323,22 @@ export default function ApplicantsTableSection() {
                 </div>
             </div>
 
-            {filteredDatas && (
+            {filteredDatas && filteredDatas.length >= 0 ? (
                 <Table
                     pagination={paginationConfig}
                     columns={columns}
                     dataSource={filteredDatas}
                     className="mt-1"
+                    loading={!applicants}
                 />
+            ) : (
+                <div className="flex justify-center items-center py-8">
+                    <p>Loading applicants data...</p>
+                </div>
             )}
 
             <div className="w-full">
-                {applicants.total > 0
+                {(applicants?.total ?? 0) > 0
                     ? `Showing ${(page - 1) * pageSize + 1} to ${Math.min(
                           page * pageSize,
                           applicants.total

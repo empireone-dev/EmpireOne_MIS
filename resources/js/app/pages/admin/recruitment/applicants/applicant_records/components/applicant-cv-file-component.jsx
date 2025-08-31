@@ -12,8 +12,8 @@ export default function ApplicantCvFileComponent({ data, item }) {
 
     return (
         <>
-            <Menu.Item onClick={openHandler} icon={item.icon}>
-                {item.label}
+            <Menu.Item onClick={openHandler} icon={item?.icon}>
+                {item?.label}
             </Menu.Item>
         </>
     );

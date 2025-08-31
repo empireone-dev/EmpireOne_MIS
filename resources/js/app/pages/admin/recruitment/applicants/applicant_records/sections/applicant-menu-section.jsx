@@ -58,18 +58,18 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 />
             ),
         },
-        // {
-        //     component: (
-        //         <ApplicantCvFileComponent
-        //             item={{
-        //                 label: "CV FIle",
-        //                 key: "1",
-        //                 icon: <SolutionOutlined />,
-        //             }}
-        //             data={data}
-        //         />
-        //     ),
-        // },
+        {
+            component: (
+                <ApplicantCvFileComponent
+                    item={{
+                        label: "CV FIle",
+                        key: "1",
+                        icon: <SolutionOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
         ...(data.status == "Initial Phase"
             ? [
                 {

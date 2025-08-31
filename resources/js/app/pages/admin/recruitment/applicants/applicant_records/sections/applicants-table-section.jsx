@@ -34,7 +34,7 @@ export default function ApplicantsTableSection() {
     const status = searchParams.get("status");
     const site = searchParams.get("site");
 
-    const filteredDatas = applicants.data??[];
+    const filteredDatas = applicants.data ?? [];
 
     function search_status(value) {
         router.visit(
@@ -199,50 +199,50 @@ export default function ApplicantsTableSection() {
                 );
             },
         },
-        {
-            title: (
-                <div className="flex gap-3 items-center justify-center">
-                    {/* 
-                Account
-                <FilterOutlined /> */}
-                    <Select
-                        allowClear
-                        className="w-28"
-                        showSearch
-                        placeholder="Site"
-                        optionFilterProp="label"
-                        value={site == "null" ? null : site}
-                        onChange={search_site}
-                        // onSearch={onSearch}
-                        options={[
-                            { text: "San Carlos", value: "San Carlos" },
-                            { text: "Carcar", value: "Carcar" },
-                        ]}
-                    />
-                </div>
-            ),
-            dataIndex: "site",
-            key: "site",
-            render: (_, record, i) => {
-                console.log("record", record);
+        // {
+        //     title: (
+        //         <div className="flex gap-3 items-center justify-center">
+        //             {/* 
+        //         Account
+        //         <FilterOutlined /> */}
+        //             <Select
+        //                 allowClear
+        //                 className="w-28"
+        //                 showSearch
+        //                 placeholder="Site"
+        //                 optionFilterProp="label"
+        //                 value={site == "null" ? null : site}
+        //                 onChange={search_site}
+        //                 // onSearch={onSearch}
+        //                 options={[
+        //                     { text: "San Carlos", value: "San Carlos" },
+        //                     { text: "Carcar", value: "Carcar" },
+        //                 ]}
+        //             />
+        //         </div>
+        //     ),
+        //     dataIndex: "site",
+        //     key: "site",
+        //     render: (_, record, i) => {
+        //         console.log("record", record);
 
-                return <div key={i}>{record?.site}</div>;
-            },
-        },
-        {
-            title: "Action",
-            dataIndex: "action",
-            render: (_, record) => {
-                return (
-                    <>
-                        <ApplicantMenuSection
-                            interviewer={interviewer}
-                            data={record}
-                        />
-                    </>
-                );
-            },
-        },
+        //         return <div key={i}>{record?.site}</div>;
+        //     },
+        // },
+        // {
+        //     title: "Action",
+        //     dataIndex: "action",
+        //     render: (_, record) => {
+        //         return (
+        //             <>
+        //                 <ApplicantMenuSection
+        //                     interviewer={interviewer}
+        //                     data={record}
+        //                 />
+        //             </>
+        //         );
+        //     },
+        // },
     ];
 
     const url = window.location.pathname + window.location.search;
@@ -271,23 +271,6 @@ export default function ApplicantsTableSection() {
 
     return (
         <div>
-            <div className="flex justify-between items-center ">
-                <div className="flex items-center gap-x-3 mb-3">
-                    <h2 className="text-lg font-medium text-gray-800">
-                        <b>Applicant(s) Records</b>
-                    </h2>
-                </div>
-            </div>
-
-            <div className="flex flex-1 justify-between w-full items-start">
-                <div>
-                    <ApplicantSearchSection />
-                </div>
-                <div className="flex justify-end items-center mr-5">
-                    <CreateApplicantSection />
-                </div>
-            </div>
-
             {filteredDatas && (
                 <Table
                     pagination={paginationConfig}

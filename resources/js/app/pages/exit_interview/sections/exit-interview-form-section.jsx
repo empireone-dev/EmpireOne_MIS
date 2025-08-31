@@ -211,7 +211,7 @@ export default function ExitInterviewFormSection() {
                                 <div className='flex w-full'>
                                     <div className="flex flex-col gap-4 mb-4 w-full">
                                         <div className='flex flex-col w-full'>
-                                            <label htmlFor=""><b>5. Do you feel you received appreciate support to enable to do your job?</b></label>
+                                            <label htmlFor=""><b>5. Do you feel you received full support to enable to do your job?</b></label>
                                             <textarea
                                                 onChange={handleRate}
                                                 name="apprec"

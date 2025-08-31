@@ -10,6 +10,8 @@ export default function ApplicantCvFileComponent({ data, item }) {
         }
     }
 
+    console
+
     return (
         <>
             <Menu.Item onClick={openHandler} icon={item.icon}>

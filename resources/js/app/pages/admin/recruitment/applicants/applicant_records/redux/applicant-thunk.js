@@ -5,39 +5,9 @@ import { final_declined_attendance_service, final_update_applicant_after_confirm
 
 export function get_applicant_thunk() {
   return async function (dispatch, getState) {
-    try {
-      const result = await get_applicant_service();
-      
-      // Ensure we have valid data structure
-      const applicantsData = result?.data || {
-        data: [],
-        current_page: 1,
-        last_page: 1,
-        per_page: 10,
-        total: 0
-      };
-      
-      const interviewerData = result?.interviewer || [];
-      
-      dispatch(applicantSlice.actions.setApplicants(applicantsData));
-      dispatch(applicantSlice.actions.setInterviewer(interviewerData));
-      
-      return result;
-    } catch (error) {
-      console.error('Error in get_applicant_thunk:', error);
-      
-      // Set default empty state on error
-      dispatch(applicantSlice.actions.setApplicants({
-        data: [],
-        current_page: 1,
-        last_page: 1,
-        per_page: 10,
-        total: 0
-      }));
-      dispatch(applicantSlice.actions.setInterviewer([]));
-      
-      throw error;
-    }
+    const result = (await get_applicant_service())
+    dispatch(applicantSlice.actions.setApplicants(result.data));
+    dispatch(applicantSlice.actions.setInterviewer(result.interviewer));
   };
 }
 

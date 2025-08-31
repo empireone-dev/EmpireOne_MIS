@@ -23,7 +23,7 @@ const ContactCell = ({ record }) => {
 export default function ApplicantsTableSection() {
     // const [filteredDatas, setFilteredDatas] = useState([]);
     const [current, setCurrent] = useState(1);
-    const [pageSize, setPageSize] = useState(20);
+    const [pageSize, setPageSize] = useState(10);
     const { applicants, interviewer } = useSelector(
         (state) => state.applicants
     );
@@ -324,13 +324,14 @@ export default function ApplicantsTableSection() {
             </div>
 
             {filteredDatas && filteredDatas.length >= 0 ? (
-                <Table
-                    pagination={paginationConfig}
-                    columns={columns}
-                    dataSource={filteredDatas}
-                    className="mt-1"
-                    loading={!applicants}
-                />
+                // <Table
+                //     pagination={paginationConfig}
+                //     columns={columns}
+                //     dataSource={filteredDatas}
+                //     className="mt-1"
+                //     loading={!applicants}
+                // />
+                sss
             ) : (
                 <div className="flex justify-center items-center py-8">
                     <p>Loading applicants data...</p>

@@ -235,10 +235,12 @@ export default function ApplicantsTableSection() {
             render: (_, record) => {
                 return (
                     <>
-                        <ApplicantMenuSection
-                            interviewer={interviewer}
-                            data={record}
-                        />
+                        {record && (
+                            <ApplicantMenuSection
+                                interviewer={interviewer}
+                                data={record}
+                            />
+                        )}
                     </>
                 );
             },

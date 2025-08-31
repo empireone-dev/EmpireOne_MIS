@@ -49,16 +49,22 @@ class ApplicantController extends Controller
     public function index(Request $request)
     {
         try {
-            $applicant = Applicant::query()
-                ->with(['final', 'initial', 'joboffer', 'user', 'cvfile', 'guideqs', 'employee']);
+            Log::info('ApplicantController@index called with parameters: ' . json_encode($request->all()));
+            
+            // Start with minimal query to test basic functionality
+            $applicant = Applicant::query();
+            
+            Log::info('Base query created successfully');
             
             // Apply filters
             if ($request->site && $request->site !== 'null') {
                 $applicant->where('site', '=', $request->site);
+                Log::info('Applied site filter: ' . $request->site);
             }
 
             if ($request->search) {
                 $applicant->where('status', $request->search);
+                Log::info('Applied search filter: ' . $request->search);
             }
 
             if ($request->searching) {
@@ -68,44 +74,53 @@ class ApplicantController extends Controller
                         ->orWhere('mname', 'LIKE', '%' . $request->searching . '%')
                         ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%');
                 });
+                Log::info('Applied searching filter: ' . $request->searching);
             }
 
             if ($request->status && $request->status !== 'null') {
                 $applicant->where('status', '=', $request->status);
+                Log::info('Applied status filter: ' . $request->status);
             }
 
             // Get users with error handling
             $user = [];
             try {
-                $user = User::with('employee')
+                Log::info('Fetching users...');
+                $user = User::select('id', 'name', 'position')
                     ->whereIn('position', ['CEO', 'Account Manager', 'Director', 'HR Manager', 'I.T Manager', 'Operations Manager'])
-                    ->where(function ($query) {
-                        $query->where('position', 'CEO')
-                            ->orWhereHas('employee', function ($subQuery) {
-                                $subQuery->whereIn('status', ['Regular', 'Probationary']);
-                            });
-                    })
                     ->get();
+                Log::info('Users fetched successfully: ' . $user->count() . ' records');
             } catch (\Exception $e) {
                 Log::error('Error fetching users in ApplicantController@index: ' . $e->getMessage());
+                Log::error('User fetch stack trace: ' . $e->getTraceAsString());
                 // Continue with empty array if user fetch fails
             }
 
-            // Get applicants with pagination
-            $applicantsData = $applicant->orderBy('id', 'desc')->paginate(10);
+            // Get applicants with basic fields first, then add relationships if this works
+            Log::info('Fetching applicants...');
+            $applicantsData = $applicant
+                ->select('id', 'app_id', 'fname', 'lname', 'mname', 'suffix', 'dob', 'gender', 'marital', 'email', 'phone', 'status', 'site', 'submitted')
+                ->orderBy('id', 'desc')
+                ->paginate(10);
+            Log::info('Applicants fetched successfully: ' . $applicantsData->count() . ' records, total: ' . $applicantsData->total());
 
-            return response()->json([
+            $response = [
                 'interviewer' => $user,
                 'data' => $applicantsData,
-            ], 200);
+            ];
+            
+            Log::info('Returning successful response');
+            return response()->json($response, 200);
             
         } catch (\Exception $e) {
             Log::error('Error in ApplicantController@index: ' . $e->getMessage());
+            Log::error('Error file: ' . $e->getFile() . ' line: ' . $e->getLine());
             Log::error('Stack trace: ' . $e->getTraceAsString());
             
             return response()->json([
                 'error' => 'Failed to fetch applicants',
                 'message' => 'An error occurred while retrieving applicant data.',
+                'debug_message' => $e->getMessage(),
                 'interviewer' => [],
                 'data' => [
                     'data' => [],

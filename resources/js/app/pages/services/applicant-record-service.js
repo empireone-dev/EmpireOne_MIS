@@ -23,11 +23,28 @@ export async function get_applicant_service() {
         console.error('Error fetching applicants:', error);
         console.error('Error response:', error.response?.data);
         console.error('Error status:', error.response?.status);
+        console.error('Error message:', error.message);
         
         // If it's a 500 error, try to get more details
         if (error.response?.status === 500) {
             console.error('Server error details:', error.response.data);
         }
+        
+        // Return a fallback response to prevent complete failure
+        if (error.response?.status >= 500) {
+            return {
+                data: {
+                    data: [],
+                    current_page: 1,
+                    last_page: 1,
+                    per_page: 10,
+                    total: 0
+                },
+                interviewer: []
+            };
+        }
+        
+        throw error;
         
         // Return a default structure on error
         return {

@@ -21,6 +21,7 @@ use App\Models\User;
 use App\Models\WorkingExperience;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -47,48 +48,76 @@ class ApplicantController extends Controller
 
     public function index(Request $request)
     {
-        $applicant = Applicant::query()
-            ->with(['final', 'initial', 'joboffer', 'user', 'cvfile', 'guideqs', 'employee']);
-        // ->orderBy('status'); // Sort by status in ascending order
-        if ($request->site && $request->site !== 'null') {
-            $applicant->where('site', '=', $request->site);
+        try {
+            $applicant = Applicant::query()
+                ->with(['final', 'initial', 'joboffer', 'user', 'cvfile', 'guideqs', 'employee']);
+            
+            // Apply filters
+            if ($request->site && $request->site !== 'null') {
+                $applicant->where('site', '=', $request->site);
+            }
+
+            if ($request->search) {
+                $applicant->where('status', $request->search);
+            }
+
+            if ($request->searching) {
+                $applicant->where(function ($query) use ($request) {
+                    $query->where('fname', 'LIKE', '%' . $request->searching . '%')
+                        ->orWhere('lname', 'LIKE', '%' . $request->searching . '%')
+                        ->orWhere('mname', 'LIKE', '%' . $request->searching . '%')
+                        ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%');
+                });
+            }
+
+            if ($request->status && $request->status !== 'null') {
+                $applicant->where('status', '=', $request->status);
+            }
+
+            // Get users with error handling
+            $user = [];
+            try {
+                $user = User::with('employee')
+                    ->whereIn('position', ['CEO', 'Account Manager', 'Director', 'HR Manager', 'I.T Manager', 'Operations Manager'])
+                    ->where(function ($query) {
+                        $query->where('position', 'CEO')
+                            ->orWhereHas('employee', function ($subQuery) {
+                                $subQuery->whereIn('status', ['Regular', 'Probationary']);
+                            });
+                    })
+                    ->get();
+            } catch (\Exception $e) {
+                Log::error('Error fetching users in ApplicantController@index: ' . $e->getMessage());
+                // Continue with empty array if user fetch fails
+            }
+
+            // Get applicants with pagination
+            $applicantsData = $applicant->orderBy('id', 'desc')->paginate(10);
+
+            return response()->json([
+                'interviewer' => $user,
+                'data' => $applicantsData,
+            ], 200);
+            
+        } catch (\Exception $e) {
+            Log::error('Error in ApplicantController@index: ' . $e->getMessage());
+            Log::error('Stack trace: ' . $e->getTraceAsString());
+            
+            return response()->json([
+                'error' => 'Failed to fetch applicants',
+                'message' => 'An error occurred while retrieving applicant data.',
+                'interviewer' => [],
+                'data' => [
+                    'data' => [],
+                    'current_page' => 1,
+                    'last_page' => 1,
+                    'per_page' => 10,
+                    'total' => 0,
+                    'from' => null,
+                    'to' => null
+                ]
+            ], 500);
         }
-
-        $user = User::with('employee')
-            // ->where('employee_id', '!=', '24010101')
-            ->whereIn('position', ['CEO', 'Account Manager', 'Director', 'HR Manager', 'I.T Manager', 'Operations Manager'])
-            ->where(function ($query) {
-                $query->where('position', 'CEO')
-                    ->orWhereHas('employee', function ($subQuery) {
-                        $subQuery->whereIn('status', ['Regular', 'Probationary']);
-                    });
-            })
-            ->get();
-
-        if ($request->search) {
-            $applicant->where('status', $request->search);
-        }
-
-        if ($request->searching) {
-            $applicant->where(function ($query) use ($request) {
-                $query->where('fname', 'LIKE', '%' . $request->searching . '%')
-                    ->orWhere('lname', 'LIKE', '%' . $request->searching . '%')
-                    ->orWhere('mname', 'LIKE', '%' . $request->searching . '%')
-                    ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%');
-            });
-        }
-
-        if ($request->status  && $request->status !== 'null') {
-            $applicant->where('status', '=', $request->status);
-        }
-
-
-
-
-        return response()->json([
-            'interviewer' => $user,
-            'data' => $applicant->orderBy('id', 'desc')->paginate(10),
-        ], 200);
     }
 
 

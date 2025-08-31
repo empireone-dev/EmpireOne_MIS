@@ -13,14 +13,43 @@ export default function ApplicantRecords() {
 
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+  
   useEffect(() => {
     async function loadData() {
-      await store.dispatch((get_applicant_thunk()))
-      await store.dispatch(get_job_position_thunk())
-      setLoading(false)
+      try {
+        setLoading(true);
+        setError(null);
+        
+        await store.dispatch(get_applicant_thunk());
+        await store.dispatch(get_job_position_thunk());
+        
+      } catch (err) {
+        console.error('Error loading data:', err);
+        setError('Failed to load applicant data. Please try refreshing the page.');
+      } finally {
+        setLoading(false);
+      }
     }
     loadData()
   }, []);
+
+  if (error) {
+    return (
+      <AdminLayout>
+        <div className="flex flex-col items-center justify-center py-8">
+          <p className="text-red-600 mb-4">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+          >
+            Retry
+          </button>
+        </div>
+      </AdminLayout>
+    );
+  }
+
   return (
     <AdminLayout>
       {loading ? (
@@ -28,9 +57,7 @@ export default function ApplicantRecords() {
           <Skeleton />
         </div>
       ) : (
-        !loading && (
-          <ApplicantsTableSection />
-        )
+        <ApplicantsTableSection />
       )}
     </AdminLayout>
   )

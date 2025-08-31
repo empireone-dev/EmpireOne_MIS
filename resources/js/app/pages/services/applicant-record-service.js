@@ -1,8 +1,46 @@
 import axios from "axios";
 
 export async function get_applicant_service() {
-    const res = await axios.get('/api/applicant' + window.location.search)
-    return res.data
+    try {
+        // Safely construct the URL with search parameters
+        const searchParams = typeof window !== 'undefined' ? window.location.search : '';
+        const url = '/api/applicant' + searchParams;
+        
+        console.log('Requesting URL:', url);
+        
+        const res = await axios.get(url, {
+            timeout: 30000, // 30 second timeout
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        });
+        
+        console.log('Response received:', res.data);
+        return res.data;
+    } catch (error) {
+        console.error('Error fetching applicants:', error);
+        console.error('Error response:', error.response?.data);
+        console.error('Error status:', error.response?.status);
+        
+        // If it's a 500 error, try to get more details
+        if (error.response?.status === 500) {
+            console.error('Server error details:', error.response.data);
+        }
+        
+        // Return a default structure on error
+        return {
+            data: {
+                data: [],
+                current_page: 1,
+                last_page: 1,
+                per_page: 10,
+                total: 0
+            },
+            interviewer: []
+        };
+    }
 }
 
 export async function get_applicant_by_app_id_service(app_id) {

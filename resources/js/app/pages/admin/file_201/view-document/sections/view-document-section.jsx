@@ -9,6 +9,8 @@ export default function ViewDocumentSection() {
     const { onboarding_ackdoc, signature } = useSelector(
         (state) => state.onboarding_ackdocs
     );
+
+    const { e_signature } = useSelector((state) => state.onboarding_ackdocs);
     const { applicant } = useSelector((state) => state.final_rate);
     const { onboarding_doc } = useSelector((state) => state.onboarding_docs);
 
@@ -21,6 +23,7 @@ export default function ViewDocumentSection() {
     // Get the e-signature
     const eSignature = signature;
 
+    console.log("e_signature:", e_signature);
     // Build document content + signature
     const getDocumentContentWithSignature = () => {
         let content = onboarding_doc?.data?.doc_content ?? "";
@@ -42,9 +45,25 @@ export default function ViewDocumentSection() {
     <img 
         src="${signature}" 
         alt="Electronic Signature" 
-        style="max-width: 400px; max-height: 180px; margin-left: 50px; display: block"
+        style="max-width: 400px; max-height: 180px; margin-left: 50px; display: block;"
         loading="eager"
     />
+    <div style="
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        letter-spacing: 1px; 
+        width: 300px; 
+        margin-bottom: 1rem;
+    ">
+        ${
+            e_signature?.[0]?.created_at
+                ? new Date(e_signature[0].created_at)
+                      .toISOString()
+                      .split("T")[0]
+                : ""
+        }
+    </div>
     <div style="border-top: 1px solid #000; padding-top: 6px; text-transform: uppercase; letter-spacing: 1px; width: 300px; ">
     <div style="align-items: center; justify-content: center; display: flex; font-weight: bold; font-size: 12px; color: #000;">
     ${

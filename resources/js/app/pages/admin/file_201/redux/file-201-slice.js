@@ -11,6 +11,7 @@ export const onboardingAckDocSlice = createSlice({
         job_offer: {},
         signature: "",
         applicant: {},
+        e_signature: {},
     },
     reducers: {
         setOnboardingAckDocs: (state, action) => {
@@ -34,6 +35,9 @@ export const onboardingAckDocSlice = createSlice({
         setSignature: (state, action) => {
             state.signature = action.payload;
         },
+        setESignature: (state, action) => {
+            state.e_signature = action.payload;
+        },
 
         setApplicant: (state, action) => {
             state.applicant = action.payload;
@@ -49,6 +53,7 @@ export const {
     setOnboardingAckDoc,
     setSignature,
     setApplicant,
+    setESignature,
 } = onboardingAckDocSlice.actions;
 
 export default onboardingAckDocSlice.reducer;

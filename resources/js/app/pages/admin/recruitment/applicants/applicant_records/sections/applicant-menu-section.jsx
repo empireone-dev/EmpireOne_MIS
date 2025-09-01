@@ -44,31 +44,31 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 <ApplicantDetaillsComponent
                     item={{
                         label: "Application Details",
-                        key: "1",
+                        key: "details",
                         icon: <AuditOutlined />,
                     }}
                     data={data}
                 />
             ),
         },
-        // {
-        //     component: (
-        //         <ApplicantDeleteComponent
-        //             item={{
-        //                 label: "Delete Application",
-        //                 key: "1",
-        //                 icon: <DeleteOutlined />,
-        //             }}
-        //             data={data}
-        //         />
-        //     ),
-        // },
+        {
+            component: (
+                <ApplicantDeleteComponent
+                    item={{
+                        label: "Delete Application",
+                        key: "delete",
+                        icon: <DeleteOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
         {
             component: (
                 <ApplicantCvFileComponent
                     item={{
                         label: "CV FIle",
-                        key: "1",
+                        key: "cv-file",
                         icon: <SolutionOutlined />,
                     }}
                     data={data}
@@ -83,7 +83,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                             status="Reschedule Initial Phase"
                             item={{
                                 label: "Reschedule Interview",
-                                key: "1",
+                                key: "reschedule-initial",
                                 icon: <ReconciliationOutlined />,
                             }}
                             data={data}
@@ -100,7 +100,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                             status="Reschedule Final Phase"
                             item={{
                                 label: "Reschedule Interview",
-                                key: "1",
+                                key: "reschedule-final",
                                 icon: <ReconciliationOutlined />,
                             }}
                             data={data}
@@ -117,7 +117,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                             status="Initial Phase"
                             item={{
                                 label: "Set Initial Phase Interview",
-                                key: "2",
+                                key: "set-initial-schedule",
                                 icon: <RiseOutlined />,
                             }}
                             data={data}
@@ -134,7 +134,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                             status="Initial Phase"
                             item={{
                                 label: "Proceed Initial Interview",
-                                key: "2",
+                                key: "proceed-initial",
                                 icon: <ArrowRightOutlined />,
                             }}
                             data={data}
@@ -151,7 +151,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                             status="Initial Phase"
                             item={{
                                 label: "Proceed Final Phase",
-                                key: "2",
+                                key: "proceed-final-phase",
                                 icon: <ArrowRightOutlined />,
                             }}
                             data={data}
@@ -167,7 +167,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                         <ApplicantInitialRatingScale
                             item={{
                                 label: "Initial Rating Scale",
-                                key: "3",
+                                key: "initial-rating",
                                 icon: <DotChartOutlined />,
                             }}
                             data={data}
@@ -183,7 +183,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                         <ApplicantProceedInitalPhaseComponent
                             item={{
                                 label: "Initial Phase Result",
-                                key: "4",
+                                key: "initial-phase-result",
                                 icon: <InfoCircleOutlined />,
                             }}
                             data={data}
@@ -200,7 +200,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                             status="Final Phase"
                             item={{
                                 label: "Proceed Interview Immediately",
-                                key: "2",
+                                key: "proceed-final-immediately",
                                 icon: <ArrowRightOutlined />,
                             }}
                             data={data}
@@ -216,7 +216,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                         <ApplicantFinalRatingScaleComponent
                             item={{
                                 label: "Final Rating Scale",
-                                key: "5",
+                                key: "final-rating",
                                 icon: <DotChartOutlined />,
                             }}
                             data={data}
@@ -233,7 +233,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                             status="Final Phase"
                             item={{
                                 label: "Set Schedule Final Phase",
-                                key: "6",
+                                key: "set-final-schedule",
                                 icon: <CalendarOutlined />,
                             }}
                             data={data}
@@ -277,7 +277,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                             data={data}
                             item={{
                                 label: "Application Results",
-                                key: "8",
+                                key: "application-results",
                                 icon: <InfoCircleOutlined />,
                             }}
                         />
@@ -291,7 +291,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                             <ApplicantRejectionComponent
                                 item={{
                                     label: "Sending Failed Email",
-                                    key: "3",
+                                    key: "send-failed-email",
                                     icon: <SendOutlined />,
                                 }}
                                 data={data}
@@ -307,7 +307,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                         <ApplicantPoolingComponent
                             item={{
                                 label: "Proceed for Pooling",
-                                key: "9",
+                                key: "proceed-pooling",
                                 icon: <TeamOutlined />,
                             }}
                             data={data}
@@ -323,7 +323,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                         <ApplicantJobOfferComponent
                             item={{
                                 label: "Make a Job Offer",
-                                key: "10",
+                                key: "make-job-offer",
                                 icon: (
                                     <BriefcaseIcon className="h-4 mr-0.5" />
                                 ),

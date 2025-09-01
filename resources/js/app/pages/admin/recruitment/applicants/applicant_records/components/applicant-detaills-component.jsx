@@ -8,6 +8,15 @@ import html2canvas from "html2canvas";
 export default function ApplicantDetaillsComponent({ data, item }) {
     const [open, setOpen] = useState(false);
 
+    // Safety check for data
+    if (!data) {
+        return (
+            <Menu.Item icon={item.icon} disabled>
+                {item.label} (No data available)
+            </Menu.Item>
+        );
+    }
+
     function openHandler(params) {
         setOpen(true);
     }
@@ -38,7 +47,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
                 {item.label}
             </Menu.Item>
             <Modal
-                visible={open}
+                open={open}
                 onOk={() => setOpen(false)}
                 onCancel={() => setOpen(false)}
                 width={1200}

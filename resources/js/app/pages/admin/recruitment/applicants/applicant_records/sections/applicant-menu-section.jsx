@@ -39,18 +39,18 @@ import ApplicantDeleteComponent from "../components/applicant-delete-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
-        // {
-        //     component: (
-        //         <ApplicantDetaillsComponent
-        //             item={{
-        //                 label: "Application Details",
-        //                 key: "details",
-        //                 icon: <AuditOutlined />,
-        //             }}
-        //             data={data}
-        //         />
-        //     ),
-        // },
+        {
+            component: (
+                <ApplicantDetaillsComponent
+                    item={{
+                        label: "Application Details",
+                        key: "details",
+                        icon: <AuditOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
         {
             component: (
                 <ApplicantDeleteComponent
@@ -342,11 +342,22 @@ export default function ApplicantMenuSection({ data, interviewer }) {
             <Dropdown
                 overlay={
                     <Menu>
-                        {items.map((item, i) => (
-                            <Menu.Item key={`menu-item-${i}`}>
-                                {item.component}
-                            </Menu.Item>
-                        ))}
+                        {items.map((item, i) => {
+                            try {
+                                return (
+                                    <React.Fragment key={`menu-item-${i}`}>
+                                        {item.component}
+                                    </React.Fragment>
+                                );
+                            } catch (error) {
+                                console.error(`Error rendering menu item ${i}:`, error);
+                                return (
+                                    <Menu.Item key={`menu-item-error-${i}`} disabled>
+                                        Error loading menu item
+                                    </Menu.Item>
+                                );
+                            }
+                        })}
                     </Menu>
                 }
                 trigger={["click"]}

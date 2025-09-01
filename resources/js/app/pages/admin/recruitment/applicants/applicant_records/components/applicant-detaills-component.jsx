@@ -16,14 +16,8 @@ export default function ApplicantDetaillsComponent({ data, item }) {
     // Safety check for data and client-side rendering
     if (!data || !isClient) {
         return (
-            <Menu.Item 
-                icon={item?.icon} 
-                disabled
-                className="opacity-50 cursor-not-allowed"
-            >
-                <span className="text-gray-400">
-                    {item?.label || "Loading..."} {!data ? "(No data available)" : ""}
-                </span>
+            <Menu.Item icon={item?.icon} disabled>
+                {item?.label || "Loading..."} {!data ? "(No data available)" : ""}
             </Menu.Item>
         );
     }
@@ -62,17 +56,8 @@ export default function ApplicantDetaillsComponent({ data, item }) {
     try {
         return (
             <>
-                <Menu.Item 
-                    onClick={() => openHandler(true)} 
-                    icon={item?.icon}
-                    className="hover:bg-blue-50 transition-colors duration-200 rounded-md"
-                >
-                    <span className="flex items-center gap-2 font-medium text-gray-700 hover:text-blue-600">
-                        {item?.label}
-                        <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
-                            View Details
-                        </span>
-                    </span>
+                <Menu.Item onClick={() => openHandler(true)} icon={item?.icon}>
+                    {item?.label}
                 </Menu.Item>
                 <Modal
                     open={open}
@@ -424,17 +409,8 @@ export default function ApplicantDetaillsComponent({ data, item }) {
     } catch (error) {
         console.error("Error rendering ApplicantDetaillsComponent:", error);
         return (
-            <Menu.Item 
-                icon={item?.icon} 
-                disabled
-                className="opacity-50 cursor-not-allowed"
-            >
-                <span className="text-red-400 flex items-center gap-2">
-                    {item?.label} 
-                    <span className="text-xs bg-red-100 text-red-600 px-2 py-1 rounded-full">
-                        Error
-                    </span>
-                </span>
+            <Menu.Item icon={item?.icon} disabled>
+                {item?.label} (Error loading)
             </Menu.Item>
         );
     }

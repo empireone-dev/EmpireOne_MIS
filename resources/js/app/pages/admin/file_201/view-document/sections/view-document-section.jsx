@@ -55,6 +55,7 @@ export default function ViewDocumentSection() {
         letter-spacing: 1px; 
         width: 300px; 
         margin-bottom: 1rem;
+        font-style: italic;
     ">
         ${
             e_signature?.[0]?.created_at

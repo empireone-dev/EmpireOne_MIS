@@ -342,9 +342,11 @@ export default function ApplicantMenuSection({ data, interviewer }) {
             <Dropdown
                 overlay={
                     <Menu>
-                        {items.map((item, i) => {
-                            return item.component;
-                        })}
+                        {items.map((item, i) => (
+                            <Menu.Item key={`menu-item-${i}`}>
+                                {item.component}
+                            </Menu.Item>
+                        ))}
                     </Menu>
                 }
                 trigger={["click"]}

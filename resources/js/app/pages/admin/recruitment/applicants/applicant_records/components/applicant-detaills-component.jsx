@@ -1,18 +1,23 @@
 import { FilePdfOutlined } from "@ant-design/icons";
 import { Menu, Modal, Tooltip } from "antd";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
 export default function ApplicantDetaillsComponent({ data, item }) {
     const [open, setOpen] = useState(false);
+    const [isClient, setIsClient] = useState(false);
 
-    // Safety check for data
-    if (!data) {
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    // Safety check for data and client-side rendering
+    if (!data || !isClient) {
         return (
-            <Menu.Item icon={item.icon} disabled>
-                {item.label} (No data available)
+            <Menu.Item icon={item?.icon} disabled>
+                {item?.label || "Loading..."} {!data ? "(No data available)" : ""}
             </Menu.Item>
         );
     }
@@ -22,37 +27,46 @@ export default function ApplicantDetaillsComponent({ data, item }) {
     }
 
     const handleConvertToPDF = () => {
-        const formElement = document.getElementById("form-to-pdf");
+        try {
+            const formElement = document.getElementById("form-to-pdf");
 
-        if (!formElement) {
-            console.error("Form element not found");
-            return;
+            if (!formElement) {
+                console.error("Form element not found");
+                return;
+            }
+
+            html2canvas(formElement, { scale: 4 }).then((canvas) => {
+                const imgData = canvas.toDataURL("image/png");
+                const pdf = new jsPDF("p", "mm", "a4");
+                const imgWidth = 210; // A4 width in mm
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+                pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+                pdf.save(`${data?.lname || 'applicant'}_${data?.fname || 'details'}.pdf`);
+            }).catch((error) => {
+                console.error("Error generating PDF:", error);
+            });
+        } catch (error) {
+            console.error("Error in PDF conversion:", error);
         }
-
-        html2canvas(formElement, { scale: 4 }).then((canvas) => {
-            const imgData = canvas.toDataURL("image/png");
-            const pdf = new jsPDF("p", "mm", "a4");
-            const imgWidth = 210; // A4 width in mm
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-            pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-            pdf.save(`${data?.lname}_${data?.fname}.pdf`);
-        });
     };
 
     console.log('data', data)
-    return (
-        <>
-            <Menu.Item onClick={() => openHandler(true)} icon={item.icon}>
-                {item.label}
-            </Menu.Item>
-            <Modal
-                open={open}
-                onOk={() => setOpen(false)}
-                onCancel={() => setOpen(false)}
-                width={1200}
-                footer={null}
-            >
+    
+    try {
+        return (
+            <>
+                <Menu.Item onClick={() => openHandler(true)} icon={item?.icon}>
+                    {item?.label}
+                </Menu.Item>
+                <Modal
+                    open={open}
+                    onOk={() => setOpen(false)}
+                    onCancel={() => setOpen(false)}
+                    width={1200}
+                    footer={null}
+                    destroyOnClose={true}
+                >
                 <div className="flex text-2xl items-center justify-center mb-2">
                     <h1>
                         <b>APPLICATION DETAILS</b>
@@ -392,4 +406,12 @@ export default function ApplicantDetaillsComponent({ data, item }) {
             </Modal>
         </>
     );
+    } catch (error) {
+        console.error("Error rendering ApplicantDetaillsComponent:", error);
+        return (
+            <Menu.Item icon={item?.icon} disabled>
+                {item?.label} (Error loading)
+            </Menu.Item>
+        );
+    }
 }

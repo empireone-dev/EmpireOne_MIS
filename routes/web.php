@@ -122,6 +122,18 @@ Route::middleware('redirectBasedOnRole')->get('/login/change_password', function
     return Inertia::render('login/change_password/page');
 })->name('login.change_password.page');
 
+Route::get('/accept/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function ($app_id, $iffdate, $ifftime, $meet_link = null) {
+    $meetLink = $meet_link ? base64_decode($meet_link) : null;
+
+    return Inertia::render('accept/page', [
+        'appId' => $app_id,
+        'date' => $iffdate,
+        'time' => $ifftime,
+        'meetLink' => $meetLink,
+    ]);
+});
+
+
 Route::get('/confirmation/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function ($app_id, $iffdate, $ifftime, $meet_link = null) {
     $meetLink = $meet_link ? base64_decode($meet_link) : null;
 

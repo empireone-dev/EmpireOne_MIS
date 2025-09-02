@@ -210,41 +210,47 @@ export default function ApplicantVirtualScheduleComponent({
                             />
                         </div>
                     </div>
-                    <div className="w-full px-2.5">
-                        <label
-                            className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                            for="grid-text"
-                        >
-                            {status} Interviewer
-                        </label>
-                        <select
-                            className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                            name=""
-                            id=""
-                            value={initial.interviewer_id}
-                            onChange={(e) =>
-                                setInitial({
-                                    ...initial,
-                                    interviewer_id: e.target.value,
-                                })
-                            }
-                        >
-                            <option value="">Select Interviewer</option>
-                            {interviewer?.map((res, i) => {
-                                return (
-                                    <option value={res?.employee_id} key={i}>
-                                        {res?.employee_fname}{" "}
-                                        {res?.employee_lname}
-                                    </option>
-                                );
-                            })}
-                        </select>
-                    </div>
+                    {status === "Final Phase" && (
+                        <div className="w-full px-2.5">
+                            <label
+                                className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
+                                for="grid-text"
+                            >
+                                {status} Interviewer
+                            </label>
+                            <select
+                                className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                name=""
+                                id=""
+                                value={initial.interviewer_id}
+                                onChange={(e) =>
+                                    setInitial({
+                                        ...initial,
+                                        interviewer_id: e.target.value,
+                                    })
+                                }
+                            >
+                                <option value="">Select Interviewer</option>
+                                {interviewer?.map((res, i) => {
+                                    return (
+                                        <option
+                                            value={res?.employee_id}
+                                            key={i}
+                                        >
+                                            {res?.employee_fname}{" "}
+                                            {res?.employee_lname}
+                                        </option>
+                                    );
+                                })}
+                            </select>
+                        </div>
+                    )}
                 </div>
                 <button
                     type="submit"
-                    className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${loading ? "cursor-not-allowed opacity-75" : ""
-                        }`}
+                    className={`bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full ${
+                        loading ? "cursor-not-allowed opacity-75" : ""
+                    }`}
                     disabled={loading}
                 >
                     {loading ? <LoadingOutlined spin /> : <CheckCircleFilled />}

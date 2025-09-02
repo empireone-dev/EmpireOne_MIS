@@ -15,10 +15,10 @@ export default function AcceptSection() {
     const iffdate = window.location.pathname.split("/")[3];
     const ifftime = window.location.pathname.split("/")[4];
     const meet_link = window.location.pathname.split("/")[5];
-    
+
     // Check for auto-confirm parameter
     const urlParams = new URLSearchParams(window.location.search);
-    const autoConfirm = urlParams.get('auto') === 'true';
+    const autoConfirm = urlParams.get("auto") === "true";
 
     const submitConfirmation = async (e) => {
         if (e) e.preventDefault();
@@ -57,12 +57,12 @@ export default function AcceptSection() {
     }, [autoConfirm, confirmed, loading]);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="min-h-screen flex items-center justify-center bg-sky-400">
             <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center">
                 <div className="mb-6">
-                    <img 
-                        src="https://empireone-hris.com/images/newlogo.png" 
-                        alt="EmpireOne Logo" 
+                    <img
+                        src="https://empireone-hris.com/images/newlogo.png"
+                        alt="EmpireOne Logo"
                         className="max-w-48 mx-auto mb-4"
                     />
                     <h2 className="text-2xl font-bold text-gray-800 mb-2">
@@ -93,7 +93,7 @@ export default function AcceptSection() {
                         </p>
                     )}
                 </div>
-                
+
                 {!autoConfirm && (
                     <form onSubmit={submitConfirmation}>
                         <button
@@ -104,15 +104,20 @@ export default function AcceptSection() {
                             }`}
                         >
                             {loading && <LoadingOutlined className="mr-2" />}
-                            {loading ? "Submitting..." : confirmed ? "Confirmed" : "Yes, I'll Attend"}
+                            {loading
+                                ? "Submitting..."
+                                : confirmed
+                                ? "Confirmed"
+                                : "Yes, I'll Attend"}
                         </button>
                     </form>
                 )}
-                
+
                 {confirmed && (
                     <div className="mt-4 p-4 bg-green-50 rounded-md">
                         <p className="text-sm text-green-700">
-                            Thank you for confirming! We look forward to meeting you.
+                            Thank you for confirming! We look forward to meeting
+                            you.
                         </p>
                     </div>
                 )}

@@ -69,7 +69,20 @@
             <p> We eagerly anticipate meeting you and delving further into your application. Thank you for considering EmpireOne BPO Solutions Inc. as your potential employer. We look forward to this next step in the selection process.</p>
 
             <p><b>**Please confirm your attendance by clicking the confirmation button below:**</b></p>
-            <div style="text-align: center;"><a href="https://empireone-hris.com/confirmation/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}" class="button">Confirm Attendance</a></div><br>
+            <div style="text-align: center;">
+                <a href="https://empireone-hris.com/accept/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}?auto=true"
+                    class="button"
+                    style="display:inline-block; margin: 0 10px;">
+                    Accept Invitation
+                </a>
+
+                <a href="https://empireone-hris.com/confirmation/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}"
+                    class="button"
+                    style="display:inline-block; margin: 0 10px; background-color: #e74c3c; color: white;">
+                    Decline
+                </a>
+            </div>
+            <br>
 
             <p> Should you have any questions or require further information before the interview, please do not hesitate to contact our HR department at hiring@empireonegroup.com for our San Carlos Site and career@empireonegroup.com for CarCar Site.</p><br>
 

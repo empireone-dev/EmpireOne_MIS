@@ -27,7 +27,7 @@ export default function FinalPhaseResultSection() {
                     <input type="text" placeholder=""  value={applicant?.final?.oavg??''} className="border p-2 rounded w-full mt-1" readOnly />
                 </div>
                 <div className='flex flex-col w-full mt-5'>
-                    <label htmlFor=""><b>INITIAL PHASE INTERVIEWER</b></label>
+                    <label htmlFor=""><b>FINAL PHASE INTERVIEWER</b></label>
                     <input type="text" placeholder=""  value={applicant?.final?.interviewer??''} className="border p-2 rounded w-full mt-1" readOnly />
                 </div>
                 <div className='mt-5'>

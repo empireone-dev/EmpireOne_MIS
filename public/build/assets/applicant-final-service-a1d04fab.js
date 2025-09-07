@@ -1,1 +1,0 @@
-async function s(a){return(await axios.post("/api/final_rate",a)).data}async function e(){return(await axios.get("/api/get_hired_applicant")).data}async function i(a){return(await axios.put(`/api/update_address/${a.id}`,a)).data}async function n(a){return(await axios.put(`/api/final_update_applicant_after_confirmation_status/${a.app_id}`,a)).data}export{n as f,e as g,s,i as u};

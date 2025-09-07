@@ -2,8 +2,8 @@ import store from "@/app/store/store";
 import { message } from "antd";
 import { useState, useEffect } from "react";
 import {
+    final_update_applicant_after_confirmation_status_thunk,
     get_applicant_thunk,
-    update_applicant_after_confirmation_status_thunk,
 } from "../../admin/recruitment/applicants/applicant_records/redux/applicant-thunk";
 import { CheckOutlined, LoadingOutlined } from "@ant-design/icons";
 
@@ -29,7 +29,7 @@ export default function AcceptSection() {
         setLoading(true);
         try {
             await store.dispatch(
-                update_applicant_after_confirmation_status_thunk({
+                final_update_applicant_after_confirmation_status_thunk({
                     app_id,
                     iffdate,
                     ifftime,

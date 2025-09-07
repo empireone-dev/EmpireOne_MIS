@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import store from "@/app/store/store";
 import { message } from "antd";
 import {
-    declined_attendance_thunk,
+    final_declined_attendance_thunk,
     get_applicant_thunk,
 } from "../../admin/recruitment/applicants/applicant_records/redux/applicant-thunk";
 
@@ -40,7 +40,7 @@ export default function ConfirmationSection() {
         setLoading(true);
         try {
             await store.dispatch(
-                declined_attendance_thunk({
+                final_declined_attendance_thunk({
                     app_id,
                     reason,
                     reschedule: reschedDecision === "yes" ? "Yes" : "No",

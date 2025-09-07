@@ -92,10 +92,13 @@ class FinalRateController extends Controller
             'meet_link' => $decodedMeetLink,
         ];
 
+        // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = 'quicklydeguzman@gmail.com';
+
         if ($decodedMeetLink) {
-            Mail::to('hiring@empireonegroup.com')->send(new ConfirmationFinalVirtual($data));
+            Mail::to($emailRecipient)->send(new ConfirmationFinalVirtual($data));
         } else {
-            Mail::to('hiring@empireonegroup.com')->send(new ConfirmationFinalPhysical($data));
+            Mail::to($emailRecipient)->send(new ConfirmationFinalPhysical($data));
         }
 
         return response()->json([
@@ -125,8 +128,10 @@ class FinalRateController extends Controller
             'reason' => $request->reason,
         ];
 
+        // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = 'quicklydeguzman@gmail.com';
 
-        Mail::to('hiring@empireonegroup.com')->send(new DeclinedConfirmation($data));
+        Mail::to($emailRecipient)->send(new DeclinedConfirmation($data));
 
         return response()->json([
             'message' => 'Applicant decline reason submitted successfully.',

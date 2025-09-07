@@ -475,8 +475,8 @@ class ApplicantController extends Controller
             'meet_link' => $decodedMeetLink,
         ];
 
-        // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
-        $emailRecipient = 'quicklydeguzman@gmail.com';
+        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        // $emailRecipient = 'quicklydeguzman@gmail.com';
 
         if ($decodedMeetLink) {
             Mail::to($emailRecipient)->send(new ConfirmationInitialVirtual($data));
@@ -518,8 +518,8 @@ class ApplicantController extends Controller
             'reason' => $request->reason,
         ];
 
-        // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
-        $emailRecipient = 'quicklydeguzman@gmail.com';
+        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        // $emailRecipient = 'quicklydeguzman@gmail.com';
 
         if (strtolower($request->reschedule) === "yes") {
             Mail::to($emailRecipient)->send(new Rescheduled($data));

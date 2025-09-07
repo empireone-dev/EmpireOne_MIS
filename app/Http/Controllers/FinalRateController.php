@@ -129,8 +129,8 @@ class FinalRateController extends Controller
             'reason' => $request->reason,
         ];
 
-        // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
-        $emailRecipient = 'quicklydeguzman@gmail.com';
+        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        // $emailRecipient = 'quicklydeguzman@gmail.com';
 
         if (strtolower($request->reschedule) === "yes") {
             Mail::to($emailRecipient)->send(new Rescheduled($data));

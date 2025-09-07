@@ -34,7 +34,7 @@ export default function AcceptSection() {
                     iffdate,
                     ifftime,
                     meet_link,
-                    status: "Initial Phase",
+                    status: "Final Phase",
                 })
             );
             setConfirmed(true);

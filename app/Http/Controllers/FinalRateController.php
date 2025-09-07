@@ -7,6 +7,7 @@ use App\Mail\ConfirmationFinalVirtual;
 use App\Mail\DeclinedConfirmation;
 use App\Mail\FailedFinal;
 use App\Mail\FailedInitial;
+use App\Mail\Rescheduled;
 use App\Models\Applicant;
 use App\Models\FinalRate;
 use Illuminate\Http\Request;
@@ -131,7 +132,14 @@ class FinalRateController extends Controller
         // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
         $emailRecipient = 'quicklydeguzman@gmail.com';
 
-        Mail::to($emailRecipient)->send(new DeclinedConfirmation($data));
+        if (strtolower($request->reschedule) === "yes") {
+            Mail::to($emailRecipient)->send(new Rescheduled($data));
+        } else {
+            $applicant->status = 'Declined';
+            $applicant->save();
+
+            Mail::to($emailRecipient)->send(new DeclinedConfirmation($data));
+        }
 
         return response()->json([
             'message' => 'Applicant decline reason submitted successfully.',

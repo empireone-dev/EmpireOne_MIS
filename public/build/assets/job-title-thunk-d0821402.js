@@ -1,0 +1,1 @@
+import{b as s,w as i}from"./store-bb4697b2.js";async function n(){return(await s.get("/api/job_position")).data}function r(){return async function(t,a){const o=(await n()).data;console.log("result",o),t(i.actions.setJobPositions(o))}}export{r as g};

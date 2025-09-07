@@ -144,17 +144,40 @@ Route::get('/confirmation/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function (
         'meetLink' => $meetLink,
     ]);
 });
-
-Route::get('/final/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function ($app_id, $iffdate, $ifftime, $meet_link = null) {
+    
+Route::get('/accept_final/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function ($app_id, $iffdate, $ifftime, $meet_link = null) {
     $meetLink = $meet_link ? base64_decode($meet_link) : null;
 
-    return Inertia::render('final/page', [
+    return Inertia::render('accept/page', [
         'appId' => $app_id,
         'date' => $iffdate,
         'time' => $ifftime,
         'meetLink' => $meetLink,
     ]);
 });
+
+
+Route::get('/final/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function ($app_id, $iffdate, $ifftime, $meet_link = null) {
+    $meetLink = $meet_link ? base64_decode($meet_link) : null;
+
+    return Inertia::render('confirmation/page', [
+        'appId' => $app_id,
+        'date' => $iffdate,
+        'time' => $ifftime,
+        'meetLink' => $meetLink,
+    ]);
+});
+
+// Route::get('/final/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function ($app_id, $iffdate, $ifftime, $meet_link = null) {
+//     $meetLink = $meet_link ? base64_decode($meet_link) : null;
+
+//     return Inertia::render('final/page', [
+//         'appId' => $app_id,
+//         'date' => $iffdate,
+//         'time' => $ifftime,
+//         'meetLink' => $meetLink,
+//     ]);
+// });
 
 
 Route::get('/online_application', function () {

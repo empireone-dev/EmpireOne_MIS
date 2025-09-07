@@ -73,8 +73,24 @@
                 forward to our upcoming conversation. This interview is an important step, and we believe it will provide
                 us with a better understanding of your potential as a valuable addition to our organization.</p>
 
+            <!-- <p><b>**Please confirm your attendance by clicking the confirmation button below:**</b></p>
+            <div style="text-align: center;"><a href="https://empireone-hris.com/final/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}" class="button">Confirm Attendance</a></div><br> -->
+
             <p><b>**Please confirm your attendance by clicking the confirmation button below:**</b></p>
-            <div style="text-align: center;"><a href="https://empireone-hris.com/final/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}" class="button">Confirm Attendance</a></div><br>
+            <div style="text-align: center;">
+                <a href="https://empireone-hris.com/accept_final/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}?auto=true"
+                    class="button"
+                    style="display:inline-block; margin: 0 10px;">
+                    Accept Invitation
+                </a>
+
+                <a href="https://empireone-hris.com/final/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}"
+                    class="button"
+                    style="display:inline-block; margin: 0 10px; background-color: #e74c3c; color: white;">
+                    Decline
+                </a>
+            </div>
+            <br>
 
             <p> If you have any questions or require any additional information before the interview, please do not
                 hesitate to contact our HR department at hiring@empireonegroup.com for our San Carlos Site and

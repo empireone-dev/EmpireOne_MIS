@@ -144,11 +144,11 @@ Route::get('/confirmation/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function (
         'meetLink' => $meetLink,
     ]);
 });
-    
+
 Route::get('/accept_final/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function ($app_id, $iffdate, $ifftime, $meet_link = null) {
     $meetLink = $meet_link ? base64_decode($meet_link) : null;
 
-    return Inertia::render('accept/page', [
+    return Inertia::render('accept_final/page', [
         'appId' => $app_id,
         'date' => $iffdate,
         'time' => $ifftime,
@@ -160,7 +160,7 @@ Route::get('/accept_final/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function (
 Route::get('/final/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function ($app_id, $iffdate, $ifftime, $meet_link = null) {
     $meetLink = $meet_link ? base64_decode($meet_link) : null;
 
-    return Inertia::render('confirmation/page', [
+    return Inertia::render('final/page', [
         'appId' => $app_id,
         'date' => $iffdate,
         'time' => $ifftime,

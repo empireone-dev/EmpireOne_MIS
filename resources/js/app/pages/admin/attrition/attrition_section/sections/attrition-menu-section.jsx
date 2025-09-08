@@ -6,6 +6,7 @@ import {
     EditOutlined,
     FileDoneOutlined,
     FileSearchOutlined,
+    FileTextOutlined,
     FolderOpenOutlined,
     SolutionOutlined,
 } from "@ant-design/icons";
@@ -16,6 +17,7 @@ import AttritionExitInterviewResultComponent from "../components/attrition-exit-
 import AttritionUploadClearanceComponent from "../components/attrition-upload-clearance-component";
 import AttritionQuitClaimComponent from "../components/attrition-quit-claim-component";
 import AttritionViewQuitClaimComponent from "../components/attirition-view-quit-claim-component";
+import AttritionLastPayProofComponent from "../components/attrition-last-pay-proof-component";
 // import UpdateEmployeeComponent from "../components/update-employee-component";
 // import File201Component from "../components/file-201-component";
 // import EmploymentStatusComponent from "../components/employment-status-component";
@@ -23,7 +25,6 @@ import AttritionViewQuitClaimComponent from "../components/attirition-view-quit-
 // import GenerateQrComponent from "../components/generate-qr-component";
 // import FileIrComponent from "../components/file-ir-component";
 // import FileNteComponent from "../components/file-nte-component";
-
 
 export default function AttritionMenuSection({ data }) {
     const items = [
@@ -53,87 +54,103 @@ export default function AttritionMenuSection({ data }) {
         },
         ...(data?.estatus == "Pending Clearance" || data?.estatus == "Cleared"
             ? [
-                {
-                    component: (
-                        <AttritionExitInterviewResultComponent
-                            // status="Exit Interview Results"
-                            item={{
-                                label: "Exit Interview Results",
-                                key: "3",
-                                icon: <FileDoneOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <AttritionExitInterviewResultComponent
+                              // status="Exit Interview Results"
+                              item={{
+                                  label: "Exit Interview Results",
+                                  key: "3",
+                                  icon: <FileDoneOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data?.estatus == "Pending"
             ? [
-                {
-                    component: (
-                        <AttritionExitInterviewComponent
-                            // status="Exit Interview"
-                            item={{
-                                label: "Proceed Exit Interview",
-                                key: "3",
-                                icon: <DeliveredProcedureOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <AttritionExitInterviewComponent
+                              // status="Exit Interview"
+                              item={{
+                                  label: "Proceed Exit Interview",
+                                  key: "3",
+                                  icon: <DeliveredProcedureOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data?.estatus == "Pending Clearance"
             ? [
-                {
-                    component: (
-                        <AttritionUploadClearanceComponent
-                            // status="Exit Clearance"
-                            item={{
-                                label: "Upload Exit Clearance",
-                                key: "3",
-                                icon: <DeliveredProcedureOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <AttritionUploadClearanceComponent
+                              // status="Exit Clearance"
+                              item={{
+                                  label: "Upload Exit Clearance",
+                                  key: "3",
+                                  icon: <DeliveredProcedureOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data?.estatus == "Cleared" && !data?.quit_claim
             ? [
-                {
-                    component: (
-                        <AttritionQuitClaimComponent
-                            // status="Quit Claim"
-                            item={{
-                                label: "Send Quit Claim",
-                                key: "3",
-                                icon: <DeliveredProcedureOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <AttritionQuitClaimComponent
+                              // status="Quit Claim"
+                              item={{
+                                  label: "Send Quit Claim",
+                                  key: "3",
+                                  icon: <DeliveredProcedureOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data?.quit_claim
             ? [
-                {
-                    component: (
-                        <AttritionViewQuitClaimComponent
-                            item={{
-                                label: "View Quit Claim",
-                                key: "1",
-                                icon: <SolutionOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <AttritionViewQuitClaimComponent
+                              item={{
+                                  label: "View Quit Claim",
+                                  key: "1",
+                                  icon: <SolutionOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
+            : []),
+        ...(data?.quit_claim
+            ? [
+                  {
+                      component: (
+                          <AttritionLastPayProofComponent
+                              item={{
+                                  label: "Send Last Pay Details",
+                                  key: "1",
+                                  icon: <FileTextOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         // ...(data.status == "Initial Phase"
         //     ? [
@@ -259,7 +276,7 @@ export default function AttritionMenuSection({ data }) {
         //     ]
         //     : []),
     ];
-    console.log('data', data)
+    console.log("data", data);
     return (
         <div>
             <Dropdown

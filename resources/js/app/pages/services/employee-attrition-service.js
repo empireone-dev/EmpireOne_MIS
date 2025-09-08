@@ -1,36 +1,49 @@
 import axios from "axios";
 
 export async function get_employee_attrition_service() {
-    const res = await axios.get('/api/employee_attrition' + (window.location.search || '?page=1'))
+    const res = await axios.get(
+        "/api/employee_attrition" + (window.location.search || "?page=1")
+    );
 
-    return res.data
+    return res.data;
 }
 
 export async function upload_exit_clearance_service(data) {
-    const res = await axios.post('/api/upload_exit_clearance', data)
-    return res.data
+    const res = await axios.post("/api/upload_exit_clearance", data);
+    return res.data;
 }
 
 export async function send_quit_claim_service(data) {
-    const res = await axios.post('/api/send_quit_claim', data, {
+    const res = await axios.post("/api/send_quit_claim", data, {
         headers: {
-            'Content-Type': 'multipart/form-data',
+            "Content-Type": "multipart/form-data",
         },
-    })
-    return res.data
+    });
+    return res.data;
+}
+
+export async function send_last_pay_service(data) {
+    const res = await axios.post("/api/send_last_pay", data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+    return res.data;
 }
 
 export async function get_employee_attrition_by_emp_id_service(emp_id) {
     try {
-        const result = await axios.get(`/api/get_employee_attrition_by_emp_id/${emp_id}`)
-        return result.data
+        const result = await axios.get(
+            `/api/get_employee_attrition_by_emp_id/${emp_id}`
+        );
+        return result.data;
     } catch (error) {
-        console.error('Error fetching employee attrition:', error);
+        console.error("Error fetching employee attrition:", error);
         throw error;
     }
 }
 
 export async function upload_quit_claim_service(data) {
-    const res = await axios.post('/api/upload_quit_claim', data)
-    return res.data
+    const res = await axios.post("/api/upload_quit_claim", data);
+    return res.data;
 }

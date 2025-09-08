@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\Attrition as MailAttrition;
 use App\Mail\Cleared;
+use App\Mail\LastPay;
 use App\Mail\QuitClaim;
 use App\Mail\QuitClaimUploaded;
 use App\Models\Applicant;
@@ -167,6 +168,49 @@ class AttritionController extends Controller
             ], 500);
         }
     }
+
+    public function send_last_pay(Request $request)
+    {
+        $data = $request->all();
+
+        // Validate that a file is uploaded
+        if (!$request->hasFile('file')) {
+            return response()->json([
+                'error' => 'File is required',
+            ], 400);
+        }
+
+        try {
+            $file = $request->file('file');
+            $path = $file->store(date("Y"), 's3');
+
+            // Get the full S3 URL for the uploaded file
+            $url = 'https://' . config('filesystems.disks.s3.bucket') . '.s3.' . config('filesystems.disks.s3.region') . '.amazonaws.com/' . $path;
+
+            if ($path) {
+                $emailData = $data;
+                if ($request->job_offer_id) {
+                    $emailData['job_offer_id'] = $request->job_offer_id;
+                    $emailData['jobPos'] = $request->jobPos;
+                }
+                Mail::to($request->email)->send(new LastPay($emailData, $url));
+
+                return response()->json([
+                    'data' => 'success',
+                    'message' => 'Email sent successfully with attachment',
+                ], 200);
+            } else {
+                return response()->json([
+                    'error' => 'Failed to upload file to S3',
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to process file upload: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
+
 
     public function get_employee_attrition_by_emp_id($emp_id)
     {

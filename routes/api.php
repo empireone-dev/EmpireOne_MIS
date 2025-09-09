@@ -99,6 +99,7 @@ Route::resource('guideq', GuideQuestionController::class);
 Route::resource('users', UserController::class);
 Route::resource('checklist', ChecklistController::class);
 Route::resource('joboffer', JobOfferController::class);
+Route::put('/proceed_direct_hire/{id}', [JobOfferController::class, 'proceed_direct_hire']);
 Route::resource('new_joboffer', NewJobOfferController::class);
 Route::resource('onboarding_doc', OnboardingDocController::class);
 Route::get('/onboarding_doc_by_id/{id}', [OnboardingDocController::class, 'onboarding_doc_by_id']);

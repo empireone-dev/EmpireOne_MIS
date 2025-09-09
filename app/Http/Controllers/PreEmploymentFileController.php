@@ -349,6 +349,7 @@ class PreEmploymentFileController extends Controller
                     'employee_mname' => $applicant->mname ?? '',
                     'employee_lname' => $applicant->lname ?? '',
                     'employee_suffix' => $applicant->suffix ?? '',
+                    'email' => $applicant->email ?? null,
                     'department' => $jo->department ?? null,
                     'account' => $jo->account ?? null,
                     'sup_id' => null,

@@ -1,22 +1,33 @@
 import React, { useRef, useState } from "react";
 import {
+    DeliveredProcedureOutlined,
     FileTextFilled,
     FolderOpenFilled,
     LineOutlined,
     SearchOutlined,
 } from "@ant-design/icons";
-import { Button, Input, Pagination, Select, Space, Table, Tag, Tooltip } from "antd";
+import {
+    Button,
+    Input,
+    Pagination,
+    Select,
+    Space,
+    Table,
+    Tag,
+    Tooltip,
+} from "antd";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import { router } from "@inertiajs/react";
 import DeclinedReasonSection from "./declined-reason-section";
 import HiringSearchSection from "./hiring-search-section";
+import DirectHireSection from "./direct-hire-section";
 
 export default function HiringTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
-    const { joboffers } = useSelector((state) => state.joboffers)
+    const { joboffers } = useSelector((state) => state.joboffers);
     const { user } = useSelector((state) => state.app);
 
     // const [isModalVisible, setIsModalVisible] = useState(false);
@@ -152,38 +163,38 @@ export default function HiringTableSection() {
 
     const urls = new URL(window.location.href);
     const searchParams = new URLSearchParams(urls.search);
-    const pages = searchParams.get('page');
-    const status = searchParams.get('status');
-    const site = searchParams.get('site');
+    const pages = searchParams.get("page");
+    const status = searchParams.get("status");
+    const site = searchParams.get("site");
 
     function search_status(value) {
         const newSearchParams = new URLSearchParams(window.location.search);
-        newSearchParams.set('page', pages || '1');
+        newSearchParams.set("page", pages || "1");
         if (value) {
-            newSearchParams.set('status', value);
+            newSearchParams.set("status", value);
         } else {
-            newSearchParams.delete('status');
+            newSearchParams.delete("status");
         }
         // Preserve existing site filter
-        if (site && site !== 'null') {
-            newSearchParams.set('site', site);
+        if (site && site !== "null") {
+            newSearchParams.set("site", site);
         }
-        router.visit('?' + newSearchParams.toString());
+        router.visit("?" + newSearchParams.toString());
     }
-    
+
     function search_site(value) {
         const newSearchParams = new URLSearchParams(window.location.search);
-        newSearchParams.set('page', '1');
+        newSearchParams.set("page", "1");
         // Preserve existing status filter
-        if (status && status !== 'null') {
-            newSearchParams.set('status', status);
+        if (status && status !== "null") {
+            newSearchParams.set("status", status);
         }
         if (value) {
-            newSearchParams.set('site', value);
+            newSearchParams.set("site", value);
         } else {
-            newSearchParams.delete('site');
+            newSearchParams.delete("site");
         }
-        router.visit('?' + newSearchParams.toString());
+        router.visit("?" + newSearchParams.toString());
     }
 
     const columns = [
@@ -199,7 +210,9 @@ export default function HiringTableSection() {
             key: "app_name",
             render: (_, record, i) => {
                 console.log("record", record);
-                const fullName = `${record?.applicant?.fname || ''} ${record?.applicant?.mname || ''} ${record?.applicant?.lname || ''}`.trim();
+                const fullName = `${record?.applicant?.fname || ""} ${
+                    record?.applicant?.mname || ""
+                } ${record?.applicant?.lname || ""}`.trim();
                 return (
                     <div key={i}>
                         {searchedColumn === "app_name" ? (
@@ -236,7 +249,9 @@ export default function HiringTableSection() {
                         placeholder="Search Applicant Name"
                         value={selectedKeys[0]}
                         onChange={(e) =>
-                            setSelectedKeys(e.target.value ? [e.target.value] : [])
+                            setSelectedKeys(
+                                e.target.value ? [e.target.value] : []
+                            )
                         }
                         onPressEnter={() =>
                             handleSearch(selectedKeys, confirm, "app_name")
@@ -304,10 +319,10 @@ export default function HiringTableSection() {
                 />
             ),
             onFilter: (value, record) => {
-                const fullName = `${record?.applicant?.fname || ''} ${record?.applicant?.mname || ''} ${record?.applicant?.lname || ''}`.trim();
-                return fullName
-                    .toLowerCase()
-                    .includes(value.toLowerCase());
+                const fullName = `${record?.applicant?.fname || ""} ${
+                    record?.applicant?.mname || ""
+                } ${record?.applicant?.lname || ""}`.trim();
+                return fullName.toLowerCase().includes(value.toLowerCase());
             },
             onFilterDropdownOpenChange: (visible) => {
                 if (visible) {
@@ -328,29 +343,34 @@ export default function HiringTableSection() {
             ...getColumnSearchProps("salary"),
         },
         {
-            title: <div>
-                <Select
-                    allowClear
-                    className="w-28"
-                    showSearch
-                    placeholder="Status"
-                    optionFilterProp="label"
-
-                    value={status == 'null' ? null : status}
-                    onChange={search_status}
-                    // onSearch={onSearch}
-                    options={
-                        [
-                            { label: "Contract Signing", value: "Contract Signing" },
+            title: (
+                <div>
+                    <Select
+                        allowClear
+                        className="w-28"
+                        showSearch
+                        placeholder="Status"
+                        optionFilterProp="label"
+                        value={status == "null" ? null : status}
+                        onChange={search_status}
+                        // onSearch={onSearch}
+                        options={[
+                            {
+                                label: "Contract Signing",
+                                value: "Contract Signing",
+                            },
                             { label: "Accepted", value: "Accepted" },
                             { label: "Declined", value: "Declined" },
                             { label: "Pending", value: "Pending" },
-                            { label: "For Acknowledgment", value: "For Acknowledgment" },
+                            {
+                                label: "For Acknowledgment",
+                                value: "For Acknowledgment",
+                            },
                             { label: "Hired", value: "Hired" },
-                        ]
-                    }
-                />
-            </div>,
+                        ]}
+                    />
+                </div>
+            ),
             dataIndex: "status",
             key: "status",
             render: (_, record, i) => {
@@ -386,150 +406,167 @@ export default function HiringTableSection() {
         },
         ...(user?.position === "CEO" || user?.position === "Director"
             ? [
-                {
-                    title: (
-                        <Select
-                            allowClear
-                            className="w-28"
-                            showSearch
-                            placeholder="Site"
-                            optionFilterProp="label"
-                            value={site === "null" ? null : site}
-                            onChange={search_site}
-                            options={[
-                                { label: "San Carlos", value: "San Carlos" },
-                                { label: "Carcar", value: "Carcar" },
-                            ]}
-                        />
-                    ),
-                    dataIndex: "site",
-                    key: "site",
-                    render: (_, record, i) => {
-                        const siteValue = record?.applicant?.site;
-                        return (
-                            <div key={i}>
-                                {searchedColumn === "site" ? (
-                                    <Highlighter
-                                        highlightStyle={{
-                                            backgroundColor: "#ffc069",
-                                            padding: 0,
-                                        }}
-                                        searchWords={[searchText]}
-                                        autoEscape
-                                        textToHighlight={siteValue ? siteValue.toString() : ""}
-                                    />
-                                ) : (
-                                    siteValue
-                                )}
-                            </div>
-                        );
-                    },
-                    filterDropdown: ({
-                        setSelectedKeys,
-                        selectedKeys,
-                        confirm,
-                        clearFilters,
-                        close,
-                    }) => (
-                        <div
-                            style={{
-                                padding: 8,
-                            }}
-                            onKeyDown={(e) => e.stopPropagation()}
-                        >
-                            <Input
-                                ref={searchInput}
-                                placeholder="Search Site"
-                                value={selectedKeys[0]}
-                                onChange={(e) =>
-                                    setSelectedKeys(e.target.value ? [e.target.value] : [])
-                                }
-                                onPressEnter={() =>
-                                    handleSearch(selectedKeys, confirm, "site")
-                                }
-                                style={{
-                                    marginBottom: 8,
-                                    display: "block",
-                                }}
-                            />
-                            <Space>
-                                <Button
-                                    type="primary"
-                                    onClick={() =>
-                                        handleSearch(selectedKeys, confirm, "site")
-                                    }
-                                    icon={<SearchOutlined />}
-                                    size="small"
-                                    style={{
-                                        width: 90,
-                                    }}
-                                >
-                                    Search
-                                </Button>
-                                <Button
-                                    onClick={() =>
-                                        clearFilters && handleReset(clearFilters)
-                                    }
-                                    size="small"
-                                    style={{
-                                        width: 90,
-                                    }}
-                                >
-                                    Reset
-                                </Button>
-                                <Button
-                                    type="link"
-                                    size="small"
-                                    onClick={() => {
-                                        confirm({
-                                            closeDropdown: false,
-                                        });
-                                        setSearchText(selectedKeys[0]);
-                                        setSearchedColumn("site");
-                                    }}
-                                >
-                                    Filter
-                                </Button>
-                                <Button
-                                    type="link"
-                                    size="small"
-                                    onClick={() => {
-                                        close();
-                                    }}
-                                >
-                                    close
-                                </Button>
-                            </Space>
-                        </div>
-                    ),
-                    filterIcon: (filtered) => (
-                        <SearchOutlined
-                            style={{
-                                color: filtered ? "#1677ff" : undefined,
-                            }}
-                        />
-                    ),
-                    onFilter: (value, record) => {
-                        const siteValue = record?.applicant?.site;
-                        if (!siteValue) return false;
-                        return siteValue
-                            .toLowerCase()
-                            .includes(value.toLowerCase());
-                    },
-                    onFilterDropdownOpenChange: (visible) => {
-                        if (visible) {
-                            setTimeout(() => searchInput.current?.select(), 100);
-                        }
-                    },
-                },
-            ]
+                  {
+                      title: (
+                          <Select
+                              allowClear
+                              className="w-28"
+                              showSearch
+                              placeholder="Site"
+                              optionFilterProp="label"
+                              value={site === "null" ? null : site}
+                              onChange={search_site}
+                              options={[
+                                  { label: "San Carlos", value: "San Carlos" },
+                                  { label: "Carcar", value: "Carcar" },
+                              ]}
+                          />
+                      ),
+                      dataIndex: "site",
+                      key: "site",
+                      render: (_, record, i) => {
+                          const siteValue = record?.applicant?.site;
+                          return (
+                              <div key={i}>
+                                  {searchedColumn === "site" ? (
+                                      <Highlighter
+                                          highlightStyle={{
+                                              backgroundColor: "#ffc069",
+                                              padding: 0,
+                                          }}
+                                          searchWords={[searchText]}
+                                          autoEscape
+                                          textToHighlight={
+                                              siteValue
+                                                  ? siteValue.toString()
+                                                  : ""
+                                          }
+                                      />
+                                  ) : (
+                                      siteValue
+                                  )}
+                              </div>
+                          );
+                      },
+                      filterDropdown: ({
+                          setSelectedKeys,
+                          selectedKeys,
+                          confirm,
+                          clearFilters,
+                          close,
+                      }) => (
+                          <div
+                              style={{
+                                  padding: 8,
+                              }}
+                              onKeyDown={(e) => e.stopPropagation()}
+                          >
+                              <Input
+                                  ref={searchInput}
+                                  placeholder="Search Site"
+                                  value={selectedKeys[0]}
+                                  onChange={(e) =>
+                                      setSelectedKeys(
+                                          e.target.value ? [e.target.value] : []
+                                      )
+                                  }
+                                  onPressEnter={() =>
+                                      handleSearch(
+                                          selectedKeys,
+                                          confirm,
+                                          "site"
+                                      )
+                                  }
+                                  style={{
+                                      marginBottom: 8,
+                                      display: "block",
+                                  }}
+                              />
+                              <Space>
+                                  <Button
+                                      type="primary"
+                                      onClick={() =>
+                                          handleSearch(
+                                              selectedKeys,
+                                              confirm,
+                                              "site"
+                                          )
+                                      }
+                                      icon={<SearchOutlined />}
+                                      size="small"
+                                      style={{
+                                          width: 90,
+                                      }}
+                                  >
+                                      Search
+                                  </Button>
+                                  <Button
+                                      onClick={() =>
+                                          clearFilters &&
+                                          handleReset(clearFilters)
+                                      }
+                                      size="small"
+                                      style={{
+                                          width: 90,
+                                      }}
+                                  >
+                                      Reset
+                                  </Button>
+                                  <Button
+                                      type="link"
+                                      size="small"
+                                      onClick={() => {
+                                          confirm({
+                                              closeDropdown: false,
+                                          });
+                                          setSearchText(selectedKeys[0]);
+                                          setSearchedColumn("site");
+                                      }}
+                                  >
+                                      Filter
+                                  </Button>
+                                  <Button
+                                      type="link"
+                                      size="small"
+                                      onClick={() => {
+                                          close();
+                                      }}
+                                  >
+                                      close
+                                  </Button>
+                              </Space>
+                          </div>
+                      ),
+                      filterIcon: (filtered) => (
+                          <SearchOutlined
+                              style={{
+                                  color: filtered ? "#1677ff" : undefined,
+                              }}
+                          />
+                      ),
+                      onFilter: (value, record) => {
+                          const siteValue = record?.applicant?.site;
+                          if (!siteValue) return false;
+                          return siteValue
+                              .toLowerCase()
+                              .includes(value.toLowerCase());
+                      },
+                      onFilterDropdownOpenChange: (visible) => {
+                          if (visible) {
+                              setTimeout(
+                                  () => searchInput.current?.select(),
+                                  100
+                              );
+                          }
+                      },
+                  },
+              ]
             : []),
         {
             title: "Action",
             dataIndex: "action",
             render: (_, record) => {
-
-                const safeJobPos = record?.jobPos?.replace(/\//g, '_');
+                const safeJobPos = record?.jobPos?.replace(/\//g, "_");
                 return (
                     <div className="flex gap-2 items-center">
                         {record.status !== "Pending" &&
@@ -542,7 +579,6 @@ export default function HiringTableSection() {
                                                 router.visit(
                                                     `/admin/file_201/${record.app_id}/${record.id}/${safeJobPos}/${record?.salary}/${record?.allowance}?status=${record.status}`
                                                 )
-
                                             }
                                             className="text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 shadow-lg shadow-yellow-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
                                         >
@@ -571,7 +607,6 @@ export default function HiringTableSection() {
                                         router.visit(
                                             `/admin/hiring/${record.app_id}?id=${record.id}`
                                         )
-
                                     }
                                     className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
                                 >
@@ -579,12 +614,18 @@ export default function HiringTableSection() {
                                 </button>
                             </div>
                         </Tooltip>
+                        {record.status === "Contract Signing" && (
+                            <Tooltip title="Direct Hire">
+                                <div>
+                                    <DirectHireSection data={record} />
+                                </div>
+                            </Tooltip>
+                        )}
                     </div>
                 );
             },
         },
     ];
-
 
     const url = window.location.pathname + window.location.search;
 

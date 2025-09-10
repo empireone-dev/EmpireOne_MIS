@@ -37,6 +37,7 @@ use App\Mail\InitialEmail;
 use App\Mail\InitialvEmail;
 use App\Mail\SendInitialEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 

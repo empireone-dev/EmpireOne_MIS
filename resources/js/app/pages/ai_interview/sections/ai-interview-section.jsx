@@ -153,9 +153,46 @@ export default function AiInterviewSection() {
             const plainText = text.replace(/<[^>]*>/g, '');
             
             const utterance = new SpeechSynthesisUtterance(plainText);
-            utterance.rate = 0.9;
-            utterance.pitch = 1;
-            utterance.volume = 0.8;
+            
+            // Get available voices
+            const voices = synthRef.current.getVoices();
+            
+            // Try to find any suitable voice (less strict approach)
+            let selectedVoice = null;
+            
+            // First preference: Any female-sounding voice
+            selectedVoice = voices.find(voice => 
+                voice.name.toLowerCase().includes('female') ||
+                voice.name.toLowerCase().includes('woman') ||
+                voice.name.toLowerCase().includes('samantha') ||
+                voice.name.toLowerCase().includes('susan') ||
+                voice.name.toLowerCase().includes('karen') ||
+                voice.name.toLowerCase().includes('zira') ||
+                voice.name.toLowerCase().includes('eva') ||
+                voice.name.toLowerCase().includes('fiona')
+            );
+            
+            // Second preference: Any English voice
+            if (!selectedVoice) {
+                selectedVoice = voices.find(voice => 
+                    voice.lang && voice.lang.startsWith('en')
+                );
+            }
+            
+            // Third preference: Default system voice (any available voice)
+            if (!selectedVoice && voices.length > 0) {
+                selectedVoice = voices[0]; // Use first available voice
+            }
+            
+            // Set the voice if one is found
+            if (selectedVoice) {
+                utterance.voice = selectedVoice;
+            }
+            
+            // Millennial voice settings - casual, trendy, and relatable
+            utterance.rate = 1.1; // Slightly faster for modern, confident speech
+            utterance.pitch = 1.2; // Moderately higher for youthful, friendly tone
+            utterance.volume = 0.9; // Confident but not overwhelming
             
             utterance.onstart = () => setIsSpeaking(true);
             utterance.onend = () => setIsSpeaking(false);
@@ -299,7 +336,7 @@ export default function AiInterviewSection() {
                         <p style="margin-bottom: 15px;"><strong>What happens next?</strong></p>
                         <ul style="text-align: left; margin-bottom: 15px; padding-left: 20px;">
                             <li>Our HR team will review your responses</li>
-                            <li>You'll be contacted within 2-3 business days</li>
+                            <li>You'll be contacted within 2-7 business days</li>
                             <li>Next steps will be communicated via email</li>
                         </ul>
                         <p style="margin-bottom: 0;"><strong>Thank you for your interest in EmpireOne BPO Solutions Inc.!</strong></p>
@@ -593,7 +630,7 @@ export default function AiInterviewSection() {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col py-8">
+        <div className="min-h-screen bg-gradient-to-br from-sky-400 to-indigo-100 flex flex-col py-8">
             <div className="flex-1 max-w-4xl mx-auto w-full px-4">
                 {/* Header */}
                 <Card className="mb-4">

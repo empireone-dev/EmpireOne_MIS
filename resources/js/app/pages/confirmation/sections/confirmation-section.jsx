@@ -60,7 +60,7 @@ export default function ConfirmationSection() {
     console.log("interview_confirmations", interview_confirmations);
 
     return (
-        <div className="min-h-screen bg-sky-400 flex justify-center items-center py-8 overflow-auto">
+        <div className="min-h-screen bg-gradient-to-br from-sky-400 to-indigo-100 flex justify-center items-center py-8 overflow-auto">
             <div className="bg-white  shadow-2xl rounded-lg p-4 sm:p-6 md:p-8 w-full max-w-3xl mx-4 mb-28">
                 <div className="flex items-center justify-center p-3">
                     <img

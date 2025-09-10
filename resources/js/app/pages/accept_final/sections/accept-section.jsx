@@ -57,7 +57,7 @@ export default function AcceptSection() {
     }, [autoConfirm, confirmed, loading]);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-sky-400">
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-400 to-indigo-100">
             <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center">
                 <div className="mb-6">
                     <img

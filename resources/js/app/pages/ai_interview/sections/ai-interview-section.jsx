@@ -492,7 +492,7 @@ export default function AiInterviewSection() {
 
     if (!interviewStarted) {
         return (
-            <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex justify-center items-center py-8">
+            <div className="min-h-screen bg-gradient-to-br from-sky-400 to-indigo-100 flex justify-center items-center py-8">
                 <Card className="w-full max-w-2xl mx-4">
                     <div className="text-center space-y-6">
                         <Avatar 

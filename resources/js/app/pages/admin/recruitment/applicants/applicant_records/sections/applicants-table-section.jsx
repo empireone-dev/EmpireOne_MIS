@@ -63,7 +63,8 @@ export default function ApplicantsTableSection() {
 
                 return (
                     <div key={i}>
-                        {record.lname}, {record.fname} {record.suffix}
+                        {record.lname}, {record.fname}{" "}
+                        {record.suffix === "undefined" ? "--" : record.suffix}
                     </div>
                 );
             },

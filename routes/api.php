@@ -27,6 +27,7 @@ use App\Http\Controllers\MedicineRecordController;
 use App\Http\Controllers\NewJobOfferController;
 use App\Http\Controllers\OnboardingAckController;
 use App\Http\Controllers\OnboardingDocController;
+use App\Http\Controllers\OpenAIController;
 use App\Http\Controllers\OutSourcingErfController;
 use App\Http\Controllers\PreEmploymentFileController;
 use App\Http\Controllers\UploadMemoController;
@@ -64,6 +65,12 @@ Route::get('/employee-qr/{emp_id}', [EmployeeController::class, 'showForQR']);
 
 Route::post('/search_applicant', [ApplicantController::class, 'search_applicant']);
 Route::resource('applicant', ApplicantController::class);
+
+Route::post('/ai_initial_interview', [OpenAIController::class, 'ai_initial_interview']);
+Route::get('/get_guide_questions_for_ai', [OpenAIController::class, 'get_guide_questions_for_ai']);
+Route::post('/save_ai_interview_response', [OpenAIController::class, 'save_ai_interview_response']);
+Route::get('/get_ai_interview_results/{app_id}', [OpenAIController::class, 'get_ai_interview_results']);
+
 Route::post('/get_applicant', [ApplicantController::class, 'get_applicant']);
 Route::get('/get_hired_applicant', [ApplicantController::class, 'get_hired_applicant']);
 Route::put('/proceed_initial_immediate/{id}', [ApplicantController::class, 'proceed_initial_immediate']);

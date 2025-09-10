@@ -179,6 +179,10 @@ Route::get('/final/{app_id}/{iffdate}/{ifftime}/{meet_link?}', function ($app_id
 //     ]);
 // });
 
+Route::get('/ai_interview/{app_id}', function () {
+    return Inertia::render('ai_interview/page');
+});
+
 
 Route::get('/online_application', function () {
     return Inertia::render('online_application/page');

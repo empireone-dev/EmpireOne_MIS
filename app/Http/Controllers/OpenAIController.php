@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\GuideQuestions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -40,7 +41,7 @@ class OpenAIController extends Controller
         }
 
         // Create comprehensive prompt with guide questions
-        $guideQuestionsText = implode("\n", array_map(function($q, $i) {
+        $guideQuestionsText = implode("\n", array_map(function ($q, $i) {
             return ($i + 1) . ". " . $q;
         }, $questionsList, array_keys($questionsList)));
 
@@ -92,9 +93,9 @@ Use these questions as a foundation but feel free to ask follow-up questions bas
                 "That's an excellent point. Your experience clearly shows through your answer.",
                 "I value your thoughtful response. It gives me a good sense of your capabilities."
             ];
-            
+
             $randomResponse = $fallbackResponses[array_rand($fallbackResponses)];
-            
+
             return response()->json([
                 'result' => "<p>{$randomResponse}</p>",
                 'guide_questions' => $questionsList,
@@ -107,12 +108,12 @@ Use these questions as a foundation but feel free to ask follow-up questions bas
     public function get_guide_questions_for_ai()
     {
         $guideQuestions = \App\Models\GuideQuestion::all();
-        
+
         // Randomly select 5 questions if there are more than 5
         if ($guideQuestions->count() > 5) {
             $guideQuestions = $guideQuestions->random(5);
         }
-        
+
         return response()->json([
             'data' => $guideQuestions->values(), // Reset array keys after random selection
             'status' => 'success'
@@ -122,25 +123,59 @@ Use these questions as a foundation but feel free to ask follow-up questions bas
     public function save_ai_interview_response(Request $request)
     {
         $request->validate([
-            'app_id' => 'required|string',
-            'question' => 'required|string',
-            'answer' => 'required|string',
+            'app_id'     => 'required|string',
+            'question'   => 'required|string',
+            'answer'     => 'required|string',
             'ai_feedback' => 'nullable|string'
         ]);
 
-        // Save to GuideQuestions table (for interview responses)
-        \App\Models\GuideQuestions::create([
-            'app_id' => $request->app_id,
-            'guideqs' => $request->question,
-            'answer' => $request->answer,
-            'int_id' => 'AI_' . time(), // Generate unique interview ID for AI interviews
+        // System and user prompts
+        $systemPrompt = "You are an experienced interviewer. 
+    Your role is to provide clear, constructive, and professional feedback on candidate responses. 
+    Focus only on strengths, weaknesses, and suggestions for improvement. 
+    Do NOT ask follow-up questions, do NOT suggest another question, and do NOT include unrelated content.";
+
+        $userPrompt = "Interview Question: {$request->question}\n\n"
+            . "Candidate's Answer: {$request->answer}\n\n"
+            . "Provide feedback in 3–5 sentences, focusing on clarity, relevance, and professionalism.";
+
+        // Call OpenAI API
+        $response = Http::withToken(env('OPENAI_API_KEY'))
+            ->withHeaders([
+                'Content-Type' => 'application/json',
+            ])
+            ->post('https://api.openai.com/v1/chat/completions', [
+                'model' => 'gpt-4o',
+                'messages' => [
+                    ['role' => 'system', 'content' => $systemPrompt],
+                    ['role' => 'user', 'content' => $userPrompt],
+                ],
+                'max_tokens' => 300,
+            ]);
+
+        // Default feedback
+        $aiFeedback = "No feedback generated.";
+
+        if ($response->successful() && isset($response['choices'][0]['message']['content'])) {
+            $aiFeedback = trim($response['choices'][0]['message']['content']);
+        }
+
+        // Save to GuideQuestions table
+        GuideQuestions::create([
+            'app_id'      => $request->app_id,
+            'guideqs'     => $request->question,
+            'answer'      => $request->answer,
+            'ai_feedback' => $aiFeedback,
+            'int_id'      => 'AI_' . time(), // Unique interview ID
         ]);
 
         return response()->json([
-            'status' => 'success',
-            'message' => 'Interview response saved successfully'
-        ]);
+            'status'         => 'success',
+            'ai_feedback'    => $aiFeedback,
+            'guide_question' => $request->question,
+        ], 200);
     }
+
 
     public function get_ai_interview_results($app_id)
     {

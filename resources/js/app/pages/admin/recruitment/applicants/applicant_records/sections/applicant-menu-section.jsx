@@ -39,30 +39,30 @@ import ApplicantDeleteComponent from "../components/applicant-delete-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
-        // {
-        //     component: (
-        //         <ApplicantDetaillsComponent
-        //             item={{
-        //                 label: "Application Details",
-        //                 key: "1",
-        //                 icon: <AuditOutlined />,
-        //             }}
-        //             data={data}
-        //         />
-        //     ),
-        // },
-        // {
-        //     component: (
-        //         <ApplicantDeleteComponent
-        //             item={{
-        //                 label: "Delete Application",
-        //                 key: "1",
-        //                 icon: <DeleteOutlined />,
-        //             }}
-        //             data={data}
-        //         />
-        //     ),
-        // },
+        {
+            component: (
+                <ApplicantDetaillsComponent
+                    item={{
+                        label: "Application Details",
+                        key: "1",
+                        icon: <AuditOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
+        {
+            component: (
+                <ApplicantDeleteComponent
+                    item={{
+                        label: "Delete Application",
+                        key: "1",
+                        icon: <DeleteOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
         {
             component: (
                 <ApplicantCvFileComponent
@@ -77,170 +77,170 @@ export default function ApplicantMenuSection({ data, interviewer }) {
         },
         ...(data.status == "Initial Phase"
             ? [
-                {
-                    component: (
-                        <ApplicantSetRescheduleComponent
-                            status="Reschedule Initial Phase"
-                            item={{
-                                label: "Reschedule Interview",
-                                key: "1",
-                                icon: <ReconciliationOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ApplicantSetRescheduleComponent
+                              status="Reschedule Initial Phase"
+                              item={{
+                                  label: "Reschedule Interview",
+                                  key: "1",
+                                  icon: <ReconciliationOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data.status == "Final Phase"
             ? [
-                {
-                    component: (
-                        <ApplicantSetRescheduleComponent
-                            status="Reschedule Final Phase"
-                            item={{
-                                label: "Reschedule Interview",
-                                key: "1",
-                                icon: <ReconciliationOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ApplicantSetRescheduleComponent
+                              status="Reschedule Final Phase"
+                              item={{
+                                  label: "Reschedule Interview",
+                                  key: "1",
+                                  icon: <ReconciliationOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data.status == "Pending"
             ? [
-                {
-                    component: (
-                        <ApplicantSetScheduleComponent
-                            status="Initial Phase"
-                            item={{
-                                label: "Set Initial Phase Interview",
-                                key: "2",
-                                icon: <RiseOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ApplicantSetScheduleComponent
+                              status="Initial Phase"
+                              item={{
+                                  label: "Set Initial Phase Interview",
+                                  key: "2",
+                                  icon: <RiseOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data.status == "Pending"
             ? [
-                {
-                    component: (
-                        <ApplicantImmediateInitialComponent
-                            status="Initial Phase"
-                            item={{
-                                label: "Proceed Initial Interview",
-                                key: "2",
-                                icon: <ArrowRightOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ApplicantImmediateInitialComponent
+                              status="Initial Phase"
+                              item={{
+                                  label: "Proceed Initial Interview",
+                                  key: "2",
+                                  icon: <ArrowRightOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data.status == "Pending" || data.status == "Initial Phase"
             ? [
-                {
-                    component: (
-                        <ApplicantProceedFinalComponent
-                            status="Initial Phase"
-                            item={{
-                                label: "Proceed Final Phase",
-                                key: "2",
-                                icon: <ArrowRightOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ApplicantProceedFinalComponent
+                              status="Initial Phase"
+                              item={{
+                                  label: "Proceed Final Phase",
+                                  key: "2",
+                                  icon: <ArrowRightOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data.status == "Initial Phase"
             ? [
-                {
-                    component: (
-                        <ApplicantInitialRatingScale
-                            item={{
-                                label: "Initial Rating Scale",
-                                key: "3",
-                                icon: <DotChartOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ApplicantInitialRatingScale
+                              item={{
+                                  label: "Initial Rating Scale",
+                                  key: "3",
+                                  icon: <DotChartOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data.status == "Final Phase" || data.status == "For Final Phase"
             ? [
-                {
-                    component: (
-                        <ApplicantProceedInitalPhaseComponent
-                            item={{
-                                label: "Initial Phase Result",
-                                key: "4",
-                                icon: <InfoCircleOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ApplicantProceedInitalPhaseComponent
+                              item={{
+                                  label: "Initial Phase Result",
+                                  key: "4",
+                                  icon: <InfoCircleOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data.status == "For Final Phase"
             ? [
-                {
-                    component: (
-                        <ApplicantImmediateFinalComponent
-                            status="Final Phase"
-                            item={{
-                                label: "Proceed Interview Immediately",
-                                key: "2",
-                                icon: <ArrowRightOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ApplicantImmediateFinalComponent
+                              status="Final Phase"
+                              item={{
+                                  label: "Proceed Interview Immediately",
+                                  key: "2",
+                                  icon: <ArrowRightOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data.status == "Final Phase"
             ? [
-                {
-                    component: (
-                        <ApplicantFinalRatingScaleComponent
-                            item={{
-                                label: "Final Rating Scale",
-                                key: "5",
-                                icon: <DotChartOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ApplicantFinalRatingScaleComponent
+                              item={{
+                                  label: "Final Rating Scale",
+                                  key: "5",
+                                  icon: <DotChartOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         ...(data.status == "For Final Phase"
             ? [
-                {
-                    component: (
-                        <ApplicantSetScheduleComponent
-                            status="Final Phase"
-                            item={{
-                                label: "Set Schedule Final Phase",
-                                key: "6",
-                                icon: <CalendarOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ApplicantSetScheduleComponent
+                              status="Final Phase"
+                              item={{
+                                  label: "Set Schedule Final Phase",
+                                  key: "6",
+                                  icon: <CalendarOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         // ...(data.status == "Final Phase" && !data.final
         //     ? [
@@ -259,82 +259,85 @@ export default function ApplicantMenuSection({ data, interviewer }) {
         //     ]
         //     : []),
         ...(data.status == "Passed" ||
-            data.status == "Pooling" ||
-            data.status == "Failed" ||
-            data.status == "Dismissal" ||
-            data.status == "Resignation" ||
-            data.status == "EOPE" ||
-            data.status == "AWOL" ||
-            data.status == "Probationary" ||
-            data.status == "Regular" ||
-            data.status == "Counter Offer" ||
-            data.status == "Accepted Offer" ||
-            data.status == "Send Failed"
+        data.status == "Pooling" ||
+        data.status == "Failed" ||
+        data.status == "Dismissal" ||
+        data.status == "Resignation" ||
+        data.status == "EOPE" ||
+        data.status == "AWOL" ||
+        data.status == "Probationary" ||
+        data.status == "Regular" ||
+        data.status == "Counter Offer" ||
+        data.status == "Accepted Offer" ||
+        data.status == "Send Failed"
             ? [
-                {
-                    component: (
-                        <ApplicantResultsComponent
-                            data={data}
-                            item={{
-                                label: "Application Results",
-                                key: "8",
-                                icon: <InfoCircleOutlined />,
-                            }}
-                        />
-                    ),
-                },
-            ]
-            : []), ...(data.status == "Send Failed"
-                ? [
-                    {
-                        component: (
-                            <ApplicantRejectionComponent
-                                item={{
-                                    label: "Sending Failed Email",
-                                    key: "3",
-                                    icon: <SendOutlined />,
-                                }}
-                                data={data}
-                            />
-                        ),
-                    },
-                ]
-                : []),
+                  {
+                      component: (
+                          <ApplicantResultsComponent
+                              data={data}
+                              item={{
+                                  label: "Application Results",
+                                  key: "8",
+                                  icon: <InfoCircleOutlined />,
+                              }}
+                          />
+                      ),
+                  },
+              ]
+            : []),
+        ...(data.status == "Send Failed"
+            ? [
+                  {
+                      component: (
+                          <ApplicantRejectionComponent
+                              item={{
+                                  label: "Sending Failed Email",
+                                  key: "3",
+                                  icon: <SendOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
+            : []),
         ...(data.status == "Passed"
             ? [
-                {
-                    component: (
-                        <ApplicantPoolingComponent
-                            item={{
-                                label: "Proceed for Pooling",
-                                key: "9",
-                                icon: <TeamOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ApplicantPoolingComponent
+                              item={{
+                                  label: "Proceed for Pooling",
+                                  key: "9",
+                                  icon: <TeamOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
-        ...(data.status == "Passed" || data.status == "Pooling" || data.status == "Counter Offer" || data.status == "Accepted Offer"
+        ...(data.status == "Passed" ||
+        data.status == "Pooling" ||
+        data.status == "Counter Offer" ||
+        data.status == "Accepted Offer"
             ? [
-                {
-                    component: (
-                        <ApplicantJobOfferComponent
-                            item={{
-                                label: "Make a Job Offer",
-                                key: "10",
-                                icon: (
-                                    <BriefcaseIcon className="h-4 mr-0.5" />
-                                ),
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ApplicantJobOfferComponent
+                              item={{
+                                  label: "Make a Job Offer",
+                                  key: "10",
+                                  icon: (
+                                      <BriefcaseIcon className="h-4 mr-0.5" />
+                                  ),
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
-
     ];
 
     return (

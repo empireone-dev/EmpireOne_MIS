@@ -278,7 +278,11 @@ class AttritionController extends Controller
             $emailData['files'] = $uploadedFiles;
 
             $primaryFileUrl = $uploadedFiles[0];
-            Mail::to("quicklydeguzman@gmail.com")->send(new QuitClaimUploaded($emailData, $primaryFileUrl));
+
+            $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+
+            // $emailRecipient = 'quicklydeguzman@gmail.com';
+            Mail::to($emailRecipient)->send(new QuitClaimUploaded($emailData, $primaryFileUrl));
 
             return response()->json([
                 'data' => 'success',

@@ -258,17 +258,59 @@ export default function AiInterviewSection() {
     const requestCameraPermission = async () => {
         try {
             setCameraError(null);
+            console.log("Requesting camera permission...");
+
+            // Stop any existing stream first, but only if we're going to create a new one
+            if (cameraStream) {
+                console.log("Stopping existing camera stream...");
+                cameraStream.getTracks().forEach((track) => track.stop());
+                setCameraStream(null);
+                // Give a moment for the stream to properly close
+                await new Promise((resolve) => setTimeout(resolve, 100));
+            }
+
+            // Try simpler constraints first
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: true,
                 audio: false,
             });
 
+            console.log("Camera stream obtained:", stream);
+            console.log("Video tracks:", stream.getVideoTracks());
+
             setCameraStream(stream);
             setCameraPermissionGranted(true);
             setCameraEnabled(true);
 
+            // Set the stream immediately and force play
             if (videoRef.current) {
+                console.log("Setting video source...");
                 videoRef.current.srcObject = stream;
+
+                // Force the video to load and play
+                videoRef.current.load();
+
+                // Multiple event handlers to ensure playback starts
+                const playVideo = async () => {
+                    try {
+                        console.log("Attempting to play video...");
+                        if (videoRef.current && videoRef.current.srcObject) {
+                            await videoRef.current.play();
+                            console.log("Video is now playing");
+                        }
+                    } catch (error) {
+                        console.error("Error playing video:", error);
+                        setCameraError(
+                            "Failed to start video playback: " + error.message
+                        );
+                    }
+                };
+
+                videoRef.current.onloadedmetadata = playVideo;
+                videoRef.current.oncanplay = playVideo;
+
+                // Force immediate play attempt
+                setTimeout(playVideo, 100);
             }
 
             return true;
@@ -303,6 +345,7 @@ export default function AiInterviewSection() {
         setCameraEnabled(false);
         if (videoRef.current) {
             videoRef.current.srcObject = null;
+            videoRef.current.pause();
         }
     };
 
@@ -312,6 +355,194 @@ export default function AiInterviewSection() {
         } else {
             await requestCameraPermission();
         }
+    };
+
+    // Add useEffect to handle video stream updates
+    useEffect(() => {
+        const setupVideo = async () => {
+            if (cameraStream && videoRef.current && cameraEnabled) {
+                console.log("Setting up video element with stream...");
+
+                const video = videoRef.current;
+
+                // Always set the source - don't check if it's different
+                video.srcObject = cameraStream;
+
+                // Force immediate play without waiting for events
+                try {
+                    // Reset video element completely
+                    video.load();
+
+                    // Wait a moment for the load to process
+                    await new Promise((resolve) => setTimeout(resolve, 50));
+
+                    // Force play
+                    await video.play();
+                    console.log("Video play successful - immediate");
+                } catch (error) {
+                    console.error("Immediate video play failed:", error);
+
+                    // Fallback - try with event listeners
+                    const handleCanPlay = async () => {
+                        try {
+                            await video.play();
+                            console.log(
+                                "Video play successful - event listener"
+                            );
+                            video.removeEventListener("canplay", handleCanPlay);
+                        } catch (e) {
+                            console.error("Event listener play failed:", e);
+                        }
+                    };
+
+                    video.addEventListener("canplay", handleCanPlay);
+
+                    // Another fallback - force play after delay
+                    setTimeout(async () => {
+                        try {
+                            if (video.paused) {
+                                await video.play();
+                                console.log("Video play successful - delayed");
+                            }
+                        } catch (e) {
+                            console.error("Delayed play failed:", e);
+                            setCameraError(
+                                "Failed to start video playback: " + e.message
+                            );
+                        }
+                    }, 500);
+                }
+
+                // Add debug event listeners
+                const handleLoadStart = () => console.log("Video load started");
+                const handleLoadedData = () => console.log("Video data loaded");
+                const handleCanPlay = () => console.log("Video can play");
+                const handlePlay = () => console.log("Video started playing");
+                const handleError = (e) => {
+                    console.error("Video element error:", e);
+                    setCameraError("Video element error occurred");
+                };
+
+                video.addEventListener("loadstart", handleLoadStart);
+                video.addEventListener("loadeddata", handleLoadedData);
+                video.addEventListener("canplay", handleCanPlay);
+                video.addEventListener("play", handlePlay);
+                video.addEventListener("error", handleError);
+
+                // Cleanup function to remove event listeners
+                return () => {
+                    video.removeEventListener("loadstart", handleLoadStart);
+                    video.removeEventListener("loadeddata", handleLoadedData);
+                    video.removeEventListener("canplay", handleCanPlay);
+                    video.removeEventListener("play", handlePlay);
+                    video.removeEventListener("error", handleError);
+                };
+            }
+        };
+
+        setupVideo();
+    }, [cameraStream, cameraEnabled]);
+
+    // Monitor interview state changes and ensure video continues playing
+    useEffect(() => {
+        if (
+            interviewStarted &&
+            cameraStream &&
+            videoRef.current &&
+            cameraEnabled
+        ) {
+            console.log(
+                "Interview started - ensuring video continues playing..."
+            );
+
+            const ensureVideoPlaying = async () => {
+                try {
+                    const video = videoRef.current;
+                    if (video && video.paused) {
+                        console.log(
+                            "Video is paused during interview, attempting to resume..."
+                        );
+                        await video.play();
+                        console.log(
+                            "Video resumed successfully during interview"
+                        );
+                    }
+
+                    // Additional check: if video is "playing" but has no video data, do a force reset
+                    if (video && !video.paused && video.readyState < 2) {
+                        console.log(
+                            "Video appears to be playing but has no data - triggering automatic force play..."
+                        );
+                        await performForcePlay();
+                    }
+                } catch (error) {
+                    console.error(
+                        "Failed to resume video during interview:",
+                        error
+                    );
+                    setCameraError(
+                        "Failed to resume video during interview: " +
+                            error.message
+                    );
+
+                    // If normal play fails, try force play
+                    console.log(
+                        "Normal play failed, attempting automatic force play..."
+                    );
+                    try {
+                        await performForcePlay();
+                    } catch (forceError) {
+                        console.error(
+                            "Automatic force play also failed:",
+                            forceError
+                        );
+                    }
+                }
+            };
+
+            // Immediate check
+            ensureVideoPlaying();
+
+            // Periodic check to ensure video stays playing and has data
+            const interval = setInterval(ensureVideoPlaying, 2000); // Check every 2 seconds
+
+            return () => clearInterval(interval);
+        }
+    }, [interviewStarted, cameraStream, cameraEnabled]);
+
+    // Function to perform force play reset
+    const performForcePlay = async () => {
+        if (videoRef.current && cameraStream) {
+            console.log(
+                "Performing automatic force play with complete reset..."
+            );
+            const video = videoRef.current;
+
+            try {
+                // Complete reset
+                video.pause();
+                video.srcObject = null;
+                await new Promise((resolve) => setTimeout(resolve, 100));
+
+                // Re-assign and play
+                video.srcObject = cameraStream;
+                video.load();
+                await new Promise((resolve) => setTimeout(resolve, 100));
+
+                await video.play();
+                console.log("Automatic force play successful!");
+
+                // Clear any existing camera errors since we succeeded
+                setCameraError(null);
+
+                return true;
+            } catch (error) {
+                console.error("Automatic force play failed:", error);
+                setCameraError("Automatic force play failed: " + error.message);
+                return false;
+            }
+        }
+        return false;
     };
 
     // Cleanup camera on component unmount
@@ -326,8 +557,62 @@ export default function AiInterviewSection() {
     const startInterview = async () => {
         setInterviewStarted(true);
 
-        // Request camera permission when starting interview
-        if (!cameraPermissionGranted) {
+        // Completely reset and reinitialize the video element during interview start
+        if (cameraPermissionGranted && cameraStream && videoRef.current) {
+            console.log(
+                "Camera already active, completely resetting video element..."
+            );
+
+            try {
+                const video = videoRef.current;
+
+                // Complete reset sequence
+                video.pause();
+                video.srcObject = null;
+
+                // Wait a moment for cleanup
+                await new Promise((resolve) => setTimeout(resolve, 100));
+
+                // Re-assign the stream
+                video.srcObject = cameraStream;
+
+                // Force load and play
+                video.load();
+                await new Promise((resolve) => setTimeout(resolve, 100));
+
+                // Multiple play attempts
+                for (let attempt = 0; attempt < 3; attempt++) {
+                    try {
+                        await video.play();
+                        console.log(
+                            `Video play successful on attempt ${attempt + 1}`
+                        );
+                        break;
+                    } catch (playError) {
+                        console.error(
+                            `Play attempt ${attempt + 1} failed:`,
+                            playError
+                        );
+                        if (attempt === 2) {
+                            setCameraError(
+                                "Failed to resume video after multiple attempts: " +
+                                    playError.message
+                            );
+                        }
+                        await new Promise((resolve) =>
+                            setTimeout(resolve, 200)
+                        );
+                    }
+                }
+            } catch (error) {
+                console.error(
+                    "Failed to reset video during interview start:",
+                    error
+                );
+                setCameraError("Failed to reset video: " + error.message);
+            }
+        } else if (!cameraPermissionGranted || !cameraStream) {
+            console.log("Requesting camera permission for interview...");
             await requestCameraPermission();
         }
 
@@ -668,10 +953,10 @@ export default function AiInterviewSection() {
                                         level={1}
                                         className="text-gray-800 mb-2"
                                     >
-                                        General Interview
+                                        Initial Interview
                                     </Title>
                                     <Text className="text-gray-500 text-lg">
-                                        A quick 10 minute interview to get to
+                                        A quick interview to get to
                                         know you a bit better.
                                     </Text>
                                 </div>
@@ -682,13 +967,40 @@ export default function AiInterviewSection() {
                                     style={{ height: "400px" }}
                                 >
                                     {cameraEnabled && cameraStream ? (
-                                        <video
-                                            ref={videoRef}
-                                            autoPlay
-                                            muted
-                                            className="w-full h-full object-cover"
-                                            style={{ transform: "scaleX(-1)" }} // Mirror effect
-                                        />
+                                        <div className="relative w-full h-full">
+                                            <video
+                                                ref={videoRef}
+                                                autoPlay
+                                                muted
+                                                playsInline
+                                                className="w-full h-full object-cover"
+                                                style={{
+                                                    transform: "scaleX(-1)",
+                                                }} // Mirror effect
+                                                onError={(e) => {
+                                                    console.error(
+                                                        "Video element error:",
+                                                        e
+                                                    );
+                                                    setCameraError(
+                                                        "Video playback error occurred"
+                                                    );
+                                                }}
+                                                onLoadedData={() =>
+                                                    console.log(
+                                                        "Video loaded data"
+                                                    )
+                                                }
+                                                onCanPlay={() =>
+                                                    console.log(
+                                                        "Video can play"
+                                                    )
+                                                }
+                                                onPlay={() =>
+                                                    console.log("Video playing")
+                                                }
+                                            />
+                                        </div>
                                     ) : (
                                         <div className="flex flex-col items-center justify-center h-full text-white">
                                             <VideoCameraAddOutlined className="text-6xl mb-4 opacity-50" />
@@ -774,9 +1086,63 @@ export default function AiInterviewSection() {
                                             type="link"
                                             size="small"
                                             className="text-blue-500"
-                                            onClick={requestCameraPermission}
+                                            onClick={async () => {
+                                                console.log(
+                                                    "Testing camera..."
+                                                );
+                                                if (cameraStream) {
+                                                    console.log(
+                                                        "Current stream:",
+                                                        cameraStream
+                                                    );
+                                                    console.log(
+                                                        "Video tracks:",
+                                                        cameraStream.getVideoTracks()
+                                                    );
+                                                    console.log(
+                                                        "Video element:",
+                                                        videoRef.current
+                                                    );
+                                                    if (videoRef.current) {
+                                                        console.log(
+                                                            "Video src:",
+                                                            videoRef.current
+                                                                .srcObject
+                                                        );
+                                                        console.log(
+                                                            "Video ready state:",
+                                                            videoRef.current
+                                                                .readyState
+                                                        );
+                                                        console.log(
+                                                            "Video paused:",
+                                                            videoRef.current
+                                                                .paused
+                                                        );
+
+                                                        // If video appears problematic, automatically trigger force play
+                                                        if (
+                                                            videoRef.current
+                                                                .paused ||
+                                                            videoRef.current
+                                                                .readyState < 2
+                                                        ) {
+                                                            console.log(
+                                                                "Video appears problematic, triggering automatic force play..."
+                                                            );
+                                                            await performForcePlay();
+                                                        } else {
+                                                            console.log(
+                                                                "Video appears to be working correctly"
+                                                            );
+                                                        }
+                                                    }
+                                                } else {
+                                                    await requestCameraPermission();
+                                                }
+                                            }}
                                         >
-                                            Restart devices
+                                            Test Camera
                                         </Button>
                                     </div>
                                 </div>
@@ -806,56 +1172,56 @@ export default function AiInterviewSection() {
                                     </Title>
 
                                     <div className="space-y-4">
-                                        <div className="flex items-start space-x-3">
+                                        <div className="flex items-center space-x-3">
                                             <div className="bg-blue-100 p-2 rounded-full mt-1">
                                                 <span className="text-blue-600 text-sm">
                                                     📅
                                                 </span>
                                             </div>
                                             <div>
-                                                <Text strong>
+                                                <p className="font-semibold">
                                                     Start now or come back later
-                                                </Text>
+                                                </p>
                                             </div>
                                         </div>
 
-                                        <div className="flex items-start space-x-3">
+                                        <div className="flex items-center space-x-3">
                                             <div className="bg-blue-100 p-2 rounded-full mt-1">
                                                 <span className="text-blue-600 text-sm">
                                                     ⏱️
                                                 </span>
                                             </div>
                                             <div>
-                                                <Text strong>
-                                                    Expect to spend 14 minutes
-                                                </Text>
+                                                <p className="font-semibold">
+                                                    Expect to spend 14 minute
+                                                </p>
                                             </div>
                                         </div>
 
-                                        <div className="flex items-start space-x-3">
+                                        <div className="flex items-center space-x-3">
                                             <div className="bg-blue-100 p-2 rounded-full mt-1">
                                                 <span className="text-blue-600 text-sm">
                                                     ⚙️
                                                 </span>
                                             </div>
                                             <div>
-                                                <Text strong>
+                                                <p className="font-semibold">
                                                     Check your device settings
-                                                </Text>
+                                                </p>
                                             </div>
                                         </div>
 
-                                        <div className="flex items-start space-x-3">
+                                        <div className="flex items-center space-x-3">
                                             <div className="bg-blue-100 p-2 rounded-full mt-1">
                                                 <span className="text-blue-600 text-sm">
                                                     🤫
                                                 </span>
                                             </div>
                                             <div>
-                                                <Text strong>
+                                                <p className="font-semibold">
                                                     Find a quiet place with
                                                     stable internet
-                                                </Text>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -935,13 +1301,27 @@ export default function AiInterviewSection() {
                                 </Button>
 
                                 <div className="mt-6 text-center">
-                                    <Text type="secondary" className="text-xs">
-                                        EmpireOne BPO Solutions Inc. uses
-                                        generative AI to conduct the AI
-                                        interview. Your responses are used only
-                                        to assess your candidacy and are never
-                                        used to train AI models.
-                                    </Text>
+                                    <div>
+                                        <p className="text-xs">
+                                            EmpireOne BPO Solutions Inc. uses
+                                            generative AI to conduct the AI
+                                            interview. Your responses are used
+                                            only to assess your candidacy and
+                                            are never used to train AI models.
+                                        </p>
+                                    </div>
+                                    <div className="mt-8 ">
+                                        <p className="text-xs text-gray-400">
+                                            <i>
+                                                Note: This interview uses AI to
+                                                provide personalized responses.
+                                                If AI is unavailable, you'll
+                                                still receive standard
+                                                acknowledgments and your
+                                                responses will be recorded.
+                                            </i>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </Col>
@@ -1120,13 +1500,34 @@ export default function AiInterviewSection() {
                                 style={{ height: "300px" }}
                             >
                                 {cameraEnabled && cameraStream ? (
-                                    <video
-                                        ref={videoRef}
-                                        autoPlay
-                                        muted
-                                        className="w-full h-full object-cover"
-                                        style={{ transform: "scaleX(-1)" }} // Mirror effect
-                                    />
+                                    <div className="relative w-full h-full">
+                                        <video
+                                            ref={videoRef}
+                                            autoPlay
+                                            muted
+                                            playsInline
+                                            className="w-full h-full object-cover"
+                                            style={{ transform: "scaleX(-1)" }} // Mirror effect
+                                            onError={(e) => {
+                                                console.error(
+                                                    "Video element error:",
+                                                    e
+                                                );
+                                                setCameraError(
+                                                    "Video playback error occurred"
+                                                );
+                                            }}
+                                            onLoadedData={() =>
+                                                console.log("Video loaded data")
+                                            }
+                                            onCanPlay={() =>
+                                                console.log("Video can play")
+                                            }
+                                            onPlay={() =>
+                                                console.log("Video playing")
+                                            }
+                                        />
+                                    </div>
                                 ) : (
                                     <div className="flex flex-col items-center justify-center h-full text-white">
                                         <VideoCameraAddOutlined className="text-4xl mb-2 opacity-50" />

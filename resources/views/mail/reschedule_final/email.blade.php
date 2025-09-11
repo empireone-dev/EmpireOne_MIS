@@ -73,8 +73,19 @@
 
             <p><b>**Please confirm your attendance by clicking the confirmation button below:**</b></p>
             <div style="text-align: center;">
-                <a href="https://empireone-hris.com/final/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}" class="button">Confirm Attendance</a>
-            </div><br>
+                <a href="https://empireone-hris.com/accept_final/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}?auto=true"
+                    class="button"
+                    style="display:inline-block; margin: 0 10px;">
+                    Accept Invitation
+                </a>
+
+                <a href="https://empireone-hris.com/final/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}"
+                    class="button"
+                    style="display:inline-block; margin: 0 10px; background-color: #e74c3c; color: white;">
+                    Decline
+                </a>
+            </div>
+            <br>
 
             <p>If you have any questions or need assistance, feel free to contact our HR department at hiring@empireonegroup.com for San Carlos Site or career@empireonegroup.com for CarCar Site.</p><br>
 

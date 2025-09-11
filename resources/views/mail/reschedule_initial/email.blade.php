@@ -68,8 +68,21 @@
 
             <p>We are looking forward to speaking with you and learning more about the contributions you can bring to our team.</p>
 
-            <p><b>**Kindly confirm your attendance by clicking the button below:**</b></p>
-            <div style="text-align: center;"><a href="https://empireone-hris.com/confirmation/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}" class="button">Confirm Attendance</a></div><br>
+            <p><b>**Please confirm your attendance by clicking the confirmation button below:**</b></p>
+            <div style="text-align: center;">
+                <a href="https://empireone-hris.com/accept/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}?auto=true"
+                    class="button"
+                    style="display:inline-block; margin: 0 10px;">
+                    Accept Invitation
+                </a>
+
+                <a href="https://empireone-hris.com/confirmation/{{$data['app_id']}}/{{$data['iffdate']}}/{{$data['ifftime']}}"
+                    class="button"
+                    style="display:inline-block; margin: 0 10px; background-color: #e74c3c; color: white;">
+                    Decline
+                </a>
+            </div>
+            <br>
 
             <p>If you have any questions or need further assistance regarding your interview schedule, feel free to contact our HR department at hiring@empireonegroup.com for San Carlos Site or career@empireonegroup.com for CarCar Site.</p><br>
 

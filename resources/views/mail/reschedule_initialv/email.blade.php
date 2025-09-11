@@ -69,12 +69,18 @@
 
             <p>We are excited to get to know you better and explore the valuable contributions you can bring to our team.</p>
 
-            <p><b>**Kindly confirm your attendance by clicking the confirmation button below:**</b></p>
+            <p><b>**Please confirm your attendance by clicking the confirmation button below:**</b></p>
             <div style="text-align: center;">
+                <a href="https://empireone-hris.com/accept/{{$data['app_id']}}/{{$data['ivdate']}}/{{$data['ivtime']}}/{{ urlencode(base64_encode($data['meet_link'])) }}?auto=true"
+                    class="button"
+                    style="display:inline-block; margin: 0 10px;">
+                    Accept Invitation
+                </a>
+
                 <a href="https://empireone-hris.com/confirmation/{{$data['app_id']}}/{{$data['ivdate']}}/{{$data['ivtime']}}/{{ urlencode(base64_encode($data['meet_link'])) }}"
-                    style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;"
-                    target="_blank">
-                    Confirm Attendance
+                    class="button"
+                    style="display:inline-block; margin: 0 10px; background-color: #e74c3c; color: white;">
+                    Decline
                 </a>
             </div><br>
 

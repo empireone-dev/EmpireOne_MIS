@@ -257,39 +257,6 @@ class ApplicantController extends Controller
             // ['id' => $jo->id],
         )));
 
-        // Mail::to('$emailRecipient')->send(new NewApplication(
-        //     array_merge(
-        //         (array) $request->all(),
-        //         ['submitted' => now()->format('Y-m-d')]
-        //     ),
-        //     $fileUrl
-        // ));
-
-        // Mail::to('$emailRecipient')->send(new NewApplication(
-        //     array_merge(
-        //         (array) $request->all(),
-        //         ['submitted' => now()->format('Y-m-d')]
-        //     ),
-        //     $fileUrl
-        // ));
-
-
-        // Mail::to('$emailRecipient')->send(new NewApplication(
-        //     array_merge(
-        //         (array) $request->all(),
-        //         ['submitted' => now()->format('Y-m-d')]
-        //     ),
-        //     $fileUrl
-        // ));
-
-        // Mail::to('$emailRecipient')->send(new NewApplication(
-        //     array_merge(
-        //         (array) $request->all(),
-        //         ['submitted' => now()->format('Y-m-d')]
-        //     ),
-        //     $fileUrl
-        // ));
-
         Mail::to('schr@empireonegroup.com')->send(new NewApplication(
             array_merge(
                 (array) $request->all(),

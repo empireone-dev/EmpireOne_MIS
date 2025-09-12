@@ -93,8 +93,8 @@ class FinalRateController extends Controller
             'meet_link' => $decodedMeetLink,
         ];
 
-        // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
-        $emailRecipient = 'quicklydeguzman@gmail.com';
+        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        // $emailRecipient = 'quicklydeguzman@gmail.com';
 
         if ($decodedMeetLink) {
             Mail::to($emailRecipient)->send(new ConfirmationFinalVirtual($data));

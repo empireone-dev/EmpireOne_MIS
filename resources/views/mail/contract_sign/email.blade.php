@@ -64,7 +64,7 @@
             <p>
                 Job Position: {{$data['jobPos']}}<br>
                 Salary: {{$data['salary']}}<br>
-                Date & Time: {{ \Carbon\Carbon::parse($data['ifftime'])->format('g:i A') }}
+                Date & Time: {{ \Carbon\Carbon::parse($data['iffdate'])->format('F j, Y') }} {{ \Carbon\Carbon::parse($data['ifftime'])->format('g:i A') }}
             </p>
 
             <p>

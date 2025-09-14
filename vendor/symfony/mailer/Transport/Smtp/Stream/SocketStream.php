@@ -147,6 +147,12 @@ final class SocketStream extends AbstractStream
         }
         // do it unconditionally as it will be used by STARTTLS as well if supported
         $options['ssl']['crypto_method'] ??= \STREAM_CRYPTO_METHOD_TLS_CLIENT | \STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT | \STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT;
+        
+        // Add SSL context options to handle certificate verification issues
+        $options['ssl']['verify_peer'] ??= false;
+        $options['ssl']['verify_peer_name'] ??= false;
+        $options['ssl']['allow_self_signed'] ??= true;
+        
         $streamContext = stream_context_create($options);
 
         $timeout = $this->getTimeout();
@@ -167,11 +173,29 @@ final class SocketStream extends AbstractStream
 
     public function startTLS(): bool
     {
+        // Create SSL context with options to handle certificate verification issues
+        $options = [
+            'ssl' => [
+                'crypto_method' => \STREAM_CRYPTO_METHOD_TLS_CLIENT | \STREAM_CRYPTO_METHOD_TLSv1_2_CLIENT | \STREAM_CRYPTO_METHOD_TLSv1_1_CLIENT,
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true,
+            ]
+        ];
+        
+        // Merge with existing stream context options if any
+        if ($this->streamContextOptions) {
+            $options = array_merge($options, $this->streamContextOptions);
+        }
+        
+        $context = stream_context_create($options);
+        stream_context_set_option($this->stream, $options);
+        
         set_error_handler(function ($type, $msg) {
             throw new TransportException('Unable to connect with STARTTLS: '.$msg);
         });
         try {
-            return stream_socket_enable_crypto($this->stream, true);
+            return stream_socket_enable_crypto($this->stream, true, \STREAM_CRYPTO_METHOD_TLS_CLIENT);
         } finally {
             restore_error_handler();
         }

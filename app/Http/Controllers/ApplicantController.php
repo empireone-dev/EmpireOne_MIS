@@ -254,40 +254,34 @@ class ApplicantController extends Controller
         // Send greeting email to applicant (also queued)
         Mail::to($request->email)->queue(new GreetingsApplication(array_merge(
             $request->all(),
-            // ['id' => $jo->id],
+            ['submitted' => now()->format('Y-m-d')]
         )));
 
-        Mail::to('schr@empireonegroup.com')->send(new NewApplication(
-            array_merge(
-                (array) $request->all(),
-                ['submitted' => now()->format('Y-m-d')]
-            ),
-            $fileUrl
-        ));
+        // Helper function to send consistent emails with proper queuing
+        $sendNotificationEmail = function ($email) use ($request, $fileUrl) {
+            if ($fileUrl) {
+                Mail::to($email)->queue(new NewApplication(
+                    array_merge(
+                        (array) $request->all(),
+                        ['submitted' => now()->format('Y-m-d')]
+                    ),
+                    $fileUrl
+                ));
+            } else {
+                Mail::to($email)->queue(new NewApplication2(
+                    array_merge(
+                        (array) $request->all(),
+                        ['submitted' => now()->format('Y-m-d')]
+                    )
+                ));
+            }
+        };
 
-        Mail::to('quicklydeguzman@gmail.com')->send(new NewApplication(
-            array_merge(
-                (array) $request->all(),
-                ['submitted' => now()->format('Y-m-d')]
-            ),
-            $fileUrl
-        ));
-
-        Mail::to('scitdept2@empireonegroup.com')->send(new NewApplication(
-            array_merge(
-                (array) $request->all(),
-                ['submitted' => now()->format('Y-m-d')]
-            ),
-            $fileUrl
-        ));
-
-        Mail::to('webdev@empireonegroup.com')->send(new NewApplication(
-            array_merge(
-                (array) $request->all(),
-                ['submitted' => now()->format('Y-m-d')]
-            ),
-            $fileUrl
-        ));
+        // Send notification emails to all recipients
+        $sendNotificationEmail('schr@empireonegroup.com');
+        $sendNotificationEmail('quicklydeguzman@gmail.com');
+        $sendNotificationEmail('scitdept2@empireonegroup.com');
+        $sendNotificationEmail('webdev@empireonegroup.com');
 
 
 

@@ -46,8 +46,6 @@ class NewApplication extends Mailable
         if ($this->filePath) {
             // Check if it's an S3 URL or local file path
             if (filter_var($this->filePath, FILTER_VALIDATE_URL)) {
-                // For URLs, always use the download approach as it's more reliable
-                // across different S3 configurations and buckets
                 $this->fallbackToDownload($email, $this->filePath);
             } else {
                 // It's a local file path

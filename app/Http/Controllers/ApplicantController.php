@@ -92,6 +92,37 @@ class ApplicantController extends Controller
     }
 
 
+    public function uploadBase64File($file)
+    {
+        try {
+            list($type, $data) = explode(';', $file);
+            list(, $data) = explode(',', $data);
+
+            $decodedFile = base64_decode($data);
+            if ($decodedFile === false) {
+                return 'none';
+            }
+
+            // detect extension
+            if (str_contains($type, 'image/')) {
+                $extension = 'png'; // or detect from $type (e.g. image/jpeg → jpg)
+            } elseif (str_contains($type, 'application/pdf')) {
+                $extension = 'pdf';
+            } else {
+                return 'none'; // unsupported type
+            }
+
+            $filename = uniqid() . '.' . $extension;
+            $path = 'empireone-financing/' . date("Y") . '/' . $filename;
+
+            Storage::disk('s3')->put($path, $decodedFile);
+            return Storage::disk('s3')->url($path);
+        } catch (\Exception $e) {
+            return 'none';
+        }
+    }
+
+
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -182,42 +213,13 @@ class ApplicantController extends Controller
 
         if ($base64Files) {
             foreach ($base64Files as $index => $base64) {
-                // Validate base64 format
-                if (!preg_match('/^data:(.*?);base64,/', $base64, $matches)) {
-                    return response()->json(['error' => 'Invalid base64 file format'], 400);
-                }
-
-                $mimeType = $matches[1];
-                $extension = explode('/', $mimeType)[1] ?? 'bin';
-
-                // More efficient base64 decoding
-                $base64Data = substr($base64, strpos($base64, ',') + 1);
-                $fileData = base64_decode($base64Data, true); // strict mode
-
-                if ($fileData === false) {
-                    return response()->json(['error' => 'Base64 decode failed'], 400);
-                }
-
-                // Use a more efficient filename structure
-                $filename = date('Y') . '/' . $dateUnique . '_' . $index . '.' . $extension;
-
-                // Upload to S3 with streaming for better memory usage
-                $disk = Storage::disk('s3');
-                $disk->put($filename, $fileData, [
-                    'ContentType' => $mimeType,
-                    'CacheControl' => 'max-age=31536000'
-                ]);
-
-                // Generate the S3 URL manually
-                $url = "https://" . env('AWS_BUCKET') . ".s3." . env('AWS_DEFAULT_REGION') . ".amazonaws.com/" . $filename;
-                $uploadedFiles[] = $url;
-
-                // Prepare file record for bulk insert
+                $url = $this->uploadBase64File($base64);
                 $cvFileData[] = [
                     'app_id' => $dateUnique,
                     'file'   => $url,
                     'created' => now(),
                 ];
+                $uploadedFiles[] = $url;
             }
 
             // Bulk insert CVFile records

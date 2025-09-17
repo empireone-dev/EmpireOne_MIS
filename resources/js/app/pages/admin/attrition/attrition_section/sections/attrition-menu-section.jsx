@@ -18,6 +18,7 @@ import AttritionUploadClearanceComponent from "../components/attrition-upload-cl
 import AttritionQuitClaimComponent from "../components/attrition-quit-claim-component";
 import AttritionViewQuitClaimComponent from "../components/attirition-view-quit-claim-component";
 import AttritionLastPayProofComponent from "../components/attrition-last-pay-proof-component";
+import AttritionChecklistComponents from "../components/attrition-checklist-components";
 // import UpdateEmployeeComponent from "../components/update-employee-component";
 // import File201Component from "../components/file-201-component";
 // import EmploymentStatusComponent from "../components/employment-status-component";
@@ -28,6 +29,18 @@ import AttritionLastPayProofComponent from "../components/attrition-last-pay-pro
 
 export default function AttritionMenuSection({ data }) {
     const items = [
+        {
+            component: (
+                <AttritionChecklistComponents
+                    item={{
+                        label: "Offboarding Checklist",
+                        key: "1",
+                        icon: <FileSearchOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
         {
             component: (
                 <AttritionReasonComponent

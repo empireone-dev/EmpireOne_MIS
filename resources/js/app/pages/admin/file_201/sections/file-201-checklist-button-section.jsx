@@ -60,9 +60,9 @@ export default function File201ChecklistButtonSection({ data }) {
                 title={
                     <span className="text-xl">
                         <CheckSquareOutlined /> Pre Employment Checklist of{" "}
-                        <b>
+                        <p className="font-bold inline">
                             {applicant?.fname ?? ""} {applicant?.lname ?? ""}
-                        </b>
+                        </p>
                     </span>
                 }
                 centered
@@ -133,7 +133,6 @@ export default function File201ChecklistButtonSection({ data }) {
                     )}
                 </div> */}
             </Modal>
-
         </div>
     );
 }

@@ -11,6 +11,7 @@ use Inertia\Inertia;
 // Image proxy routes to handle CORS issues
 Route::get('/api/proxy-image', [ImageProxyController::class, 'proxyImage']);
 Route::get('/api/image-to-base64', [ImageProxyController::class, 'imageToBase64']);
+Route::get('/api/download-file', [ImageProxyController::class, 'downloadFile']);
 
 // Debug route to check file upload configuration (remove in production)
 Route::post('/debug/file-upload', function (\Illuminate\Http\Request $request) {

@@ -70,30 +70,38 @@ export default function File201ImageSection({ data }) {
             >
                 {data?.reqs_img ? (
                     <div className="flex flex-col items-center">
-                        <Image src={data.reqs_img} />
-                        <button
-                            onClick={handleDownload}
-                            disabled={downloading}
-                            className={`mt-3 flex items-center gap-2 text-white font-medium rounded-lg text-base px-3 py-2 ${
-                                downloading
-                                    ? "bg-gray-400 cursor-not-allowed"
-                                    : "bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 shadow-lg shadow-green-500/50"
-                            }`}
-                        >
-                            {downloading ? (
-                                <LoadingOutlined />
-                            ) : (
-                                <DownloadOutlined />
-                            )}
-                            {downloading ? "Downloading..." : "Download"}
-                        </button>
+                        <Image
+                            src={data.reqs_img}
+                            alt="Requirement"
+                            width={300}
+                        />
+
+                        {data.status === "Approved" && (
+                            <button
+                                onClick={handleDownload}
+                                disabled={downloading}
+                                className={`mt-3 flex items-center gap-2 text-white font-medium rounded-lg text-base px-3 py-2 ${
+                                    downloading
+                                        ? "bg-gray-400 cursor-not-allowed"
+                                        : "bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 shadow-lg shadow-green-500/50"
+                                }`}
+                            >
+                                {downloading ? (
+                                    <LoadingOutlined />
+                                ) : (
+                                    <DownloadOutlined />
+                                )}
+                                {downloading ? "Downloading..." : "Download"}
+                            </button>
+                        )}
                     </div>
                 ) : (
                     <p className="flex items-center justify-center text-gray-400 font-sans">
-                        <StopOutlined />
-                        &nbsp;No image available
+                        <StopOutlined className="mr-1" />
+                        No image available
                     </p>
                 )}
+
                 <div className="flex flex-1 gap-1.5 w-full items-center justify-center mt-3 text-white">
                     {data.status === "Uploaded" ? (
                         <>

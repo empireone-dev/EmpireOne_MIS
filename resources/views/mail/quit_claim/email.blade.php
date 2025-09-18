@@ -67,11 +67,10 @@
             <p>
                 1. Download the attached Quit Claim document.<br>
                 2. Review the details carefully.<br>
-                3. Print and sign the document.<br>
-                4. Scan or take a clear photo of the signed document.<br>
-                5. Send the signed copy back to our HR department via email or through the upload link below.
+                3. Choose one of the following options to complete the signing:
             </p>
-
+            <p>
+                <b>Option 1:</b> Print and sign the document. Then, scan or take a clear photo of the signed copy and send it back via email or through the upload link below.<br><br>
             <div style="text-align: center;">
                 <a href="https://empireone-hris.com/quit-claim/{{$data['emp_id']}}"
                     style="display: inline-block; padding: 12px 24px; background-color: #007bff; color: #ffffff; text-decoration: none; border-radius: 6px; font-weight: bold;"
@@ -79,6 +78,8 @@
                     Upload Signed Quit Claim
                 </a>
             </div><br>
+            <b>Option 2:</b> If you are unable to print or provide a hard copy of the document, you may visit our office and sign the Quit Claim directly with our HR department.
+            </p>
 
             <p>If you have any questions or concerns regarding the document, please don’t hesitate to reach out to our HR department for clarification.</p>
 

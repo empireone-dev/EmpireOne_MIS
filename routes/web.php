@@ -214,6 +214,9 @@ Route::get('/virtual-contract/{app_id}/{job_offer_id}', function () {
 Route::get('/quit-claim/{emp_id}', function () {
     return Inertia::render('quit-claim/page');
 });
+Route::get('/exit_interview/{int_id}/{emp_id}/{app_id}', function () {
+    return Inertia::render('exit_interview/page');
+});
 // Route::get('/exit_interview/{app_id}', function () {
 //     return Inertia::render('exit_interview/page');
 // });

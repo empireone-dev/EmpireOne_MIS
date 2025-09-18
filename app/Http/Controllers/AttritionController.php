@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\Attrition as MailAttrition;
 use App\Mail\Cleared;
+use App\Mail\ExitInterview;
 use App\Mail\LastPay;
 use App\Mail\QuitClaim;
 use App\Mail\QuitClaimUploaded;
@@ -72,6 +73,52 @@ class AttritionController extends Controller
                 'status' => 'success',
             ], 200);
         }
+    }
+
+    public function send_exit_interview(Request $request)
+    {
+        $data = $request->all();
+
+        // Fetch applicant data to get fname and lname
+        $applicant = null;
+        $employee = null;
+        
+        if (isset($data['data']['emp_id'])) {
+            // Try to get applicant via employee relationship
+            $employee = Employee::where('emp_id', $data['data']['emp_id'])->with('applicant')->first();
+            $applicant = $employee ? $employee->applicant : null;
+        } elseif (isset($data['data']['app_id'])) {
+            // Get applicant directly
+            $applicant = Applicant::where('app_id', $data['data']['app_id'])->first();
+        }
+
+        if (!$applicant) {
+            return response()->json([
+                'error' => 'Applicant not found',
+            ], 404);
+        }
+
+        // Prepare email data with int_id (userId) from request
+        $emailData = [
+            'fname' => $applicant->fname,
+            'lname' => $applicant->lname,
+            'emp_id' => $data['data']['emp_id'] ?? null,
+            'app_id' => $data['data']['app_id'] ?? null,
+            'int_id' => $data['userId'] ?? null, // This is the user ID passed from frontend
+        ];
+
+        // Merge any additional data
+        if (isset($data['data'])) {
+            $emailData = array_merge($emailData, $data['data']);
+            // Ensure int_id is set
+            $emailData['int_id'] = $data['userId'] ?? $emailData['int_id'] ?? null;
+        }
+
+        Mail::to($applicant->email)->send(new ExitInterview($emailData));
+
+        return response()->json([
+            'data' => 'success'
+        ], 200);
     }
 
     public function upload_exit_clearance(Request $request)

@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Dropdown, message, Space, Modal, Menu } from "antd";
 import {
+    ContainerOutlined,
     DeliveredProcedureOutlined,
     DownOutlined,
     EditOutlined,
@@ -19,6 +20,8 @@ import AttritionQuitClaimComponent from "../components/attrition-quit-claim-comp
 import AttritionViewQuitClaimComponent from "../components/attirition-view-quit-claim-component";
 import AttritionLastPayProofComponent from "../components/attrition-last-pay-proof-component";
 import AttritionChecklistComponents from "../components/attrition-checklist-components";
+import AttritionSendQuitClaimComponents from "../components/attrition-send-exit-interview-components";
+import AttritionSendExitInterviewComponents from "../components/attrition-send-exit-interview-components";
 // import UpdateEmployeeComponent from "../components/update-employee-component";
 // import File201Component from "../components/file-201-component";
 // import EmploymentStatusComponent from "../components/employment-status-component";
@@ -75,6 +78,23 @@ export default function AttritionMenuSection({ data }) {
                                   label: "Exit Interview Results",
                                   key: "3",
                                   icon: <FileDoneOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
+            : []),
+        ...(data?.estatus == "Pending"
+            ? [
+                  {
+                      component: (
+                          <AttritionSendExitInterviewComponents
+                              // status="Exit Interview"
+                              item={{
+                                  label: "Send Exit Interview",
+                                  key: "3",
+                                  icon: <ContainerOutlined />,
                               }}
                               data={data}
                           />

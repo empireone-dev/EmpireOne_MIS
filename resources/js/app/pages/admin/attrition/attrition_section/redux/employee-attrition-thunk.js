@@ -1,6 +1,7 @@
 import {
     get_employee_attrition_by_emp_id_service,
     get_employee_attrition_service,
+    send_exit_interview_service,
     send_last_pay_service,
     send_quit_claim_service,
     upload_exit_clearance_service,
@@ -68,6 +69,13 @@ export function get_employee_attrition_by_emp_id_thunk(emp_id) {
 export function upload_quit_claim_thunk(data) {
     return async function (dispatch, getState) {
         const result = await upload_quit_claim_service(data);
+        return result;
+    };
+}
+
+export function send_exit_interview_thunk(data) {
+    return async function (dispatch, getState) {
+        const result = await send_exit_interview_service(data);
         return result;
     };
 }

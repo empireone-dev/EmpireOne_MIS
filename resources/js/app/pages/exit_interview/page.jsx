@@ -7,7 +7,7 @@ import { get_employee_by_id_thunk } from '../admin/employee_relation/employee_se
 import { get_users_thunk } from '../redux/app-thunk';
 
 export default function ExitInterviewPage() {
-  const app_id = window.location.pathname.split("/")[2];
+  const app_id = window.location.pathname.split("/")[4];
   useEffect(() => {
     store.dispatch(get_employee_by_id_thunk(app_id))
   }, []);

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\DeclinedContract;
 use App\Mail\DeclinedRequirements;
 use App\Mail\FinalvEmail;
+use App\Mail\UploadedFile;
 use App\Models\Applicant;
 use App\Models\Employee;
 use App\Models\JobOffer;
@@ -164,6 +165,26 @@ class PreEmploymentFileController extends Controller
                         'reas' => $request->reas ?? '',
                         'created' => $request->created ?? now(),
                     ]);
+
+                    // Prepare data for email notification to HR (exclude file object)
+                    $requestData = $request->except(['file']); // Exclude the file object
+                    $data = array_merge($applicant->toArray(), $requestData, ['file_url' => $url]);
+
+                    // Send notification to HR (skip email only if user is authenticated)
+                    $shouldSendEmail = true;
+
+                    // Only skip email if there's an authenticated user
+                    if (auth()->check()) {
+                        $shouldSendEmail = false;
+                    }
+
+                    if ($shouldSendEmail) {
+                        // Determine email recipient based on site
+                        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+
+                        // $emailRecipient = 'quicklydeguzman@gmail.com';
+                        Mail::to($emailRecipient)->send(new UploadedFile($data));
+                    }
                 } catch (\Exception $dbException) {
                     Log::error('Database insert failed', [
                         'error' => $dbException->getMessage(),

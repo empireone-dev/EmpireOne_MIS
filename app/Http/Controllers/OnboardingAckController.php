@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AcknowledgeOnboarding;
 use App\Mail\OnboardingAck as MailOnboardingAck;
 use App\Models\ESignature;
 use App\Models\JobOffer;
@@ -88,13 +89,23 @@ class OnboardingAckController extends Controller
             'app_id' => $request->app_id,
             'signature' => $signature,
         ]);
+        // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = 'quicklydeguzman@gmail.com';
+        $data = [
+            'fname' => $request->fname,
+            'lname' => $request->lname,
+            'app_id' => $request->app_id,
+            'position' => $request->position,
+            'signature' => $signature
+        ];
+        Mail::to($emailRecipient)->send(new AcknowledgeOnboarding($data));
         return response()->json($request->all(), 200);
     }
 
     public function onboarding_ackdoc_by_id(Request $request, $app_id)
     {
         $res = OnboardingAck::whereNotNull('doc_id')->with('onboardingDoc', 'eSignature')->where('app_id', $app_id)->get();
-        $jo = JobOffer::where('id', $request->job_offer_id)->first();
+        $jo = JobOffer::where('id', $request->job_offer_id)->with('applicant')->first();
         if ($res->isEmpty()) {
             return response()->json([
                 'message' => 'Document not found'

@@ -16,7 +16,7 @@ export function OnboardingDocsStepper() {
     const [agree, setAgree] = useState([]);
     const isReadOnly = false; // Add this if it's meant to control read-only mode
 
-    console.log('job_offer', job_offer?.status)
+    console.log('job_offer', job_offer)
 
     // Add guard clause to handle case where onboarding_ackdoc is not available
     if (!onboarding_ackdoc || !Array.isArray(onboarding_ackdoc)) {
@@ -67,6 +67,8 @@ export function OnboardingDocsStepper() {
             ...data,
             job_offer_id: window.location.pathname.split('/')[3],
             app_id: window.location.pathname.split('/')[2],
+            fname: job_offer?.applicant?.fname,
+            lname: job_offer?.applicant?.lname,
         })
         setIsSignaturePadVisible(false);
         setOnboardingCompleted(true);

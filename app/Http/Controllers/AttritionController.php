@@ -189,16 +189,14 @@ class AttritionController extends Controller
             $file = $request->file('file');
             $path = $file->store(date("Y"), 's3');
 
-            // Get the full S3 URL for the uploaded file
-            $url = 'https://' . config('filesystems.disks.s3.bucket') . '.s3.' . config('filesystems.disks.s3.region') . '.amazonaws.com/' . $path;
-
             if ($path) {
                 $emailData = $data;
                 if ($request->job_offer_id) {
                     $emailData['job_offer_id'] = $request->job_offer_id;
                     $emailData['jobPos'] = $request->jobPos;
                 }
-                Mail::to($request->email)->send(new QuitClaim($emailData, $url));
+                // Pass the S3 path instead of the full URL
+                Mail::to($request->email)->send(new QuitClaim($emailData, $path));
 
                 return response()->json([
                     'data' => 'success',
@@ -231,16 +229,14 @@ class AttritionController extends Controller
             $file = $request->file('file');
             $path = $file->store(date("Y"), 's3');
 
-            // Get the full S3 URL for the uploaded file
-            $url = 'https://' . config('filesystems.disks.s3.bucket') . '.s3.' . config('filesystems.disks.s3.region') . '.amazonaws.com/' . $path;
-
             if ($path) {
                 $emailData = $data;
                 if ($request->job_offer_id) {
                     $emailData['job_offer_id'] = $request->job_offer_id;
                     $emailData['jobPos'] = $request->jobPos;
                 }
-                Mail::to($request->email)->send(new LastPay($emailData, $url));
+                // Pass the S3 path instead of the full URL
+                Mail::to($request->email)->send(new LastPay($emailData, $path));
 
                 return response()->json([
                     'data' => 'success',

@@ -179,7 +179,6 @@ class PreEmploymentFileController extends Controller
                     }
 
                     if ($shouldSendEmail) {
-                        // Determine email recipient based on site
                         $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
 
                         // $emailRecipient = 'quicklydeguzman@gmail.com';

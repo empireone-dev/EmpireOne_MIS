@@ -42,10 +42,9 @@ class QuitClaim extends Mailable
             ->markdown('mail.quit_claim.email')
             ->with($this->data);
 
-        // Attach the file if it exists
+        // Attach the file from S3 storage if it exists
         if ($this->filePath) {
-            $email->attach($this->filePath, [
-                'as' => 'quit_claim_document.pdf',
+            $email->attachFromStorageDisk('s3', $this->filePath, 'quit_claim_document.pdf', [
                 'mime' => 'application/pdf',
             ]);
         }

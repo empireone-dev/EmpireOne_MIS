@@ -89,15 +89,16 @@ class OnboardingAckController extends Controller
             'app_id' => $request->app_id,
             'signature' => $signature,
         ]);
-        // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
-        $emailRecipient = 'quicklydeguzman@gmail.com';
         $data = [
             'fname' => $request->fname,
             'lname' => $request->lname,
             'app_id' => $request->app_id,
             'position' => $request->position,
-            'signature' => $signature
+            'signature' => $signature,
+            'site' => $request->site
         ];
+        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        // $emailRecipient = 'quicklydeguzman@gmail.com';
         Mail::to($emailRecipient)->send(new AcknowledgeOnboarding($data));
         return response()->json($request->all(), 200);
     }

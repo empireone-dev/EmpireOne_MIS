@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Stepper, Step, Button } from "@material-tailwind/react";
 import Wysiwyg from "../../_components/wysiwyg";
 import { useSelector } from "react-redux";
-import { create_onboarding_ack_service, update_onboarding_ack_service } from "../../services/onboarding-ack-service";
+import {
+    create_onboarding_ack_service,
+    update_onboarding_ack_service,
+} from "../../services/onboarding-ack-service";
 import SignaturePadSection from "./signature-pad-section";
 
 export function OnboardingDocsStepper() {
@@ -11,12 +14,14 @@ export function OnboardingDocsStepper() {
     const [isFirstStep, setIsFirstStep] = useState(false);
     const [onboardingCompleted, setOnboardingCompleted] = useState(false);
     const [isSignaturePadVisible, setIsSignaturePadVisible] = useState(false);
-    const { onboarding_ackdoc, job_offer } = useSelector((state) => state.onboarding_ackdocs);
+    const { onboarding_ackdoc, job_offer } = useSelector(
+        (state) => state.onboarding_ackdocs
+    );
     const [form, setForm] = useState({ signature: "" });
     const [agree, setAgree] = useState([]);
     const isReadOnly = false; // Add this if it's meant to control read-only mode
 
-    console.log('job_offer', job_offer)
+    console.log("job_offer", job_offer);
 
     // Add guard clause to handle case where onboarding_ackdoc is not available
     if (!onboarding_ackdoc || !Array.isArray(onboarding_ackdoc)) {
@@ -61,15 +66,15 @@ export function OnboardingDocsStepper() {
     }
 
     async function finish_handler(data) {
-
-        console.log('form', data);
+        console.log("form", data);
         await update_onboarding_ack_service({
             ...data,
-            job_offer_id: window.location.pathname.split('/')[3],
-            app_id: window.location.pathname.split('/')[2],
+            job_offer_id: window.location.pathname.split("/")[3],
+            app_id: window.location.pathname.split("/")[2],
             fname: job_offer?.applicant?.fname,
             lname: job_offer?.applicant?.lname,
-        })
+            site: job_offer?.applicant?.site,
+        });
         setIsSignaturePadVisible(false);
         setOnboardingCompleted(true);
     }
@@ -78,17 +83,20 @@ export function OnboardingDocsStepper() {
         setIsSignaturePadVisible(true);
     }
 
-    if (job_offer?.status == "For Acknowledgment" && !onboardingCompleted && isSignaturePadVisible) {
+    if (
+        job_offer?.status == "For Acknowledgment" &&
+        !onboardingCompleted &&
+        isSignaturePadVisible
+    ) {
         return (
             <SignaturePadSection
                 submit={finish_handler}
                 data={form}
                 setForm={setForm}
-
             />
         );
     }
-    
+
     if (job_offer?.status == "For Acknowledgment" && onboardingCompleted) {
         return (
             <div className="bg-cover bg-[url('/images/SCemp.jpg')] bg-center transition-colors duration-300 overflow-y-scroll h-screen p-4 sm:p-8 md:p-14">
@@ -116,7 +124,7 @@ export function OnboardingDocsStepper() {
             </div>
         );
     }
-    
+
     if (job_offer?.status != "For Acknowledgment") {
         return (
             <div className="bg-cover bg-[url('/images/SCemp.jpg')] bg-center transition-colors duration-300 overflow-y-scroll h-screen p-4 sm:p-8 md:p-14">
@@ -145,7 +153,11 @@ export function OnboardingDocsStepper() {
         );
     }
 
-    if (job_offer?.status == "For Acknowledgment" && !onboardingCompleted && !isSignaturePadVisible) {
+    if (
+        job_offer?.status == "For Acknowledgment" &&
+        !onboardingCompleted &&
+        !isSignaturePadVisible
+    ) {
         return (
             <div className="bg-cover bg-[url('/images/SCemp.jpg')] transition-colors duration-300 overflow-y-scroll h-screen p-2 sm:p-6 md:p-14">
                 <div className="container mx-auto items-center justify-center w-full px-3 sm:px-6 py-3 sm:py-5 shadow-2xl shadow-black bg-white rounded-lg max-w-6xl">
@@ -162,8 +174,16 @@ export function OnboardingDocsStepper() {
                     <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 rounded-lg">
                         <div className="flex">
                             <div className="flex-shrink-0">
-                                <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                <svg
+                                    className="h-5 w-5 text-yellow-400"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fillRule="evenodd"
+                                        d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z"
+                                        clipRule="evenodd"
+                                    />
                                 </svg>
                             </div>
                             <div className="ml-3">
@@ -172,11 +192,34 @@ export function OnboardingDocsStepper() {
                                 </h3>
                                 <div className="mt-2 text-sm text-yellow-700">
                                     <ul className="list-disc list-inside space-y-1">
-                                        <li><strong>Read Carefully:</strong> Please read the entire document thoroughly before acknowledging.</li>
-                                        <li><strong>Understand Terms:</strong> Ensure you fully understand all terms, conditions, and requirements outlined in this document.</li>
-                                        <li><strong>Ask Questions:</strong> If you have any questions or concerns, please contact HR before proceeding.</li>
-                                        <li><strong>Legal Implications:</strong> Your acknowledgment confirms that you have read, understood, and agree to comply with the document contents.</li>
-                                        <li>Following the acknowledgment, you will be asked to provide your e-signature using a signature pad.</li>
+                                        <li>
+                                            <strong>Read Carefully:</strong>{" "}
+                                            Please read the entire document
+                                            thoroughly before acknowledging.
+                                        </li>
+                                        <li>
+                                            <strong>Understand Terms:</strong>{" "}
+                                            Ensure you fully understand all
+                                            terms, conditions, and requirements
+                                            outlined in this document.
+                                        </li>
+                                        <li>
+                                            <strong>Ask Questions:</strong> If
+                                            you have any questions or concerns,
+                                            please contact HR before proceeding.
+                                        </li>
+                                        <li>
+                                            <strong>Legal Implications:</strong>{" "}
+                                            Your acknowledgment confirms that
+                                            you have read, understood, and agree
+                                            to comply with the document
+                                            contents.
+                                        </li>
+                                        <li>
+                                            Following the acknowledgment, you
+                                            will be asked to provide your
+                                            e-signature using a signature pad.
+                                        </li>
                                     </ul>
                                 </div>
                             </div>
@@ -214,37 +257,50 @@ export function OnboardingDocsStepper() {
                                     <div key={`content-${i}-${res.id || i}`}>
                                         {/* Important Reminders Section */}
 
-
                                         <div
                                             key={i}
                                             dangerouslySetInnerHTML={{
-                                                __html: res.onboarding_doc?.doc_content,
+                                                __html: res.onboarding_doc
+                                                    ?.doc_content,
                                             }}
                                             className="mb-4 sm:mb-7 text-sm sm:text-base overflow-x-auto"
                                         />
                                         <div className="overflow-x-auto">
                                             <Stepper
                                                 activeStep={activeStep}
-                                                isLastStep={(value) => setIsLastStep(value)}
-                                                isFirstStep={(value) => setIsFirstStep(value)}
+                                                isLastStep={(value) =>
+                                                    setIsLastStep(value)
+                                                }
+                                                isFirstStep={(value) =>
+                                                    setIsFirstStep(value)
+                                                }
                                                 lineClassName="bg-gray-300"
                                                 activeLineClassName="bg-blue-600"
                                             >
-                                                {onboarding_ackdoc?.map((res, i) => {
-                                                    return (
-                                                        <Step
-                                                            key={`inner-step-${i}-${res.id || i}`}
-                                                            onClick={() => {
-                                                                if (!isReadOnly) handleStepClick(i);
-                                                            }}
-                                                            className="p-1 sm:p-2 w-8 sm:w-10 !bg-blue-gray-50 cursor-pointer items-center justify-center text-xs sm:text-sm"
-                                                            activeClassName="ring-0 !bg-blue-600 text-white"
-                                                            completedClassName="!bg-blue-600 text-white"
-                                                        >
-                                                            {i + 1}
-                                                        </Step>
-                                                    );
-                                                })}
+                                                {onboarding_ackdoc?.map(
+                                                    (res, i) => {
+                                                        return (
+                                                            <Step
+                                                                key={`inner-step-${i}-${
+                                                                    res.id || i
+                                                                }`}
+                                                                onClick={() => {
+                                                                    if (
+                                                                        !isReadOnly
+                                                                    )
+                                                                        handleStepClick(
+                                                                            i
+                                                                        );
+                                                                }}
+                                                                className="p-1 sm:p-2 w-8 sm:w-10 !bg-blue-gray-50 cursor-pointer items-center justify-center text-xs sm:text-sm"
+                                                                activeClassName="ring-0 !bg-blue-600 text-white"
+                                                                completedClassName="!bg-blue-600 text-white"
+                                                            >
+                                                                {i + 1}
+                                                            </Step>
+                                                        );
+                                                    }
+                                                )}
                                             </Stepper>
                                         </div>
                                         <div className="flex items-start sm:items-center mb-2 mt-6 sm:mt-11 pt-4">
@@ -260,7 +316,9 @@ export function OnboardingDocsStepper() {
                                                 className="ms-2 text-xs sm:text-sm font-medium text-gray-900"
                                             >
                                                 <b>
-                                                    I fully understand and acknowledge the document above.
+                                                    I fully understand and
+                                                    acknowledge the document
+                                                    above.
                                                 </b>
                                             </label>
                                         </div>
@@ -268,10 +326,11 @@ export function OnboardingDocsStepper() {
                                             <Button
                                                 onClick={handlePrev}
                                                 disabled={isFirstStep}
-                                                className={`w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 ${isFirstStep
-                                                    ? "disabledPrevButton bg-blue-400"
-                                                    : "bg-blue-600 hover:bg-blue-700"
-                                                    }`}
+                                                className={`w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 ${
+                                                    isFirstStep
+                                                        ? "disabledPrevButton bg-blue-400"
+                                                        : "bg-blue-600 hover:bg-blue-700"
+                                                }`}
                                             >
                                                 Prev
                                             </Button>
@@ -279,14 +338,17 @@ export function OnboardingDocsStepper() {
                                                 <Button
                                                     disabled={
                                                         agree.length !==
-                                                        (onboarding_ackdoc?.length || 0)
+                                                        (onboarding_ackdoc?.length ||
+                                                            0)
                                                     }
                                                     onClick={esignature_handler}
-                                                    className={`w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 ${agree.length ==
-                                                        (onboarding_ackdoc?.length || 0)
-                                                        ? "bg-blue-600 hover:bg-blue-700"
-                                                        : "disabledNextButton bg-blue-400"
-                                                        }`}
+                                                    className={`w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 ${
+                                                        agree.length ==
+                                                        (onboarding_ackdoc?.length ||
+                                                            0)
+                                                            ? "bg-blue-600 hover:bg-blue-700"
+                                                            : "disabledNextButton bg-blue-400"
+                                                    }`}
                                                 >
                                                     Finish
                                                 </Button>
@@ -294,10 +356,11 @@ export function OnboardingDocsStepper() {
                                                 <Button
                                                     disabled={agree.length <= i}
                                                     onClick={handleNext}
-                                                    className={`w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 ${agree.length > i
-                                                        ? "bg-blue-600 hover:bg-blue-700"
-                                                        : "disabledNextButton bg-blue-400"
-                                                        }`}
+                                                    className={`w-full sm:w-auto text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-3 ${
+                                                        agree.length > i
+                                                            ? "bg-blue-600 hover:bg-blue-700"
+                                                            : "disabledNextButton bg-blue-400"
+                                                    }`}
                                                 >
                                                     Next
                                                 </Button>
@@ -313,5 +376,4 @@ export function OnboardingDocsStepper() {
             </div>
         );
     }
-
 }

@@ -34,11 +34,16 @@ import ApplicantDeleteComponent from "../components/applicant-delete-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     // Safety check to ensure data exists and has required properties
-    if (!data || typeof data !== 'object') {
+    if (!data || typeof data !== 'object' || !data.status) {
+        console.warn('ApplicantMenuSection: Invalid data provided', data);
         return null;
     }
 
-    const items = [
+    // Debug logging
+    console.log('ApplicantMenuSection: Rendering with status:', data.status);
+
+    try {
+        const items = [
         {
             key: "details",
             component: (
@@ -357,24 +362,28 @@ export default function ApplicantMenuSection({ data, interviewer }) {
             : []),
     ];
 
-    return (
-        <div>
-            <Dropdown
-                menu={{
-                    items: items.map((item, i) => ({
-                        key: item.key || i.toString(),
-                        label: item.component,
-                    })),
-                }}
-                trigger={["click"]}
-            >
-                <Button type="primary">
-                    <Space>
-                        Menu
-                        <DownOutlined />
-                    </Space>
-                </Button>
-            </Dropdown>
-        </div>
-    );
+        return (
+            <div>
+                <Dropdown
+                    menu={{
+                        items: items.map((item, i) => ({
+                            key: item.key || i.toString(),
+                            label: item.component,
+                        })),
+                    }}
+                    trigger={["click"]}
+                >
+                    <Button type="primary">
+                        <Space>
+                            Menu
+                            <DownOutlined />
+                        </Space>
+                    </Button>
+                </Dropdown>
+            </div>
+        );
+    } catch (error) {
+        console.error('ApplicantMenuSection: Error rendering component', error);
+        return <div>Error loading menu</div>;
+    }
 }

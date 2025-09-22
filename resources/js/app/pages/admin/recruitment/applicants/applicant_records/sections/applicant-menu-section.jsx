@@ -69,23 +69,23 @@ export default function ApplicantMenuSection({ data, interviewer }) {
         //         />
         //     ),
         // },
-        // ...(data.status == "Initial Phase"
-        //     ? [
-        //           {
-        //               component: (
-        //                   <ApplicantSetRescheduleComponent
-        //                       status="Reschedule Initial Phase"
-        //                       item={{
-        //                           label: "Reschedule Interview",
-        //                           key: "1",
-        //                           icon: <ReconciliationOutlined />,
-        //                       }}
-        //                       data={data}
-        //                   />
-        //               ),
-        //           },
-        //       ]
-        //     : []),
+        ...(data.status == "Initial Phase"
+            ? [
+                  {
+                      component: (
+                          <ApplicantSetRescheduleComponent
+                              status="Reschedule Initial Phase"
+                              item={{
+                                  label: "Reschedule Interview",
+                                  key: "1",
+                                  icon: <ReconciliationOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
+            : []),
         ...(data.status == "Final Phase"
             ? [
                   {

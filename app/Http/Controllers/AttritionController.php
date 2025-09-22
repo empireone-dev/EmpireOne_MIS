@@ -20,6 +20,35 @@ use Illuminate\Support\Facades\Storage;
 
 class AttritionController extends Controller
 {
+    public function uploadBase64File($file)
+    {
+        try {
+            list($type, $data) = explode(';', $file);
+            list(, $data) = explode(',', $data);
+
+            $decodedFile = base64_decode($data);
+            if ($decodedFile === false) {
+                return 'none';
+            }
+
+            // detect extension
+            if (str_contains($type, 'image/')) {
+                $extension = 'png'; // or detect from $type (e.g. image/jpeg → jpg)
+            } elseif (str_contains($type, 'application/pdf')) {
+                $extension = 'pdf';
+            } else {
+                return 'none'; // unsupported type
+            }
+
+            $filename = uniqid() . '.' . $extension;
+            $path = 'empireone-financing/' . date("Y") . '/' . $filename;
+
+            Storage::disk('s3')->put($path, $decodedFile);
+            return Storage::disk('s3')->url($path);
+        } catch (\Exception $e) {
+            return 'none';
+        }
+    }
     public function store(Request $request)
     {
 
@@ -82,7 +111,7 @@ class AttritionController extends Controller
         // Fetch applicant data to get fname and lname
         $applicant = null;
         $employee = null;
-        
+
         if (isset($data['data']['emp_id'])) {
             // Try to get applicant via employee relationship
             $employee = Employee::where('emp_id', $data['data']['emp_id'])->with('applicant')->first();
@@ -186,17 +215,21 @@ class AttritionController extends Controller
         }
 
         try {
-            $file = $request->file('file');
-            $path = $file->store(date("Y"), 's3');
-
+            $path = $request->file('file')->store(date("Y"), 's3');
+            $url = Storage::disk('s3')->url($path);
             if ($path) {
                 $emailData = $data;
                 if ($request->job_offer_id) {
                     $emailData['job_offer_id'] = $request->job_offer_id;
                     $emailData['jobPos'] = $request->jobPos;
                 }
-                // Pass the S3 path instead of the full URL
-                Mail::to($request->email)->send(new QuitClaim($emailData, $path));
+
+                $recipients = array_unique(array_filter([
+                    $request->email,
+                    $emailData['personal'] ?? null,
+                ]));
+
+                Mail::to($recipients)->send(new QuitClaim($emailData, $path));
 
                 return response()->json([
                     'data' => 'success',
@@ -274,35 +307,12 @@ class AttritionController extends Controller
             ], 400);
         }
 
-        $dateUnique = Carbon::now()->format('mdyHisv');
         $base64Files = $request->input('files');
         $uploadedFiles = [];
-        if ($base64Files && is_array($base64Files)) {
-            foreach ($base64Files as $base64) {
-                // Ensure $base64 is a string before using preg_match
-                if (!is_string($base64) || !preg_match('/^data:(.*?);base64,/', $base64, $matches)) {
-                    return response()->json(['error' => 'Invalid base64 file format'], 400);
-                }
-
-                $mimeType = $matches[1];
-                $extension = explode('/', $mimeType)[1] ?? 'bin'; // fallback to bin if missing
-
-                $fileData = base64_decode(substr($base64, strpos($base64, ',') + 1));
-                if ($fileData === false) {
-                    return response()->json(['error' => 'Base64 decode failed'], 400);
-                }
-
-                $filename = date('Y') . '/' .  $dateUnique . '_' . uniqid() . '.' . $extension;
-                Storage::disk('s3')->put($filename, $fileData);
-
-                // Build the URL manually using the S3 configuration
-                $bucket = config('filesystems.disks.s3.bucket');
-                $region = config('filesystems.disks.s3.region');
-                $url = "https://{$bucket}.s3.{$region}.amazonaws.com/{$filename}";
-
+        if ($base64Files) {
+            foreach ($base64Files as $index => $base64) {
+                $url = $this->uploadBase64File($base64);
                 $uploadedFiles[] = $url;
-
-                // Save file record
                 ModelsQuitClaim::create([
                     'app_id' =>  $request->app_id,
                     'emp_id' =>  $request->emp_id,

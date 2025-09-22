@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class LastPay extends Mailable
 {
@@ -44,9 +45,14 @@ class LastPay extends Mailable
 
         // Attach the file from S3 storage if it exists
         if ($this->filePath) {
-            $email->attachFromStorageDisk('s3', $this->filePath, 'last_pay_document.pdf', [
-                'mime' => 'application/pdf',
-            ]);
+            try {
+                $email->attachFromStorageDisk('s3', $this->filePath, 'last_pay_document.pdf', [
+                    'mime' => 'application/pdf',
+                ]);
+            } catch (\Exception $e) {
+                // Log the error but don't fail the email send
+                Log::warning('Failed to attach last pay document: ' . $e->getMessage());
+            }
         }
 
         return $email;

@@ -107,7 +107,9 @@
                     <img src="https://cdn-icons-png.flaticon.com/24/174/174857.png" alt="LinkedIn" style="width: 24px; height: 24px;">
                 </a>
             </p><br>
-            <img src="https://empireone-hris.com/images/SCemp2.jpg" alt="">
+            <div style="text-align: center;">
+                <img src="https://empireone-hris.com/images/SCemp2.jpg" alt="EmpireOne Team" style="max-width: 100%; height: auto; border-radius: 8px;">
+            </div>
         </div>
     </div>
 

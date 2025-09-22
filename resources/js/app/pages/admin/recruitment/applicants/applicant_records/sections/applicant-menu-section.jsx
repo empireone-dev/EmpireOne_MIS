@@ -46,18 +46,18 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 />
             ),
         },
-        {
-            component: (
-                <ApplicantDeleteComponent
-                    item={{
-                        label: "Delete Application",
-                        key: "1",
-                        icon: <DeleteOutlined />,
-                    }}
-                    data={data}
-                />
-            ),
-        },
+        // {
+        //     component: (
+        //         <ApplicantDeleteComponent
+        //             item={{
+        //                 label: "Delete Application",
+        //                 key: "1",
+        //                 icon: <DeleteOutlined />,
+        //             }}
+        //             data={data}
+        //         />
+        //     ),
+        // },
         {
             component: (
                 <ApplicantCvFileComponent

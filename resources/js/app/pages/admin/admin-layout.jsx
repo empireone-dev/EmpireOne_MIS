@@ -139,10 +139,6 @@ const AdminLayout = ({ children }) => {
                     key: "applicant_records",
                     icon: <TeamOutlined />,
                     label: "Application Records",
-                    // onClick: () =>
-                    //     router.visit(
-                    //         "/admin/recruitment/applicant_records?page=1"
-                    //     ),
                     children: [
                         {
                             key: "applicant_recordss",
@@ -189,24 +185,24 @@ const AdminLayout = ({ children }) => {
                                     "/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null"
                                 ),
                         },
-                        {
-                            key: "failed",
-                            icon: <HolderOutlined />,
-                            label: "Failed",
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Failed&site=null"
-                                ),
-                        },
-                        {
-                            key: "send_failed",
-                            icon: <HolderOutlined />,
-                            label: "Send Failed",
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null"
-                                ),
-                        },
+                        // {
+                        //     key: "failed",
+                        //     icon: <HolderOutlined />,
+                        //     label: "Failed",
+                        //     onClick: () =>
+                        //         router.visit(
+                        //             "/admin/recruitment/applicant_records?page=1&status=Failed&site=null"
+                        //         ),
+                        // },
+                        // {
+                        //     key: "send_failed",
+                        //     icon: <HolderOutlined />,
+                        //     label: "Send Failed",
+                        //     onClick: () =>
+                        //         router.visit(
+                        //             "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null"
+                        //         ),
+                        // },
                         {
                             key: "passed",
                             icon: <HolderOutlined />,

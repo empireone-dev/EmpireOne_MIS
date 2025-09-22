@@ -322,10 +322,13 @@ class AttritionController extends Controller
 
             $primaryFileUrl = $uploadedFiles[0];
 
-            $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+            // Only send email if user is not authenticated
+            if (!auth()->check()) {
+                // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
 
-            // $emailRecipient = 'quicklydeguzman@gmail.com';
-            Mail::to($emailRecipient)->send(new QuitClaimUploaded($emailData, $primaryFileUrl));
+                $emailRecipient = 'quicklydeguzman@gmail.com';
+                Mail::to($emailRecipient)->send(new QuitClaimUploaded($emailData, $primaryFileUrl));
+            }
 
             return response()->json([
                 'data' => 'success',

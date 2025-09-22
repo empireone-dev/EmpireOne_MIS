@@ -9,7 +9,9 @@ import {
     FileSearchOutlined,
     FileTextOutlined,
     FolderOpenOutlined,
+    QuestionCircleOutlined,
     SolutionOutlined,
+    UploadOutlined,
 } from "@ant-design/icons";
 import File201Component from "../../../employee_relation/employee_section/components/file-201-component";
 import AttritionReasonComponent from "../components/attrition-reason-components";
@@ -22,6 +24,7 @@ import AttritionLastPayProofComponent from "../components/attrition-last-pay-pro
 import AttritionChecklistComponents from "../components/attrition-checklist-components";
 import AttritionSendQuitClaimComponents from "../components/attrition-send-exit-interview-components";
 import AttritionSendExitInterviewComponents from "../components/attrition-send-exit-interview-components";
+import AttritionUploadQuitClaimComponent from "../components/attrition-upload-quit-claim-component";
 // import UpdateEmployeeComponent from "../components/update-employee-component";
 // import File201Component from "../components/file-201-component";
 // import EmploymentStatusComponent from "../components/employment-status-component";
@@ -50,7 +53,7 @@ export default function AttritionMenuSection({ data }) {
                     item={{
                         label: "View Reason",
                         key: "1",
-                        icon: <FileSearchOutlined />,
+                        icon: <QuestionCircleOutlined />,
                     }}
                     data={data}
                 />
@@ -129,6 +132,23 @@ export default function AttritionMenuSection({ data }) {
                                   label: "Upload Exit Clearance",
                                   key: "3",
                                   icon: <DeliveredProcedureOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
+            : []),
+        ...(data?.estatus == "Cleared" && !data?.quit_claim
+            ? [
+                  {
+                      component: (
+                          <AttritionUploadQuitClaimComponent
+                              // status="Quit Claim"
+                              item={{
+                                  label: "Upload Quit Claim",
+                                  key: "3",
+                                  icon: <UploadOutlined />,
                               }}
                               data={data}
                           />

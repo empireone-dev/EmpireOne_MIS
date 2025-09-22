@@ -33,52 +33,61 @@ import ApplicantProceedFinalComponent from "../components/applicant-proceed-fina
 import ApplicantDeleteComponent from "../components/applicant-delete-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
+    // Safety check to ensure data exists and has required properties
+    if (!data || typeof data !== 'object') {
+        return null;
+    }
+
     const items = [
         {
+            key: "details",
             component: (
                 <ApplicantDetaillsComponent
                     item={{
                         label: "Application Details",
-                        key: "1",
+                        key: "details",
                         icon: <AuditOutlined />,
                     }}
                     data={data}
                 />
             ),
         },
-        // {
-        //     component: (
-        //         <ApplicantDeleteComponent
-        //             item={{
-        //                 label: "Delete Application",
-        //                 key: "1",
-        //                 icon: <DeleteOutlined />,
-        //             }}
-        //             data={data}
-        //         />
-        //     ),
-        // },
         {
+            key: "delete",
+            component: (
+                <ApplicantDeleteComponent
+                    item={{
+                        label: "Delete Application",
+                        key: "delete",
+                        icon: <DeleteOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
+        {
+            key: "cv",
             component: (
                 <ApplicantCvFileComponent
                     item={{
                         label: "CV File",
-                        key: "1",
+                        key: "cv",
                         icon: <SolutionOutlined />,
                     }}
                     data={data}
                 />
             ),
         },
-        ...(data.status == "Initial Phase"
+        ...(data.status === "Initial Phase"
             ? [
                   {
+                      key: "reschedule-initial",
                       component: (
                           <ApplicantSetRescheduleComponent
                               status="Reschedule Initial Phase"
                               item={{
                                   label: "Reschedule Interview",
-                                  key: "1",
+                                  key: "reschedule-initial",
                                   icon: <ReconciliationOutlined />,
                               }}
                               data={data}
@@ -87,15 +96,16 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                   },
               ]
             : []),
-        ...(data.status == "Final Phase"
+        ...(data.status === "Final Phase"
             ? [
                   {
+                      key: "reschedule-final",
                       component: (
                           <ApplicantSetRescheduleComponent
                               status="Reschedule Final Phase"
                               item={{
                                   label: "Reschedule Interview",
-                                  key: "1",
+                                  key: "reschedule-final",
                                   icon: <ReconciliationOutlined />,
                               }}
                               data={data}
@@ -104,15 +114,16 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                   },
               ]
             : []),
-        ...(data.status == "Pending"
+        ...(data.status === "Pending"
             ? [
                   {
+                      key: "set-initial-schedule",
                       component: (
                           <ApplicantSetScheduleComponent
                               status="Initial Phase"
                               item={{
                                   label: "Set Initial Phase Interview",
-                                  key: "2",
+                                  key: "set-initial-schedule",
                                   icon: <RiseOutlined />,
                               }}
                               data={data}
@@ -121,15 +132,16 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                   },
               ]
             : []),
-        ...(data.status == "Pending"
+        ...(data.status === "Pending"
             ? [
                   {
+                      key: "immediate-initial",
                       component: (
                           <ApplicantImmediateInitialComponent
                               status="Initial Phase"
                               item={{
                                   label: "Proceed Initial Interview",
-                                  key: "2",
+                                  key: "immediate-initial",
                                   icon: <ArrowRightOutlined />,
                               }}
                               data={data}
@@ -138,15 +150,16 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                   },
               ]
             : []),
-        ...(data.status == "Pending" || data.status == "Initial Phase"
+        ...(data.status === "Pending" || data.status === "Initial Phase"
             ? [
                   {
+                      key: "proceed-final",
                       component: (
                           <ApplicantProceedFinalComponent
                               status="Initial Phase"
                               item={{
                                   label: "Proceed Final Phase",
-                                  key: "2",
+                                  key: "proceed-final",
                                   icon: <ArrowRightOutlined />,
                               }}
                               data={data}
@@ -155,14 +168,15 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                   },
               ]
             : []),
-        ...(data.status == "Initial Phase"
+        ...(data.status === "Initial Phase"
             ? [
                   {
+                      key: "initial-rating",
                       component: (
                           <ApplicantInitialRatingScale
                               item={{
                                   label: "Initial Rating Scale",
-                                  key: "3",
+                                  key: "initial-rating",
                                   icon: <DotChartOutlined />,
                               }}
                               data={data}
@@ -171,14 +185,15 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                   },
               ]
             : []),
-        ...(data.status == "Final Phase" || data.status == "For Final Phase"
+        ...(data.status === "Final Phase" || data.status === "For Final Phase"
             ? [
                   {
+                      key: "initial-result",
                       component: (
                           <ApplicantProceedInitalPhaseComponent
                               item={{
                                   label: "Initial Phase Result",
-                                  key: "4",
+                                  key: "initial-result",
                                   icon: <InfoCircleOutlined />,
                               }}
                               data={data}
@@ -187,15 +202,16 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                   },
               ]
             : []),
-        ...(data.status == "For Final Phase"
+        ...(data.status === "For Final Phase"
             ? [
                   {
+                      key: "immediate-final",
                       component: (
                           <ApplicantImmediateFinalComponent
                               status="Final Phase"
                               item={{
                                   label: "Proceed Interview Immediately",
-                                  key: "2",
+                                  key: "immediate-final",
                                   icon: <ArrowRightOutlined />,
                               }}
                               data={data}
@@ -204,14 +220,15 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                   },
               ]
             : []),
-        ...(data.status == "Final Phase"
+        ...(data.status === "Final Phase"
             ? [
                   {
+                      key: "final-rating",
                       component: (
                           <ApplicantFinalRatingScaleComponent
                               item={{
                                   label: "Final Rating Scale",
-                                  key: "5",
+                                  key: "final-rating",
                                   icon: <DotChartOutlined />,
                               }}
                               data={data}
@@ -220,15 +237,16 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                   },
               ]
             : []),
-        ...(data.status == "For Final Phase"
+        ...(data.status === "For Final Phase"
             ? [
                   {
+                      key: "set-final-schedule",
                       component: (
                           <ApplicantSetScheduleComponent
                               status="Final Phase"
                               item={{
                                   label: "Set Schedule Final Phase",
-                                  key: "6",
+                                  key: "set-final-schedule",
                                   icon: <CalendarOutlined />,
                               }}
                               data={data}
@@ -253,26 +271,27 @@ export default function ApplicantMenuSection({ data, interviewer }) {
         //         },
         //     ]
         //     : []),
-        ...(data.status == "Passed" ||
-        data.status == "Pooling" ||
-        data.status == "Failed" ||
-        data.status == "Dismissal" ||
-        data.status == "Resignation" ||
-        data.status == "EOPE" ||
-        data.status == "AWOL" ||
-        data.status == "Probationary" ||
-        data.status == "Regular" ||
-        data.status == "Counter Offer" ||
-        data.status == "Accepted Offer" ||
-        data.status == "Send Failed"
+        ...(data.status === "Passed" ||
+        data.status === "Pooling" ||
+        data.status === "Failed" ||
+        data.status === "Dismissal" ||
+        data.status === "Resignation" ||
+        data.status === "EOPE" ||
+        data.status === "AWOL" ||
+        data.status === "Probationary" ||
+        data.status === "Regular" ||
+        data.status === "Counter Offer" ||
+        data.status === "Accepted Offer" ||
+        data.status === "Send Failed"
             ? [
                   {
+                      key: "results",
                       component: (
                           <ApplicantResultsComponent
                               data={data}
                               item={{
                                   label: "Application Results",
-                                  key: "8",
+                                  key: "results",
                                   icon: <InfoCircleOutlined />,
                               }}
                           />
@@ -280,14 +299,15 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                   },
               ]
             : []),
-        ...(data.status == "Send Failed"
+        ...(data.status === "Send Failed"
             ? [
                   {
+                      key: "rejection",
                       component: (
                           <ApplicantRejectionComponent
                               item={{
                                   label: "Sending Failed Email",
-                                  key: "3",
+                                  key: "rejection",
                                   icon: <SendOutlined />,
                               }}
                               data={data}
@@ -296,14 +316,15 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                   },
               ]
             : []),
-        ...(data.status == "Passed"
+        ...(data.status === "Passed"
             ? [
                   {
+                      key: "pooling",
                       component: (
                           <ApplicantPoolingComponent
                               item={{
                                   label: "Proceed for Pooling",
-                                  key: "9",
+                                  key: "pooling",
                                   icon: <TeamOutlined />,
                               }}
                               data={data}
@@ -312,17 +333,18 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                   },
               ]
             : []),
-        ...(data.status == "Passed" ||
-        data.status == "Pooling" ||
-        data.status == "Counter Offer" ||
-        data.status == "Accepted Offer"
+        ...(data.status === "Passed" ||
+        data.status === "Pooling" ||
+        data.status === "Counter Offer" ||
+        data.status === "Accepted Offer"
             ? [
                   {
+                      key: "job-offer",
                       component: (
                           <ApplicantJobOfferComponent
                               item={{
                                   label: "Make a Job Offer",
-                                  key: "10",
+                                  key: "job-offer",
                                   icon: (
                                       <BriefcaseIcon className="h-4 mr-0.5" />
                                   ),
@@ -338,13 +360,12 @@ export default function ApplicantMenuSection({ data, interviewer }) {
     return (
         <div>
             <Dropdown
-                overlay={
-                    <Menu>
-                        {items.map((item, i) => {
-                            return item.component;
-                        })}
-                    </Menu>
-                }
+                menu={{
+                    items: items.map((item, i) => ({
+                        key: item.key || i.toString(),
+                        label: item.component,
+                    })),
+                }}
                 trigger={["click"]}
             >
                 <Button type="primary">

@@ -4,6 +4,7 @@ import {
     ArrowRightOutlined,
     AuditOutlined,
     CalendarOutlined,
+    DeleteOutlined,
     DotChartOutlined,
     DownOutlined,
     InfoCircleOutlined,

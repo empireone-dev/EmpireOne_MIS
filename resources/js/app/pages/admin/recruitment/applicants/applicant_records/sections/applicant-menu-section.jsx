@@ -57,35 +57,35 @@ export default function ApplicantMenuSection({ data, interviewer }) {
         //         />
         //     ),
         // },
-        {
-            component: (
-                <ApplicantCvFileComponent
-                    item={{
-                        label: "CV File",
-                        key: "1",
-                        icon: <SolutionOutlined />,
-                    }}
-                    data={data}
-                />
-            ),
-        },
-        ...(data.status == "Initial Phase"
-            ? [
-                  {
-                      component: (
-                          <ApplicantSetRescheduleComponent
-                              status="Reschedule Initial Phase"
-                              item={{
-                                  label: "Reschedule Interview",
-                                  key: "1",
-                                  icon: <ReconciliationOutlined />,
-                              }}
-                              data={data}
-                          />
-                      ),
-                  },
-              ]
-            : []),
+        // {
+        //     component: (
+        //         <ApplicantCvFileComponent
+        //             item={{
+        //                 label: "CV File",
+        //                 key: "1",
+        //                 icon: <SolutionOutlined />,
+        //             }}
+        //             data={data}
+        //         />
+        //     ),
+        // },
+        // ...(data.status == "Initial Phase"
+        //     ? [
+        //           {
+        //               component: (
+        //                   <ApplicantSetRescheduleComponent
+        //                       status="Reschedule Initial Phase"
+        //                       item={{
+        //                           label: "Reschedule Interview",
+        //                           key: "1",
+        //                           icon: <ReconciliationOutlined />,
+        //                       }}
+        //                       data={data}
+        //                   />
+        //               ),
+        //           },
+        //       ]
+        //     : []),
         ...(data.status == "Final Phase"
             ? [
                   {

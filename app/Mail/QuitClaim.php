@@ -3,24 +3,15 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
-use Illuminate\Mail\Mailables\Content;
-use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 
 class QuitClaim extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * The data passed to the mailable.
-     */
     public $data;
-
-    /**
-     * The file path of the attachment.
-     */
     public $filePath;
 
     /**
@@ -28,7 +19,14 @@ class QuitClaim extends Mailable
      */
     public function __construct($data, $filePath = null)
     {
-        $this->data = $data;
+        // Ensure data is properly structured with required fields
+        $this->data = array_merge([
+            'fname' => '',
+            'lname' => '',
+            'emp_id' => '',
+            'email' => ''
+        ], $data ?? []);
+        
         $this->filePath = $filePath;
     }
 
@@ -37,16 +35,21 @@ class QuitClaim extends Mailable
      */
     public function build()
     {
-        $email =  $this->from('hrisempireone@gmail.com', 'No Reply')
+        $email = $this->from('hrisempireone@gmail.com', 'No Reply')
             ->subject('EmpireOne BPO Solutions Inc - Quit Claim')
-            ->markdown('mail.quit_claim.email')
-            ->with($this->data);
+            ->view('mail.quit_claim.email')
+            ->with('data', $this->data);
 
-        // Attach the file from S3 storage if it exists
-        if ($this->filePath) {
-            $email->attachFromStorageDisk('s3', $this->filePath, 'quit_claim_document.pdf', [
-                'mime' => 'application/pdf',
-            ]);
+        // Attach quit claim PDF from S3 if available
+        if (!empty($this->filePath)) {
+            try {
+                $email->attachFromStorageDisk('s3', $this->filePath, 'quit_claim_document.pdf', [
+                    'mime' => 'application/pdf',
+                ]);
+            } catch (\Exception $e) {
+                // Log the error but don't fail the email send
+                Log::warning('Failed to attach quit claim document: ' . $e->getMessage());
+            }
         }
 
         return $email;

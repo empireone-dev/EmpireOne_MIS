@@ -334,9 +334,9 @@ class AttritionController extends Controller
 
             // Only send email if user is not authenticated
             if (!auth()->check()) {
-                // $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+                $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
 
-                $emailRecipient = 'quicklydeguzman@gmail.com';
+                // $emailRecipient = 'quicklydeguzman@gmail.com';
                 Mail::to($emailRecipient)->send(new QuitClaimUploaded($emailData, $primaryFileUrl));
             }
 

@@ -66,6 +66,7 @@ export default function QuitClaimUploadSection() {
                     mname: employee_attrition?.applicant?.mname,
                     lname: employee_attrition?.applicant?.lname,
                     email: employee_attrition?.applicant?.email,
+                    site: employee_attrition?.applicant?.site,
                 })
             );
 
@@ -92,7 +93,7 @@ export default function QuitClaimUploadSection() {
                 message.error("Failed to upload quit claim. Please try again.");
             }
         } finally {
-            setLoading(false); 
+            setLoading(false);
         }
     }
 

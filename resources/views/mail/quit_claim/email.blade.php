@@ -70,7 +70,7 @@
                 3. Choose one of the following options to complete the signing:
             </p>
             <p>
-                <b>Option 1:</b> Print and sign the document. Then, scan or take a clear photo of the signed copy and send it back via email or through the upload button link below.<br><br>
+                <b>Option 1:</b> Print and sign the document with your wet signature. Then, scan or take a clear photo of the signed copy and send it back via email or through the upload button link below.<br><br>
             </p>
             <div style="text-align: center;">
                 <a href="https://empireone-hris.com/quit-claim/{{$data['emp_id']}}"

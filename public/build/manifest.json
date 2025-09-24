@@ -7578,7 +7578,7 @@
     "src": "resources/js/app/pages/admin/exit_clearance/sections/upload-signature-section.jsx"
   },
   "resources/js/app/pages/admin/exit_interview/components/checkbox-input-component.jsx": {
-    "file": "assets/checkbox-input-component-53e8251c.js",
+    "file": "assets/checkbox-input-component-76fb0bff.js",
     "imports": [
       "_store-dfefbe8e.js"
     ],
@@ -15823,7 +15823,7 @@
     "src": "resources/js/app/pages/exit_interview/components/table-row-component.jsx"
   },
   "resources/js/app/pages/exit_interview/exit_interview_result/components/checkbox-input-component.jsx": {
-    "file": "assets/checkbox-input-component-76fb0bff.js",
+    "file": "assets/checkbox-input-component-53e8251c.js",
     "imports": [
       "_store-dfefbe8e.js"
     ],

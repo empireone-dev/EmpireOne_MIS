@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Dropdown, message, Space, Modal, Menu } from "antd";
 import {
+    CheckOutlined,
     ContainerOutlined,
     DeliveredProcedureOutlined,
     DownOutlined,
@@ -25,6 +26,7 @@ import AttritionChecklistComponents from "../components/attrition-checklist-comp
 import AttritionSendQuitClaimComponents from "../components/attrition-send-exit-interview-components";
 import AttritionSendExitInterviewComponents from "../components/attrition-send-exit-interview-components";
 import AttritionUploadQuitClaimComponent from "../components/attrition-upload-quit-claim-component";
+import AttritionQuitClaimApprovalComponent from "../components/attrition-quit-claim-approval-component";
 // import UpdateEmployeeComponent from "../components/update-employee-component";
 // import File201Component from "../components/file-201-component";
 // import EmploymentStatusComponent from "../components/employment-status-component";
@@ -139,7 +141,8 @@ export default function AttritionMenuSection({ data }) {
                   },
               ]
             : []),
-        ...(data?.estatus == "Cleared" && !data?.quit_claim
+        ...((data?.estatus == "Cleared" && !data?.quit_claim) ||
+        data?.quit_claim?.status === "Declined"
             ? [
                   {
                       component: (
@@ -156,7 +159,8 @@ export default function AttritionMenuSection({ data }) {
                   },
               ]
             : []),
-        ...(data?.estatus == "Cleared" && !data?.quit_claim
+        ...((data?.estatus == "Cleared" && !data?.quit_claim) ||
+        data?.quit_claim?.status === "Declined"
             ? [
                   {
                       component: (
@@ -173,7 +177,7 @@ export default function AttritionMenuSection({ data }) {
                   },
               ]
             : []),
-        ...(data?.quit_claim
+        ...(data?.quit_claim && data?.quit_claim.status === "Approved"
             ? [
                   {
                       component: (
@@ -189,7 +193,39 @@ export default function AttritionMenuSection({ data }) {
                   },
               ]
             : []),
-        ...(data?.quit_claim
+        ...(data?.quit_claim && data?.quit_claim.status === "Pending"
+            ? [
+                  {
+                      component: (
+                          <AttritionViewQuitClaimComponent
+                              item={{
+                                  label: "View Uploaded Quit Claim",
+                                  key: "1",
+                                  icon: <SolutionOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
+            : []),
+        ...(data?.quit_claim && data?.quit_claim.status === "Pending"
+            ? [
+                  {
+                      component: (
+                          <AttritionQuitClaimApprovalComponent
+                              item={{
+                                  label: "Quit Claim Approval",
+                                  key: "1",
+                                  icon: <CheckOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
+            : []),
+        ...(data?.quit_claim && data?.quit_claim.status === "Approved"
             ? [
                   {
                       component: (

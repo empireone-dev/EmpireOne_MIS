@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('app_id')->nullable();
             $table->string('emp_id')->nullable();
             $table->string('file')->nullable();
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

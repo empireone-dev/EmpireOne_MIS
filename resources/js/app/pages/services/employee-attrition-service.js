@@ -52,3 +52,19 @@ export async function send_exit_interview_service(data) {
     const res = await axios.post("/api/send_exit_interview", data);
     return res.data;
 }
+
+export async function approve_quit_claim_service(data) {
+    const res = await axios.put(
+        `/api/approve_quit_claim/${data.quit_claim.id}`,
+        data
+    );
+    return res.data;
+}
+
+export async function decline_quit_claim_service(data) {
+    const res = await axios.put(
+        `/api/decline_quit_claim/${data.quit_claim.id}`,
+        data
+    );
+    return res.data;
+}

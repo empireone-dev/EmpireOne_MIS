@@ -171,6 +171,9 @@ Route::resource('attrition', AttritionController::class);
 Route::post('/upload_exit_clearance', [AttritionController::class, 'upload_exit_clearance']);
 Route::post('/upload_quit_claim', [AttritionController::class, 'upload_quit_claim']);
 Route::post('/send_exit_interview', [AttritionController::class, 'send_exit_interview']);
+Route::put('/approve_quit_claim/{id}', [AttritionController::class, 'approve_quit_claim']);
+Route::put('/decline_quit_claim/{id}', [AttritionController::class, 'decline_quit_claim']);
+
 Route::resource('exit_int', ExitInterviewController::class);
 Route::resource('exit_clr', ExitClearanceController::class);
 Route::post('/send-clearance-email', [ExitClearanceController::class, 'sendClearanceEmail']);

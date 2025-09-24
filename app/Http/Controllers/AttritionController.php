@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\Attrition as MailAttrition;
 use App\Mail\Cleared;
+use App\Mail\DeclinedQuitClaim;
 use App\Mail\ExitInterview;
 use App\Mail\LastPay;
 use App\Mail\QuitClaim;
@@ -298,13 +299,11 @@ class AttritionController extends Controller
 
     public function upload_quit_claim(Request $request)
     {
-        // Check if employee already has a quit claim uploaded
-        $existingQuitClaim = ModelsQuitClaim::where('emp_id', $request->emp_id)->first();
-        if ($existingQuitClaim) {
-            return response()->json([
-                'error' => 'Quit claim already uploaded for this employee',
-                'status' => 'already_exists'
-            ], 400);
+        // Check if employee already has a quit claim uploaded and delete existing ones
+        $existingQuitClaims = ModelsQuitClaim::where('emp_id', $request->emp_id)->get();
+        if ($existingQuitClaims->isNotEmpty()) {
+            // Delete all existing quit claims for this employee
+            ModelsQuitClaim::where('emp_id', $request->emp_id)->delete();
         }
 
         $base64Files = $request->input('files');
@@ -313,10 +312,13 @@ class AttritionController extends Controller
             foreach ($base64Files as $index => $base64) {
                 $url = $this->uploadBase64File($base64);
                 $uploadedFiles[] = $url;
+
+                $status = auth()->check() ? "Approved" : "Pending";
                 ModelsQuitClaim::create([
                     'app_id' =>  $request->app_id,
                     'emp_id' =>  $request->emp_id,
                     'file'   => $url,
+                    'status' => $status,
                 ]);
             }
         }
@@ -341,13 +343,14 @@ class AttritionController extends Controller
                         ->send(new QuitClaimUploaded($emailData, $primaryFileUrl));
                 } else {
                     $emailRecipient = 'hiring@empireonegroup.com';
+                    // $emailRecipient = 'quicklydeguz@gmail.com';
 
                     Mail::to($emailRecipient)
                         ->cc(['schr@empireonegroup.com', 'SCaccounting@empireonegroup.com'])
+                        // ->cc(['quicklydeguzman@gmail.com', 'eogs.quickly@gmail.com'])
                         ->send(new QuitClaimUploaded($emailData, $primaryFileUrl));
                 }
             }
-
 
             return response()->json([
                 'data' => 'success',
@@ -359,5 +362,55 @@ class AttritionController extends Controller
                 'error' => 'No files were uploaded',
             ], 400);
         }
+    }
+
+    public function approve_quit_claim(Request $request, $id)
+    {
+        // Find the quit claim
+        $quitClaim = ModelsQuitClaim::find($id);
+
+        if (!$quitClaim) {
+            return response()->json([
+                'message' => 'Quit claim not found.',
+            ], 404);
+        }
+
+        $quitClaim->update([
+            'status' => 'Approved',
+        ]);
+
+        return response()->json([
+            'message' => 'Quit claim approved successfully.',
+        ]);
+    }
+
+    public function decline_quit_claim(Request $request, $id)
+    {
+        // Find the quit claim
+        $quitClaim = ModelsQuitClaim::find($id);
+
+        if (!$quitClaim) {
+            return response()->json([
+                'message' => 'Quit claim not found.',
+            ], 404);
+        }
+
+        $quitClaim->update([
+            'status' => 'Declined',
+        ]);
+
+        mail::to($request->email)->send(new DeclinedQuitClaim([
+            'fname' => $request->fname,
+            'lname' => $request->lname,
+            'emp_id' => $request->emp_id,
+            'app_id' => $request->app_id,
+            'reason' => $request->reason,
+            'userId' => $request->userId,
+            'site' => $request->site,
+        ]));
+
+        return response()->json([
+            'message' => 'Quit claim declined successfully.',
+        ]);
     }
 }

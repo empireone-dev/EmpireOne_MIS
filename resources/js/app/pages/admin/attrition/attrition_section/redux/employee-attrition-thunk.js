@@ -1,4 +1,6 @@
 import {
+    approve_quit_claim_service,
+    decline_quit_claim_service,
     get_employee_attrition_by_emp_id_service,
     get_employee_attrition_service,
     send_exit_interview_service,
@@ -77,5 +79,17 @@ export function send_exit_interview_thunk(data) {
     return async function (dispatch, getState) {
         const result = await send_exit_interview_service(data);
         return result;
+    };
+}
+
+export function approve_quit_claim_thunk(data) {
+    return async function (dispatch, getState) {
+        const res = await approve_quit_claim_service(data);
+    };
+}
+
+export function decline_quit_claim_thunk(data) {
+    return async function (dispatch, getState) {
+        const res = await decline_quit_claim_service(data);
     };
 }

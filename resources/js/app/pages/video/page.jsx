@@ -5,7 +5,7 @@ export default function Page() {
     const [error, setError] = useState(null);
     const videoRef = useRef(null);
 
-    const videoSource = "/images/1.mp4"; 
+    const videoSource = "/images/1.mp4";
 
     const handleVideoLoad = () => {
         setIsLoading(false);
@@ -86,6 +86,7 @@ export default function Page() {
                 playsInline
                 muted
                 autoPlay
+                loop // 🔄 makes it loop
                 onLoadedData={handleVideoLoad}
                 onError={handleVideoError}
                 preload="auto"

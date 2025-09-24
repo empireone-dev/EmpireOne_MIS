@@ -5,7 +5,7 @@ export default function Page() {
     const [error, setError] = useState(null);
     const videoRef = useRef(null);
 
-    const videoSource = "/images/DAY 2.mp4"; // Just this one video
+    const videoSource = "/images/1.mp4"; 
 
     const handleVideoLoad = () => {
         setIsLoading(false);

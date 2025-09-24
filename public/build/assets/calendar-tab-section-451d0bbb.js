@@ -1,1 +1,0 @@
-import{j as r}from"./store-be97c391.js";import o from"./calendar-component-f92a40f6.js";import"./ChevronDownIcon-2cd0e98e.js";import"./app-ca6c0cbd.js";import"./portal-78e3f432.js";import"./use-server-handoff-complete-af2881a1.js";import"./floating-ui.dom-dbc86a7b.js";function s(){return r.jsx("div",{children:r.jsx(o,{})})}export{s as default};

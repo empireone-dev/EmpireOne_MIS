@@ -15,6 +15,7 @@ class QuitClaim extends Model
         'app_id',
         'emp_id',
         'file',
+        'status',
     ];
 
     public function employee(): BelongsTo

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ApprovedQuitClaim;
 use App\Mail\Attrition as MailAttrition;
 use App\Mail\Cleared;
 use App\Mail\DeclinedQuitClaim;
@@ -16,6 +17,7 @@ use App\Models\QuitClaim as ModelsQuitClaim;
 use App\Models\UploadExitClearance;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -378,6 +380,15 @@ class AttritionController extends Controller
         $quitClaim->update([
             'status' => 'Approved',
         ]);
+
+        // mail::send(new ApprovedQuitClaim([
+        //     'fname' => $request->fname,
+        //     'lname' => $request->lname,
+        //     'emp_id' => $request->emp_id,
+        //     'app_id' => $request->app_id,
+        //     'userId' => $request->userId,
+        //     'site' => $request->site,
+        // ]));
 
         return response()->json([
             'message' => 'Quit claim approved successfully.',

@@ -1,1 +1,0 @@
-import{j as e}from"./store-dfefbe8e.js";function i(){return e.jsxs("div",{children:[e.jsx("h1",{children:e.jsx("b",{children:"Coaching Logs Section"})}),e.jsx("div",{className:"flex justify-center items-center h-[400px]",children:e.jsx("img",{src:"/images/under-develop.png",className:"max-w-full max-h-full",alt:""})})]})}export{i as default};

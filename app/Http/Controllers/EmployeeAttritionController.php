@@ -95,7 +95,7 @@ class EmployeeAttritionController extends Controller
             });
         }
 
-        $employee_attrition = $query->orderBy('id', 'desc')->get();
+        $employee_attrition = $query->orderBy('id', 'desc')->paginate(10);
 
         return response()->json([
             'data' => $employee_attrition

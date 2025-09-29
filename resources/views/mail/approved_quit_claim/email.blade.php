@@ -65,6 +65,9 @@
                 <p><strong>Account Details:</strong></p>
                 <p>Bank Name: {{$data['accountName'] ?? 'N/A'}}</p>
                 <p>Account Number: {{$data['accountNumber'] ?? 'N/A'}}</p>
+                <p class="note">
+                    <i>If the above account details are incorrect, please visit our office for verification and updating of your details.</i>
+                </p>
             </div>
 
             <p>

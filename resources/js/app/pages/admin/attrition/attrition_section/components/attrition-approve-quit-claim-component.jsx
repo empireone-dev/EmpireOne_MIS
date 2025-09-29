@@ -24,7 +24,7 @@ export default function AttritionapproveQuitClaimComponent({
     item,
     setStatusModalOpen,
 }) {
-    const [bankDetailsModalOpen, setBankDetailsModalOpen] = useState(false);
+    const [payDetailsModalOpen, setPayDetailsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [uploadedFile, setUploadedFile] = useState(null);
     const [file, setFile] = useState(null);
@@ -40,42 +40,12 @@ export default function AttritionapproveQuitClaimComponent({
 
     console.log("daasdadta", data);
 
-    async function approve_quit_claim(e) {
-        e.preventDefault();
-        setLoading(true);
-        try {
-            await store.dispatch(
-                approve_quit_claim_thunk({
-                    ...data,
-                    status: "Approved",
-                    accountName: form.accountName,
-                    accountNumber: form.accountNumber,
-                    email: data.applicant.email,
-                    fname: data.applicant.fname,
-                    lname: data.applicant.lname,
-                    emp_id: data.applicant.emp_id,
-                    app_id: data.applicant.id,
-                    userId: data.applicant.userId,
-                    site: data.applicant.site,
-                })
-            );
-            await store.dispatch(get_employee_attrition_thunk());
-            message.success("Quit claim approved successfully");
-            setStatusModalOpen(false);
-            setBankDetailsModalOpen(false);
-        } catch (error) {
-            message.error("Failed to approve quit claim");
-        } finally {
-            setLoading(false);
-        }
-    }
-
     function openHandler(params) {
-        setBankDetailsModalOpen(true);
+        setPayDetailsModalOpen(true);
     }
 
     function closeModalHandler() {
-        setBankDetailsModalOpen(false);
+        setPayDetailsModalOpen(false);
         setFile(null);
         setUploadedFile(null);
         setForm({
@@ -97,32 +67,28 @@ export default function AttritionapproveQuitClaimComponent({
             <Modal
                 title="Choose mode for last pay"
                 centered
-                visible={bankDetailsModalOpen}
+                visible={payDetailsModalOpen}
                 onOk={closeModalHandler}
                 onCancel={closeModalHandler}
                 width={1000}
                 footer={null}
             >
-                <form onSubmit={approve_quit_claim} className="w-full h-full">
-                    <div className="mt-4">
-                        <div className="flex flex-1 gap-4 mt-3 mb-2 py-2">
-                            <div>
-                                <AttritionBankLastPayComponent
-                                    data={data}
-                                    item={item}
-                                    setStatusModalOpen={setStatusModalOpen}
-                                />
-                            </div>
-                            <div>
-                                <AttritionCheckLastPayComponent
-                                    data={data}
-                                    item={item}
-                                    setStatusModalOpen={setStatusModalOpen}
-                                />
-                            </div>
-                        </div>
+                <div className="w-full h-full">
+                    <div className="mt-4 flex flex-1 gap-4 mb-1 py-2">
+                        <AttritionBankLastPayComponent
+                            data={data}
+                            item={item}
+                            setStatusModalOpen={setStatusModalOpen}
+                            setPayDetailsModalOpen={setPayDetailsModalOpen}
+                        />
+                        <AttritionCheckLastPayComponent
+                            data={data}
+                            item={item}
+                            setStatusModalOpen={setStatusModalOpen}
+                            setPayDetailsModalOpen={setPayDetailsModalOpen}
+                        />
                     </div>
-                </form>
+                </div>
             </Modal>
         </>
     );

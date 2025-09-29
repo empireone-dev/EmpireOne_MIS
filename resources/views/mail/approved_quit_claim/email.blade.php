@@ -72,7 +72,7 @@
 
             <p>
                 Please be advised that your last pay will be credited to the above account within
-                <strong>twenty-five (25) banking days</strong> from the date of this notice.
+                <strong>thirty (30) days</strong> from the date of this notice.
             </p>
 
             <p>

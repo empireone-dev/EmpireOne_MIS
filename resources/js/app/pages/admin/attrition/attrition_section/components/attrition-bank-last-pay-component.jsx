@@ -22,6 +22,7 @@ export default function AttritionBankLastPayComponent({
     data,
     item,
     setStatusModalOpen,
+    setPayDetailsModalOpen,
 }) {
     const [bankDetailsModalOpen, setBankDetailsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -62,6 +63,7 @@ export default function AttritionBankLastPayComponent({
             message.success("Quit claim approved successfully");
             setStatusModalOpen(false);
             setBankDetailsModalOpen(false);
+            setPayDetailsModalOpen(false);
         } catch (error) {
             message.error("Failed to approve quit claim");
         } finally {
@@ -87,11 +89,12 @@ export default function AttritionBankLastPayComponent({
         <>
             <button
                 onClick={() => openHandler(true)}
-                className="bg-green-500 flex text-white px-52 py-2 rounded disabled:opacity-50"
+                className="bg-green-500 hover:bg-green-600 flex text-white px-52 py-2 rounded disabled:opacity-50"
                 type="button"
                 disabled={loading}
             >
-                <BankOutlined />&nbsp;Bank
+                <BankOutlined />
+                &nbsp;Bank
             </button>
             <Modal
                 title="Account Details for Last Pay"

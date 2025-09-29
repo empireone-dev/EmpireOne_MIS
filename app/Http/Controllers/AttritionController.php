@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ApprovedQuitClaim;
 use App\Mail\Attrition as MailAttrition;
+use App\Mail\CheckPay;
 use App\Mail\Cleared;
 use App\Mail\DeclinedQuitClaim;
 use App\Mail\ExitInterview;
@@ -381,16 +382,28 @@ class AttritionController extends Controller
             'status' => 'Approved',
         ]);
 
-        mail::to($request->email)->send(new ApprovedQuitClaim([
-            'fname' => $request->fname,
-            'lname' => $request->lname,
-            'emp_id' => $request->emp_id,
-            'app_id' => $request->app_id,
-            'userId' => $request->userId,
-            'site' => $request->site,
-            'accountName' => $request->accountName,
-            'accountNumber' => $request->accountNumber,
-        ]));
+        // Check if account information is provided
+        if (!empty($request->accountName) && !empty($request->accountNumber)) {
+            Mail::to($request->email)->send(new ApprovedQuitClaim([
+                'fname' => $request->fname,
+                'lname' => $request->lname,
+                'emp_id' => $request->emp_id,
+                'app_id' => $request->app_id,
+                'userId' => $request->userId,
+                'site' => $request->site,
+                'accountName' => $request->accountName,
+                'accountNumber' => $request->accountNumber,
+            ]));
+        } else {
+            Mail::to($request->email)->send(new CheckPay([
+                'fname' => $request->fname,
+                'lname' => $request->lname,
+                'emp_id' => $request->emp_id,
+                'app_id' => $request->app_id,
+                'userId' => $request->userId,
+                'site' => $request->site,
+            ]));
+        }
 
         return response()->json([
             'message' => 'Quit claim approved successfully.',

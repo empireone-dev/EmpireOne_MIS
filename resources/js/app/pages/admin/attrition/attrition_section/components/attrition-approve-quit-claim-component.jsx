@@ -16,6 +16,8 @@ import {
 } from "../redux/employee-attrition-thunk";
 import store from "@/app/store/store";
 import SendUploadQuitClaimSection from "../sections/send-upload-quit-claim-section";
+import AttritionBankLastPayComponent from "./attrition-bank-last-pay-component";
+import AttritionCheckLastPayComponent from "./attrition-check-last-pay-component";
 
 export default function AttritionapproveQuitClaimComponent({
     data,
@@ -93,7 +95,7 @@ export default function AttritionapproveQuitClaimComponent({
                 Approved
             </button>
             <Modal
-                title="Account Details for Last Pay"
+                title="Choose mode for last pay"
                 centered
                 visible={bankDetailsModalOpen}
                 onOk={closeModalHandler}
@@ -102,68 +104,22 @@ export default function AttritionapproveQuitClaimComponent({
                 footer={null}
             >
                 <form onSubmit={approve_quit_claim} className="w-full h-full">
-                    <div>
-                        {/* <textarea
-                            className="w-full h-28"
-                            name="reason"
-                            id="reason"
-                            // value={reason}
-                            onChange={(e) => setReason(e.target.value)}
-                            placeholder="Please enter the reason for declining the quit claim..."
-                        ></textarea> */}
-                        <div className="w-full mt-5">
-                            <label className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                Account Name:
-                            </label>
-                            <input
-                                className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                id="account-name"
-                                type="text"
-                                value={form.accountName}
-                                onChange={(e) =>
-                                    setForm({
-                                        ...form,
-                                        accountName: e.target.value,
-                                    })
-                                }
-                                placeholder="Enter account name"
-                                required
-                            />
-                        </div>
-                        <div className="w-full mt-5">
-                            <label className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                Account Number:
-                            </label>
-                            <input
-                                className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                id="account-number"
-                                type="text"
-                                value={form.accountNumber}
-                                onChange={(e) =>
-                                    setForm({
-                                        ...form,
-                                        accountNumber: e.target.value,
-                                    })
-                                }
-                                placeholder="Enter account number"
-                                required
-                            />
-                        </div>
-                        <div className="mt-4 flex justify-end">
-                            <button
-                                className="bg-green-500 text-white px-4 py-2 rounded disabled:opacity-50"
-                                type="submit"
-                                disabled={loading}
-                            >
-                                {loading ? (
-                                    <>
-                                        <LoadingOutlined className="mr-2" />
-                                        Processing...
-                                    </>
-                                ) : (
-                                    "Submit"
-                                )}
-                            </button>
+                    <div className="mt-4">
+                        <div className="flex flex-1 gap-4 mt-3 mb-2 py-2">
+                            <div>
+                                <AttritionBankLastPayComponent
+                                    data={data}
+                                    item={item}
+                                    setStatusModalOpen={setStatusModalOpen}
+                                />
+                            </div>
+                            <div>
+                                <AttritionCheckLastPayComponent
+                                    data={data}
+                                    item={item}
+                                    setStatusModalOpen={setStatusModalOpen}
+                                />
+                            </div>
                         </div>
                     </div>
                 </form>

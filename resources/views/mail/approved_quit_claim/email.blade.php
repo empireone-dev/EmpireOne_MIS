@@ -63,8 +63,8 @@
 
             <div class="account-box">
                 <p><strong>Account Details:</strong></p>
-                <p>Bank Name: {{$data['bank_name'] ?? 'N/A'}}</p>
-                <p>Account Number: {{$data['account_no'] ?? 'N/A'}}</p>
+                <p>Bank Name: {{$data['accountName'] ?? 'N/A'}}</p>
+                <p>Account Number: {{$data['accountNumber'] ?? 'N/A'}}</p>
             </div>
 
             <p>

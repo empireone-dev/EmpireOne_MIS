@@ -381,14 +381,16 @@ class AttritionController extends Controller
             'status' => 'Approved',
         ]);
 
-        // mail::send(new ApprovedQuitClaim([
-        //     'fname' => $request->fname,
-        //     'lname' => $request->lname,
-        //     'emp_id' => $request->emp_id,
-        //     'app_id' => $request->app_id,
-        //     'userId' => $request->userId,
-        //     'site' => $request->site,
-        // ]));
+        mail::to($request->email)->send(new ApprovedQuitClaim([
+            'fname' => $request->fname,
+            'lname' => $request->lname,
+            'emp_id' => $request->emp_id,
+            'app_id' => $request->app_id,
+            'userId' => $request->userId,
+            'site' => $request->site,
+            'accountName' => $request->accountName,
+            'accountNumber' => $request->accountNumber,
+        ]));
 
         return response()->json([
             'message' => 'Quit claim approved successfully.',

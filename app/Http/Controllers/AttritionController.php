@@ -9,6 +9,7 @@ use App\Mail\Cleared;
 use App\Mail\DeclinedQuitClaim;
 use App\Mail\ExitInterview;
 use App\Mail\LastPay;
+use App\Mail\OffboardingChecklist;
 use App\Mail\QuitClaim;
 use App\Mail\QuitClaimUploaded;
 use App\Models\Applicant;
@@ -438,5 +439,51 @@ class AttritionController extends Controller
         return response()->json([
             'message' => 'Quit claim declined successfully.',
         ]);
+    }
+
+    public function send_offboarding_checklist(Request $request)
+    {
+        $data = $request->all();
+
+        // Validate that a file is uploaded
+        if (!$request->hasFile('file')) {
+            return response()->json([
+                'error' => 'File is required',
+            ], 400);
+        }
+
+        try {
+            $file = $request->file('file');
+            $file2 = $request->file('file2');
+            $file3 = $request->file('file3');
+            
+            // Upload files to S3
+            $path = $file->store(date("Y"), 's3');
+            $path2 = $file2 ? $file2->store(date("Y"), 's3') : null;
+            $path3 = $file3 ? $file3->store(date("Y"), 's3') : null;
+
+            if ($path) {
+                $emailData = $data;
+                if ($request->job_offer_id) {
+                    $emailData['job_offer_id'] = $request->job_offer_id;
+                    $emailData['jobPos'] = $request->jobPos;
+                }
+                // Pass the S3 paths for multiple attachments
+                Mail::to($request->email)->send(new OffboardingChecklist($emailData, $path, $path2, $path3));
+
+                return response()->json([
+                    'data' => 'success',
+                    'message' => 'Email sent successfully with attachment',
+                ], 200);
+            } else {
+                return response()->json([
+                    'error' => 'Failed to upload file to S3',
+                ], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Failed to process file upload: ' . $e->getMessage(),
+            ], 500);
+        }
     }
 }

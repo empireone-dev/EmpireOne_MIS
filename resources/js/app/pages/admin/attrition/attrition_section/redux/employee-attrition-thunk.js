@@ -5,6 +5,7 @@ import {
     get_employee_attrition_service,
     send_exit_interview_service,
     send_last_pay_service,
+    send_offboarding_checklist_service,
     send_quit_claim_service,
     upload_exit_clearance_service,
     upload_quit_claim_service,
@@ -44,6 +45,13 @@ export function send_quit_claim_thunk(data) {
 export function send_last_pay_thunk(data) {
     return async function (dispatch, getState) {
         const result = await send_last_pay_service(data);
+        return result;
+    };
+}
+
+export function send_offboarding_checklist_thunk(data) {
+    return async function (dispatch, getState) {
+        const result = await send_offboarding_checklist_service(data);
         return result;
     };
 }

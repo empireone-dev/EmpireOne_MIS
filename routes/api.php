@@ -180,6 +180,7 @@ Route::post('/send-clearance-email', [ExitClearanceController::class, 'sendClear
 
 Route::post('/send_quit_claim', [AttritionController::class, 'send_quit_claim']);
 Route::post('/send_last_pay', [AttritionController::class, 'send_last_pay']);
+Route::post('/send_offboarding_checklist', [AttritionController::class, 'send_offboarding_checklist']);
 Route::get('get_employee_attrition_by_emp_id/{emp_id}', [AttritionController::class, 'get_employee_attrition_by_emp_id']);
 
 

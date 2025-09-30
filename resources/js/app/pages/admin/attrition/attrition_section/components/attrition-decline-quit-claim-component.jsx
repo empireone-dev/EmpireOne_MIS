@@ -15,7 +15,7 @@ import {
     upload_exit_clearance_thunk,
 } from "../redux/employee-attrition-thunk";
 import store from "@/app/store/store";
-import SendUploadQuitClaimSection from "../sections/send-upload-quit-claim-section";
+import SendUploadQuitClaimSection from "../sections/upload-last-pay-section";
 
 export default function AttritionDeclineQuitClaimComponent({
     data,

@@ -734,6 +734,7 @@ class ComposerStaticInit59f67a3d65aa0b992a53af8c7baf9b23
         'App\\Mail\\NewApplication' => __DIR__ . '/../..' . '/app/Mail/NewApplication.php',
         'App\\Mail\\NewApplication2' => __DIR__ . '/../..' . '/app/Mail/NewApplication2.php',
         'App\\Mail\\NewJobOffer' => __DIR__ . '/../..' . '/app/Mail/NewJobOffer.php',
+        'App\\Mail\\OffboardingChecklist' => __DIR__ . '/../..' . '/app/Mail/OffboardingChecklist.php',
         'App\\Mail\\OnboardingAck' => __DIR__ . '/../..' . '/app/Mail/OnboardingAck.php',
         'App\\Mail\\PoolingEmail' => __DIR__ . '/../..' . '/app/Mail/PoolingEmail.php',
         'App\\Mail\\PreEmploymentEmail' => __DIR__ . '/../..' . '/app/Mail/PreEmploymentEmail.php',

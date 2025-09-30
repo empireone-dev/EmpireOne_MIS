@@ -510,6 +510,10 @@ export default function AttritionTableSection() {
                         color = "#52D017";
                         textColor = "#fff";
                         break;
+                    case "Offboarded":
+                        color = "#034409";
+                        textColor = "#fff";
+                        break;
                     case "Pending Clearance":
                         color = "#FFFF00"; // background
                         textColor = "#000"; // black text for yellow background

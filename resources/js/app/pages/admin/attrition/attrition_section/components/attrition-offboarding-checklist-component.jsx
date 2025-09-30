@@ -33,7 +33,7 @@ export default function AttritionOffboardingChecklistComponent({ data, item }) {
 
     console.log("daasdadta", data);
 
-    async function send_quit_claim(e) {
+    async function send_offboarding_checklist(e) {
         e.preventDefault();
 
         // Validate that a file is selected
@@ -276,7 +276,7 @@ export default function AttritionOffboardingChecklistComponent({ data, item }) {
                                         ? "cursor-not-allowed opacity-75"
                                         : ""
                                 }`}
-                                onClick={send_quit_claim}
+                                onClick={send_offboarding_checklist}
                                 disabled={loading}
                             >
                                 {loading ? (
@@ -284,7 +284,9 @@ export default function AttritionOffboardingChecklistComponent({ data, item }) {
                                 ) : (
                                     <CheckCircleFilled />
                                 )}
-                                {loading ? " SENDING..." : " SEND QUIT CLAIM"}
+                                {loading
+                                    ? " PROCESSING..."
+                                    : " SEND OFFBOARDING CHECKLIST"}
                             </button>
                         </div>
                     </div>

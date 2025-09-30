@@ -471,6 +471,12 @@ class AttritionController extends Controller
                 // Pass the S3 paths for multiple attachments
                 Mail::to($request->email)->send(new OffboardingChecklist($emailData, $path, $path2, $path3));
 
+                // Update attrition status to Offboarded
+                Attrition::where('emp_id', $request->emp_id)
+                    ->update([
+                        'estatus' => 'Offboarded',
+                    ]);
+
                 return response()->json([
                     'data' => 'success',
                     'message' => 'Email sent successfully with attachment',
@@ -485,10 +491,5 @@ class AttritionController extends Controller
                 'error' => 'Failed to process file upload: ' . $e->getMessage(),
             ], 500);
         }
-
-        $attrition = Attrition::where('emp_id', $request->emp_id)
-            ->update([
-                'estatus' => 'Offboarded',
-            ]);
     }
 }

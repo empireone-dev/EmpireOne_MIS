@@ -290,6 +290,10 @@ export default function EmploymentStatusComponent({ data, item }) {
                                     <option value="Dismissed">Dismissed</option>
                                     <option value="AWOL">AWOL</option>
                                     <option value="Resigned">Resigned</option>
+                                    <option value="Fallout">Fallout</option>
+                                    <option value="Fixed Term">
+                                        Fixed Term
+                                    </option>
                                 </select>
                             </div>
                         </div>

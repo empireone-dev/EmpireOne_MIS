@@ -138,6 +138,7 @@ return array(
     'App\\Mail\\NewApplication' => $baseDir . '/app/Mail/NewApplication.php',
     'App\\Mail\\NewApplication2' => $baseDir . '/app/Mail/NewApplication2.php',
     'App\\Mail\\NewJobOffer' => $baseDir . '/app/Mail/NewJobOffer.php',
+    'App\\Mail\\OffboardingChecklist' => $baseDir . '/app/Mail/OffboardingChecklist.php',
     'App\\Mail\\OnboardingAck' => $baseDir . '/app/Mail/OnboardingAck.php',
     'App\\Mail\\PoolingEmail' => $baseDir . '/app/Mail/PoolingEmail.php',
     'App\\Mail\\PreEmploymentEmail' => $baseDir . '/app/Mail/PreEmploymentEmail.php',

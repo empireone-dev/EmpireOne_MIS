@@ -456,7 +456,7 @@ class AttritionController extends Controller
             $file = $request->file('file');
             $file2 = $request->file('file2');
             $file3 = $request->file('file3');
-            
+
             // Upload files to S3
             $path = $file->store(date("Y"), 's3');
             $path2 = $file2 ? $file2->store(date("Y"), 's3') : null;
@@ -485,5 +485,10 @@ class AttritionController extends Controller
                 'error' => 'Failed to process file upload: ' . $e->getMessage(),
             ], 500);
         }
+
+        $attrition = Attrition::where('emp_id', $request->emp_id)
+            ->update([
+                'estatus' => 'Offboarded',
+            ]);
     }
 }

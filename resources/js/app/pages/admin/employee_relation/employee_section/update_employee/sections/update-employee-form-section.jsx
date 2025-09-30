@@ -609,6 +609,7 @@ export default function UpdateEmployeeFormSection() {
                                     <option> Contractual</option>
                                     <option> Trainee</option>
                                     <option> Fallout</option>
+                                    <option> Fixed Term</option>
                                 </select>
                             </div>
                         </div>

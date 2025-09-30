@@ -7,6 +7,7 @@ import { Menu, message, Modal } from "antd";
 import Dragger from "antd/es/upload/Dragger";
 import React, { useState } from "react";
 import {
+    get_employee_attrition_thunk,
     send_last_pay_thunk,
     send_offboarding_checklist_thunk,
     send_quit_claim_thunk,
@@ -61,6 +62,7 @@ export default function AttritionOffboardingChecklistComponent({ data, item }) {
 
         try {
             await store.dispatch(send_offboarding_checklist_thunk(fd));
+            await store.dispatch(get_employee_attrition_thunk());
             setLoading(false);
             setFile(null);
             setFile2(null);

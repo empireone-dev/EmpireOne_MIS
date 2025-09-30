@@ -8,6 +8,7 @@ import { Menu, message, Modal } from "antd";
 import Dragger from "antd/es/upload/Dragger";
 import React, { useState } from "react";
 import {
+    get_employee_attrition_thunk,
     send_quit_claim_thunk,
     upload_exit_clearance_thunk,
     upload_quit_claim_thunk,
@@ -71,6 +72,7 @@ export default function AttritionUploadQuitClaimComponent({ data, item }) {
                     email: data?.applicant?.email,
                 })
             );
+            await store.dispatch(get_employee_attrition_thunk());
             setLoading(false);
             setFile(null);
             setUploadedFile(null);

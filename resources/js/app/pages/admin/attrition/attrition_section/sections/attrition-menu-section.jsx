@@ -10,6 +10,7 @@ import {
     FileSearchOutlined,
     FileTextOutlined,
     FolderOpenOutlined,
+    OrderedListOutlined,
     QuestionCircleOutlined,
     SolutionOutlined,
     UploadOutlined,
@@ -27,6 +28,7 @@ import AttritionSendQuitClaimComponents from "../components/attrition-send-exit-
 import AttritionSendExitInterviewComponents from "../components/attrition-send-exit-interview-components";
 import AttritionUploadQuitClaimComponent from "../components/attrition-upload-quit-claim-component";
 import AttritionQuitClaimApprovalComponent from "../components/attrition-quit-claim-approval-component";
+import AttritionOffboardingChecklistComponent from "../components/attrition-offboarding-checklist-component";
 // import UpdateEmployeeComponent from "../components/update-employee-component";
 // import File201Component from "../components/file-201-component";
 // import EmploymentStatusComponent from "../components/employment-status-component";
@@ -234,6 +236,22 @@ export default function AttritionMenuSection({ data }) {
                                   label: "Send Last Pay Details",
                                   key: "1",
                                   icon: <FileTextOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
+            : []),
+        ...(data?.quit_claim && data?.quit_claim.status === "Approved"
+            ? [
+                  {
+                      component: (
+                          <AttritionOffboardingChecklistComponent
+                              item={{
+                                  label: "Send Offboarding Checklist",
+                                  key: "1",
+                                  icon: <OrderedListOutlined />,
                               }}
                               data={data}
                           />

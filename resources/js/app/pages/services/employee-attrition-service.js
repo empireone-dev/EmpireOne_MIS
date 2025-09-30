@@ -31,6 +31,15 @@ export async function send_last_pay_service(data) {
     return res.data;
 }
 
+export async function send_offboarding_checklist_service(data) {
+    const res = await axios.post("/api/send_offboarding_checklist", data, {
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+    });
+    return res.data;
+}
+
 export async function get_employee_attrition_by_emp_id_service(emp_id) {
     try {
         const result = await axios.get(

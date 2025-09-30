@@ -341,13 +341,13 @@ class ComposerStaticInit59f67a3d65aa0b992a53af8c7baf9b23
         ),
         'Spatie\\LaravelIgnition\\' => 
         array (
-            0 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/laravel-ignition',
-            1 => __DIR__ . '/..' . '/spatie/laravel-ignition/src',
+            0 => __DIR__ . '/..' . '/spatie/laravel-ignition/src',
+            1 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/laravel-ignition',
         ),
         'Spatie\\Ignition\\' => 
         array (
-            0 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/ignition',
-            1 => __DIR__ . '/..' . '/spatie/ignition/src',
+            0 => __DIR__ . '/..' . '/spatie/ignition/src',
+            1 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/ignition',
         ),
         'Spatie\\FlareClient\\' => 
         array (
@@ -703,7 +703,10 @@ class ComposerStaticInit59f67a3d65aa0b992a53af8c7baf9b23
         'App\\Http\\Requests\\ProfileUpdateRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ProfileUpdateRequest.php',
         'App\\Kernel' => __DIR__ . '/..' . '/laravel/pint/app/Kernel.php',
         'App\\Mail\\AcceptedOffer' => __DIR__ . '/../..' . '/app/Mail/AcceptedOffer.php',
+        'App\\Mail\\AcknowledgeOnboarding' => __DIR__ . '/../..' . '/app/Mail/AcknowledgeOnboarding.php',
+        'App\\Mail\\ApprovedQuitClaim' => __DIR__ . '/../..' . '/app/Mail/ApprovedQuitClaim.php',
         'App\\Mail\\Attrition' => __DIR__ . '/../..' . '/app/Mail/Attrition.php',
+        'App\\Mail\\CheckPay' => __DIR__ . '/../..' . '/app/Mail/CheckPay.php',
         'App\\Mail\\Cleared' => __DIR__ . '/../..' . '/app/Mail/Cleared.php',
         'App\\Mail\\ConfirmationFinalPhysical' => __DIR__ . '/../..' . '/app/Mail/ConfirmationFinalPhysical.php',
         'App\\Mail\\ConfirmationFinalVirtual' => __DIR__ . '/../..' . '/app/Mail/ConfirmationFinalVirtual.php',
@@ -714,8 +717,10 @@ class ComposerStaticInit59f67a3d65aa0b992a53af8c7baf9b23
         'App\\Mail\\DeclinedConfirmation' => __DIR__ . '/../..' . '/app/Mail/DeclinedConfirmation.php',
         'App\\Mail\\DeclinedContract' => __DIR__ . '/../..' . '/app/Mail/DeclinedContract.php',
         'App\\Mail\\DeclinedOffer' => __DIR__ . '/../..' . '/app/Mail/DeclinedOffer.php',
+        'App\\Mail\\DeclinedQuitClaim' => __DIR__ . '/../..' . '/app/Mail/DeclinedQuitClaim.php',
         'App\\Mail\\DeclinedRequirements' => __DIR__ . '/../..' . '/app/Mail/DeclinedRequirements.php',
         'App\\Mail\\ExitClearanceToDepartment' => __DIR__ . '/../..' . '/app/Mail/ExitClearanceToDepartment.php',
+        'App\\Mail\\ExitInterview' => __DIR__ . '/../..' . '/app/Mail/ExitInterview.php',
         'App\\Mail\\FailedFinal' => __DIR__ . '/../..' . '/app/Mail/FailedFinal.php',
         'App\\Mail\\FailedInitial' => __DIR__ . '/../..' . '/app/Mail/FailedInitial.php',
         'App\\Mail\\FinalEmail' => __DIR__ . '/../..' . '/app/Mail/FinalEmail.php',
@@ -739,6 +744,7 @@ class ComposerStaticInit59f67a3d65aa0b992a53af8c7baf9b23
         'App\\Mail\\RescheduleInitialEmail' => __DIR__ . '/../..' . '/app/Mail/RescheduleInitialEmail.php',
         'App\\Mail\\RescheduleInitialvEmail' => __DIR__ . '/../..' . '/app/Mail/RescheduleInitialvEmail.php',
         'App\\Mail\\Rescheduled' => __DIR__ . '/../..' . '/app/Mail/Rescheduled.php',
+        'App\\Mail\\UploadedFile' => __DIR__ . '/../..' . '/app/Mail/UploadedFile.php',
         'App\\Models\\AIInterview' => __DIR__ . '/../..' . '/app/Models/AIInterview.php',
         'App\\Models\\Account' => __DIR__ . '/../..' . '/app/Models/Account.php',
         'App\\Models\\Applicant' => __DIR__ . '/../..' . '/app/Models/Applicant.php',

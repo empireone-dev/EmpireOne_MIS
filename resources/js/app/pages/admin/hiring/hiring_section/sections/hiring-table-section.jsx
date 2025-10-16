@@ -575,11 +575,12 @@ export default function HiringTableSection() {
                                     <div>
                                         <button
                                             type="button"
-                                            onClick={() =>
-                                                router.visit(
-                                                    `/admin/file_201/${record.app_id}/${record.id}/${safeJobPos}/${record?.salary}/${record?.allowance}?status=${record.status}`
-                                                )
-                                            }
+                                            onClick={() => {
+                                                window.open(
+                                                    `/admin/file_201/${record.app_id}/${record.id}/${safeJobPos}/${record?.salary}/${record?.allowance}?status=${record.status}`,
+                                                    "_blank"
+                                                );
+                                            }}
                                             className="text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 shadow-lg shadow-yellow-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
                                         >
                                             <FolderOpenFilled />
@@ -599,15 +600,16 @@ export default function HiringTableSection() {
                                 <LineOutlined />
                             </div>
                         )} */}
-                        <Tooltip title="Job Offer">
+                        <Tooltip title="View Job Offer">
                             <div>
                                 <button
                                     type="button"
-                                    onClick={() =>
-                                        router.visit(
-                                            `/admin/hiring/${record.app_id}?id=${record.id}`
-                                        )
-                                    }
+                                    onClick={() => {
+                                        window.open(
+                                            `/admin/hiring/${record.app_id}?id=${record.id}`,
+                                            "_blank"
+                                        );
+                                    }}
                                     className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
                                 >
                                     <FileTextFilled />

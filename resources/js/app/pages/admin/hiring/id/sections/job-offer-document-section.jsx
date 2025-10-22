@@ -11,7 +11,6 @@ export default function JobOfferDocumentSection() {
 
     const pdfRef = useRef();
 
-    // Helper function to clean and parse numeric values
     const parseNumericValue = (value) => {
         if (!value) return 0;
         const cleanedValue = value

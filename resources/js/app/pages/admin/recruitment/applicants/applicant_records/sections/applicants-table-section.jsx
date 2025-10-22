@@ -239,7 +239,7 @@ export default function ApplicantsTableSection() {
             key: "cv_file",
             render: (_, record) => {
                 return (
-                    <div className="gap-1.5 flex">
+                    <div className="gap-1.5 flex text-center justify-center">
                         <div>
                             <ApplicantCvFileComponent data={record} />
                         </div>

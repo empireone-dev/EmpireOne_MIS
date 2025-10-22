@@ -234,6 +234,20 @@ export default function ApplicantsTableSection() {
             },
         },
         {
+            title: "CV File/Resume",
+            dataIndex: "cv_file",
+            key: "cv_file",
+            render: (_, record) => {
+                return (
+                    <div className="gap-1.5 flex">
+                        <div>
+                            <ApplicantCvFileComponent data={record} />
+                        </div>
+                    </div>
+                );
+            },
+        },
+        {
             title: "Action",
             dataIndex: "action",
             render: (_, record) => {
@@ -241,9 +255,6 @@ export default function ApplicantsTableSection() {
                     <>
                         {record && (
                             <div className="flex justify-center gap-1">
-                                <div>
-                                    <ApplicantCvFileComponent data={record} />
-                                </div>
                                 <ApplicantMenuSection
                                     interviewer={interviewer}
                                     data={record}

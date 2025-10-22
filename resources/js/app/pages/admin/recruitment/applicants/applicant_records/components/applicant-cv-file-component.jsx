@@ -1,4 +1,5 @@
-import { Menu } from "antd";
+import { NewspaperIcon } from "@heroicons/react/24/outline";
+import { Menu, Tooltip } from "antd";
 import React from "react";
 
 export default function ApplicantCvFileComponent({ data, item }) {
@@ -12,9 +13,11 @@ export default function ApplicantCvFileComponent({ data, item }) {
 
     return (
         <>
-            <Menu.Item onClick={openHandler} icon={item?.icon}>
-                {item?.label}
-            </Menu.Item>
+            <Tooltip title="View CV File">
+                <button type="button" onClick={openHandler}>
+                    <NewspaperIcon className="h-8 w-7 text-blue-500" />
+                </button>
+            </Tooltip>
         </>
     );
 }

@@ -15,7 +15,14 @@ export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
     };
 
     return (
-        <div style={{ width: "100%", height: "auto", backgroundColor: "skyblue", padding: "40px" }}>
+        <div
+            style={{
+                width: "100%",
+                height: "100vh",
+                backgroundColor: "skyblue",
+                padding: "40px",
+            }}
+        >
             {!showQuizLink &&
                 videoSrc.map((src, index) => (
                     <video
@@ -36,9 +43,11 @@ export default function TrainingVideoPlayerComponent({ videoSrc, link }) {
                     </video>
                 ))}
 
-            <ModalQuiz show={showQuizLink} static onClose={() => { }}>
+            <ModalQuiz show={showQuizLink} static onClose={() => {}}>
                 <div className="mt-6 text-center">
-                    <h2 className="text-xl font-semibold mb-4">Training Complete</h2>
+                    <h2 className="text-xl font-semibold mb-4">
+                        Training Complete
+                    </h2>
                     <a
                         href={link}
                         target="_blank"

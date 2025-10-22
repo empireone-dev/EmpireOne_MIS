@@ -58,18 +58,6 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                 />
             ),
         },
-        {
-            component: (
-                <ApplicantCvFileComponent
-                    item={{
-                        label: "CV File",
-                        key: "1",
-                        icon: <SolutionOutlined />,
-                    }}
-                    data={data}
-                />
-            ),
-        },
         ...(data.status == "Initial Phase"
             ? [
                   {

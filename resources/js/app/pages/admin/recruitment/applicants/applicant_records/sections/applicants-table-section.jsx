@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Select, Table, Tag } from "antd";
+import { Select, Table, Tag, Tooltip } from "antd";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { router } from "@inertiajs/react";
@@ -7,6 +7,9 @@ import ApplicantMenuSection from "./applicant-menu-section";
 import ApplicantSearchSection from "./applicant-search-section";
 import CreateApplicantSection from "./create-applicant-section";
 import ApplicantPhoneStatusComponent from "../components/applicant-phone-status-component";
+import { FileFilled } from "@ant-design/icons";
+import { NewspaperIcon } from "@heroicons/react/24/outline";
+import ApplicantCvFileComponent from "../components/applicant-cv-file-component";
 
 // ContactCell component to handle modal state properly
 const ContactCell = ({ record }) => {
@@ -237,10 +240,15 @@ export default function ApplicantsTableSection() {
                 return (
                     <>
                         {record && (
-                            <ApplicantMenuSection
-                                interviewer={interviewer}
-                                data={record}
-                            />
+                            <div className="flex justify-center gap-1">
+                                <div>
+                                    <ApplicantCvFileComponent data={record} />
+                                </div>
+                                <ApplicantMenuSection
+                                    interviewer={interviewer}
+                                    data={record}
+                                />
+                            </div>
                         )}
                     </>
                 );

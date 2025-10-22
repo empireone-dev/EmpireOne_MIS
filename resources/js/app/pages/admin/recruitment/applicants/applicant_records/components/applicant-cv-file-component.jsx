@@ -13,9 +13,9 @@ export default function ApplicantCvFileComponent({ data, item }) {
 
     return (
         <>
-            <Tooltip title="View CV File">
+            <Tooltip title={`View CV File of ${data?.fname} ${data?.lname}`}>
                 <button type="button" onClick={openHandler}>
-                    <NewspaperIcon className="h-8 w-7 text-blue-500" />
+                    <NewspaperIcon className="h-9 w-9 text-gray-500" />
                 </button>
             </Tooltip>
         </>

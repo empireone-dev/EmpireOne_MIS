@@ -34,7 +34,7 @@ class OnboardingAckController extends Controller
             $path = 'empireone-financing/' . date("Y") . '/' . $filename;
 
             Storage::disk('s3')->put($path, $decodedImage);
-            return Storage::disk('s3')->url($path);
+            return "https://s3.amazonaws.com/empireone-ticketing-system/" . $path;
         } catch (\Exception $e) {
             return 'none';
         }
@@ -136,10 +136,16 @@ class OnboardingAckController extends Controller
                 'message' => 'Document not found'
             ], 404);
         }
-        $path = str_replace("https://s3.amazonaws.com/empireone-ticketing-system/", "", $res[0]['eSignature']['signature']);
+
+        // Check if eSignature exists and has signature data
+        $signature = null;
+        if ($res[0]['eSignature'] && isset($res[0]['eSignature']['signature'])) {
+            $path = str_replace("https://s3.amazonaws.com/empireone-ticketing-system/", "", $res[0]['eSignature']['signature']);
+            $signature = $this->getSignatureBase64($path);
+        }
 
         return response()->json([
-            'signature' => $this->getSignatureBase64($path),
+            'signature' => $signature,
             'data' => $res,
             'job_offer' => $jo
         ], 200);

@@ -1,5 +1,6 @@
 import axios from "axios";
 
+
 export async function create_onboarding_ack_service(data) {
     const res = await axios.post('/api/onboarding_ack', data)
     return res.data
@@ -10,20 +11,19 @@ export async function update_onboarding_ack_service(data) {
     return res.data
 }
 
+
 export async function get_onboarding_ackdoc_by_id_service(app_id) {
-    const jobOfferId = typeof window !== 'undefined' ? window.location.pathname.split('/')[3] : '';
-    const res = await axios.get('/api/onboarding_ackdoc_by_id/' + app_id + `?job_offer_id=` + jobOfferId)
+    const res = await axios.get('/api/onboarding_ackdoc_by_id/' + app_id + `?job_offer_id=` + window.location.pathname.split('/')[3])
     return res.data
 }
 
+
 export async function get_onboarding_ackdoc_by_app_id_service(app_id) {
-    const jobOfferId = typeof window !== 'undefined' ? window.location.pathname.split('/')[3] : '';
-    const res = await axios.get('/api/get_onboarding_ackdoc_by_app_id/' + app_id + `?job_offer_id=` + jobOfferId)
+    const res = await axios.get('/api/get_onboarding_ackdoc_by_app_id/' + app_id + `?job_offer_id=` + window.location.pathname.split('/')[3])
     return res.data
 }
 
 export async function get_e_signature_by_app_id_service(app_id) {
-    const jobOfferId = typeof window !== 'undefined' ? window.location.pathname.split('/')[4] : '';
-    const res = await axios.get('/api/get_e_signature_by_app_id/' + app_id + `?job_offer_id=` + jobOfferId)
+    const res = await axios.get('/api/get_e_signature_by_app_id/' + app_id + `?job_offer_id=` + window.location.pathname.split('/')[4])
     return res.data
 }

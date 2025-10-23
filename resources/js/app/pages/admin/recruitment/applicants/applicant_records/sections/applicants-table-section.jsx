@@ -73,19 +73,19 @@ export default function ApplicantsTableSection() {
                 );
             },
         },
-        {
-            title: "Date of Birth",
-            dataIndex: "dob",
-            key: "dob",
-            // ...getColumnSearchProps("dob"),
-            render: (_, record) => {
-                return (
-                    <div className="gap-1.5 flex">
-                        {moment(record.dob).format("LL")}
-                    </div>
-                );
-            },
-        },
+        // {
+        //     title: "Date of Birth",
+        //     dataIndex: "dob",
+        //     key: "dob",
+        //     // ...getColumnSearchProps("dob"),
+        //     render: (_, record) => {
+        //         return (
+        //             <div className="gap-1.5 flex">
+        //                 {moment(record.dob).format("LL")}
+        //             </div>
+        //         );
+        //     },
+        // },
         {
             title: "Gender",
             dataIndex: "gender",
@@ -137,7 +137,7 @@ export default function ApplicantsTableSection() {
                             <ApplicantCvFileComponent data={record} />
                         </div>
                         <div>
-                            {/* <ApplicantDetaillsComponent data={record} /> */}
+                            <ApplicantDetaillsComponent data={record} />
                         </div>
                     </div>
                 );

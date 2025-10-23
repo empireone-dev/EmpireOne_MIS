@@ -1,9 +1,10 @@
 import { FilePdfOutlined, LoadingOutlined } from "@ant-design/icons";
-import { Menu, Modal, Tooltip, Spin } from "antd";
+import { Menu, Modal, Tooltip } from "antd";
 import React from "react";
 import { useState, useEffect } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import { NewspaperIcon } from "@heroicons/react/24/outline";
 
 export default function ApplicantDetaillsComponent({ data, item }) {
     const [open, setOpen] = useState(false);
@@ -15,14 +16,14 @@ export default function ApplicantDetaillsComponent({ data, item }) {
     }, []);
 
     // Safety check for data and client-side rendering
-    if (!data || !isClient) {
-        return (
-            <Menu.Item icon={item?.icon} disabled>
-                {item?.label || "Loading..."}{" "}
-                {!data ? "(No data available)" : ""}
-            </Menu.Item>
-        );
-    }
+    // if (!data || !isClient) {
+    //     return (
+    //         <Menu.Item icon={item?.icon} disabled>
+    //             {item?.label || "Loading..."}{" "}
+    //             {!data ? "(No data available)" : ""}
+    //         </Menu.Item>
+    //     );
+    // }
 
     function openHandler(params) {
         setOpen(true);
@@ -60,9 +61,13 @@ export default function ApplicantDetaillsComponent({ data, item }) {
     try {
         return (
             <>
-                <Menu.Item onClick={() => openHandler(true)} icon={item?.icon}>
-                    {item?.label}
-                </Menu.Item>
+                <Tooltip
+                title={`Application Details of ${data?.fname} ${data?.lname}`}
+                >
+                    <button type="button" onClick={openHandler}>
+                        <NewspaperIcon className="h-9 w-9 text-gray-500 hover:text-gray-600" />
+                    </button>
+                </Tooltip>
                 <Modal
                     open={open}
                     onOk={() => setOpen(false)}

@@ -36,18 +36,6 @@ export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
         {
             component: (
-                <ApplicantDetaillsComponent
-                    item={{
-                        label: "Application Details",
-                        key: "1",
-                        icon: <AuditOutlined />,
-                    }}
-                    data={data}
-                />
-            ),
-        },
-        {
-            component: (
                 <ApplicantDeleteComponent
                     item={{
                         label: "Delete Application",

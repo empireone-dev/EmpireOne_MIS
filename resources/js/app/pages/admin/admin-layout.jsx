@@ -149,78 +149,78 @@ const AdminLayout = ({ children }) => {
                                     "/admin/recruitment/applicant_records?page=1"
                                 ),
                         },
-                        {
-                            key: "pending",
-                            icon: <HolderOutlined />,
-                            label: "Pending",
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Pending&site=null"
-                                ),
-                        },
-                        {
-                            key: "initial_phase",
-                            icon: <HolderOutlined />,
-                            label: "Initial Phase",
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null"
-                                ),
-                        },
-                        {
-                            key: "for_final_phase",
-                            icon: <HolderOutlined />,
-                            label: "For Final Phase",
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=For%20Final%20Phase&site=null"
-                                ),
-                        },
-                        {
-                            key: "final_phase",
-                            icon: <HolderOutlined />,
-                            label: "Final Phase",
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null"
-                                ),
-                        },
-                        {
-                            key: "failed",
-                            icon: <HolderOutlined />,
-                            label: "Failed",
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Failed&site=null"
-                                ),
-                        },
-                        {
-                            key: "send_failed",
-                            icon: <HolderOutlined />,
-                            label: "Send Failed",
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null"
-                                ),
-                        },
-                        {
-                            key: "passed",
-                            icon: <HolderOutlined />,
-                            label: "Passed",
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Passed&site=null"
-                                ),
-                        },
-                        {
-                            key: "pooling",
-                            icon: <HolderOutlined />,
-                            label: "Pooling",
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Pooling&site=null"
-                                ),
-                        },
+                        // {
+                        //     key: "pending",
+                        //     icon: <HolderOutlined />,
+                        //     label: "Pending",
+                        //     onClick: () =>
+                        //         router.visit(
+                        //             "/admin/recruitment/applicant_records?page=1&status=Pending&site=null"
+                        //         ),
+                        // },
+                        // {
+                        //     key: "initial_phase",
+                        //     icon: <HolderOutlined />,
+                        //     label: "Initial Phase",
+                        //     onClick: () =>
+                        //         router.visit(
+                        //             "/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null"
+                        //         ),
+                        // },
+                        // {
+                        //     key: "for_final_phase",
+                        //     icon: <HolderOutlined />,
+                        //     label: "For Final Phase",
+                        //     onClick: () =>
+                        //         router.visit(
+                        //             "/admin/recruitment/applicant_records?page=1&status=For%20Final%20Phase&site=null"
+                        //         ),
+                        // },
+                        // {
+                        //     key: "final_phase",
+                        //     icon: <HolderOutlined />,
+                        //     label: "Final Phase",
+                        //     onClick: () =>
+                        //         router.visit(
+                        //             "/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null"
+                        //         ),
+                        // },
+                        // {
+                        //     key: "failed",
+                        //     icon: <HolderOutlined />,
+                        //     label: "Failed",
+                        //     onClick: () =>
+                        //         router.visit(
+                        //             "/admin/recruitment/applicant_records?page=1&status=Failed&site=null"
+                        //         ),
+                        // },
+                        // {
+                        //     key: "send_failed",
+                        //     icon: <HolderOutlined />,
+                        //     label: "Send Failed",
+                        //     onClick: () =>
+                        //         router.visit(
+                        //             "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null"
+                        //         ),
+                        // },
+                        // {
+                        //     key: "passed",
+                        //     icon: <HolderOutlined />,
+                        //     label: "Passed",
+                        //     onClick: () =>
+                        //         router.visit(
+                        //             "/admin/recruitment/applicant_records?page=1&status=Passed&site=null"
+                        //         ),
+                        // },
+                        // {
+                        //     key: "pooling",
+                        //     icon: <HolderOutlined />,
+                        //     label: "Pooling",
+                        //     onClick: () =>
+                        //         router.visit(
+                        //             "/admin/recruitment/applicant_records?page=1&status=Pooling&site=null"
+                        //         ),
+                        // },
                         // {
                         //     key: "shortlisted",
                         //     icon: <HolderOutlined />,

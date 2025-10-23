@@ -134,7 +134,7 @@ export default function ApplicantsTableSection() {
                 return (
                     <div className="gap-1.5 flex text-center justify-center">
                         <div>
-                            {/* <ApplicantCvFileComponent data={record} /> */}
+                            <ApplicantCvFileComponent data={record} />
                         </div>
                         <div>
                             <ApplicantDetaillsComponent data={record} />

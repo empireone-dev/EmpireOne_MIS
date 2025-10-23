@@ -10,6 +10,7 @@ import ApplicantPhoneStatusComponent from "../components/applicant-phone-status-
 import { FileFilled } from "@ant-design/icons";
 import { NewspaperIcon } from "@heroicons/react/24/outline";
 import ApplicantCvFileComponent from "../components/applicant-cv-file-component";
+import ApplicantDetaillsComponent from "../components/applicant-detaills-component";
 
 // ContactCell component to handle modal state properly
 const ContactCell = ({ record }) => {
@@ -65,7 +66,7 @@ export default function ApplicantsTableSection() {
                 console.log("record", record);
 
                 return (
-                    <div key={i}>
+                    <div key={i} className="uppercase font-semibold">
                         {record.lname}, {record.fname}{" "}
                         {record.suffix === "undefined" ? "--" : record.suffix}
                     </div>
@@ -123,6 +124,53 @@ export default function ApplicantsTableSection() {
                         {moment(record.submitted).format("L")}
                     </div>
                 );
+            },
+        },
+        {
+            title: "CV File & Application Details",
+            dataIndex: "cv_file",
+            key: "cv_file",
+            render: (_, record) => {
+                return (
+                    <div className="gap-1.5 flex text-center justify-center">
+                        <div>
+                            <ApplicantCvFileComponent data={record} />
+                        </div>
+                        <div>
+                            <ApplicantDetaillsComponent data={record} />
+                        </div>
+                    </div>
+                );
+            },
+        },
+        {
+            title: (
+                <div className="flex gap-3 items-center justify-center">
+                    {/* 
+                Account
+                <FilterOutlined /> */}
+                    <Select
+                        allowClear
+                        className="w-28"
+                        showSearch
+                        placeholder="Site"
+                        optionFilterProp="label"
+                        value={site == "null" ? null : site}
+                        onChange={search_site}
+                        // onSearch={onSearch}
+                        options={[
+                            { text: "San Carlos", value: "San Carlos" },
+                            { text: "Carcar", value: "Carcar" },
+                        ]}
+                    />
+                </div>
+            ),
+            dataIndex: "site",
+            key: "site",
+            render: (_, record, i) => {
+                console.log("record", record);
+
+                return <div key={i}>{record?.site}</div>;
             },
         },
         {
@@ -200,50 +248,6 @@ export default function ApplicantsTableSection() {
                     <Tag color={color} key={record.key}>
                         {record.status}
                     </Tag>
-                );
-            },
-        },
-        {
-            title: (
-                <div className="flex gap-3 items-center justify-center">
-                    {/* 
-                Account
-                <FilterOutlined /> */}
-                    <Select
-                        allowClear
-                        className="w-28"
-                        showSearch
-                        placeholder="Site"
-                        optionFilterProp="label"
-                        value={site == "null" ? null : site}
-                        onChange={search_site}
-                        // onSearch={onSearch}
-                        options={[
-                            { text: "San Carlos", value: "San Carlos" },
-                            { text: "Carcar", value: "Carcar" },
-                        ]}
-                    />
-                </div>
-            ),
-            dataIndex: "site",
-            key: "site",
-            render: (_, record, i) => {
-                console.log("record", record);
-
-                return <div key={i}>{record?.site}</div>;
-            },
-        },
-        {
-            title: "CV File/Resume",
-            dataIndex: "cv_file",
-            key: "cv_file",
-            render: (_, record) => {
-                return (
-                    <div className="gap-1.5 flex text-center justify-center">
-                        <div>
-                            <ApplicantCvFileComponent data={record} />
-                        </div>
-                    </div>
                 );
             },
         },

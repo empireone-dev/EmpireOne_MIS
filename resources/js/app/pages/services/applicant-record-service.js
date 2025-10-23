@@ -1,8 +1,7 @@
 import axios from "axios";
 
 export async function get_applicant_service() {
-    const searchQuery = typeof window !== 'undefined' ? window.location.search : '';
-    const res = await axios.get('/api/applicant' + searchQuery)
+    const res = await axios.get('/api/applicant' + window.location.search)
     return res.data
 }
 

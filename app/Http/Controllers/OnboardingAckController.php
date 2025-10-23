@@ -9,7 +9,6 @@ use App\Models\JobOffer;
 use App\Models\OnboardingAck;
 use App\Models\OnboardingDoc;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -35,7 +34,7 @@ class OnboardingAckController extends Controller
             $path = 'empireone-financing/' . date("Y") . '/' . $filename;
 
             Storage::disk('s3')->put($path, $decodedImage);
-            return "https://s3.amazonaws.com/empireone-ticketing-system/" . $path;
+            return Storage::disk('s3')->url($path);
         } catch (\Exception $e) {
             return 'none';
         }
@@ -130,59 +129,19 @@ class OnboardingAckController extends Controller
 
     public function get_onboarding_ackdoc_by_app_id(Request $request, $app_id)
     {
-        try {
-            $res = OnboardingAck::whereNotNull('doc_id')
-                ->with('onboardingDoc', 'eSignature')
-                ->where('app_id', $app_id)
-                ->get();
-
-            $jo = null;
-            if ($request->has('job_offer_id') && $request->job_offer_id) {
-                $jo = JobOffer::where('id', $request->job_offer_id)->first();
-            }
-
-            if ($res->isEmpty()) {
-                return response()->json([
-                    'message' => 'Document not found',
-                    'signature' => null,
-                    'data' => [],
-                    'job_offer' => $jo
-                ], 404);
-            }
-
-            // Check if eSignature exists and has signature data
-            $signature = null;
-            if (
-                isset($res[0]) && 
-                is_array($res[0]) || is_object($res[0]) && 
-                isset($res[0]['eSignature']) && 
-                $res[0]['eSignature'] && 
-                isset($res[0]['eSignature']['signature']) && 
-                $res[0]['eSignature']['signature']
-            ) {
-                $path = str_replace("https://s3.amazonaws.com/empireone-ticketing-system/", "", $res[0]['eSignature']['signature']);
-                $signature = $this->getSignatureBase64($path);
-            }
-
+        $res = OnboardingAck::whereNotNull('doc_id')->with('onboardingDoc', 'eSignature')->where('app_id', $app_id)->get();
+        $jo = JobOffer::where('id', $request->job_offer_id)->first();
+        if ($res->isEmpty()) {
             return response()->json([
-                'signature' => $signature,
-                'data' => $res,
-                'job_offer' => $jo
-            ], 200);
-
-        } catch (\Exception $e) {
-            Log::error('Error in get_onboarding_ackdoc_by_app_id: ' . $e->getMessage(), [
-                'app_id' => $app_id,
-                'job_offer_id' => $request->job_offer_id ?? null,
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            return response()->json([
-                'message' => 'An error occurred while fetching the document',
-                'signature' => null,
-                'data' => [],
-                'job_offer' => null
-            ], 500);
+                'message' => 'Document not found'
+            ], 404);
         }
+        $path = str_replace("https://s3.amazonaws.com/empireone-ticketing-system/", "", $res[0]['eSignature']['signature']);
+
+        return response()->json([
+            'signature' => $this->getSignatureBase64($path),
+            'data' => $res,
+            'job_offer' => $jo
+        ], 200);
     }
 }

@@ -23,7 +23,6 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Log;
 
 class ApplicantController extends Controller
 {
@@ -48,97 +47,48 @@ class ApplicantController extends Controller
 
     public function index(Request $request)
     {
-        try {
-            Log::info('ApplicantController@index called', [
-                'request_params' => $request->all(),
-                'user_id' => auth()->id()
-            ]);
-
-            $search = $request->get('search', '');
-            $status = $request->get('status', '');
-            $phone = $request->get('phone', '');
-            $email = $request->get('email', '');
-            $sourcing = $request->get('sourcing', '');
-            $position = $request->get('position', '');
-
-            Log::info('Building applicant query...');
-            
-            // Start with Applicant model instead of User model
-            $applicants = Applicant::with(['final', 'initial', 'joboffer', 'user', 'cvfile', 'guideqs', 'employee'])
-                ->where(function ($query) use ($status, $phone, $email, $sourcing, $position) {
-                    if ($status) {
-                        $query->where('status', $status);
-                    }
-                    if ($phone) {
-                        $query->where('phone', 'like', '%' . $phone . '%');
-                    }
-                    if ($email) {
-                        $query->where('email', 'like', '%' . $email . '%');
-                    }
-                    if ($sourcing) {
-                        $query->where('sourcing', 'like', '%' . $sourcing . '%');
-                    }
-                    if ($position) {
-                        $query->where('position', 'like', '%' . $position . '%');
-                    }
-                })
-                ->when($search, function ($query) use ($search) {
-                    // Search in applicant fields and related user fields
-                    $query->where(function ($subQuery) use ($search) {
-                        $subQuery->where('fname', 'like', '%' . $search . '%')
-                            ->orWhere('lname', 'like', '%' . $search . '%')
-                            ->orWhere('mname', 'like', '%' . $search . '%')
-                            ->orWhere('suffix', 'like', '%' . $search . '%')
-                            ->orWhereHas('user', function ($userQuery) use ($search) {
-                                $userQuery->where('employee_fname', 'like', '%' . $search . '%')
-                                    ->orWhere('employee_lname', 'like', '%' . $search . '%')
-                                    ->orWhere('employee_mname', 'like', '%' . $search . '%')
-                                    ->orWhere('employee_suffix', 'like', '%' . $search . '%');
-                            });
-                    });
-                });
-
-            Log::info('Applicant query built successfully');
-
-            $app_id = $request->get('app_id');
-            $app_ids = [];
-            
-            if ($app_id) {
-                $app_ids = explode(',', $app_id);
-            }
-
-            $perPage = $request->get('per_page', 10);
-            $currentPage = $request->get('page', 1);
-
-            if (!empty($app_ids)) {
-                $applicants = $applicants->whereIn('app_id', $app_ids);
-            }
-
-            Log::info('Executing applicant pagination...');
-            
-            $result = $applicants->paginate($perPage, ['*'], 'page', $currentPage);
-
-            Log::info('Applicant query executed successfully', [
-                'total_records' => $result->total(),
-                'current_page' => $result->currentPage(),
-                'per_page' => $result->perPage()
-            ]);
-
-            return response()->json($result);
-
-        } catch (\Exception $e) {
-            Log::error('Error in ApplicantController@index', [
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            return response()->json([
-                'error' => 'An error occurred while fetching applicant data',
-                'message' => $e->getMessage()
-            ], 500);
+        $applicant = Applicant::query()
+            ->with(['final', 'initial', 'joboffer', 'user', 'cvfile', 'guideqs', 'employee']);
+        // ->orderBy('status'); // Sort by status in ascending order
+        if ($request->site && $request->site !== 'null') {
+            $applicant->where('site', '=', $request->site);
         }
+
+        $user = User::with('employee')
+            // ->where('employee_id', '!=', '24010101')
+            ->whereIn('position', ['CEO', 'Account Manager', 'Director', 'HR Manager', 'I.T Manager', 'Operations Manager'])
+            ->where(function ($query) {
+                $query->where('position', 'CEO')
+                    ->orWhereHas('employee', function ($subQuery) {
+                        $subQuery->whereIn('status', ['Regular', 'Probationary']);
+                    });
+            })
+            ->get();
+
+        if ($request->search) {
+            $applicant->where('status', $request->search);
+        }
+
+        if ($request->searching) {
+            $applicant->where(function ($query) use ($request) {
+                $query->where('fname', 'LIKE', '%' . $request->searching . '%')
+                    ->orWhere('lname', 'LIKE', '%' . $request->searching . '%')
+                    ->orWhere('mname', 'LIKE', '%' . $request->searching . '%')
+                    ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%');
+            });
+        }
+
+        if ($request->status  && $request->status !== 'null') {
+            $applicant->where('status', '=', $request->status);
+        }
+
+
+
+
+        return response()->json([
+            'interviewer' => $user,
+            'data' => $applicant->orderBy('id', 'desc')->paginate(10),
+        ], 200);
     }
 
 

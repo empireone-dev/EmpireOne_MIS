@@ -126,23 +126,23 @@ export default function ApplicantsTableSection() {
                 );
             },
         },
-        {
-            title: "CV File & Application Details",
-            dataIndex: "cv_file",
-            key: "cv_file",
-            render: (_, record) => {
-                return (
-                    <div className="gap-1.5 flex text-center justify-center">
-                        <div>
-                            <ApplicantCvFileComponent data={record} />
-                        </div>
-                        <div>
-                            <ApplicantDetaillsComponent data={record} />
-                        </div>
-                    </div>
-                );
-            },
-        },
+        // {
+        //     title: "CV File & Application Details",
+        //     dataIndex: "cv_file",
+        //     key: "cv_file",
+        //     render: (_, record) => {
+        //         return (
+        //             <div className="gap-1.5 flex text-center justify-center">
+        //                 <div>
+        //                     <ApplicantCvFileComponent data={record} />
+        //                 </div>
+        //                 <div>
+        //                     <ApplicantDetaillsComponent data={record} />
+        //                 </div>
+        //             </div>
+        //         );
+        //     },
+        // },
         {
             title: (
                 <div className="flex gap-3 items-center justify-center">

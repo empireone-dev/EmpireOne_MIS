@@ -32,22 +32,32 @@ export default function ApplicantsTableSection() {
         (state) => state.applicants
     );
 
-    const urls = new URL(window.location.href);
-    const searchParams = new URLSearchParams(urls.search);
-    const pages = searchParams.get("page");
-    const status = searchParams.get("status");
-    const site = searchParams.get("site");
+    // Safely get URL parameters
+    const getUrlParams = () => {
+        if (typeof window !== 'undefined') {
+            const urls = new URL(window.location.href);
+            const searchParams = new URLSearchParams(urls.search);
+            return {
+                pages: searchParams.get("page"),
+                status: searchParams.get("status"),
+                site: searchParams.get("site")
+            };
+        }
+        return { pages: null, status: null, site: null };
+    };
 
-    const filteredDatas = applicants.data ?? [];
+    const { pages, status, site } = getUrlParams();
+
+    const filteredDatas = applicants?.data ?? [];
 
     function search_status(value) {
         router.visit(
-            "?page=1" + "&status=" + (value || "null") + "&site=" + site
+            "?page=1" + "&status=" + (value || "null") + "&site=" + (site || "null")
         );
     }
     function search_site(value) {
         router.visit(
-            "?page=1" + "&status=" + status + "&site=" + (value || "null")
+            "?page=1" + "&status=" + (status || "null") + "&site=" + (value || "null")
         );
     }
     const columns = [
@@ -63,8 +73,6 @@ export default function ApplicantsTableSection() {
             key: "fullname",
             // ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
-                console.log("record", record);
-
                 return (
                     <div key={i} className="uppercase font-semibold">
                         {record.lname}, {record.fname}{" "}
@@ -168,8 +176,6 @@ export default function ApplicantsTableSection() {
             dataIndex: "site",
             key: "site",
             render: (_, record, i) => {
-                console.log("record", record);
-
                 return <div key={i}>{record?.site}</div>;
             },
         },
@@ -271,24 +277,34 @@ export default function ApplicantsTableSection() {
         },
     ];
 
-    const url = window.location.pathname + window.location.search;
+    const getUrlAndParams = () => {
+        if (typeof window !== 'undefined') {
+            return {
+                url: window.location.pathname + window.location.search,
+                pathname: window.location.pathname
+            };
+        }
+        return { url: '', pathname: '' };
+    };
+
+    const { url, pathname } = getUrlAndParams();
 
     const getQueryParam = (url, paramName) => {
         const searchParams = new URLSearchParams(url.split("?")[1]);
         return searchParams.get(paramName);
     };
 
-    const page = getQueryParam(url, "page");
+    const page = getQueryParam(url, "page") || 1;
     const categories = getQueryParam(url, "categories");
 
     const paginationConfig = {
-        current: page,
+        current: parseInt(page) || 1,
         pageSize: pageSize,
-        total: applicants.last_page * pageSize,
+        total: applicants?.last_page ? applicants.last_page * pageSize : 0,
         onChange: (newPage, newPageSize) => {
             router.visit(
-                window.location.pathname +
-                    `?page=${newPage}&status=${status}&site=${site}`
+                pathname +
+                    `?page=${newPage}&status=${status || 'null'}&site=${site || 'null'}`
             );
             setCurrent(newPage);
             setPageSize(newPageSize);
@@ -307,9 +323,9 @@ export default function ApplicantsTableSection() {
             )}
 
             <div className="w-full">
-                {applicants.total > 0
-                    ? `Showing ${(page - 1) * pageSize + 1} to ${Math.min(
-                          page * pageSize,
+                {applicants?.total > 0
+                    ? `Showing ${((parseInt(page) || 1) - 1) * pageSize + 1} to ${Math.min(
+                          (parseInt(page) || 1) * pageSize,
                           applicants.total
                       )} of ${applicants.total} entries`
                     : "No entries available"}

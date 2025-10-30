@@ -133,9 +133,9 @@ export default function ApplicantsTableSection() {
             render: (_, record) => {
                 return (
                     <div className="gap-1.5 flex text-center justify-center">
-                        <div>
+                        {/* <div>
                             <ApplicantCvFileComponent data={record} />
-                        </div>
+                        </div> */}
                         <div>
                             <ApplicantDetaillsComponent data={record} />
                         </div>

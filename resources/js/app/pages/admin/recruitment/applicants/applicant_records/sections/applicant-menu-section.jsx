@@ -34,18 +34,18 @@ import ApplicantDeleteComponent from "../components/applicant-delete-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
-        // {
-        //     component: (
-        //         <ApplicantDeleteComponent
-        //             item={{
-        //                 label: "Delete Application",
-        //                 key: "1",
-        //                 icon: <DeleteOutlined />,
-        //             }}
-        //             data={data}
-        //         />
-        //     ),
-        // },
+        {
+            component: (
+                <ApplicantDeleteComponent
+                    item={{
+                        label: "Delete Application",
+                        key: "1",
+                        icon: <DeleteOutlined />,
+                    }}
+                    data={data}
+                />
+            ),
+        },
         ...(data.status == "Initial Phase"
             ? [
                   {

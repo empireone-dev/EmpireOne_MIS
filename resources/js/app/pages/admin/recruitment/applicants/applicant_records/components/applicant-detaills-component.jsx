@@ -32,7 +32,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
     const handleConvertToPDF = async () => {
         try {
             setIsGeneratingPDF(true);
-            const formElement = document.getElementById("form-to-pdf");
+            const formElement = document?.getElementById("form-to-pdf");
 
             if (!formElement) {
                 console.error("Form element not found");

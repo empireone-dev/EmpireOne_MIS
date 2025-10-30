@@ -11,7 +11,7 @@ import { FileFilled } from "@ant-design/icons";
 import { NewspaperIcon } from "@heroicons/react/24/outline";
 import ApplicantCvFileComponent from "../components/applicant-cv-file-component";
 import ApplicantDetaillsComponent from "../components/applicant-detaills-component";
-
+ 
 // ContactCell component to handle modal state properly
 const ContactCell = ({ record }) => {
     const [open, setOpen] = useState(false);

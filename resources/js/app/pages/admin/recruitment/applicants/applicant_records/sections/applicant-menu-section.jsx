@@ -15,22 +15,22 @@ import {
     TeamOutlined,
 } from "@ant-design/icons";
 import { BriefcaseIcon } from "@heroicons/react/24/outline";
-import ApplicantProceedInitalPhaseComponent from "../components/applicant-proceed-inital-phase-component";
-import ApplicantInitialRatingScale from "../components/applicant-initial-rating-scale";
-import ApplicantFinalRatingScaleComponent from "../components/applicant-final-rating-scale-component";
-import ApplicantCheckScheduleComponent from "../components/applicant-check-schedule-component";
-import ApplicantResultsComponent from "../components/applicant-results-component";
-import ApplicantJobOfferComponent from "../components/applicant-job-offer-component";
-import ApplicantDetaillsComponent from "../components/applicant-detaills-component";
-import ApplicantSetScheduleComponent from "../components/applicant-set-schedule-component";
-import ApplicantPoolingComponent from "../components/applicant-pooling-component";
-import ApplicantCvFileComponent from "../components/applicant-cv-file-component";
-import ApplicantRejectionComponent from "../components/applicant-rejection-component";
-import ApplicantSetRescheduleComponent from "../components/applicant-set-reschedule-component";
-import ApplicantImmediateInitialComponent from "../components/applicant-immediate-initial-component";
-import ApplicantImmediateFinalComponent from "../components/applicant-immediate-final-component";
-import ApplicantProceedFinalComponent from "../components/applicant-proceed-final-component";
-import ApplicantDeleteComponent from "../components/applicant-delete-component";
+import ApplicantProceedInitalPhaseComponent from "../../components/applicant-proceed-inital-phase-component";
+import ApplicantInitialRatingScale from "../../components/applicant-initial-rating-scale";
+import ApplicantFinalRatingScaleComponent from "../../components/applicant-final-rating-scale-component";
+import ApplicantCheckScheduleComponent from "../../components/applicant-check-schedule-component";
+import ApplicantResultsComponent from "../../components/applicant-results-component";
+import ApplicantJobOfferComponent from "../../components/applicant-job-offer-component";
+import ApplicantDetaillsComponent from "../../components/applicant-detaills-component";
+import ApplicantSetScheduleComponent from "../../components/applicant-set-schedule-component";
+import ApplicantPoolingComponent from "../../components/applicant-pooling-component";
+import ApplicantCvFileComponent from "../../components/applicant-cv-file-component";
+import ApplicantRejectionComponent from "../../components/applicant-rejection-component";
+import ApplicantSetRescheduleComponent from "../../components/applicant-set-reschedule-component";
+import ApplicantImmediateInitialComponent from "../../components/applicant-immediate-initial-component";
+import ApplicantImmediateFinalComponent from "../../components/applicant-immediate-final-component";
+import ApplicantProceedFinalComponent from "../../components/applicant-proceed-final-component";
+import ApplicantDeleteComponent from "../../components/applicant-delete-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [

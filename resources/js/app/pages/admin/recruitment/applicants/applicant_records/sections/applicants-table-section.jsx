@@ -6,11 +6,11 @@ import { router } from "@inertiajs/react";
 import ApplicantMenuSection from "./applicant-menu-section";
 import ApplicantSearchSection from "./applicant-search-section";
 import CreateApplicantSection from "./create-applicant-section";
-import ApplicantPhoneStatusComponent from "../components/applicant-phone-status-component";
+import ApplicantPhoneStatusComponent from "../../components/applicant-phone-status-component";
 import { FileFilled } from "@ant-design/icons";
 import { NewspaperIcon } from "@heroicons/react/24/outline";
-import ApplicantCvFileComponent from "../components/applicant-cv-file-component";
-import ApplicantDetaillsComponent from "../components/applicant-detaills-component";
+import ApplicantCvFileComponent from "../../components/applicant-cv-file-component";
+import ApplicantDetaillsComponent from "../../components/applicant-detaills-component";
  
 // ContactCell component to handle modal state properly
 const ContactCell = ({ record }) => {

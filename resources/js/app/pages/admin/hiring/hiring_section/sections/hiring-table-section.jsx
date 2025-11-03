@@ -575,10 +575,15 @@ export default function HiringTableSection() {
                                     <div>
                                         <button
                                             type="button"
+                                            // onClick={() => {
+                                            //     window.open(
+                                            //         `/admin/file_201/${record.app_id}/${record.id}/${safeJobPos}/${record?.salary}/${record?.allowance}?status=${record.status}`,
+                                            //         "_blank"
+                                            //     );
+                                            // }}
                                             onClick={() => {
-                                                window.open(
-                                                    `/admin/file_201/${record.app_id}/${record.id}/${safeJobPos}/${record?.salary}/${record?.allowance}?status=${record.status}`,
-                                                    "_blank"
+                                                router.visit(
+                                                    `/admin/file_201/${record.app_id}/${record.id}/${safeJobPos}/${record?.salary}/${record?.allowance}?status=${record.status}`
                                                 );
                                             }}
                                             className="text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 shadow-lg shadow-yellow-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"

@@ -359,7 +359,7 @@ class ApplicantController extends Controller
         ], 200);
     }
 
-    public function update_applicant_status(Request $request, $id)
+    public function update_applicant_status(Request $request, $id, $id)
     {
         // Find the applicant
         $applicant = Applicant::find($id);
@@ -382,7 +382,7 @@ class ApplicantController extends Controller
             'status' => $request->status,
         ]);
 
-        $employee = Employee::find($id);
+        $employee = Employee::where('emp_id', $request->emp_id)->first();
 
         if ($employee) {
             $employee->update([

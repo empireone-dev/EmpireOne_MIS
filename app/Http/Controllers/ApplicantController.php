@@ -322,10 +322,19 @@ class ApplicantController extends Controller
 
         $employee = Employee::where('app_id', '=', $request->app_id)->first();
 
+
         if (!$employee) {
             return response()->json([
                 'message' => 'Employee not found.',
             ], 404);
+        }
+
+        $employee1 = Employee::where('emp_id', $request->emp_id)->first();
+
+        if ($employee1) {
+            $employee1->update([
+                'eogs' => $request->email,
+            ]);
         }
 
         $employee->update($request->all());
@@ -381,14 +390,6 @@ class ApplicantController extends Controller
         $applicant->update([
             'status' => $request->status,
         ]);
-
-        $employee = Employee::where('emp_id', $request->emp_id)->first();
-
-        if ($employee) {
-            $employee->update([
-                'eogs' => $request->email,
-            ]);
-        }
 
         return response()->json([
             'message' => 'Applicant status updated successfully.',

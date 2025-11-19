@@ -359,7 +359,7 @@ class ApplicantController extends Controller
         ], 200);
     }
 
-    public function update_applicant_status(Request $request, $id, $id)
+    public function update_applicant_status(Request $request, $id)
     {
         // Find the applicant
         $applicant = Applicant::find($id);

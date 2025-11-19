@@ -382,6 +382,12 @@ class ApplicantController extends Controller
             'status' => $request->status,
         ]);
 
+        $employee = Employee::find($id);
+
+        if ($employee) {
+            $employee->update($request->all());
+        }
+
         return response()->json([
             'message' => 'Applicant status updated successfully.',
         ]);

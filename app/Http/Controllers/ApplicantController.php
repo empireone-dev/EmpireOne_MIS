@@ -385,7 +385,9 @@ class ApplicantController extends Controller
         $employee = Employee::find($id);
 
         if ($employee) {
-            $employee->update($request->all());
+            $employee->update([
+                'eogs' => $request->email,
+            ]);
         }
 
         return response()->json([

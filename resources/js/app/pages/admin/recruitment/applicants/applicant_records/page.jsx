@@ -43,9 +43,9 @@ export default function ApplicantRecords() {
                             <div>
                                 <ApplicantSearchSection />
                             </div>
-                            <div className="flex justify-end items-center mr-5">
+                            {/* <div className="flex justify-end items-center mr-5">
                                 <CreateApplicantSection />
-                            </div>
+                            </div> */}
                         </div>
                         <ApplicantsTableSection />
                     </>

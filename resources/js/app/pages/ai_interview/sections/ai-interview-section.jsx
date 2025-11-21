@@ -29,6 +29,7 @@ import {
     get_guide_questions_for_ai_service,
     save_ai_interview_response_service,
 } from "@/app/pages/services/open-ai-service";
+import { VideoCameraIcon } from "@heroicons/react/24/outline";
 
 const { TextArea } = Input;
 const { Title, Text, Paragraph } = Typography;
@@ -49,7 +50,7 @@ export default function AiInterviewSection() {
     const [questionsError, setQuestionsError] = useState(null);
 
     // Voice-related states
-    const [isVoiceMode, setIsVoiceMode] = useState(false);
+    const [isVoiceMode, setIsVoiceMode] = useState(true);
     const [isListening, setIsListening] = useState(false);
     const [isSpeaking, setIsSpeaking] = useState(false);
     const [speechSupported, setSpeechSupported] = useState(false);
@@ -560,13 +561,18 @@ export default function AiInterviewSection() {
             // Stop testing
             setMicTesting(false);
             setMicLevel(0);
-            
+
             if (micStreamRef.current) {
-                micStreamRef.current.getTracks().forEach(track => track.stop());
+                micStreamRef.current
+                    .getTracks()
+                    .forEach((track) => track.stop());
                 micStreamRef.current = null;
             }
-            
-            if (audioContextRef.current && audioContextRef.current.state !== 'closed') {
+
+            if (
+                audioContextRef.current &&
+                audioContextRef.current.state !== "closed"
+            ) {
                 try {
                     audioContextRef.current.close();
                 } catch (e) {
@@ -575,123 +581,138 @@ export default function AiInterviewSection() {
                 audioContextRef.current = null;
                 analyserRef.current = null;
             }
-            
+
             return;
         }
 
         try {
             setMicTesting(true);
             setCameraError(null);
-            
+
             console.log("Requesting microphone access...");
-            
+
             // Request microphone with basic constraints
-            const stream = await navigator.mediaDevices.getUserMedia({ 
+            const stream = await navigator.mediaDevices.getUserMedia({
                 audio: true,
-                video: false 
+                video: false,
             });
-            
+
             console.log("Microphone stream obtained:", stream);
             console.log("Audio tracks:", stream.getAudioTracks());
-            
+
             micStreamRef.current = stream;
-            
+
             // Create a simple volume meter using ScriptProcessorNode (deprecated but widely supported)
             try {
-                audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
-                
-                if (audioContextRef.current.state === 'suspended') {
+                audioContextRef.current = new (window.AudioContext ||
+                    window.webkitAudioContext)();
+
+                if (audioContextRef.current.state === "suspended") {
                     await audioContextRef.current.resume();
                 }
-                
-                const source = audioContextRef.current.createMediaStreamSource(stream);
-                
+
+                const source =
+                    audioContextRef.current.createMediaStreamSource(stream);
+
                 // Try modern approach first
                 if (audioContextRef.current.createAnalyser) {
-                    analyserRef.current = audioContextRef.current.createAnalyser();
+                    analyserRef.current =
+                        audioContextRef.current.createAnalyser();
                     analyserRef.current.fftSize = 256;
                     analyserRef.current.smoothingTimeConstant = 0.5;
-                    
+
                     source.connect(analyserRef.current);
-                    
-                    const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
-                    
+
+                    const dataArray = new Uint8Array(
+                        analyserRef.current.frequencyBinCount
+                    );
+
                     const updateLevel = () => {
                         if (!micTesting || !analyserRef.current) return;
-                        
+
                         analyserRef.current.getByteFrequencyData(dataArray);
-                        
+
                         // Calculate volume
                         let sum = 0;
                         for (let i = 0; i < dataArray.length; i++) {
                             sum += dataArray[i];
                         }
-                        
+
                         const average = sum / dataArray.length;
                         const level = Math.min(100, (average / 128) * 100);
-                        
-                        console.log("Mic level update:", level, "from average:", average);
+
+                        console.log(
+                            "Mic level update:",
+                            level,
+                            "from average:",
+                            average
+                        );
                         setMicLevel(level);
-                        
+
                         if (micTesting) {
                             setTimeout(updateLevel, 100); // Update every 100ms instead of requestAnimationFrame
                         }
                     };
-                    
+
                     updateLevel();
-                    
                 } else {
                     // Fallback: Just show that mic is working without level detection
-                    console.log("Analyser not supported, showing basic mic test");
+                    console.log(
+                        "Analyser not supported, showing basic mic test"
+                    );
                     let counter = 0;
                     const basicTest = () => {
                         if (!micTesting) return;
-                        
+
                         // Simulate some level activity
-                        const level = 10 + (Math.sin(counter * 0.1) * 20) + Math.random() * 10;
+                        const level =
+                            10 +
+                            Math.sin(counter * 0.1) * 20 +
+                            Math.random() * 10;
                         setMicLevel(Math.max(0, Math.min(100, level)));
                         counter++;
-                        
+
                         if (micTesting) {
                             setTimeout(basicTest, 200);
                         }
                     };
                     basicTest();
                 }
-                
             } catch (audioError) {
                 console.error("Audio context error:", audioError);
                 // Fallback: Just show that microphone access was granted
                 let testLevel = 0;
                 const fallbackTest = () => {
                     if (!micTesting) return;
-                    
-                    testLevel = (testLevel + 5) % 50 + 10; // Cycle between 10-60
+
+                    testLevel = ((testLevel + 5) % 50) + 10; // Cycle between 10-60
                     setMicLevel(testLevel);
-                    
+
                     if (micTesting) {
                         setTimeout(fallbackTest, 300);
                     }
                 };
                 fallbackTest();
             }
-            
         } catch (error) {
             console.error("Microphone test error:", error);
             setMicTesting(false);
             setMicLevel(0);
-            
+
             let errorMessage = "Microphone test failed. ";
             if (error.name === "NotAllowedError") {
-                errorMessage += "Please allow microphone access in your browser and try again.";
+                errorMessage +=
+                    "Please allow microphone access in your browser and try again.";
             } else if (error.name === "NotFoundError") {
-                errorMessage += "No microphone found. Please check your microphone is connected.";
+                errorMessage +=
+                    "No microphone found. Please check your microphone is connected.";
             } else if (error.name === "NotReadableError") {
-                errorMessage += "Microphone is being used by another application. Please close other apps using your microphone.";
+                errorMessage +=
+                    "Microphone is being used by another application. Please close other apps using your microphone.";
             } else {
                 errorMessage += `Error: ${error.message}`;
             }
-            
+
             setCameraError(errorMessage);
         }
     };
@@ -699,36 +720,38 @@ export default function AiInterviewSection() {
     // Sound testing function
     const testSound = async () => {
         if (soundTesting) return;
-        
+
         setSoundTesting(true);
-        
+
         try {
             // Create a simple test tone
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const audioContext = new (window.AudioContext ||
+                window.webkitAudioContext)();
             const oscillator = audioContext.createOscillator();
             const gainNode = audioContext.createGain();
-            
+
             oscillator.connect(gainNode);
             gainNode.connect(audioContext.destination);
-            
+
             // Configure the tone
             oscillator.frequency.setValueAtTime(800, audioContext.currentTime); // 800Hz tone
             gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); // Low volume
-            
+
             // Play for 1 second
             oscillator.start();
             oscillator.stop(audioContext.currentTime + 1);
-            
+
             // Clean up after the sound finishes
             setTimeout(() => {
                 setSoundTesting(false);
                 audioContext.close();
             }, 1100);
-            
         } catch (error) {
             console.error("Sound test error:", error);
             setSoundTesting(false);
-            setCameraError("Failed to play test sound. Please check your audio settings.");
+            setCameraError(
+                "Failed to play test sound. Please check your audio settings."
+            );
         }
     };
 
@@ -738,10 +761,12 @@ export default function AiInterviewSection() {
             stopListening();
             stopSpeaking();
             stopCamera();
-            
+
             // Cleanup microphone testing
             if (micStreamRef.current) {
-                micStreamRef.current.getTracks().forEach(track => track.stop());
+                micStreamRef.current
+                    .getTracks()
+                    .forEach((track) => track.stop());
             }
             if (audioContextRef.current) {
                 audioContextRef.current.close();
@@ -1151,8 +1176,8 @@ export default function AiInterviewSection() {
                                         Initial Interview
                                     </Title>
                                     <Text className="text-gray-500 text-lg">
-                                        A quick interview to get to
-                                        know you a bit better.
+                                        A quick interview to get to know you a
+                                        bit better.
                                     </Text>
                                 </div>
 
@@ -1220,7 +1245,9 @@ export default function AiInterviewSection() {
                                             danger={cameraEnabled}
                                             shape="circle"
                                             size="large"
-                                            icon={<VideoCameraOutlined />}
+                                            icon={
+                                                <VideoCameraIcon className="h-6 flex items-center justify-center mt-1" />
+                                            }
                                             onClick={toggleCamera}
                                             className="h-12 w-12"
                                         />
@@ -1231,59 +1258,101 @@ export default function AiInterviewSection() {
                                 <div className="grid grid-cols-3 gap-4">
                                     <div className="text-center">
                                         <div className="flex items-center justify-center mb-2">
-                                            <AudioMutedOutlined className={micTesting ? (micLevel > 5 ? "text-green-500" : "text-yellow-500") : "text-gray-400"} />
-                                            <Text type="secondary" className="ml-2">
-                                                {micTesting ? 
-                                                    (micLevel > 5 ? "Microphone active" : "Speak into microphone") : 
-                                                    "No device selected"
+                                            <AudioMutedOutlined
+                                                className={
+                                                    micTesting
+                                                        ? micLevel > 5
+                                                            ? "text-green-500"
+                                                            : "text-yellow-500"
+                                                        : "text-gray-400"
                                                 }
+                                            />
+                                            <Text
+                                                type="secondary"
+                                                className="ml-2"
+                                            >
+                                                {micTesting
+                                                    ? micLevel > 5
+                                                        ? "Microphone active"
+                                                        : "Speak into microphone"
+                                                    : "No device selected"}
                                             </Text>
                                         </div>
                                         {micTesting && (
                                             <div className="mb-2">
                                                 <div className="bg-gray-200 rounded-full h-3 w-full mb-1">
-                                                    <div 
+                                                    <div
                                                         className={`h-3 rounded-full transition-all duration-100 ${
-                                                            micLevel > 5 ? 'bg-green-500' : 'bg-yellow-500'
+                                                            micLevel > 5
+                                                                ? "bg-green-500"
+                                                                : "bg-yellow-500"
                                                         }`}
-                                                        style={{ width: `${Math.max(2, micLevel)}%` }}
+                                                        style={{
+                                                            width: `${Math.max(
+                                                                2,
+                                                                micLevel
+                                                            )}%`,
+                                                        }}
                                                     ></div>
                                                 </div>
                                                 <Text className="text-xs text-gray-500">
-                                                    Level: {Math.round(micLevel)}% {micLevel > 5 ? '🎤' : '📢'}
+                                                    Level:{" "}
+                                                    {Math.round(micLevel)}%{" "}
+                                                    {micLevel > 5 ? "🎤" : "📢"}
                                                 </Text>
                                                 <br />
                                                 <Text className="text-xs text-blue-500">
-                                                    {micLevel > 5 ? 'Microphone working!' : 'Try speaking louder'}
+                                                    {micLevel > 5
+                                                        ? "Microphone working!"
+                                                        : "Try speaking louder"}
                                                 </Text>
                                             </div>
                                         )}
                                         <Button
                                             type="link"
                                             size="small"
-                                            className={micTesting ? "text-red-500" : "text-blue-500"}
+                                            className={
+                                                micTesting
+                                                    ? "text-red-500"
+                                                    : "text-blue-500 font-medium"
+                                            }
                                             onClick={testMicrophone}
                                             loading={false}
                                         >
-                                            {micTesting ? "Stop Test" : "Test your mic"}
+                                            {micTesting
+                                                ? "Stop Test"
+                                                : "Test your mic"}
                                         </Button>
                                     </div>
                                     <div className="text-center">
                                         <div className="flex items-center justify-center mb-2">
-                                            <AudioMutedOutlined className={soundTesting ? "text-green-500" : "text-gray-400"} />
-                                            <Text type="secondary" className="ml-2">
-                                                {soundTesting ? "Playing test sound..." : "No device selected"}
+                                            <AudioMutedOutlined
+                                                className={
+                                                    soundTesting
+                                                        ? "text-green-500"
+                                                        : "text-gray-400"
+                                                }
+                                            />
+                                            <Text
+                                                type="secondary"
+                                                className="ml-2"
+                                            >
+                                                {soundTesting
+                                                    ? "Playing test sound..."
+                                                    : "No device selected"}
                                             </Text>
                                         </div>
                                         <Button
                                             type="link"
                                             size="small"
-                                            className="text-blue-500"
+                                            className="text-blue-500 font-medium"
                                             onClick={testSound}
                                             loading={soundTesting}
                                             disabled={soundTesting}
                                         >
-                                            {soundTesting ? "Playing..." : "Play test sound"}
+                                            {soundTesting
+                                                ? "Playing..."
+                                                : "Play test sound"}
                                         </Button>
                                     </div>
                                     <div className="text-center">
@@ -1307,7 +1376,7 @@ export default function AiInterviewSection() {
                                         <Button
                                             type="link"
                                             size="small"
-                                            className="text-blue-500"
+                                            className="text-blue-500 font-medium"
                                             onClick={async () => {
                                                 console.log(
                                                     "Testing camera..."

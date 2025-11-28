@@ -41,6 +41,7 @@ class Applicant extends Model
         'eaddress',
         'relationship',
         'ephone',
+        'agreed',
         'status',
         'call_status',
         'site',

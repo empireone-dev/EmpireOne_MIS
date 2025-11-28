@@ -189,6 +189,10 @@ Route::get('/online_application', function () {
     return Inertia::render('online_application/page');
 });
 
+Route::get('/privacy_policy', function () {
+    return Inertia::render('privacy_policy/page');
+});
+
 Route::get('/video', function () {
     return Inertia::render('video/page');
 });

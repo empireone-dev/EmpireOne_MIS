@@ -159,6 +159,7 @@ export default function ApplicationFormSection() {
                     region: JSON.parse(data?.region).name,
                     files: files.map((res) => res.files),
                     is_experience: hasExperience,
+                    agreed: "true",
                 })
             );
 
@@ -1103,6 +1104,55 @@ export default function ApplicationFormSection() {
                                             </p>
                                         </div>
                                     </div>
+                                </div>
+
+                                <div className="bg-gray-100 border-l-4 border-gray-400 p-4">
+                                    <div className="ml-3">
+                                        <div className="flex items-start gap-2 text-sm text-gray-700">
+                                            <Checkbox
+                                                register={{
+                                                    ...register(
+                                                        "privacy_policy",
+                                                        {
+                                                            required:
+                                                                "You must agree to the Privacy Policy to proceed.",
+                                                        }
+                                                    ),
+                                                }}
+                                                name="privacy_policy"
+                                            />
+                                            <p className="leading-5">
+                                                I have read and agree to the
+                                                Privacy Policy. Read our full
+                                                Privacy Policy{" "}
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        window.open(
+                                                            "/privacy_policy",
+                                                            "_blank"
+                                                        )
+                                                    }
+                                                    className="text-blue-600 underline"
+                                                >
+                                                    Here
+                                                </button>
+                                                .
+                                            </p>
+                                        </div>
+                                    </div>
+                                    {errors?.privacy_policy && (
+                                        <div className="ml-11">
+                                            <p className="text-red-500 text-sm">
+                                                <i>
+                                                    {
+                                                        errors.privacy_policy
+                                                            .message
+                                                    }
+                                                </i>
+                                            </p>
+                                        </div>
+                                    )}
                                 </div>
 
                                 <div className="flex items-end justify-end">

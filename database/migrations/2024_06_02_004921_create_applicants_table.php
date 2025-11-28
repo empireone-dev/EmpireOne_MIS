@@ -40,6 +40,7 @@ return new class extends Migration
             $table->string('eaddress')->nullable();
             $table->string('relationship')->nullable();
             $table->string('ephone')->nullable();
+            $table->string('agreed')->nullable();
             $table->string('status')->nullable();
             $table->string('call_status')->nullable();
             $table->string('site')->nullable();

@@ -151,6 +151,7 @@ class ApplicantController extends Controller
             'eaddress'      => 'nullable|string|max:255',
             'relationship'  => 'nullable|string|max:50',
             'ephone'        => 'nullable|string|max:20',
+            'agreed'        => 'nullable|string|max:255',
             'site'          => 'required|string|max:255',
             'lot'           => 'nullable|string|max:255',
             'brgy'          => 'nullable|string|max:255',

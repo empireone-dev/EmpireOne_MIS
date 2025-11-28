@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Checkbox({ label, name, error, ...props }) {
+export default function Checkbox({ label, name, error, register, ...props }) {
   return (
     <div className="flex flex-col items-start space-y-1">
       <label className="flex items-center space-x-2">
@@ -9,6 +9,7 @@ export default function Checkbox({ label, name, error, ...props }) {
           name={name}
           id={name}
           className="accent-blue-600 w-4 h-4"
+          {...(register || {})}
           {...props}
         />
         <span className="text-sm text-gray-700">{label}</span>

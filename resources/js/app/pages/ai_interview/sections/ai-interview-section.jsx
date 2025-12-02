@@ -28,6 +28,7 @@ import {
     ai_interview_service,
     get_guide_questions_for_ai_service,
     save_ai_interview_response_service,
+    saveInterviewRecordingService,
 } from "@/app/pages/services/open-ai-service";
 import { VideoCameraIcon } from "@heroicons/react/24/outline";
 
@@ -70,6 +71,14 @@ export default function AiInterviewSection() {
     const [micStream, setMicStream] = useState(null);
     const [soundTesting, setSoundTesting] = useState(false);
 
+    // Recording states
+    const [isRecording, setIsRecording] = useState(false);
+    const [recordingStream, setRecordingStream] = useState(null);
+    const [mediaRecorder, setMediaRecorder] = useState(null);
+    const [recordedChunks, setRecordedChunks] = useState([]);
+    const [recordingError, setRecordingError] = useState(null);
+    const [uploadingRecording, setUploadingRecording] = useState(false);
+
     // Refs for speech APIs and camera
     const recognitionRef = useRef(null);
     const synthRef = useRef(null);
@@ -77,13 +86,27 @@ export default function AiInterviewSection() {
     const audioContextRef = useRef(null);
     const analyserRef = useRef(null);
     const micStreamRef = useRef(null);
+    
+    // Recording refs
+    const recordingRef = useRef(null);
+    const chunksRef = useRef([]);
+    
+    // Messages auto-scroll ref
+    const messagesEndRef = useRef(null);
 
     // Extract app_id from URL
     useEffect(() => {
         const urlParts = window.location.pathname.split("/");
         const appIdFromUrl = urlParts[urlParts.length - 1];
-        if (appIdFromUrl) {
-            setApplicantId(appIdFromUrl);
+        console.log("Extracted app ID from URL:", appIdFromUrl);
+        console.log("Full URL path:", window.location.pathname);
+        console.log("URL parts:", urlParts);
+        
+        if (appIdFromUrl && appIdFromUrl.trim() !== '') {
+            setApplicantId(appIdFromUrl.trim());
+            console.log("Set applicant ID to:", appIdFromUrl.trim());
+        } else {
+            console.error("No valid app ID found in URL");
         }
     }, []);
 
@@ -92,6 +115,13 @@ export default function AiInterviewSection() {
         loadGuideQuestions();
         initializeSpeechAPIs();
     }, []);
+
+    // Auto-scroll to bottom when messages change
+    useEffect(() => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [messages, loading]);
 
     // Initialize Speech Recognition and Text-to-Speech
     const initializeSpeechAPIs = () => {
@@ -755,12 +785,342 @@ export default function AiInterviewSection() {
         }
     };
 
+    // Recording functions
+    const startRecording = async () => {
+        try {
+            setRecordingError(null);
+            console.log("Starting interview recording...");
+
+            let recordingStreamToUse;
+
+            // If camera is enabled, use existing camera stream or get new combined stream
+            if (cameraEnabled && cameraStream) {
+                // Try to get audio track from camera stream or create new combined stream
+                const audioTracks = cameraStream.getAudioTracks();
+                
+                if (audioTracks.length === 0) {
+                    // Camera stream has no audio, need to get audio separately and combine
+                    console.log("Camera stream has no audio, getting combined stream...");
+                    recordingStreamToUse = await navigator.mediaDevices.getUserMedia({
+                        video: true,
+                        audio: true
+                    });
+                } else {
+                    // Camera stream already has audio
+                    recordingStreamToUse = cameraStream;
+                }
+            } else {
+                // No camera or camera disabled, get audio only
+                console.log("Getting audio-only stream for recording...");
+                recordingStreamToUse = await navigator.mediaDevices.getUserMedia({
+                    video: false,
+                    audio: true
+                });
+            }
+
+            console.log("Recording stream tracks:", {
+                video: recordingStreamToUse.getVideoTracks().length,
+                audio: recordingStreamToUse.getAudioTracks().length
+            });
+
+            setRecordingStream(recordingStreamToUse);
+            chunksRef.current = [];
+
+            // Determine appropriate MIME type
+            let mimeType;
+            if (recordingStreamToUse.getVideoTracks().length > 0) {
+                // Video recording
+                if (MediaRecorder.isTypeSupported('video/webm; codecs=vp8,opus')) {
+                    mimeType = 'video/webm; codecs=vp8,opus';
+                } else if (MediaRecorder.isTypeSupported('video/webm')) {
+                    mimeType = 'video/webm';
+                } else if (MediaRecorder.isTypeSupported('video/mp4')) {
+                    mimeType = 'video/mp4';
+                } else {
+                    mimeType = 'video/webm'; // Default fallback
+                }
+            } else {
+                // Audio only recording
+                if (MediaRecorder.isTypeSupported('audio/webm; codecs=opus')) {
+                    mimeType = 'audio/webm; codecs=opus';
+                } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+                    mimeType = 'audio/webm';
+                } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+                    mimeType = 'audio/mp4';
+                } else {
+                    mimeType = 'audio/webm'; // Default fallback
+                }
+            }
+
+            console.log("Using MIME type for recording:", mimeType);
+
+            const recorder = new MediaRecorder(recordingStreamToUse, { mimeType });
+            recordingRef.current = recorder;
+            setMediaRecorder(recorder);
+
+            recorder.ondataavailable = (event) => {
+                if (event.data && event.data.size > 0) {
+                    chunksRef.current.push(event.data);
+                    console.log("Recording chunk received:", event.data.size, "bytes");
+                }
+            };
+
+            recorder.onstop = () => {
+                console.log("Recording stopped, total chunks collected:", chunksRef.current.length);
+                const totalSize = chunksRef.current.reduce((sum, chunk) => sum + chunk.size, 0);
+                console.log("Total recording data size:", totalSize, "bytes");
+                setIsRecording(false);
+            };
+
+            recorder.onerror = (event) => {
+                console.error("Recording error:", event.error);
+                setRecordingError("Recording error: " + event.error);
+                setIsRecording(false);
+            };
+
+            recorder.onstart = () => {
+                console.log("MediaRecorder started successfully");
+                setIsRecording(true);
+            };
+
+            // Start recording with shorter intervals for better data collection
+            recorder.start(500); // Collect data every 500ms
+            console.log("MediaRecorder.start() called, state:", recorder.state);
+            
+            // Verify recording is actually working after a short delay
+            setTimeout(() => {
+                console.log("Recording status check:");
+                console.log("- MediaRecorder state:", recordingRef.current?.state);
+                console.log("- isRecording:", isRecording);
+                console.log("- Chunks collected so far:", chunksRef.current.length);
+                
+                if (recordingRef.current?.state !== 'recording') {
+                    console.error("MediaRecorder is not in recording state!");
+                    setRecordingError("Recording failed to start properly");
+                }
+            }, 2000);
+
+        } catch (error) {
+            console.error("Failed to start recording:", error);
+            setRecordingError("Failed to start recording: " + error.message);
+        }
+    };
+
+    const stopRecording = async () => {
+        return new Promise((resolve) => {
+            if (recordingRef.current && isRecording) {
+                console.log("Stopping recording...");
+                
+                // Set up one-time event listener for when recording stops
+                recordingRef.current.onstop = () => {
+                    console.log("Recording stopped completely, chunks:", chunksRef.current.length);
+                    setIsRecording(false);
+                    
+                    // Only stop recording stream tracks if it's different from camera stream
+                    if (recordingStream && recordingStream !== cameraStream) {
+                        console.log("Stopping recording stream tracks...");
+                        recordingStream.getTracks().forEach(track => track.stop());
+                        setRecordingStream(null);
+                    } else {
+                        setRecordingStream(null);
+                    }
+                    
+                    resolve();
+                };
+                
+                recordingRef.current.stop();
+            } else {
+                console.log("No active recording to stop");
+                resolve();
+            }
+        });
+    };
+
+    const saveRecording = async () => {
+        try {
+            setUploadingRecording(true);
+            
+            // Check if we have recording data
+            if (!chunksRef.current || chunksRef.current.length === 0) {
+                console.warn("No recording data to save");
+                setRecordingError("No recording data available to save");
+                return null;
+            }
+
+            console.log("Preparing to save recording...");
+            console.log("Chunks available:", chunksRef.current.length);
+            
+            // Calculate total size
+            const totalSize = chunksRef.current.reduce((sum, chunk) => sum + (chunk.size || 0), 0);
+            console.log("Total recording size:", totalSize, "bytes");
+
+            if (totalSize === 0) {
+                console.warn("Recording chunks have no data");
+                setRecordingError("Recording contains no data");
+                return null;
+            }
+
+            // Determine the correct MIME type and file extension based on what Laravel expects
+            let mimeType;
+            let fileExtension;
+            
+            if (recordingRef.current && recordingRef.current.mimeType) {
+                const originalMimeType = recordingRef.current.mimeType;
+                console.log("Original recorder MIME type:", originalMimeType);
+                
+                // Laravel validation expects: webm,mp4,avi,mov
+                // Map recorder MIME types to Laravel-acceptable ones
+                if (originalMimeType.includes('webm')) {
+                    mimeType = 'video/webm';
+                    fileExtension = '.webm';
+                } else if (originalMimeType.includes('mp4')) {
+                    mimeType = 'video/mp4';
+                    fileExtension = '.mp4';
+                } else if (originalMimeType.includes('audio/webm')) {
+                    // For audio-only recordings, still use webm container
+                    mimeType = 'video/webm'; // Laravel expects video MIME types
+                    fileExtension = '.webm';
+                } else {
+                    // Default fallback to webm
+                    console.warn("Unknown MIME type, defaulting to webm:", originalMimeType);
+                    mimeType = 'video/webm';
+                    fileExtension = '.webm';
+                }
+            } else {
+                // No recorder MIME type available, use default
+                console.warn("No recorder MIME type available, using default webm");
+                mimeType = 'video/webm';
+                fileExtension = '.webm';
+            }
+            
+            console.log("Final MIME type for upload:", mimeType);
+            console.log("File extension:", fileExtension);
+
+            // Create blob from chunks
+            const blob = new Blob(chunksRef.current, { type: mimeType });
+            
+            console.log("Recording blob created:", {
+                size: blob.size,
+                type: blob.type,
+                chunks: chunksRef.current.length
+            });
+
+            if (blob.size === 0) {
+                console.error("Created blob has zero size");
+                setRecordingError("Failed to create recording file - no data");
+                return null;
+            }
+
+            // Validate required data before upload
+            if (!applicantId || applicantId.trim() === '') {
+                console.error("No applicant ID available");
+                setRecordingError("No applicant ID available for recording save");
+                return null;
+            }
+
+            // Create FormData for file upload
+            const formData = new FormData();
+            const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+            const filename = `interview_${applicantId}_${timestamp}${fileExtension}`;
+            
+            formData.append('recording', blob, filename);
+            formData.append('app_id', applicantId.toString());
+            
+            if (interviewStartTime) {
+                const duration = Math.floor((Date.now() - interviewStartTime) / 1000);
+                formData.append('interview_duration', duration.toString());
+                console.log("Interview duration:", duration, "seconds");
+            } else {
+                // Provide a default duration if not available
+                formData.append('interview_duration', '0');
+                console.warn("No interview start time available, using duration 0");
+            }
+
+            // Debug FormData contents
+            console.log("FormData prepared:", {
+                filename,
+                blobSize: blob.size,
+                applicantId,
+                duration: interviewStartTime ? Math.floor((Date.now() - interviewStartTime) / 1000) : 'unknown'
+            });
+
+            // Upload the recording
+            console.log("Uploading recording to server...");
+            console.log("FormData entries:");
+            for (let [key, value] of formData.entries()) {
+                console.log(`${key}:`, value instanceof Blob ? `Blob(${value.size} bytes, ${value.type})` : value);
+            }
+            
+            const response = await saveInterviewRecordingService(formData);
+            
+            console.log("Upload response:", response);
+
+            if (response && response.data && response.data.status === 'success') {
+                console.log("Recording saved successfully:", response.data);
+                // Clear the chunks after successful upload
+                chunksRef.current = [];
+                setRecordingError(null);
+                return response.data;
+            } else {
+                const errorMsg = response?.data?.message || 'Upload failed - no success response';
+                console.error("Upload failed:", errorMsg);
+                console.error("Full response:", response);
+                throw new Error(errorMsg);
+            }
+
+        } catch (error) {
+            console.error("Failed to save recording:", error);
+            
+            let errorMessage = 'Unknown error occurred while saving recording';
+            
+            if (error.response) {
+                // Server responded with error status
+                console.error("Server error response:", error.response);
+                
+                if (error.response.status === 422) {
+                    // Validation error
+                    const validationErrors = error.response.data?.errors || {};
+                    const errorList = Object.values(validationErrors).flat();
+                    errorMessage = `Validation failed: ${errorList.join(', ')}`;
+                } else if (error.response.status === 413) {
+                    errorMessage = 'File too large. Please try with a shorter recording.';
+                } else if (error.response.status === 500) {
+                    errorMessage = error.response.data?.message || 'Server error occurred while saving recording';
+                } else {
+                    errorMessage = `Server error (${error.response.status}): ${error.response.data?.message || error.message}`;
+                }
+            } else if (error.request) {
+                // Network error
+                errorMessage = 'Network error - please check your connection and try again';
+            } else {
+                // Other error
+                errorMessage = error.message || errorMessage;
+            }
+            
+            setRecordingError("Failed to save recording: " + errorMessage);
+            throw error;
+        } finally {
+            setUploadingRecording(false);
+        }
+    };
+
+    // Track interview start time for duration calculation
+    const [interviewStartTime, setInterviewStartTime] = useState(null);
+
     // Cleanup camera on component unmount
     useEffect(() => {
         return () => {
             stopListening();
             stopSpeaking();
             stopCamera();
+            
+            // Cleanup recording
+            if (recordingRef.current && isRecording) {
+                recordingRef.current.stop();
+            }
+            if (recordingStream) {
+                recordingStream.getTracks().forEach(track => track.stop());
+            }
 
             // Cleanup microphone testing
             if (micStreamRef.current) {
@@ -776,6 +1136,10 @@ export default function AiInterviewSection() {
 
     const startInterview = async () => {
         setInterviewStarted(true);
+        setInterviewStartTime(Date.now());
+        
+        // Start recording when interview begins
+        await startRecording();
 
         // Completely reset and reinitialize the video element during interview start
         if (cameraPermissionGranted && cameraStream && videoRef.current) {
@@ -962,6 +1326,34 @@ export default function AiInterviewSection() {
             setMessages((prev) => [...prev, completionMessage]);
             setCurrentQuestion(null);
             setInterviewCompleted(true);
+
+            // Stop and save recording when interview completes
+            if (isRecording) {
+                console.log("Stopping and saving recording...");
+                
+                // Stop recording and then save it
+                stopRecording().then(() => {
+                    console.log("Recording stopped, waiting before save...");
+                    // Give a moment for final chunks to be processed
+                    setTimeout(async () => {
+                        try {
+                            const result = await saveRecording();
+                            if (result) {
+                                console.log("Interview recording saved successfully:", result);
+                            } else {
+                                console.warn("Recording save returned no result");
+                            }
+                        } catch (error) {
+                            console.error("Failed to save interview recording:", error);
+                            // Show error to user but don't block completion
+                            setRecordingError("Failed to save recording: " + error.message);
+                        }
+                    }, 1000); // Reduced timeout but still allows for chunk processing
+                }).catch((error) => {
+                    console.error("Failed to stop recording:", error);
+                    setRecordingError("Failed to stop recording properly: " + error.message);
+                });
+            }
 
             // Speak completion message if voice mode is enabled
             if (isVoiceMode) {
@@ -1778,6 +2170,8 @@ export default function AiInterviewSection() {
                                         </div>
                                     </div>
                                 )}
+                                {/* Invisible element for auto-scroll */}
+                                <div ref={messagesEndRef} />
                             </div>
                         </Card>
                     </Col>
@@ -1856,6 +2250,65 @@ export default function AiInterviewSection() {
                                     className="mt-3"
                                 />
                             )}
+
+                            {/* Recording Status */}
+                            <div className="mt-3 p-3 bg-gray-50 rounded-lg">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex items-center space-x-2">
+                                        <div className={`w-3 h-3 rounded-full ${isRecording ? 'bg-red-500 animate-pulse' : 'bg-gray-400'}`}></div>
+                                        <Text strong>
+                                            {isRecording ? "Recording..." : "Not Recording"}
+                                        </Text>
+                                    </div>
+                                    {uploadingRecording && (
+                                        <div className="flex items-center space-x-2">
+                                            <Spin size="small" />
+                                            <Text type="secondary">Saving...</Text>
+                                        </div>
+                                    )}
+                                </div>
+                                
+                                {recordingError && (
+                                    <Alert
+                                        message="Recording Error"
+                                        description={recordingError}
+                                        type="error"
+                                        showIcon
+                                        closable
+                                        size="small"
+                                        onClose={() => setRecordingError(null)}
+                                        className="mt-2"
+                                    />
+                                )}
+
+                                {/* Debug Controls - Remove in production */}
+                                {/* {isRecording && (
+                                    <div className="mt-2 flex space-x-2">
+                                        <Button 
+                                            size="small" 
+                                            danger
+                                            onClick={() => stopRecording()}
+                                        >
+                                            Stop Recording
+                                        </Button>
+                                        <Button 
+                                            size="small" 
+                                            type="primary"
+                                            loading={uploadingRecording}
+                                            onClick={async () => {
+                                                try {
+                                                    await stopRecording();
+                                                    setTimeout(() => saveRecording(), 500);
+                                                } catch (error) {
+                                                    console.error("Manual save failed:", error);
+                                                }
+                                            }}
+                                        >
+                                            Save Recording Now
+                                        </Button>
+                                    </div>
+                                )} */}
+                            </div>
                         </Card>
                     </Col>
                 </Row>
@@ -1874,7 +2327,8 @@ export default function AiInterviewSection() {
                                         level={2}
                                         className="text-green-600 mb-0"
                                     >
-                                        {answeredQuestions.length}
+                                        5
+                                        {/* {answeredQuestions.length} */}
                                     </Title>
                                 </div>
                                 <div className="bg-blue-50 p-4 rounded-lg">

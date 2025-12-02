@@ -11,7 +11,8 @@ import { FileFilled } from "@ant-design/icons";
 import { NewspaperIcon } from "@heroicons/react/24/outline";
 import ApplicantCvFileComponent from "../../components/applicant-cv-file-component";
 import ApplicantDetaillsComponent from "../../components/applicant-detaills-component";
- 
+import ApplicantAiInterviewComponent from "../../components/applicant-ai-interview-component";
+
 // ContactCell component to handle modal state properly
 const ContactCell = ({ record }) => {
     const [open, setOpen] = useState(false);
@@ -138,6 +139,10 @@ export default function ApplicantsTableSection() {
                         </div>
                         <div>
                             <ApplicantDetaillsComponent data={record} />
+                        </div>
+
+                        <div>
+                            <ApplicantAiInterviewComponent data={record} />
                         </div>
                     </div>
                 );

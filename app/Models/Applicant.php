@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DeepCopy\f001\A;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -79,5 +80,9 @@ class Applicant extends Model
     public function guideqs(): HasMany
     {
         return $this->hasMany(GuideQuestions::class, "app_id", "app_id");
+    }
+    public function a_i_interview(): BelongsTo
+    {
+        return $this->belongsTo(AIInterview::class, 'app_id', 'app_id');
     }
 }

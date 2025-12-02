@@ -70,6 +70,8 @@ Route::resource('applicant', ApplicantController::class);
 Route::post('/ai_initial_interview', [OpenAIController::class, 'ai_initial_interview']);
 Route::get('/get_guide_questions_for_ai', [OpenAIController::class, 'get_guide_questions_for_ai']);
 Route::post('/save_ai_interview_response', [OpenAIController::class, 'save_ai_interview_response']);
+Route::post('/save_ai_interview_recording', [OpenAIController::class, 'save_ai_interview_recording']);
+Route::get('/get_ai_interview_recording/{app_id}', [OpenAIController::class, 'get_ai_interview_recording']);
 Route::get('/get_ai_interview_results/{app_id}', [OpenAIController::class, 'get_ai_interview_results']);
 
 Route::post('/get_applicant', [ApplicantController::class, 'get_applicant']);

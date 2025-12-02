@@ -48,7 +48,7 @@ class ApplicantController extends Controller
     public function index(Request $request)
     {
         $applicant = Applicant::query()
-            ->with(['final', 'initial', 'joboffer', 'user', 'cvfile', 'guideqs', 'employee']);
+            ->with(['final', 'initial', 'joboffer', 'user', 'cvfile', 'guideqs', 'employee', 'a_i_interview']);
         // ->orderBy('status'); // Sort by status in ascending order
         if ($request->site && $request->site !== 'null') {
             $applicant->where('site', '=', $request->site);

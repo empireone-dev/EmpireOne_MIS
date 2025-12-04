@@ -66,9 +66,17 @@ export default function ApplicantsTableSection() {
             render: (_, record, i) => {
                 console.log("record", record);
 
+                const capitalizeFirstLetter = (str) => {
+                    if (!str) return str;
+                    return str
+                        .split(' ')
+                        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+                        .join(' ');
+                };
+
                 return (
-                    <div key={i} className="uppercase font-semibold">
-                        {record.lname}, {record.fname}{" "}
+                    <div key={i} className="font-bold">
+                        {capitalizeFirstLetter(record.lname)},&nbsp;{capitalizeFirstLetter(record.fname)}&nbsp;
                         {record.suffix === "undefined" ? "--" : record.suffix}
                     </div>
                 );

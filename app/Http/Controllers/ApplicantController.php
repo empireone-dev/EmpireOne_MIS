@@ -176,20 +176,17 @@ class ApplicantController extends Controller
 
         $data['caddress'] = trim("{$request->lot}, {$request->brgy}, {$request->city}, {$request->province}");
 
-        // Create applicant record
-        $applicant = Applicant::create($data);
-
         // Generate unique application ID more efficiently
         $today = date('Y-m-d');
         $count = Applicant::whereDate('submitted', $today)->count();
         $dateUnique = Carbon::now()->format('mdyHis') . str_pad($count + 1, 3, '0', STR_PAD_LEFT);
 
+        // Add app_id and status to data array
+        $data['app_id'] = $dateUnique;
+        $data['status'] = 'Pending';
 
-        // Update applicant with app_id and status
-        $applicant->update([
-            'app_id' => $dateUnique,
-            'status' => 'Pending',
-        ]);
+        // Create applicant record with all data including app_id and status
+        Applicant::create($data);
 
         // Save work experience records efficiently
         if ($experiences && !empty($experiences)) {

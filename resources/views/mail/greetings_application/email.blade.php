@@ -63,16 +63,6 @@
 
             <p>If we require any additional information, we will reach out directly.</p>
 
-            <!-- <p><b>**If you would like also to proceed with the initial interview by our AI you may proceed by clicking the button below:**</b></p>
-            <div style="text-align: center;">
-                <a href="https://empireone-hris.com/ai_interview/{{$data['app_id']}}"
-                    class="button"
-                    style="display:inline-block; margin: 0 10px; background-color: #e74c3c; color: white;">
-                    Proceed AI Initial Interview
-                </a>
-            </div>
-            <br> -->
-
             <p> Thank you again for your interest. We wish you the best of luck and look forward to possibly speaking with you soon.</p>
 
             <p></p>

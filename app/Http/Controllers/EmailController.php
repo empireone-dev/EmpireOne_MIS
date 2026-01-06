@@ -13,6 +13,7 @@ use App\Mail\InterviewerFinalV;
 use App\Mail\RescheduleFinalEmail;
 use App\Mail\RescheduleFinalvEmail;
 use App\Mail\RescheduleInitialEmail;
+use App\Mail\RescheduleInitialvEmail;
 use App\Models\Applicant;
 use App\Models\FinalRate;
 use App\Models\InitialRate;
@@ -50,7 +51,7 @@ class EmailController extends Controller
                 ]);
                 Mail::to($interviewer->email)->send(new InterviewerFinalV($data, $interviewer));
             } else if ($request->phase_status == 'Reschedule Initial Phase') {
-                Mail::to($request->email)->send(new RescheduleInitialEmail($data));
+                Mail::to($request->email)->send(new RescheduleInitialvEmail($data));
                 InitialRate::where('app_id', $request->app_id)->delete();
                 InitialRate::create([
                     'app_id' => $request->app_id,
@@ -71,7 +72,6 @@ class EmailController extends Controller
                 ]);
             }
         } else {
-            // Face-to-face interview
             if ($request->phase_status == 'Initial Phase') {
                 Mail::to($request->email)->send(new InitialEmail($data));
                 InitialRate::create([

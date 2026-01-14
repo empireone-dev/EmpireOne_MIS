@@ -28,7 +28,7 @@ class Employee extends Model
 
     public function applicant(): HasOne
     {
-        return $this->hasOne(Applicant::class, "emp_id", "emp_id");
+        return $this->hasOne(Applicant::class, "app_id", "emp_id");
     }
 
     public function dept(): HasOne

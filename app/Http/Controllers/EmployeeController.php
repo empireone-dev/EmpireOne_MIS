@@ -218,7 +218,7 @@ class EmployeeController extends Controller
         $jobOffer = ModelsJobOffer::where('app_id', '=', $request->app_id)
             ->where('status', '=', 'Hired')
             ->first();
-        
+
         if ($jobOffer) {
             $jobOffer->update([
                 'jobPos' => $request->position,
@@ -243,9 +243,16 @@ class EmployeeController extends Controller
     public function show($id)
     {
         $employee = Employee::where('app_id', $id)->with(['attrition', 'applicant', 'user', 'dept'])->first();
-        return response()->json([
-            'data' => $employee
-        ], 200);
+        if ($employee) {
+            return response()->json([
+                'data' => $employee
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'Employee not found',
+                'message' => 'No employee found with the provided application ID'
+            ], 404);
+        }
     }
 
     public function showForQR($id)

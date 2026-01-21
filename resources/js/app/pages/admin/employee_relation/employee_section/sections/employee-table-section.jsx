@@ -7,6 +7,7 @@ import AddEmployeeButtonSection from "./add-employee-button-section";
 import EmployeeMenuSection from "./employee-menu-section";
 import { router } from "@inertiajs/react";
 import EmployeeSearchSection from "./employee-search-section";
+import GenerateExcelFileSection from "./generate-excel-file-secttion";
 
 export default function EmployeeTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -140,19 +141,45 @@ export default function EmployeeTableSection() {
 
     const urls = new URL(window.location.href);
     const searchParams = new URLSearchParams(urls.search);
-    const pages = searchParams.get('page');
-    const account = searchParams.get('account');
-    const status = searchParams.get('status');
-    const site = searchParams.get('site');
+    const pages = searchParams.get("page");
+    const account = searchParams.get("account");
+    const status = searchParams.get("status");
+    const site = searchParams.get("site");
     function search_account(value) {
-
-        router.visit('?page=' + pages + '&account=' + (value || 'null') + '&status=' + status + '&site=' + site)
+        router.visit(
+            "?page=" +
+                pages +
+                "&account=" +
+                (value || "null") +
+                "&status=" +
+                status +
+                "&site=" +
+                site,
+        );
     }
     function search_status(value) {
-        router.visit('?page=' + pages + '&account=' + account + '&status=' + (value || 'null') + '&site=' + site)
+        router.visit(
+            "?page=" +
+                pages +
+                "&account=" +
+                account +
+                "&status=" +
+                (value || "null") +
+                "&site=" +
+                site,
+        );
     }
     function search_site(value) {
-        router.visit('?page=' + pages + '&account=' + account + '&status=' + status + '&site=' + (value || 'null'))
+        router.visit(
+            "?page=" +
+                pages +
+                "&account=" +
+                account +
+                "&status=" +
+                status +
+                "&site=" +
+                (value || "null"),
+        );
     }
 
     const columns = [
@@ -191,25 +218,30 @@ export default function EmployeeTableSection() {
             // ...getColumnSearchProps("dept"),
         },
         {
-            title: <div className="flex gap-3 items-center justify-center">
-                {/* 
+            title: (
+                <div className="flex gap-3 items-center justify-center">
+                    {/* 
                 Account
                 <FilterOutlined /> */}
-                <Select
-                    allowClear
-                    className="w-28"
-                    showSearch
-                    placeholder="Account"
-                    optionFilterProp="label"
-                    value={account == 'null' ? null : account}
-                    onChange={search_account}
-                    // onSearch={onSearch}
-                    options={[
-                        { label: "N/A", value: "N/A" },
-                        ...(accounts?.map(acc => ({ label: acc.acc, value: acc.acc })) || [])
-                    ]}
-                />
-            </div>,
+                    <Select
+                        allowClear
+                        className="w-28"
+                        showSearch
+                        placeholder="Account"
+                        optionFilterProp="label"
+                        value={account == "null" ? null : account}
+                        onChange={search_account}
+                        // onSearch={onSearch}
+                        options={[
+                            { label: "N/A", value: "N/A" },
+                            ...(accounts?.map((acc) => ({
+                                label: acc.acc,
+                                value: acc.acc,
+                            })) || []),
+                        ]}
+                    />
+                </div>
+            ),
             dataIndex: "account",
             key: "dept",
             render: (text) => text || "N/A",
@@ -232,66 +264,72 @@ export default function EmployeeTableSection() {
             },
         },
         {
-            title: <div className="flex gap-3 items-center justify-center">
-                {/* 
+            title: (
+                <div className="flex gap-3 items-center justify-center">
+                    {/* 
                 Account
                 <FilterOutlined /> */}
-                <Select
-                    allowClear
-                    className="w-28"
-                    showSearch
-                    placeholder="Site"
-                    optionFilterProp="label"
-
-                    value={site == 'null' ? null : site}
-                    onChange={search_site}
-                    // onSearch={onSearch}
-                    options={
-                        [
+                    <Select
+                        allowClear
+                        className="w-28"
+                        showSearch
+                        placeholder="Site"
+                        optionFilterProp="label"
+                        value={site == "null" ? null : site}
+                        onChange={search_site}
+                        // onSearch={onSearch}
+                        options={[
                             { text: "San Carlos", value: "San Carlos" },
                             { text: "Carcar", value: "Carcar" },
-                        ]
-                    }
-                />
-            </div>,
+                        ]}
+                    />
+                </div>
+            ),
             dataIndex: "site",
             key: "site",
             render: (_, record, i) => {
                 console.log("record", record);
 
-                return (
-                    <div key={i}>
-                        {record?.applicant?.site}
-                    </div>
-                );
+                return <div key={i}>{record?.applicant?.site}</div>;
             },
         },
         {
-            title: <div className="flex gap-3 items-center justify-center">
-                {/* Status */}
-                <Select
-                    allowClear
-                    className="w-28"
-                    showSearch
-                    placeholder="Status"
-                    optionFilterProp="label"
-                    value={status == 'null' ? null : status}
-                    onChange={search_status}
-                    // onSearch={onSearch}
-                    options={[
-                        { text: "AWOL", value: "AWOL" },
-                        { text: "Contractual", value: "Contractual" },
-                        { text: "End of Contract", value: "End of Contract" },
-                        { text: "EOPE", value: "EOPE" },
-                        { text: "Extended Probationary", value: "Extended Probationary" },
-                        { text: "Probationary", value: "Probationary" },
-                        { text: "Regular", value: "Regular" },
-                        { text: "Resigned", value: "Resigned" },
-                        { text: "Terminated", value: "Terminated" },
-                        { text: "Trainee Fallout", value: "Trainee Fallout" },
-                    ]}
-                />
-            </div>,
+            title: (
+                <div className="flex gap-3 items-center justify-center">
+                    {/* Status */}
+                    <Select
+                        allowClear
+                        className="w-28"
+                        showSearch
+                        placeholder="Status"
+                        optionFilterProp="label"
+                        value={status == "null" ? null : status}
+                        onChange={search_status}
+                        // onSearch={onSearch}
+                        options={[
+                            { text: "AWOL", value: "AWOL" },
+                            { text: "Contractual", value: "Contractual" },
+                            {
+                                text: "End of Contract",
+                                value: "End of Contract",
+                            },
+                            { text: "EOPE", value: "EOPE" },
+                            {
+                                text: "Extended Probationary",
+                                value: "Extended Probationary",
+                            },
+                            { text: "Probationary", value: "Probationary" },
+                            { text: "Regular", value: "Regular" },
+                            { text: "Resigned", value: "Resigned" },
+                            { text: "Terminated", value: "Terminated" },
+                            {
+                                text: "Trainee Fallout",
+                                value: "Trainee Fallout",
+                            },
+                        ]}
+                    />
+                </div>
+            ),
             dataIndex: "status",
             key: "status",
             // filters: [
@@ -354,7 +392,6 @@ export default function EmployeeTableSection() {
         },
     ];
 
-
     const getQueryParam = (url, paramName) => {
         const searchParams = new URLSearchParams(url.split("?")[1]);
         return searchParams.get(paramName);
@@ -384,7 +421,10 @@ export default function EmployeeTableSection() {
                     {/* <SearchBranchSection /> */}
                 </div>
             </div>
-            <EmployeeSearchSection />
+            <div className="flex justify-between items-center my-3">
+                <EmployeeSearchSection />
+                <GenerateExcelFileSection />
+            </div>
             <Table
                 pagination={false}
                 columns={columns}
@@ -393,11 +433,12 @@ export default function EmployeeTableSection() {
             <div className="flex">
                 <div className="w-full mt-3.5">
                     {employees.total > 0
-                        ? `Showing ${(currentPage - 1) * pageSize + 1
-                        } to ${Math.min(
-                            currentPage * pageSize,
-                            employees.total
-                        )} of ${employees.total} entries`
+                        ? `Showing ${
+                              (currentPage - 1) * pageSize + 1
+                          } to ${Math.min(
+                              currentPage * pageSize,
+                              employees.total,
+                          )} of ${employees.total} entries`
                         : "No entries available"}
                 </div>
                 <div className="flex w-full items-center justify-end mt-2">

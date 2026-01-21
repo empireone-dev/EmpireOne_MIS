@@ -53,7 +53,9 @@ class EmployeeController extends Controller
         }
 
         // Execute the query and paginate the results
-        $applicants = $query->paginate(10);
+        // Allow up to 10000 records per page for Excel export, default to 10
+        $perPage = min($request->get('per_page', 10), 10000);
+        $applicants = $query->paginate($perPage);
 
         // Return the results as JSON
         return response()->json([

@@ -27,6 +27,7 @@ export default function ApplicationFormSection() {
     const [address, setAddress] = useState({});
     const [open, setOpen] = useState(false);
     const [hasExperience, setHasExperience] = useState(false);
+    const [hasBPOExperience, setHasBPOExperience] = useState(false);
     const [files, setFiles] = useState([]);
     const [showSuccessModal, setShowSuccessModal] = useState(false);
     const [uploadProgress, setUploadProgress] = useState(0);
@@ -38,6 +39,7 @@ export default function ApplicationFormSection() {
         formState: { errors, isSubmitting },
         reset,
         control,
+        setValue,
     } = useForm({
         defaultValues: {
             work_experience: [
@@ -1020,6 +1022,18 @@ export default function ApplicationFormSection() {
                                             Experience
                                         </button>
                                     )}
+                                </div>
+                                <div className="flex items-center mb-3 justify-between">
+                                    <Checkbox
+                                        label="With BPO Experience?"
+                                        name="with_bpo"
+                                        checked={hasBPOExperience}
+                                        onChange={(e) => {
+                                            const isChecked = e.target.checked;
+                                            setHasBPOExperience(isChecked);
+                                            setValue("with_bpo", isChecked ? "Yes" : "No");
+                                        }}
+                                    />
                                 </div>
                                 <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                                     Emergency Contact Information

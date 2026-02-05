@@ -158,6 +158,7 @@ class ApplicantController extends Controller
             'city'          => 'nullable|string|max:255',
             'province'      => 'nullable|string|max:255',
             'source'        => 'nullable|string|max:255',
+            'with_bpo'      => 'nullable|string|max:255',
             'submitted'     => 'nullable|date',
         ]);
 

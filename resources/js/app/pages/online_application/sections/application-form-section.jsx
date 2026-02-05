@@ -363,6 +363,14 @@ export default function ApplicationFormSection() {
                                                         value: "Facebook",
                                                     },
                                                     {
+                                                        label: "Instagram",
+                                                        value: "Instagram",
+                                                    },
+                                                    {
+                                                        label: "Indeed",
+                                                        value: "Indeed",
+                                                    },
+                                                    {
                                                         label: "LinkedIn",
                                                         value: "LinkedIn",
                                                     },
@@ -901,7 +909,7 @@ export default function ApplicationFormSection() {
                                     Working Experience
                                 </h1>
 
-                                <div className="flex-col">
+                                {/* <div className="flex-col">
                                     <div className="flex items-center mb-3 justify-between">
                                         <Checkbox
                                             label="With Working Experience?"
@@ -1042,7 +1050,7 @@ export default function ApplicationFormSection() {
                                             Experience
                                         </button>
                                     )}
-                                </div>
+                                </div> */}
                                 <div className="flex items-center mb-3 justify-between">
                                     <Checkbox
                                         label="With BPO Experience?"

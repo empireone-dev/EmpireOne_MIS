@@ -69,15 +69,15 @@ export default function ApplicationFormSection() {
                     (existing) =>
                         existing.file.name === file.name &&
                         existing.file.size === file.size &&
-                        existing.file.lastModified === file.lastModified
-                )
+                        existing.file.lastModified === file.lastModified,
+                ),
         );
 
         const base64Files = await Promise.all(
             newUniqueFiles.map(async (file) => ({
                 file,
                 files: await toBase64(file),
-            }))
+            })),
         );
 
         setFiles((prevFiles) => [...prevFiles, ...base64Files]);
@@ -101,7 +101,7 @@ export default function ApplicationFormSection() {
                     .filter(Boolean);
                 handleFiles(newFiles);
                 message.success(
-                    `${info.file.name} file uploaded successfully.`
+                    `${info.file.name} file uploaded successfully.`,
                 );
             } else if (status === "error") {
                 message.error(`${info.file.name} file upload failed.`);
@@ -109,7 +109,7 @@ export default function ApplicationFormSection() {
         },
         onRemove(file) {
             setFiles((prevFiles) =>
-                prevFiles.filter((f) => f.file.name !== file.name)
+                prevFiles.filter((f) => f.file.name !== file.name),
             );
             return true; // allow UI to remove it too
         },
@@ -160,7 +160,7 @@ export default function ApplicationFormSection() {
                     files: files.map((res) => res.files),
                     is_experience: hasExperience,
                     agreed: "true",
-                })
+                }),
             );
 
             // Complete the progress
@@ -174,14 +174,14 @@ export default function ApplicationFormSection() {
             setIsUploading(false);
             setShowSuccessModal(true);
             message.success(
-                "Application has been submitted successfully! Please check your email regularly for updates on your application status."
+                "Application has been submitted successfully! Please check your email regularly for updates on your application status.",
             );
         } catch (error) {
             setUploadProgress(0);
             setIsUploading(false);
             if (error?.response?.status === 422) {
                 message.error(
-                    "Application failed: Data validation error or already exists"
+                    "Application failed: Data validation error or already exists",
                 );
             } else {
                 message.error("Something went wrong. Please try again later.");
@@ -196,7 +196,7 @@ export default function ApplicationFormSection() {
         if (e.target.name == "region") {
             const region = JSON.parse(e.target.value);
             const prov = province.filter(
-                (obj) => obj.region_code === region.region_code
+                (obj) => obj.region_code === region.region_code,
             );
             setNewProvince(prov);
             setAddress({
@@ -206,7 +206,7 @@ export default function ApplicationFormSection() {
         } else if (e.target.name == "province") {
             const province = JSON.parse(e.target.value);
             const ct = city.filter(
-                (obj) => obj.province_code === province.province_code
+                (obj) => obj.province_code === province.province_code,
             );
             setNewCity(ct);
             setAddress({
@@ -216,7 +216,7 @@ export default function ApplicationFormSection() {
         } else if (e.target.name == "city") {
             const city = JSON.parse(e.target.value);
             const brgy = barangay.filter(
-                (obj) => obj.city_code === city.city_code
+                (obj) => obj.city_code === city.city_code,
             );
             setNewBarangay(brgy);
             setAddress({
@@ -341,31 +341,70 @@ export default function ApplicationFormSection() {
                                 onSubmit={handleSubmit(onSubmit)}
                                 className="space-y-4 px-1 py-8"
                             >
-                                <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
-                                    Site Information
-                                </h1>
-                                <div className="w-full lg:w-1/2 lg:flex-row flex-none">
-                                    <Select2
-                                        register={{
-                                            ...register("site", {
-                                                required: "Site is required",
-                                            }),
-                                        }}
-                                        options={[
-                                            {
-                                                label: "San Carlos",
-                                                value: "San Carlos",
-                                            },
-                                            {
-                                                label: "Carcar",
-                                                value: "Carcar",
-                                            },
-                                        ]}
-                                        errorMessage={errors?.site?.message}
-                                        label="Site"
-                                        name="site"
-                                    />
+                                <div className="flex gap-4 mb-6 lg:flex-row flex-col">
+                                    <div className="w-full">
+                                        <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
+                                            Where did you find out about this
+                                            job posting?
+                                        </h1>
+                                        <div className="w-full lg:flex-row flex-none">
+                                            <Select2
+                                                register={{
+                                                    ...register("source", {
+                                                        required:
+                                                            "Source is required",
+                                                    }),
+                                                }}
+                                                options={[
+                                                    {
+                                                        label: "Facebook",
+                                                        value: "Facebook",
+                                                    },
+                                                    {
+                                                        label: "Poster",
+                                                        value: "Poster",
+                                                    },
+                                                ]}
+                                                errorMessage={
+                                                    errors?.source?.message
+                                                }
+                                                label="Source"
+                                                name="source"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="w-full">
+                                        <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
+                                            Site Information
+                                        </h1>
+                                        <div className="w-full lg:flex-row flex-none">
+                                            <Select2
+                                                register={{
+                                                    ...register("site", {
+                                                        required:
+                                                            "Site is required",
+                                                    }),
+                                                }}
+                                                options={[
+                                                    {
+                                                        label: "San Carlos",
+                                                        value: "San Carlos",
+                                                    },
+                                                    {
+                                                        label: "Carcar",
+                                                        value: "Carcar",
+                                                    },
+                                                ]}
+                                                errorMessage={
+                                                    errors?.site?.message
+                                                }
+                                                label="Site"
+                                                name="site"
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                                     Personal Information
                                 </h1>
@@ -848,7 +887,7 @@ export default function ApplicationFormSection() {
                                             // error=""
                                             onChange={(e) =>
                                                 setHasExperience(
-                                                    e.target.checked
+                                                    e.target.checked,
                                                 )
                                             }
                                         />
@@ -866,7 +905,7 @@ export default function ApplicationFormSection() {
                                                                 type="button"
                                                                 onClick={() =>
                                                                     remove(
-                                                                        index
+                                                                        index,
                                                                     )
                                                                 }
                                                                 className="bg-red-500 text-white px-2 py-1 rounded"
@@ -884,7 +923,7 @@ export default function ApplicationFormSection() {
                                                                     {
                                                                         required:
                                                                             "Company is required",
-                                                                    }
+                                                                    },
                                                                 ),
                                                             }}
                                                             errorMessage={
@@ -906,7 +945,7 @@ export default function ApplicationFormSection() {
                                                                     {
                                                                         required:
                                                                             "Position is required",
-                                                                    }
+                                                                    },
                                                                 ),
                                                             }}
                                                             errorMessage={
@@ -931,7 +970,7 @@ export default function ApplicationFormSection() {
                                                                     {
                                                                         required:
                                                                             "Started at is required",
-                                                                    }
+                                                                    },
                                                                 ),
                                                             }}
                                                             errorMessage={
@@ -952,7 +991,7 @@ export default function ApplicationFormSection() {
                                                                     {
                                                                         required:
                                                                             "End at is required",
-                                                                    }
+                                                                    },
                                                                 ),
                                                             }}
                                                             errorMessage={
@@ -990,13 +1029,9 @@ export default function ApplicationFormSection() {
                                         <Input2
                                             register={{
                                                 ...register("ename", {
-                                                    required:
-                                                        "Emergency Contact Fullname is required",
+                                                    required: false,
                                                 }),
                                             }}
-                                            errorMessage={
-                                                errors?.ename?.message
-                                            }
                                             name="ename"
                                             label="Emergency Contact Fullname"
                                             type="text"
@@ -1006,13 +1041,9 @@ export default function ApplicationFormSection() {
                                         <Input2
                                             register={{
                                                 ...register("eaddress", {
-                                                    required:
-                                                        "Emergency Contact Address is required",
+                                                    required: false,
                                                 }),
                                             }}
-                                            errorMessage={
-                                                errors?.eaddress?.message
-                                            }
                                             name="eaddress"
                                             label="Address"
                                             type="text"
@@ -1045,13 +1076,9 @@ export default function ApplicationFormSection() {
                                         <Input2
                                             register={{
                                                 ...register("ephone", {
-                                                    required:
-                                                        "Emergency Contact Phone is required",
+                                                    required: false,
                                                 }),
                                             }}
-                                            errorMessage={
-                                                errors?.ephone?.message
-                                            }
                                             name="ephone"
                                             label="Contact No."
                                             type="number"
@@ -1116,7 +1143,7 @@ export default function ApplicationFormSection() {
                                                         {
                                                             required:
                                                                 "You must agree to the Privacy Policy to proceed.",
-                                                        }
+                                                        },
                                                     ),
                                                 }}
                                                 name="privacy_policy"
@@ -1130,7 +1157,7 @@ export default function ApplicationFormSection() {
                                                     onClick={() =>
                                                         window.open(
                                                             "/privacy_policy",
-                                                            "_blank"
+                                                            "_blank",
                                                         )
                                                     }
                                                     className="text-blue-600 underline"

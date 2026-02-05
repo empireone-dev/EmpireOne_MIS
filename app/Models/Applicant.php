@@ -44,6 +44,7 @@ class Applicant extends Model
         'ephone',
         'agreed',
         'status',
+        'source',
         'call_status',
         'site',
         'submitted',

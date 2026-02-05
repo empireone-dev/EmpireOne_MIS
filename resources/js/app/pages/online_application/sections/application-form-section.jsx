@@ -363,8 +363,28 @@ export default function ApplicationFormSection() {
                                                         value: "Facebook",
                                                     },
                                                     {
+                                                        label: "LinkedIn",
+                                                        value: "LinkedIn",
+                                                    },
+                                                    {
                                                         label: "Poster",
                                                         value: "Poster",
+                                                    },
+                                                    {
+                                                        label: "Job Board",
+                                                        value: "Job Board",
+                                                    },
+                                                    {
+                                                        label: "Job Fair",
+                                                        value: "Job Fair",
+                                                    },
+                                                    {
+                                                        label: "Employee Referral",
+                                                        value: "Employee Referral",
+                                                    },
+                                                    {
+                                                        label: "Other",
+                                                        value: "Other",
                                                     },
                                                 ]}
                                                 errorMessage={
@@ -1031,7 +1051,10 @@ export default function ApplicationFormSection() {
                                         onChange={(e) => {
                                             const isChecked = e.target.checked;
                                             setHasBPOExperience(isChecked);
-                                            setValue("with_bpo", isChecked ? "Yes" : "No");
+                                            setValue(
+                                                "with_bpo",
+                                                isChecked ? "Yes" : "No",
+                                            );
                                         }}
                                     />
                                 </div>

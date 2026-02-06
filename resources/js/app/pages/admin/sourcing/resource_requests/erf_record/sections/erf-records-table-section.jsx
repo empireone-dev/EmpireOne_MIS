@@ -65,6 +65,10 @@ export default function ErfRecordsTableSection() {
     };
 
     const getStatusStep = (status) => {
+        // Get current date for demonstration - in real app, these would come from API/database
+        const currentDate = new Date().toLocaleString();
+        const submittedDate = selectedErfRecord?.submitted || currentDate;
+
         const steps = [
             {
                 title: "Submitted",
@@ -74,7 +78,7 @@ export default function ErfRecordsTableSection() {
             {
                 title: "In Review",
                 status: "process",
-                description: "Under review by HR/Approver",
+                description: "Under review by Site Director/Site Manager",
             },
             {
                 title: "Approved",
@@ -95,6 +99,10 @@ export default function ErfRecordsTableSection() {
                     steps: steps.map((step, index) => ({
                         ...step,
                         status: index === 0 ? "process" : "wait",
+                        title: index === 0 
+                            ? `${step.title} (${submittedDate})`
+                            : step.title,
+                        description: step.description,
                     })),
                 };
             case "In Review":
@@ -108,6 +116,12 @@ export default function ErfRecordsTableSection() {
                                 : index === 1
                                   ? "process"
                                   : "wait",
+                        title: index === 0 
+                            ? `${step.title} (${submittedDate})`
+                            : index === 1
+                            ? `${step.title} (${currentDate})`
+                            : step.title,
+                        description: step.description,
                     })),
                 };
             case "Approved":
@@ -121,6 +135,14 @@ export default function ErfRecordsTableSection() {
                                 : index === 2
                                   ? "process"
                                   : "wait",
+                        title: index === 0 
+                            ? `${step.title} (${submittedDate})`
+                            : index === 1
+                            ? `${step.title} (${currentDate})`
+                            : index === 2
+                            ? `${step.title} (${currentDate})`
+                            : step.title,
+                        description: step.description,
                     })),
                 };
             case "Completed":
@@ -129,6 +151,10 @@ export default function ErfRecordsTableSection() {
                     steps: steps.map((step, index) => ({
                         ...step,
                         status: "finish",
+                        title: index === 0 
+                            ? `${step.title} (${submittedDate})`
+                            : `${step.title} (${currentDate})`,
+                        description: step.description,
                     })),
                 };
             case "Declined":
@@ -142,10 +168,14 @@ export default function ErfRecordsTableSection() {
                                 : index === 1
                                   ? "error"
                                   : "wait",
-                        description:
-                            index === 1
-                                ? "Request declined by approver"
-                                : step.description,
+                        title: index === 0 
+                            ? `${step.title} (${submittedDate})`
+                            : index === 1
+                            ? `Declined (${currentDate})`
+                            : step.title,
+                        description: index === 1
+                            ? "Request declined by approver"
+                            : step.description,
                     })),
                 };
             default:
@@ -516,7 +546,9 @@ export default function ErfRecordsTableSection() {
                                         <b>{selectedErfRecord.jobType}</b>
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Position Status:">
-                                        <b>{selectedErfRecord.positionStatus}</b>
+                                        <b>
+                                            {selectedErfRecord.positionStatus}
+                                        </b>
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Date Needed:">
                                         <b>{selectedErfRecord.dateNeed}</b>

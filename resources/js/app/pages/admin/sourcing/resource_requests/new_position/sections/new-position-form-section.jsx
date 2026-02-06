@@ -261,7 +261,7 @@ export default function NewPositionFormSection() {
                                     {departments.map((res, i) => {
                                         return (
                                             <option key={i} value={res.dept}>
-                                                {res.dept}
+                                                <b>{res.dept}</b> ({res.site})
                                             </option>
                                         );
                                     })}

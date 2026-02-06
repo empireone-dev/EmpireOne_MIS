@@ -4,9 +4,9 @@ import AddExistingPositionSection from "./add-existing-position-section";
 export default function AddPositionButtonSection() {
     return (
         <div className="my-2">
-            <div class="inline-flex rounded-md shadow-sm" role="group">
-                <AddNewPositionSection/>
-                {/* <AddExistingPositionSection/> */}
+            <div className="inline-flex rounded-l shadow-sm" role="group">
+                <AddNewPositionSection />
+                <AddExistingPositionSection />
             </div>
         </div>
     );

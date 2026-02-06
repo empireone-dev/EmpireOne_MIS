@@ -15,7 +15,7 @@ class OutSourcingErfController extends Controller
         $res = OutSourcingErf::where('ref_id', $ref_id)->with(['ja', 'jd'])->first();
 
         return response()->json([
-            'data' => $res  
+            'data' => $res
         ], 200);
     }
     public function count_outsourcing_erf($date)
@@ -28,7 +28,7 @@ class OutSourcingErfController extends Controller
     }
     public function index()
     {
-        $erfrec = OutSourcingErf::with('user')->get();
+        $erfrec = OutSourcingErf::with('user')->orderBy('id', 'desc')->get();
         return response()->json([
             'data' => $erfrec
         ], 200);
@@ -37,12 +37,13 @@ class OutSourcingErfController extends Controller
     {
 
         $erf = OutSourcingErf::create([
-            'user_id' => $request->id,
+            'user_id' => $request->user_id,
             'ref_id' => $request->ref_id,
             'submitted' => $request->submitted,
             'budgetCost' => $request->budgetCost,
             'dateNeed' => $request->dateNeed,
             'department' => $request->department,
+            'account' => $request->account,
             'jobTitle' => $request->jobTitle,
             'jobType' => $request->jobType,
             'justification' => $request->justification,

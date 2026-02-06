@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { create_outsourcing_erf_thunk } from "../../erf_record/redux/erf-record-thunk";
 import moment from "moment";
-import axios from 'axios';
-import { message } from "antd";
+import axios from "axios";
+import { message, Button } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 export default function ExistingPositionFormSection() {
     const { job_positions } = useSelector((state) => state.job_positions);
@@ -14,20 +15,21 @@ export default function ExistingPositionFormSection() {
 
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
-        department: '',
-        budgetCost: '',
-        jobTitle: '',
-        jobType: '',
-        personnel: '',
-        dateNeed: '',
-        positionStatus: '',
-        sourcingMethod: '',
-        justification: '',
-        site: user?.site || '',
+        department: "",
+        account: "",
+        budgetCost: "",
+        jobTitle: "",
+        jobType: "",
+        personnel: "",
+        dateNeed: "",
+        positionStatus: "",
+        sourcingMethod: "",
+        justification: "",
+        site: user?.site || "",
     });
 
     const [applicationCount, setApplicationCount] = useState(0);
-    const [reqs, setReqs] = useState('');
+    const [reqs, setReqs] = useState("");
 
     useEffect(() => {
         const fetchApplicationCount = async () => {
@@ -57,24 +59,32 @@ export default function ExistingPositionFormSection() {
 
     const handleJobTitleChange = (e) => {
         const selectedJobTitle = e.target.value;
-        const selectedJob = job_positions.find(job => job.jPosition === selectedJobTitle);
+        const selectedJob = job_positions.find(
+            (job) => job.jPosition === selectedJobTitle,
+        );
 
         if (selectedJob) {
             setForm((prevForm) => ({
                 ...prevForm,
+                account: selectedJob.outsourcing_erf.account,
                 department: selectedJob.outsourcing_erf.department,
                 budgetCost: selectedJob.salary,
-                jobTitle: selectedJobTitle
+                jobTitle: selectedJobTitle,
             }));
         } else {
             setForm((prevForm) => ({
                 ...prevForm,
-                department: '',
-                budgetCost: '',
-                jobTitle: selectedJobTitle
+                department: "",
+                account: "",
+                budgetCost: "",
+                jobTitle: selectedJobTitle,
             }));
         }
         setReqs(selectedJobTitle);
+    };
+
+    const handleGoBack = () => {
+        window.history.back();
     };
 
     const submitErf = async () => {
@@ -85,7 +95,7 @@ export default function ExistingPositionFormSection() {
                     submitted: moment().format("YYYY-MM-DD"),
                     ...form,
                     ...user,
-                })
+                }),
             );
             message.success("Successfully Added!");
             setTimeout(() => {
@@ -100,17 +110,33 @@ export default function ExistingPositionFormSection() {
 
     return (
         <div>
+            {/* Back Button */}
+            <div className="mb-4">
+                <Button
+                    onClick={handleGoBack}
+                    icon={<ArrowLeftOutlined />}
+                    className="mb-4 flex items-center gap-2 bg-gray-100 border-gray-300 hover:bg-gray-200"
+                >
+                    Back
+                </Button>
+            </div>
+
             <form>
                 <h1 className="text-xl font-semibold mb-3 text-gray-900 mt-6 text-center">
                     EMPLOYEE REQUISITION FORM
                 </h1>
-                <h1 className="text-lg"><b>Instructions/Hiring Information</b></h1>
+                <h1 className="text-lg">
+                    <b>Instructions/Hiring Information</b>
+                </h1>
                 <p>
                     &emsp;&emsp;Use this form to initiate the recruitment
                     process for all new and existing staff. Please complete all
                     applicable sections of this form.{" "}
-                    <b>NO OFFERS should be made, either verbally or in written
-                        form, before all approvals on the form are completed</b>.
+                    <b>
+                        NO OFFERS should be made, either verbally or in written
+                        form, before all approvals on the form are completed
+                    </b>
+                    .
                 </p>
                 <input
                     onChange={(e) =>
@@ -124,7 +150,9 @@ export default function ExistingPositionFormSection() {
                 />
                 <div className="flex flex-1 w-full gap-4 mb-4 mt-4">
                     <div className="w-full flex flex-col">
-                        <label><b>Reference No.</b></label>
+                        <label>
+                            <b>Reference No.</b>
+                        </label>
                         <input
                             type="text"
                             value={form.ref_id || ""}
@@ -133,7 +161,9 @@ export default function ExistingPositionFormSection() {
                         />
                     </div>
                     <div className="w-full flex flex-col">
-                        <label><b>Job Title</b></label>
+                        <label>
+                            <b>Job Title</b>
+                        </label>
                         <select
                             className="border p-2 rounded w-full"
                             onChange={handleJobTitleChange}
@@ -141,7 +171,7 @@ export default function ExistingPositionFormSection() {
                         >
                             <option value=""></option>
                             {job_positions
-                                .filter(res => res.status === "Approved")
+                                .filter((res) => res.status === "Approved")
                                 .map((res, i) => (
                                     <option value={res.jPosition} key={i}>
                                         {res.jPosition}
@@ -152,9 +182,13 @@ export default function ExistingPositionFormSection() {
                 </div>
                 <div className="flex flex-1 w-full gap-4 mb-4">
                     <div className="w-full flex flex-col">
-                        <label><b>Job Type</b></label>
+                        <label>
+                            <b>Job Type</b>
+                        </label>
                         <select
-                            onChange={(e) => setForm({ ...form, jobType: e.target.value })}
+                            onChange={(e) =>
+                                setForm({ ...form, jobType: e.target.value })
+                            }
                             className="border p-2 rounded w-full"
                             value={form.jobType}
                         >
@@ -166,27 +200,42 @@ export default function ExistingPositionFormSection() {
                         </select>
                     </div>
                     <div className="w-full flex flex-col">
-                        <label><b>No. of Required Personnel</b></label>
+                        <label>
+                            <b>No. of Required Personnel</b>
+                        </label>
                         <input
                             type="number"
                             className="border p-2 rounded w-full"
-                            onChange={(e) => setForm({ ...form, personnel: e.target.value })}
+                            onChange={(e) =>
+                                setForm({ ...form, personnel: e.target.value })
+                            }
                         />
                     </div>
                     <div className="w-full flex flex-col">
-                        <label><b>Date Needed</b></label>
+                        <label>
+                            <b>Target Onboarding Date</b>
+                        </label>
                         <input
                             type="date"
                             className="border p-2 rounded w-full"
-                            onChange={(e) => setForm({ ...form, dateNeed: e.target.value })}
+                            onChange={(e) =>
+                                setForm({ ...form, dateNeed: e.target.value })
+                            }
                         />
                     </div>
                 </div>
                 <div className="flex flex-1 w-full gap-4 mb-4">
                     <div className="w-full flex flex-col">
-                        <label><b>Position Status</b></label>
+                        <label>
+                            <b>Position Status</b>
+                        </label>
                         <select
-                            onChange={(e) => setForm({ ...form, positionStatus: e.target.value })}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    positionStatus: e.target.value,
+                                })
+                            }
                             className="border p-2 rounded w-full"
                             value={form.positionStatus}
                         >
@@ -197,7 +246,9 @@ export default function ExistingPositionFormSection() {
                         </select>
                     </div>
                     <div className="w-full flex flex-col">
-                        <label><b>Department</b></label>
+                        <label>
+                            <b>Department</b>
+                        </label>
                         <input
                             type="text"
                             value={form.department}
@@ -206,9 +257,27 @@ export default function ExistingPositionFormSection() {
                         />
                     </div>
                     <div className="w-full flex flex-col">
-                        <label><b>Sourcing Method</b></label>
+                        <label>
+                            <b>Account</b>
+                        </label>
+                        <input
+                            type="text"
+                            value={form.account}
+                            className="border p-2 rounded w-full"
+                            readOnly
+                        />
+                    </div>
+                    <div className="w-full flex flex-col">
+                        <label>
+                            <b>Sourcing Method</b>
+                        </label>
                         <select
-                            onChange={(e) => setForm({ ...form, sourcingMethod: e.target.value })}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    sourcingMethod: e.target.value,
+                                })
+                            }
                             className="border p-2 rounded w-full"
                             value={form.sourcingMethod}
                         >
@@ -220,24 +289,32 @@ export default function ExistingPositionFormSection() {
                     </div>
                 </div>
                 <div className="w-full flex flex-col mb-4">
-                    <label><b>Reason or Justification of the Request</b></label>
+                    <label>
+                        <b>Reason or Justification of the Request</b>
+                    </label>
                     <textarea
                         className="border h-40 p-2 rounded w-full"
-                        onChange={(e) => setForm({ ...form, justification: e.target.value })}
+                        onChange={(e) =>
+                            setForm({ ...form, justification: e.target.value })
+                        }
                     />
                 </div>
                 <div className="flex flex-1 w-full gap-4 mb-4">
                     <div className="w-full flex flex-col">
-                        <label><b>Manager Submitting Request</b></label>
+                        <label>
+                            <b>Manager Submitting Request</b>
+                        </label>
                         <input
                             type="text"
-                            value={`${user?.employee_fname || ''} ${user?.employee_lname || ''}`}
+                            value={`${user?.employee_fname || ""} ${user?.employee_lname || ""}`}
                             className="border p-2 rounded w-full"
                             readOnly
                         />
                     </div>
                     <div className="w-full flex flex-col">
-                        <label><b>Budget/Cost per head:</b></label>
+                        <label>
+                            <b>Budget/Cost per head:</b>
+                        </label>
                         <input
                             type="text"
                             value={form.budgetCost}
@@ -247,21 +324,21 @@ export default function ExistingPositionFormSection() {
                     </div>
                 </div>
                 <div className="flex flex-1 gap-2 justify-end items-center">
-                    <button
+                    <Button
                         className="rounded-md hover:bg-blue-100 w-32 h-10 mt-2"
                         type="button"
-                        onClick={() => router.visit("/admin/sourcing/resource_requests/erf_record")}
+                        onClick={handleGoBack}
                     >
                         Back
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                         className="bg-blue-600 rounded-md hover:bg-blue-700 text-white w-32 h-10 mt-2"
-                        type="button"
+                        type="primary"
                         onClick={submitErf}
-                        disabled={loading}
+                        loading={loading}
                     >
-                        {loading ? "Submitting..." : "Submit"}
-                    </button>
+                        Submit
+                    </Button>
                 </div>
             </form>
         </div>

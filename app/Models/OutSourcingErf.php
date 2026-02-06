@@ -20,6 +20,7 @@ class OutSourcingErf extends Model
         'dateNeed',
         'positionStatus',
         'department',
+        'account',
         'sourcingMethod',
         'justification',
         'budgetCost',
@@ -31,15 +32,15 @@ class OutSourcingErf extends Model
 
     public function user(): HasOne
     {
-        return $this->hasOne(User::class,"id","user_id");
+        return $this->hasOne(User::class, "id", "user_id");
     }
 
     public function ja(): HasOne
     {
-        return $this->hasOne(ERFJa::class,"ref_id","ref_id");
+        return $this->hasOne(ERFJa::class, "ref_id", "ref_id");
     }
     public function jd(): HasOne
     {
-        return $this->hasOne(ERFJd::class,"ref_id","ref_id");
+        return $this->hasOne(ERFJd::class, "ref_id", "ref_id");
     }
 }

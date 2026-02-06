@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Stepper, Step, Typography } from "@material-tailwind/react";
 import { Button, message } from "antd";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 import Wysiwyg from "@/app/pages/_components/wysiwyg";
 import App from "@/app/pages/_components/summernote-editor";
 import App2 from "@/app/pages/_components/summernote-editor2";
@@ -14,6 +15,7 @@ export default function NewPositionFormSection() {
     const [activeStep, setActiveStep] = useState(0);
     const { job_positions } = useSelector((state) => state.job_positions);
     const { departments, erfCount } = useSelector((state) => state.departments);
+    const { accounts } = useSelector((state) => state.accounts);
     const { user } = useSelector((state) => state.app);
     const [loading, setLoading] = useState(false);
     // console.log('job_positions',job_positions)
@@ -23,8 +25,10 @@ export default function NewPositionFormSection() {
     // const [step3FormData, setStep3FormData] = useState({ jobDescriptionDetails: '' });
 
     const [form, setForm] = useState({
-        positionStatus: 'New Position',
-        site: user?.site || '',
+        positionStatus: "New Position",
+        site: user?.site || "",
+        department: "",
+        account: "",
     });
 
     const handleNext = () => {
@@ -57,15 +61,21 @@ export default function NewPositionFormSection() {
         }
     };
 
+    const handleGoBack = () => {
+        window.history.back();
+    };
+
     async function submit_new_erf(params) {
         setLoading(true);
         try {
             await store.dispatch(
                 create_outsourcing_erf_thunk({
                     submitted: moment().format("YYYY-MM-DD"),
+                    user_id: user?.id,
+                    site: user?.site || "",
                     ...form,
-                    ...user,
-                })
+                    // ...user,
+                }),
             );
             message.success("Successfully Added!");
             setTimeout(() => {
@@ -196,7 +206,7 @@ export default function NewPositionFormSection() {
                             </div>
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">
-                                    <b>Date Needed</b>
+                                    <b>Target Onboarding Date</b>
                                 </label>
                                 <input
                                     onChange={(e) =>
@@ -228,7 +238,6 @@ export default function NewPositionFormSection() {
                                     className="border p-2 rounded w-full"
                                     readOnly
                                 />
-
                             </div>
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">
@@ -241,15 +250,46 @@ export default function NewPositionFormSection() {
                                             department: e.target.value,
                                         })
                                     }
+                                    value={form.department || ""}
                                     className="border p-2 rounded w-full"
-                                    name=""
-                                    id=""
+                                    name="department"
+                                    id="department"
                                 >
-                                    <option selected disabled></option>
+                                    <option value="" disabled>
+                                        Select a department
+                                    </option>
                                     {departments.map((res, i) => {
                                         return (
-                                            <option value={res.dept}>
+                                            <option key={i} value={res.dept}>
                                                 {res.dept}
+                                            </option>
+                                        );
+                                    })}
+                                </select>
+                            </div>
+                            <div className="w-full flex flex-col">
+                                <label htmlFor="">
+                                    <b>Account</b>
+                                </label>
+                                <select
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            account: e.target.value,
+                                        })
+                                    }
+                                    value={form.account || ""}
+                                    className="border p-2 rounded w-full"
+                                    name="account"
+                                    id="account"
+                                >
+                                    <option value="" disabled>
+                                        Select an account
+                                    </option>
+                                    {accounts.map((res, i) => {
+                                        return (
+                                            <option key={i} value={res.acc}>
+                                                {res.acc}
                                             </option>
                                         );
                                     })}
@@ -310,7 +350,7 @@ export default function NewPositionFormSection() {
                                         })
                                     }
                                     type="text"
-                                    value={`${user?.employee_fname || ''} ${user?.employee_lname || ''}`}
+                                    value={`${user?.employee_fname || ""} ${user?.employee_lname || ""}`}
                                     className="border p-2 rounded w-full"
                                     readOnly
                                 />
@@ -413,50 +453,69 @@ export default function NewPositionFormSection() {
 
     return (
         <div className="w-full">
-            <div className="w-full px-16 pt-4 pb-8">
-                <Stepper
-                    activeStep={activeStep}
-                    lineClassName="bg-gray-300"
-                    activeLineClassName="bg-blue-600"
+            {/* Back Button */}
+            <div className="pt-4 pb-2">
+                <Button
+                    onClick={handleGoBack}
+                    icon={<ArrowLeftOutlined />}
+                    className="mb-4 flex items-center gap-2 bg-gray-100 border-gray-300 hover:bg-gray-200"
                 >
-                    <Step
-                        className="h-4 w-4 !bg-gray-300"
-                        activeClassName="ring-0 !bg-blue-600 text-blue-600"
-                        completedClassName="!bg-blue-600 text-blue-600"
-                    // onClick={() => handleStepChange(0)}
+                    Back
+                </Button>
+            </div>
+
+            <div className="px-8 w-full pt-4 pb-12">
+                <div className="relative px-4">
+                    <Stepper
+                        activeStep={activeStep}
+                        lineClassName="bg-gray-300"
+                        activeLineClassName="bg-blue-600"
                     >
-                        <div className="absolute -bottom-[2.3rem] w-max text-center text-xs">
-                            <Typography variant="h6" color="inherit">
-                                Employee Requisition
-                            </Typography>
-                        </div>
-                    </Step>
-                    <Step
-                        className="h-4 w-4 !bg-gray-300"
-                        activeClassName="ring-0 !bg-blue-600 text-blue-600"
-                        completedClassName="!bg-blue-600 text-blue-600"
-                    // onClick={() => handleStepChange(1)}
-                    >
-                        <div className="absolute -bottom-[2.3rem] w-max text-center text-xs">
-                            <Typography variant="h6" color="inherit">
-                                Job Analysis
-                            </Typography>
-                        </div>
-                    </Step>
-                    <Step
-                        className="h-4 w-4 !bg-blue-gray-50 cursor-pointer"
-                        activeClassName="ring-0 !bg-blue-600 text-blue-600"
-                        completedClassName="!bg-blue-600 text-blue-600"
-                    // onClick={() => handleStepChange(2)}
-                    >
-                        <div className="absolute -bottom-[2.3rem] w-max text-center text-xs">
-                            <Typography variant="h6" color="inherit">
-                                Job Description
-                            </Typography>
-                        </div>
-                    </Step>
-                </Stepper>
-                <div className="mt-16">{renderFormByStep()}</div>
+                        <Step
+                            className="h-6 w-6 !bg-gray-300 relative"
+                            activeClassName="ring-0 !bg-blue-600 text-white"
+                            completedClassName="!bg-blue-600 text-white"
+                        >
+                            <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 w-max text-center">
+                                <Typography
+                                    variant="small"
+                                    className="font-medium text-gray-600"
+                                >
+                                    Employee Requisition
+                                </Typography>
+                            </div>
+                        </Step>
+                        <Step
+                            className="h-6 w-6 !bg-gray-300 relative"
+                            activeClassName="ring-0 !bg-blue-600 text-white"
+                            completedClassName="!bg-blue-600 text-white"
+                        >
+                            <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 w-max text-center">
+                                <Typography
+                                    variant="small"
+                                    className="font-medium text-gray-600"
+                                >
+                                    Job Analysis
+                                </Typography>
+                            </div>
+                        </Step>
+                        <Step
+                            className="h-6 w-6 !bg-gray-300 relative"
+                            activeClassName="ring-0 !bg-blue-600 text-white"
+                            completedClassName="!bg-blue-600 text-white"
+                        >
+                            <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 w-max text-center">
+                                <Typography
+                                    variant="small"
+                                    className="font-medium text-gray-600"
+                                >
+                                    Job Description
+                                </Typography>
+                            </div>
+                        </Step>
+                    </Stepper>
+                </div>
+                <div className="mt-20">{renderFormByStep()}</div>
             </div>
         </div>
     );

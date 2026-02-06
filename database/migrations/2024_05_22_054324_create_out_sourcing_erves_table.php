@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('dateNeed')->nullable();
             $table->string('positionStatus')->nullable();
             $table->string('department')->nullable();
+            $table->string('account')->nullable();
             $table->string('sourcingMethod')->nullable();
             $table->string('justification')->nullable();
             $table->string('budgetCost')->nullable();

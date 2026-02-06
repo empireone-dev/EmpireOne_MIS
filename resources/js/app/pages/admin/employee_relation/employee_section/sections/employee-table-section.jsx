@@ -281,6 +281,7 @@ export default function EmployeeTableSection() {
                         options={[
                             { text: "San Carlos", value: "San Carlos" },
                             { text: "Carcar", value: "Carcar" },
+                            { text: "Cebu", value: "Cebu" },
                         ]}
                     />
                 </div>

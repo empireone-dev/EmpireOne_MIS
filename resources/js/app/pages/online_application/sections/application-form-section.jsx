@@ -363,10 +363,6 @@ export default function ApplicationFormSection() {
                                                         value: "Facebook",
                                                     },
                                                     {
-                                                        label: "Instagram",
-                                                        value: "Instagram",
-                                                    },
-                                                    {
                                                         label: "Indeed",
                                                         value: "Indeed",
                                                     },
@@ -375,24 +371,25 @@ export default function ApplicationFormSection() {
                                                         value: "LinkedIn",
                                                     },
                                                     {
-                                                        label: "Poster",
-                                                        value: "Poster",
+                                                        label: "PESO Job Fair",
+                                                        value: "PESO Job Fair",
+                                                    },
+
+                                                    {
+                                                        label: "School Job Fair",
+                                                        value: "School Job Fair",
                                                     },
                                                     {
-                                                        label: "Job Board",
-                                                        value: "Job Board",
-                                                    },
-                                                    {
-                                                        label: "Job Fair",
-                                                        value: "Job Fair",
+                                                        label: "External Ads",
+                                                        value: "External Ads",
                                                     },
                                                     {
                                                         label: "Employee Referral",
                                                         value: "Employee Referral",
                                                     },
                                                     {
-                                                        label: "Other",
-                                                        value: "Other",
+                                                        label: "Non Employee Referral",
+                                                        value: "Non Employee Referral",
                                                     },
                                                 ]}
                                                 errorMessage={
@@ -423,6 +420,10 @@ export default function ApplicationFormSection() {
                                                     {
                                                         label: "Carcar",
                                                         value: "Carcar",
+                                                    },
+                                                    {
+                                                        label: "Cebu",
+                                                        value: "Cebu",
                                                     },
                                                 ]}
                                                 errorMessage={

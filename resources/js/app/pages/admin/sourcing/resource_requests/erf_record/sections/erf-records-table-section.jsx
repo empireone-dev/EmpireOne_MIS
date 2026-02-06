@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Tag } from "antd";
+import { Button, Input, Space, Table, Tag, Modal, Steps, Descriptions, Card } from "antd";
 import Highlighter from "react-highlight-words";
 import ButtonComponents from "../components/button-components";
 import ErfDropdownFilterComponents from "@/app/pages/admin/sourcing/resource_requests/erf_record/components/erf-dropdown-filter-components";
@@ -13,6 +13,8 @@ import ErfMenuButtonSection from "./erf-menu-button-section";
 export default function ErfRecordsTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [selectedErfRecord, setSelectedErfRecord] = useState(null);
     const { erf_records,filteredData } = useSelector((state) => state.erf_records);
     const dispatch =useDispatch()
     console.log("erf_records", erf_records);
@@ -32,6 +34,55 @@ export default function ErfRecordsTableSection() {
     useEffect(() => {
         dispatch(setFilteredData(erf_records))
     }, [erf_records]);
+
+    const openErfModal = (record) => {
+        setSelectedErfRecord(record);
+        setIsModalVisible(true);
+    };
+
+    const closeErfModal = () => {
+        setIsModalVisible(false);
+        setSelectedErfRecord(null);
+    };
+
+    const getStatusStep = (status) => {
+        const steps = [
+            { title: 'Submitted', status: 'finish' },
+            { title: 'In Review', status: 'process' },
+            { title: 'Approved', status: 'finish' },
+            { title: 'Completed', status: 'wait' }
+        ];
+
+        switch (status) {
+            case 'Pending':
+                return { current: 0, steps: steps.map((step, index) => ({
+                    ...step,
+                    status: index === 0 ? 'process' : 'wait'
+                })) };
+            case 'In Review':
+                return { current: 1, steps: steps.map((step, index) => ({
+                    ...step,
+                    status: index < 1 ? 'finish' : index === 1 ? 'process' : 'wait'
+                })) };
+            case 'Approved':
+                return { current: 2, steps: steps.map((step, index) => ({
+                    ...step,
+                    status: index < 2 ? 'finish' : index === 2 ? 'process' : 'wait'
+                })) };
+            case 'Completed':
+                return { current: 3, steps: steps.map((step, index) => ({
+                    ...step,
+                    status: 'finish'
+                })) };
+            case 'Declined':
+                return { current: 1, steps: steps.map((step, index) => ({
+                    ...step,
+                    status: index === 0 ? 'finish' : index === 1 ? 'error' : 'wait'
+                })) };
+            default:
+                return { current: 0, steps };
+        }
+    };
 
     const searchInput = useRef(null);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -160,8 +211,16 @@ export default function ErfRecordsTableSection() {
         {
             title: "Ref #",
             dataIndex: "ref_id",
-            key: "emp_id",
-            ...getColumnSearchProps("emp_id"),
+            key: "ref_id",
+            render: (text, record) => (
+                <Button 
+                    type="link" 
+                    onClick={() => openErfModal(record)}
+                    style={{ padding: 0, height: 'auto' }}
+                >
+                    {text}
+                </Button>
+            ),
         },
         {
             title: "Requesting Manager",
@@ -271,6 +330,123 @@ export default function ErfRecordsTableSection() {
                 dataSource={filteredData}
                 className="mt-1"
             />
+
+            {/* ERF Details Modal */}
+            <Modal
+                title={`ERF Details - ${selectedErfRecord?.ref_id || ''}`}
+                open={isModalVisible}
+                onCancel={closeErfModal}
+                footer={null}
+                width={1000}
+                style={{ top: 20 }}
+            >
+                {selectedErfRecord && (
+                    <div className="flex gap-6">
+                        {/* Main Content */}
+                        <div className="flex-1">
+                            <Card title="Request Information" className="mb-4">
+                                <Descriptions column={2} bordered size="small">
+                                    <Descriptions.Item label="Reference ID">
+                                        {selectedErfRecord.ref_id}
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Status">
+                                        <Tag
+                                            color={
+                                                selectedErfRecord.status === "Approved"
+                                                    ? "green"
+                                                    : selectedErfRecord.status === "Pending"
+                                                    ? "orange"
+                                                    : selectedErfRecord.status === "Declined"
+                                                    ? "red"
+                                                    : selectedErfRecord.status === "In Review"
+                                                    ? "blue"
+                                                    : "blue"
+                                            }
+                                        >
+                                            {selectedErfRecord.status}
+                                        </Tag>
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Requesting Manager">
+                                        {selectedErfRecord.user?.employee_fname} {selectedErfRecord.user?.employee_lname}
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Date Submitted">
+                                        {selectedErfRecord.submitted}
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Job Title">
+                                        {selectedErfRecord.jobTitle}
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Job Type">
+                                        {selectedErfRecord.jobType}
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Position Status">
+                                        {selectedErfRecord.positionStatus}
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Date Needed">
+                                        {selectedErfRecord.dateNeed}
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Budget/Cost" span={2}>
+                                        {selectedErfRecord.budgetCost}
+                                    </Descriptions.Item>
+                                </Descriptions>
+                            </Card>
+
+                            {selectedErfRecord.businessJustification && (
+                                <Card title="Business Justification" className="mb-4">
+                                    <p>{selectedErfRecord.businessJustification}</p>
+                                </Card>
+                            )}
+
+                            {selectedErfRecord.qualifications && (
+                                <Card title="Required Qualifications" className="mb-4">
+                                    <p>{selectedErfRecord.qualifications}</p>
+                                </Card>
+                            )}
+
+                            {selectedErfRecord.responsibilities && (
+                                <Card title="Key Responsibilities">
+                                    <p>{selectedErfRecord.responsibilities}</p>
+                                </Card>
+                            )}
+                        </div>
+
+                        {/* Stepper Sidebar */}
+                        <div className="w-80">
+                            <Card title="Request Progress" size="small">
+                                <Steps
+                                    direction="vertical"
+                                    current={getStatusStep(selectedErfRecord.status).current}
+                                    items={getStatusStep(selectedErfRecord.status).steps}
+                                    size="small"
+                                />
+                                
+                                <div className="mt-4 p-3 bg-gray-50 rounded">
+                                    <h4 className="text-sm font-medium mb-2">Timeline</h4>
+                                    <div className="space-y-2 text-xs">
+                                        <div className="flex justify-between">
+                                            <span>Requisition created:</span>
+                                            <span className="text-gray-600">{selectedErfRecord.submitted}</span>
+                                        </div>
+                                        {selectedErfRecord.status !== 'Pending' && (
+                                            <div className="flex justify-between">
+                                                <span>Status updated:</span>
+                                                <span className="text-gray-600">
+                                                    {new Date().toLocaleDateString()}
+                                                </span>
+                                            </div>
+                                        )}
+                                        {selectedErfRecord.dateNeed && (
+                                            <div className="flex justify-between">
+                                                <span>Target start date:</span>
+                                                <span className="text-gray-600">{selectedErfRecord.dateNeed}</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </Card>
+                        </div>
+                    </div>
+                )}
+            </Modal>
         </div>
     );
 }

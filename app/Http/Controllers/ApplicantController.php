@@ -58,7 +58,7 @@ class ApplicantController extends Controller
             // ->where('employee_id', '!=', '24010101')
             ->whereIn('position', ['CEO', 'Account Manager', 'Director', 'HR Director', 'Talent Acquisition Manager', 'HR Manager', 'I.T Manager', 'Operations Manager'])
             ->where(function ($query) {
-                $query->where('position', 'CEO', 'Talent Acquisition Manager', 'HR Director')
+                $query->where('position', 'CEO')
                     ->orWhereHas('employee', function ($subQuery) {
                         $subQuery->whereIn('status', ['Regular', 'Probationary']);
                     });

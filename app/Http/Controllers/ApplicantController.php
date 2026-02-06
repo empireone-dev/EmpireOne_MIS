@@ -56,9 +56,9 @@ class ApplicantController extends Controller
 
         $user = User::with('employee')
             // ->where('employee_id', '!=', '24010101')
-            ->whereIn('position', ['CEO', 'Account Manager', 'Director', 'HR Manager', 'I.T Manager', 'Operations Manager'])
+            ->whereIn('position', ['CEO', 'Account Manager', 'Director', 'HR Director', 'Talent Acquisition Manager', 'HR Manager', 'I.T Manager', 'Operations Manager'])
             ->where(function ($query) {
-                $query->where('position', 'CEO')
+                $query->where('position', 'CEO', 'Talent Acquisition Manager', 'HR Director')
                     ->orWhereHas('employee', function ($subQuery) {
                         $subQuery->whereIn('status', ['Regular', 'Probationary']);
                     });
@@ -231,7 +231,7 @@ class ApplicantController extends Controller
         $fileUrl = $uploadedFiles[0] ?? null;
 
         // Determine email recipient based on site
-        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
 
         // $emailRecipient = 'quicklydeguzman@gmail.com';
 
@@ -447,7 +447,7 @@ class ApplicantController extends Controller
             'meet_link' => $decodedMeetLink,
         ];
 
-        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
         // $emailRecipient = 'quicklydeguzman@gmail.com';
 
         if ($decodedMeetLink) {
@@ -490,7 +490,7 @@ class ApplicantController extends Controller
             'reason' => $request->reason,
         ];
 
-        $emailRecipient = ($request->site === 'Carcar') ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
         // $emailRecipient = 'quicklydeguzman@gmail.com';
 
         if (strtolower($request->reschedule) === "yes") {

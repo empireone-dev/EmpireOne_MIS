@@ -30,7 +30,7 @@ export default function ApplicantsTableSection() {
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(10);
     const { applicants, interviewer } = useSelector(
-        (state) => state.applicants
+        (state) => state.applicants,
     );
 
     const urls = new URL(window.location.href);
@@ -43,12 +43,12 @@ export default function ApplicantsTableSection() {
 
     function search_status(value) {
         router.visit(
-            "?page=1" + "&status=" + (value || "null") + "&site=" + site
+            "?page=1" + "&status=" + (value || "null") + "&site=" + site,
         );
     }
     function search_site(value) {
         router.visit(
-            "?page=1" + "&status=" + status + "&site=" + (value || "null")
+            "?page=1" + "&status=" + status + "&site=" + (value || "null"),
         );
     }
     const columns = [
@@ -69,14 +69,19 @@ export default function ApplicantsTableSection() {
                 const capitalizeFirstLetter = (str) => {
                     if (!str) return str;
                     return str
-                        .split(' ')
-                        .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-                        .join(' ');
+                        .split(" ")
+                        .map(
+                            (word) =>
+                                word.charAt(0).toUpperCase() +
+                                word.slice(1).toLowerCase(),
+                        )
+                        .join(" ");
                 };
 
                 return (
                     <div key={i} className="font-bold">
-                        {capitalizeFirstLetter(record.lname)},&nbsp;{capitalizeFirstLetter(record.fname)}&nbsp;
+                        {capitalizeFirstLetter(record.lname)},&nbsp;
+                        {capitalizeFirstLetter(record.fname)}&nbsp;
                         {record.suffix === "undefined" ? "--" : record.suffix}
                     </div>
                 );
@@ -174,6 +179,7 @@ export default function ApplicantsTableSection() {
                         options={[
                             { text: "San Carlos", value: "San Carlos" },
                             { text: "Carcar", value: "Carcar" },
+                            { text: "Cebu", value: "Cebu" },
                         ]}
                     />
                 </div>
@@ -301,7 +307,7 @@ export default function ApplicantsTableSection() {
         onChange: (newPage, newPageSize) => {
             router.visit(
                 window.location.pathname +
-                    `?page=${newPage}&status=${status}&site=${site}`
+                    `?page=${newPage}&status=${status}&site=${site}`,
             );
             setCurrent(newPage);
             setPageSize(newPageSize);
@@ -323,7 +329,7 @@ export default function ApplicantsTableSection() {
                 {applicants.total > 0
                     ? `Showing ${(page - 1) * pageSize + 1} to ${Math.min(
                           page * pageSize,
-                          applicants.total
+                          applicants.total,
                       )} of ${applicants.total} entries`
                     : "No entries available"}
             </div>

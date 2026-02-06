@@ -250,7 +250,7 @@ export default function HiringTableSection() {
                         value={selectedKeys[0]}
                         onChange={(e) =>
                             setSelectedKeys(
-                                e.target.value ? [e.target.value] : []
+                                e.target.value ? [e.target.value] : [],
                             )
                         }
                         onPressEnter={() =>
@@ -419,6 +419,7 @@ export default function HiringTableSection() {
                               options={[
                                   { label: "San Carlos", value: "San Carlos" },
                                   { label: "Carcar", value: "Carcar" },
+                                  { label: "Cebu", value: "Cebu" },
                               ]}
                           />
                       ),
@@ -467,14 +468,16 @@ export default function HiringTableSection() {
                                   value={selectedKeys[0]}
                                   onChange={(e) =>
                                       setSelectedKeys(
-                                          e.target.value ? [e.target.value] : []
+                                          e.target.value
+                                              ? [e.target.value]
+                                              : [],
                                       )
                                   }
                                   onPressEnter={() =>
                                       handleSearch(
                                           selectedKeys,
                                           confirm,
-                                          "site"
+                                          "site",
                                       )
                                   }
                                   style={{
@@ -489,7 +492,7 @@ export default function HiringTableSection() {
                                           handleSearch(
                                               selectedKeys,
                                               confirm,
-                                              "site"
+                                              "site",
                                           )
                                       }
                                       icon={<SearchOutlined />}
@@ -555,7 +558,7 @@ export default function HiringTableSection() {
                           if (visible) {
                               setTimeout(
                                   () => searchInput.current?.select(),
-                                  100
+                                  100,
                               );
                           }
                       },
@@ -583,7 +586,7 @@ export default function HiringTableSection() {
                                             // }}
                                             onClick={() => {
                                                 router.visit(
-                                                    `/admin/file_201/${record.app_id}/${record.id}/${safeJobPos}/${record?.salary}/${record?.allowance}?status=${record.status}`
+                                                    `/admin/file_201/${record.app_id}/${record.id}/${safeJobPos}/${record?.salary}/${record?.allowance}?status=${record.status}`,
                                                 );
                                             }}
                                             className="text-white bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-yellow-300 shadow-lg shadow-yellow-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
@@ -612,7 +615,7 @@ export default function HiringTableSection() {
                                     onClick={() => {
                                         window.open(
                                             `/admin/hiring/${record.app_id}?id=${record.id}`,
-                                            "_blank"
+                                            "_blank",
                                         );
                                     }}
                                     className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"

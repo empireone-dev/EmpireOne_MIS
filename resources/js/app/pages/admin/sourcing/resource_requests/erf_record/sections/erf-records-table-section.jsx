@@ -99,9 +99,10 @@ export default function ErfRecordsTableSection() {
                     steps: steps.map((step, index) => ({
                         ...step,
                         status: index === 0 ? "process" : "wait",
-                        title: index === 0 
-                            ? `${step.title} (${submittedDate})`
-                            : step.title,
+                        title:
+                            index === 0
+                                ? `${step.title} (${submittedDate})`
+                                : step.title,
                         description: step.description,
                     })),
                 };
@@ -116,11 +117,12 @@ export default function ErfRecordsTableSection() {
                                 : index === 1
                                   ? "process"
                                   : "wait",
-                        title: index === 0 
-                            ? `${step.title} (${submittedDate})`
-                            : index === 1
-                            ? `${step.title} (${currentDate})`
-                            : step.title,
+                        title:
+                            index === 0
+                                ? `${step.title} (${submittedDate})`
+                                : index === 1
+                                  ? `${step.title} (${currentDate})`
+                                  : step.title,
                         description: step.description,
                     })),
                 };
@@ -135,13 +137,14 @@ export default function ErfRecordsTableSection() {
                                 : index === 2
                                   ? "process"
                                   : "wait",
-                        title: index === 0 
-                            ? `${step.title} (${submittedDate})`
-                            : index === 1
-                            ? `${step.title} (${currentDate})`
-                            : index === 2
-                            ? `${step.title} (${currentDate})`
-                            : step.title,
+                        title:
+                            index === 0
+                                ? `${step.title} (${submittedDate})`
+                                : index === 1
+                                  ? `${step.title} (${currentDate})`
+                                  : index === 2
+                                    ? `${step.title} (${currentDate})`
+                                    : step.title,
                         description: step.description,
                     })),
                 };
@@ -151,9 +154,10 @@ export default function ErfRecordsTableSection() {
                     steps: steps.map((step, index) => ({
                         ...step,
                         status: "finish",
-                        title: index === 0 
-                            ? `${step.title} (${submittedDate})`
-                            : `${step.title} (${currentDate})`,
+                        title:
+                            index === 0
+                                ? `${step.title} (${submittedDate})`
+                                : `${step.title} (${currentDate})`,
                         description: step.description,
                     })),
                 };
@@ -168,14 +172,16 @@ export default function ErfRecordsTableSection() {
                                 : index === 1
                                   ? "error"
                                   : "wait",
-                        title: index === 0 
-                            ? `${step.title} (${submittedDate})`
-                            : index === 1
-                            ? `Declined (${currentDate})`
-                            : step.title,
-                        description: index === 1
-                            ? "Request declined by approver"
-                            : step.description,
+                        title:
+                            index === 0
+                                ? `${step.title} (${submittedDate})`
+                                : index === 1
+                                  ? `Declined (${currentDate})`
+                                  : step.title,
+                        description:
+                            index === 1
+                                ? "Request declined by approver"
+                                : step.description,
                     })),
                 };
             default:
@@ -367,13 +373,14 @@ export default function ErfRecordsTableSection() {
             dataIndex: "ref_id",
             key: "ref_id",
             render: (text, record) => (
-                <Button
-                    type="link"
-                    onClick={() => openErfModal(record)}
-                    style={{ padding: 0, height: "auto" }}
-                >
-                    {text}
-                </Button>
+                // <Button
+                //     type="link"
+                //     onClick={() => openErfModal(record)}
+                //     style={{ padding: 0, height: "auto" }}
+                // >
+                //     {text}
+                // </Button>
+                <div>{record?.ref_id}</div>
             ),
         },
         {

@@ -282,6 +282,7 @@ class ApplicantController extends Controller
         // Send notification emails to all recipients
         $sendNotificationEmail('schr@empireonegroup.com');
         $sendNotificationEmail('quicklydeguzman@gmail.com');
+        $sendNotificationEmail('christiann@empireonegroup.com');
         // $sendNotificationEmail('scitdept2@empireonegroup.com');
         // $sendNotificationEmail('webdev@empireonegroup.com');
 

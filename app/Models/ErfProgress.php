@@ -10,6 +10,7 @@ class ErfProgress extends Model
     use HasFactory;
     protected $fillable = [
         'ref_id',
+        'requested_by',
         'status',
         'remarks',
         'approved_by',

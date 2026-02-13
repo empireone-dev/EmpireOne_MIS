@@ -566,6 +566,12 @@ export default function ErfRecordsTableSection() {
                                     >
                                         <b>{selectedErfRecord.budgetCost}</b>
                                     </Descriptions.Item>
+                                    {selectedErfRecord.status ===
+                                        "Declined" && (
+                                        <Descriptions.Item label="Reason for Decline:">
+                                            <b>{selectedErfRecord.reason}</b>
+                                        </Descriptions.Item>
+                                    )}
                                 </Descriptions>
                             </Card>
 

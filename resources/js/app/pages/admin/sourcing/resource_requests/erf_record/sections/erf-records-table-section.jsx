@@ -373,14 +373,14 @@ export default function ErfRecordsTableSection() {
             dataIndex: "ref_id",
             key: "ref_id",
             render: (text, record) => (
-                // <Button
-                //     type="link"
-                //     onClick={() => openErfModal(record)}
-                //     style={{ padding: 0, height: "auto" }}
-                // >
-                //     {text}
-                // </Button>
-                <div>{record?.ref_id}</div>
+                <Button
+                    type="link"
+                    onClick={() => openErfModal(record)}
+                    style={{ padding: 0, height: "auto" }}
+                >
+                    {text}
+                </Button>
+                // <div>{record?.ref_id}</div>
             ),
         },
         {

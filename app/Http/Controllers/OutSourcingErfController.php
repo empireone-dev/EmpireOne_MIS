@@ -108,6 +108,12 @@ class OutSourcingErfController extends Controller
             ]);
         }
 
+        if ($request->status === 'Declined') {
+            $erfrec->update([
+                'reason' => $request->reason,
+            ]);
+        }
+
         return response()->json([
             'data' => $this->index()->original['data']
         ], 200);

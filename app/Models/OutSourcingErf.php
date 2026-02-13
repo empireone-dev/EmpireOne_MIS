@@ -27,7 +27,7 @@ class OutSourcingErf extends Model
         'submitted',
         'status',
         'site',
-        'decided',
+        'reason',
     ];
 
     public function user(): HasOne

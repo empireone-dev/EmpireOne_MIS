@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('submitted')->nullable();
             $table->string('status')->nullable();
             $table->string('site')->nullable();
-            $table->string('decided')->nullable();
+            $table->longText('reason')->nullable();
             $table->timestamps();
         });
     }

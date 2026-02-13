@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('erf_progress', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('ref_id');
+            $table->string('requested_by')->nullable();
             $table->string('status')->nullable();
             $table->string('remarks')->nullable();
             $table->string('approved_by')->nullable();

@@ -85,11 +85,11 @@ export default function ErfRecordsTableSection() {
                 status: "finish",
                 description: "Request approved for posting",
             },
-            {
-                title: "Completed",
-                status: "wait",
-                description: "Position posted and recruitment started",
-            },
+            // {
+            //     title: "Completed",
+            //     status: "wait",
+            //     description: "Position posted and recruitment started",
+            // },
         ];
 
         switch (status) {
@@ -418,10 +418,19 @@ export default function ErfRecordsTableSection() {
             ...getColumnSearchProps("eogs"),
         },
         {
-            title: "Date Needed",
+            title: "Target Onboarding Date",
             dataIndex: "dateNeed",
             key: "contact",
             ...getColumnSearchProps("contact"),
+            render: (text) => {
+                if (!text) return "";
+                const date = new Date(text);
+                return date.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                });
+            },
         },
         {
             title: "Budget/Cost",
@@ -434,6 +443,15 @@ export default function ErfRecordsTableSection() {
             dataIndex: "submitted",
             key: "eogs",
             ...getColumnSearchProps("eogs"),
+            render: (text) => {
+                if (!text) return "";
+                const date = new Date(text);
+                return date.toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                });
+            },
         },
         {
             title: "Status",

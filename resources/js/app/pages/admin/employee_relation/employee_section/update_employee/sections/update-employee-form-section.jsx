@@ -552,6 +552,10 @@ export default function UpdateEmployeeFormSection() {
                                                     "Operations Manager",
                                                     "Site Director",
                                                     "Site Manager",
+                                                    "Director, Learning Leadership & Development",
+                                                    "Director, Accounting & Finance",
+                                                    "Director, Marketing & Communications",
+                                                    "Director, Quality & Training",
                                                 ].includes(res.position),
                                         )
                                         .sort((a, b) => {

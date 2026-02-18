@@ -1,31 +1,34 @@
-import { useDispatch, useSelector } from 'react-redux';
-import store from '@/app/store/store';
-import region from "@/app/address/region.json"
-import province from "@/app/address/province.json"
-import city from "@/app/address/city.json"
-import barangay from "@/app/address/barangay.json"
-import moment from 'moment';
+import { useDispatch, useSelector } from "react-redux";
+import store from "@/app/store/store";
+import region from "@/app/address/region.json";
+import province from "@/app/address/province.json";
+import city from "@/app/address/city.json";
+import barangay from "@/app/address/barangay.json";
+import moment from "moment";
 // import Input from '../../_components/input';
 // import Select from '../../_components/select';
 import Select2 from "@/app/pages/_components/select2";
-import { useEffect } from 'react';
-import { InboxOutlined, UserAddOutlined } from '@ant-design/icons'
-import { message, Modal } from 'antd';
-import React, { useState } from 'react'
-import UploadResumeSection from './upload-resume-section';
-import WorkingExperienceSection from './working-experience-section';
-import { setApplicantForm } from '../../../recruitment/applicants/applicant_records/redux/applicant-slice';
-import { get_applicant_thunk, store_applicant_thunk } from '../../../recruitment/applicants/applicant_records/redux/applicant-thunk';
-import Input from '@/app/pages/_components/input';
-import Select from '@/app/pages/_components/select';
-import { store_employee_thunk } from '../redux/employee-section-thunk';
-import { wait } from 'ckeditor5';
-import { get_job_position_thunk } from '../../../sourcing/job_title_section/redux/job-title-thunk';
-import { get_department_thunk } from '../../../sourcing/department/redux/department-thunk';
-import { useForm } from 'react-hook-form';
-import Dragger from 'antd/es/upload/Dragger';
-import Input2 from '@/app/pages/_components/input2';
-import Checkbox from '@/app/pages/_components/checkbox';
+import { useEffect } from "react";
+import { InboxOutlined, UserAddOutlined } from "@ant-design/icons";
+import { message, Modal } from "antd";
+import React, { useState } from "react";
+import UploadResumeSection from "./upload-resume-section";
+import WorkingExperienceSection from "./working-experience-section";
+import { setApplicantForm } from "../../../recruitment/applicants/applicant_records/redux/applicant-slice";
+import {
+    get_applicant_thunk,
+    store_applicant_thunk,
+} from "../../../recruitment/applicants/applicant_records/redux/applicant-thunk";
+import Input from "@/app/pages/_components/input";
+import Select from "@/app/pages/_components/select";
+import { store_employee_thunk } from "../redux/employee-section-thunk";
+import { wait } from "ckeditor5";
+import { get_job_position_thunk } from "../../../sourcing/job_title_section/redux/job-title-thunk";
+import { get_department_thunk } from "../../../sourcing/department/redux/department-thunk";
+import { useForm } from "react-hook-form";
+import Dragger from "antd/es/upload/Dragger";
+import Input2 from "@/app/pages/_components/input2";
+import Checkbox from "@/app/pages/_components/checkbox";
 
 export default function AddExistingEmployeeSection() {
     const [open, setOpen] = useState(false);
@@ -38,15 +41,15 @@ export default function AddExistingEmployeeSection() {
     const [showFirstTimeJobseeker, setShowFirstTimeJobseeker] = useState(false);
     const [uploadedFile, setUploadedFile] = useState(null);
     const [loading, setLoading] = useState(null);
-    const [error, setError] = useState({})
+    const [error, setError] = useState({});
 
     const [files, setFiles] = useState([]);
 
     const [applicationCount, setApplicationCount] = useState(0);
     const { applicantForm } = useSelector((state) => state.applicants);
-    const [newProvince, setNewProvince] = useState([])
-    const [newCity, setNewCity] = useState([])
-    const [newBarangay, setNewBarangay] = useState([])
+    const [newProvince, setNewProvince] = useState([]);
+    const [newCity, setNewCity] = useState([]);
+    const [newBarangay, setNewBarangay] = useState([]);
 
     const [hasExperience, setHasExperience] = useState(false);
     const dispatch = useDispatch();
@@ -67,8 +70,8 @@ export default function AddExistingEmployeeSection() {
 
     useEffect(() => {
         if (open) {
-            store.dispatch(get_job_position_thunk())
-            store.dispatch(get_department_thunk())
+            store.dispatch(get_job_position_thunk());
+            store.dispatch(get_department_thunk());
         }
     }, [open]);
 
@@ -78,7 +81,7 @@ export default function AddExistingEmployeeSection() {
             setApplicationCount(count);
         };
         fetchApplicationCount();
-        setLoading(false)
+        setLoading(false);
     }, []);
 
     function changeHandler(e) {
@@ -88,21 +91,21 @@ export default function AddExistingEmployeeSection() {
                 setApplicantForm({
                     ...applicantForm,
                     [data]: e.target.files,
-                })
+                }),
             );
         } else {
             dispatch(
                 setApplicantForm({
                     ...applicantForm,
                     [data]: e.target.value,
-                })
+                }),
             );
         }
     }
-    console.log('query', applicantForm)
+    console.log("query", applicantForm);
 
     async function submitApplicant(data) {
-        console.log('aaaaaaaaaaaaaaaaa', data)
+        console.log("aaaaaaaaaaaaaaaaa", data);
         // const fd = new FormData()
         // fd.append('files', uploadedFile)
         // fd.append('site', user.site ?? "")
@@ -159,27 +162,27 @@ export default function AddExistingEmployeeSection() {
             //         app_id: applicantForm.app_id
             //     })
             // );
-            await store.dispatch(store_employee_thunk({
-                ...data,
-                province: JSON.parse(data?.province).name,
-                city: JSON.parse(data?.city).name,
-                region: JSON.parse(data?.region).name,
-                site: user.site,
-                files: files.map((res) => res.files),
-                is_experience: hasExperience,
-            }));
-            await store.dispatch(get_applicant_thunk())
-            message.success('Employee Saved successfully')
+            await store.dispatch(
+                store_employee_thunk({
+                    ...data,
+                    province: JSON.parse(data?.province).name,
+                    city: JSON.parse(data?.city).name,
+                    region: JSON.parse(data?.region).name,
+                    site: user.site,
+                    files: files.map((res) => res.files),
+                    is_experience: hasExperience,
+                }),
+            );
+            await store.dispatch(get_applicant_thunk());
+            message.success("Employee Saved successfully");
             reset();
             setFiles([]);
             setOpen(false);
         } catch (error) {
-            console.log("bbbbbb", error)
-            message.error('Employee failed to saved')
-
+            console.log("bbbbbb", error);
+            message.error("Employee failed to saved");
         }
     }
-
 
     // const handleWorkingExperienceChange = (e) => {
     //     setShowWorkingExperience(e.target.checked);
@@ -192,48 +195,51 @@ export default function AddExistingEmployeeSection() {
     // };
 
     function data_handler(e) {
-        if (e.target.name == 'region') {
-            const region = JSON.parse(e.target.value)
-            const prov = province.filter(obj => obj.region_code === region.region_code);
-            setNewProvince(prov)
+        if (e.target.name == "region") {
+            const region = JSON.parse(e.target.value);
+            const prov = province.filter(
+                (obj) => obj.region_code === region.region_code,
+            );
+            setNewProvince(prov);
             dispatch(
                 setApplicantForm({
                     ...applicantForm,
                     [e.target.name]: region.name,
-                })
+                }),
             );
-        } else if (e.target.name == 'province') {
-            const province = JSON.parse(e.target.value)
-            const ct = city.filter(obj => obj.province_code === province.province_code);
-            setNewCity(ct)
+        } else if (e.target.name == "province") {
+            const province = JSON.parse(e.target.value);
+            const ct = city.filter(
+                (obj) => obj.province_code === province.province_code,
+            );
+            setNewCity(ct);
             dispatch(
                 setApplicantForm({
                     ...applicantForm,
                     [e.target.name]: province.name,
-                })
+                }),
             );
-        } else if (e.target.name == 'city') {
-            const city = JSON.parse(e.target.value)
-            const brgy = barangay.filter(obj => obj.city_code === city.city_code);
-            setNewBarangay(brgy)
+        } else if (e.target.name == "city") {
+            const city = JSON.parse(e.target.value);
+            const brgy = barangay.filter(
+                (obj) => obj.city_code === city.city_code,
+            );
+            setNewBarangay(brgy);
             dispatch(
                 setApplicantForm({
                     ...applicantForm,
                     [e.target.name]: city.name,
-                })
+                }),
             );
         } else {
             dispatch(
                 setApplicantForm({
                     ...applicantForm,
                     [e.target.name]: e.target.value,
-                })
+                }),
             );
         }
-
-
     }
-
 
     const handleFiles = async (fileList) => {
         const toBase64 = (file) =>
@@ -253,15 +259,15 @@ export default function AddExistingEmployeeSection() {
                     (existing) =>
                         existing.file.name === file.name &&
                         existing.file.size === file.size &&
-                        existing.file.lastModified === file.lastModified
-                )
+                        existing.file.lastModified === file.lastModified,
+                ),
         );
 
         const base64Files = await Promise.all(
             newUniqueFiles.map(async (file) => ({
                 file,
                 files: await toBase64(file),
-            }))
+            })),
         );
 
         setFiles((prevFiles) => [...prevFiles, ...base64Files]);
@@ -283,7 +289,7 @@ export default function AddExistingEmployeeSection() {
                     .filter(Boolean);
                 handleFiles(newFiles);
                 message.success(
-                    `${info.file.name} file uploaded successfully.`
+                    `${info.file.name} file uploaded successfully.`,
                 );
             } else if (status === "error") {
                 message.error(`${info.file.name} file upload failed.`);
@@ -291,7 +297,7 @@ export default function AddExistingEmployeeSection() {
         },
         onRemove(file) {
             setFiles((prevFiles) =>
-                prevFiles.filter((f) => f.file.name !== file.name)
+                prevFiles.filter((f) => f.file.name !== file.name),
             );
             return true; // allow UI to remove it too
         },
@@ -309,7 +315,7 @@ export default function AddExistingEmployeeSection() {
                     onClick={() => setOpen(true)}
                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-transparent border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white focus:z-10 focus:ring-2 focus:ring-blue-500 focus:bg-blue-500 focus:text-white      gap-1"
                 >
-                    <UserAddOutlined className='text-xl' />
+                    <UserAddOutlined className="text-xl" />
                     Add Existing Employee
                 </button>
             </div>
@@ -516,8 +522,7 @@ export default function AddExistingEmployeeSection() {
                             <Input2
                                 register={{
                                     ...register("mmname", {
-                                        required:
-                                            false,
+                                        required: false,
                                     }),
                                 }}
                                 name="mmname"
@@ -606,89 +611,130 @@ export default function AddExistingEmployeeSection() {
                         </div>
                     </div>
 
-                    <div className='flex flex-1 gap-4'>
-                        <div className='flex flex-col w-full mb-4'>
-                            <div className='flex flex-1 gap-3'>
+                    <div className="flex flex-1 gap-4">
+                        <div className="flex flex-col w-full mb-4">
+                            <div className="flex flex-1 gap-3">
                                 <select
                                     {...register("position", {
                                         required: false,
                                     })}
-                                    name='position'
-                                    className="border p-2 rounded  w-full">
-                                    <option disabled selected value="">Job Position</option>
-                                    {
-                                        job_positions
-                                            .filter(res => res.site === "San Carlos")
-                                            .map((res, i) => (
-                                                <option value={res.jPosition} key={i}>
-                                                    {res.jPosition}
-                                                </option>
-                                            ))
-                                    }
+                                    name="position"
+                                    className="border p-2 rounded  w-full"
+                                >
+                                    <option disabled selected value="">
+                                        Job Position
+                                    </option>
+                                    {job_positions
+                                        .filter(
+                                            (res) => res.site === "San Carlos",
+                                        )
+                                        .map((res, i) => (
+                                            <option
+                                                value={res.jPosition}
+                                                key={i}
+                                            >
+                                                {res.jPosition}
+                                            </option>
+                                        ))}
                                 </select>
                                 <select
                                     {...register("dept", {
                                         required: false,
                                     })}
-                                    name='dept'
-                                    className="border p-2 rounded  w-full">
-                                    <option disabled selected value="">Department</option>
-                                    {
-                                        departments
-                                            .filter(res => res.site === "San Carlos")
-                                            .map((res, i) => (
-                                                <option value={res.dept} key={i}>
-                                                    {res.dept}
-                                                </option>
-                                            ))
-                                    }
+                                    name="dept"
+                                    className="border p-2 rounded  w-full"
+                                >
+                                    <option disabled selected value="">
+                                        Department
+                                    </option>
+                                    {departments
+                                        .filter(
+                                            (res) => res.site === "San Carlos",
+                                        )
+                                        .map((res, i) => (
+                                            <option value={res.dept} key={i}>
+                                                {res.dept}
+                                            </option>
+                                        ))}
                                 </select>
                                 <select
                                     {...register("account", {
                                         required: false,
                                     })}
-                                    name='account'
-                                    className="border p-2 rounded  w-full">
-                                    <option disabled selected value="">Account (If Applicable)</option>
-                                    {
-                                        accounts
-                                            // .filter(res => res.site === "San Carlos")
-                                            .map((res, i) => (
-                                                <option value={res.acc} key={i}>
-                                                    {res.acc}
-                                                </option>
-                                            ))
-                                    }
+                                    name="account"
+                                    className="border p-2 rounded  w-full"
+                                >
+                                    <option disabled selected value="">
+                                        Account (If Applicable)
+                                    </option>
+                                    {accounts
+                                        // .filter(res => res.site === "San Carlos")
+                                        .map((res, i) => (
+                                            <option value={res.acc} key={i}>
+                                                {res.acc}
+                                            </option>
+                                        ))}
                                 </select>
                             </div>
                         </div>
                     </div>
-                    <div className='flex flex-1 gap-4'>
-                        <div className='flex flex-col w-full mb-4'>
-                            <div className='flex flex-1 gap-3'>
+                    <div className="flex flex-1 gap-4">
+                        <div className="flex flex-col w-full mb-4">
+                            <div className="flex flex-1 gap-3">
                                 <select
                                     {...register("sup_id", {
                                         required: false,
                                     })}
-                                    name='sup_id'
+                                    name="sup_id"
                                     value={applicantForm.sup_id}
-                                    className="border p-2 rounded  w-full">
-                                    <option disabled selected value="">Supervisor</option>
+                                    className="border p-2 rounded  w-full"
+                                >
+                                    <option disabled selected value="">
+                                        Supervisor
+                                    </option>
                                     {users
-                                        .filter((res) =>
-                                            (
-                                                !user?.site ||
-                                                res.site === user.site ||
-                                                !res.site
-                                            ) &&
-                                            ["Manager", "Account Manager", "Supervisor", "Team Leader", "Director", "CEO", "HR Lead", "Compliance Officer", "Site Admin"].includes(res.position)
+                                        .filter(
+                                            (res) =>
+                                                (!user?.site ||
+                                                    res.site === user.site ||
+                                                    !res.site) &&
+                                                [
+                                                    "Manager",
+                                                    "Account Manager",
+                                                    "Supervisor",
+                                                    "Team Leader",
+                                                    "Director",
+                                                    "CEO",
+                                                    "HR Lead",
+                                                    "TQA Manager",
+                                                    "TQA Director",
+                                                    "IT Manager",
+                                                    "I.T Manager",
+                                                    "IT Lead",
+                                                    "I.T Lead",
+                                                    "Compliance Officer",
+                                                    "Site Admin",
+                                                    "Talent Acquisition Manager",
+                                                    "HR Director",
+                                                    "Director of Operations",
+                                                    "Operations Manager",
+                                                    "Site Director",
+                                                    "Site Manager",
+                                                ].includes(res.position),
                                         )
+                                        .sort((a, b) => {
+                                            const nameA =
+                                                `${a.employee_fname} ${a.employee_lname}`.toLowerCase();
+                                            const nameB =
+                                                `${b.employee_fname} ${b.employee_lname}`.toLowerCase();
+                                            return nameA.localeCompare(nameB);
+                                        })
                                         .map((res) => (
                                             <option key={res.id} value={res.id}>
-                                                {res.employee_fname} {res.employee_lname}
+                                                {res.employee_fname}{" "}
+                                                {res.employee_lname}
                                             </option>
                                         ))}
-
                                 </select>
                                 <Input2
                                     register={{
@@ -705,11 +751,13 @@ export default function AddExistingEmployeeSection() {
                                     {...register("status", {
                                         required: false,
                                     })}
-                                    name='status'
+                                    name="status"
                                     className="border p-2 rounded  w-full"
                                     required
                                 >
-                                    <option disabled selected>Employee Status</option>
+                                    <option disabled selected>
+                                        Employee Status
+                                    </option>
                                     <option> Probationary</option>
                                     <option> Regular</option>
                                     <option> Contractual</option>
@@ -730,7 +778,6 @@ export default function AddExistingEmployeeSection() {
                                     }),
                                 }}
                                 onChange={(event) => data_handler(event)}
-
                                 options={region.map((res) => ({
                                     label: res.region_name,
                                     value: JSON.stringify({
@@ -748,11 +795,10 @@ export default function AddExistingEmployeeSection() {
                             <Select
                                 register={{
                                     ...register("province", {
-                                        required: "Please Select Province"
+                                        required: "Please Select Province",
                                     }),
                                 }}
                                 onChange={(event) => data_handler(event)}
-
                                 options={newProvince.map((res) => ({
                                     label: res.province_name,
                                     value: JSON.stringify({
@@ -769,11 +815,10 @@ export default function AddExistingEmployeeSection() {
                             <Select
                                 register={{
                                     ...register("city", {
-                                        required: "Please Select City"
+                                        required: "Please Select City",
                                     }),
                                 }}
                                 onChange={(event) => data_handler(event)}
-
                                 options={newCity.map((res) => ({
                                     label: res.city_name,
                                     value: JSON.stringify({
@@ -792,11 +837,10 @@ export default function AddExistingEmployeeSection() {
                             <Select
                                 register={{
                                     ...register("brgy", {
-                                        required: "Please Select Barangay"
+                                        required: "Please Select Barangay",
                                     }),
                                 }}
                                 onChange={(event) => data_handler(event)}
-
                                 options={newBarangay.map((res) => ({
                                     label: res.brgy_name,
                                     value: res.brgy_name,
@@ -828,8 +872,7 @@ export default function AddExistingEmployeeSection() {
                         <div className="flex-1">
                             <Input2
                                 register={{
-                                    ...register("sss", {
-                                    }),
+                                    ...register("sss", {}),
                                 }}
                                 name="sss"
                                 label="SSS"
@@ -839,8 +882,7 @@ export default function AddExistingEmployeeSection() {
                         <div className="flex-1">
                             <Input2
                                 register={{
-                                    ...register("pagibig", {
-                                    }),
+                                    ...register("pagibig", {}),
                                 }}
                                 name="pagibig"
                                 label="Pagibig"
@@ -853,8 +895,7 @@ export default function AddExistingEmployeeSection() {
                         <div className="flex-1">
                             <Input2
                                 register={{
-                                    ...register("tin", {
-                                    }),
+                                    ...register("tin", {}),
                                 }}
                                 name="tin"
                                 label="Tin"
@@ -864,8 +905,7 @@ export default function AddExistingEmployeeSection() {
                         <div className="flex-1">
                             <Input2
                                 register={{
-                                    ...register("philh", {
-                                    }),
+                                    ...register("philh", {}),
                                 }}
                                 name="philh"
                                 label="Philhealth No."
@@ -926,7 +966,7 @@ export default function AddExistingEmployeeSection() {
                                                         {
                                                             required:
                                                                 "Company is required",
-                                                        }
+                                                        },
                                                     ),
                                                 }}
                                                 errorMessage={
@@ -945,7 +985,7 @@ export default function AddExistingEmployeeSection() {
                                                         {
                                                             required:
                                                                 "Position is required",
-                                                        }
+                                                        },
                                                     ),
                                                 }}
                                                 errorMessage={
@@ -967,7 +1007,7 @@ export default function AddExistingEmployeeSection() {
                                                         {
                                                             required:
                                                                 "Started at is required",
-                                                        }
+                                                        },
                                                     ),
                                                 }}
                                                 errorMessage={
@@ -985,7 +1025,7 @@ export default function AddExistingEmployeeSection() {
                                                         {
                                                             required:
                                                                 "End at is required",
-                                                        }
+                                                        },
                                                     ),
                                                 }}
                                                 errorMessage={
@@ -1010,8 +1050,7 @@ export default function AddExistingEmployeeSection() {
                             <Input2
                                 register={{
                                     ...register("ename", {
-                                        required:
-                                            false,
+                                        required: false,
                                     }),
                                 }}
                                 name="ename"
@@ -1084,5 +1123,5 @@ export default function AddExistingEmployeeSection() {
                 </form>
             </Modal>
         </div>
-    )
+    );
 }

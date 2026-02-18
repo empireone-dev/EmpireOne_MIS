@@ -450,7 +450,7 @@ export default function ErfRecordsTableSection() {
                     year: "numeric",
                     month: "long",
                     day: "numeric"
-                });
+                }); 
             },
         },
         {

@@ -87,7 +87,7 @@ export default function UpdateEmployeeFormSection() {
                     mname: form.mname,
                     lname: form.lname,
                     suffix: form.suffix,
-                })
+                }),
             );
             await store.dispatch(get_applicant_by_app_id_thunk(app_id));
             await store.dispatch(get_employee_by_id_thunk(app_id));
@@ -432,7 +432,7 @@ export default function UpdateEmployeeFormSection() {
                                             (res) =>
                                                 user?.role_id === 1 ||
                                                 user?.role_id === 2 ||
-                                                res.site === user?.site
+                                                res.site === user?.site,
                                         )
                                         .map((res, i) => (
                                             <option
@@ -465,7 +465,7 @@ export default function UpdateEmployeeFormSection() {
                                             (res) =>
                                                 user?.role_id === 1 ||
                                                 user?.role_id === 2 ||
-                                                res.site === user?.site
+                                                res.site === user?.site,
                                         )
                                         .map((res, i) => (
                                             <option value={res.dept} key={i}>
@@ -527,32 +527,42 @@ export default function UpdateEmployeeFormSection() {
                                     {users
                                         .filter(
                                             (res) =>
-                                                user?.role_id === 1 ||
-                                                user?.role_id === 2 ||
-                                                res.site === user?.site
+                                                (!user?.site ||
+                                                    res.site === user.site ||
+                                                    !res.site) &&
+                                                [
+                                                    "Manager",
+                                                    "Account Manager",
+                                                    "Supervisor",
+                                                    "Team Leader",
+                                                    "Director",
+                                                    "CEO",
+                                                    "HR Lead",
+                                                    "TQA Manager",
+                                                    "TQA Director",
+                                                    "IT Manager",
+                                                    "I.T Manager",
+                                                    "IT Lead",
+                                                    "I.T Lead",
+                                                    "Compliance Officer",
+                                                    "Site Admin",
+                                                    "Talent Acquisition Manager",
+                                                    "HR Director",
+                                                    "Director of Operations",
+                                                    "Operations Manager",
+                                                    "Site Director",
+                                                    "Site Manager",
+                                                ].includes(res.position),
                                         )
-                                        .filter((res) =>
-                                            [
-                                                "Manager",
-                                                "I.T Manager",
-                                                "HR Manager",
-                                                "Operations Manager",
-                                                "Account Manager",
-                                                "Supervisor",
-                                                "Team Leader",
-                                                "Director",
-                                                "Director of Operations",
-                                                "Accounting Head",
-                                                "CEO",
-                                            ].includes(res.position)
-                                        )
-                                        .sort((a, b) =>
-                                            `${a.employee_fname} ${a.employee_lname}`.localeCompare(
-                                                `${b.employee_fname} ${b.employee_lname}`
-                                            )
-                                        )
-                                        .map((res, i) => (
-                                            <option value={res.id} key={res.id}>
+                                        .sort((a, b) => {
+                                            const nameA =
+                                                `${a.employee_fname} ${a.employee_lname}`.toLowerCase();
+                                            const nameB =
+                                                `${b.employee_fname} ${b.employee_lname}`.toLowerCase();
+                                            return nameA.localeCompare(nameB);
+                                        })
+                                        .map((res) => (
+                                            <option key={res.id} value={res.id}>
                                                 {res.employee_fname}{" "}
                                                 {res.employee_lname}
                                             </option>

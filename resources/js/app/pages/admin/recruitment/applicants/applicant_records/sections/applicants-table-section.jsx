@@ -79,10 +79,21 @@ export default function ApplicantsTableSection() {
                 };
 
                 return (
-                    <div key={i} className="font-bold">
-                        {capitalizeFirstLetter(record.lname)},&nbsp;
-                        {capitalizeFirstLetter(record.fname)}&nbsp;
-                        {record.suffix === "undefined" ? "--" : record.suffix}
+                    <div key={i} className="font-bold flex items-center gap-2">
+                        {record.with_bpo === "Yes" && (
+                            <Tooltip title="With BPO Experience">
+                                <span className="text-green-600 text-sm">
+                                    ✓
+                                </span>
+                            </Tooltip>
+                        )}
+                        <span>
+                            {capitalizeFirstLetter(record.lname)},&nbsp;
+                            {capitalizeFirstLetter(record.fname)}&nbsp;
+                            {record.suffix === "undefined"
+                                ? "--"
+                                : record.suffix}
+                        </span>
                     </div>
                 );
             },

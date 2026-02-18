@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { message, Modal } from "antd";
 import { PencilSquareIcon } from "@heroicons/react/24/outline";
-import { get_department_thunk, update_department_thunk } from "../redux/department-thunk";
+import {
+    get_department_thunk,
+    update_department_thunk,
+} from "../redux/department-thunk";
 import Input from "@/app/pages/_components/input";
 import { useSelector } from "react-redux";
 import store from "@/app/store/store";
@@ -10,30 +13,31 @@ export default function DepartmentUpdateSection({ data }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [form, setForm] = useState({});
     const [loading, setLoading] = useState(false);
-    const { users } = useSelector((state) => state.app);
+    const { users, user } = useSelector((state) => state.app);
 
     useEffect(() => {
         setForm({
             id: data?.id,
             dept: data?.dept || "",
             depthead: data?.user?.id || "",
-        })
+        });
     }, []);
     const showModal = () => {
         setIsModalOpen(true);
     };
 
-
-    console.log('datsssa', data)
+    console.log("datsssa", data);
     async function update_department(e) {
         e.preventDefault();
         setLoading(true);
 
         try {
-            await store.dispatch(update_department_thunk({
-                ...form,
-                id: data.id
-            }));
+            await store.dispatch(
+                update_department_thunk({
+                    ...form,
+                    id: data.id,
+                }),
+            );
             await store.dispatch(get_department_thunk());
             message.success("Updated Successfully!");
             setIsModalOpen(false);
@@ -98,25 +102,46 @@ export default function DepartmentUpdateSection({ data }) {
                             {/* <option value="">
                                 {data?.user?.employee_fname ?? ''} {data?.user?.employee_lname ?? ''}
                             </option> */}
-                            {Array.isArray(users) && users
-                                .filter((res) =>
-                                    [
-                                        "Manager",
-                                        "Account Manager",
-                                        "Supervisor",
-                                        "Operations Manager",
-                                        "Director",
-                                        "CEO",
-                                        "HR Lead",
-                                        "HR Manager",
-                                        "I.T Manager",
-                                        "Accounting Head",
-                                    ].includes(res.position)
+                            {users
+                                .filter(
+                                    (res) =>
+                                        (!user?.site ||
+                                            res.site === user.site ||
+                                            !res.site) &&
+                                        [
+                                            "Manager",
+                                            "Account Manager",
+                                            "Supervisor",
+                                            "Director",
+                                            "CEO",
+                                            "HR Lead",
+                                            "TQA Manager",
+                                            "TQA Director",
+                                            "IT Manager",
+                                            "I.T Manager",
+                                            "IT Lead",
+                                            "I.T Lead",
+                                            "Compliance Officer",
+                                            "Site Admin",
+                                            "Talent Acquisition Manager",
+                                            "HR Director",
+                                            "Director of Operations",
+                                            "Operations Manager",
+                                            "Site Director",
+                                            "Site Manager",
+                                        ].includes(res.position),
                                 )
-                                .sort((a, b) => a.employee_fname.localeCompare(b.employee_fname))
+                                .sort((a, b) => {
+                                    const nameA =
+                                        `${a.employee_fname} ${a.employee_lname}`.toLowerCase();
+                                    const nameB =
+                                        `${b.employee_fname} ${b.employee_lname}`.toLowerCase();
+                                    return nameA.localeCompare(nameB);
+                                })
                                 .map((res) => (
-                                    <option value={res.id} key={res.id}>
-                                        {`${res.employee_fname} ${res.employee_lname}`}
+                                    <option key={res.id} value={res.id}>
+                                        {res.employee_fname}{" "}
+                                        {res.employee_lname}
                                     </option>
                                 ))}
                         </select>

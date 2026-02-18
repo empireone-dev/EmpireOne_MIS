@@ -17,26 +17,26 @@ const DepartmentCreateSection = () => {
     const [form, setForm] = useState({
         dept: "",
         depthead: "",
-        site: user?.site || '',
+        site: user?.site || "",
     });
 
-    console.log('site', user?.site)
+    console.log("site", user?.site);
 
     const showModal = () => {
         setForm((prev) => ({
             ...prev,
-            site: user?.site || '',
+            site: user?.site || "",
         }));
         setIsModalOpen(true);
     };
-    console.log('users', users)
+    console.log("users", users);
     const handleOk = async () => {
         setLoading(true);
         try {
             await store.dispatch(
                 create_department_thunk({
                     ...form,
-                })
+                }),
             );
             await store.dispatch(get_department_thunk());
             message.success("Successfully Added!"); // Show success message
@@ -59,7 +59,7 @@ const DepartmentCreateSection = () => {
                 onClick={showModal}
                 class="inline-flex items-center px-4 py-2 text-sm font-medium text-blue-500 bg-transparent border border-blue-500 rounded-lg hover:bg-blue-500 hover:text-white gap-1"
             >
-                <PlusSquareTwoTone className='text-xl' />
+                <PlusSquareTwoTone className="text-xl" />
                 Create Department
             </button>
             <Modal
@@ -106,30 +106,47 @@ const DepartmentCreateSection = () => {
                         value={form.depthead}
                     >
                         <option value="">Select Department Head</option>
-                        {Array.isArray(users) && users
-                            .filter((res) =>
-                                [
-                                    "Manager",
-                                    "Account Manager",
-                                    "Supervisor",
-                                    "Operations Manager",
-                                    "Director",
-                                    "CEO",
-                                    "HR Lead",
-                                    "HR Manager",
-                                    "I.T Manager",
-                                    "Accounting Head",
-                                ].includes(res.position)
+                        {users
+                            .filter(
+                                (res) =>
+                                    (!user?.site ||
+                                        res.site === user.site ||
+                                        !res.site) &&
+                                    [
+                                        "Manager",
+                                        "Account Manager",
+                                        "Supervisor",
+                                        "Director",
+                                        "CEO",
+                                        "HR Lead",
+                                        "TQA Manager",
+                                        "TQA Director",
+                                        "IT Manager",
+                                        "I.T Manager",
+                                        "IT Lead",
+                                        "Compliance Officer",
+                                        "Site Admin",
+                                        "Talent Acquisition Manager",
+                                        "HR Director",
+                                        "Director of Operations",
+                                        "Operations Manager",
+                                        "Site Director",
+                                        "Site Manager",
+                                    ].includes(res.position),
                             )
-                            .sort((a, b) => a.employee_fname.localeCompare(b.employee_fname))
+                            .sort((a, b) => {
+                                const nameA =
+                                    `${a.employee_fname} ${a.employee_lname}`.toLowerCase();
+                                const nameB =
+                                    `${b.employee_fname} ${b.employee_lname}`.toLowerCase();
+                                return nameA.localeCompare(nameB);
+                            })
                             .map((res) => (
-                                <option value={res.id} key={res.id}>
-                                    {`${res.employee_fname} ${res.employee_lname}`}
+                                <option key={res.id} value={res.id}>
+                                    {res.employee_fname} {res.employee_lname}
                                 </option>
                             ))}
-
                     </select>
-
                 </div>
             </Modal>
         </>

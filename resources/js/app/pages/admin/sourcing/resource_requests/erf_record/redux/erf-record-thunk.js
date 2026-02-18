@@ -16,8 +16,10 @@ export function create_outsourcing_erf_thunk(data) {
 }
 
 
-export function update_outsourcing_erf_thunk(data) {
+export function update_outsourcing_erf_thunk(data, additionalData = {}) {
   return async function (dispatch, getState) {
-    await update_outsourcing_erf_service(data)
+    // Merge the additional data with the main data
+    const updatedData = { ...data, ...additionalData };
+    await update_outsourcing_erf_service(updatedData);
   };
 }

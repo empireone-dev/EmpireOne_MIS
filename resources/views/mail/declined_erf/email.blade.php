@@ -57,37 +57,20 @@
 
             <p>Dear <b>{{$data['fname']}} {{$data['lname']}}</b>,</p>
 
-            <p> I hope this message finds you well. After a thorough review, we regret to inform you that the contract for the position of <strong>{{$data['jobPos']}}</strong> has been declined due to the following reason:</p>
+            <p>I hope this message finds you well. After a thorough review, we regret to inform you that your ERF request with Reference ID <strong>{{$data['ref_id']}}</strong> for the position of <strong>{{$data['jobPos']}}</strong> has been declined due to the following reason:</p>
 
-            <p><strong>Reason: {{$data['reason'] ?? ''}}</strong></p>
+            <p><strong>Reason: {{$data['reason'] ?? 'No reason provided'}}</strong></p>
 
-            <p>If you encounter any issues or require assistance during this process, please do not hesitate to reach out. We are committed to providing support to ensure a smooth and successful contract submission.</p>
+            <p>If you encounter any issues or require assistance during this process, please do not hesitate to reach out. We are committed to providing support and are available to discuss this decision further if needed.</p>
 
-            <p>Thank you for your prompt attention to this matter. We are eager to move forward once the corrected document is received and we remain enthusiastic about the opportunity to have you join our team.</p>
+            <p>Thank you for your understanding. Please feel free to submit a new ERF request in the future if circumstances change.</p>
 
             <p></p>
 
             <p>Warm regards,</p>
-            <p>TA Team<br>
+            <p>Human Resources<br>
                 <strong>EmpireOne BPO Solutions Inc.</strong>
             </p><br><br>
-
-            <p>Visit us on our social media accounts:</p>
-            <p>
-                <a href="https://www.facebook.com/profile.php?id=100089467625882" style="margin: 0 10px;">
-                    <img src="https://cdn-icons-png.flaticon.com/24/733/733547.png" alt="Facebook" style="width: 24px; height: 24px;">
-                </a>
-                <a href="https://www.instagram.com/empireonebposolutions/" style="margin: 0 10px;">
-                    <img src="https://cdn-icons-png.flaticon.com/24/2111/2111463.png" alt="Instagram" style="width: 24px; height: 24px;">
-                </a>
-                <a href="https://www.tiktok.com/@empireonebposolutions" style="margin: 0 10px;">
-                    <img src="https://cdn-icons-png.flaticon.com/24/3046/3046122.png" alt="TikTok" style="width: 24px; height: 24px;">
-                </a>
-                <a href="https://www.linkedin.com/company/empireone-contact-center-inc/?viewAsMember=true" style="margin: 0 10px;">
-                    <img src="https://cdn-icons-png.flaticon.com/24/174/174857.png" alt="LinkedIn" style="width: 24px; height: 24px;">
-                </a>
-            </p><br>
-            <img src="https://empireone-hris.com/images/SCemp2.jpg" alt="">
         </div>
     </div>
 

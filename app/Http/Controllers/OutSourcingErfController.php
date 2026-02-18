@@ -2,17 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\DeclinedErf;
 use App\Models\ERFJa;
 use App\Models\ERFJd;
 use App\Models\JobPosition;
 use App\Models\OutSourcingErf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class OutSourcingErfController extends Controller
 {
     public function outsourcing_erf_by_id($ref_id)
     {
-        $res = OutSourcingErf::where('ref_id', $ref_id)->with(['ja', 'jd'])->first();
+        $res = OutSourcingErf::where('ref_id', $ref_id)
+            ->with(['ja', 'jd', 'user.employee.applicant'])
+            ->first();
 
         return response()->json([
             'data' => $res
@@ -28,7 +33,7 @@ class OutSourcingErfController extends Controller
     }
     public function index()
     {
-        $erfrec = OutSourcingErf::with('user')->orderBy('id', 'desc')->get();
+        $erfrec = OutSourcingErf::with(['user.employee.applicant'])->orderBy('id', 'desc')->get();
         return response()->json([
             'data' => $erfrec
         ], 200);
@@ -92,12 +97,12 @@ class OutSourcingErfController extends Controller
 
     public function update(Request $request, $id)
     {
-        $erfrec = OutSourcingErf::find($id);
+        $erfrec = OutSourcingErf::with(['user.employee.applicant'])->find($id);
         $erfrec->update([
             'status' => $request->status,
         ]);
 
-        if ($request->status === 'Approved') {
+        if ($request->status == 'Approved') {
             // Create a new Job Position
             JobPosition::create([
                 'ref_id' => $request->ref_id,
@@ -108,10 +113,37 @@ class OutSourcingErfController extends Controller
             ]);
         }
 
-        if ($request->status === 'Declined') {
+        if ($request->status == 'Declined') {
             $erfrec->update([
                 'reason' => $request->reason,
             ]);
+
+            // Send email notification with proper data structure
+            try {
+                $emailData = [
+                    'fname' => $erfrec->user->employee->applicant->fname ?? '',
+                    'lname' => $erfrec->user->employee->applicant->lname ?? '',
+                    'jobPos' => $erfrec->jobTitle,
+                    'reason' => $request->reason,
+                    'ref_id' => $erfrec->ref_id,
+                ];
+
+                // Get email from multiple possible sources
+                $recipientEmail = $request->requestor_email ?? 
+                                $erfrec->user->employee->eogs ?? 
+                                $erfrec->user->employee->applicant->email ?? 
+                                null;
+                
+                if ($recipientEmail) {
+                    Mail::to($recipientEmail)->send(new DeclinedErf($emailData));
+                    Log::info("ERF decline email sent successfully to: " . $recipientEmail . " for ref_id: " . $erfrec->ref_id);
+                } else {
+                    Log::error("No email found for ERF decline notification. User ID: " . $erfrec->user_id . ", Ref ID: " . $erfrec->ref_id);
+                }
+            } catch (\Exception $e) {
+                Log::error("Failed to send ERF decline email: " . $e->getMessage() . " for ref_id: " . $erfrec->ref_id);
+                // Don't fail the request if email fails
+            }
         }
 
         return response()->json([

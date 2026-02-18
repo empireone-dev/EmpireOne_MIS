@@ -91,6 +91,37 @@ Route::get('/test-s3', function () {
     }
 });
 
+// Test email functionality for ERF decline
+Route::get('/test-erf-decline-email', function () {
+    try {
+        $testEmailData = [
+            'fname' => 'John',
+            'lname' => 'Doe',
+            'jobPos' => 'Software Developer',
+            'reason' => 'Budget constraints',
+            'ref_id' => 'ERF-TEST-001',
+        ];
+
+        \Illuminate\Support\Facades\Mail::to('test@example.com')->send(new \App\Mail\DeclinedErf($testEmailData));
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Test ERF decline email sent successfully',
+            'data' => $testEmailData
+        ]);
+    } catch (\Exception $e) {
+        \Illuminate\Support\Facades\Log::error('ERF decline email test failed', [
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+
+        return response()->json([
+            'success' => false,
+            'error' => $e->getMessage()
+        ], 500);
+    }
+});
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

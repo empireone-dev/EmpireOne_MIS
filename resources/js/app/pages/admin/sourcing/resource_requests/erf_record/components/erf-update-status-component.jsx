@@ -36,7 +36,12 @@ export default function ErfUpdateStatusComponent({ data, item }) {
         }
 
         try {
-            await store.dispatch(update_outsourcing_erf_thunk(dataValue));
+            await store.dispatch(
+                update_outsourcing_erf_thunk(dataValue, {
+                    reason: dataValue.reason || null,
+                    requestor_email: dataValue?.user?.employee?.eogs || dataValue?.user?.employee?.applicant?.email || null,
+                }),
+            );
             await store.dispatch(get_erf_record_thunk());
             message.success("Updated Successfully");
             setModalOpen(false);

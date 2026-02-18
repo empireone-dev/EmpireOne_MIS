@@ -33,14 +33,46 @@ class DeclinedErf extends Mailable
     }
 
     /**
-     * Build the message.
+     * Get the message envelope.
+     */
+    public function envelope(): Envelope
+    {
+        return new Envelope(
+            from: 'hrisempireone@gmail.com',
+            subject: 'EmpireOne BPO Solutions Inc - Declined ERF Request',
+        );
+    }
+
+    /**
+     * Get the message content definition.
+     */
+    public function content(): Content
+    {
+        return new Content(
+            view: 'mail.declined_erf.email',
+            with: ['data' => $this->data],
+        );
+    }
+
+    /**
+     * Get the attachments for the message.
+     *
+     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     */
+    public function attachments(): array
+    {
+        return [];
+    }
+
+    /**
+     * Build the message (legacy method for compatibility).
      */
     public function build()
     {
         $email = $this->from('hrisempireone@gmail.com', 'No Reply')
             ->subject('EmpireOne BPO Solutions Inc - Declined ERF Request')
-            ->markdown('mail.declined_erf.email')
-            ->with($this->data);
+            ->view('mail.declined_erf.email')
+            ->with(['data' => $this->data]);
 
         return $email;
     }

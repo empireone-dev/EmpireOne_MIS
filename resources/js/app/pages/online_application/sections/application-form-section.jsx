@@ -92,6 +92,14 @@ export default function ApplicationFormSection() {
         accept: "application/pdf",
         method: "GET",
         action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
+        beforeUpload(file) {
+            const isLt5M = file.size / 1024 / 1024 < 5;
+            if (!isLt5M) {
+                message.error('File size must be less than 5MB!');
+                return false;
+            }
+            return true;
+        },
         onChange(info) {
             const { status } = info.file;
             if (status !== "uploading") {
@@ -679,14 +687,10 @@ export default function ApplicationFormSection() {
                                         <Select
                                             register={{
                                                 ...register("educ", {
-                                                    required: false,
+                                                    required: "Education is required",
                                                 }),
                                             }}
                                             options={[
-                                                {
-                                                    label: "Highest Educational Attainmen",
-                                                    value: "Highest Educational Attainmen",
-                                                },
                                                 {
                                                     label: "Elementary Undergraduate",
                                                     value: "Elementary Undergraduate",
@@ -724,6 +728,7 @@ export default function ApplicationFormSection() {
                                                     value: "Doctoral Degree",
                                                 },
                                             ]}
+                                            errorMessage={errors?.educ?.message}
                                             label="Highest Educational Attainment"
                                             name="educ"
                                         />
@@ -1147,7 +1152,7 @@ export default function ApplicationFormSection() {
                                         </p>
                                         <p className="ant-upload-hint">
                                             Support for a single or bulk upload.
-                                            Only PDF files are allowed.
+                                            Only PDF files are allowed. Maximum file size: 5MB.
                                         </p>
                                     </Dragger>
                                     {files.length === 0 && (

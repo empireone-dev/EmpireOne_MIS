@@ -30,7 +30,11 @@ import AdminFooterComponents from "./_components/admin-footer-components";
 import { KeyIcon } from "@heroicons/react/24/outline";
 import store from "@/app/store/store";
 import { useSelector } from "react-redux";
-import { get_user_thunk, get_users_thunk, change_password_thunk } from "../redux/app-thunk";
+import {
+    get_user_thunk,
+    get_users_thunk,
+    change_password_thunk,
+} from "../redux/app-thunk";
 import UpdateProfile from "../_components/update-profile";
 const { Header, Sider, Content } = Layout;
 const AdminLayout = ({ children }) => {
@@ -40,9 +44,9 @@ const AdminLayout = ({ children }) => {
     const [changePassModalOpen, setChangePassModalOpen] = useState(false);
     const [updateProfileModalOpen, setUpdateProfileModalOpen] = useState(false);
     const [passwordForm, setPasswordForm] = useState({
-        current_password: '',
-        password: '',
-        password_confirmation: ''
+        current_password: "",
+        password: "",
+        password_confirmation: "",
     });
     const [passwordErrors, setPasswordErrors] = useState({});
     const [passwordLoading, setPasswordLoading] = useState(false);
@@ -59,7 +63,26 @@ const AdminLayout = ({ children }) => {
         }
         loadData();
     }, [user.id]);
-    const items = [
+
+    // Special menu items for role_id == 10 (ERF users)
+    const erfUserItems = [
+        {
+            key: "sourcing",
+            icon: <BookOutlined />,
+            label: "Sourcing",
+            children: [
+                {
+                    key: "erf_record",
+                    icon: <HolderOutlined />,
+                    label: "ERF Record",
+                    onClick: () => router.visit("/employee/erf_record"),
+                },
+            ],
+        },
+    ];
+
+    // Full admin menu items for other roles
+    const adminItems = [
         {
             key: "dashboard",
             icon: <DashboardOutlined />,
@@ -96,22 +119,6 @@ const AdminLayout = ({ children }) => {
                     label: "ERF Record",
                     onClick: () => router.visit("/admin/sourcing/erf_record"),
                 },
-                // {
-                //     key: "resource_requests",
-                //     icon: <HolderOutlined />,
-                //     label: "Resource Request",
-                //     children: [
-                //         {
-                //             key: "erf_record",
-                //             icon: <MoreOutlined />,
-                //             label: "ERF Record",
-                //             onClick: () =>
-                //                 router.visit(
-                //                     "/admin/sourcing/resource_requests/erf_record"
-                //                 ),
-                //         },
-                //     ],
-                // },
             ],
         },
         {
@@ -153,7 +160,7 @@ const AdminLayout = ({ children }) => {
                             label: "All Records",
                             onClick: () =>
                                 router.visit(
-                                    "/admin/recruitment/applicant_records?page=1"
+                                    "/admin/recruitment/applicant_records?page=1",
                                 ),
                         },
                         {
@@ -162,7 +169,7 @@ const AdminLayout = ({ children }) => {
                             label: "Pending",
                             onClick: () =>
                                 router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Pending&site=null"
+                                    "/admin/recruitment/applicant_records?page=1&status=Pending&site=null",
                                 ),
                         },
                         {
@@ -171,7 +178,7 @@ const AdminLayout = ({ children }) => {
                             label: "Initial Phase",
                             onClick: () =>
                                 router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null"
+                                    "/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null",
                                 ),
                         },
                         {
@@ -180,7 +187,7 @@ const AdminLayout = ({ children }) => {
                             label: "For Final Phase",
                             onClick: () =>
                                 router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=For%20Final%20Phase&site=null"
+                                    "/admin/recruitment/applicant_records?page=1&status=For%20Final%20Phase&site=null",
                                 ),
                         },
                         {
@@ -189,7 +196,7 @@ const AdminLayout = ({ children }) => {
                             label: "Final Phase",
                             onClick: () =>
                                 router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null"
+                                    "/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null",
                                 ),
                         },
                         {
@@ -198,7 +205,7 @@ const AdminLayout = ({ children }) => {
                             label: "Failed",
                             onClick: () =>
                                 router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Failed&site=null"
+                                    "/admin/recruitment/applicant_records?page=1&status=Failed&site=null",
                                 ),
                         },
                         {
@@ -207,7 +214,7 @@ const AdminLayout = ({ children }) => {
                             label: "Send Failed",
                             onClick: () =>
                                 router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null"
+                                    "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null",
                                 ),
                         },
                         {
@@ -216,7 +223,7 @@ const AdminLayout = ({ children }) => {
                             label: "Passed",
                             onClick: () =>
                                 router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Passed&site=null"
+                                    "/admin/recruitment/applicant_records?page=1&status=Passed&site=null",
                                 ),
                         },
                         {
@@ -225,7 +232,7 @@ const AdminLayout = ({ children }) => {
                             label: "Pooling",
                             onClick: () =>
                                 router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Pooling&site=null"
+                                    "/admin/recruitment/applicant_records?page=1&status=Pooling&site=null",
                                 ),
                         },
                         // {
@@ -289,7 +296,7 @@ const AdminLayout = ({ children }) => {
                     label: "Employee Section",
                     onClick: () =>
                         router.visit(
-                            "/admin/employee_relation/employee_section?page=1"
+                            "/admin/employee_relation/employee_section?page=1",
                         ),
                 },
                 // {
@@ -394,6 +401,9 @@ const AdminLayout = ({ children }) => {
         // },
     ];
 
+    // Choose which menu items to show based on user role
+    const items = user.role_id == "10" ? erfUserItems : adminItems;
+
     const dropdownRef = useRef(null);
 
     const handleButtonClick = () => {
@@ -424,15 +434,15 @@ const AdminLayout = ({ children }) => {
 
     const handlePasswordChange = (e) => {
         const { name, value } = e.target;
-        setPasswordForm(prev => ({
+        setPasswordForm((prev) => ({
             ...prev,
-            [name]: value
+            [name]: value,
         }));
         // Clear error when user starts typing
         if (passwordErrors[name]) {
-            setPasswordErrors(prev => ({
+            setPasswordErrors((prev) => ({
                 ...prev,
-                [name]: ''
+                [name]: "",
             }));
         }
     };
@@ -445,19 +455,19 @@ const AdminLayout = ({ children }) => {
         // Basic validation
         const errors = {};
         if (!passwordForm.current_password) {
-            errors.current_password = 'Current password is required';
+            errors.current_password = "Current password is required";
         }
         if (!passwordForm.password) {
-            errors.password = 'New password is required';
+            errors.password = "New password is required";
         }
         if (!passwordForm.password_confirmation) {
-            errors.password_confirmation = 'Password confirmation is required';
+            errors.password_confirmation = "Password confirmation is required";
         }
         if (passwordForm.password !== passwordForm.password_confirmation) {
-            errors.password_confirmation = 'Passwords do not match';
+            errors.password_confirmation = "Passwords do not match";
         }
         if (passwordForm.password && passwordForm.password.length < 8) {
-            errors.password = 'Password must be at least 8 characters long';
+            errors.password = "Password must be at least 8 characters long";
         }
 
         if (Object.keys(errors).length > 0) {
@@ -467,44 +477,53 @@ const AdminLayout = ({ children }) => {
         }
 
         try {
-            const result = await store.dispatch(change_password_thunk(passwordForm));
-            
+            const result = await store.dispatch(
+                change_password_thunk(passwordForm),
+            );
+
             if (result.success) {
                 // Success
                 setChangePassModalOpen(false);
                 resetPasswordForm();
-                message.success('Password changed successfully!');
+                message.success("Password changed successfully!");
             }
         } catch (error) {
-            console.error('Password change error:', error);
-            
+            console.error("Password change error:", error);
+
             // Handle validation errors from server
             if (error.errors && Object.keys(error.errors).length > 0) {
                 // Convert Laravel validation errors (arrays) to strings
                 const formattedErrors = {};
-                Object.keys(error.errors).forEach(key => {
-                    formattedErrors[key] = Array.isArray(error.errors[key]) 
-                        ? error.errors[key][0]  // Take first error message
+                Object.keys(error.errors).forEach((key) => {
+                    formattedErrors[key] = Array.isArray(error.errors[key])
+                        ? error.errors[key][0] // Take first error message
                         : error.errors[key];
                 });
                 setPasswordErrors(formattedErrors);
-                message.error('Please check the form for errors.');
+                message.error("Please check the form for errors.");
             } else if (error.status === 422) {
                 // Handle direct response errors
-                setPasswordErrors({ 
-                    general: error.message || 'Validation failed. Please check your inputs.' 
+                setPasswordErrors({
+                    general:
+                        error.message ||
+                        "Validation failed. Please check your inputs.",
                 });
-                message.error('Validation failed. Please check your inputs.');
-            } else if (error.status === 401 || error.message.includes('password is incorrect')) {
-                setPasswordErrors({ 
-                    current_password: 'Current password is incorrect.' 
+                message.error("Validation failed. Please check your inputs.");
+            } else if (
+                error.status === 401 ||
+                error.message.includes("password is incorrect")
+            ) {
+                setPasswordErrors({
+                    current_password: "Current password is incorrect.",
                 });
-                message.error('Current password is incorrect.');
+                message.error("Current password is incorrect.");
             } else {
-                setPasswordErrors({ 
-                    general: error.message || 'An error occurred while changing password. Please try again.' 
+                setPasswordErrors({
+                    general:
+                        error.message ||
+                        "An error occurred while changing password. Please try again.",
                 });
-                message.error('An error occurred. Please try again.');
+                message.error("An error occurred. Please try again.");
             }
         } finally {
             setPasswordLoading(false);
@@ -513,9 +532,9 @@ const AdminLayout = ({ children }) => {
 
     const resetPasswordForm = () => {
         setPasswordForm({
-            current_password: '',
-            password: '',
-            password_confirmation: ''
+            current_password: "",
+            password: "",
+            password_confirmation: "",
         });
         setPasswordErrors({});
     };
@@ -634,7 +653,9 @@ const AdminLayout = ({ children }) => {
                                                 className="flex flex-1"
                                                 onClick={() => {
                                                     resetPasswordForm();
-                                                    setChangePassModalOpen(true);
+                                                    setChangePassModalOpen(
+                                                        true,
+                                                    );
                                                     toggleDropdown(false);
                                                 }}
                                             >
@@ -853,7 +874,10 @@ const AdminLayout = ({ children }) => {
                                 >
                                     <li className="bg-gray-300 h-0.5"></li>
                                     <div className="flex flex-1 gap-2 w-full mt-1">
-                                        <form className="w-full h-full" onSubmit={handlePasswordSubmit}>
+                                        <form
+                                            className="w-full h-full"
+                                            onSubmit={handlePasswordSubmit}
+                                        >
                                             {passwordErrors.general && (
                                                 <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                                                     {passwordErrors.general}
@@ -866,18 +890,26 @@ const AdminLayout = ({ children }) => {
                                                     </label>
                                                     <input
                                                         className={`appearance-none block w-full border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white ${
-                                                            passwordErrors.current_password 
-                                                                ? 'border-red-500' 
-                                                                : 'border-gray-400 focus:border-gray-500'
+                                                            passwordErrors.current_password
+                                                                ? "border-red-500"
+                                                                : "border-gray-400 focus:border-gray-500"
                                                         }`}
                                                         type="password"
                                                         name="current_password"
-                                                        value={passwordForm.current_password}
-                                                        onChange={handlePasswordChange}
+                                                        value={
+                                                            passwordForm.current_password
+                                                        }
+                                                        onChange={
+                                                            handlePasswordChange
+                                                        }
                                                         placeholder="Enter your current password"
                                                     />
                                                     {passwordErrors.current_password && (
-                                                        <p className="text-red-500 text-xs mb-3">{passwordErrors.current_password}</p>
+                                                        <p className="text-red-500 text-xs mb-3">
+                                                            {
+                                                                passwordErrors.current_password
+                                                            }
+                                                        </p>
                                                     )}
                                                 </div>
                                                 <div className="w-full px-2.5">
@@ -886,18 +918,26 @@ const AdminLayout = ({ children }) => {
                                                     </label>
                                                     <input
                                                         className={`appearance-none block w-full border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white ${
-                                                            passwordErrors.password 
-                                                                ? 'border-red-500' 
-                                                                : 'border-gray-400 focus:border-gray-500'
+                                                            passwordErrors.password
+                                                                ? "border-red-500"
+                                                                : "border-gray-400 focus:border-gray-500"
                                                         }`}
                                                         type="password"
                                                         name="password"
-                                                        value={passwordForm.password}
-                                                        onChange={handlePasswordChange}
+                                                        value={
+                                                            passwordForm.password
+                                                        }
+                                                        onChange={
+                                                            handlePasswordChange
+                                                        }
                                                         placeholder="Enter your new password"
                                                     />
                                                     {passwordErrors.password && (
-                                                        <p className="text-red-500 text-xs mb-3">{passwordErrors.password}</p>
+                                                        <p className="text-red-500 text-xs mb-3">
+                                                            {
+                                                                passwordErrors.password
+                                                            }
+                                                        </p>
                                                     )}
                                                 </div>
                                                 <div className="w-full px-2.5">
@@ -906,32 +946,42 @@ const AdminLayout = ({ children }) => {
                                                     </label>
                                                     <input
                                                         className={`appearance-none block w-full border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white ${
-                                                            passwordErrors.password_confirmation 
-                                                                ? 'border-red-500' 
-                                                                : 'border-gray-400 focus:border-gray-500'
+                                                            passwordErrors.password_confirmation
+                                                                ? "border-red-500"
+                                                                : "border-gray-400 focus:border-gray-500"
                                                         }`}
                                                         type="password"
                                                         name="password_confirmation"
-                                                        value={passwordForm.password_confirmation}
-                                                        onChange={handlePasswordChange}
+                                                        value={
+                                                            passwordForm.password_confirmation
+                                                        }
+                                                        onChange={
+                                                            handlePasswordChange
+                                                        }
                                                         placeholder="Confirm your new password"
                                                     />
                                                     {passwordErrors.password_confirmation && (
-                                                        <p className="text-red-500 text-xs mb-3">{passwordErrors.password_confirmation}</p>
+                                                        <p className="text-red-500 text-xs mb-3">
+                                                            {
+                                                                passwordErrors.password_confirmation
+                                                            }
+                                                        </p>
                                                     )}
                                                 </div>
                                             </div>
-                                            <button 
+                                            <button
                                                 type="submit"
                                                 disabled={passwordLoading}
                                                 className={`w-full text-white font-bold py-2 px-4 rounded-lg ${
-                                                    passwordLoading 
-                                                        ? 'bg-gray-400 cursor-not-allowed' 
-                                                        : 'bg-blue-500 hover:bg-blue-700'
+                                                    passwordLoading
+                                                        ? "bg-gray-400 cursor-not-allowed"
+                                                        : "bg-blue-500 hover:bg-blue-700"
                                                 }`}
                                             >
-                                                <CheckCircleFilled /> 
-                                                {passwordLoading ? 'Changing...' : 'Change Password'}
+                                                <CheckCircleFilled />
+                                                {passwordLoading
+                                                    ? "Changing..."
+                                                    : "Change Password"}
                                             </button>
                                         </form>
                                     </div>

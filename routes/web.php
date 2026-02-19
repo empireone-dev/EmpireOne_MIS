@@ -661,6 +661,24 @@ Route::prefix('employee', 'role:7')->group(function () {
     });
 });
 
+Route::middleware(['auth:sanctum', 'role:10'])->prefix('employee')->group(function () {
+    Route::prefix('sourcing')->group(function () {
+        Route::get('/resource_request/erf_record', function () {
+            return Inertia::render('employee/sourcing/resource_requests/erf_record/page');
+        });
+        Route::get('/resource_request', function () {
+            return Inertia::render('employee/sourcing/resource_requests/erf_record/page');
+        });
+    });
+    // Add dedicated erf_record route for easier access
+    Route::get('/erf_record', function () {
+        return Inertia::render('employee/sourcing/resource_requests/erf_record/page');
+    });
+    Route::get('/profile', function () {
+        return Inertia::render('employee/profile/page');
+    });
+});
+
 
 
 

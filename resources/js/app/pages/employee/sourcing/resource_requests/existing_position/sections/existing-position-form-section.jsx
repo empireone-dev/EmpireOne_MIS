@@ -12,6 +12,7 @@ export default function ExistingPositionFormSection() {
     const { job_positions } = useSelector((state) => state.job_positions);
     const { erfCount } = useSelector((state) => state.departments);
     const { user } = useSelector((state) => state.app);
+    const { accounts } = useSelector((state) => state.accounts);
 
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
@@ -261,12 +262,29 @@ export default function ExistingPositionFormSection() {
                         <label>
                             <b>Account</b>
                         </label>
-                        <input
-                            type="text"
-                            value={form.account}
+                        <select
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    account: e.target.value,
+                                })
+                            }
+                            value={form.account || ""}
                             className="border p-2 rounded w-full"
-                            readOnly
-                        />
+                            name="account"
+                            id="account"
+                        >
+                            <option value="" disabled>
+                                Select an account
+                            </option>
+                            {accounts.map((res, i) => {
+                                return (
+                                    <option key={i} value={res.acc}>
+                                        {res.acc}
+                                    </option>
+                                );
+                            })}
+                        </select>
                     </div>
                     <div className="w-full flex flex-col">
                         <label>

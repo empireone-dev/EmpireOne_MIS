@@ -663,17 +663,49 @@ Route::prefix('employee', 'role:7')->group(function () {
 
 Route::middleware(['auth:sanctum', 'role:10'])->prefix('employee')->group(function () {
     Route::prefix('sourcing')->group(function () {
-        Route::get('/resource_request/erf_record', function () {
-            return Inertia::render('employee/sourcing/resource_requests/erf_record/page');
+        Route::prefix('resource_requests')->group(function () {
+            Route::get('/erf_record', function () {
+                return Inertia::render('employee/sourcing/resource_requests/erf_record/page');
+            });
+            Route::get('/new_position', function () {
+                return Inertia::render('employee/sourcing/resource_requests/new_position/page');
+            });
+            Route::get('/existing_position', function () {
+                return Inertia::render('employee/sourcing/resource_requests/existing_position/page');
+            });
+            Route::get('/approved_erf', function () {
+                return Inertia::render('employee/sourcing/resource_requests/approved_erf/page');
+            });
+            Route::get('/declined_erf', function () {
+                return Inertia::render('employee/sourcing/resource_requests/declined_erf/page');
+            });
         });
         Route::get('/resource_request', function () {
             return Inertia::render('employee/sourcing/resource_requests/erf_record/page');
         });
     });
+
     // Add dedicated erf_record route for easier access
     Route::get('/erf_record', function () {
         return Inertia::render('employee/sourcing/resource_requests/erf_record/page');
     });
+    
+    // Add erf_record prefixed routes for easier navigation
+    Route::prefix('erf_record')->group(function () {
+        Route::get('/new_position', function () {
+            return Inertia::render('employee/sourcing/resource_requests/new_position/page');
+        });
+        Route::get('/existing_position', function () {
+            return Inertia::render('employee/sourcing/resource_requests/existing_position/page');
+        });
+        Route::get('/approved_erf', function () {
+            return Inertia::render('employee/sourcing/resource_requests/approved_erf/page');
+        });
+        Route::get('/declined_erf', function () {
+            return Inertia::render('employee/sourcing/resource_requests/declined_erf/page');
+        });
+    });
+
     Route::get('/profile', function () {
         return Inertia::render('employee/profile/page');
     });

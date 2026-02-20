@@ -12,6 +12,7 @@ export default function ExistingPositionFormSection() {
     const { job_positions } = useSelector((state) => state.job_positions);
     const { erfCount } = useSelector((state) => state.departments);
     const { user } = useSelector((state) => state.app);
+    const { accounts } = useSelector((state) => state.accounts);
 
     const [loading, setLoading] = useState(false);
     const [form, setForm] = useState({
@@ -26,6 +27,7 @@ export default function ExistingPositionFormSection() {
         sourcingMethod: "",
         justification: "",
         site: user?.site || "",
+        user_id: user?.id || "",
     });
 
     const [applicationCount, setApplicationCount] = useState(0);
@@ -66,18 +68,18 @@ export default function ExistingPositionFormSection() {
         if (selectedJob) {
             setForm((prevForm) => ({
                 ...prevForm,
-                account: selectedJob.outsourcing_erf.account,
                 department: selectedJob.outsourcing_erf.department,
                 budgetCost: selectedJob.salary,
                 jobTitle: selectedJobTitle,
+                // Don't override account if user has manually selected one
             }));
         } else {
             setForm((prevForm) => ({
                 ...prevForm,
                 department: "",
-                account: "",
                 budgetCost: "",
                 jobTitle: selectedJobTitle,
+                // Don't clear account when job title changes
             }));
         }
         setReqs(selectedJobTitle);
@@ -89,6 +91,14 @@ export default function ExistingPositionFormSection() {
 
     const submitErf = async () => {
         setLoading(true);
+        
+        // Debug: Check form data before submission
+        console.log("Form data being submitted:", {
+            submitted: moment().format("YYYY-MM-DD"),
+            ...form,
+            ...user,
+        });
+        
         try {
             await store.dispatch(
                 create_outsourcing_erf_thunk({
@@ -260,12 +270,36 @@ export default function ExistingPositionFormSection() {
                         <label>
                             <b>Account</b>
                         </label>
-                        <input
+                        <select
+                            onChange={(e) => {
+                                console.log("Account selected:", e.target.value);
+                                setForm({
+                                    ...form,
+                                    account: e.target.value,
+                                });
+                            }}
+                            value={form.account || ""}
+                            className="border p-2 rounded w-full"
+                            name="account"
+                            id="account"
+                        >
+                            <option value="" disabled>
+                                Select an account
+                            </option>
+                            {accounts.map((res, i) => {
+                                return (
+                                    <option key={i} value={res.acc}>
+                                        {res.acc}
+                                    </option>
+                                );
+                            })}
+                        </select>
+                        {/* <input
                             type="text"
                             value={form.account}
                             className="border p-2 rounded w-full"
                             readOnly
-                        />
+                        /> */}
                     </div>
                     <div className="w-full flex flex-col">
                         <label>

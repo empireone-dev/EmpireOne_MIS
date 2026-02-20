@@ -81,7 +81,7 @@ export default function NewPositionFormSection() {
             message.success("Successfully Added!");
             setTimeout(() => {
                 setLoading(false);
-                router.visit("/admin/sourcing/resource_requests/erf_record");
+                router.visit("/employee/erf_record");
             }, 2000);
         } catch (error) {
             setLoading(false);

@@ -402,7 +402,13 @@ const AdminLayout = ({ children }) => {
     ];
 
     // Choose which menu items to show based on user role
-    const items = user.role_id == "10" ? erfUserItems : adminItems;
+    // Add loading check to prevent admin menu from showing before user data is loaded
+    const items =
+        user && user.role_id == "10"
+            ? erfUserItems
+            : user && user.role_id
+              ? adminItems
+              : [];
 
     const dropdownRef = useRef(null);
 
@@ -571,22 +577,26 @@ const AdminLayout = ({ children }) => {
                                 className={`${collapsed ? "hidden" : ""} mr-2`}
                             >
                                 <a className=" flex hover:text-primary transition-colors duration-200 ease-in-out text-[1.075rem] font-medium text-secondary-inverse">
-                                    {user.employee_fname} {user.employee_lname}
+                                    {user
+                                        ? `${user.employee_fname || ""} ${user.employee_lname || ""}`
+                                        : "Loading..."}
                                 </a>
                                 <span className=" font-medium block text-[0.85rem]">
-                                    {user.position}
+                                    {user ? user.position || "" : "Loading..."}
                                 </span>
                             </div>
                         </div>
                     </div>
 
-                    <Menu
-                        className="text-lg font-sans"
-                        mode="inline"
-                        defaultSelectedKeys={active.split("?")[0]}
-                        defaultOpenKeys={path.slice(1 - path.length)}
-                        items={items}
-                    />
+                    {user && user.role_id && (
+                        <Menu
+                            className="text-lg font-sans"
+                            mode="inline"
+                            defaultSelectedKeys={active.split("?")[0]}
+                            defaultOpenKeys={path.slice(1 - path.length)}
+                            items={items}
+                        />
+                    )}
                 </Sider>
                 <Layout>
                     <Header

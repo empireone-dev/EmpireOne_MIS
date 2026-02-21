@@ -27,7 +27,6 @@ export default function ExistingPositionFormSection() {
         sourcingMethod: "",
         justification: "",
         site: user?.site || "",
-        user_id: user?.id || "",
     });
 
     const [applicationCount, setApplicationCount] = useState(0);
@@ -52,6 +51,17 @@ export default function ExistingPositionFormSection() {
         }));
     }, [erfCount]);
 
+    // Update user_id and site when user object is available
+    useEffect(() => {
+        if (user?.id) {
+            setForm((prevForm) => ({
+                ...prevForm,
+                user_id: user.id,
+                site: user.site || "",
+            }));
+        }
+    }, [user]);
+
     const generateUniqueAppId = () => {
         const today = new Date();
         const datePart = moment(today).format("MMDDYYYY");
@@ -71,7 +81,8 @@ export default function ExistingPositionFormSection() {
                 department: selectedJob.outsourcing_erf.department,
                 budgetCost: selectedJob.salary,
                 jobTitle: selectedJobTitle,
-                // Don't override account if user has manually selected one
+                // Auto-populate account from job position if available, otherwise keep existing
+                account: selectedJob.outsourcing_erf?.account || prevForm.account,
             }));
         } else {
             setForm((prevForm) => ({
@@ -79,10 +90,25 @@ export default function ExistingPositionFormSection() {
                 department: "",
                 budgetCost: "",
                 jobTitle: selectedJobTitle,
-                // Don't clear account when job title changes
+                // Keep existing account selection when no job is found
+                account: prevForm.account,
             }));
         }
         setReqs(selectedJobTitle);
+    };
+
+    const handleAccountChange = (e) => {
+        const selectedAccount = e.target.value;
+        console.log("Account changed to:", selectedAccount);
+        
+        setForm((prevForm) => {
+            const updatedForm = {
+                ...prevForm,
+                account: selectedAccount,
+            };
+            console.log("Updated form state:", updatedForm);
+            return updatedForm;
+        });
     };
 
     const handleGoBack = () => {
@@ -90,23 +116,60 @@ export default function ExistingPositionFormSection() {
     };
 
     const submitErf = async () => {
+        // Validate required fields including account
+        if (!form.account) {
+            message.error("Please select an account before submitting.");
+            return;
+        }
+
+        if (!form.jobTitle) {
+            message.error("Please select a job title before submitting.");
+            return;
+        }
+
+        if (!form.jobType) {
+            message.error("Please select a job type before submitting.");
+            return;
+        }
+
+        if (!form.personnel) {
+            message.error("Please enter the number of required personnel.");
+            return;
+        }
+
+        if (!form.dateNeed) {
+            message.error("Please select a target onboarding date.");
+            return;
+        }
+
         setLoading(true);
-        
+
         // Debug: Check form data before submission
-        console.log("Form data being submitted:", {
-            submitted: moment().format("YYYY-MM-DD"),
-            ...form,
-            ...user,
-        });
-        
+        console.log("Form state before submission:", form);
+        console.log("User object:", user);
+
         try {
-            await store.dispatch(
-                create_outsourcing_erf_thunk({
-                    submitted: moment().format("YYYY-MM-DD"),
-                    ...form,
-                    ...user,
-                }),
-            );
+            // Create the submit data object carefully to ensure account is not overridden
+            const submitData = {
+                submitted: moment().format("YYYY-MM-DD"),
+                user_id: user?.id || form.user_id,
+                site: user?.site || form.site,
+                ref_id: form.ref_id,
+                department: form.department,
+                account: form.account, // Explicitly ensure account is included
+                budgetCost: form.budgetCost,
+                jobTitle: form.jobTitle,
+                jobType: form.jobType,
+                personnel: form.personnel,
+                dateNeed: form.dateNeed,
+                positionStatus: form.positionStatus,
+                sourcingMethod: form.sourcingMethod,
+                justification: form.justification,
+            };
+
+            console.log("Final data being sent to thunk:", submitData);
+
+            await store.dispatch(create_outsourcing_erf_thunk(submitData));
             message.success("Successfully Added!");
             setTimeout(() => {
                 setLoading(false);
@@ -114,6 +177,7 @@ export default function ExistingPositionFormSection() {
             }, 2000);
         } catch (error) {
             console.error("Error submitting ERF:", error);
+            message.error("Error submitting form. Please try again.");
             setLoading(false);
         }
     };
@@ -270,20 +334,18 @@ export default function ExistingPositionFormSection() {
                         <label>
                             <b>Account</b>
                         </label>
+                        {/* Debug info - remove after testing */}
+                        <div className="text-xs text-gray-500 mb-1">
+                            Current account value: "{form.account || 'none selected'}"
+                        </div>
                         <select
-                            onChange={(e) => {
-                                console.log("Account selected:", e.target.value);
-                                setForm({
-                                    ...form,
-                                    account: e.target.value,
-                                });
-                            }}
+                            onChange={handleAccountChange}
                             value={form.account || ""}
                             className="border p-2 rounded w-full"
                             name="account"
                             id="account"
                         >
-                            <option value="" disabled>
+                            <option value="">
                                 Select an account
                             </option>
                             {accounts.map((res, i) => {
@@ -294,12 +356,6 @@ export default function ExistingPositionFormSection() {
                                 );
                             })}
                         </select>
-                        {/* <input
-                            type="text"
-                            value={form.account}
-                            className="border p-2 rounded w-full"
-                            readOnly
-                        /> */}
                     </div>
                     <div className="w-full flex flex-col">
                         <label>
@@ -353,7 +409,9 @@ export default function ExistingPositionFormSection() {
                             type="text"
                             value={form.budgetCost}
                             className="border p-2 rounded w-full"
-                            readOnly
+                            onChange={(e) =>
+                                setForm({ ...form, budgetCost: e.target.value })
+                            }
                         />
                     </div>
                 </div>

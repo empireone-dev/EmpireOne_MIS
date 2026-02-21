@@ -52,6 +52,16 @@ export default function ExistingPositionFormSection() {
         }));
     }, [erfCount]);
 
+    useEffect(() => {
+        if (user?.id) {
+            setForm((prevForm) => ({
+                ...prevForm,
+                user_id: user.id,
+                site: user.site || "",
+            }));
+        }
+    }, [user]);
+
     const generateUniqueAppId = () => {
         const today = new Date();
         const datePart = moment(today).format("MMDDYYYY");
@@ -68,21 +78,37 @@ export default function ExistingPositionFormSection() {
         if (selectedJob) {
             setForm((prevForm) => ({
                 ...prevForm,
-                account: selectedJob.outsourcing_erf.account,
                 department: selectedJob.outsourcing_erf.department,
                 budgetCost: selectedJob.salary,
                 jobTitle: selectedJobTitle,
+                // Auto-populate account from job position if available, otherwise keep existing
+                account: selectedJob.outsourcing_erf?.account || prevForm.account,
             }));
         } else {
             setForm((prevForm) => ({
                 ...prevForm,
                 department: "",
-                account: "",
                 budgetCost: "",
                 jobTitle: selectedJobTitle,
+                // Keep existing account selection when no job is found
+                account: prevForm.account,
             }));
         }
         setReqs(selectedJobTitle);
+    };
+
+    const handleAccountChange = (e) => {
+        const selectedAccount = e.target.value;
+        console.log("Account changed to:", selectedAccount);
+        
+        setForm((prevForm) => {
+            const updatedForm = {
+                ...prevForm,
+                account: selectedAccount,
+            };
+            console.log("Updated form state:", updatedForm);
+            return updatedForm;
+        });
     };
 
     const handleGoBack = () => {
@@ -90,15 +116,59 @@ export default function ExistingPositionFormSection() {
     };
 
     const submitErf = async () => {
+        // Debug: Log the form data to see what's being submitted
+        console.log("Form state before submission:", form);
+        console.log("User object:", user);
+        
+        // Validate required fields including account
+        if (!form.account) {
+            message.error("Please select an account before submitting.");
+            return;
+        }
+
+        if (!form.jobTitle) {
+            message.error("Please select a job title before submitting.");
+            return;
+        }
+
+        if (!form.jobType) {
+            message.error("Please select a job type before submitting.");
+            return;
+        }
+
+        if (!form.personnel) {
+            message.error("Please enter the number of required personnel.");
+            return;
+        }
+
+        if (!form.dateNeed) {
+            message.error("Please select a target onboarding date.");
+            return;
+        }
+
         setLoading(true);
         try {
-            await store.dispatch(
-                create_outsourcing_erf_thunk({
-                    submitted: moment().format("YYYY-MM-DD"),
-                    ...form,
-                    ...user,
-                }),
-            );
+            // Create the submit data object carefully to ensure account is not overridden
+            const submitData = {
+                submitted: moment().format("YYYY-MM-DD"),
+                user_id: user?.id || form.user_id,
+                site: user?.site || form.site,
+                ref_id: form.ref_id,
+                department: form.department,
+                account: form.account, // Explicitly ensure account is included
+                budgetCost: form.budgetCost,
+                jobTitle: form.jobTitle,
+                jobType: form.jobType,
+                personnel: form.personnel,
+                dateNeed: form.dateNeed,
+                positionStatus: form.positionStatus,
+                sourcingMethod: form.sourcingMethod,
+                justification: form.justification,
+            };
+            
+            console.log("Final data being sent to thunk:", submitData);
+            
+            await store.dispatch(create_outsourcing_erf_thunk(submitData));
             message.success("Successfully Added!");
             setTimeout(() => {
                 setLoading(false);
@@ -106,6 +176,7 @@ export default function ExistingPositionFormSection() {
             }, 2000);
         } catch (error) {
             console.error("Error submitting ERF:", error);
+            message.error("Error submitting form. Please try again.");
             setLoading(false);
         }
     };
@@ -263,18 +334,13 @@ export default function ExistingPositionFormSection() {
                             <b>Account</b>
                         </label>
                         <select
-                            onChange={(e) =>
-                                setForm({
-                                    ...form,
-                                    account: e.target.value,
-                                })
-                            }
+                            onChange={handleAccountChange}
                             value={form.account || ""}
                             className="border p-2 rounded w-full"
                             name="account"
                             id="account"
                         >
-                            <option value="" disabled>
+                            <option value="">
                                 Select an account
                             </option>
                             {accounts.map((res, i) => {
@@ -338,7 +404,9 @@ export default function ExistingPositionFormSection() {
                             type="text"
                             value={form.budgetCost}
                             className="border p-2 rounded w-full"
-                            readOnly
+                            onChange={(e) =>
+                                setForm({ ...form, budgetCost: e.target.value })
+                            }
                         />
                     </div>
                 </div>

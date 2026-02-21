@@ -4,8 +4,8 @@ import Input from "@/app/pages/_components/input";
 import store from "@/app/store/store";
 import { useSelector } from "react-redux";
 import { PlusSquareTwoTone } from "@ant-design/icons";
-import { create_account_thunk, get_account_thunk } from "../../../employee_relation/employee_section/redux/account-thunk";
 import create from "@ant-design/icons/lib/components/IconFont";
+import { create_account_thunk, get_account_thunk } from "@/app/pages/admin/employee_relation/employee_section/redux/account-thunk";
 
 const AccountsCreateSection = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);

@@ -3,7 +3,7 @@ import store from "@/app/store/store";
 import React, { useState } from "react";
 import { message, Modal } from "antd";
 import { TrashIcon } from "@heroicons/react/24/outline";
-import { delete_account_thunk, get_account_thunk } from "../../../employee_relation/employee_section/redux/account-thunk";
+import { delete_account_thunk, get_account_thunk } from "@/app/pages/admin/employee_relation/employee_section/redux/account-thunk";
 
 export default function AccountsDeleteSection({ data }) {
     const [isModalOpen, setIsModalOpen] = useState(false);

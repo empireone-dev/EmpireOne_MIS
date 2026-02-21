@@ -82,7 +82,8 @@ export default function ExistingPositionFormSection() {
                 budgetCost: selectedJob.salary,
                 jobTitle: selectedJobTitle,
                 // Auto-populate account from job position if available, otherwise keep existing
-                account: selectedJob.outsourcing_erf?.account || prevForm.account,
+                account:
+                    selectedJob.outsourcing_erf?.account || prevForm.account,
             }));
         } else {
             setForm((prevForm) => ({
@@ -100,7 +101,7 @@ export default function ExistingPositionFormSection() {
     const handleAccountChange = (e) => {
         const selectedAccount = e.target.value;
         console.log("Account changed to:", selectedAccount);
-        
+
         setForm((prevForm) => {
             const updatedForm = {
                 ...prevForm,
@@ -269,8 +270,9 @@ export default function ExistingPositionFormSection() {
                             <option value=""></option>
                             <option value="Full Time">Full Time</option>
                             <option value="Part Time">Part Time</option>
+                            <option value="Contractual">Contractual</option>
+                            <option value="Project-based">Project-based</option>
                             <option value="Temporary">Temporary</option>
-                            <option value="Other">Other</option>
                         </select>
                     </div>
                     <div className="w-full flex flex-col">
@@ -314,9 +316,12 @@ export default function ExistingPositionFormSection() {
                             value={form.positionStatus}
                         >
                             <option value=""></option>
-                            <option>Replacement</option>
-                            <option>Reorganization</option>
-                            <option>Other</option>
+                            <option>
+                                Replacement (due to
+                                resignation/termination/personnel movement)
+                            </option>
+                            <option>Additional manpower</option>
+                            <option>New Role</option>
                         </select>
                     </div>
                     <div className="w-full flex flex-col">
@@ -336,7 +341,8 @@ export default function ExistingPositionFormSection() {
                         </label>
                         {/* Debug info - remove after testing */}
                         <div className="text-xs text-gray-500 mb-1">
-                            Current account value: "{form.account || 'none selected'}"
+                            Current account value: "
+                            {form.account || "none selected"}"
                         </div>
                         <select
                             onChange={handleAccountChange}
@@ -345,9 +351,7 @@ export default function ExistingPositionFormSection() {
                             name="account"
                             id="account"
                         >
-                            <option value="">
-                                Select an account
-                            </option>
+                            <option value="">Select an account</option>
                             {accounts.map((res, i) => {
                                 return (
                                     <option key={i} value={res.acc}>

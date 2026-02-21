@@ -236,18 +236,29 @@ export default function NewPositionFormSection() {
                                 <label htmlFor="">
                                     <b>Position Status</b>
                                 </label>
-                                <input
+                                <select
                                     onChange={(e) =>
                                         setForm({
                                             ...form,
                                             positionStatus: e.target.value,
                                         })
                                     }
-                                    type="text"
-                                    value={form.positionStatus}
+                                    value={form.positionStatus || ""}
                                     className="border p-2 rounded w-full"
-                                    readOnly
-                                />
+                                >
+                                    <option value="" disabled>
+                                        Select position status
+                                    </option>
+                                    <option value="Replacement (due to resignation/termination/personnel movement)">
+                                        Replacement (due to
+                                        resignation/termination/personnel
+                                        movement)
+                                    </option>
+                                    <option value="Additional manpower">
+                                        Additional manpower
+                                    </option>
+                                    <option value="New Role">New Role</option>
+                                </select>
                             </div>
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">

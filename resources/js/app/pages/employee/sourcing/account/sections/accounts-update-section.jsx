@@ -4,7 +4,7 @@ import { PencilSquareIcon } from "@heroicons/react/24/outline";
 import Input from "@/app/pages/_components/input";
 import { useSelector } from "react-redux";
 import store from "@/app/store/store";
-import { get_account_thunk, update_account_thunk } from "../../../employee_relation/employee_section/redux/account-thunk";
+import { get_account_thunk, update_account_thunk } from "@/app/pages/admin/employee_relation/employee_section/redux/account-thunk";
 
 export default function AccountsUpdateSection({ data }) {
     const [isModalOpen, setIsModalOpen] = useState(false);

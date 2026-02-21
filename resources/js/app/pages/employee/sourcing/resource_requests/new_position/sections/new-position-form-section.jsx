@@ -56,6 +56,16 @@ export default function NewPositionFormSection() {
         });
     }, [erfCount]);
 
+    useEffect(() => {
+        if (user?.id) {
+            setForm((prevForm) => ({
+                ...prevForm,
+                user_id: user.id,
+                site: user.site || "",
+            }));
+        }
+    }, [user]);
+
     const handlePrev = () => {
         if (activeStep > 0) {
             setActiveStep(activeStep - 1);

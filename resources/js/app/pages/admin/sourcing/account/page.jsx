@@ -1,10 +1,10 @@
 import React from 'react'
-import AdminLayout from '../../admin-layout'
 import AccountsTableSection from './sections/accounts-table-section'
 import { useEffect } from 'react'
 import store from '@/app/store/store'
 import { get_account_thunk } from '../../employee_relation/employee_section/redux/account-thunk'
 import AccountsCreateSection from './sections/accounts-create-section'
+import AdminLayout from '../../admin-layout'
 
 export default function page() {
     useEffect(() => {

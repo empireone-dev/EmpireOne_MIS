@@ -538,6 +538,7 @@ export default function UpdateEmployeeFormSection() {
                                                     "Director",
                                                     "CEO",
                                                     "HR Lead",
+                                                    "Accounting Head",
                                                     "TQA Manager",
                                                     "TQA Director",
                                                     "IT Manager",

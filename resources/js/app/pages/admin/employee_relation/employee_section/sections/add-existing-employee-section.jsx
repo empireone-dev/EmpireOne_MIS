@@ -706,6 +706,7 @@ export default function AddExistingEmployeeSection() {
                                                     "Director",
                                                     "CEO",
                                                     "HR Lead",
+                                                    "Accounting Head",
                                                     "TQA Manager",
                                                     "TQA Director",
                                                     "IT Manager",

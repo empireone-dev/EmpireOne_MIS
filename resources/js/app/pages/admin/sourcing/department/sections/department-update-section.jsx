@@ -20,6 +20,7 @@ export default function DepartmentUpdateSection({ data }) {
             id: data?.id,
             dept: data?.dept || "",
             depthead: data?.user?.id || "",
+            site: data?.site || "",
         });
     }, []);
     const showModal = () => {
@@ -99,9 +100,9 @@ export default function DepartmentUpdateSection({ data }) {
                             }
                             value={form.depthead}
                         >
-                            {/* <option value="">
-                                {data?.user?.employee_fname ?? ''} {data?.user?.employee_lname ?? ''}
-                            </option> */}
+                            <option value="" disabled>
+                                Select Department Head
+                            </option>
                             {users
                                 .filter(
                                     (res) =>
@@ -115,6 +116,7 @@ export default function DepartmentUpdateSection({ data }) {
                                             "Director",
                                             "CEO",
                                             "HR Lead",
+                                            "Accounting Head",
                                             "TQA Manager",
                                             "TQA Director",
                                             "IT Manager",
@@ -148,6 +150,23 @@ export default function DepartmentUpdateSection({ data }) {
                                         {res.employee_lname}
                                     </option>
                                 ))}
+                        </select>
+                        <select
+                            className="border p-2 rounded-md w-full"
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    site: e.target.value,
+                                })
+                            }
+                            value={form.site}
+                        >
+                            <option value="" disabled>
+                                Select Site
+                            </option>
+                            <option value="San Carlos">San Carlos</option>
+                            <option value="Carcar">Carcar</option>
+                            <option value="Cebu">Cebu</option>
                         </select>
                     </div>
                 </form>

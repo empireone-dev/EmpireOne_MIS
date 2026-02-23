@@ -107,6 +107,7 @@ const DepartmentCreateSection = () => {
                                         "Director",
                                         "CEO",
                                         "HR Lead",
+                                        "Accounting Head",
                                         "TQA Manager",
                                         "TQA Director",
                                         "IT Manager",

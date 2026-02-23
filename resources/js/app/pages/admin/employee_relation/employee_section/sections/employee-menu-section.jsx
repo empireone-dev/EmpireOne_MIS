@@ -43,18 +43,18 @@ export default function EmployeeMenuSection({ data }) {
                 />
             ),
         },
-        {
-            component: (
-                <EmploymentStatusComponent
-                    item={{
-                        label: "Employment Status",
-                        key: "3",
-                        icon: <UsergroupAddOutlined />,
-                    }}
-                    data={data}
-                />
-            ),
-        },
+        // {
+        //     component: (
+        //         <EmploymentStatusComponent
+        //             item={{
+        //                 label: "Employment Status",
+        //                 key: "3",
+        //                 icon: <UsergroupAddOutlined />,
+        //             }}
+        //             data={data}
+        //         />
+        //     ),
+        // },
         // {
         //     component: (
         //         <FileIrComponent

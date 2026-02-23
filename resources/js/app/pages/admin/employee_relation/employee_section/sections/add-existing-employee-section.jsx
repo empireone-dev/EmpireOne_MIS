@@ -21,7 +21,7 @@ import {
 } from "../../../recruitment/applicants/applicant_records/redux/applicant-thunk";
 import Input from "@/app/pages/_components/input";
 import Select from "@/app/pages/_components/select";
-import { store_employee_thunk } from "../redux/employee-section-thunk";
+import { get_employee_thunk, store_employee_thunk } from "../redux/employee-section-thunk";
 import { wait } from "ckeditor5";
 import { get_job_position_thunk } from "../../../sourcing/job_title_section/redux/job-title-thunk";
 import { get_department_thunk } from "../../../sourcing/department/redux/department-thunk";
@@ -29,6 +29,7 @@ import { useForm } from "react-hook-form";
 import Dragger from "antd/es/upload/Dragger";
 import Input2 from "@/app/pages/_components/input2";
 import Checkbox from "@/app/pages/_components/checkbox";
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 export default function AddExistingEmployeeSection() {
     const [open, setOpen] = useState(false);
@@ -168,12 +169,12 @@ export default function AddExistingEmployeeSection() {
                     province: JSON.parse(data?.province).name,
                     city: JSON.parse(data?.city).name,
                     region: JSON.parse(data?.region).name,
-                    site: user.site,
                     files: files.map((res) => res.files),
                     is_experience: hasExperience,
                 }),
             );
             await store.dispatch(get_applicant_thunk());
+            await store.dispatch(get_employee_thunk());
             message.success("Employee Saved successfully");
             reset();
             setFiles([]);
@@ -335,6 +336,26 @@ export default function AddExistingEmployeeSection() {
                     onSubmit={handleSubmit(submitApplicant)}
                     className="space-y-4 px-8 py-8"
                 >
+                    <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
+                        Site Information
+                    </h1>
+                    <div className="flex-1">
+                        <Select2
+                            register={{
+                                ...register("site", {
+                                    required: "Site is required",
+                                }),
+                            }}
+                            options={[
+                                { label: "San Carlos", value: "San Carlos" },
+                                { label: "Carcar", value: "Carcar" },
+                                { label: "Cebu", value: "Cebu" },
+                            ]}
+                            errorMessage={errors?.site?.message}
+                            label="Site"
+                            name="site"
+                        />
+                    </div>
                     <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                         Personal Information
                     </h1>
@@ -918,7 +939,7 @@ export default function AddExistingEmployeeSection() {
                             />
                         </div>
                     </div>
-                    <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
+                    {/* <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                         Working Experience
                     </h1>
 
@@ -1046,7 +1067,7 @@ export default function AddExistingEmployeeSection() {
                                 ))}
                             </div>
                         )}
-                    </div>
+                    </div> */}
                     <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                         Emergency Contact Information
                     </h1>
@@ -1108,7 +1129,7 @@ export default function AddExistingEmployeeSection() {
                             <InboxOutlined />
                         </p>
                         <p className="ant-upload-text">
-                            Click or drag file to this area to upload your CV
+                            Click or drag file to this area to upload CV
                         </p>
                         <p className="ant-upload-hint">
                             Support for a single or bulk upload. Strictly

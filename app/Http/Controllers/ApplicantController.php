@@ -330,13 +330,13 @@ class ApplicantController extends Controller
             ], 404);
         }
 
-        $employee1 = Employee::where('emp_id', $request->emp_id)->first();
+        // $employee1 = Employee::where('emp_id', $request->emp_id)->first();
 
-        if ($employee1) {
-            $employee1->update([
-                'eogs' => $request->email,
-            ]);
-        }
+        // if ($employee1) {
+        //     $employee1->update([
+        //         'eogs' => $request->email,
+        //     ]);
+        // }
 
         $employee->update($request->all());
 

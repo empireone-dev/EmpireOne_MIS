@@ -17,15 +17,12 @@ const DepartmentCreateSection = () => {
     const [form, setForm] = useState({
         dept: "",
         depthead: "",
-        site: user?.site || "",
+        site: "",
     });
-
-    console.log("site", user?.site);
 
     const showModal = () => {
         setForm((prev) => ({
             ...prev,
-            site: user?.site || "",
         }));
         setIsModalOpen(true);
     };
@@ -71,17 +68,6 @@ const DepartmentCreateSection = () => {
                 okText="Save"
             >
                 <div className="flex flex-col gap-4">
-                    <input
-                        onChange={(e) =>
-                            setForm({
-                                ...form,
-                                site: e.target.value,
-                            })
-                        }
-                        value={user?.site ?? ""}
-                        type="hidden"
-                        className="border p-2 rounded w-full"
-                    />
                     <Input
                         onChange={(e) =>
                             setForm({
@@ -105,7 +91,9 @@ const DepartmentCreateSection = () => {
                         }
                         value={form.depthead}
                     >
-                        <option value="">Select Department Head</option>
+                        <option value="" disabled>
+                            Select Department Head
+                        </option>
                         {users
                             .filter(
                                 (res) =>
@@ -150,6 +138,23 @@ const DepartmentCreateSection = () => {
                                     {res.employee_fname} {res.employee_lname}
                                 </option>
                             ))}
+                    </select>
+                    <select
+                        className="border p-2 rounded-md w-full"
+                        onChange={(e) =>
+                            setForm({
+                                ...form,
+                                site: e.target.value,
+                            })
+                        }
+                        value={form.site}
+                    >
+                        <option value="" disabled>
+                            Select Site
+                        </option>
+                        <option value="San Carlos">San Carlos</option>
+                        <option value="Carcar">Carcar</option>
+                        <option value="Cebu">Cebu</option>
                     </select>
                 </div>
             </Modal>

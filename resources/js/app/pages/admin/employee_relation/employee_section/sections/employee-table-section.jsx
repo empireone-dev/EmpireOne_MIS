@@ -247,7 +247,7 @@ export default function EmployeeTableSection() {
             render: (text) => text || "N/A",
         },
         {
-            title: "Email Address",
+            title: "Company Email Address",
             dataIndex: "eogs",
             key: "eogs",
             // ...getColumnSearchProps("eogs"),

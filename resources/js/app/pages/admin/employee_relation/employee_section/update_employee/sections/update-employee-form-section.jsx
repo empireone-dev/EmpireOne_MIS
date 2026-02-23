@@ -26,6 +26,7 @@ export default function UpdateEmployeeFormSection() {
 
     useEffect(() => {
         setForm({
+            site: applicant?.site || "",
             app_id: applicant?.app_id,
             id: applicant?.id,
             emp_id: applicant?.employee?.emp_id || "",
@@ -36,6 +37,7 @@ export default function UpdateEmployeeFormSection() {
             gender: applicant?.gender || "",
             dob: applicant?.dob || "",
             email: applicant?.email || "",
+            eogs: employee?.eogs || "",
             phone: applicant?.phone || "",
             marital: applicant?.marital || "",
             religion: applicant?.religion || "",
@@ -112,6 +114,30 @@ export default function UpdateEmployeeFormSection() {
                 onSubmit={edit_information}
             >
                 <h1 className="text-xl font-semibold mb-3 text-gray-900  text-center"></h1>
+                <div className="mb-4">
+                    <div className="flex flex-col w-full">
+                        <label htmlFor="">
+                            <b>Site</b>
+                        </label>
+                        <select
+                            value={form?.site ?? ""}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    site: e.target.value,
+                                })
+                            }
+                            className="border p-2 rounded w-full"
+                        >
+                            <option disabled selected>
+                                Select Site
+                            </option>
+                            <option value="San Carlos"> San Carlos</option>
+                            <option value="Carcar"> Carcar</option>
+                            <option value="Cebu"> Cebu</option>
+                        </select>
+                    </div>
+                </div>
                 <div className="mb-4">
                     <div className="flex flex-col w-full">
                         <label htmlFor="">
@@ -234,7 +260,7 @@ export default function UpdateEmployeeFormSection() {
                             </div>
                             <div className=" w-full">
                                 <label htmlFor="">
-                                    <b>Email</b>
+                                    <b>Personal Email</b>
                                 </label>
                                 <input
                                     type="email"
@@ -306,6 +332,22 @@ export default function UpdateEmployeeFormSection() {
                                         })
                                     }
                                     className="border p-2 rounded w-full"
+                                />
+                            </div>
+                            <div className=" w-full">
+                                <label htmlFor="">
+                                    <b>Company Email</b>
+                                </label>
+                                <input
+                                    type="email"
+                                    value={form?.eogs ?? ""}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            eogs: e.target.value,
+                                        })
+                                    }
+                                    className="border p-2 rounded w-full "
                                 />
                             </div>
                             <div className="flex flex-col w-full">

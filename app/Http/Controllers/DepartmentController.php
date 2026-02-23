@@ -10,7 +10,6 @@ class DepartmentController extends Controller
     public function index()
     {
         $department = Department::with(['user'])
-            ->orderBy('site', 'desc')
             ->orderBy('dept', 'asc')
             ->get();
         return response()->json([

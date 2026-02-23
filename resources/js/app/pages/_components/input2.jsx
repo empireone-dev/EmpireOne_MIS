@@ -13,7 +13,7 @@ export default function Input2({
                     {...register}
                     type={type}
                     id={register?.name}
-                    className={`peer pl-8 text-black placeholder-transparent w-full rounded-md py-2.5 px-5 border-gray-500 border bg-transparent bg-white focus-within:outline-none focus-within:border-blue-500 ${errorMessage ? "border-red-500" : ""
+                    className={`peer pl-4 text-black placeholder-transparent w-full rounded-md py-2.5 px-5 border-gray-500 border bg-transparent bg-white focus-within:outline-none focus-within:border-blue-500 ${errorMessage ? "border-red-500" : ""
                         }`}
                     placeholder=""
                 />

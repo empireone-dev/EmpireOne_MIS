@@ -339,11 +339,6 @@ export default function ExistingPositionFormSection() {
                         <label>
                             <b>Account</b>
                         </label>
-                        {/* Debug info - remove after testing */}
-                        <div className="text-xs text-gray-500 mb-1">
-                            Current account value: "
-                            {form.account || "none selected"}"
-                        </div>
                         <select
                             onChange={handleAccountChange}
                             value={form.account || ""}

@@ -16,6 +16,8 @@ export default function EmployeeTableSection() {
     const { employees } = useSelector((state) => state.employees);
     const { accounts } = useSelector((state) => state.accounts);
 
+    console.log("employsssees", employees);
+
     const url = window.location.pathname + window.location.search;
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();

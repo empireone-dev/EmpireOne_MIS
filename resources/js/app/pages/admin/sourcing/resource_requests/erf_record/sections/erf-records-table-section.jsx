@@ -378,7 +378,7 @@ export default function ErfRecordsTableSection() {
                     onClick={() => openErfModal(record)}
                     style={{ padding: 0, height: "auto" }}
                 >
-                    {text}
+                    <u>{text}</u>
                 </Button>
                 // <div>{record?.ref_id}</div>
             ),
@@ -428,7 +428,7 @@ export default function ErfRecordsTableSection() {
                 return date.toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
-                    day: "numeric"
+                    day: "numeric",
                 });
             },
         },
@@ -449,8 +449,8 @@ export default function ErfRecordsTableSection() {
                 return date.toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
-                    day: "numeric"
-                }); 
+                    day: "numeric",
+                });
             },
         },
         {

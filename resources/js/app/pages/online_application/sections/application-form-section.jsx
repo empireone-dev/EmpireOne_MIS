@@ -95,7 +95,7 @@ export default function ApplicationFormSection() {
         beforeUpload(file) {
             const isLt5M = file.size / 1024 / 1024 < 5;
             if (!isLt5M) {
-                message.error('File size must be less than 5MB!');
+                message.error("File size must be less than 5MB!");
                 return false;
             }
             return true;
@@ -595,7 +595,7 @@ export default function ApplicationFormSection() {
                                             }
                                             name="phone"
                                             label="Phone"
-                                            type="number"
+                                            type="tel"
                                         />
                                     </div>
                                 </div>
@@ -687,7 +687,8 @@ export default function ApplicationFormSection() {
                                         <Select
                                             register={{
                                                 ...register("educ", {
-                                                    required: "Education is required",
+                                                    required:
+                                                        "Education is required",
                                                 }),
                                             }}
                                             options={[
@@ -1132,7 +1133,7 @@ export default function ApplicationFormSection() {
                                             }}
                                             name="ephone"
                                             label="Contact No."
-                                            type="number"
+                                            type="tel"
                                         />
                                     </div>
                                 </div>
@@ -1152,7 +1153,8 @@ export default function ApplicationFormSection() {
                                         </p>
                                         <p className="ant-upload-hint">
                                             Support for a single or bulk upload.
-                                            Only PDF files are allowed. Maximum file size: 5MB.
+                                            Only PDF files are allowed. Maximum
+                                            file size: 5MB.
                                         </p>
                                     </Dragger>
                                     {files.length === 0 && (

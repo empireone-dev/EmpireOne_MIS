@@ -31,6 +31,7 @@ export default function ExistingPositionFormSection() {
 
     const [applicationCount, setApplicationCount] = useState(0);
     const [reqs, setReqs] = useState("");
+    const [errors, setErrors] = useState({});
 
     useEffect(() => {
         const fetchApplicationCount = async () => {
@@ -75,6 +76,11 @@ export default function ExistingPositionFormSection() {
             (job) => job.jPosition === selectedJobTitle,
         );
 
+        // Clear error when user selects a value
+        if (errors.jobTitle) {
+            setErrors(prev => ({ ...prev, jobTitle: "" }));
+        }
+
         if (selectedJob) {
             setForm((prevForm) => ({
                 ...prevForm,
@@ -102,6 +108,11 @@ export default function ExistingPositionFormSection() {
         const selectedAccount = e.target.value;
         console.log("Account changed to:", selectedAccount);
 
+        // Clear error when user selects a value
+        if (errors.account) {
+            setErrors(prev => ({ ...prev, account: "" }));
+        }
+
         setForm((prevForm) => {
             const updatedForm = {
                 ...prevForm,
@@ -117,29 +128,54 @@ export default function ExistingPositionFormSection() {
     };
 
     const submitErf = async () => {
-        // Validate required fields including account
+        // Reset errors
+        setErrors({});
+        
+        // Validate required fields (all fields except budgetCost)
+        const newErrors = {};
+        
         if (!form.account) {
-            message.error("Please select an account before submitting.");
-            return;
+            newErrors.account = "Please select an account before submitting.";
         }
 
         if (!form.jobTitle) {
-            message.error("Please select a job title before submitting.");
-            return;
+            newErrors.jobTitle = "Please select a job title before submitting.";
         }
 
         if (!form.jobType) {
-            message.error("Please select a job type before submitting.");
-            return;
+            newErrors.jobType = "Please select a job type before submitting.";
         }
 
         if (!form.personnel) {
-            message.error("Please enter the number of required personnel.");
-            return;
+            newErrors.personnel = "Please enter the number of required personnel.";
         }
 
         if (!form.dateNeed) {
-            message.error("Please select a target onboarding date.");
+            newErrors.dateNeed = "Please select a target onboarding date.";
+        }
+
+        if (!form.positionStatus) {
+            newErrors.positionStatus = "Please select a position status.";
+        }
+
+        if (!form.department) {
+            newErrors.department = "Department is required. Please select a job title first.";
+        }
+
+        if (!form.sourcingMethod) {
+            newErrors.sourcingMethod = "Please select a sourcing method.";
+        }
+
+        if (!form.justification || form.justification.trim() === "") {
+            newErrors.justification = "Please provide a reason or justification for the request.";
+        }
+
+        // If there are errors, set them and return
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+            // Show first error message
+            const firstError = Object.values(newErrors)[0];
+            message.error(firstError);
             return;
         }
 
@@ -190,7 +226,7 @@ export default function ExistingPositionFormSection() {
                 <Button
                     onClick={handleGoBack}
                     icon={<ArrowLeftOutlined />}
-                    className="mb-4 flex items-center gap-2 bg-gray-100 border-gray-300 hover:bg-gray-200"
+                    className="mb-4 flex items-center gap-2 bg-gray-100  hover:bg-gray-200"
                 >
                     Back
                 </Button>
@@ -240,11 +276,12 @@ export default function ExistingPositionFormSection() {
                             <b>Job Title</b>
                         </label>
                         <select
-                            className="border p-2 rounded w-full"
+                            className={`border p-2 rounded w-full ${errors.jobTitle ? 'border-red-500' : ''}`}
                             onChange={handleJobTitleChange}
                             value={form.jobTitle}
+                            required
                         >
-                            <option value=""></option>
+                            <option value="">Select a job title</option>
                             {job_positions
                                 .filter((res) => res.status === "Approved")
                                 .map((res, i) => (
@@ -253,6 +290,7 @@ export default function ExistingPositionFormSection() {
                                     </option>
                                 ))}
                         </select>
+                        {errors.jobTitle && <span className="text-red-500 text-sm mt-1">{errors.jobTitle}</span>}
                     </div>
                 </div>
                 <div className="flex flex-1 w-full gap-4 mb-4">
@@ -261,19 +299,24 @@ export default function ExistingPositionFormSection() {
                             <b>Job Type</b>
                         </label>
                         <select
-                            onChange={(e) =>
-                                setForm({ ...form, jobType: e.target.value })
-                            }
-                            className="border p-2 rounded w-full"
+                            onChange={(e) => {
+                                setForm({ ...form, jobType: e.target.value });
+                                if (errors.jobType) {
+                                    setErrors(prev => ({ ...prev, jobType: "" }));
+                                }
+                            }}
+                            className={`border p-2 rounded w-full ${errors.jobType ? 'border-red-500' : ''}`}
                             value={form.jobType}
+                            required
                         >
-                            <option value=""></option>
+                            <option value="">Select a job type</option>
                             <option value="Full Time">Full Time</option>
                             <option value="Part Time">Part Time</option>
                             <option value="Contractual">Contractual</option>
                             <option value="Project-based">Project-based</option>
                             <option value="Temporary">Temporary</option>
                         </select>
+                        {errors.jobType && <span className="text-red-500 text-sm mt-1">{errors.jobType}</span>}
                     </div>
                     <div className="w-full flex flex-col">
                         <label>
@@ -281,11 +324,17 @@ export default function ExistingPositionFormSection() {
                         </label>
                         <input
                             type="number"
-                            className="border p-2 rounded w-full"
-                            onChange={(e) =>
-                                setForm({ ...form, personnel: e.target.value })
-                            }
+                            className={`border p-2 rounded w-full ${errors.personnel ? 'border-red-500' : ''}`}
+                            onChange={(e) => {
+                                setForm({ ...form, personnel: e.target.value });
+                                if (errors.personnel) {
+                                    setErrors(prev => ({ ...prev, personnel: "" }));
+                                }
+                            }}
+                            value={form.personnel}
+                            required
                         />
+                        {errors.personnel && <span className="text-red-500 text-sm mt-1">{errors.personnel}</span>}
                     </div>
                     <div className="w-full flex flex-col">
                         <label>
@@ -293,11 +342,17 @@ export default function ExistingPositionFormSection() {
                         </label>
                         <input
                             type="date"
-                            className="border p-2 rounded w-full"
-                            onChange={(e) =>
-                                setForm({ ...form, dateNeed: e.target.value })
-                            }
+                            className={`border p-2 rounded w-full ${errors.dateNeed ? 'border-red-500' : ''}`}
+                            onChange={(e) => {
+                                setForm({ ...form, dateNeed: e.target.value });
+                                if (errors.dateNeed) {
+                                    setErrors(prev => ({ ...prev, dateNeed: "" }));
+                                }
+                            }}
+                            value={form.dateNeed}
+                            required
                         />
+                        {errors.dateNeed && <span className="text-red-500 text-sm mt-1">{errors.dateNeed}</span>}
                     </div>
                 </div>
                 <div className="flex flex-1 w-full gap-4 mb-4">
@@ -306,23 +361,31 @@ export default function ExistingPositionFormSection() {
                             <b>Position Status</b>
                         </label>
                         <select
-                            onChange={(e) =>
+                            onChange={(e) => {
                                 setForm({
                                     ...form,
                                     positionStatus: e.target.value,
-                                })
-                            }
-                            className="border p-2 rounded w-full"
+                                });
+                                if (errors.positionStatus) {
+                                    setErrors(prev => ({ ...prev, positionStatus: "" }));
+                                }
+                            }}
+                            className={`border p-2 rounded w-full ${errors.positionStatus ? 'border-red-500' : ''}`}
                             value={form.positionStatus}
+                            required
                         >
-                            <option value=""></option>
+                            <option value="">Select a position status</option>
                             <option>
                                 Replacement (due to
                                 resignation/termination/personnel movement)
                             </option>
                             <option>Additional manpower</option>
                             <option>New Role</option>
+                            <option value=" Internal Job Posting">
+                                Internal Job Posting
+                            </option>
                         </select>
+                        {errors.positionStatus && <span className="text-red-500 text-sm mt-1">{errors.positionStatus}</span>}
                     </div>
                     <div className="w-full flex flex-col">
                         <label>
@@ -342,9 +405,10 @@ export default function ExistingPositionFormSection() {
                         <select
                             onChange={handleAccountChange}
                             value={form.account || ""}
-                            className="border p-2 rounded w-full"
+                            className={`border p-2 rounded w-full ${errors.account ? 'border-red-500' : ''}`}
                             name="account"
                             id="account"
+                            required
                         >
                             <option value="">Select an account</option>
                             {accounts.map((res, i) => {
@@ -355,26 +419,32 @@ export default function ExistingPositionFormSection() {
                                 );
                             })}
                         </select>
+                        {errors.account && <span className="text-red-500 text-sm mt-1">{errors.account}</span>}
                     </div>
                     <div className="w-full flex flex-col">
                         <label>
                             <b>Sourcing Method</b>
                         </label>
                         <select
-                            onChange={(e) =>
+                            onChange={(e) => {
                                 setForm({
                                     ...form,
                                     sourcingMethod: e.target.value,
-                                })
-                            }
-                            className="border p-2 rounded w-full"
+                                });
+                                if (errors.sourcingMethod) {
+                                    setErrors(prev => ({ ...prev, sourcingMethod: "" }));
+                                }
+                            }}
+                            className={`border p-2 rounded w-full ${errors.sourcingMethod ? 'border-red-500' : ''}`}
                             value={form.sourcingMethod}
+                            required
                         >
-                            <option value=""></option>
+                            <option value="">Select a sourcing method</option>
                             <option>Internal Candidates</option>
                             <option>External Candidates</option>
                             <option>Both</option>
                         </select>
+                        {errors.sourcingMethod && <span className="text-red-500 text-sm mt-1">{errors.sourcingMethod}</span>}
                     </div>
                 </div>
                 <div className="w-full flex flex-col mb-4">
@@ -382,11 +452,17 @@ export default function ExistingPositionFormSection() {
                         <b>Reason or Justification of the Request</b>
                     </label>
                     <textarea
-                        className="border h-40 p-2 rounded w-full"
-                        onChange={(e) =>
-                            setForm({ ...form, justification: e.target.value })
-                        }
+                        className={`border h-40 p-2 rounded w-full ${errors.justification ? 'border-red-500' : ''}`}
+                        onChange={(e) => {
+                            setForm({ ...form, justification: e.target.value });
+                            if (errors.justification) {
+                                setErrors(prev => ({ ...prev, justification: "" }));
+                            }
+                        }}
+                        value={form.justification}
+                        required
                     />
+                    {errors.justification && <span className="text-red-500 text-sm mt-1">{errors.justification}</span>}
                 </div>
                 <div className="flex flex-1 w-full gap-4 mb-4">
                     <div className="w-full flex flex-col">

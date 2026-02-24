@@ -389,7 +389,7 @@ export default function ErfRecordsTableSection() {
                     onClick={() => openErfModal(record)}
                     style={{ padding: 0, height: "auto" }}
                 >
-                    {text}
+                    <u>{text}</u>
                 </Button>
                 // <div>{record?.ref_id}</div>
             ),

@@ -21,7 +21,10 @@ import {
 } from "../../../recruitment/applicants/applicant_records/redux/applicant-thunk";
 import Input from "@/app/pages/_components/input";
 import Select from "@/app/pages/_components/select";
-import { get_employee_thunk, store_employee_thunk } from "../redux/employee-section-thunk";
+import {
+    get_employee_thunk,
+    store_employee_thunk,
+} from "../redux/employee-section-thunk";
 import { wait } from "ckeditor5";
 import { get_job_position_thunk } from "../../../sourcing/job_title_section/redux/job-title-thunk";
 import { get_department_thunk } from "../../../sourcing/department/redux/department-thunk";
@@ -489,7 +492,7 @@ export default function AddExistingEmployeeSection() {
                                 errorMessage={errors?.phone?.message}
                                 name="phone"
                                 label="Phone"
-                                type="number"
+                                type="tel"
                             />
                         </div>
                     </div>
@@ -1119,7 +1122,7 @@ export default function AddExistingEmployeeSection() {
                                 }}
                                 name="ephone"
                                 label="Contact No."
-                                type="number"
+                                type="tel"
                             />
                         </div>
                     </div>

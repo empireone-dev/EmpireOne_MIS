@@ -12,6 +12,7 @@ export default function ExistingPositionFormSection() {
     const { job_positions } = useSelector((state) => state.job_positions);
     const { erfCount } = useSelector((state) => state.departments);
     const { user } = useSelector((state) => state.app);
+    const { users } = useSelector((state) => state.app);
     const { accounts } = useSelector((state) => state.accounts);
 
     const [loading, setLoading] = useState(false);
@@ -26,8 +27,10 @@ export default function ExistingPositionFormSection() {
         positionStatus: "",
         sourcingMethod: "",
         justification: "",
+        reviewer: "",
         site: user?.site || "",
         user_id: user?.id || "",
+        requestor_name: `${user?.employee_fname || ""} ${user?.employee_lname || ""}`,
     });
 
     const [applicationCount, setApplicationCount] = useState(0);
@@ -59,6 +62,7 @@ export default function ExistingPositionFormSection() {
                 ...prevForm,
                 user_id: user.id,
                 site: user.site || "",
+                requestor_name: `${user.employee_fname || ""} ${user.employee_lname || ""}`,
             }));
         }
     }, [user]);
@@ -174,6 +178,10 @@ export default function ExistingPositionFormSection() {
             newErrors.justification = "Please provide a reason or justification for the request.";
         }
 
+        if (!form.reviewer || form.reviewer.trim() === "") {
+            newErrors.reviewer = "Please select a reviewer.";
+        }
+
         // If there are errors, set them and return
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
@@ -201,6 +209,8 @@ export default function ExistingPositionFormSection() {
                 positionStatus: form.positionStatus,
                 sourcingMethod: form.sourcingMethod,
                 justification: form.justification,
+                reviewer: form.reviewer,
+                requestor_name: form.requestor_name,
             };
 
             console.log("Final data being sent to thunk:", submitData);
@@ -486,6 +496,56 @@ export default function ExistingPositionFormSection() {
                             }
                         />
                     </div>
+                </div>
+                <div className="w-full flex flex-col mb-4">
+                    <label>
+                        <b>Reviewer</b>
+                    </label>
+                    <select
+                        onChange={(e) => {
+                            setForm({
+                                ...form,
+                                reviewer: e.target.value,
+                            });
+                            if (errors.reviewer) {
+                                setErrors(prev => ({ ...prev, reviewer: "" }));
+                            }
+                        }}
+                        value={form.reviewer || ""}
+                        className={`border p-2 rounded w-full ${errors.reviewer ? 'border-red-500' : ''}`}
+                        name="reviewer"
+                        id="reviewer"
+                        required
+                    >
+                        <option value="" disabled>
+                            Select a reviewer
+                        </option>
+                        {users
+                            .filter(
+                                (res) =>
+                                    res.id == "717" ||
+                                    res.id == "892" ||
+                                    res.id == "4",
+                            )
+                            .sort((a, b) =>
+                                a.employee_fname.localeCompare(
+                                    b.employee_fname,
+                                ),
+                            )
+                            .map((res, i) => {
+                                return (
+                                    <option key={i} value={res.id}>
+                                        {res.employee_fname}{" "}
+                                        {res.employee_lname}
+                                    </option>
+                                );
+                            })}
+                    </select>
+                    {errors.reviewer && (
+                        <span className="text-red-500 text-sm mt-1">
+                            {errors.reviewer}
+                        </span>
+                    )}
                 </div>
                 <div className="flex flex-1 gap-2 justify-end items-center">
                     <Button

@@ -580,7 +580,10 @@ export default function ExistingPositionFormSection() {
                         </option>
                         {users
                             .filter(
-                                (res) => res.id == "717" || res.id == "892",
+                                (res) =>
+                                    res.id == "717" ||
+                                    res.id == "892" ||
+                                    res.id == "742",
                                 // res.id == "4",
                             )
                             .sort((a, b) =>

@@ -462,14 +462,16 @@ export default function NewPositionFormSection() {
                                         Select an account
                                     </option>
                                     {[...accounts]
-                                        .sort((a, b) => a.acc.localeCompare(b.acc))
+                                        .sort((a, b) =>
+                                            a.acc.localeCompare(b.acc),
+                                        )
                                         .map((res, i) => {
-                                        return (
-                                            <option key={i} value={res.acc}>
-                                                {res.acc}
-                                            </option>
-                                        );
-                                    })}
+                                            return (
+                                                <option key={i} value={res.acc}>
+                                                    {res.acc}
+                                                </option>
+                                            );
+                                        })}
                                 </select>
                                 {errors.account && (
                                     <span className="text-red-500 text-sm mt-1">
@@ -611,9 +613,8 @@ export default function NewPositionFormSection() {
                                 {users
                                     .filter(
                                         (res) =>
-                                            res.id == "717" ||
-                                            res.id == "892" ||
-                                            res.id == "4",
+                                            res.id == "717" || res.id == "892",
+                                        // res.id == "4",
                                     )
                                     .sort((a, b) =>
                                         a.employee_fname.localeCompare(

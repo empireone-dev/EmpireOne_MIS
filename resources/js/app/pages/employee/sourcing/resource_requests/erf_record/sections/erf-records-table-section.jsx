@@ -42,8 +42,8 @@ export default function ErfRecordsTableSection() {
 
     const filterData = (selectedStatus) => {
         // First filter by current user's ERF records
-        const userErfRecords = erf_records.filter((record) => 
-            record.user?.id === user?.id
+        const userErfRecords = erf_records.filter(
+            (record) => record.user?.id === user?.id,
         );
 
         // Then apply status filter if any
@@ -59,8 +59,8 @@ export default function ErfRecordsTableSection() {
 
     useEffect(() => {
         // Only show ERF records for the current user
-        const userErfRecords = erf_records.filter((record) => 
-            record.user?.id === user?.id
+        const userErfRecords = erf_records.filter(
+            (record) => record.user?.id === user?.id,
         );
         dispatch(setFilteredData(userErfRecords));
     }, [erf_records, user]);
@@ -439,7 +439,7 @@ export default function ErfRecordsTableSection() {
                 return date.toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
-                    day: "numeric"
+                    day: "numeric",
                 });
             },
         },
@@ -460,8 +460,8 @@ export default function ErfRecordsTableSection() {
                 return date.toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
-                    day: "numeric"
-                }); 
+                    day: "numeric",
+                });
             },
         },
         {
@@ -491,13 +491,13 @@ export default function ErfRecordsTableSection() {
                 );
             },
         },
-        // {
-        //     title: "Action",
-        //     dataIndex: "action",
-        //     render: (_, record) => {
-        //         return <ErfMenuButtonSection data={record} />;
-        //     },
-        // },
+        {
+            title: "Action",
+            dataIndex: "action",
+            render: (_, record) => {
+                return <ErfMenuButtonSection data={record} />;
+            },
+        },
     ];
 
     return (

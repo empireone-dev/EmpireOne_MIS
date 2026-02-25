@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Mail\DeclinedErf;
+use App\Mail\ReviewErf;
 use App\Models\ERFJa;
 use App\Models\ERFJd;
 use App\Models\JobPosition;
 use App\Models\OutSourcingErf;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
@@ -58,6 +60,26 @@ class OutSourcingErfController extends Controller
             'site' => $request->site,
             'status' => 'Pending',
         ]);
+
+        // Get reviewer user details
+        $reviewer = User::find($request->reviewer);
+        if ($reviewer) {
+            // Prepare email data for the ERF review request
+            $emailData = [
+                'approver_name' => $reviewer->employee_fname . ' ' . $reviewer->employee_lname,
+                'position' => $request->jobTitle,
+                'department' => $request->department,
+                'employment_type' => $request->jobType,
+                'headcount' => $request->personnel,
+                'justification' => $request->justification,
+                'requested_by' => $request->requestor_name,
+                'ref_id' => $request->ref_id,
+                'reviewer_id' => $request->reviewer,
+            ];
+
+            $reviewerEmail = $reviewer->email ?? $reviewer->employee->eogs ?? $reviewer->employee->applicant->email ?? null;
+            Mail::to($reviewerEmail)->send(new ReviewErf($emailData));
+        }
 
         if ($request->has('ja') && $request->has('jd')) {
 
@@ -129,11 +151,11 @@ class OutSourcingErfController extends Controller
                 ];
 
                 // Get email from multiple possible sources
-                $recipientEmail = $request->requestor_email ?? 
-                                $erfrec->user->employee->eogs ?? 
-                                $erfrec->user->employee->applicant->email ?? 
-                                null;
-                
+                $recipientEmail = $request->requestor_email ??
+                    $erfrec->user->employee->eogs ??
+                    $erfrec->user->employee->applicant->email ??
+                    null;
+
                 if ($recipientEmail) {
                     Mail::to($recipientEmail)->send(new DeclinedErf($emailData));
                     Log::info("ERF decline email sent successfully to: " . $recipientEmail . " for ref_id: " . $erfrec->ref_id);

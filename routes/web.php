@@ -122,6 +122,14 @@ Route::get('/test-erf-decline-email', function () {
     }
 });
 
+// ERF Detail View Route
+Route::get('/erf/{reviewer_id}/{ref_id}', function ($reviewer_id, $ref_id) {
+    return Inertia::render('erf/erf_details/page', [
+        'ref_id' => $ref_id,
+        'reviewer_id' => $reviewer_id
+    ]);
+})->name('erf.show');
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -689,7 +697,7 @@ Route::middleware(['auth:sanctum', 'role:10'])->prefix('employee')->group(functi
     Route::get('/erf_record', function () {
         return Inertia::render('employee/sourcing/resource_requests/erf_record/page');
     });
-    
+
     // Add erf_record prefixed routes for easier navigation
     Route::prefix('erf_record')->group(function () {
         Route::get('/new_position', function () {

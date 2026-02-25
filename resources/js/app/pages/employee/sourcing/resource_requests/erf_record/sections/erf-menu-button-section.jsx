@@ -24,27 +24,11 @@ import ErfUpdateStatusComponent from "../components/erf-update-status-component"
 export default function ErfMenuButtonSection({ data }) {
     const items = [
 
-        ...(data?.status !== "Approved"
-            ? [
-                {
-                    component: (
-                        <ErfUpdateStatusComponent
-                            item={{
-                                label: "Update Status",
-                                key: "1",
-                                icon: <EditOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
-            : []),
         {
             component: (
                 <ErfJAComponent
                     item={{
-                        label: "Job Analysis",
+                        label: "View Job Analysis",
                         key: "2",
                         icon: <FileOutlined />,
                     }}
@@ -56,7 +40,7 @@ export default function ErfMenuButtonSection({ data }) {
             component: (
                 <ErfJdComponent
                     item={{
-                        label: "Job Description",
+                        label: "View Job Description",
                         key: "3",
                         icon: <FileTextOutlined />,
                     }}

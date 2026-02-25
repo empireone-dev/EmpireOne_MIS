@@ -12,6 +12,7 @@ import {
 import ErfJAComponent from "../components/erf-ja-component";
 import ErfJdComponent from "../components/erf-jd-component";
 import ErfUpdateStatusComponent from "../components/erf-update-status-component";
+import { useSelector } from "react-redux";
 // import UpdateEmployeeComponent from "../components/update-employee-component";
 // import File201Component from "../components/file-201-component";
 // import EmploymentStatusComponent from "../components/employment-status-component";
@@ -20,25 +21,33 @@ import ErfUpdateStatusComponent from "../components/erf-update-status-component"
 // import FileIrComponent from "../components/file-ir-component";
 // import FileNteComponent from "../components/file-nte-component";
 
-
 export default function ErfMenuButtonSection({ data }) {
-    const items = [
+    const { user } = useSelector((state) => state.app);
 
-        ...(data?.status !== "Approved"
+    // Check if user has permission to update status
+    const canUpdateStatus =
+        user?.position === "CEO" ||
+        user?.position === "Talent Acquisition Manager" ||
+        user?.position === "HR Director" ||
+        user?.position === "HR Generalist" ||
+        user?.position === "HR Lead";
+
+    const items = [
+        ...(data?.status !== "Approved" && data?.status !== "Declined" && canUpdateStatus
             ? [
-                {
-                    component: (
-                        <ErfUpdateStatusComponent
-                            item={{
-                                label: "Update Status",
-                                key: "1",
-                                icon: <EditOutlined />,
-                            }}
-                            data={data}
-                        />
-                    ),
-                },
-            ]
+                  {
+                      component: (
+                          <ErfUpdateStatusComponent
+                              item={{
+                                  label: "Update Status",
+                                  key: "1",
+                                  icon: <EditOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
             : []),
         {
             component: (
@@ -64,7 +73,6 @@ export default function ErfMenuButtonSection({ data }) {
                 />
             ),
         },
-
 
         // ...(data.status == "Initial Phase"
         //     ? [
@@ -190,7 +198,7 @@ export default function ErfMenuButtonSection({ data }) {
         //     ]
         //     : []),
     ];
-    console.log('data', data)
+    console.log("data", data);
     return (
         <div>
             <Dropdown

@@ -79,6 +79,10 @@ export default function NewPositionFormSection() {
                     "Please provide a reason or justification for the request.";
             }
 
+            if (!form.reviewer || form.reviewer.trim() === "") {
+                newErrors.reviewer = "Please select a reviewer.";
+            }
+
             // If there are errors, set them and return
             if (Object.keys(newErrors).length > 0) {
                 setErrors(newErrors);
@@ -620,9 +624,9 @@ export default function NewPositionFormSection() {
                                         );
                                     })}
                             </select>
-                            {errors.account && (
+                            {errors.reviewer && (
                                 <span className="text-red-500 text-sm mt-1">
-                                    {errors.account}
+                                    {errors.reviewer}
                                 </span>
                             )}
                         </div>

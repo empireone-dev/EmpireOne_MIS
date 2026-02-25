@@ -125,7 +125,7 @@ class OutSourcingErfController extends Controller
         ]);
 
         if ($request->status == 'Approved') {
-            // Create a new Job Position
+            // Create a new Job Position only for final approval
             JobPosition::create([
                 'ref_id' => $request->ref_id,
                 'salary' => $request->budgetCost,
@@ -134,6 +134,9 @@ class OutSourcingErfController extends Controller
                 'site' => $request->site,
             ]);
         }
+
+        // Note: For "Approved by Site Head" status, we don't create JobPosition yet
+        // This will be created when final approval is given
 
         if ($request->status == 'Declined') {
             $erfrec->update([

@@ -10,6 +10,9 @@ import {
     Row,
     Col,
     Divider,
+    Modal,
+    Input,
+    message,
 } from "antd";
 import {
     ArrowLeftOutlined,
@@ -21,11 +24,15 @@ import moment from "moment";
 import axios from "axios";
 
 const { Title, Text } = Typography;
+const { TextArea } = Input;
 
 export default function ErfDetailsPage() {
     const [erfData, setErfData] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [actionLoading, setActionLoading] = useState(false);
+    const [declineModalVisible, setDeclineModalVisible] = useState(false);
+    const [declineReason, setDeclineReason] = useState("");
 
     // Extract reference ID from URL path
     const ref_id = window.location.pathname.split("/")[3];
@@ -54,6 +61,8 @@ export default function ErfDetailsPage() {
         switch (status?.toLowerCase()) {
             case "approved":
                 return "success";
+            case "approved by site head":
+                return "processing";
             case "declined":
                 return "error";
             case "pending":
@@ -91,6 +100,93 @@ export default function ErfDetailsPage() {
     // Handle back navigation
     const handleBack = () => {
         window.history.back();
+    };
+
+    // Handle ERF approval
+    const handleApprove = async () => {
+        try {
+            setActionLoading(true);
+            const response = await axios.put(
+                `/api/outsourcing_erf/${erfData.id}`,
+                {
+                    id: erfData.id,
+                    status: "Approved by Site Head",
+                    ref_id: erfData.ref_id,
+                    budgetCost: erfData.budgetCost,
+                    jobTitle: erfData.jobTitle,
+                    site: erfData.site,
+                },
+            );
+
+            if (response.status === 200) {
+                message.success(
+                    "ERF has been approved by Site Head successfully",
+                );
+                // Update local state
+                setErfData((prev) => ({
+                    ...prev,
+                    status: "Approved by Site Head",
+                }));
+            }
+        } catch (error) {
+            console.error("Error approving ERF:", error);
+            message.error("Failed to approve ERF. Please try again.");
+        } finally {
+            setActionLoading(false);
+        }
+    };
+
+    // Handle ERF decline
+    const handleDecline = () => {
+        setDeclineModalVisible(true);
+    };
+
+    // Submit decline with reason
+    const handleDeclineSubmit = async () => {
+        if (!declineReason.trim()) {
+            message.error("Please provide a reason for declining the ERF");
+            return;
+        }
+
+        try {
+            setActionLoading(true);
+            const response = await axios.put(
+                `/api/outsourcing_erf/${erfData.id}`,
+                {
+                    id: erfData.id,
+                    status: "Declined",
+                    reason: declineReason,
+                    ref_id: erfData.ref_id,
+                    requestor_email:
+                        erfData.user?.employee?.applicant?.email ||
+                        erfData.user?.employee?.eogs ||
+                        erfData.user?.email,
+                },
+            );
+
+            if (response.status === 200) {
+                message.success("ERF has been declined successfully");
+                // Update local state
+                setErfData((prev) => ({
+                    ...prev,
+                    status: "Declined",
+                    reason: declineReason,
+                }));
+                setDeclineModalVisible(false);
+                setDeclineReason("");
+            }
+        } catch (error) {
+            console.error("Error declining ERF:", error);
+            message.error("Failed to decline ERF. Please try again.");
+        } finally {
+            setActionLoading(false);
+        }
+    };
+
+    // Cancel decline modal
+    const handleDeclineCancel = () => {
+        setDeclineModalVisible(false);
+        setDeclineReason("");
     };
 
     if (loading) {
@@ -213,6 +309,46 @@ export default function ErfDetailsPage() {
                             )}
                         </Descriptions>
                     </Card>
+
+                    {/* Action buttons - only show if status is Pending */}
+                    {erfData.status === "Pending" && (
+                        <div style={{ marginTop: "16px" }}>
+                            <Button
+                                type="primary"
+                                style={{ margin: "10px", width: "45%" }}
+                                loading={actionLoading}
+                                onClick={handleApprove}
+                            >
+                                Approve
+                            </Button>
+                            <Button
+                                type="danger"
+                                style={{ margin: "10px", width: "45%" }}
+                                loading={actionLoading}
+                                onClick={handleDecline}
+                            >
+                                Decline
+                            </Button>
+                        </div>
+                    )}
+
+                    {/* Show status message for non-pending ERFs */}
+                    {erfData.status !== "Pending" && (
+                        <div style={{ marginTop: "16px", textAlign: "center" }}>
+                            <Alert
+                                message={`ERF has been ${erfData.status}`}
+                                type={
+                                    erfData.status === "Approved"
+                                        ? "success"
+                                        : erfData.status ===
+                                            "Approved by Site Head"
+                                          ? "info"
+                                          : "error"
+                                }
+                                showIcon
+                            />
+                        </div>
+                    )}
                 </Col>
 
                 {/* Requestor Information */}
@@ -300,6 +436,34 @@ export default function ErfDetailsPage() {
                     </Card>
                 </Col>
             </Row>
+
+            {/* Decline Modal */}
+            <Modal
+                title="Decline ERF"
+                open={declineModalVisible}
+                onOk={handleDeclineSubmit}
+                onCancel={handleDeclineCancel}
+                confirmLoading={actionLoading}
+                okText="Decline ERF"
+                okType="danger"
+            >
+                <div style={{ marginBottom: "16px" }}>
+                    <Text strong>
+                        Are you sure you want to decline this ERF for "
+                        {erfData?.jobTitle}"?
+                    </Text>
+                </div>
+                <div>
+                    <Text>Please provide a reason for declining:</Text>
+                    <TextArea
+                        rows={4}
+                        value={declineReason}
+                        onChange={(e) => setDeclineReason(e.target.value)}
+                        placeholder="Enter the reason for declining this ERF..."
+                        style={{ marginTop: "8px" }}
+                    />
+                </div>
+            </Modal>
         </div>
     );
 }

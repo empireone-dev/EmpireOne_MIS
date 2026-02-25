@@ -421,7 +421,10 @@ export default function NewPositionFormSection() {
                                     {departments.map((res, i) => {
                                         return (
                                             <option key={i} value={res.dept}>
-                                                <b>{res.dept}</b> ({res.site})
+                                                <b>{res.dept}</b>
+                                                {res.site
+                                                    ? ` (${res.site})`
+                                                    : ""}
                                             </option>
                                         );
                                     })}
@@ -458,7 +461,9 @@ export default function NewPositionFormSection() {
                                     <option value="" disabled>
                                         Select an account
                                     </option>
-                                    {accounts.map((res, i) => {
+                                    {[...accounts]
+                                        .sort((a, b) => a.acc.localeCompare(b.acc))
+                                        .map((res, i) => {
                                         return (
                                             <option key={i} value={res.acc}>
                                                 {res.acc}

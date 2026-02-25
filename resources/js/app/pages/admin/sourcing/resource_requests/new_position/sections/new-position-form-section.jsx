@@ -37,7 +37,7 @@ export default function NewPositionFormSection() {
         if (activeStep === 0) {
             // Validate form before proceeding to next step
             const newErrors = {};
-            
+
             if (!form.jobTitle || form.jobTitle.trim() === "") {
                 newErrors.jobTitle = "Please enter a job title.";
             }
@@ -47,7 +47,8 @@ export default function NewPositionFormSection() {
             }
 
             if (!form.personnel) {
-                newErrors.personnel = "Please enter the number of required personnel.";
+                newErrors.personnel =
+                    "Please enter the number of required personnel.";
             }
 
             if (!form.dateNeed) {
@@ -71,7 +72,8 @@ export default function NewPositionFormSection() {
             }
 
             if (!form.justification || form.justification.trim() === "") {
-                newErrors.justification = "Please provide a reason or justification for the request.";
+                newErrors.justification =
+                    "Please provide a reason or justification for the request.";
             }
 
             // If there are errors, set them and return
@@ -221,16 +223,23 @@ export default function NewPositionFormSection() {
                                             jobTitle: e.target.value,
                                         });
                                         if (errors.jobTitle) {
-                                            setErrors(prev => ({ ...prev, jobTitle: "" }));
+                                            setErrors((prev) => ({
+                                                ...prev,
+                                                jobTitle: "",
+                                            }));
                                         }
                                     }}
                                     type="text"
                                     placeholder=""
-                                    className={`border p-2 rounded w-full ${errors.jobTitle ? 'border-red-500' : ''}`}
+                                    className={`border p-2 rounded w-full ${errors.jobTitle ? "border-red-500" : ""}`}
                                     value={form.jobTitle || ""}
                                     required
                                 />
-                                {errors.jobTitle && <span className="text-red-500 text-sm mt-1">{errors.jobTitle}</span>}
+                                {errors.jobTitle && (
+                                    <span className="text-red-500 text-sm mt-1">
+                                        {errors.jobTitle}
+                                    </span>
+                                )}
                             </div>
                         </div>
                         <div className="flex flex-1 w-full gap-4 mb-4">
@@ -245,22 +254,31 @@ export default function NewPositionFormSection() {
                                             jobType: e.target.value,
                                         });
                                         if (errors.jobType) {
-                                            setErrors(prev => ({ ...prev, jobType: "" }));
+                                            setErrors((prev) => ({
+                                                ...prev,
+                                                jobType: "",
+                                            }));
                                         }
                                     }}
-                                    className={`border p-2 rounded w-full ${errors.jobType ? 'border-red-500' : ''}`}
+                                    className={`border p-2 rounded w-full ${errors.jobType ? "border-red-500" : ""}`}
                                     name=""
                                     id=""
                                     value={form.jobType || ""}
                                     required
                                 >
-                                    <option value="" disabled>Select a job type</option>
+                                    <option value="" disabled>
+                                        Select a job type
+                                    </option>
                                     <option value="Full Time">Full Time</option>
                                     <option value="Partime">Partime</option>
                                     <option value="Temporary">Temporary</option>
                                     <option value="Others">Others</option>
                                 </select>
-                                {errors.jobType && <span className="text-red-500 text-sm mt-1">{errors.jobType}</span>}
+                                {errors.jobType && (
+                                    <span className="text-red-500 text-sm mt-1">
+                                        {errors.jobType}
+                                    </span>
+                                )}
                             </div>
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">
@@ -273,16 +291,23 @@ export default function NewPositionFormSection() {
                                             personnel: e.target.value,
                                         });
                                         if (errors.personnel) {
-                                            setErrors(prev => ({ ...prev, personnel: "" }));
+                                            setErrors((prev) => ({
+                                                ...prev,
+                                                personnel: "",
+                                            }));
                                         }
                                     }}
                                     type="number"
                                     placeholder=""
-                                    className={`border p-2 rounded w-full ${errors.personnel ? 'border-red-500' : ''}`}
+                                    className={`border p-2 rounded w-full ${errors.personnel ? "border-red-500" : ""}`}
                                     value={form.personnel || ""}
                                     required
                                 />
-                                {errors.personnel && <span className="text-red-500 text-sm mt-1">{errors.personnel}</span>}
+                                {errors.personnel && (
+                                    <span className="text-red-500 text-sm mt-1">
+                                        {errors.personnel}
+                                    </span>
+                                )}
                             </div>
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">
@@ -295,16 +320,23 @@ export default function NewPositionFormSection() {
                                             dateNeed: e.target.value,
                                         });
                                         if (errors.dateNeed) {
-                                            setErrors(prev => ({ ...prev, dateNeed: "" }));
+                                            setErrors((prev) => ({
+                                                ...prev,
+                                                dateNeed: "",
+                                            }));
                                         }
                                     }}
                                     type="date"
                                     placeholder=""
-                                    className={`border p-2 rounded w-full ${errors.dateNeed ? 'border-red-500' : ''}`}
+                                    className={`border p-2 rounded w-full ${errors.dateNeed ? "border-red-500" : ""}`}
                                     value={form.dateNeed || ""}
                                     required
                                 />
-                                {errors.dateNeed && <span className="text-red-500 text-sm mt-1">{errors.dateNeed}</span>}
+                                {errors.dateNeed && (
+                                    <span className="text-red-500 text-sm mt-1">
+                                        {errors.dateNeed}
+                                    </span>
+                                )}
                             </div>
                         </div>
                         <div className="flex flex-1 w-full gap-4 mb-4">
@@ -319,11 +351,14 @@ export default function NewPositionFormSection() {
                                             positionStatus: e.target.value,
                                         });
                                         if (errors.positionStatus) {
-                                            setErrors(prev => ({ ...prev, positionStatus: "" }));
+                                            setErrors((prev) => ({
+                                                ...prev,
+                                                positionStatus: "",
+                                            }));
                                         }
                                     }}
                                     value={form.positionStatus || ""}
-                                    className={`border p-2 rounded w-full ${errors.positionStatus ? 'border-red-500' : ''}`}
+                                    className={`border p-2 rounded w-full ${errors.positionStatus ? "border-red-500" : ""}`}
                                     required
                                 >
                                     <option value="" disabled>
@@ -342,7 +377,11 @@ export default function NewPositionFormSection() {
                                         Internal Job Posting
                                     </option>
                                 </select>
-                                {errors.positionStatus && <span className="text-red-500 text-sm mt-1">{errors.positionStatus}</span>}
+                                {errors.positionStatus && (
+                                    <span className="text-red-500 text-sm mt-1">
+                                        {errors.positionStatus}
+                                    </span>
+                                )}
                             </div>
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">
@@ -355,11 +394,14 @@ export default function NewPositionFormSection() {
                                             department: e.target.value,
                                         });
                                         if (errors.department) {
-                                            setErrors(prev => ({ ...prev, department: "" }));
+                                            setErrors((prev) => ({
+                                                ...prev,
+                                                department: "",
+                                            }));
                                         }
                                     }}
                                     value={form.department || ""}
-                                    className={`border p-2 rounded w-full ${errors.department ? 'border-red-500' : ''}`}
+                                    className={`border p-2 rounded w-full ${errors.department ? "border-red-500" : ""}`}
                                     name="department"
                                     id="department"
                                     required
@@ -370,12 +412,19 @@ export default function NewPositionFormSection() {
                                     {departments.map((res, i) => {
                                         return (
                                             <option key={i} value={res.dept}>
-                                                <b>{res.dept}</b> ({res.site})
+                                                <b>{res.dept}</b>
+                                                {res.site
+                                                    ? ` (${res.site})`
+                                                    : ""}
                                             </option>
                                         );
                                     })}
                                 </select>
-                                {errors.department && <span className="text-red-500 text-sm mt-1">{errors.department}</span>}
+                                {errors.department && (
+                                    <span className="text-red-500 text-sm mt-1">
+                                        {errors.department}
+                                    </span>
+                                )}
                             </div>
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">
@@ -388,11 +437,14 @@ export default function NewPositionFormSection() {
                                             account: e.target.value,
                                         });
                                         if (errors.account) {
-                                            setErrors(prev => ({ ...prev, account: "" }));
+                                            setErrors((prev) => ({
+                                                ...prev,
+                                                account: "",
+                                            }));
                                         }
                                     }}
                                     value={form.account || ""}
-                                    className={`border p-2 rounded w-full ${errors.account ? 'border-red-500' : ''}`}
+                                    className={`border p-2 rounded w-full ${errors.account ? "border-red-500" : ""}`}
                                     name="account"
                                     id="account"
                                     required
@@ -400,15 +452,23 @@ export default function NewPositionFormSection() {
                                     <option value="" disabled>
                                         Select an account
                                     </option>
-                                    {accounts.map((res, i) => {
-                                        return (
-                                            <option key={i} value={res.acc}>
-                                                {res.acc}
-                                            </option>
-                                        );
-                                    })}
+                                    {[...accounts]
+                                        .sort((a, b) =>
+                                            a.acc.localeCompare(b.acc),
+                                        )
+                                        .map((res, i) => {
+                                            return (
+                                                <option key={i} value={res.acc}>
+                                                    {res.acc}
+                                                </option>
+                                            );
+                                        })}
                                 </select>
-                                {errors.account && <span className="text-red-500 text-sm mt-1">{errors.account}</span>}
+                                {errors.account && (
+                                    <span className="text-red-500 text-sm mt-1">
+                                        {errors.account}
+                                    </span>
+                                )}
                             </div>
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">
@@ -421,16 +481,21 @@ export default function NewPositionFormSection() {
                                             sourcingMethod: e.target.value,
                                         });
                                         if (errors.sourcingMethod) {
-                                            setErrors(prev => ({ ...prev, sourcingMethod: "" }));
+                                            setErrors((prev) => ({
+                                                ...prev,
+                                                sourcingMethod: "",
+                                            }));
                                         }
                                     }}
-                                    className={`border p-2 rounded w-full ${errors.sourcingMethod ? 'border-red-500' : ''}`}
+                                    className={`border p-2 rounded w-full ${errors.sourcingMethod ? "border-red-500" : ""}`}
                                     name=""
                                     id=""
                                     value={form.sourcingMethod || ""}
                                     required
                                 >
-                                    <option value="" disabled>Select a sourcing method</option>
+                                    <option value="" disabled>
+                                        Select a sourcing method
+                                    </option>
                                     <option value="Internal Candidates">
                                         Internal Candidates
                                     </option>
@@ -439,7 +504,11 @@ export default function NewPositionFormSection() {
                                     </option>
                                     <option value="Both">Both</option>
                                 </select>
-                                {errors.sourcingMethod && <span className="text-red-500 text-sm mt-1">{errors.sourcingMethod}</span>}
+                                {errors.sourcingMethod && (
+                                    <span className="text-red-500 text-sm mt-1">
+                                        {errors.sourcingMethod}
+                                    </span>
+                                )}
                             </div>
                         </div>
                         <div className="w-full flex flex-col mb-4">
@@ -453,16 +522,23 @@ export default function NewPositionFormSection() {
                                         justification: e.target.value,
                                     });
                                     if (errors.justification) {
-                                        setErrors(prev => ({ ...prev, justification: "" }));
+                                        setErrors((prev) => ({
+                                            ...prev,
+                                            justification: "",
+                                        }));
                                     }
                                 }}
                                 type="text"
                                 placeholder=""
-                                className={`border h-40 p-2 rounded w-full ${errors.justification ? 'border-red-500' : ''}`}
+                                className={`border h-40 p-2 rounded w-full ${errors.justification ? "border-red-500" : ""}`}
                                 value={form.justification || ""}
                                 required
                             />
-                            {errors.justification && <span className="text-red-500 text-sm mt-1">{errors.justification}</span>}
+                            {errors.justification && (
+                                <span className="text-red-500 text-sm mt-1">
+                                    {errors.justification}
+                                </span>
+                            )}
                         </div>
                         <div className="flex flex-1 w-full gap-4 mb-4">
                             <div className="w-full flex flex-col">

@@ -3,9 +3,11 @@ import React, { useState, useRef, useEffect } from "react";
 export default function Page() {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
     const videoRef = useRef(null);
 
-    const videoSource = "/images/1.mp4";
+    const videoSources = ["/images/1.mp4", "/images/2.mp4"];
+    const videoSource = videoSources[currentVideoIndex];
 
     const handleVideoLoad = () => {
         setIsLoading(false);
@@ -15,6 +17,13 @@ export default function Page() {
     const handleVideoError = () => {
         setError("Failed to load video");
         setIsLoading(false);
+    };
+
+    const handleVideoEnded = () => {
+        // Move to next video when current video ends
+        setCurrentVideoIndex((prevIndex) => 
+            (prevIndex + 1) % videoSources.length
+        );
     };
 
     const playVideo = async () => {
@@ -32,7 +41,7 @@ export default function Page() {
         if (videoRef.current) {
             playVideo();
         }
-    }, []);
+    }, [currentVideoIndex]); // Re-run when video index changes
 
     return (
         <div
@@ -86,9 +95,9 @@ export default function Page() {
                 playsInline
                 muted
                 autoPlay
-                loop // 🔄 makes it loop
                 onLoadedData={handleVideoLoad}
                 onError={handleVideoError}
+                onEnded={handleVideoEnded}
                 preload="auto"
                 style={{
                     width: "100vw",

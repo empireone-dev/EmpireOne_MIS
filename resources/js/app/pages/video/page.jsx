@@ -26,6 +26,13 @@ export default function Page() {
         );
     };
 
+    const loadVideo = () => {
+        if (videoRef.current) {
+            videoRef.current.src = videoSource;
+            videoRef.current.load(); // Force reload of the video
+        }
+    };
+
     const playVideo = async () => {
         try {
             setIsLoading(true);
@@ -39,6 +46,7 @@ export default function Page() {
 
     useEffect(() => {
         if (videoRef.current) {
+            loadVideo();
             playVideo();
         }
     }, [currentVideoIndex]); // Re-run when video index changes
@@ -108,7 +116,6 @@ export default function Page() {
                     left: 0,
                 }}
             >
-                <source src={videoSource} type="video/mp4" />
                 Your browser does not support the video tag.
             </video>
         </div>

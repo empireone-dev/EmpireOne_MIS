@@ -296,6 +296,15 @@ export default function ExistingPositionFormSection() {
                             <option value="">Select a job title</option>
                             {job_positions
                                 .filter((res) => res.status === "Approved")
+                                .filter(
+                                    (res, index, self) =>
+                                        index ===
+                                        self.findIndex(
+                                            (item) =>
+                                                item.jPosition ===
+                                                res.jPosition,
+                                        ),
+                                )
                                 .map((res, i) => (
                                     <option value={res.jPosition} key={i}>
                                         {res.jPosition}
@@ -580,10 +589,7 @@ export default function ExistingPositionFormSection() {
                         </option>
                         {users
                             .filter(
-                                (res) =>
-                                    res.id == "717" ||
-                                    res.id == "892" ||
-                                    res.id == "742",
+                                (res) => res.id == "717" || res.id == "742",
                                 // res.id == "4",
                             )
                             .sort((a, b) =>

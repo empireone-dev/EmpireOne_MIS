@@ -652,6 +652,9 @@ export default function AddExistingEmployeeSection() {
                                         .filter(
                                             (res) => res.site === "San Carlos",
                                         )
+                                        .filter((res, index, self) => 
+                                            index === self.findIndex(item => item.jPosition === res.jPosition)
+                                        )
                                         .map((res, i) => (
                                             <option
                                                 value={res.jPosition}

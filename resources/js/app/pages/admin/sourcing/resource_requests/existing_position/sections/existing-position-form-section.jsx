@@ -287,6 +287,9 @@ export default function ExistingPositionFormSection() {
                             <option value="">Select a job title</option>
                             {job_positions
                                 .filter((res) => res.status === "Approved")
+                                .filter((res, index, self) => 
+                                    index === self.findIndex(item => item.jPosition === res.jPosition)
+                                )
                                 .map((res, i) => (
                                     <option value={res.jPosition} key={i}>
                                         {res.jPosition}

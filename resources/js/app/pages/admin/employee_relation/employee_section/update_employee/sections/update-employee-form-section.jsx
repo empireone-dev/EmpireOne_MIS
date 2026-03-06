@@ -476,6 +476,9 @@ export default function UpdateEmployeeFormSection() {
                                                 user?.role_id === 2 ||
                                                 res.site === user?.site,
                                         )
+                                        .filter((res, index, self) => 
+                                            index === self.findIndex(item => item.jPosition === res.jPosition)
+                                        )
                                         .map((res, i) => (
                                             <option
                                                 value={res.jPosition}

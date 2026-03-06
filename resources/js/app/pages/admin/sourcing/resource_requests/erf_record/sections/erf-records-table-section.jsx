@@ -27,6 +27,7 @@ import { useEffect } from "react";
 import AddPositionButtonSection from "./add-position-button-section";
 import { setErfRecords, setFilteredData } from "../redux/erf-record-slice";
 import ErfMenuButtonSection from "./erf-menu-button-section";
+import moment from "moment";
 
 export default function ErfRecordsTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -562,7 +563,11 @@ export default function ErfRecordsTableSection() {
                                         </b>
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Date Submitted:">
-                                        <b>{selectedErfRecord.submitted}</b>
+                                        <b>
+                                            {moment(
+                                                selectedErfRecord.submitted,
+                                            ).format("LL")}
+                                        </b>
                                     </Descriptions.Item>
                                     <Descriptions.Item label="Job Title:">
                                         <b>{selectedErfRecord.jobTitle}</b>
@@ -575,14 +580,19 @@ export default function ErfRecordsTableSection() {
                                             {selectedErfRecord.positionStatus}
                                         </b>
                                     </Descriptions.Item>
-                                    <Descriptions.Item label="Date Needed:">
-                                        <b>{selectedErfRecord.dateNeed}</b>
+
+                                    <Descriptions.Item label="Required Personnel:">
+                                        <b>{selectedErfRecord.personnel}</b>
                                     </Descriptions.Item>
-                                    <Descriptions.Item
-                                        label="Budget/Cost:"
-                                        span={2}
-                                    >
+                                    <Descriptions.Item label="Budget/Cost:">
                                         <b>{selectedErfRecord.budgetCost}</b>
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Date Needed:">
+                                        <b>
+                                            {moment(
+                                                selectedErfRecord.dateNeed,
+                                            ).format("LL")}
+                                        </b>
                                     </Descriptions.Item>
                                     {selectedErfRecord.status ===
                                         "Declined" && (

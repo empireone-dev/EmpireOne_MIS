@@ -589,8 +589,30 @@ export default function ExistingPositionFormSection() {
                         </option>
                         {users
                             .filter(
-                                (res) => res.id == "717" || res.id == "742",
-                                // res.id == "4",
+                                (res) =>
+                                    res.position == "Director of Operations" ||
+                                    res.position ==
+                                        "Director, Accounting & Finance" ||
+                                    res.position ==
+                                        "Director, Marketing & Communications" ||
+                                    res.position ==
+                                        "Director, Quality & Training" ||
+                                    res.position ==
+                                        "Director, Learning Leadership & Development" ||
+                                    res.position == "HR Director" ||
+                                    res.position == "Manager" ||
+                                    res.position == "Account Manager" ||
+                                    res.position == "Supervisor" ||
+                                    res.position == "Director" ||
+                                    res.position == "CEO" ||
+                                    res.position == "TQA Director" ||
+                                    res.position == "Site Admin" ||
+                                    res.position ==
+                                        "Talent Acquisition Manager" ||
+                                    res.position == "Director of Operations" ||
+                                    res.position == "Operations Manager" ||
+                                    res.position == "Site Director" ||
+                                    res.position == "Site Manager",
                             )
                             .sort((a, b) =>
                                 a.employee_fname.localeCompare(

@@ -65,7 +65,7 @@ class JobOfferManager extends Mailable
             // Generate filename with candidate name and date
             $candidateName = strtoupper($this->data['fname'] . '_' . $this->data['lname']);
             $date = date('Y-m-d');
-            $filename = "Job_Offer_Letter_{$candidateName}_{$date}.pdf";
+            $filename = "Job_Offer_{$candidateName}_{$date}.pdf";
 
             return $this->from('hrisempireone@gmail.com', 'No Reply')
                 ->subject('EmpireOne BPO Solutions Inc - Job Offer')

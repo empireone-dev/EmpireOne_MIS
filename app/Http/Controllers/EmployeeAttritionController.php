@@ -95,6 +95,42 @@ class EmployeeAttritionController extends Controller
             });
         }
 
+        // Filter by site
+        if ($request->has('site') && !empty($request->site) && $request->site !== 'null') {
+            $query->whereHas('applicant', function ($applicantQuery) use ($request) {
+                $applicantQuery->where('site', $request->site);
+            });
+        }
+
+        // Filter by exit status (estatus)
+        if ($request->has('estatus') && !empty($request->estatus) && $request->estatus !== 'null') {
+            $query->where('estatus', $request->estatus);
+        }
+
+        // Filter by reason (reas)
+        if ($request->has('reas') && !empty($request->reas) && $request->reas !== 'null') {
+            $query->where('reas', $request->reas);
+        }
+
+        // Filter by employment status
+        if ($request->has('status') && !empty($request->status) && $request->status !== 'null') {
+            $query->where('status', $request->status);
+        }
+
+        // Filter by department
+        if ($request->has('dept') && !empty($request->dept) && $request->dept !== 'null') {
+            $query->whereHas('employee', function ($employeeQuery) use ($request) {
+                $employeeQuery->where('dept', $request->dept);
+            });
+        }
+
+        // Filter by position
+        if ($request->has('position') && !empty($request->position) && $request->position !== 'null') {
+            $query->whereHas('employee', function ($employeeQuery) use ($request) {
+                $employeeQuery->where('position', $request->position);
+            });
+        }
+
         $employee_attrition = $query->orderBy('id', 'desc')->paginate(10);
 
         return response()->json([

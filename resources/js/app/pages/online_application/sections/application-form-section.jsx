@@ -403,7 +403,7 @@ export default function ApplicationFormSection() {
                                                 errorMessage={
                                                     errors?.source?.message
                                                 }
-                                                label={<>Source <span className="text-red-500">*</span></>}
+                                                label="Source"
                                                 name="source"
                                             />
                                         </div>
@@ -437,7 +437,7 @@ export default function ApplicationFormSection() {
                                                 errorMessage={
                                                     errors?.site?.message
                                                 }
-                                                label={<>Site <span className="text-red-500">*</span></>}
+                                                label="Site"
                                                 name="site"
                                             />
                                         </div>
@@ -461,7 +461,7 @@ export default function ApplicationFormSection() {
                                                 errors?.fname?.message
                                             }
                                             name="fname"
-                                            label={<>First Name <span className="text-red-500">*</span></>}
+                                            label="First Name"
                                             type="text"
                                         />
                                     </div>
@@ -477,7 +477,7 @@ export default function ApplicationFormSection() {
                                                 errors?.mname?.message
                                             }
                                             name="mname"
-                                            label={<>Middle Name <span className="text-red-500">*</span></>}
+                                            label="Middle Name"
                                             type="text"
                                         />
                                     </div>
@@ -493,7 +493,7 @@ export default function ApplicationFormSection() {
                                                 errors?.lname?.message
                                             }
                                             name="lname"
-                                            label={<>Last Name <span className="text-red-500">*</span></>}
+                                            label="Last Name"
                                             type="text"
                                         />
                                     </div>
@@ -541,7 +541,7 @@ export default function ApplicationFormSection() {
                                             errorMessage={
                                                 errors?.gender?.message
                                             }
-                                            label={<>Gender <span className="text-red-500">*</span></>}
+                                            label="Gender"
                                             name="gender"
                                         />
                                     </div>
@@ -555,7 +555,7 @@ export default function ApplicationFormSection() {
                                             }}
                                             errorMessage={errors?.dob?.message}
                                             name="dob"
-                                            label={<>Date of Birth <span className="text-red-500">*</span></>}
+                                            label="Date of Birth"
                                             type="date"
                                         />
                                     </div>
@@ -578,7 +578,7 @@ export default function ApplicationFormSection() {
                                                 errors?.email?.message
                                             }
                                             name="email"
-                                            label={<>Email <span className="text-red-500">*</span></>}
+                                            label="Email"
                                             type="email"
                                         />
                                     </div>
@@ -594,7 +594,7 @@ export default function ApplicationFormSection() {
                                                 errors?.phone?.message
                                             }
                                             name="phone"
-                                            label={<>Phone <span className="text-red-500">*</span></>}
+                                            label="Phone"
                                             type="tel"
                                         />
                                     </div>
@@ -730,7 +730,7 @@ export default function ApplicationFormSection() {
                                                 },
                                             ]}
                                             errorMessage={errors?.educ?.message}
-                                            label={<>Highest Educational Attainment <span className="text-red-500">*</span></>}
+                                            label="Highest Educational Attainment"
                                             name="educ"
                                         />
                                     </div>
@@ -774,7 +774,7 @@ export default function ApplicationFormSection() {
                                             errorMessage={
                                                 errors?.region?.message
                                             }
-                                            label={<>Region <span className="text-red-500">*</span></>}
+                                            label="Region"
                                             name="region"
                                         />
                                     </div>
@@ -800,7 +800,7 @@ export default function ApplicationFormSection() {
                                             errorMessage={
                                                 errors?.province?.message
                                             }
-                                            label={<>Province <span className="text-red-500">*</span></>}
+                                            label="Province"
                                             name="province"
                                         />
                                     </div>
@@ -824,7 +824,7 @@ export default function ApplicationFormSection() {
                                             }))}
                                             errorMessage={errors?.city?.message}
                                             name="city"
-                                            label={<>City/Municipality <span className="text-red-500">*</span></>}
+                                            label="City/Municipality"
                                         />
                                     </div>
                                 </div>
@@ -846,7 +846,7 @@ export default function ApplicationFormSection() {
                                             }))}
                                             errorMessage={errors?.brgy?.message}
                                             name="brgy"
-                                            label={<>Barangay <span className="text-red-500">*</span></>}
+                                            label="Barangay"
                                         />
                                     </div>
                                     <div className="flex-1">
@@ -859,7 +859,7 @@ export default function ApplicationFormSection() {
                                             }}
                                             errorMessage={errors?.lot?.message}
                                             name="lot"
-                                            label={<>House/Lot No., Street, Purok/Sitio <span className="text-red-500">*</span></>}
+                                            label="House/Lot No., Street, Purok/Sitio"
                                             type="text"
                                         />
                                     </div>

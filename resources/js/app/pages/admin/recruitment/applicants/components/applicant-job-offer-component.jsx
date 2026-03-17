@@ -289,7 +289,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                             >
                                 Role Type
                             </label>
-                            <select
+                            {/* <select
                                 onChange={(e) =>
                                     setForm({
                                         ...form,
@@ -304,7 +304,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                 <option value="Agent">Agent</option>
                                 <option value="Support">Support</option>
                                 <option value="Manager">Manager</option>
-                            </select>
+                            </select> */}
                         </div>
                     </div>
                     <button

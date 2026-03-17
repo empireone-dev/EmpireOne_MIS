@@ -28,8 +28,8 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                 create_job_offer_thunk({
                     ...form,
                     ...data,
-                    status: 'Pending',
-                })
+                    status: "Pending",
+                }),
             );
             await store.dispatch(get_applicant_thunk());
             message.success("Job Offer already sent!");
@@ -40,7 +40,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
         }
     }
 
-    console.log('job_positions', job_positions)
+    console.log("job_positions", job_positions);
     return (
         <>
             <Menu.Item onClick={() => openHandler(true)} icon={item.icon}>
@@ -145,20 +145,25 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                     id=""
                                     onChange={(e) => {
                                         const selectedJob = job_positions.find(
-                                            (job) => job.jPosition === e.target.value
+                                            (job) =>
+                                                job.jPosition ===
+                                                e.target.value,
                                         );
 
                                         setForm({
                                             ...form,
                                             outsourcing_erf: {
                                                 ...form.outsourcing_erf,
-                                                department: selectedJob?.outsourcing_erf?.department || "",
+                                                department:
+                                                    selectedJob?.outsourcing_erf
+                                                        ?.department || "",
                                             },
-                                            // salary: selectedJob?.salary || "", 
-                                            jobPos: selectedJob?.jPosition || e.target.value,
+                                            // salary: selectedJob?.salary || "",
+                                            jobPos:
+                                                selectedJob?.jPosition ||
+                                                e.target.value,
                                         });
                                     }}
-
                                 >
                                     <option selected disabled></option>
                                     {job_positions.map((res, i) => {
@@ -179,7 +184,9 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                     type="hidden"
                                     placeholder=""
                                     readOnly
-                                    value={form?.outsourcing_erf?.department ?? ""}
+                                    value={
+                                        form?.outsourcing_erf?.department ?? ""
+                                    }
                                 />
                             </div>
                             <div className="w-3/5 px-2.5">
@@ -270,6 +277,30 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                     </option>
                                 </select>
                             </div>
+                        </div>
+                        <div className="w-full px-2.5">
+                            <label
+                                className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
+                                for="grid-text"
+                            >
+                                Role Type
+                            </label>
+                            <select
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        [e.target.name]: e.target.value,
+                                    })
+                                }
+                                className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                name="typea"
+                                id=""
+                            >
+                                <option></option>
+                                <option value="Agent">Agent</option>
+                                <option value="Support">Support</option>
+                                <option value="Manager">Manager</option>
+                            </select>
                         </div>
                     </div>
                     <button

@@ -166,17 +166,21 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                     }}
                                 >
                                     <option selected disabled></option>
-                                    {job_positions.map((res, i) => {
-                                        return (
-                                            <option
-                                                id={res.salary}
-                                                value={res.jPosition}
-                                                key={i}
-                                            >
-                                                {res.jPosition}
-                                            </option>
-                                        );
-                                    })}
+                                    {job_positions
+                                        .filter((job, index, self) =>
+                                            index === self.findIndex(j => j.jPosition === job.jPosition)
+                                        )
+                                        .map((res, i) => {
+                                            return (
+                                                <option
+                                                    id={res.salary}
+                                                    value={res.jPosition}
+                                                    key={i}
+                                                >
+                                                    {res.jPosition}
+                                                </option>
+                                            );
+                                        })}
                                 </select>
                                 <input
                                     className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"

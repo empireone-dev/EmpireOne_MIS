@@ -328,12 +328,12 @@ const AdminLayout = ({ children }) => {
             label: "Compliance Training",
             onClick: () => router.visit("/admin/compliance"),
         },
-        {
-            key: "coaching_logs",
-            icon: <FieldTimeOutlined />,
-            label: "Coaching Logs",
-            onClick: () => router.visit("/admin/coaching_logs"),
-        },
+        // {
+        //     key: "coaching_logs",
+        //     icon: <FieldTimeOutlined />,
+        //     label: "Coaching Logs",
+        //     onClick: () => router.visit("/admin/coaching_logs"),
+        // },
         // {
         //     key: "employee_wellness",
         //     icon: <MedicineBoxOutlined />,

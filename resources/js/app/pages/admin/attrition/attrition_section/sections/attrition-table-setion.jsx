@@ -29,9 +29,11 @@ import { router } from "@inertiajs/react";
 export default function AttritionTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
     const searchInput = useRef(null);
     const { employee_attritions } = useSelector(
-        (state) => state.employee_attritions
+        (state) => state.employee_attritions,
     );
     console.log("attrition", employee_attritions);
 
@@ -173,89 +175,113 @@ export default function AttritionTableSection() {
     const position = searchParams.get("position");
     const estatus = searchParams.get("estatus");
     const reas = searchParams.get("reas");
+    const site = searchParams.get("site");
 
     function search_status(value) {
         router.visit(
-            "?page=" +
-                pages +
+            "?page=1" +
                 "&status=" +
                 (value || "null") +
                 "&dept=" +
-                dept +
+                (dept || "null") +
                 "&position=" +
-                position +
+                (position || "null") +
                 "&estatus=" +
-                estatus +
+                (estatus || "null") +
                 "&reas=" +
-                reas
+                (reas || "null") +
+                "&site=" +
+                (site || "null"),
         );
     }
 
     function search_dept(value) {
         router.visit(
-            "?page=" +
-                pages +
+            "?page=1" +
                 "&status=" +
-                status +
+                (status || "null") +
                 "&dept=" +
                 (value || "null") +
                 "&position=" +
-                position +
+                (position || "null") +
                 "&estatus=" +
-                estatus +
+                (estatus || "null") +
                 "&reas=" +
-                reas
+                (reas || "null") +
+                "&site=" +
+                (site || "null"),
         );
     }
 
     function search_position(value) {
         router.visit(
-            "?page=" +
-                pages +
+            "?page=1" +
                 "&status=" +
-                status +
+                (status || "null") +
                 "&dept=" +
-                dept +
+                (dept || "null") +
                 "&position=" +
                 (value || "null") +
                 "&estatus=" +
-                estatus +
+                (estatus || "null") +
                 "&reas=" +
-                reas
+                (reas || "null") +
+                "&site=" +
+                (site || "null"),
         );
     }
 
     function search_estatus(value) {
         router.visit(
-            "?page=" +
-                pages +
+            "?page=1" +
                 "&status=" +
-                status +
+                (status || "null") +
                 "&dept=" +
-                dept +
+                (dept || "null") +
                 "&position=" +
-                position +
+                (position || "null") +
                 "&estatus=" +
                 (value || "null") +
                 "&reas=" +
-                reas
+                (reas || "null") +
+                "&site=" +
+                (site || "null"),
+        );
+    }
+
+    function search_site(value) {
+        router.visit(
+            "?page=1" +
+                "&status=" +
+                (status || "null") +
+                "&dept=" +
+                (dept || "null") +
+                "&position=" +
+                (position || "null") +
+                "&estatus=" +
+                (estatus || "null") +
+                "&reas=" +
+                (reas || "null") +
+                "&site=" +
+                (value || "null"),
         );
     }
 
     function search_reas(value) {
         router.visit(
-            "?page=" +
-                pages +
+            "?page=1" +
                 "&status=" +
-                status +
+                (status || "null") +
                 "&dept=" +
-                dept +
+                (dept || "null") +
                 "&position=" +
-                position +
+                (position || "null") +
                 "&estatus=" +
-                estatus +
+                (estatus || "null") +
                 "&reas=" +
-                (value || "null")
+                (value || "null") +
+                "&site=" +
+                (site || "null"),
         );
     }
 
@@ -301,7 +327,7 @@ export default function AttritionTableSection() {
                         value={selectedKeys[0]}
                         onChange={(e) =>
                             setSelectedKeys(
-                                e.target.value ? [e.target.value] : []
+                                e.target.value ? [e.target.value] : [],
                             )
                         }
                         onPressEnter={() =>
@@ -383,6 +409,31 @@ export default function AttritionTableSection() {
             // ...getColumnSearchProps('dept'),
         },
         {
+            title: (
+                <div className="flex gap-3 items-center justify-center">
+                    <Select
+                        allowClear
+                        className="w-28"
+                        showSearch
+                        placeholder="Site"
+                        optionFilterProp="label"
+                        value={site == "null" ? null : site}
+                        onChange={search_site}
+                        options={[
+                            { label: "San Carlos", value: "San Carlos" },
+                            { label: "Carcar", value: "Carcar" },
+                            { label: "Cebu", value: "Cebu" },
+                        ]}
+                    />
+                </div>
+            ),
+            dataIndex: "site",
+            key: "site",
+            render: (_, record, i) => {
+                return <div key={i}>{record?.applicant?.site}</div>;
+            },
+        },
+        {
             title: "Hired",
             dataIndex: "hired",
             key: "hired",
@@ -455,11 +506,6 @@ export default function AttritionTableSection() {
             ),
             dataIndex: "reas",
             key: "reas",
-            onFilter: (value, record) => {
-                if (!value) return true;
-                return record.reas === value;
-            },
-            filteredValue: reas && reas !== "null" ? [reas] : null,
             render: (_, record) => {
                 return (
                     <Tag color="#FF0000" key={record.key}>
@@ -492,11 +538,6 @@ export default function AttritionTableSection() {
             ),
             dataIndex: "estatus",
             key: "estatus",
-            onFilter: (value, record) => {
-                if (!value) return true;
-                return record.estatus === value;
-            },
-            filteredValue: estatus && estatus !== "null" ? [estatus] : null,
             render: (_, record) => {
                 let color = "";
                 let textColor = "#000"; // default text color
@@ -557,21 +598,34 @@ export default function AttritionTableSection() {
         },
     ];
 
-    const getQueryParam = (url, paramName) => {
-        const searchParams = new URLSearchParams(url.split("?")[1]);
-        return searchParams.get(paramName);
+    // Initialize currentPage from URL or default to 1
+    useEffect(() => {
+        const pageFromUrl = pages ? parseInt(pages, 10) : 1;
+        setCurrentPage(pageFromUrl);
+    }, [pages]);
+
+    const onChangePaginate = (newPage, newPageSize) => {
+        setCurrentPage(newPage);
+        if (newPageSize) {
+            setPageSize(newPageSize);
+        }
+        
+        router.visit(
+            window.location.pathname +
+                `?page=${newPage}&status=${status || 'null'}&dept=${dept || 'null'}&position=${position || 'null'}&estatus=${estatus || 'null'}&reas=${reas || 'null'}&site=${site || 'null'}`,
+        );
     };
 
-    const page = getQueryParam(url, "page");
-    const currentPage = page ? parseInt(page, 10) : 1; // Ensure currentPage is a number
-
-    const onChangePaginate = (page) => {
-        const searchParams = new URLSearchParams(window.location.search);
-        searchParams.set("page", page);
-        const newUrl = window.location.pathname + "?" + searchParams.toString();
-        router.visit(newUrl);
+    const paginationConfig = {
+        current: currentPage,
+        pageSize: pageSize,
+        total: employee_attritions?.total || employee_attritions?.length || 0,
+        onChange: onChangePaginate,
+        showSizeChanger: true,
+        showQuickJumper: true,
+        showTotal: (total, range) => 
+            `${range[0]}-${range[1]} of ${total} items`,
     };
-    const pageSize = 10;
 
     return (
         <div>
@@ -585,7 +639,7 @@ export default function AttritionTableSection() {
             <AddAttritionSection />
             <AttritionSearchSection />
             <Table
-                pagination={false}
+                pagination={paginationConfig}
                 columns={columns}
                 dataSource={employee_attritions?.data || employee_attritions}
                 scroll={{ x: 1200 }}
@@ -600,24 +654,12 @@ export default function AttritionTableSection() {
                           } to ${Math.min(
                               currentPage * pageSize,
                               employee_attritions?.total ||
-                                  employee_attritions?.length
+                                  employee_attritions?.length,
                           )} of ${
                               employee_attritions?.total ||
                               employee_attritions?.length
                           } entries`
                         : "No entries available"}
-                </div>
-                <div className="flex w-full items-center justify-end mt-2">
-                    <Pagination
-                        onChange={onChangePaginate}
-                        defaultCurrent={currentPage}
-                        total={
-                            employee_attritions?.total ||
-                            employee_attritions?.length
-                        }
-                        pageSize={pageSize}
-                        showSizeChanger={false}
-                    />
                 </div>
             </div>
         </div>

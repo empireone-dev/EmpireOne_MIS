@@ -26,28 +26,52 @@ export default function ErfMenuButtonSection({ data }) {
 
     // Check if user has permission to update status
     const canUpdateStatus =
-        user?.position === "CEO" ||
-        user?.position === "Talent Acquisition Manager" ||
-        user?.position === "HR Director" ||
-        user?.position === "HR Generalist" ||
-        user?.position === "HR Lead";
+        user?.position == "CEO" ||
+        user?.position == "Talent Acquisition Manager" ||
+        user?.position == "HR Director" ||
+        user?.position == "HR Generalist" ||
+        user?.position == "HR Generalist" ||
+        user?.position == "HR Lead" ||
+        user?.position == "Director of Operations" ||
+        user?.position ==
+        "Director, Accounting & Finance" ||
+        user?.position ==
+        "Director, Marketing & Communications" ||
+        user?.position ==
+        "Director, Quality & Training" ||
+        user?.position ==
+        "Director, Learning Leadership & Development" ||
+        user?.position == "HR Director" ||
+        user?.position == "Manager" ||
+        user?.position == "Account Manager" ||
+        user?.position == "Supervisor" ||
+        user?.position == "Director" ||
+        user?.position == "CEO" ||
+        user?.position == "TQA Director" ||
+        user?.position == "Site Admin" ||
+        user?.position ==
+        "Talent Acquisition Manager" ||
+        user?.position == "Director of Operations" ||
+        user?.position == "Operations Manager" ||
+        user?.position == "Site Director" ||
+        user?.position == "Site Manager";
 
     const items = [
         ...(data?.status !== "Approved" && data?.status !== "Declined" && canUpdateStatus
             ? [
-                  {
-                      component: (
-                          <ErfUpdateStatusComponent
-                              item={{
-                                  label: "Update Status",
-                                  key: "1",
-                                  icon: <EditOutlined />,
-                              }}
-                              data={data}
-                          />
-                      ),
-                  },
-              ]
+                {
+                    component: (
+                        <ErfUpdateStatusComponent
+                            item={{
+                                label: "Update Status",
+                                key: "1",
+                                icon: <EditOutlined />,
+                            }}
+                            data={data}
+                        />
+                    ),
+                },
+            ]
             : []),
         {
             component: (

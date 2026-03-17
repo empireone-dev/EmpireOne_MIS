@@ -575,6 +575,12 @@ export default function ErfRecordsTableSection() {
                                     <Descriptions.Item label="Job Type:">
                                         <b>{selectedErfRecord.jobType}</b>
                                     </Descriptions.Item>
+                                    <Descriptions.Item label="Account:">
+                                        <b>{selectedErfRecord.account}</b>
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Department:">
+                                        <b>{selectedErfRecord.department}</b>
+                                    </Descriptions.Item>
                                     <Descriptions.Item label="Position Status:">
                                         <b>
                                             {selectedErfRecord.positionStatus}

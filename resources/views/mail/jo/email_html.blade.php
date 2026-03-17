@@ -96,9 +96,9 @@
                 <p><strong>Start Date:</strong> {{ date('F j, Y', strtotime('+4 days')) }}</p>
             </div>
 
-            <div class="attachment-notice">
+            <!-- <div class="attachment-notice">
                 <p><strong>📎 Important:</strong> Please find your detailed job offer letter attached as a PDF document. This attachment contains all terms and conditions, benefits, and requirements.</p>
-            </div>
+            </div> -->
 
             <p>To accept or decline this offer, please click the button below:</p>
 

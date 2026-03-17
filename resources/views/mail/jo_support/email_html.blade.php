@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +21,7 @@
             background-color: #ffffff;
             padding: 30px;
             border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .header {
@@ -75,11 +76,12 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <div class="header">
             <img src="https://empireone-hris.com/images/newlogo.png" alt="EmpireOne Logo" class="logo">
-            <h2 style="margin: 15px 0 0 0; color: #007bff;">Job Offer Letter</h2>
+            <h2 style="margin: 15px 0 0 0; color: #007bff;">Job Offer</h2>
         </div>
 
         <div class="content">
@@ -101,9 +103,9 @@
 
             <p>To accept or decline this offer, please click the button below:</p>
 
-            <div style="text-align: center;">
-                <a href="https://empireone-hris.com/job_offer/{{ $data['app_id'] }}/{{ urlencode($data['site']) }}?id={{ $data['id'] }}" 
-                   class="button" target="_blank">
+            <div style="text-align: center; color: white;">
+                <a href="https://empireone-hris.com/job_offer/{{ $data['app_id'] }}/{{ urlencode($data['site']) }}?id={{ $data['id'] }}"
+                    class="button" style="background-color: #007bff; color: white;">
                     Accept/Decline Offer
                 </a>
             </div>
@@ -115,8 +117,8 @@
             <div style="margin-top: 30px;">
                 <p>Very truly yours,</p>
                 <p><strong>CHRISTI ANN SANCHEZ</strong><br>
-                Talent Acquisition Manager<br>
-                EmpireOne BPO Solutions, Inc.</p>
+                    Talent Acquisition Manager<br>
+                    EmpireOne BPO Solutions, Inc.</p>
             </div>
         </div>
 
@@ -126,4 +128,5 @@
         </div>
     </div>
 </body>
+
 </html>

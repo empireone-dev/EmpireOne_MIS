@@ -119,6 +119,36 @@
         .compensation-value {
             display: inline-block;
         }
+
+        .benefits-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .benefits-table td {
+            padding: 8px 12px;
+            vertical-align: top;
+            border: none;
+        }
+
+        .benefits-table .label-col {
+            width: 40%;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .benefits-table .value-col {
+            width: 60%;
+            text-align: left;
+        }
+
+        .benefits-indent {
+            padding-left: 40%;
+            font-size: 12px;
+            margin: -5px 0 5px 0;
+        }
     </style>
 </head>
 
@@ -237,26 +267,48 @@
                 <p><span class="underline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><br>
                     Signature over Printed Name / Date</p>
             </div>
-
             <div class="annexure">
                 <h3 class="center bold">ANNEXURE I</h3>
                 <h3 class="center bold">SCHEDULE OF BENEFITS</h3>
 
-                <p><strong>Service Incentive Leave</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;upon regularization at 0.42 (5.04 days annually)<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Conversion every February of the following year</p>
-
-                <p><strong>Government Mandated Benefits</strong>&nbsp;&nbsp;&nbsp;&nbsp;as applicable</p>
-
-                <p><strong>Medical Benefits</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;effective period of coverage is upon hire</p>
-
-                <p><strong>Hospitalization</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Room and Board: Regular Private<br>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Maximum Benefit Limit: 100,000</p>
-
-                <p><strong>Dental</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Included in the HMO Plan</p>
-
-                <p><strong>Dependent</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Entitled to 1 free dependent</p>
-
-                <p><strong>Allowances</strong></p>
+                <table class="benefits-table">
+                    <tr>
+                        <td class="label-col">Service Incentive Leave</td>
+                        <td class="value-col">upon regularization at 0.42 (5.04 days annually)</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col"></td>
+                        <td class="value-col">Conversion every February of the following year</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Government Mandated Benefits</td>
+                        <td class="value-col">as applicable</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Medical Benefits</td>
+                        <td class="value-col">effective period of coverage is upon hire</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Hospitalization</td>
+                        <td class="value-col">Room and Board: Regular Private</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col"></td>
+                        <td class="value-col">Maximum Benefit Limit: 100,000</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Dental</td>
+                        <td class="value-col">Included in the HMO Plan</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Dependent</td>
+                        <td class="value-col">Entitled to 1 free dependent</td>
+                    </tr>
+                    <tr>
+                        <td class="label-col">Allowances</td>
+                        <td class="value-col"></td>
+                    </tr>
+                </table>
 
                 <p><strong>Note:</strong></p>
                 <p>All benefits are subject to annual review and may be amended, abrogated, modified, rescinded/reinstated by the Company from time to time<br>

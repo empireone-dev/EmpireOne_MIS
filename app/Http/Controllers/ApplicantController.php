@@ -233,9 +233,9 @@ class ApplicantController extends Controller
         $fileUrl = $uploadedFiles[0] ?? null;
 
         // Determine email recipient based on site
-        // $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
 
-        $emailRecipient = 'quicklydeguzman@gmail.com';
+        // $emailRecipient = 'quicklydeguzman@gmail.com';
 
         // Queue emails to improve performance
         if ($fileUrl) {
@@ -282,9 +282,9 @@ class ApplicantController extends Controller
         };
 
         // Send notification emails to all recipients
-        // $sendNotificationEmail('schr@empireonegroup.com');
+        $sendNotificationEmail('schr@empireonegroup.com');
         $sendNotificationEmail('quicklydeguzman@gmail.com');
-        // $sendNotificationEmail('christiann@empireonegroup.com');
+        $sendNotificationEmail('christiann@empireonegroup.com');
         // $sendNotificationEmail('scitdept2@empireonegroup.com');
         // $sendNotificationEmail('webdev@empireonegroup.com');
 

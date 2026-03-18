@@ -11,6 +11,7 @@
 
   **Applicant Details:**
   - **Name:** {{$data['fname']}} {{$data['lname']}}
+  - **Applying For:** {{$data['applying_for']}}
   - **Submission Date:** {{$data['submitted']}}
   - **Email:** {{$data['email']}}
   - **Phone Number:** {{$data['phone']}}

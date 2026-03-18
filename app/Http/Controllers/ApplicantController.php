@@ -158,6 +158,8 @@ class ApplicantController extends Controller
             'city'          => 'nullable|string|max:255',
             'province'      => 'nullable|string|max:255',
             'source'        => 'nullable|string|max:255',
+            'applying_for'  => 'nullable|string|max:255',
+            'referred_by'   => 'nullable|string|max:255',
             'with_bpo'      => 'nullable|string|max:255',
             'submitted'     => 'nullable|date',
         ]);
@@ -231,9 +233,9 @@ class ApplicantController extends Controller
         $fileUrl = $uploadedFiles[0] ?? null;
 
         // Determine email recipient based on site
-        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        // $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
 
-        // $emailRecipient = 'quicklydeguzman@gmail.com';
+        $emailRecipient = 'quicklydeguzman@gmail.com';
 
         // Queue emails to improve performance
         if ($fileUrl) {
@@ -242,7 +244,7 @@ class ApplicantController extends Controller
                     (array) $request->all(),
                     ['submitted' => now()->format('Y-m-d')]
                 ),
-                $fileUrl
+                $fileUrl    
             ));
         } else {
             Mail::to($emailRecipient)->queue(new NewApplication2(
@@ -280,9 +282,9 @@ class ApplicantController extends Controller
         };
 
         // Send notification emails to all recipients
-        $sendNotificationEmail('schr@empireonegroup.com');
+        // $sendNotificationEmail('schr@empireonegroup.com');
         $sendNotificationEmail('quicklydeguzman@gmail.com');
-        $sendNotificationEmail('christiann@empireonegroup.com');
+        // $sendNotificationEmail('christiann@empireonegroup.com');
         // $sendNotificationEmail('scitdept2@empireonegroup.com');
         // $sendNotificationEmail('webdev@empireonegroup.com');
 

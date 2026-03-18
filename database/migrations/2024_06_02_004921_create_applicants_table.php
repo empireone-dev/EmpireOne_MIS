@@ -43,6 +43,8 @@ return new class extends Migration
             $table->string('agreed')->nullable();
             $table->string('status')->nullable();
             $table->string('source')->nullable();
+            $table->string('applying_for')->nullable();
+            $table->string('referred_by')->nullable();
             $table->string('with_bpo')->nullable();
             $table->string('call_status')->nullable();
             $table->string('site')->nullable();

@@ -45,6 +45,8 @@ class Applicant extends Model
         'agreed',
         'status',
         'source',
+        'applying_for',
+        'referred_by',
         'with_bpo',
         'call_status',
         'site',

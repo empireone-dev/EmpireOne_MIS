@@ -40,6 +40,7 @@ export default function ApplicationFormSection() {
         reset,
         control,
         setValue,
+        watch,
     } = useForm({
         defaultValues: {
             work_experience: [
@@ -47,6 +48,9 @@ export default function ApplicationFormSection() {
             ],
         },
     });
+
+    // Watch the source field to conditionally show referred_by field
+    const selectedSource = watch("source");
 
     const { fields, append, remove } = useFieldArray({
         control,
@@ -365,6 +369,13 @@ export default function ApplicationFormSection() {
                                                             "Source is required",
                                                     }),
                                                 }}
+                                                onChange={(value) => {
+                                                    setValue("source", value);
+                                                    // Clear referred_by field when source changes and it's not Employee Referral
+                                                    if (value !== "Employee Referral") {
+                                                        setValue("referred_by", "");
+                                                    }
+                                                }}
                                                 options={[
                                                     {
                                                         label: "Facebook",
@@ -403,7 +414,14 @@ export default function ApplicationFormSection() {
                                                 errorMessage={
                                                     errors?.source?.message
                                                 }
-                                                label={<>Source <span className="text-red-500">*</span></>}
+                                                label={
+                                                    <>
+                                                        Source{" "}
+                                                        <span className="text-red-500">
+                                                            *
+                                                        </span>
+                                                    </>
+                                                }
                                                 name="source"
                                             />
                                         </div>
@@ -437,11 +455,69 @@ export default function ApplicationFormSection() {
                                                 errorMessage={
                                                     errors?.site?.message
                                                 }
-                                                label={<>Site <span className="text-red-500">*</span></>}
+                                                label={
+                                                    <>
+                                                        Site{" "}
+                                                        <span className="text-red-500">
+                                                            *
+                                                        </span>
+                                                    </>
+                                                }
                                                 name="site"
                                             />
                                         </div>
                                     </div>
+                                </div>
+
+                                {selectedSource === "Employee Referral" && (
+                                    <div className="flex-1">
+                                        <Input2
+                                            register={{
+                                                ...register("referred_by", {
+                                                    required: selectedSource === "Employee Referral"
+                                                        ? "Referred By is required"
+                                                        : false,
+                                                }),
+                                            }}
+                                            errorMessage={
+                                                errors?.referred_by?.message
+                                            }
+                                            name="referred_by"
+                                            label={
+                                                <>
+                                                    Referred By{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
+                                            type="text"
+                                        />
+                                    </div>
+                                )}
+                                
+                                <div className="flex-1">
+                                    <Input2
+                                        register={{
+                                            ...register("applying_for", {
+                                                required:
+                                                    "Applying For is required",
+                                            }),
+                                        }}
+                                        errorMessage={
+                                            errors?.applying_for?.message
+                                        }
+                                        name="applying_for"
+                                        label={
+                                            <>
+                                                Applying For{" "}
+                                                <span className="text-red-500">
+                                                    *
+                                                </span>
+                                            </>
+                                        }
+                                        type="text"
+                                    />
                                 </div>
 
                                 <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
@@ -461,7 +537,14 @@ export default function ApplicationFormSection() {
                                                 errors?.fname?.message
                                             }
                                             name="fname"
-                                            label={<>First Name <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    First Name{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                             type="text"
                                         />
                                     </div>
@@ -477,7 +560,14 @@ export default function ApplicationFormSection() {
                                                 errors?.mname?.message
                                             }
                                             name="mname"
-                                            label={<>Middle Name <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    Middle Name{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                             type="text"
                                         />
                                     </div>
@@ -493,7 +583,14 @@ export default function ApplicationFormSection() {
                                                 errors?.lname?.message
                                             }
                                             name="lname"
-                                            label={<>Last Name <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    Last Name{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                             type="text"
                                         />
                                     </div>
@@ -541,7 +638,14 @@ export default function ApplicationFormSection() {
                                             errorMessage={
                                                 errors?.gender?.message
                                             }
-                                            label={<>Gender <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    Gender{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                             name="gender"
                                         />
                                     </div>
@@ -555,7 +659,14 @@ export default function ApplicationFormSection() {
                                             }}
                                             errorMessage={errors?.dob?.message}
                                             name="dob"
-                                            label={<>Date of Birth <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    Date of Birth{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                             type="date"
                                         />
                                     </div>
@@ -578,7 +689,14 @@ export default function ApplicationFormSection() {
                                                 errors?.email?.message
                                             }
                                             name="email"
-                                            label={<>Email <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    Email{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                             type="email"
                                         />
                                     </div>
@@ -594,7 +712,14 @@ export default function ApplicationFormSection() {
                                                 errors?.phone?.message
                                             }
                                             name="phone"
-                                            label={<>Phone <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    Phone{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                             type="tel"
                                         />
                                     </div>
@@ -730,7 +855,15 @@ export default function ApplicationFormSection() {
                                                 },
                                             ]}
                                             errorMessage={errors?.educ?.message}
-                                            label={<>Highest Educational Attainment <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    Highest Educational
+                                                    Attainment{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                             name="educ"
                                         />
                                     </div>
@@ -774,7 +907,14 @@ export default function ApplicationFormSection() {
                                             errorMessage={
                                                 errors?.region?.message
                                             }
-                                            label={<>Region <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    Region{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                             name="region"
                                         />
                                     </div>
@@ -800,7 +940,14 @@ export default function ApplicationFormSection() {
                                             errorMessage={
                                                 errors?.province?.message
                                             }
-                                            label={<>Province <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    Province{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                             name="province"
                                         />
                                     </div>
@@ -824,7 +971,14 @@ export default function ApplicationFormSection() {
                                             }))}
                                             errorMessage={errors?.city?.message}
                                             name="city"
-                                            label={<>City/Municipality <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    City/Municipality{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                         />
                                     </div>
                                 </div>
@@ -846,7 +1000,14 @@ export default function ApplicationFormSection() {
                                             }))}
                                             errorMessage={errors?.brgy?.message}
                                             name="brgy"
-                                            label={<>Barangay <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    Barangay{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                         />
                                     </div>
                                     <div className="flex-1">
@@ -859,7 +1020,15 @@ export default function ApplicationFormSection() {
                                             }}
                                             errorMessage={errors?.lot?.message}
                                             name="lot"
-                                            label={<>House/Lot No., Street, Purok/Sitio <span className="text-red-500">*</span></>}
+                                            label={
+                                                <>
+                                                    House/Lot No., Street,
+                                                    Purok/Sitio{" "}
+                                                    <span className="text-red-500">
+                                                        *
+                                                    </span>
+                                                </>
+                                            }
                                             type="text"
                                         />
                                     </div>

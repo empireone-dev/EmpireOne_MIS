@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Select, Table, Tag, Tooltip } from "antd";
+import { Select, Table, Tag, Tooltip, Modal, Button } from "antd";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { router } from "@inertiajs/react";
@@ -22,6 +22,292 @@ const ContactCell = ({ record }) => {
             open={open}
             setOpen={setOpen}
         />
+    );
+};
+
+// ApplicationDetailsModal component to show application details
+const ApplicationDetailsModal = ({ record, open, setOpen }) => {
+    const capitalizeFirstLetter = (str) => {
+        if (!str) return str;
+        return str
+            .split(" ")
+            .map(
+                (word) =>
+                    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase(),
+            )
+            .join(" ");
+    };
+
+    return (
+        <Modal
+            title={`Application Details - ${record?.app_id}`}
+            open={open}
+            onCancel={() => setOpen(false)}
+            footer={[
+                <Button key="close" onClick={() => setOpen(false)}>
+                    Close
+                </Button>,
+            ]}
+            width={600}
+        >
+            <div className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="mt-3">
+                        <h3 className="font-bold text-lg text-gray-700 mb-4">
+                            Personal Information:
+                        </h3>
+                        <div className="space-y-2">
+                            <div>
+                                <span className="font-medium">Full Name:</span>
+                                <span className="ml-2">
+                                    {capitalizeFirstLetter(record?.fname)}{" "}
+                                    {capitalizeFirstLetter(record?.mname)}{" "}
+                                    {capitalizeFirstLetter(record?.lname)}{" "}
+                                    {record?.suffix !== "undefined"
+                                        ? record?.suffix
+                                        : ""}
+                                </span>
+                            </div>
+                            <div>
+                                <span className="font-medium">Email:</span>
+                                <span className="ml-2">{record?.email}</span>
+                            </div>
+                            <div>
+                                <span className="font-medium">Phone:</span>
+                                <span className="ml-2">{record?.phone}</span>
+                            </div>
+                            <div>
+                                <span className="font-medium">Gender:</span>
+                                <span className="ml-2">{record?.gender}</span>
+                            </div>
+                            <div>
+                                <span className="font-medium">
+                                    Date of Birth:
+                                </span>
+                                <span className="ml-2">
+                                    {record?.dob
+                                        ? moment(record.dob).format("LL")
+                                        : "N/A"}
+                                </span>
+                            </div>
+                            <div>
+                                <span className="font-medium">
+                                    Marital Status:
+                                </span>
+                                <span className="ml-2">
+                                    {record?.marital || "N/A"}
+                                </span>
+                            </div>
+                            <div>
+                                <span className="font-medium">
+                                    BPO Experience:
+                                </span>
+                                <span className="ml-2">
+                                    {record?.with_bpo === "Yes"
+                                        ? "✓ Yes"
+                                        : "✗ No"}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="border-l pl-4 mt-3">
+                        <h3 className="font-bold text-lg text-gray-700 mb-4">
+                            Application Information:
+                        </h3>
+                        <div className="space-y-2">
+                            <div>
+                                <span className="font-medium">
+                                    Applying For:
+                                </span>
+                                <span className="ml-2">
+                                    {record?.applying_for || "N/A"}
+                                </span>
+                            </div>
+                            <div>
+                                <span className="font-medium">Source:</span>
+                                <span className="ml-2">
+                                    {record?.source || "N/A"}
+                                </span>
+                            </div>
+                            <div>
+                                <span className="font-medium">
+                                    Referred By:
+                                </span>
+                                <span className="ml-2">
+                                    {record?.referred_by || "N/A"}
+                                </span>
+                            </div>
+                            <div>
+                                <span className="font-medium">Site:</span>
+                                <span className="ml-2">
+                                    {record?.site || "N/A"}
+                                </span>
+                            </div>
+                            <div>
+                                <span className="font-medium">Status:</span>
+                                <span className="ml-2">
+                                    <Tag
+                                        color={
+                                            record?.status === "Failed" ||
+                                            record?.status === "Send Failed" ||
+                                            record?.status === "Declined"
+                                                ? "red"
+                                                : record?.status === "Passed" ||
+                                                    record?.status ===
+                                                        "Accepted Offer" ||
+                                                    record?.status === "Hired"
+                                                  ? "green"
+                                                  : record?.status ===
+                                                          "For Final Phase" ||
+                                                      record?.status ===
+                                                          "Final Phase" ||
+                                                      record?.status ===
+                                                          "Regular"
+                                                    ? "blue"
+                                                    : record?.status ===
+                                                            "Pending" ||
+                                                        record?.status ===
+                                                            "Counter Offer"
+                                                      ? "yellow"
+                                                      : record?.status ===
+                                                          "Initial Phase"
+                                                        ? "orange"
+                                                        : record?.status ===
+                                                            "Pooling"
+                                                          ? "purple"
+                                                          : "default"
+                                        }
+                                    >
+                                        {record?.status}
+                                    </Tag>
+                                </span>
+                            </div>
+                            <div>
+                                <span className="font-medium">
+                                    Date Submitted:
+                                </span>
+                                <span className="ml-2">
+                                    {record?.submitted
+                                        ? moment(record.submitted).format("LL")
+                                        : "N/A"}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="pt-4">
+                    <h3 className="font-bold text-lg text-gray-700 mb-4">
+                        Address Information:
+                    </h3>
+                    <div>
+                        <>{record?.caddress || "N/A"}</>
+                    </div>
+                </div>
+
+                {(record?.mmname ||
+                    record?.ffname ||
+                    record?.educ ||
+                    record?.courset ||
+                    record?.nationality ||
+                    record?.religion) && (
+                    <div className="pt-4">
+                        <h3 className="font-bold text-lg text-gray-700 mb-4">
+                            Additional Information
+                        </h3>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                {record?.mmname && (
+                                    <div>
+                                        <span className="font-medium">
+                                            Mother's Maiden Name:
+                                        </span>
+                                        <span className="ml-2">
+                                            {record.mmname}
+                                        </span>
+                                    </div>
+                                )}
+                                {record?.ffname && (
+                                    <div>
+                                        <span className="font-medium">
+                                            Father's Full Name:
+                                        </span>
+                                        <span className="ml-2">
+                                            {record.ffname}
+                                        </span>
+                                    </div>
+                                )}
+                                {record?.nationality && (
+                                    <div>
+                                        <span className="font-medium">
+                                            Nationality:
+                                        </span>
+                                        <span className="ml-2">
+                                            {record.nationality}
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                            <div className="space-y-2">
+                                {record?.educ && (
+                                    <div>
+                                        <span className="font-medium">
+                                            Education:
+                                        </span>
+                                        <span className="ml-2">
+                                            {record.educ}
+                                        </span>
+                                    </div>
+                                )}
+                                {record?.courset && (
+                                    <div>
+                                        <span className="font-medium">
+                                            Course Taken:
+                                        </span>
+                                        <span className="ml-2">
+                                            {record.courset}
+                                        </span>
+                                    </div>
+                                )}
+                                {record?.religion && (
+                                    <div>
+                                        <span className="font-medium">
+                                            Religion:
+                                        </span>
+                                        <span className="ml-2">
+                                            {record.religion}
+                                        </span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </Modal>
+    );
+};
+
+// ApplicationIdCell component to handle modal state
+const ApplicationIdCell = ({ record }) => {
+    const [open, setOpen] = useState(false);
+
+    return (
+        <>
+            <Button
+                type="link"
+                onClick={() => setOpen(true)}
+                className="p-0 font-medium text-blue-600 hover:text-blue-800"
+            >
+                <u>{record.app_id}</u>
+            </Button>
+            <ApplicationDetailsModal
+                record={record}
+                open={open}
+                setOpen={setOpen}
+            />
+        </>
     );
 };
 
@@ -55,8 +341,10 @@ export default function ApplicantsTableSection() {
         {
             title: "Application #",
             dataIndex: "app_id",
-            key: "emp_id",
-            // ...getColumnSearchProps("emp_id"),
+            key: "app_id",
+            render: (_, record) => {
+                return <ApplicationIdCell record={record} />;
+            },
         },
         {
             title: "Fullname",

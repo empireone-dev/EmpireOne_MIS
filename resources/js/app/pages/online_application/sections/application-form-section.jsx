@@ -93,10 +93,16 @@ export default function ApplicationFormSection() {
     const props = {
         name: "file",
         multiple: false,
+        maxCount: 1, // Ensure only 1 file can be uploaded
         accept: "application/pdf",
         method: "GET",
         action: "https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload",
         beforeUpload(file) {
+            // Check if there's already a file uploaded
+            if (files.length > 0) {
+                return false;
+            }
+
             const isLt5M = file.size / 1024 / 1024 < 5;
             if (!isLt5M) {
                 message.error("File size must be less than 5MB!");
@@ -110,10 +116,11 @@ export default function ApplicationFormSection() {
                 console.log(info.file, info.fileList);
             }
             if (status === "done") {
-                const newFiles = info.fileList
-                    .map((file) => file.originFileObj)
-                    .filter(Boolean);
-                handleFiles(newFiles);
+                // Ensure only the last (newest) file is kept
+                const latestFile = info.fileList[info.fileList.length - 1];
+                if (latestFile && latestFile.originFileObj) {
+                    handleFiles([latestFile.originFileObj]); // Only pass single file
+                }
                 message.success(
                     `${info.file.name} file uploaded successfully.`,
                 );
@@ -372,8 +379,14 @@ export default function ApplicationFormSection() {
                                                 onChange={(value) => {
                                                     setValue("source", value);
                                                     // Clear referred_by field when source changes and it's not Employee Referral
-                                                    if (value !== "Employee Referral") {
-                                                        setValue("referred_by", "");
+                                                    if (
+                                                        value !==
+                                                        "Employee Referral"
+                                                    ) {
+                                                        setValue(
+                                                            "referred_by",
+                                                            "",
+                                                        );
                                                     }
                                                 }}
                                                 options={[
@@ -474,9 +487,11 @@ export default function ApplicationFormSection() {
                                         <Input2
                                             register={{
                                                 ...register("referred_by", {
-                                                    required: selectedSource === "Employee Referral"
-                                                        ? "Referred By is required"
-                                                        : false,
+                                                    required:
+                                                        selectedSource ===
+                                                        "Employee Referral"
+                                                            ? "Referred By is required"
+                                                            : false,
                                                 }),
                                             }}
                                             errorMessage={
@@ -495,7 +510,7 @@ export default function ApplicationFormSection() {
                                         />
                                     </div>
                                 )}
-                                
+
                                 <div className="flex-1">
                                     <Input2
                                         register={{
@@ -1321,9 +1336,8 @@ export default function ApplicationFormSection() {
                                             to upload your CV
                                         </p>
                                         <p className="ant-upload-hint">
-                                            Support for a single or bulk upload.
-                                            Only PDF files are allowed. Maximum
-                                            file size: 5MB.
+                                            Upload a single PDF file only.
+                                            Maximum file size: 5MB.
                                         </p>
                                     </Dragger>
                                     {files.length === 0 && (

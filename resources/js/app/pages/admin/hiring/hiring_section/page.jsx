@@ -4,6 +4,7 @@ import HiringTableSection from './sections/hiring-table-section'
 import store from '@/app/store/store';
 import { get_job_offer_thunk } from './redux/hiring-thunk';
 import { useEffect } from 'react';
+import { router } from '@inertiajs/react';
 import { get_job_position_thunk } from '../../sourcing/job_title_section/redux/job-title-thunk';
 import { get_applicant_thunk } from '../../recruitment/applicants/applicant_records/redux/applicant-thunk';
 import Skeleton from '@/app/pages/_components/skeleton';
@@ -20,6 +21,11 @@ export default function HiringSectionPage() {
     }
     loadData()
 
+    const removeListener = router.on('navigate', () => {
+      store.dispatch(get_job_offer_thunk())
+    })
+
+    return removeListener
   }, []);
   return (
     <AdminLayout>

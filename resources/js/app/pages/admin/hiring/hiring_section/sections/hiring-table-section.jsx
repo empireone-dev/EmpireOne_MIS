@@ -572,6 +572,22 @@ export default function HiringTableSection() {
                 const safeJobPos = record?.jobPos?.replace(/\//g, "_");
                 return (
                     <div className="flex gap-2 items-center">
+                        <Tooltip title="View Job Offer">
+                            <div>
+                                <button
+                                    type="button"
+                                    onClick={() => {
+                                        window.open(
+                                            `/admin/hiring/${record.app_id}?id=${record.id}`,
+                                            "_blank",
+                                        );
+                                    }}
+                                    className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
+                                >
+                                    <FileTextFilled />
+                                </button>
+                            </div>
+                        </Tooltip>
                         {record.status !== "Pending" &&
                             record.status !== "Declined" && (
                                 <Tooltip title="201 File">
@@ -608,22 +624,6 @@ export default function HiringTableSection() {
                                 <LineOutlined />
                             </div>
                         )} */}
-                        <Tooltip title="View Job Offer">
-                            <div>
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        window.open(
-                                            `/admin/hiring/${record.app_id}?id=${record.id}`,
-                                            "_blank",
-                                        );
-                                    }}
-                                    className="text-white bg-gradient-to-r from-cyan-400 via-cyan-500 to-cyan-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-cyan-300 shadow-lg shadow-cyan-500/50 font-medium rounded-lg text-lg px-3.5 py-2 text-center"
-                                >
-                                    <FileTextFilled />
-                                </button>
-                            </div>
-                        </Tooltip>
                         {record.status === "Contract Signing" && (
                             <Tooltip title="Direct Hire">
                                 <div>

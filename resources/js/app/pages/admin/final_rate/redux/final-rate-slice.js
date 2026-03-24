@@ -12,11 +12,14 @@ export const finalRateSlice = createSlice({
     setApplicant: (state, action) => {
       state.applicant = action.payload
     },
+    resetApplicant: (state) => {
+      state.applicant = {}
+    },
     setFinalRate: (state, action) => {
       state.finalRate = action.payload
     }
   },
 })
-export const { setApplicant,setFinalRate } = finalRateSlice.actions
+export const { setApplicant, resetApplicant, setFinalRate } = finalRateSlice.actions
 
 export default finalRateSlice.reducer

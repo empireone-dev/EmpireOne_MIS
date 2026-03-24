@@ -28,7 +28,7 @@ export default function File201TableSection() {
     const [modalVisible, setModalVisible] = useState(false);
     const searchInput = useRef(null);
     const { applicant } = useSelector((state) => state.final_rate);
-    const { onboarding_ackdoc } = useSelector(
+    const { onboarding_ackdoc, onboarding_ackdoc_loading } = useSelector(
         (state) => state.onboarding_ackdocs
     );
     console.log("applicant", applicant);
@@ -291,6 +291,10 @@ export default function File201TableSection() {
             ),
         },
     ];
+    
+
+    const requirementsLoading = !applicant?.requirements;
+    const onboardingLoading = onboarding_ackdoc_loading;
 
     const dataSource = applicant?.requirements ?? [];
     const onboardingDataSource = Array.isArray(onboarding_ackdoc)
@@ -389,7 +393,11 @@ export default function File201TableSection() {
                         key: "1",
                         label: "Pre-employment Requirements",
                         children: (
-                            <Table columns={columns} dataSource={dataSource} />
+                            <Table
+                                columns={columns}
+                                dataSource={dataSource}
+                                loading={requirementsLoading}
+                            />
                         ),
                     },
                     {
@@ -399,6 +407,7 @@ export default function File201TableSection() {
                             <Table
                                 columns={onboarding_ack_columns}
                                 dataSource={onboardingDataSource}
+                                loading={onboardingLoading}
                             />
                         ),
                     },

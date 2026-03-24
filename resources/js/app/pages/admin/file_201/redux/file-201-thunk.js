@@ -15,23 +15,33 @@ export function create_onboarding_ack_thunk(data) {
 
 export function get_onboarding_ackdoc_by_id_thunk(app_id) {
     return async function (dispatch, getState) {
-        const res = await get_onboarding_ackdoc_by_id_service(app_id);
-        // Extract the data array from the response
-        dispatch(onboardingAckDocSlice.actions.setOnboardingAckDoc(res.data));
-        dispatch(onboardingAckDocSlice.actions.setJobOffer(res.job_offer));
+        dispatch(onboardingAckDocSlice.actions.setOnboardingAckDocLoading(true));
+        try {
+            const res = await get_onboarding_ackdoc_by_id_service(app_id);
+            // Extract the data array from the response
+            dispatch(onboardingAckDocSlice.actions.setOnboardingAckDoc(res.data));
+            dispatch(onboardingAckDocSlice.actions.setJobOffer(res.job_offer));
+        } finally {
+            dispatch(onboardingAckDocSlice.actions.setOnboardingAckDocLoading(false));
+        }
     };
 }
 
 export function get_onboarding_ackdoc_by_app_id_thunk(app_id) {
     return async function (dispatch, getState) {
-        const res = await get_onboarding_ackdoc_by_app_id_service(app_id);
-        // Extract the data array from the response
-        dispatch(onboardingAckDocSlice.actions.setOnboardingAckDoc(res.data));
-        dispatch(onboardingAckDocSlice.actions.setJobOffer(res.job_offer));
-        dispatch(onboardingAckDocSlice.actions.setSignature(res.signature));
-        dispatch(
-            onboardingAckDocSlice.actions.setApplicant(res.data.applicant)
-        );
+        dispatch(onboardingAckDocSlice.actions.setOnboardingAckDocLoading(true));
+        try {
+            const res = await get_onboarding_ackdoc_by_app_id_service(app_id);
+            // Extract the data array from the response
+            dispatch(onboardingAckDocSlice.actions.setOnboardingAckDoc(res.data));
+            dispatch(onboardingAckDocSlice.actions.setJobOffer(res.job_offer));
+            dispatch(onboardingAckDocSlice.actions.setSignature(res.signature));
+            dispatch(
+                onboardingAckDocSlice.actions.setApplicant(res.data.applicant)
+            );
+        } finally {
+            dispatch(onboardingAckDocSlice.actions.setOnboardingAckDocLoading(false));
+        }
     };
 }
 

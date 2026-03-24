@@ -23,6 +23,8 @@ export default function ViewOnboardingDocumentSection({ data }) {
         setLoading(false);
     };
 
+    console.log("dataadsada", data);
+
     return (
         <div>
             <div className="">

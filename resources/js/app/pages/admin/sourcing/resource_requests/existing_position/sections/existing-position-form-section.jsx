@@ -26,6 +26,11 @@ export default function ExistingPositionFormSection() {
         positionStatus: "",
         sourcingMethod: "",
         justification: "",
+        reviewer: "",
+        interviewer: "",
+        sub_interviewer: "",
+        interview_date: "",
+        interview_time: "",
         site: user?.site || "",
     });
 
@@ -205,6 +210,11 @@ export default function ExistingPositionFormSection() {
                 positionStatus: form.positionStatus,
                 sourcingMethod: form.sourcingMethod,
                 justification: form.justification,
+                reviewer: form.reviewer,
+                interviewer: form.interviewer,
+                sub_interviewer: form.sub_interviewer,
+                interview_date: form.interview_date,
+                interview_time: form.interview_time,
             };
 
             console.log("Final data being sent to thunk:", submitData);
@@ -287,8 +297,14 @@ export default function ExistingPositionFormSection() {
                             <option value="">Select a job title</option>
                             {job_positions
                                 .filter((res) => res.status === "Approved")
-                                .filter((res, index, self) => 
-                                    index === self.findIndex(item => item.jPosition === res.jPosition)
+                                .filter(
+                                    (res, index, self) =>
+                                        index ===
+                                        self.findIndex(
+                                            (item) =>
+                                                item.jPosition ===
+                                                res.jPosition,
+                                        ),
                                 )
                                 .map((res, i) => (
                                     <option value={res.jPosition} key={i}>
@@ -546,6 +562,129 @@ export default function ExistingPositionFormSection() {
                                 setForm({ ...form, budgetCost: e.target.value })
                             }
                         />
+                    </div>
+                </div>
+                <h1 className="font-bold text-xl mb-2 mt-8">
+                    Interview Details:
+                </h1>
+                <div className="mt-2 mb-3 flex flex-1 gap-4">
+                    <div className="w-full flex flex-col">
+                        <label htmlFor="">
+                            <b>Interviewer</b>
+                        </label>
+                        <input
+                            onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    interviewer: e.target.value,
+                                });
+                                if (errors.interviewer) {
+                                    setErrors((prev) => ({
+                                        ...prev,
+                                        interviewer: "",
+                                    }));
+                                }
+                            }}
+                            type="text"
+                            placeholder=""
+                            className={`border p-2 rounded w-full ${errors.interviewer ? "border-red-500" : ""}`}
+                            value={form.interviewer || ""}
+                            required
+                        />
+                        {errors.interviewer && (
+                            <span className="text-red-500 text-sm mt-1">
+                                {errors.interviewer}
+                            </span>
+                        )}
+                    </div>
+                    <div className="w-full flex flex-col">
+                        <label htmlFor="">
+                            <b>Sub-Interviewer</b>
+                        </label>
+                        <input
+                            onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    sub_interviewer: e.target.value,
+                                });
+                                if (errors.sub_interviewer) {
+                                    setErrors((prev) => ({
+                                        ...prev,
+                                        sub_interviewer: "",
+                                    }));
+                                }
+                            }}
+                            type="text"
+                            placeholder=""
+                            className={`border p-2 rounded w-full ${errors.sub_interviewer ? "border-red-500" : ""}`}
+                            value={form.sub_interviewer || ""}
+                            required
+                        />
+                        {errors.sub_interviewer && (
+                            <span className="text-red-500 text-sm mt-1">
+                                {errors.sub_interviewer}
+                            </span>
+                        )}
+                    </div>
+                </div>
+                <div className="mb-4 flex flex-1 gap-4">
+                    <div className="w-full flex flex-col">
+                        <label htmlFor="">
+                            <b>Date</b>
+                        </label>
+                        <input
+                            onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    interview_date: e.target.value,
+                                });
+                                if (errors.interview_date) {
+                                    setErrors((prev) => ({
+                                        ...prev,
+                                        interview_date: "",
+                                    }));
+                                }
+                            }}
+                            type="date"
+                            placeholder=""
+                            className={`border p-2 rounded w-full ${errors.interview_date ? "border-red-500" : ""}`}
+                            value={form.interview_date || ""}
+                            required
+                        />
+                        {errors.interview_date && (
+                            <span className="text-red-500 text-sm mt-1">
+                                {errors.interview_date}
+                            </span>
+                        )}
+                    </div>
+                    <div className="w-full flex flex-col">
+                        <label htmlFor="">
+                            <b>Time</b>
+                        </label>
+                        <input
+                            onChange={(e) => {
+                                setForm({
+                                    ...form,
+                                    interview_time: e.target.value,
+                                });
+                                if (errors.interview_time) {
+                                    setErrors((prev) => ({
+                                        ...prev,
+                                        interview_time: "",
+                                    }));
+                                }
+                            }}
+                            type="time"
+                            placeholder=""
+                            className={`border p-2 rounded w-full ${errors.interview_time ? "border-red-500" : ""}`}
+                            value={form.interview_time || ""}
+                            required
+                        />
+                        {errors.interview_time && (
+                            <span className="text-red-500 text-sm mt-1">
+                                {errors.interview_time}
+                            </span>
+                        )}
                     </div>
                 </div>
                 <div className="flex flex-1 gap-2 justify-end items-center">

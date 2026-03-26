@@ -57,6 +57,10 @@ class OutSourcingErfController extends Controller
             'personnel' => $request->personnel,
             'positionStatus' => $request->positionStatus,
             'sourcingMethod' => $request->sourcingMethod,
+            'interviewer' => $request->interviewer,
+            'sub_interviewer' => $request->sub_interviewer,
+            'interview_date' => $request->interview_date,
+            'interview_time' => $request->interview_time,
             'site' => $request->site,
             'status' => 'Pending',
         ]);

@@ -24,6 +24,10 @@ return new class extends Migration
             $table->string('sourcingMethod')->nullable();
             $table->string('justification')->nullable();
             $table->string('budgetCost')->nullable();
+            $table->string('interviewer')->nullable();
+            $table->string('sub_interviewer')->nullable();
+            $table->string('interview_date')->nullable();
+            $table->string('interview_time')->nullable();
             $table->string('submitted')->nullable();
             $table->string('status')->nullable();
             $table->string('site')->nullable();

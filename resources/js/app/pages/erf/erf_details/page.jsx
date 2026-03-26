@@ -19,6 +19,8 @@ import {
     FileTextOutlined,
     UserOutlined,
     CalendarOutlined,
+    ClockCircleOutlined,
+    TeamOutlined,
 } from "@ant-design/icons";
 import moment from "moment";
 import axios from "axios";
@@ -315,14 +317,15 @@ export default function ErfDetailsPage() {
                         <div style={{ marginTop: "16px" }}>
                             <Button
                                 type="primary"
-                                style={{ margin: "10px", width: "45%" }}
+                                style={{ margin: "10px", width: "50%" }}
                                 loading={actionLoading}
                                 onClick={handleApprove}
                             >
                                 Approve
                             </Button>
                             <Button
-                                type="danger"
+                                type="primary"
+                                danger
                                 style={{ margin: "10px", width: "45%" }}
                                 loading={actionLoading}
                                 onClick={handleDecline}
@@ -383,6 +386,95 @@ export default function ErfDetailsPage() {
                                 </>
                             )}
                         </Descriptions>
+                    </Card>
+
+                    {/* Interview Details */}
+                    <Card
+                        title={
+                            <span>
+                                <CalendarOutlined
+                                    style={{ marginRight: "8px" }}
+                                />
+                                Interview Details
+                            </span>
+                        }
+                        style={{ marginBottom: "24px" }}
+                    >
+                        {erfData.interviewer ||
+                        erfData.sub_interviewer ||
+                        erfData.interview_date ||
+                        erfData.interview_time ? (
+                            <Descriptions column={1}>
+                                {erfData.interviewer && (
+                                    <Descriptions.Item
+                                        label={
+                                            <span>
+                                                <TeamOutlined
+                                                    style={{
+                                                        marginRight: "4px",
+                                                    }}
+                                                />
+                                                Interviewer
+                                            </span>
+                                        }
+                                    >
+                                        {formatValue(erfData.interviewer)}
+                                    </Descriptions.Item>
+                                )}
+                                {erfData.sub_interviewer && (
+                                    <Descriptions.Item
+                                        label={
+                                            <span>
+                                                <TeamOutlined
+                                                    style={{
+                                                        marginRight: "4px",
+                                                    }}
+                                                />
+                                                Sub-Interviewer
+                                            </span>
+                                        }
+                                    >
+                                        {formatValue(erfData.sub_interviewer)}
+                                    </Descriptions.Item>
+                                )}
+                                {erfData.interview_date && (
+                                    <Descriptions.Item
+                                        label={
+                                            <span>
+                                                <CalendarOutlined
+                                                    style={{
+                                                        marginRight: "4px",
+                                                    }}
+                                                />
+                                                Interview Date
+                                            </span>
+                                        }
+                                    >
+                                        {formatDate(erfData.interview_date)}
+                                    </Descriptions.Item>
+                                )}
+                                {erfData.interview_time && (
+                                    <Descriptions.Item
+                                        label={
+                                            <span>
+                                                <ClockCircleOutlined
+                                                    style={{
+                                                        marginRight: "4px",
+                                                    }}
+                                                />
+                                                Interview Time
+                                            </span>
+                                        }
+                                    >
+                                        {formatValue(erfData.interview_time)}
+                                    </Descriptions.Item>
+                                )}
+                            </Descriptions>
+                        ) : (
+                            <Text type="secondary">
+                                No interview schedule set
+                            </Text>
+                        )}
                     </Card>
 
                     {/* Job Analysis & Description */}

@@ -604,6 +604,25 @@ export default function ErfRecordsTableSection() {
                                 </Descriptions>
                             </Card>
 
+                            <Card title="Interview Details" className="mb-4">
+                                <Descriptions column={2} bordered size="small">
+                                    <Descriptions.Item label="Interviewer:">
+                                        <b>{selectedErfRecord.interviewer || "N/A"}</b>
+                                    </Descriptions.Item>
+
+                                    <Descriptions.Item label="Sub-Interviewer:">
+                                        <b>{selectedErfRecord.sub_interviewer || "N/A"}</b>
+                                    </Descriptions.Item>
+
+                                    <Descriptions.Item label="Interview Date:">
+                                        <b>{selectedErfRecord.interview_date || "N/A"}</b>
+                                    </Descriptions.Item>
+                                    <Descriptions.Item label="Interview Time:">
+                                        <b>{selectedErfRecord.interview_time || "N/A"}</b>
+                                    </Descriptions.Item>
+                                </Descriptions>
+                            </Card>
+
                             {selectedErfRecord.businessJustification && (
                                 <Card
                                     title="Business Justification"

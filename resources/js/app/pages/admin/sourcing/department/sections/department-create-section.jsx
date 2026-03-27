@@ -95,8 +95,9 @@ const DepartmentCreateSection = () => {
                             Select Department Head
                         </option>
                         {users
-                            .filter(
-                                (res) =>
+                            .filter((res) => {
+                                console.log("resss", res);
+                                return (
                                     (!user?.site ||
                                         res.site === user.site ||
                                         !res.site) &&
@@ -125,8 +126,14 @@ const DepartmentCreateSection = () => {
                                         "Director, Accounting & Finance",
                                         "Director, Marketing & Communications",
                                         "Director, Quality & Training",
-                                    ].includes(res.position),
-                            )
+                                        "Facilities Manager",
+                                    ].includes(res.position) 
+                                    &&
+                                    !["Resigned", "AWOL", "End of Contract", "Terminated", "Trainee Fallout"].includes(
+                                        res?.employee?.status,
+                                    )
+                                );
+                            })
                             .sort((a, b) => {
                                 const nameA =
                                     `${a.employee_fname} ${a.employee_lname}`.toLowerCase();

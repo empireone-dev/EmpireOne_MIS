@@ -567,7 +567,7 @@ export default function NewPositionFormSection() {
                         <div className="flex flex-1 w-full gap-4 mb-4">
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">
-                                    <b>Manager Submitting Request</b>
+                                    <b>Requestor</b>
                                 </label>
                                 <input
                                     onChange={(e) =>

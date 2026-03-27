@@ -32,7 +32,7 @@ export default function ExistingPositionFormSection() {
         sub_interviewer: "",
         interview_date: "",
         interview_time: "",
-        site: user?.site || "",
+        site: "",
         user_id: user?.id || "",
         requestor_name: `${user?.employee_fname || ""} ${user?.employee_lname || ""}`,
     });
@@ -65,7 +65,6 @@ export default function ExistingPositionFormSection() {
             setForm((prevForm) => ({
                 ...prevForm,
                 user_id: user.id,
-                site: user.site || "",
                 requestor_name: `${user.employee_fname || ""} ${user.employee_lname || ""}`,
             }));
         }
@@ -146,8 +145,8 @@ export default function ExistingPositionFormSection() {
         // Validate required fields (all fields except budgetCost)
         const newErrors = {};
 
-        if (!form.account) {
-            newErrors.account = "Please select an account before submitting.";
+        if (!form.site || form.site.trim() === "") {
+            newErrors.site = "Please select a site.";
         }
 
         if (!form.jobTitle) {
@@ -176,6 +175,10 @@ export default function ExistingPositionFormSection() {
                 "Department is required. Please select a job title first.";
         }
 
+        if (!form.account) {
+            newErrors.account = "Please select an account before submitting.";
+        }
+
         if (!form.sourcingMethod) {
             newErrors.sourcingMethod = "Please select a sourcing method.";
         }
@@ -187,6 +190,26 @@ export default function ExistingPositionFormSection() {
 
         if (!form.reviewer || form.reviewer.trim() === "") {
             newErrors.reviewer = "Please select a reviewer.";
+        }
+
+        if (!form.interviewer || form.interviewer.trim() === "") {
+            newErrors.interviewer =
+                "Please provide an Interviewer for reference.";
+        }
+
+        if (!form.sub_interviewer || form.sub_interviewer.trim() === "") {
+            newErrors.sub_interviewer =
+                "Please provide a Sub-Interviewer for reference.";
+        }
+
+        if (!form.interview_date || form.interview_date.trim() === "") {
+            newErrors.interview_date =
+                "Please provide an Interview Date for reference.";
+        }
+
+        if (!form.interview_time || form.interview_time.trim() === "") {
+            newErrors.interview_time =
+                "Please provide an Interview Time for reference.";
         }
 
         // If there are errors, set them and return
@@ -204,7 +227,7 @@ export default function ExistingPositionFormSection() {
             const submitData = {
                 submitted: moment().format("YYYY-MM-DD"),
                 user_id: user?.id || form.user_id,
-                site: user?.site || form.site,
+                site: form.site,
                 ref_id: form.ref_id,
                 department: form.department,
                 account: form.account, // Explicitly ensure account is included
@@ -269,16 +292,6 @@ export default function ExistingPositionFormSection() {
                     </b>
                     .
                 </p>
-                <input
-                    onChange={(e) =>
-                        setForm({
-                            ...form,
-                            site: e.target.value,
-                        })
-                    }
-                    value={form?.site ?? ""}
-                    type="hidden"
-                />
                 <div className="flex flex-1 w-full gap-4 mb-4 mt-4">
                     <div className="w-full flex flex-col">
                         <label>
@@ -293,38 +306,68 @@ export default function ExistingPositionFormSection() {
                     </div>
                     <div className="w-full flex flex-col">
                         <label>
-                            <b>Job Title</b>
+                            <b>Site</b>
                         </label>
                         <select
-                            className={`border p-2 rounded w-full ${errors.jobTitle ? "border-red-500" : ""}`}
-                            onChange={handleJobTitleChange}
-                            value={form.jobTitle}
+                            onChange={(e) => {
+                                setForm({ ...form, site: e.target.value });
+                                if (errors.site) {
+                                    setErrors((prev) => ({
+                                        ...prev,
+                                        site: "",
+                                    }));
+                                }
+                            }}
+                            className={`border p-2 rounded w-full ${errors.site ? "border-red-500" : ""}`}
+                            value={form.site}
                             required
                         >
-                            <option value="">Select a job title</option>
-                            {job_positions
-                                .filter((res) => res.status === "Approved")
-                                .filter(
-                                    (res, index, self) =>
-                                        index ===
-                                        self.findIndex(
-                                            (item) =>
-                                                item.jPosition ===
-                                                res.jPosition,
-                                        ),
-                                )
-                                .map((res, i) => (
-                                    <option value={res.jPosition} key={i}>
-                                        {res.jPosition}
-                                    </option>
-                                ))}
+                            <option value="" disabled>
+                                Select a site
+                            </option>
+                            <option value="San Carlos">San Carlos City</option>
+                            <option value="Carcar">Carcar City</option>
+                            <option value="Cebu">Cebu City</option>
                         </select>
-                        {errors.jobTitle && (
+                        {errors.site && (
                             <span className="text-red-500 text-sm mt-1">
-                                {errors.jobTitle}
+                                {errors.site}
                             </span>
                         )}
                     </div>
+                </div>
+                <div className="w-full flex flex-col mb-4">
+                    <label>
+                        <b>Job Title</b>
+                    </label>
+                    <select
+                        className={`border p-2 rounded w-full ${errors.jobTitle ? "border-red-500" : ""}`}
+                        onChange={handleJobTitleChange}
+                        value={form.jobTitle}
+                        required
+                    >
+                        <option value="">Select a job title</option>
+                        {job_positions
+                            .filter((res) => res.status === "Approved")
+                            .filter(
+                                (res, index, self) =>
+                                    index ===
+                                    self.findIndex(
+                                        (item) =>
+                                            item.jPosition === res.jPosition,
+                                    ),
+                            )
+                            .map((res, i) => (
+                                <option value={res.jPosition} key={i}>
+                                    {res.jPosition}
+                                </option>
+                            ))}
+                    </select>
+                    {errors.jobTitle && (
+                        <span className="text-red-500 text-sm mt-1">
+                            {errors.jobTitle}
+                        </span>
+                    )}
                 </div>
                 <div className="flex flex-1 w-full gap-4 mb-4">
                     <div className="w-full flex flex-col">
@@ -546,7 +589,7 @@ export default function ExistingPositionFormSection() {
                 <div className="flex flex-1 w-full gap-4 mb-4">
                     <div className="w-full flex flex-col">
                         <label>
-                            <b>Manager Submitting Request</b>
+                            <b>Requestor</b>
                         </label>
                         <input
                             type="text"

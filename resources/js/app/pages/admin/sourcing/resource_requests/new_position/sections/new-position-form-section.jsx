@@ -28,30 +28,34 @@ export default function NewPositionFormSection() {
 
     const [form, setForm] = useState({
         positionStatus: "",
-        site: user?.site || "",
+        site: "",
         department: "",
         account: "",
         interviewer: "",
         sub_interviewer: "",
         interview_date: "",
         interview_time: "",
-         justification: "",
-         sourcingMethod: "",
-         jobTitle: "",
-         jobType: "",
-         personnel: "",
-         dateNeed: "",
-          budgetCost: "",
-         ref_id: "",
-          user_id: user?.id || "",
-          requestor_name: `${user?.employee_fname || ""} ${user?.employee_lname || ""}`,
-          reviewer: "",
+        justification: "",
+        sourcingMethod: "",
+        jobTitle: "",
+        jobType: "",
+        personnel: "",
+        dateNeed: "",
+        budgetCost: "",
+        ref_id: "",
+        user_id: user?.id || "",
+        requestor_name: `${user?.employee_fname || ""} ${user?.employee_lname || ""}`,
+        reviewer: "",
     });
 
     const handleNext = () => {
         if (activeStep === 0) {
             // Validate form before proceeding to next step
             const newErrors = {};
+
+            if (!form.site || form.site.trim() === "") {
+                newErrors.site = "Please select a site.";
+            }
 
             if (!form.jobTitle || form.jobTitle.trim() === "") {
                 newErrors.jobTitle = "Please enter a job title.";
@@ -89,6 +93,26 @@ export default function NewPositionFormSection() {
             if (!form.justification || form.justification.trim() === "") {
                 newErrors.justification =
                     "Please provide a reason or justification for the request.";
+            }
+
+            if (!form.interviewer || form.interviewer.trim() === "") {
+                newErrors.interviewer =
+                    "Please provide an Interviewer for reference.";
+            }
+
+            if (!form.sub_interviewer || form.sub_interviewer.trim() === "") {
+                newErrors.sub_interviewer =
+                    "Please provide a Sub-Interviewer for reference.";
+            }
+
+            if (!form.interview_date || form.interview_date.trim() === "") {
+                newErrors.interview_date =
+                    "Please provide an Interview Date for reference.";
+            }
+
+            if (!form.interview_time || form.interview_time.trim() === "") {
+                newErrors.interview_time =
+                    "Please provide an Interview Time for reference.";
             }
 
             // If there are errors, set them and return
@@ -129,7 +153,7 @@ export default function NewPositionFormSection() {
             setForm((prevForm) => ({
                 ...prevForm,
                 user_id: user.id,
-                site: user.site || "",
+                site: form.site,
             }));
         }
     }, [user]);
@@ -151,7 +175,7 @@ export default function NewPositionFormSection() {
                 create_outsourcing_erf_thunk({
                     submitted: moment().format("YYYY-MM-DD"),
                     user_id: user?.id,
-                    site: user?.site || "",
+                    site: form.site,
                     ...form,
                     reviewer: form.reviewer,
                     interviewer: form.interviewer,
@@ -234,33 +258,71 @@ export default function NewPositionFormSection() {
                             </div>
                             <div className="w-full flex flex-col">
                                 <label htmlFor="">
-                                    <b>Job Title</b>
+                                    <b>Site</b>
                                 </label>
-                                <input
+                                <select
                                     onChange={(e) => {
                                         setForm({
                                             ...form,
-                                            jobTitle: e.target.value,
+                                            site: e.target.value,
                                         });
-                                        if (errors.jobTitle) {
+                                        if (errors.site) {
                                             setErrors((prev) => ({
                                                 ...prev,
-                                                jobTitle: "",
+                                                site: "",
                                             }));
                                         }
                                     }}
-                                    type="text"
-                                    placeholder=""
-                                    className={`border p-2 rounded w-full ${errors.jobTitle ? "border-red-500" : ""}`}
-                                    value={form.jobTitle || ""}
+                                    className={`border p-2 rounded w-full ${errors.site ? "border-red-500" : ""}`}
+                                    name=""
+                                    id=""
+                                    value={form.site || ""}
                                     required
-                                />
-                                {errors.jobTitle && (
+                                >
+                                    <option value="" disabled>
+                                        Select a site
+                                    </option>
+                                    <option value="San Carlos">
+                                        San Carlos City
+                                    </option>
+                                    <option value="Carcar">Carcar City</option>
+                                    <option value="Cebu">Cebu City</option>
+                                </select>
+                                {errors.site && (
                                     <span className="text-red-500 text-sm mt-1">
-                                        {errors.jobTitle}
+                                        {errors.site}
                                     </span>
                                 )}
                             </div>
+                        </div>
+                        <div className="w-full flex flex-col mb-4">
+                            <label htmlFor="">
+                                <b>Job Title</b>
+                            </label>
+                            <input
+                                onChange={(e) => {
+                                    setForm({
+                                        ...form,
+                                        jobTitle: e.target.value,
+                                    });
+                                    if (errors.jobTitle) {
+                                        setErrors((prev) => ({
+                                            ...prev,
+                                            jobTitle: "",
+                                        }));
+                                    }
+                                }}
+                                type="text"
+                                placeholder=""
+                                className={`border p-2 rounded w-full ${errors.jobTitle ? "border-red-500" : ""}`}
+                                value={form.jobTitle || ""}
+                                required
+                            />
+                            {errors.jobTitle && (
+                                <span className="text-red-500 text-sm mt-1">
+                                    {errors.jobTitle}
+                                </span>
+                            )}
                         </div>
                         <div className="flex flex-1 w-full gap-4 mb-4">
                             <div className="w-full flex flex-col">

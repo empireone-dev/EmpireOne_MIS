@@ -11,7 +11,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::get();
+        $users = User::with('employee')->get();
         return response()->json([
             'result' => $users
         ], 200);
@@ -64,5 +64,5 @@ class UserController extends Controller
         return response()->json([
             'message' => 'Password updated successfully.',
         ], 200);
-    }   
+    }
 }

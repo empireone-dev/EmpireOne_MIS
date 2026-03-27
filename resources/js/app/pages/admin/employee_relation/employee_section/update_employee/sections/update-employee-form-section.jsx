@@ -476,8 +476,14 @@ export default function UpdateEmployeeFormSection() {
                                                 user?.role_id === 2 ||
                                                 res.site === user?.site,
                                         )
-                                        .filter((res, index, self) => 
-                                            index === self.findIndex(item => item.jPosition === res.jPosition)
+                                        .filter(
+                                            (res, index, self) =>
+                                                index ===
+                                                self.findIndex(
+                                                    (item) =>
+                                                        item.jPosition ===
+                                                        res.jPosition,
+                                                ),
                                         )
                                         .map((res, i) => (
                                             <option
@@ -602,7 +608,17 @@ export default function UpdateEmployeeFormSection() {
                                                     "Director, Accounting & Finance",
                                                     "Director, Marketing & Communications",
                                                     "Director, Quality & Training",
-                                                ].includes(res.position),
+                                                    "Facilities Manager",
+                                                ].includes(res.position) &&
+                                                ![
+                                                    "Resigned",
+                                                    "AWOL",
+                                                    "End of Contract",
+                                                    "Terminated",
+                                                    "Trainee Fallout",
+                                                ].includes(
+                                                    res?.employee?.status,
+                                                ),
                                         )
                                         .sort((a, b) => {
                                             const nameA =

@@ -185,6 +185,13 @@ export default function JobTitleTableSection() {
         },
     ];
 
+    const uniqueJobPositions = job_positions
+        ? job_positions.filter(
+              (item, index, self) =>
+                  index === self.findIndex((t) => t.jPosition === item.jPosition)
+          )
+        : [];
+
     return (
         <div>
             <div>
@@ -194,7 +201,7 @@ export default function JobTitleTableSection() {
                     </h2>
                 </div>
             </div>
-            <Table columns={columns} dataSource={job_positions} />;
+            <Table columns={columns} dataSource={uniqueJobPositions} />;
         </div>
     );
 }

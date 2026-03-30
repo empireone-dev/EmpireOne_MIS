@@ -22,8 +22,14 @@ export default function DepartmentUpdateSection({ data }) {
             depthead: data?.user?.id || "",
             site: data?.site || "",
         });
-    }, []);
+    }, [data]);
     const showModal = () => {
+        setForm({
+            id: data?.id,
+            dept: data?.dept || "",
+            depthead: data?.user?.id || "",
+            site: data?.site || "",
+        });
         setIsModalOpen(true);
     };
 
@@ -104,8 +110,9 @@ export default function DepartmentUpdateSection({ data }) {
                                 Select Department Head
                             </option>
                             {users
-                                .filter(
-                                    (res) =>
+                                .filter((res) => {
+                                    console.log("resss", res);
+                                    return (
                                         (!user?.site ||
                                             res.site === user.site ||
                                             !res.site) &&
@@ -122,7 +129,6 @@ export default function DepartmentUpdateSection({ data }) {
                                             "IT Manager",
                                             "I.T Manager",
                                             "IT Lead",
-                                            "I.T Lead",
                                             "Compliance Officer",
                                             "Site Admin",
                                             "Talent Acquisition Manager",
@@ -135,8 +141,18 @@ export default function DepartmentUpdateSection({ data }) {
                                             "Director, Accounting & Finance",
                                             "Director, Marketing & Communications",
                                             "Director, Quality & Training",
-                                        ].includes(res.position),
-                                )
+                                            "Facilities Manager",
+                                            "WFM and Data Analytics Manager",
+                                        ].includes(res.position) &&
+                                        ![
+                                            "Resigned",
+                                            "AWOL",
+                                            "End of Contract",
+                                            "Terminated",
+                                            "Trainee Fallout",
+                                        ].includes(res?.employee?.status)
+                                    );
+                                })
                                 .sort((a, b) => {
                                     const nameA =
                                         `${a.employee_fname} ${a.employee_lname}`.toLowerCase();

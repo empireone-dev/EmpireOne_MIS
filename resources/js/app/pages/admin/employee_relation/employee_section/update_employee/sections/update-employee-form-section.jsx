@@ -609,6 +609,7 @@ export default function UpdateEmployeeFormSection() {
                                                     "Director, Marketing & Communications",
                                                     "Director, Quality & Training",
                                                     "Facilities Manager",
+                                                    "WFM and Data Analytics Manager",
                                                 ].includes(res.position) &&
                                                 ![
                                                     "Resigned",

@@ -136,6 +136,7 @@ const DepartmentCreateSection = () => {
                                         "Director, Accounting & Finance",
                                         "Director, Marketing & Communications",
                                         "Director, Quality & Training",
+                                        "WFM and Data Analytics Manager",
                                     ].includes(res.position),
                             )
                             .sort((a, b) => {

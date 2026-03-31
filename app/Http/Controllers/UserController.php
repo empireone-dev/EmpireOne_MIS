@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
+use App\Models\ESignature;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -42,6 +43,23 @@ class UserController extends Controller
                 ]);
             }
         }
+
+        $e_signature = ESignature::where('emp_id', $request->employee_id)->orWhere('app_id', $request->app_id)->first();
+
+        if ($e_signature) {
+            if ($request->signature) {
+                $e_signature->update([
+                    'signature' => $request->signature,
+                ]);
+            }
+        } else {
+            ESignature::create([
+                'app_id' => $request->app_id,
+                'emp_id' => $request->employee_id,
+                'signature' => $request->signature,
+            ]);
+        }
+
 
         return response()->json([
             'data' => 'success'

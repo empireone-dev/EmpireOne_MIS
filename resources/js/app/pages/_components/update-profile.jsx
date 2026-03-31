@@ -70,6 +70,7 @@ export default function UpdateProfile({ user }) {
         }
     }
 
+    console.log("user", user);
     return (
         <div>
             <button
@@ -258,14 +259,20 @@ export default function UpdateProfile({ user }) {
                                 <label class="block uppercase tracking-wide text-xs font-bold mb-1">
                                     Signature
                                 </label>
-                                <div className="border border-gray-400 rounded overflow-hidden" style={{ width: "100%", height: 150 }}>
+                                <div
+                                    className="border border-gray-400 rounded overflow-hidden"
+                                    style={{ width: "100%", height: 150 }}
+                                >
                                     <SignatureCanvas
                                         ref={sigCanvasRef}
                                         penColor="black"
                                         canvasProps={{
                                             width: 1100,
                                             height: 150,
-                                            style: { width: "100%", height: "100%" },
+                                            style: {
+                                                width: "100%",
+                                                height: "100%",
+                                            },
                                             className: "rounded",
                                         }}
                                     />

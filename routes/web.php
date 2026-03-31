@@ -579,9 +579,9 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         return Inertia::render('admin/ceo_section/page');
     });
 
-
-
-
+    Route::get('/update_profile', function () {
+        return Inertia::render('admin/profile/page');
+    });
 
     Route::get('/profile', function () {
         return Inertia::render('admin/profile/page');
@@ -638,6 +638,10 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 // });
 // employee = 7
 Route::prefix('employee', 'role:7')->group(function () {
+
+    Route::get('/update_profile', function () {
+        return Inertia::render('employee/profile/page');
+    });
     Route::get('/cocd', function () {
         return Inertia::render('employee/cocd/page');
     });
@@ -672,9 +676,6 @@ Route::prefix('employee', 'role:7')->group(function () {
         Route::get('/birthday', function () {
             return Inertia::render('employee/engagement/birthday/page');
         });
-    });
-    Route::get('/profile', function () {
-        return Inertia::render('employee/profile/page');
     });
 });
 

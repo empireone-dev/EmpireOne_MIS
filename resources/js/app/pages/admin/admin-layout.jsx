@@ -643,7 +643,20 @@ const AdminLayout = ({ children }) => {
                                         aria-labelledby="dropdownDefault"
                                     >
                                         <li class="flex items-center text-lg  px-2">
-                                            <UpdateProfile user={user} />
+                                            <button
+                                                className="flex flex-1"
+                                                onClick={() => {
+                                                    router.visit(
+                                                        "/employee/update_profile",
+                                                    );
+                                                    setIsOpen(false);
+                                                }}
+                                            >
+                                                <UserOutlined className="text-lg mt-1 mr-2" />
+                                                <h6 className="text-lg">
+                                                    Update Profile
+                                                </h6>
+                                            </button>
                                             {/* <button
                                                 onClick={() => {
                                                     setUpdateProfileModalOpen(

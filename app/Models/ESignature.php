@@ -11,6 +11,7 @@ class ESignature extends Model
     use HasFactory;
     protected $fillable = [
         'app_id',
+        'emp_id',
         'signature',
     ];
 

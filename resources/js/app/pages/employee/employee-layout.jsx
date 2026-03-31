@@ -28,8 +28,12 @@ import { Link, router, usePage } from "@inertiajs/react";
 import { KeyIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 import AdminFooterComponents from "../admin/_components/admin-footer-components";
 import store from "@/app/store/store";
-import { get_user_thunk, get_users_thunk, change_password_thunk } from "../redux/app-thunk";
-import UpdateProfile from "../_components/update-profile";
+import {
+    get_user_thunk,
+    get_users_thunk,
+    change_password_thunk,
+} from "../redux/app-thunk";
+
 import { useSelector } from "react-redux";
 const { Header, Sider, Content } = Layout;
 const EmployeeLayout = ({ children }) => {
@@ -120,22 +124,22 @@ const EmployeeLayout = ({ children }) => {
         //     onClick: () => router.visit("/employee/list_memo"),
         // },
         {
-            key: "cocd",
-            icon: <FileProtectOutlined />,
-            label: "COCD (Code of Conduct and Discipline)",
-            onClick: () => router.visit("/employee/cocd"),
-        },
-        {
             key: "employee_handbook",
             icon: <IdcardOutlined />,
             label: "Employee Handbook",
             onClick: () => router.visit("/employee/employee_handbook"),
         },
-         {
+        {
             key: "code_of_ethics",
             icon: <BankOutlined />,
             label: "Code of Ethics",
             onClick: () => router.visit("/employee/code_of_ethics"),
+        },
+        {
+            key: "cocd",
+            icon: <FileProtectOutlined />,
+            label: "Code of Discipline",
+            onClick: () => router.visit("/employee/cocd"),
         },
         // {
         //     key: "code_of_ethics",
@@ -154,7 +158,6 @@ const EmployeeLayout = ({ children }) => {
 
     const [isOpen, setIsOpen] = useState(false);
     const [changePassModalOpen, setChangePassModalOpen] = useState(false);
-    const [updateProfileModalOpen, setUpdateProfileModalOpen] = useState(false);
     const [passwordForm, setPasswordForm] = useState({
         current_password: "",
         password: "",
@@ -263,7 +266,8 @@ const EmployeeLayout = ({ children }) => {
                 message.error("Validation failed. Please check your inputs.");
             } else if (
                 error.status === 401 ||
-                (error.message && error.message.includes("password is incorrect"))
+                (error.message &&
+                    error.message.includes("password is incorrect"))
             ) {
                 setPasswordErrors({
                     current_password: "Current password is incorrect.",
@@ -311,7 +315,7 @@ const EmployeeLayout = ({ children }) => {
                     <div className="flex items-center justify-between px-5 py-5">
                         <div className="flex items-center mr-5">
                             <div className="mr-5">
-                                  <div className="inline-block relative shrink-0 cursor-pointer rounded-[.95rem]">
+                                <div className="inline-block relative shrink-0 cursor-pointer rounded-[.95rem]">
                                     <img
                                         className="w-[45px] h-[40px] shrink-0 inline-block rounded-[.95rem]"
                                         src="/images/pngegg.png"
@@ -385,7 +389,16 @@ const EmployeeLayout = ({ children }) => {
                                         aria-labelledby="dropdownDefault"
                                     >
                                         <li class="flex items-center text-lg  px-2">
-                                            <UpdateProfile user={user} />
+                                            <button
+                                                className="flex flex-1"
+                                                onClick={() => {
+                                                    router.visit("/employee/update_profile");
+                                                    setIsOpen(false);
+                                                }}
+                                            >
+                                                <UserOutlined className="text-lg mt-1 mr-2" />
+                                                <h6 className="text-lg">Update Profile</h6>
+                                            </button>
                                         </li>
                                         <li class="flex items-center text-lg  px-2">
                                             <button
@@ -422,181 +435,6 @@ const EmployeeLayout = ({ children }) => {
                                     </ul>
                                 </div>
 
-                                <Modal
-                                    title="Update My Profile"
-                                    centered
-                                    visible={updateProfileModalOpen}
-                                    onOk={() =>
-                                        setUpdateProfileModalOpen(false)
-                                    }
-                                    onCancel={() =>
-                                        setUpdateProfileModalOpen(false)
-                                    }
-                                    width={1200}
-                                    footer={null}
-                                >
-                                    <li className="bg-gray-300 h-0.5"></li>
-                                    <div className="flex flex-1 w-full mt-1">
-                                        <form class="w-full h-full">
-                                            <h1 className="text-xl">
-                                                <b>My Personal Information</b>
-                                            </h1>
-                                            <div class="flex flex-col -mx-3 mb-3 mt-3">
-                                                <div class="w-full px-2.5">
-                                                    <label class="block uppercase tracking-wide  text-xs font-bold mb-1">
-                                                        Employee's ID
-                                                    </label>
-                                                    <input
-                                                        class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                        type="number"
-                                                        placeholder=""
-                                                        readOnly
-                                                    />
-                                                </div>
-
-                                                <div className="flex flex-1">
-                                                    <div class="w-full px-2.5">
-                                                        <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                                            Employee's Firstname
-                                                        </label>
-                                                        <input
-                                                            class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                            type="text"
-                                                            placeholder=""
-                                                            readOnly
-                                                        />
-                                                    </div>
-                                                    <div class="w-full px-2.5">
-                                                        <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                                            Employee's
-                                                            Middlename
-                                                        </label>
-                                                        <input
-                                                            class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                            type="text"
-                                                            placeholder=""
-                                                            readOnly
-                                                        />
-                                                    </div>
-                                                    <div class="w-full px-2.5">
-                                                        <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                                            Employee's Lastname
-                                                        </label>
-                                                        <input
-                                                            class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                            type="text"
-                                                            placeholder=""
-                                                            readOnly
-                                                        />
-                                                    </div>
-                                                    <div class="w-full px-2.5">
-                                                        <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                                            Employee's Suffix
-                                                        </label>
-                                                        <select
-                                                            className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                            name=""
-                                                            id=""
-                                                        >
-                                                            <option value=""></option>
-                                                            <option value="">
-                                                                Jr.
-                                                            </option>
-                                                            <option value="">
-                                                                Sr.
-                                                            </option>
-                                                            <option value="">
-                                                                II
-                                                            </option>
-                                                            <option value="">
-                                                                III
-                                                            </option>
-                                                            <option value="">
-                                                                IV
-                                                            </option>
-                                                            <option value="">
-                                                                V
-                                                            </option>
-                                                            <option value="">
-                                                                VI
-                                                            </option>
-                                                            <option value="">
-                                                                VII
-                                                            </option>
-                                                            <option value="">
-                                                                VIII
-                                                            </option>
-                                                            <option value="">
-                                                                IX
-                                                            </option>
-                                                            <option value="">
-                                                                X
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div className="flex flex-1 ">
-                                                    <div class="w-full px-2.5">
-                                                        <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                                            Employee's Gender
-                                                        </label>
-                                                        <select
-                                                            className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                            name=""
-                                                            id=""
-                                                        >
-                                                            <option value=""></option>
-                                                            <option value="">
-                                                                Male
-                                                            </option>
-                                                            <option value="">
-                                                                Female
-                                                            </option>
-                                                        </select>
-                                                    </div>
-                                                    <div class="w-full px-2.5">
-                                                        <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                                            Department
-                                                        </label>
-                                                        <input
-                                                            class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                            type="text"
-                                                            placeholder=""
-                                                            readOnly
-                                                        />
-                                                    </div>
-                                                    <div class="w-full px-2.5">
-                                                        <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                                            Position
-                                                        </label>
-                                                        <input
-                                                            class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                            type="text"
-                                                            placeholder=""
-                                                            readOnly
-                                                        />
-                                                    </div>
-                                                    <div class="w-full px-2.5">
-                                                        <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                                            Profile Picture
-                                                        </label>
-                                                        <input
-                                                            class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                                            type="file"
-                                                            placeholder=""
-                                                            required
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full">
-                                                <CheckCircleFilled /> Save
-                                                Changes
-                                            </button>
-                                        </form>
-                                    </div>
-                                </Modal>
                                 <Modal
                                     title="Change Account Password"
                                     centered
@@ -635,13 +473,19 @@ const EmployeeLayout = ({ children }) => {
                                                         }`}
                                                         type="password"
                                                         name="current_password"
-                                                        value={passwordForm.current_password}
-                                                        onChange={handlePasswordChange}
+                                                        value={
+                                                            passwordForm.current_password
+                                                        }
+                                                        onChange={
+                                                            handlePasswordChange
+                                                        }
                                                         placeholder="Enter your current password"
                                                     />
                                                     {passwordErrors.current_password && (
                                                         <p className="text-red-500 text-xs mb-3">
-                                                            {passwordErrors.current_password}
+                                                            {
+                                                                passwordErrors.current_password
+                                                            }
                                                         </p>
                                                     )}
                                                 </div>
@@ -657,13 +501,19 @@ const EmployeeLayout = ({ children }) => {
                                                         }`}
                                                         type="password"
                                                         name="password"
-                                                        value={passwordForm.password}
-                                                        onChange={handlePasswordChange}
+                                                        value={
+                                                            passwordForm.password
+                                                        }
+                                                        onChange={
+                                                            handlePasswordChange
+                                                        }
                                                         placeholder="Enter your new password"
                                                     />
                                                     {passwordErrors.password && (
                                                         <p className="text-red-500 text-xs mb-3">
-                                                            {passwordErrors.password}
+                                                            {
+                                                                passwordErrors.password
+                                                            }
                                                         </p>
                                                     )}
                                                 </div>
@@ -679,13 +529,19 @@ const EmployeeLayout = ({ children }) => {
                                                         }`}
                                                         type="password"
                                                         name="password_confirmation"
-                                                        value={passwordForm.password_confirmation}
-                                                        onChange={handlePasswordChange}
+                                                        value={
+                                                            passwordForm.password_confirmation
+                                                        }
+                                                        onChange={
+                                                            handlePasswordChange
+                                                        }
                                                         placeholder="Confirm your new password"
                                                     />
                                                     {passwordErrors.password_confirmation && (
                                                         <p className="text-red-500 text-xs mb-3">
-                                                            {passwordErrors.password_confirmation}
+                                                            {
+                                                                passwordErrors.password_confirmation
+                                                            }
                                                         </p>
                                                     )}
                                                 </div>

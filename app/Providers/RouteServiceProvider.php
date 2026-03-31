@@ -23,7 +23,7 @@ class RouteServiceProvider extends ServiceProvider
     public const ACCOUNTING_DASHBOARD = '/admin/dashboard';
     public const MANAGER_DASHBOARD = '/admin/dashboard';
     public const ENGAGEMENT_DASHBOARD = '/admin/dashboard';
-    public const EMPLOYEE_DASHBOARD = '/employee/dashboard';
+    public const EMPLOYEE_DASHBOARD = '/employee/employee_handbook';
     public const ERF_DASHBOARD = '/employee/erf_record';
 
     /**

@@ -584,13 +584,13 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     });
 
     Route::get('/cocd', function () {
-        return Inertia::render('employee/cocd/page');
+        return Inertia::render('admin/cocd/page');
     });
     Route::get('/employee_handbook', function () {
-        return Inertia::render('employee/employee_handbook/page');
+        return Inertia::render('admin/employee_handbook/page');
     });
     Route::get('/code_of_ethics', function () {
-        return Inertia::render('employee/code_of_ethics/page');
+        return Inertia::render('admin/code_of_ethics/page');
     });
 
     Route::get('/profile', function () {
@@ -734,23 +734,23 @@ Route::middleware(['auth:sanctum', 'role:10'])->prefix('employee')->group(functi
         });
     });
 
-    Route::get('/update_profile', function () {
-        return Inertia::render('admin/profile/page');
-    });
+    // Route::get('/update_profile', function () {
+    //     return Inertia::render('admin/profile/page');
+    // });
 
-    Route::get('/cocd', function () {
-        return Inertia::render('employee/cocd/page');
-    });
-    Route::get('/employee_handbook', function () {
-        return Inertia::render('employee/employee_handbook/page');
-    });
-    Route::get('/code_of_ethics', function () {
-        return Inertia::render('employee/code_of_ethics/page');
-    });
+    // Route::get('/cocd', function () {
+    //     return Inertia::render('employee/cocd/page');
+    // });
+    // Route::get('/employee_handbook', function () {
+    //     return Inertia::render('employee/employee_handbook/page');
+    // });
+    // Route::get('/code_of_ethics', function () {
+    //     return Inertia::render('employee/code_of_ethics/page');
+    // });
 
-    Route::get('/profile', function () {
-        return Inertia::render('employee/profile/page');
-    });
+    // Route::get('/profile', function () {
+    //     return Inertia::render('employee/profile/page');
+    // });
 });
 
 

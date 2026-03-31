@@ -25,6 +25,9 @@ use App\Http\Controllers\JobOfferController;
 use App\Http\Controllers\JobPositionController;
 use App\Http\Controllers\MedicineRecordController;
 use App\Http\Controllers\NewJobOfferController;
+use App\Http\Controllers\CocdAcknowledgeController;
+use App\Http\Controllers\HandbookAcknowledgeController;
+use App\Http\Controllers\EthicsAcknowledgeController;
 use App\Http\Controllers\OnboardingAckController;
 use App\Http\Controllers\OnboardingDocController;
 use App\Http\Controllers\OpenAIController;
@@ -96,6 +99,13 @@ Route::resource('/ERFJd', ERFJdController::class);
 
 
 Route::get('/get_e_signature_by_app_id/{app_id}', [ESignatureController::class, 'get_e_signature_by_app_id']);
+
+Route::post('/cocd_acknowledge', [CocdAcknowledgeController::class, 'store']);
+Route::get('/cocd_acknowledge/{emp_id}', [CocdAcknowledgeController::class, 'show']);
+Route::post('/handbook_acknowledge', [HandbookAcknowledgeController::class, 'store']);
+Route::get('/handbook_acknowledge/{emp_id}', [HandbookAcknowledgeController::class, 'show']);
+Route::post('/ethics_acknowledge', [EthicsAcknowledgeController::class, 'store']);
+Route::get('/ethics_acknowledge/{emp_id}', [EthicsAcknowledgeController::class, 'show']);
 
 
 Route::resource('/incident_report', IncidentReportController::class);

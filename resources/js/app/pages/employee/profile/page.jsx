@@ -20,7 +20,9 @@ export default function Page() {
     });
     const [loading, setLoading] = useState(false);
     const [canvasEmpty, setCanvasEmpty] = useState(true);
+    const [uploadedSignature, setUploadedSignature] = useState(null);
     const sigCanvasRef = useRef(null);
+    const fileInputRef = useRef(null);
 
     useEffect(() => {
         store.dispatch(get_user_thunk());
@@ -44,6 +46,19 @@ export default function Page() {
     const clearSignature = () => {
         sigCanvasRef.current?.clear();
         setCanvasEmpty(true);
+        setUploadedSignature(null);
+    };
+
+    const handleFileUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (ev) => {
+            setUploadedSignature(ev.target.result);
+            setCanvasEmpty(true);
+        };
+        reader.readAsDataURL(file);
+        e.target.value = "";
     };
 
     console.log("usssser", user);
@@ -52,10 +67,11 @@ export default function Page() {
         e.preventDefault();
         setLoading(true);
         try {
-            const signatureData =
-                sigCanvasRef.current && !sigCanvasRef.current.isEmpty()
-                    ? sigCanvasRef.current.toDataURL("image/png")
-                    : null;
+            const signatureData = uploadedSignature
+                ? uploadedSignature
+                : sigCanvasRef.current && !sigCanvasRef.current.isEmpty()
+                ? sigCanvasRef.current.toDataURL("image/png")
+                : null;
             await store.dispatch(
                 update_user_thunk({ ...form, signature: signatureData, app_id: user?.employee?.applicant?.app_id || "" }),
             );
@@ -218,7 +234,15 @@ export default function Page() {
                             <label className="block uppercase tracking-wide text-xs font-bold mb-1">
                                 Signature
                             </label>
-                            {user?.e_signature?.signature && canvasEmpty ? (
+                            {uploadedSignature ? (
+                                <div className="border border-gray-400 rounded overflow-hidden mb-2" style={{ width: "100%", height: 300 }}>
+                                    <img
+                                        src={uploadedSignature}
+                                        alt="Uploaded Signature"
+                                        className="w-full h-full object-contain"
+                                    />
+                                </div>
+                            ) : user?.e_signature?.signature && canvasEmpty ? (
                                 <div className="border border-gray-400 rounded overflow-hidden mb-2" style={{ width: "100%", height: 300 }}>
                                     <img
                                         src={user.e_signature.signature}
@@ -260,15 +284,29 @@ export default function Page() {
                                 >
                                     Clear Signature
                                 </button>
-                                {user?.e_signature?.signature && canvasEmpty && (
+                                {user?.e_signature?.signature && canvasEmpty && !uploadedSignature && (
                                     <button
                                         type="button"
                                         onClick={() => setCanvasEmpty(false)}
                                         className="text-sm text-blue-500 hover:text-blue-700 underline"
                                     >
-                                        Replace Signature
+                                        Draw Signature
                                     </button>
                                 )}
+                                <button
+                                    type="button"
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="text-sm text-green-600 hover:text-green-800 underline"
+                                >
+                                    Upload Image
+                                </button>
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    accept="image/*"
+                                    className="hidden"
+                                    onChange={handleFileUpload}
+                                />
                             </div>
                         </div>
                     </div>

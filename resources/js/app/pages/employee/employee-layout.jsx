@@ -311,7 +311,7 @@ const EmployeeLayout = ({ children }) => {
                     collapsible
                     collapsed={collapsed}
                 >
-                    <img src="/images/logo.png" />
+                    <img className="p-3" src="/images/logo.png" />
                     <div className="flex items-center justify-between px-5 py-5">
                         <div className="flex items-center mr-5">
                             <div className="mr-5">
@@ -578,7 +578,7 @@ const EmployeeLayout = ({ children }) => {
                     >
                         {children}
                     </Content>
-                    <AdminFooterComponents />
+                    {/* <AdminFooterComponents /> */}
                 </Layout>
             </Layout>
         </div>

@@ -352,19 +352,19 @@ const AdminLayout = ({ children }) => {
             key: "employee_handbook",
             icon: <IdcardOutlined />,
             label: "Employee Handbook",
-            onClick: () => router.visit("/employee/employee_handbook"),
+            onClick: () => router.visit("/admin/employee_handbook"),
         },
         {
             key: "code_of_ethics",
             icon: <BankOutlined />,
             label: "Code of Ethics",
-            onClick: () => router.visit("/employee/code_of_ethics"),
+            onClick: () => router.visit("/admin/code_of_ethics"),
         },
         {
             key: "cocd",
             icon: <FileProtectOutlined />,
             label: "Code of Discipline",
-            onClick: () => router.visit("/employee/cocd"),
+            onClick: () => router.visit("/admin/cocd"),
         },
         // {
         //     key: "coaching_logs",
@@ -594,12 +594,12 @@ const AdminLayout = ({ children }) => {
                 <Sider
                     width={260}
                     theme="light"
-                    className="shadow-lg"
+                    className="shadow-lg "
                     trigger={null}
                     collapsible
                     collapsed={collapsed}
                 >
-                    <img src="/images/logo.png" />
+                    <img className="p-3" src="/images/logo.png" />
                     <div className="flex items-center justify-between px-5 py-5">
                         <div className="flex items-center mr-5">
                             <div className="mr-5">
@@ -685,7 +685,7 @@ const AdminLayout = ({ children }) => {
                                                 className="flex flex-1"
                                                 onClick={() => {
                                                     router.visit(
-                                                        "/employee/update_profile",
+                                                        "/admin/update_profile",
                                                     );
                                                     setIsOpen(false);
                                                 }}

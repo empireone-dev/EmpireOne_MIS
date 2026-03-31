@@ -583,6 +583,16 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         return Inertia::render('admin/profile/page');
     });
 
+    Route::get('/cocd', function () {
+        return Inertia::render('employee/cocd/page');
+    });
+    Route::get('/employee_handbook', function () {
+        return Inertia::render('employee/employee_handbook/page');
+    });
+    Route::get('/code_of_ethics', function () {
+        return Inertia::render('employee/code_of_ethics/page');
+    });
+
     Route::get('/profile', function () {
         return Inertia::render('admin/profile/page');
     });
@@ -722,6 +732,20 @@ Route::middleware(['auth:sanctum', 'role:10'])->prefix('employee')->group(functi
         Route::get('/declined_erf', function () {
             return Inertia::render('employee/sourcing/resource_requests/declined_erf/page');
         });
+    });
+
+    Route::get('/update_profile', function () {
+        return Inertia::render('admin/profile/page');
+    });
+
+    Route::get('/cocd', function () {
+        return Inertia::render('employee/cocd/page');
+    });
+    Route::get('/employee_handbook', function () {
+        return Inertia::render('employee/employee_handbook/page');
+    });
+    Route::get('/code_of_ethics', function () {
+        return Inertia::render('employee/code_of_ethics/page');
     });
 
     Route::get('/profile', function () {

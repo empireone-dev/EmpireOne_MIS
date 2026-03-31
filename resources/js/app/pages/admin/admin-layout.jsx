@@ -23,6 +23,8 @@ import {
     AuditOutlined,
     HistoryOutlined,
     FieldTimeOutlined,
+    BankOutlined,
+    FileProtectOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal, message } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
@@ -78,6 +80,24 @@ const AdminLayout = ({ children }) => {
                     onClick: () => router.visit("/employee/erf_record"),
                 },
             ],
+        },
+        {
+            key: "employee_handbook",
+            icon: <IdcardOutlined />,
+            label: "Employee Handbook",
+            onClick: () => router.visit("/employee/employee_handbook"),
+        },
+        {
+            key: "code_of_ethics",
+            icon: <BankOutlined />,
+            label: "Code of Ethics",
+            onClick: () => router.visit("/employee/code_of_ethics"),
+        },
+        {
+            key: "cocd",
+            icon: <FileProtectOutlined />,
+            label: "Code of Discipline",
+            onClick: () => router.visit("/employee/cocd"),
         },
     ];
 
@@ -327,6 +347,24 @@ const AdminLayout = ({ children }) => {
             icon: <AuditOutlined />,
             label: "Compliance Training",
             onClick: () => router.visit("/admin/compliance"),
+        },
+        {
+            key: "employee_handbook",
+            icon: <IdcardOutlined />,
+            label: "Employee Handbook",
+            onClick: () => router.visit("/employee/employee_handbook"),
+        },
+        {
+            key: "code_of_ethics",
+            icon: <BankOutlined />,
+            label: "Code of Ethics",
+            onClick: () => router.visit("/employee/code_of_ethics"),
+        },
+        {
+            key: "cocd",
+            icon: <FileProtectOutlined />,
+            label: "Code of Discipline",
+            onClick: () => router.visit("/employee/cocd"),
         },
         // {
         //     key: "coaching_logs",

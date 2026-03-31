@@ -638,6 +638,15 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 // });
 // employee = 7
 Route::prefix('employee', 'role:7')->group(function () {
+    Route::get('/cocd', function () {
+        return Inertia::render('employee/cocd/page');
+    });
+    Route::get('/employee_handbook', function () {
+        return Inertia::render('employee/employee_handbook/page');
+    });
+    Route::get('/code_of_ethics', function () {
+        return Inertia::render('employee/code_of_ethics/page');
+    });
     Route::get('/dashboard', function () {
         return Inertia::render('employee/dashboard/page');
     });

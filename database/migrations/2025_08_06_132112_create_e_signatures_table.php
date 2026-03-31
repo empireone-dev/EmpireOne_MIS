@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('e_signatures', function (Blueprint $table) {
             $table->id();
             $table->string('app_id')->nullable();
+            $table->string('emp_id')->nullable();
             $table->string('signature')->nullable();
             $table->timestamps();
         });

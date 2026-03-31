@@ -61,12 +61,11 @@ class User extends Authenticatable
 
     public function employee(): BelongsTo
     {
-        return $this->belongsTo(Employee::class,"employee_id","emp_id")->with('applicant');
+        return $this->belongsTo(Employee::class, "employee_id", "emp_id")->with('applicant');
     }
 
-    public function eSignature(): HasOne
+    public function e_signature(): HasOne
     {
         return $this->hasOne(ESignature::class, 'emp_id', 'employee_id');
     }
 }
-    

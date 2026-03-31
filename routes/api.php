@@ -60,9 +60,9 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
-    return Auth::user()->load('employee', 'eSignature');
+    return Auth::user()->load('employee', 'e_signature');
 });
-Route::put('/user/{id}', [UserController::class, 'update']);
+Route::post('/user/{id}', [UserController::class, 'update']);
 
 // Public API route for QR code scanning (no authentication required)
 Route::get('/employee-qr/{emp_id}', [EmployeeController::class, 'showForQR']);

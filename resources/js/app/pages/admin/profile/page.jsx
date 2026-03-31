@@ -76,6 +76,9 @@ export default function Page() {
                 update_user_thunk({ ...form, signature: signatureData, app_id: user?.employee?.applicant?.app_id || "" }),
             );
             await store.dispatch(get_user_thunk());
+            setCanvasEmpty(true);
+            setUploadedSignature(null);
+            if (sigCanvasRef.current) sigCanvasRef.current.clear();
             message.success("Updated Successfully!");
         } catch (error) {
             message.error("Failed to update. Please try again.");

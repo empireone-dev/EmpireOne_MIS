@@ -44,20 +44,16 @@ class UserController extends Controller
             }
         }
 
-        $e_signature = ESignature::where('emp_id', $request->employee_id)->orWhere('app_id', $request->app_id)->first();
-
-        if ($e_signature) {
-            if ($request->signature) {
-                $e_signature->update([
+        if ($request->signature) {
+            ESignature::updateOrCreate(
+                [
+                    'emp_id' => $request->employee_id,
+                    'app_id' => $request->app_id,
+                ],
+                [
                     'signature' => $request->signature,
-                ]);
-            }
-        } else {
-            ESignature::create([
-                'app_id' => $request->app_id,
-                'emp_id' => $request->employee_id,
-                'signature' => $request->signature,
-            ]);
+                ]
+            );
         }
 
 

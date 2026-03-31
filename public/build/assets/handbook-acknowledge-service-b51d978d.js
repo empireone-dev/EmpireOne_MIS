@@ -1,1 +1,0 @@
-import{a as e}from"./store-d5169abf.js";async function s(a){return(await e.post("/api/handbook_acknowledge",a)).data}async function t(a){return(await e.get("/api/handbook_acknowledge/"+a)).data}export{t as g,s};

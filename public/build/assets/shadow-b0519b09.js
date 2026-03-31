@@ -1,0 +1,1 @@
+import{r}from"./store-7169ceab.js";var a=r.createContext({});const i=a;function n(o){var t;return o==null||(t=o.getRootNode)===null||t===void 0?void 0:t.call(o)}function e(o){return n(o)instanceof ShadowRoot}function u(o){return e(o)?n(o):null}export{i as I,u as g};

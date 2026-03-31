@@ -31,3 +31,8 @@ export function delete_account_service(id) {
         console.error(error);
     }
 }
+
+export async function save_signature_service(data) {
+    const result = await axios.post('/api/account/save-signature', data);
+    return result;
+}

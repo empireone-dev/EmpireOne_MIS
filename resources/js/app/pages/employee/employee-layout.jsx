@@ -131,19 +131,25 @@ const EmployeeLayout = ({ children }) => {
             label: "Employee Handbook",
             onClick: () => router.visit("/employee/employee_handbook"),
         },
-        {
+         {
             key: "code_of_ethics",
             icon: <BankOutlined />,
-            label: "Code of Ethics and Business Conduct",
-            children: [
-                {
-                    key: "employee_section",
-                    icon: <HolderOutlined />,
-                    label: "Employee Section",
-                    onClick: () => router.visit("/employee/code_of_ethics"),
-                },
-            ],
+            label: "Code of Ethics",
+            onClick: () => router.visit("/employee/code_of_ethics"),
         },
+        // {
+        //     key: "code_of_ethics",
+        //     icon: <BankOutlined />,
+        //     label: "Code of Ethics and Business Conduct",
+        //     children: [
+        //         {
+        //             key: "employee_section",
+        //             icon: <HolderOutlined />,
+        //             label: "Employee Section",
+        //             onClick: () => router.visit("/employee/code_of_ethics"),
+        //         },
+        //     ],
+        // },
     ];
 
     const [isOpen, setIsOpen] = useState(false);
@@ -305,10 +311,10 @@ const EmployeeLayout = ({ children }) => {
                     <div className="flex items-center justify-between px-5 py-5">
                         <div className="flex items-center mr-5">
                             <div className="mr-5">
-                                <div className="inline-block relative shrink-0 cursor-pointer rounded-[.95rem]">
+                                  <div className="inline-block relative shrink-0 cursor-pointer rounded-[.95rem]">
                                     <img
-                                        className="w-[40px] h-[40px] shrink-0 inline-block rounded-[.95rem]"
-                                        src="/images/male.png"
+                                        className="w-[45px] h-[40px] shrink-0 inline-block rounded-[.95rem]"
+                                        src="/images/pngegg.png"
                                         alt="avatar image"
                                     />
                                 </div>

@@ -1,8 +1,9 @@
-import { CheckCircleFilled, UserOutlined } from '@ant-design/icons';
-import { message, Modal } from 'antd';
-import React, { useEffect, useState } from 'react'
-import { update_user_thunk } from '../redux/app-thunk';
-import store from '@/app/store/store';
+import { CheckCircleFilled, UserOutlined } from "@ant-design/icons";
+import { message, Modal } from "antd";
+import React, { useEffect, useRef, useState } from "react";
+import { update_user_thunk } from "../redux/app-thunk";
+import store from "@/app/store/store";
+import SignatureCanvas from "react-signature-canvas";
 
 export default function UpdateProfile({ user }) {
     const [updateProfileModalOpen, setUpdateProfileModalOpen] = useState(false);
@@ -17,12 +18,16 @@ export default function UpdateProfile({ user }) {
         gender: "",
     });
 
-    console.log('formsssss', form)
+    console.log("formsssss", form);
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
     const [loading, setLoading] = useState(false);
+    const sigCanvasRef = useRef(null);
 
+    const clearSignature = () => {
+        sigCanvasRef.current?.clear();
+    };
 
     useEffect(() => {
         if (user) {
@@ -43,9 +48,17 @@ export default function UpdateProfile({ user }) {
         setLoading(true);
 
         try {
-            await store.dispatch(update_user_thunk({
-                ...form
-            }));
+            const signatureData =
+                sigCanvasRef.current && !sigCanvasRef.current.isEmpty()
+                    ? sigCanvasRef.current.toDataURL("image/png")
+                    : null;
+
+            await store.dispatch(
+                update_user_thunk({
+                    ...form,
+                    signature: signatureData,
+                }),
+            );
             // await store.dispatch(get_department_thunk());
             message.success("Updated Successfully!");
             setUpdateProfileModalOpen(false);
@@ -59,12 +72,9 @@ export default function UpdateProfile({ user }) {
 
     return (
         <div>
-
             <button
                 onClick={() => {
-                    setUpdateProfileModalOpen(
-                        true
-                    );
+                    setUpdateProfileModalOpen(true);
                     toggleDropdown(false);
                 }}
             >
@@ -79,9 +89,7 @@ export default function UpdateProfile({ user }) {
                 centered
                 visible={updateProfileModalOpen}
                 onOk={update_user}
-                onCancel={() =>
-                    setUpdateProfileModalOpen(false)
-                }
+                onCancel={() => setUpdateProfileModalOpen(false)}
                 width={1200}
                 confirmLoading={loading}
                 footer={null}
@@ -100,7 +108,7 @@ export default function UpdateProfile({ user }) {
                                 <input
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     type="number"
-                                    value={user?.employee_id ?? ''}
+                                    value={user?.employee_id ?? ""}
                                     readOnly
                                 />
                             </div>
@@ -113,7 +121,7 @@ export default function UpdateProfile({ user }) {
                                     <input
                                         class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="text"
-                                        value={form?.employee_fname ?? ''}
+                                        value={form?.employee_fname ?? ""}
                                         onChange={(e) =>
                                             setForm({
                                                 ...form,
@@ -124,13 +132,12 @@ export default function UpdateProfile({ user }) {
                                 </div>
                                 <div class="w-full px-2.5">
                                     <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
-                                        Employee's
-                                        Middlename
+                                        Employee's Middlename
                                     </label>
                                     <input
                                         class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="text"
-                                        value={form?.employee_mname ?? ''}
+                                        value={form?.employee_mname ?? ""}
                                         onChange={(e) =>
                                             setForm({
                                                 ...form,
@@ -146,7 +153,7 @@ export default function UpdateProfile({ user }) {
                                     <input
                                         class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="text"
-                                        value={form?.employee_lname ?? ''}
+                                        value={form?.employee_lname ?? ""}
                                         onChange={(e) =>
                                             setForm({
                                                 ...form,
@@ -162,7 +169,7 @@ export default function UpdateProfile({ user }) {
                                     <select
                                         className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         name=""
-                                        value={form?.employee_suffix ?? ''}
+                                        value={form?.employee_suffix ?? ""}
                                         onChange={(e) =>
                                             setForm({
                                                 ...form,
@@ -170,7 +177,9 @@ export default function UpdateProfile({ user }) {
                                             })
                                         }
                                     >
-                                        <option disabled>{user?.suffix ?? ''}</option>
+                                        <option disabled>
+                                            {user?.suffix ?? ""}
+                                        </option>
                                         <option value="">---</option>
                                         <option value="Jr.">Jr.</option>
                                         <option value="Sr.">Sr.</option>
@@ -195,7 +204,7 @@ export default function UpdateProfile({ user }) {
                                     <select
                                         className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         name=""
-                                        value={form?.gender ?? ''}
+                                        value={form?.gender ?? ""}
                                         onChange={(e) =>
                                             setForm({
                                                 ...form,
@@ -203,13 +212,11 @@ export default function UpdateProfile({ user }) {
                                             })
                                         }
                                     >
-                                        <option disabled>{user?.gender ?? ''}</option>
-                                        <option value="Male">
-                                            Male
+                                        <option disabled>
+                                            {user?.gender ?? ""}
                                         </option>
-                                        <option value="Female">
-                                            Female
-                                        </option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
                                     </select>
                                 </div>
                                 <div class="w-full px-2.5">
@@ -219,7 +226,7 @@ export default function UpdateProfile({ user }) {
                                     <input
                                         class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="text"
-                                        value={user?.department ?? ''}
+                                        value={user?.department ?? ""}
                                         readOnly
                                     />
                                 </div>
@@ -230,7 +237,7 @@ export default function UpdateProfile({ user }) {
                                     <input
                                         class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                         type="text"
-                                        value={user?.position ?? ''}
+                                        value={user?.position ?? ""}
                                         readOnly
                                     />
                                 </div>
@@ -246,14 +253,38 @@ export default function UpdateProfile({ user }) {
                                     />
                                 </div> */}
                             </div>
+
+                            <div class="w-full px-2.5 mt-2">
+                                <label class="block uppercase tracking-wide text-xs font-bold mb-1">
+                                    Signature
+                                </label>
+                                <div className="border border-gray-400 rounded overflow-hidden" style={{ width: "100%", height: 150 }}>
+                                    <SignatureCanvas
+                                        ref={sigCanvasRef}
+                                        penColor="black"
+                                        canvasProps={{
+                                            width: 1100,
+                                            height: 150,
+                                            style: { width: "100%", height: "100%" },
+                                            className: "rounded",
+                                        }}
+                                    />
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={clearSignature}
+                                    className="mt-1 text-sm text-red-500 hover:text-red-700 underline"
+                                >
+                                    Clear Signature
+                                </button>
+                            </div>
                         </div>
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full">
-                            <CheckCircleFilled /> Save
-                            Changes
+                            <CheckCircleFilled /> Save Changes
                         </button>
                     </form>
                 </div>
             </Modal>
         </div>
-    )
+    );
 }

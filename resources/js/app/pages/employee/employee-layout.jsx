@@ -123,6 +123,24 @@ const EmployeeLayout = ({ children }) => {
         //     label: "List of MEMO",
         //     onClick: () => router.visit("/employee/list_memo"),
         // },
+        ...(user?.role_id == "10"
+            ? [
+                  {
+                      key: "sourcing",
+                      icon: <BookOutlined />,
+                      label: "Sourcing",
+                      children: [
+                          {
+                              key: "erf_record",
+                              icon: <HolderOutlined />,
+                              label: "ERF Record",
+                              onClick: () =>
+                                  router.visit("/employee/erf_record"),
+                          },
+                      ],
+                  },
+              ]
+            : []),
         {
             key: "employee_handbook",
             icon: <IdcardOutlined />,
@@ -392,12 +410,16 @@ const EmployeeLayout = ({ children }) => {
                                             <button
                                                 className="flex flex-1"
                                                 onClick={() => {
-                                                    router.visit("/employee/update_profile");
+                                                    router.visit(
+                                                        "/employee/update_profile",
+                                                    );
                                                     setIsOpen(false);
                                                 }}
                                             >
                                                 <UserOutlined className="text-lg mt-1 mr-2" />
-                                                <h6 className="text-lg">Update Profile</h6>
+                                                <h6 className="text-lg">
+                                                    Update Profile
+                                                </h6>
                                             </button>
                                         </li>
                                         <li class="flex items-center text-lg  px-2">

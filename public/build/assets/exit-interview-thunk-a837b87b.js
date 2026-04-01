@@ -1,0 +1,1 @@
+import{s as r}from"./exit-interview-service-c61c937a.js";import{v as e}from"./store-d5169abf.js";function c(i){return async function(t,s){const n=await r(i);t(e.actions.setExitInterviews(n.data)),t(e.actions.setExitInterviewForm({}))}}export{c as s};

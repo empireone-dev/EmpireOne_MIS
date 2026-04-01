@@ -96,6 +96,12 @@
                 @if(!empty($data['startDate']))
                 <p><strong>Start Date:</strong> {{ \Carbon\Carbon::parse($data['startDate'])->format('F j, Y') }}</p>
                 @endif
+                @if(!empty($data['department']))
+                <p><strong>Department:</strong> {{ $data['department'] }}</p>
+                @endif
+                @if(!empty($data['account']))
+                <p><strong>Account:</strong> {{ $data['account'] }}</p>
+                @endif
             </div>
     
             <!-- <div class="attachment-notice">

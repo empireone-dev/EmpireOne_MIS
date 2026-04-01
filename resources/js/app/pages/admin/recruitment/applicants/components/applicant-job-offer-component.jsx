@@ -7,9 +7,14 @@ import React from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { get_applicant_thunk } from "../applicant_records/redux/applicant-thunk";
+import { useEffect } from "react";
+import { get_department_thunk } from "../../../sourcing/department/redux/department-thunk";
+import { get_account_thunk } from "../../../employee_relation/employee_section/redux/account-thunk";
 
 export default function ApplicantJobOfferComponent({ data, item }) {
     const { job_positions } = useSelector((state) => state.job_positions);
+    const { departments } = useSelector((state) => state.departments);
+    const { accounts } = useSelector((state) => state.accounts);
     const [form, setForm] = useState({
         allowance: "",
         salary: "",
@@ -21,6 +26,10 @@ export default function ApplicantJobOfferComponent({ data, item }) {
         setOpen(true);
     }
 
+useEffect(() => {
+    store.dispatch(get_department_thunk());
+    store.dispatch(get_account_thunk());
+}, []);
     async function send_job_offer(e) {
         e.preventDefault();
         setLoading(true);
@@ -95,19 +104,17 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                     //         ? data.mname.charAt(0) + "."
                                     //         : ""
                                     // }`
-                                    
-                                    value={`${data.fname} ${data.mname} ${data.lname}`
-                                }
+
+                                    value={`${data.fname} ${data.mname} ${data.lname}`}
                                     readOnly
                                 />
                             </div>
                         </div>
-
-                        <div className="flex flex-1">
-                            <div className="w-full px-2.5">
+                        <div className="flex flex-1 gap-5 px-2.5">
+                            <div className="w-full">
                                 <label
                                     className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
+                                    htmlFor="grid-text"
                                 >
                                     Job Position
                                 </label>
@@ -129,8 +136,10 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                                 department:
                                                     selectedJob?.outsourcing_erf
                                                         ?.department || "",
+                                                account:
+                                                    selectedJob?.outsourcing_erf
+                                                        ?.account || "",
                                             },
-                                            // salary: selectedJob?.salary || "",
                                             jobPos:
                                                 selectedJob?.jPosition ||
                                                 e.target.value,
@@ -160,38 +169,72 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                             );
                                         })}
                                 </select>
-                                <input
-                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-text"
-                                    type="hidden"
-                                    placeholder=""
-                                    readOnly
-                                    value={
-                                        form?.outsourcing_erf?.department ?? ""
-                                    }
-                                />
                             </div>
-                            <div className="w-full px-2.5">
+                            <div className="w-full">
                                 <label
                                     className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    htmlFor="grid-text"
+                                    htmlFor="grid-department"
                                 >
-                                    Start Date
+                                    Department
                                 </label>
-                                <input
-                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-text"
-                                    type="date"
-                                    placeholder=""
+                                <select
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-department"
+                                    value={form.outsourcing_erf?.department || ""}
                                     onChange={(e) =>
                                         setForm({
                                             ...form,
-                                            [e.target.name]: e.target.value,
+                                            outsourcing_erf: {
+                                                ...form.outsourcing_erf,
+                                                department: e.target.value,
+                                            },
                                         })
                                     }
-                                    value={form?.startDate ?? ""}
-                                    name="startDate"
-                                />
+                                >
+                                    <option value="">Select Department</option>
+                                    {departments
+                                        .filter(
+                                            (res, index, self) =>
+                                                index ===
+                                                self.findIndex(
+                                                    (d) => d.dept === res.dept,
+                                                ),
+                                        )
+                                        .map((res, i) => (
+                                            <option value={res.dept} key={i}>
+                                                {res.dept}
+                                            </option>
+                                        ))}
+                                </select>
+                            </div>
+                            <div className="w-full">
+                                <label
+                                    className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
+                                    htmlFor="grid-account"
+                                >
+                                    Account
+                                </label>
+                                <select
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-account"
+                                    value={form.outsourcing_erf?.account || ""}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            outsourcing_erf: {
+                                                ...form.outsourcing_erf,
+                                                account: e.target.value,
+                                            },
+                                        })
+                                    }
+                                >
+                                    <option value="">Select Account</option>
+                                    {accounts.map((res, i) => (
+                                        <option value={res.acc} key={i}>
+                                            {res.acc}
+                                        </option>
+                                    ))}
+                                </select>
                             </div>
                         </div>
                         <div className="flex flex-1">
@@ -285,6 +328,30 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                             </div>
                         </div>
 
+                        <div className="flex flex-1">
+                            <div className="w-full px-2.5">
+                                <label
+                                    className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
+                                    htmlFor="grid-text"
+                                >
+                                    Start Date
+                                </label>
+                                <input
+                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-text"
+                                    type="date"
+                                    placeholder=""
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                    value={form?.startDate ?? ""}
+                                    name="startDate"
+                                />
+                            </div>
+                        </div>
                         <div className="w-full px-2.5">
                             {/* <label
                                 className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"

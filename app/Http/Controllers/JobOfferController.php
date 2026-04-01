@@ -59,12 +59,19 @@ class JobOfferController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        $department = $request->input('outsourcing_erf.department');
+        $account = $request->input('outsourcing_erf.account');
         $jo = JobOffer::create(array_merge($data, [
-            'department' => $request->outsourcing_erf['department']
+            'department' => $department,
+            'account' => $account,
         ]));
         Mail::to($request->email)->send(new MailJobOffer(array_merge(
             $request->all(),
-            ['id' => $jo->id]
+            [
+                'id' => $jo->id,
+                'department' => $department,
+                'account' => $account,
+            ]
         )));
 
         return response()->json([

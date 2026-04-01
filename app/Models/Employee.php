@@ -72,4 +72,19 @@ class Employee extends Model
     {
         return $this->hasMany(JobOffer::class, "app_id", "app_id")->where('status', 'Hired');
     }
+
+    public function cocd_acknowledges(): HasOne
+    {
+        return $this->hasOne(CocdAcknowledge::class, "emp_id", "emp_id");
+    }
+
+    public function ethics_acknowledges(): HasOne
+    {
+        return $this->hasOne(EthicsAcknowledge::class, "emp_id", "emp_id");
+    }
+
+    public function handbook_acknowledges(): HasOne
+    {
+        return $this->hasOne(HandbookAcknowledge::class, "emp_id", "emp_id");
+    }
 }

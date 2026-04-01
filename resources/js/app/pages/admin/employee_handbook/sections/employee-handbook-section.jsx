@@ -1,8 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { useSelector } from "react-redux";
-import { get_handbook_acknowledge_service, submit_handbook_acknowledge_service } from "@/app/pages/services/handbook-acknowledge-service";
-
+import {
+    get_handbook_acknowledge_service,
+    submit_handbook_acknowledge_service,
+} from "@/app/pages/services/handbook-acknowledge-service";
 
 export default function EmployeeHandbookSection() {
     const sigPadRef = useRef(null);
@@ -23,6 +25,12 @@ export default function EmployeeHandbookSection() {
     const storedSignature = user?.e_signature?.signature ?? null;
 
     useEffect(() => {
+        setHasAcknowledged(false);
+        setExistingAck(null);
+        setAgreed(false);
+        setError(null);
+        setChecking(true);
+
         if (!emp_id) {
             setChecking(false);
             return;
@@ -86,26 +94,52 @@ export default function EmployeeHandbookSection() {
         return (
             <div className="w-full mt-8 p-6 bg-white rounded-lg shadow-md border border-green-200">
                 <div className="flex items-center justify-center mb-4">
-                    <img className="w-48" src="/images/newlogo.png" alt="logo" />
+                    <img
+                        className="w-48"
+                        src="/images/newlogo.png"
+                        alt="logo"
+                    />
                 </div>
                 <div className="text-center mb-6">
                     <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold text-sm mb-3">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M5 13l4 4L19 7"
+                            />
                         </svg>
                         Acknowledged
                     </div>
-                    <h2 className="text-xl font-bold text-gray-800">Employee Handbook</h2>
+                    <h2 className="text-xl font-bold text-gray-800">
+                        Employee Handbook
+                    </h2>
                     <p className="text-sm text-gray-500 mt-1">
-                        Acknowledged by <span className="font-semibold">{existingAck.emp_name}</span> on{" "}
-                        {new Date(existingAck.acknowledged_at).toLocaleDateString("en-US", {
-                            year: "numeric", month: "long", day: "numeric",
+                        Acknowledged by{" "}
+                        <span className="font-semibold">
+                            {existingAck.emp_name}
+                        </span>{" "}
+                        on{" "}
+                        {new Date(
+                            existingAck.acknowledged_at,
+                        ).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
                         })}
                     </p>
                 </div>
                 <div className="flex justify-center">
                     <div className="border border-gray-300 rounded p-2 bg-gray-50">
-                        <p className="text-xs text-gray-400 text-center mb-1">E-Signature</p>
+                        <p className="text-xs text-gray-400 text-center mb-1">
+                            E-Signature
+                        </p>
                         <img
                             src={existingAck.signature}
                             alt="E-Signature"
@@ -120,7 +154,9 @@ export default function EmployeeHandbookSection() {
     return (
         <div className="w-full mb-10 px-4">
             <p className="text-sm text-gray-500 text-center mb-4">
-                <i>Please read the Employee Handbook carefully before signing.</i>
+                <i>
+                    Please read the Employee Handbook carefully before signing.
+                </i>
             </p>
 
             {/* PDF Viewer */}
@@ -143,11 +179,16 @@ export default function EmployeeHandbookSection() {
                         onChange={(e) => setAgreed(e.target.checked)}
                     />
                     <span className="text-sm text-gray-700 leading-snug">
-                        I, <span className="font-semibold">{emp_name || "Employee"}</span>, hereby acknowledge that
-                        I have read, understood, and agree to comply with the{" "}
-                        <span className="font-semibold">Employee Handbook</span> of EmpireOne BPO
-                        Solutions Inc. I understand that adherence to the policies and guidelines set
-                        forth in this handbook is a condition of my employment.
+                        I,{" "}
+                        <span className="font-semibold">
+                            {emp_name || "Employee"}
+                        </span>
+                        , hereby acknowledge that I have read, understood, and
+                        agree to comply with the{" "}
+                        <span className="font-semibold">Employee Handbook</span>{" "}
+                        of EmpireOne BPO Solutions Inc. I understand that
+                        adherence to the policies and guidelines set forth in
+                        this handbook is a condition of my employment.
                     </span>
                 </label>
             </div>
@@ -155,9 +196,12 @@ export default function EmployeeHandbookSection() {
             {/* Signature Section */}
             {storedSignature ? (
                 <div className="bg-white border border-gray-300 rounded-lg p-4 shadow-sm mb-5">
-                    <p className="text-sm font-semibold text-gray-700 mb-1">E-Signature</p>
+                    <p className="text-sm font-semibold text-gray-700 mb-1">
+                        E-Signature
+                    </p>
                     <p className="text-xs text-gray-400 mb-3">
-                        Your registered e-signature will be used for this acknowledgment.
+                        Your registered e-signature will be used for this
+                        acknowledgment.
                     </p>
                     <div className="inline-block border border-gray-200 rounded bg-gray-50 p-2">
                         <img
@@ -166,13 +210,23 @@ export default function EmployeeHandbookSection() {
                             className="max-h-24 object-contain"
                         />
                     </div>
-                    <div className="text-gray-400 text-xs"><i>If you wish to use a different signature, please update your e-signature in your profile settings.</i></div>
+                    <div className="text-gray-400 text-xs">
+                        <i>
+                            If you wish to use a different signature, please
+                            update your e-signature in your profile settings.
+                        </i>
+                    </div>
                 </div>
             ) : (
                 <div className="bg-white border border-gray-300 rounded-lg p-4 shadow-sm mb-5">
-                    <p className="text-sm font-semibold text-gray-700 mb-1">E-Signature</p>
+                    <p className="text-sm font-semibold text-gray-700 mb-1">
+                        E-Signature
+                    </p>
                     <p className="text-xs text-gray-400 mb-3">
-                        You don't have a registered signature. Please sign in the box below using your mouse, trackpad, or touch screen. Or go to your profile settings to set up a default e-signature for future use.
+                        You don't have a registered signature. Please sign in
+                        the box below using your mouse, trackpad, or touch
+                        screen. Or go to your profile settings to set up a
+                        default e-signature for future use.
                     </p>
                     <SignatureCanvas
                         ref={sigPadRef}
@@ -215,9 +269,24 @@ export default function EmployeeHandbookSection() {
                     className="flex items-center gap-2 px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-300 text-white text-sm font-semibold rounded-lg transition-colors"
                 >
                     {loading && (
-                        <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none">
-                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+                        <svg
+                            className="w-4 h-4 animate-spin"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                        >
+                            <circle
+                                className="opacity-25"
+                                cx="12"
+                                cy="12"
+                                r="10"
+                                stroke="currentColor"
+                                strokeWidth="4"
+                            />
+                            <path
+                                className="opacity-75"
+                                fill="currentColor"
+                                d="M4 12a8 8 0 018-8v8z"
+                            />
                         </svg>
                     )}
                     {loading ? "Submitting..." : "Submit Acknowledgment"}
@@ -226,4 +295,3 @@ export default function EmployeeHandbookSection() {
         </div>
     );
 }
-

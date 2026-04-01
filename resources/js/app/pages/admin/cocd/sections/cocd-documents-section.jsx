@@ -1,7 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { useSelector } from "react-redux";
-import { get_cocd_acknowledge_service, submit_cocd_acknowledge_service } from "@/app/pages/services/cocd-acknowledge-service";
+import {
+    get_cocd_acknowledge_service,
+    submit_cocd_acknowledge_service,
+} from "@/app/pages/services/cocd-acknowledge-service";
 
 export default function CocdDocumentsSection() {
     const sigPadRef = useRef(null);
@@ -23,6 +26,12 @@ export default function CocdDocumentsSection() {
     const storedSignature = user?.e_signature?.signature ?? null;
 
     useEffect(() => {
+        setHasAcknowledged(false);
+        setExistingAck(null);
+        setAgreed(false);
+        setError(null);
+        setChecking(true);
+
         if (!emp_id) {
             setChecking(false);
             return;
@@ -221,7 +230,8 @@ export default function CocdDocumentsSection() {
                     <p className="text-xs text-gray-400 mb-3">
                         You don't have a registered signature. Please sign in
                         the box below using your mouse, trackpad, or touch
-                        screen. Or go to your profile settings to set up a default e-signature for future use.
+                        screen. Or go to your profile settings to set up a
+                        default e-signature for future use.
                     </p>
                     <SignatureCanvas
                         ref={sigPadRef}

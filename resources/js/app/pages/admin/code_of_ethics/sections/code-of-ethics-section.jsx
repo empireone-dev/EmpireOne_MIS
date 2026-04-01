@@ -1,7 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import SignatureCanvas from "react-signature-canvas";
 import { useSelector } from "react-redux";
-import { get_ethics_acknowledge_service, submit_ethics_acknowledge_service } from "@/app/pages/services/ethics-acknowledge-service";
+import {
+    get_ethics_acknowledge_service,
+    submit_ethics_acknowledge_service,
+} from "@/app/pages/services/ethics-acknowledge-service";
 
 export default function CodeOfEthicsSection() {
     const sigPadRef = useRef(null);
@@ -22,6 +25,12 @@ export default function CodeOfEthicsSection() {
     const storedSignature = user?.e_signature?.signature ?? null;
 
     useEffect(() => {
+        setHasAcknowledged(false);
+        setExistingAck(null);
+        setAgreed(false);
+        setError(null);
+        setChecking(true);
+
         if (!emp_id) {
             setChecking(false);
             return;

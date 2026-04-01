@@ -1,1 +1,0 @@
-import{g as i}from"./job-title-service-90b45f9e.js";import{g as s}from"./store-d5169abf.js";function r(){return async function(t,n){const o=(await i()).data;console.log("result",o),t(s.actions.setJobPositions(o))}}export{r as g};

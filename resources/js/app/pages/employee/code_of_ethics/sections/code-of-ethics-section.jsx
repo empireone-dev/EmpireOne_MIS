@@ -25,6 +25,12 @@ export default function CodeOfEthicsSection() {
     const storedSignature = user?.e_signature?.signature ?? null;
 
     useEffect(() => {
+        setHasAcknowledged(false);
+        setExistingAck(null);
+        setAgreed(false);
+        setError(null);
+        setChecking(true);
+
         if (!emp_id) {
             setChecking(false);
             return;

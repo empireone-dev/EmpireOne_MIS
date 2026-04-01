@@ -20,6 +20,7 @@ class JobOffer extends Model
         'typea',
         'department',
         'account',
+        'startDate',
         'status',
         'reas',
         'dcs',

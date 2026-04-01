@@ -93,9 +93,11 @@
                 <h3 style="margin-top: 0;">Position Details:</h3>
                 <p><strong>Position:</strong> {{ $data['jobPos'] }}</p>
                 <p><strong>Total Compensation:</strong> PHP {{ number_format($data['salary']) }}{{ $data['allowance'] != 0 ? ' + PHP ' . number_format($data['allowance']) . ' ' . ($data['typea'] ?? '') : '' }}</p>
-                <p><strong>Start Date:</strong> {{ date('F j, Y', strtotime('+4 days')) }}</p>
+                @if(!empty($data['startDate']))
+                <p><strong>Start Date:</strong> {{ \Carbon\Carbon::parse($data['startDate'])->format('F j, Y') }}</p>
+                @endif
             </div>
-
+    
             <!-- <div class="attachment-notice">
                 <p><strong>📎 Important:</strong> Please find your detailed job offer letter attached as a PDF document. This attachment contains all terms and conditions, benefits, and requirements.</p>
             </div> -->

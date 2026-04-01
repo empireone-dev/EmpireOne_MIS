@@ -13,6 +13,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
     const [form, setForm] = useState({
         allowance: "",
         salary: "",
+        startDate: "",
     });
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -82,50 +83,21 @@ export default function ApplicantJobOfferComponent({ data, item }) {
 
                         <div className="flex flex-1">
                             <div className="w-full px-2.5">
-                                <label
-                                    className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
-                                >
-                                    Firstname
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
+                                    Full Name
                                 </label>
                                 <input
-                                    value={data.fname}
-                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-text"
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     type="text"
-                                    placeholder=""
-                                    readOnly
-                                />
-                            </div>
-                            <div className="w-full px-2.5">
-                                <label
-                                    className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
-                                >
-                                    Middlename
-                                </label>
-                                <input
-                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-text"
-                                    type="text"
-                                    value={data.mname}
-                                    placeholder=""
-                                    readOnly
-                                />
-                            </div>
-                            <div className="w-full px-2.5">
-                                <label
-                                    className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-                                    for="grid-text"
-                                >
-                                    Lastname
-                                </label>
-                                <input
-                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    id="grid-text"
-                                    value={data.lname}
-                                    type="text"
-                                    placeholder=""
+                                    // value={`${data.lname}, ${data.fname} ${data.mname}`
+                                    // ${
+                                    //     data.mname
+                                    //         ? data.mname.charAt(0) + "."
+                                    //         : ""
+                                    // }`
+                                    
+                                    value={`${data.fname} ${data.mname} ${data.lname}`
+                                }
                                     readOnly
                                 />
                             </div>
@@ -167,8 +139,14 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                 >
                                     <option selected disabled></option>
                                     {job_positions
-                                        .filter((job, index, self) =>
-                                            index === self.findIndex(j => j.jPosition === job.jPosition)
+                                        .filter(
+                                            (job, index, self) =>
+                                                index ===
+                                                self.findIndex(
+                                                    (j) =>
+                                                        j.jPosition ===
+                                                        job.jPosition,
+                                                ),
                                         )
                                         .map((res, i) => {
                                             return (
@@ -193,6 +171,30 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                     }
                                 />
                             </div>
+                            <div className="w-full px-2.5">
+                                <label
+                                    className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
+                                    htmlFor="grid-text"
+                                >
+                                    Start Date
+                                </label>
+                                <input
+                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    id="grid-text"
+                                    type="date"
+                                    placeholder=""
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                    value={form?.startDate ?? ""}
+                                    name="startDate"
+                                />
+                            </div>
+                        </div>
+                        <div className="flex flex-1">
                             <div className="w-3/5 px-2.5">
                                 <label
                                     className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
@@ -282,13 +284,14 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                 </select>
                             </div>
                         </div>
+
                         <div className="w-full px-2.5">
-                            <label
+                            {/* <label
                                 className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
                                 for="grid-text"
                             >
                                 Role Type
-                            </label>
+                            </label> */}
                             {/* <select
                                 onChange={(e) =>
                                     setForm({

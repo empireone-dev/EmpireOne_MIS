@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('typea')->nullable();
             $table->string('department')->nullable();
             $table->string('account')->nullable();
+            $table->string('startDate')->nullable();
             $table->string('status')->nullable();
             $table->string('reas')->nullable();
             $table->string('dcs')->nullable();

@@ -25,6 +25,7 @@ import {
     FieldTimeOutlined,
     BankOutlined,
     FileProtectOutlined,
+    LikeOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal, message } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
@@ -347,6 +348,12 @@ const AdminLayout = ({ children }) => {
             icon: <AuditOutlined />,
             label: "Compliance Training",
             onClick: () => router.visit("/admin/compliance"),
+        },
+        {
+            key: "acknowledgments",
+            icon: <LikeOutlined />,
+            label: "Acknowledgments",
+            onClick: () => router.visit("/admin/acknowledgments"),
         },
         {
             key: "employee_handbook",

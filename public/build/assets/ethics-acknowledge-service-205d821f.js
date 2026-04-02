@@ -1,1 +1,0 @@
-import{a}from"./store-7f576822.js";async function c(e){return(await a.post("/api/ethics_acknowledge",e)).data}async function i(e){return(await a.get("/api/ethics_acknowledge/"+e)).data}export{i as g,c as s};

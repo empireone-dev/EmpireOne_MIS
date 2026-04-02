@@ -1,0 +1,1 @@
+import{a as r}from"./store-9b7b15ad.js";function n(){try{return r.get("/api/department")}catch{}}function s(e){try{return r.post("/api/department",e)}catch{}}async function c(e){return(await r.put(`/api/department/${e.id}`,e)).data}function p(e){try{return r.delete("/api/department/"+e)}catch{}}export{s as c,p as d,n as g,c as u};

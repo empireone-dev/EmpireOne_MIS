@@ -289,7 +289,7 @@ class EmployeeController extends Controller
                     ->orWhereHas('ethics_acknowledges')
                     ->orWhereHas('handbook_acknowledges');
             })
-            ->get();
+            ->paginate(10);
 
         if ($employees->isNotEmpty()) {
             return response()->json([

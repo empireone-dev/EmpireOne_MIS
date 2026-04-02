@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('cocd_acknowledges', function (Blueprint $table) {
             $table->id();
-            $table->string('emp_id');
+            $table->bigInteger('emp_id');
             $table->string('emp_name');
             $table->text('signature');
             $table->timestamp('acknowledged_at')->nullable();

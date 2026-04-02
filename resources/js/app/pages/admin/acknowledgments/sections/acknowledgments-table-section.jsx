@@ -21,7 +21,7 @@ export default function AcknowledgmentsTableSection() {
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
 
-    const { employeesWithAcknowledgment } = useSelector(
+    const { employeesWithAcknowledgment, employeesWithAcknowledgmentTotal } = useSelector(
         (state) => state.employees,
     );
     const { employees } = useSelector((state) => state.employees);
@@ -266,14 +266,14 @@ export default function AcknowledgmentsTableSection() {
             <div className="flex">
                 <div className="w-full mt-3.5">
                     {employeesWithAcknowledgment?.length > 0
-                        ? `Showing ${Math.min((currentPage - 1) * pageSize + 1, employeesWithAcknowledgment.length)} to ${Math.min(currentPage * pageSize, employeesWithAcknowledgment.length)} of ${employeesWithAcknowledgment.length} entries`
+                        ? `Showing ${Math.min((currentPage - 1) * pageSize + 1, employeesWithAcknowledgmentTotal)} to ${Math.min(currentPage * pageSize, employeesWithAcknowledgmentTotal)} of ${employeesWithAcknowledgmentTotal} entries`
                         : "No entries available"}
                 </div>
                 <div className="flex w-full items-center justify-end mt-2">
                     <Pagination
                         onChange={onChangePaginate}
                         current={currentPage}
-                        total={employeesWithAcknowledgment?.length || 0}
+                        total={employeesWithAcknowledgmentTotal}
                         pageSize={pageSize}
                         showSizeChanger={false}
                     />

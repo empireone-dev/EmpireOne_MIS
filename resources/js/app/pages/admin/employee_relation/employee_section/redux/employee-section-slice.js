@@ -9,6 +9,7 @@ export const employeeSlice = createSlice({
         hiredApplicants: [],
         acknowledgment: {},
           employeesWithAcknowledgment: [],
+          employeesWithAcknowledgmentTotal: 0,
     },
     reducers: {
         setEmployees: (state, action) => {
@@ -31,7 +32,10 @@ export const employeeSlice = createSlice({
         },
         setEmployeesWithAcknowledgment: (state, action) => {
             state.employeesWithAcknowledgment = action.payload;
-        },  
+        },
+        setEmployeesWithAcknowledgmentTotal: (state, action) => {
+            state.employeesWithAcknowledgmentTotal = action.payload;
+        },
     },
 });
 export const {
@@ -42,6 +46,7 @@ export const {
     setEmployee,
     setEmployeeAcknowledgment,
     setEmployeesWithAcknowledgment,
+    setEmployeesWithAcknowledgmentTotal,
 } = employeeSlice.actions;
 
 export default employeeSlice.reducer;

@@ -64,6 +64,7 @@ class JobOfferController extends Controller
         $jo = JobOffer::create(array_merge($data, [
             'department' => $department,
             'account' => $account,
+            'work_location' => $request->input('work_location'),
         ]));
         Mail::to($request->email)->send(new MailJobOffer(array_merge(
             $request->all(),
@@ -71,6 +72,7 @@ class JobOfferController extends Controller
                 'id' => $jo->id,
                 'department' => $department,
                 'account' => $account,
+                'work_location' => $request->input('work_location'),
             ]
         )));
 

@@ -1,7 +1,8 @@
 import React from "react";
-import { Table, Tag } from "antd";
+import { Table, Tag, Tooltip } from "antd";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import { ClipboardDocumentCheckIcon, EyeIcon } from "@heroicons/react/24/outline";
 
 export default function EmployeeAcknowledgementSection() {
     const { employee } = useSelector((state) => state.employees);
@@ -50,11 +51,35 @@ export default function EmployeeAcknowledgementSection() {
             key: "acknowledged_at",
             render: (_, record) =>
                 record.data?.acknowledged_at ? (
-                    <b>{moment(record.data.acknowledged_at).format("LLL")}</b>
+                    <>{moment(record.data.acknowledged_at).format("LLL")}</>
                 ) : (
                     <span className="text-gray-400">—</span>
                 ),
         },
+        // {
+        //     title: "Action",
+        //     dataIndex: "action",
+        //     key: "action",
+        //     render: (_, record, i) => {
+        //         return (
+        //             <div key={i}>
+        //                 <button
+        //                     onClick={() => {
+        //                         window.open(
+        //                             `/admin/acknowledgments/${record.emp_id}`,
+        //                             "_blank",
+        //                         );
+        //                     }}
+        //                     className="bg-amber-400 hover:bg-amber-500 text-white p-2 px-4 rounded-md"
+        //                 >
+        //                     <Tooltip title="View Document">
+        //                         <EyeIcon className="h-5" />
+        //                     </Tooltip>
+        //                 </button>
+        //             </div>
+        //         );
+        //     },
+        // },
     ];
 
     const employeeName = acknowledgment?.applicant
@@ -65,7 +90,7 @@ export default function EmployeeAcknowledgementSection() {
         <div>
             <div className="mb-4">
                 <h2 className="text-lg text-gray-800">
-                    Acknowledgments for <b>{employeeName}</b>
+                    Documents acknowledged by: <b>{employeeName}</b>
                 </h2>
             </div>
             <Table

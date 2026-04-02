@@ -21,6 +21,7 @@ class JobOffer extends Model
         'department',
         'account',
         'startDate',
+        'work_location',
         'status',
         'reas',
         'dcs',

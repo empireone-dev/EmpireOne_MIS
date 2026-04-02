@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('department')->nullable();
             $table->string('account')->nullable();
             $table->string('startDate')->nullable();
+            $table->string('work_location')->nullable();
             $table->string('status')->nullable();
             $table->string('reas')->nullable();
             $table->string('dcs')->nullable();

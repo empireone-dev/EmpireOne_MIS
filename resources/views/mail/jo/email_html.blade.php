@@ -102,6 +102,10 @@
                 @if(!empty($data['account']))
                 <p><strong>Account:</strong> {{ $data['account'] }}</p>
                 @endif
+                @if(!empty($data['work_location']))
+                <p><strong>Work Location:</strong> {{ $data['work_location'] }}</p>
+                @endif
+
             </div>
     
             <!-- <div class="attachment-notice">

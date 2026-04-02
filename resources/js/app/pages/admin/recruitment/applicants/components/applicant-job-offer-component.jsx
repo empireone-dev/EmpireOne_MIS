@@ -26,10 +26,10 @@ export default function ApplicantJobOfferComponent({ data, item }) {
         setOpen(true);
     }
 
-useEffect(() => {
-    store.dispatch(get_department_thunk());
-    store.dispatch(get_account_thunk());
-}, []);
+    useEffect(() => {
+        store.dispatch(get_department_thunk());
+        store.dispatch(get_account_thunk());
+    }, []);
     async function send_job_offer(e) {
         e.preventDefault();
         setLoading(true);
@@ -180,7 +180,9 @@ useEffect(() => {
                                 <select
                                     className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-department"
-                                    value={form.outsourcing_erf?.department || ""}
+                                    value={
+                                        form.outsourcing_erf?.department || ""
+                                    }
                                     onChange={(e) =>
                                         setForm({
                                             ...form,
@@ -350,6 +352,37 @@ useEffect(() => {
                                     value={form?.startDate ?? ""}
                                     name="startDate"
                                 />
+                            </div>{" "}
+                            <div className="w-full px-2.5">
+                                <label
+                                    className="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
+                                    htmlFor="grid-text"
+                                >
+                                    Work Location
+                                </label>
+                                <select
+                                    className="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    type="text"
+                                    placeholder=""
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                    name="work_location"
+                                    id="work_location"
+                                >
+                                    <option value="" disabled>
+                                        Select Work Location
+                                    </option>
+                                    <option value="San Carlos City (On-site)">San Carlos City (On-site)</option>
+                                    <option value="Carcar City (On-site)">Carcar City (On-site)</option>
+                                    <option value="Cebu City (On-site)">Cebu City (On-site)</option>
+                                    <option value="Work From Home Setup">Work From Home Setup</option>
+                                    <option value="Remote">Remote</option>
+                                    <option value="Hybrid">Hybrid</option>
+                                </select>
                             </div>
                         </div>
                         <div className="w-full px-2.5">

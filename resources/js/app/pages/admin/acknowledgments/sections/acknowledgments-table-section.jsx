@@ -13,7 +13,7 @@ import {
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import { router } from "@inertiajs/react";
-import { EyeIcon } from "@heroicons/react/24/outline";
+import { ClipboardDocumentCheckIcon, EyeIcon } from "@heroicons/react/24/outline";
 import AcknowledgmentsSearchSection from "./acknowledgments-search-section";
 
 export default function AcknowledgmentsTableSection() {
@@ -21,9 +21,12 @@ export default function AcknowledgmentsTableSection() {
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
 
+    const { employeesWithAcknowledgment } = useSelector(
+        (state) => state.employees,
+    );
     const { employees } = useSelector((state) => state.employees);
 
-    console.log("employeessss", employees);
+    console.log("employeesWithAcknowledgment", employeesWithAcknowledgment);
 
     const url = window.location.pathname + window.location.search;
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -187,7 +190,12 @@ export default function AcknowledgmentsTableSection() {
             render: (_, record, i) => {
                 console.log("record", record);
 
-                return <div key={i}>{record?.applicant?.fname} {record?.applicant?.mname} {record?.applicant?.lname}</div>;
+                return (
+                    <div key={i}>
+                        {record?.applicant?.fname} {record?.applicant?.mname}{" "}
+                        {record?.applicant?.lname}
+                    </div>
+                );
             },
         },
         {
@@ -204,15 +212,16 @@ export default function AcknowledgmentsTableSection() {
                 return (
                     <div key={i}>
                         <button
-                            onClick={() =>
-                                router.visit(
+                            onClick={() => {
+                                window.open(
                                     `/admin/acknowledgments/${record.emp_id}`,
-                                )
-                            }
-                            className="bg-sky-400 hover:bg-sky-600 text-white p-2 px-4 rounded-md"
+                                    "_blank",
+                                );
+                            }}
+                            className="bg-purple-700 hover:bg-purple-600 text-white p-2 px-4 rounded-md"
                         >
-                            <Tooltip title="Show Acknowledgment Documents">
-                                <EyeIcon className="h-5" />
+                            <Tooltip title="Documents Acknowledged">
+                                <ClipboardDocumentCheckIcon className="h-5" />
                             </Tooltip>
                         </button>
                     </div>
@@ -250,25 +259,22 @@ export default function AcknowledgmentsTableSection() {
             <Table
                 pagination={false}
                 columns={columns}
-                dataSource={employees?.data ?? []}
+                dataSource={employeesWithAcknowledgment ?? []}
+                rowKey="emp_id"
             />
 
             <div className="flex">
                 <div className="w-full mt-3.5">
-                    {employees?.total > 0
-                        ? `Showing ${
-                              (currentPage - 1) * pageSize + 1
-                          } to ${Math.min(currentPage * pageSize, employees.total)} of ${
-                              employees.total
-                          } entries`
+                    {employeesWithAcknowledgment?.length > 0
+                        ? `Showing ${Math.min((currentPage - 1) * pageSize + 1, employeesWithAcknowledgment.length)} to ${Math.min(currentPage * pageSize, employeesWithAcknowledgment.length)} of ${employeesWithAcknowledgment.length} entries`
                         : "No entries available"}
                 </div>
                 <div className="flex w-full items-center justify-end mt-2">
                     <Pagination
                         onChange={onChangePaginate}
-                        current={employees?.current_page || 1}
-                        total={employees?.total || 0}
-                        pageSize={employees?.per_page || pageSize}
+                        current={currentPage}
+                        total={employeesWithAcknowledgment?.length || 0}
+                        pageSize={pageSize}
                         showSizeChanger={false}
                     />
                 </div>

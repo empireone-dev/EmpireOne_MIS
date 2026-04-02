@@ -46,11 +46,11 @@ export default function EmployeeAcknowledgementSection() {
                 ),
         },
         {
-            title: "Date Completed",
+            title: "Date/Time Completed",
             key: "acknowledged_at",
             render: (_, record) =>
                 record.data?.acknowledged_at ? (
-                    <b>{moment(record.data.acknowledged_at).format("LL")}</b>
+                    <b>{moment(record.data.acknowledged_at).format("LLL")}</b>
                 ) : (
                     <span className="text-gray-400">—</span>
                 ),

@@ -5,6 +5,11 @@ export async function get_employee_service() {
     return res.data
 }
 
+export async function get_employee_with_acknowledgment_service() {
+    const res = await axios.get('/api/get_employee_with_acknowledgment' + window.location.search ?? '?page=1')
+    return res.data
+}
+
 export async function get_all_employees_service() {
     const res = await axios.get('/api/employee?per_page=10000')
     return res.data

@@ -3,13 +3,12 @@ import AcknowledgmentsTableSection from './sections/acknowledgments-table-sectio
 import AdminLayout from '../admin-layout'
 import { useEffect } from 'react';
 import store from '@/app/store/store';
-import { get_all_employees_service } from '../../services/employee-service';
-import { get_employee_thunk } from '../employee_relation/employee_section/redux/employee-section-thunk';
+import { get_employee_with_acknowledgment_thunk } from '../employee_relation/employee_section/redux/employee-section-thunk';
 
 export default function page() {
     useEffect(() => {
         // store.dispatch(get_all_employees_service())
-        store.dispatch(get_employee_thunk())
+        store.dispatch(get_employee_with_acknowledgment_thunk())
     }, []);
   return (
     <AdminLayout>

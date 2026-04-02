@@ -273,6 +273,36 @@ class EmployeeController extends Controller
         }
     }
 
+    public function get_employee_with_acknowledgment()
+    {
+        $employees = Employee::with([
+            'attrition',
+            'applicant',
+            'user',
+            'dept',
+            'cocd_acknowledges',
+            'ethics_acknowledges',
+            'handbook_acknowledges'
+        ])
+            ->where(function ($query) {
+                $query->whereHas('cocd_acknowledges')
+                    ->orWhereHas('ethics_acknowledges')
+                    ->orWhereHas('handbook_acknowledges');
+            })
+            ->get();
+
+        if ($employees->isNotEmpty()) {
+            return response()->json([
+                'data' => $employees
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'No employees found',
+                'message' => 'No employees with acknowledgments found'
+            ], 404);
+        }
+    }
+
     public function showForQR($id)
     {
         // Public endpoint for QR code scanning - no authentication required

@@ -593,8 +593,13 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         return Inertia::render('admin/code_of_ethics/page');
     });
 
-    Route::get('/acknowledgments', function () {
-        return Inertia::render('admin/acknowledgments/page');
+    Route::prefix('acknowledgments')->group(function () {
+        Route::get('/', function () {
+            return Inertia::render('admin/acknowledgments/page');
+        });
+        Route::get('/{id}', function () {
+            return Inertia::render('admin/acknowledgments/id/page');
+        });
     });
 
     Route::get('/profile', function () {

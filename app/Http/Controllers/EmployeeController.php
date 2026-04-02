@@ -244,7 +244,7 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $employee = Employee::where('app_id', $id)->with(['attrition', 'applicant', 'user', 'dept'])->first();
+        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges'])->first();
         if ($employee) {
             return response()->json([
                 'data' => $employee
@@ -252,7 +252,7 @@ class EmployeeController extends Controller
         } else {
             return response()->json([
                 'error' => 'Employee not found',
-                'message' => 'No employee found with the provided application ID'
+                'message' => 'No employee found with the provided employee ID'
             ], 404);
         }
     }
@@ -265,7 +265,7 @@ class EmployeeController extends Controller
         if (!$employee) {
             return response()->json([
                 'error' => 'Employee not found',
-                'message' => 'No employee found with the provided ID'
+                'message' => 'No employee found with the provided employee ID'
             ], 404);
         }
 

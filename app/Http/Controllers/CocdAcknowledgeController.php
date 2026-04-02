@@ -37,4 +37,10 @@ class CocdAcknowledgeController extends Controller
 
         return response()->json(['data' => $ack], 200);
     }
+
+    public function get_acknowledgment_by_emp_id($emp_id)
+    {
+        $ack = CocdAcknowledge::where('emp_id', $emp_id)->first();
+        return response()->json(['data' => $ack], 200);
+    }
 }

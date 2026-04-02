@@ -9,7 +9,8 @@ export const appSlice = createSlice({
     sidebarOpen: false,
     user: {},
     users: [],
-    hash: hash
+    hash: hash,
+    acknowledgment: {}
   },
   reducers: {
     setIsModalOpen: (state, action) => {
@@ -25,8 +26,11 @@ export const appSlice = createSlice({
       state.hash = action.payload
     },
     setSidebarOpen: (state, action) => {
-      state.hash = action.payload
+      state.sidebarOpen = action.payload
     },
+    setAcknowledgment: (state, action) => {
+        state.acknowledgment = action.payload;
+    }
   },
 })
 export const {
@@ -35,6 +39,7 @@ export const {
   setHash,
   setSidebarOpen,
   setUsers,
+  setAcknowledgment
 } = appSlice.actions
 
 export default appSlice.reducer

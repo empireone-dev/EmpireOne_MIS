@@ -349,12 +349,12 @@ const AdminLayout = ({ children }) => {
             label: "Compliance Training",
             onClick: () => router.visit("/admin/compliance"),
         },
-        // {
-        //     key: "acknowledgments",
-        //     icon: <LikeOutlined />,
-        //     label: "Acknowledgments",
-        //     onClick: () => router.visit("/admin/acknowledgments"),
-        // },
+        {
+            key: "acknowledgments",
+            icon: <LikeOutlined />,
+            label: "Acknowledgments",
+            onClick: () => router.visit("/admin/acknowledgments"),
+        },
         {
             key: "employee_handbook",
             icon: <IdcardOutlined />,

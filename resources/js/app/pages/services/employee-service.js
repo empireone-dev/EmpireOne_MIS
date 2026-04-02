@@ -29,3 +29,12 @@ export async function update_employee_service(data) {
     const res = await axios.put(`/api/employee/${data.id}`, data);
     return res.data;
 }
+
+export function get_acknowledgment_by_emp_id_service() {
+  try {
+    const result = axios.get('/api/get_acknowledgment_by_emp_id/' + window.location.pathname.split('/')[3])
+    return result
+  } catch (error) {
+
+  }
+}

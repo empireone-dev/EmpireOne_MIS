@@ -13,7 +13,10 @@ import {
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import { router } from "@inertiajs/react";
-import { ClipboardDocumentCheckIcon, EyeIcon } from "@heroicons/react/24/outline";
+import {
+    ClipboardDocumentCheckIcon,
+    EyeIcon,
+} from "@heroicons/react/24/outline";
 import AcknowledgmentsSearchSection from "./acknowledgments-search-section";
 
 export default function AcknowledgmentsTableSection() {
@@ -21,9 +24,8 @@ export default function AcknowledgmentsTableSection() {
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
 
-    const { employeesWithAcknowledgment, employeesWithAcknowledgmentTotal } = useSelector(
-        (state) => state.employees,
-    );
+    const { employeesWithAcknowledgment, employeesWithAcknowledgmentTotal } =
+        useSelector((state) => state.employees);
     const { employees } = useSelector((state) => state.employees);
 
     console.log("employeesWithAcknowledgment", employeesWithAcknowledgment);
@@ -188,8 +190,6 @@ export default function AcknowledgmentsTableSection() {
             key: "fullname",
             // ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
-                console.log("record", record);
-
                 return (
                     <div key={i}>
                         {record?.applicant?.fname} {record?.applicant?.mname}{" "}
@@ -203,6 +203,24 @@ export default function AcknowledgmentsTableSection() {
             dataIndex: "eogs",
             key: "email",
             // ...getColumnSearchProps("email"),
+        },
+        {
+            title: "Department",
+            dataIndex: "department",
+            key: "department",
+            // ...getColumnSearchProps("department"),
+            render: (_, record, i) => {
+                return <div key={i}>{record?.dept?.dept || "N/A"}</div>;
+            },
+        },
+        {
+            title: "Account",
+            dataIndex: "account",
+            key: "account",
+            // ...getColumnSearchProps("account"),
+            render: (_, record, i) => {
+                return <div key={i}>{record?.account || "N/A"}</div>;
+            },
         },
         {
             title: "Action",

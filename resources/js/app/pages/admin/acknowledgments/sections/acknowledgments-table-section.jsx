@@ -269,7 +269,7 @@ export default function AcknowledgmentsTableSection() {
             <div>
                 <div className="flex items-center gap-x-3">
                     <h2 className="text-lg font-medium text-gray-800">
-                        <b>Documents Acknowledgments Records</b>
+                        <b>Document Acknowledgment Records</b>
                     </h2>
                 </div>
             </div>

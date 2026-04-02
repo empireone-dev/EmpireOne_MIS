@@ -211,7 +211,7 @@ export default function AcknowledgmentsTableSection() {
                             }
                             className="bg-sky-400 hover:bg-sky-600 text-white p-2 px-4 rounded-md"
                         >
-                            <Tooltip title="Show Trainings Taken">
+                            <Tooltip title="Show Acknowledgment Documents">
                                 <EyeIcon className="h-5" />
                             </Tooltip>
                         </button>

@@ -1,4 +1,4 @@
-import { get_employee_by_id_service, get_employee_service, store_employee_service, store_new_employee_service, update_employee_service } from "@/app/pages/services/employee-service";
+import { get_employee_acknowledgment_by_emp_id_service, get_employee_by_id_service, get_employee_service, store_employee_service, store_new_employee_service, update_employee_service } from "@/app/pages/services/employee-service";
 import { employeeSlice } from "./employee-section-slice";
 import { create_employee_service, get_hired_applicant_service, update_address_service } from "@/app/pages/services/applicant-final-service";
 import { applicantSlice } from "../../../recruitment/applicants/applicant_records/redux/applicant-slice";
@@ -15,6 +15,13 @@ export function get_employee_by_id_thunk(id) {
   return async function (dispatch, getState) {
     const result = (await get_employee_by_id_service(id)).data
     dispatch(employeeSlice.actions.setEmployee(result));
+  };
+}
+
+export function get_employee_acknowledgment_by_emp_id_thunk(emp_id) {
+  return async function (dispatch, getState) {
+    const result = (await get_employee_acknowledgment_by_emp_id_service(emp_id)).data
+    dispatch(employeeSlice.actions.setEmployeeAcknowledgment(result));
   };
 }
 

@@ -15,7 +15,13 @@ export async function get_employee_by_id_service(id) {
     return res.data
 }
 
-export async function store_employee_service(fd) {
+
+export async function get_employee_acknowledgment_by_emp_id_service(emp_id) {
+    const res = await axios.get('/api/get_employee_acknowledgment/' + emp_id)
+    return res.data
+}
+
+export async function store_employee_service(fd) {  
     const res = await axios.post('/api/employee', fd)
     return res.data
 }

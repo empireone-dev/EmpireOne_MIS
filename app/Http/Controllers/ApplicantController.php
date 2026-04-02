@@ -47,7 +47,7 @@ class ApplicantController extends Controller
 
     public function index(Request $request)
     {
-        ini_set('memory_limit', '256M');
+        ini_set('memory_limit', '512M');
 
         $applicant = Applicant::query()
             ->with(['final', 'initial', 'joboffer', 'user', 'cvfile', 'guideqs', 'employee', 'a_i_interview']);

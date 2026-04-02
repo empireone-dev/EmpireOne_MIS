@@ -66,6 +66,7 @@ Route::post('/user/{id}', [UserController::class, 'update']);
 
 // Public API route for QR code scanning (no authentication required)
 Route::get('/employee-qr/{emp_id}', [EmployeeController::class, 'showForQR']);
+Route::get('/get_employee_acknowledgment/{emp_id}', [EmployeeController::class, 'get_employee_acknowledgment']);
 
 Route::post('/search_applicant', [ApplicantController::class, 'search_applicant']);
 Route::resource('applicant', ApplicantController::class);

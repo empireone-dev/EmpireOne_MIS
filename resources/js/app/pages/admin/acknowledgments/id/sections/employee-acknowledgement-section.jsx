@@ -5,22 +5,26 @@ import moment from "moment";
 
 export default function EmployeeAcknowledgementSection() {
     const { employee } = useSelector((state) => state.employees);
+    const { acknowledgment } = useSelector((state) => state.employees);
+
+    console.log("employee: ", employee);
+    console.log("acknowledgment: ", acknowledgment);
 
     const tableData = [
         {
             key: "cocd",
             type: "Code of Conduct (COCD)",
-            data: employee?.cocd_acknowledges,
+            data: acknowledgment?.cocd_acknowledges,
         },
         {
             key: "handbook",
             type: "Employee Handbook",
-            data: employee?.handbook_acknowledges,
+            data: acknowledgment?.handbook_acknowledges,
         },
         {
             key: "ethics",
             type: "Code of Ethics",
-            data: employee?.ethics_acknowledges,
+            data: acknowledgment?.ethics_acknowledges,
         },
     ];
 
@@ -53,8 +57,8 @@ export default function EmployeeAcknowledgementSection() {
         },
     ];
 
-    const employeeName = employee?.applicant
-        ? `${employee.applicant.fname ?? ""} ${employee.applicant.lname ?? ""}`.trim()
+    const employeeName = acknowledgment?.applicant
+        ? `${acknowledgment.applicant.fname ?? ""} ${acknowledgment.applicant.lname ?? ""}`.trim()
         : "";
 
     return (

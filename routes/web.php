@@ -696,6 +696,9 @@ Route::middleware('auth:sanctum')->prefix('employee')->group(function () {
             return Inertia::render('employee/engagement/birthday/page');
         });
     });
+    Route::get('/update_profile', function () {
+        return Inertia::render('employee/profile/page');
+    });
 });
 
 Route::middleware(['auth:sanctum', 'role:10'])->prefix('employee')->group(function () {
@@ -743,9 +746,9 @@ Route::middleware(['auth:sanctum', 'role:10'])->prefix('employee')->group(functi
         });
     });
 
-    Route::get('/update_profile', function () {
-        return Inertia::render('employee/profile/page');
-    });
+    // Route::get('/update_profile', function () {
+    //     return Inertia::render('employee/profile/page');
+    // });
 
     Route::get('/profile', function () {
         return Inertia::render('employee/profile/page');

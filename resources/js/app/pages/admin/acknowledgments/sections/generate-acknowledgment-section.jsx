@@ -100,7 +100,7 @@ export default function GenerateAcknowledgmentSection() {
             XLSX.utils.book_append_sheet(wb, ws, "Acknowledgment Records");
 
             // Generate filename with current date
-            const fileName = `Acknowledgment_Records_${moment().format("YYYY-MM-DD_HH-mm-ss")}.xlsx`;
+            const fileName = `Acknowledgment_Records_Of_Employees.xlsx`;
 
             // Save the file
             XLSX.writeFile(wb, fileName);

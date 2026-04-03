@@ -91,7 +91,7 @@ export default function GenerateExcelFileSection() {
             XLSX.utils.book_append_sheet(wb, ws, "Employee Masterlist");
 
             // Generate filename with current date
-            const fileName = `Employee_Masterlist_${moment().format("YYYY-MM-DD_HH-mm-ss")}.xlsx`;
+            const fileName = `Employee_Masterlist.xlsx`;
 
             // Save the file
             XLSX.writeFile(wb, fileName);

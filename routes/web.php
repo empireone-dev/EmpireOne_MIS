@@ -656,7 +656,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 //     });
 // });
 // employee = 7
-Route::prefix('employee', 'role:7')->group(function () {
+Route::middleware('auth:sanctum')->prefix('employee')->group(function () {
 
     Route::get('/update_profile', function () {
         return Inertia::render('employee/profile/page');
@@ -743,23 +743,13 @@ Route::middleware(['auth:sanctum', 'role:10'])->prefix('employee')->group(functi
         });
     });
 
-    // Route::get('/update_profile', function () {
-    //     return Inertia::render('admin/profile/page');
-    // });
+    Route::get('/update_profile', function () {
+        return Inertia::render('employee/profile/page');
+    });
 
-    // Route::get('/cocd', function () {
-    //     return Inertia::render('employee/cocd/page');
-    // });
-    // Route::get('/employee_handbook', function () {
-    //     return Inertia::render('employee/employee_handbook/page');
-    // });
-    // Route::get('/code_of_ethics', function () {
-    //     return Inertia::render('employee/code_of_ethics/page');
-    // });
-
-    // Route::get('/profile', function () {
-    //     return Inertia::render('employee/profile/page');
-    // });
+    Route::get('/profile', function () {
+        return Inertia::render('employee/profile/page');
+    });
 });
 
 

@@ -28,7 +28,11 @@ import { Link, router, usePage } from "@inertiajs/react";
 import { KeyIcon, MegaphoneIcon } from "@heroicons/react/24/outline";
 import AdminFooterComponents from "../admin/_components/admin-footer-components";
 import store from "@/app/store/store";
-import { get_user_thunk, get_users_thunk, change_password_thunk } from "../redux/app-thunk";
+import {
+    get_user_thunk,
+    get_users_thunk,
+    change_password_thunk,
+} from "../redux/app-thunk";
 import UpdateProfile from "../_components/update-profile";
 import { useSelector } from "react-redux";
 const { Header, Sider, Content } = Layout;
@@ -119,12 +123,20 @@ const EmployeeLayout = ({ children }) => {
         //     label: "List of MEMO",
         //     onClick: () => router.visit("/employee/list_memo"),
         // },
-        {
-            key: "cocd",
-            icon: <FileProtectOutlined />,
-            label: "COCD (Code of Conduct and Discipline)",
-            onClick: () => router.visit("/employee/cocd"),
-        },
+
+        ...(user.role_id === 10 ? [{
+            key: "sourcing",
+            icon: <BookOutlined />,
+            label: "Sourcing",
+            children: [
+                {
+                    key: "erf_record",
+                    icon: <HolderOutlined />,
+                    label: "ERF Record",
+                    onClick: () => router.visit("/employee/erf_record"),
+                },
+            ],
+        }] : []),
         {
             key: "employee_handbook",
             icon: <IdcardOutlined />,
@@ -134,15 +146,14 @@ const EmployeeLayout = ({ children }) => {
         {
             key: "code_of_ethics",
             icon: <BankOutlined />,
-            label: "Code of Ethics and Business Conduct",
-            children: [
-                {
-                    key: "employee_section",
-                    icon: <HolderOutlined />,
-                    label: "Employee Section",
-                    onClick: () => router.visit("/employee/code_of_ethics"),
-                },
-            ],
+            label: "Code of Ethics",
+            onClick: () => router.visit("/employee/code_of_ethics"),
+        },
+        {
+            key: "cocd",
+            icon: <FileProtectOutlined />,
+            label: "Code of Discipline",
+            onClick: () => router.visit("/employee/cocd"),
         },
     ];
 
@@ -257,7 +268,8 @@ const EmployeeLayout = ({ children }) => {
                 message.error("Validation failed. Please check your inputs.");
             } else if (
                 error.status === 401 ||
-                (error.message && error.message.includes("password is incorrect"))
+                (error.message &&
+                    error.message.includes("password is incorrect"))
             ) {
                 setPasswordErrors({
                     current_password: "Current password is incorrect.",
@@ -307,8 +319,8 @@ const EmployeeLayout = ({ children }) => {
                             <div className="mr-5">
                                 <div className="inline-block relative shrink-0 cursor-pointer rounded-[.95rem]">
                                     <img
-                                        className="w-[40px] h-[40px] shrink-0 inline-block rounded-[.95rem]"
-                                        src="/images/male.png"
+                                        className="w-[45px] h-[40px] shrink-0 inline-block rounded-[.95rem]"
+                                        src="/images/pngegg.png"
                                         alt="avatar image"
                                     />
                                 </div>
@@ -329,7 +341,7 @@ const EmployeeLayout = ({ children }) => {
                     <Menu
                         className="text-lg font-sans"
                         mode="inline"
-                        defaultSelectedKeys={active}
+                        selectedKeys={[active]}
                         defaultOpenKeys={path.slice(1 - path.length)}
                         items={items}
                     />
@@ -629,13 +641,19 @@ const EmployeeLayout = ({ children }) => {
                                                         }`}
                                                         type="password"
                                                         name="current_password"
-                                                        value={passwordForm.current_password}
-                                                        onChange={handlePasswordChange}
+                                                        value={
+                                                            passwordForm.current_password
+                                                        }
+                                                        onChange={
+                                                            handlePasswordChange
+                                                        }
                                                         placeholder="Enter your current password"
                                                     />
                                                     {passwordErrors.current_password && (
                                                         <p className="text-red-500 text-xs mb-3">
-                                                            {passwordErrors.current_password}
+                                                            {
+                                                                passwordErrors.current_password
+                                                            }
                                                         </p>
                                                     )}
                                                 </div>
@@ -651,13 +669,19 @@ const EmployeeLayout = ({ children }) => {
                                                         }`}
                                                         type="password"
                                                         name="password"
-                                                        value={passwordForm.password}
-                                                        onChange={handlePasswordChange}
+                                                        value={
+                                                            passwordForm.password
+                                                        }
+                                                        onChange={
+                                                            handlePasswordChange
+                                                        }
                                                         placeholder="Enter your new password"
                                                     />
                                                     {passwordErrors.password && (
                                                         <p className="text-red-500 text-xs mb-3">
-                                                            {passwordErrors.password}
+                                                            {
+                                                                passwordErrors.password
+                                                            }
                                                         </p>
                                                     )}
                                                 </div>
@@ -673,13 +697,19 @@ const EmployeeLayout = ({ children }) => {
                                                         }`}
                                                         type="password"
                                                         name="password_confirmation"
-                                                        value={passwordForm.password_confirmation}
-                                                        onChange={handlePasswordChange}
+                                                        value={
+                                                            passwordForm.password_confirmation
+                                                        }
+                                                        onChange={
+                                                            handlePasswordChange
+                                                        }
                                                         placeholder="Confirm your new password"
                                                     />
                                                     {passwordErrors.password_confirmation && (
                                                         <p className="text-red-500 text-xs mb-3">
-                                                            {passwordErrors.password_confirmation}
+                                                            {
+                                                                passwordErrors.password_confirmation
+                                                            }
                                                         </p>
                                                     )}
                                                 </div>

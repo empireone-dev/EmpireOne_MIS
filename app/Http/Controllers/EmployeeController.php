@@ -275,6 +275,9 @@ class EmployeeController extends Controller
 
     public function get_employee_with_acknowledgment()
     {
+        $perPage = (int) request()->get('per_page', 10);
+        $perPage = min($perPage, 10000); // cap to prevent abuse
+
         $employees = Employee::with([
             'attrition',
             'applicant',
@@ -289,7 +292,7 @@ class EmployeeController extends Controller
                     ->orWhereHas('ethics_acknowledges')
                     ->orWhereHas('handbook_acknowledges');
             })
-            ->paginate(10);
+            ->paginate($perPage);
 
         if ($employees->isNotEmpty()) {
             return response()->json([

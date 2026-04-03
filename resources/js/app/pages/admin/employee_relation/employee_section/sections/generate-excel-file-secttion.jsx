@@ -42,11 +42,9 @@ export default function GenerateExcelFileSection() {
             const excelData = employeeData.map((employee, index) => ({
                 "No.": index + 1,
                 "Employee ID": employee.emp_id || "",
-                "Full Name":
-                    `${employee.applicant?.fname || ""} ${employee.applicant?.mname || ""} ${employee.applicant?.lname || ""}`.trim(),
+                "Last Name": employee.applicant?.lname || "",
                 "First Name": employee.applicant?.fname || "",
                 "Middle Name": employee.applicant?.mname || "",
-                "Last Name": employee.applicant?.lname || "",
                 Position: employee.position || "",
                 Department: employee?.dept || "",
                 Account: employee.account || "",
@@ -76,36 +74,18 @@ export default function GenerateExcelFileSection() {
             const wb = XLSX.utils.book_new();
             const ws = XLSX.utils.json_to_sheet(excelData);
 
-            // Set column widths for better readability
-            const colWidths = [
-                { wch: 5 }, // No.
-                { wch: 12 }, // Employee ID
-                { wch: 25 }, // Full Name
-                { wch: 15 }, // First Name
-                { wch: 15 }, // Middle Name
-                { wch: 15 }, // Last Name
-                { wch: 20 }, // Position
-                { wch: 20 }, // Department
-                { wch: 15 }, // Account
-                { wch: 12 }, // Site
-                { wch: 12 }, // Status
-                { wch: 12 }, // Hired Date
-                { wch: 25 }, // Email
-                { wch: 15 }, // Contact Number
-                { wch: 30 }, // Address
-                { wch: 12 }, // Birth Date
-                { wch: 5 }, // Age
-                { wch: 8 }, // Gender
-                { wch: 12 }, // Civil Status
-                { wch: 20 }, // Emergency Contact Name
-                { wch: 15 }, // Emergency Contact Number
-                { wch: 15 }, // Emergency Contact Relationship
-                { wch: 15 }, // SSS Number
-                { wch: 15 }, // PhilHealth Number
-                { wch: 15 }, // PAG-IBIG Number
-                { wch: 15 }, // TIN Number
-            ];
-            ws["!cols"] = colWidths;
+            // Auto-fit column widths based on header and cell content
+            if (excelData.length > 0) {
+                const headers = Object.keys(excelData[0]);
+                const colWidths = headers.map((header) => {
+                    const maxDataLen = excelData.reduce((max, row) => {
+                        const cellVal = row[header] != null ? String(row[header]) : "";
+                        return Math.max(max, cellVal.length);
+                    }, 0);
+                    return { wch: Math.max(header.length, maxDataLen)};
+                });
+                ws["!cols"] = colWidths;
+            }
 
             // Add worksheet to workbook
             XLSX.utils.book_append_sheet(wb, ws, "Employee Masterlist");
@@ -129,9 +109,9 @@ export default function GenerateExcelFileSection() {
 
     return (
         <div className="flex items-center gap-2">
-            <span className="text-xs text-gray-500">
+            {/* <span className="text-xs text-gray-500">
                 {employees?.total || 0} employees
-            </span>
+            </span> */}
             <Button
                 type="primary"
                 icon={<FileExcelOutlined />}

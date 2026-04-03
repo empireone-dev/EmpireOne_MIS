@@ -18,6 +18,7 @@ import {
     EyeIcon,
 } from "@heroicons/react/24/outline";
 import AcknowledgmentsSearchSection from "./acknowledgments-search-section";
+import GenerateAcknowledgmentSection from "./generate-acknowledgment-section";
 
 export default function AcknowledgmentsTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -273,7 +274,10 @@ export default function AcknowledgmentsTableSection() {
                     </h2>
                 </div>
             </div>
-            <AcknowledgmentsSearchSection />
+            <div className="flex flex-1 justify-between">
+                <AcknowledgmentsSearchSection />
+                <GenerateAcknowledgmentSection />
+            </div>
             <Table
                 pagination={false}
                 columns={columns}

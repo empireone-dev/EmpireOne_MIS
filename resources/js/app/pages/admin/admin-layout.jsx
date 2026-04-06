@@ -147,13 +147,13 @@ const AdminLayout = ({ children }) => {
             icon: <UsergroupAddOutlined />,
             label: "Recruitment",
             children: [
-                // {
-                //     key: "guide_question",
-                //     icon: <QuestionOutlined />,
-                //     label: "Guide Questions",
-                //     onClick: () =>
-                //         router.visit("/admin/recruitment/guide_question"),
-                // },
+                {
+                    key: "guide_question",
+                    icon: <QuestionOutlined />,
+                    label: "Guide Questions",
+                    onClick: () =>
+                        router.visit("/admin/recruitment/guide_question"),
+                },
                 // {
                 //     key: "applicants",
                 //     icon: <HolderOutlined />,

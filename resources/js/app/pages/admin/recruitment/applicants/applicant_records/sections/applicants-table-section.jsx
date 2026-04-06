@@ -366,9 +366,8 @@ export default function ApplicantsTableSection() {
         store.dispatch(get_account_thunk());
     }, []);
 
-    const urls = new URL(window.location.href);
-    const searchParams = new URLSearchParams(urls.search);
-    const pages = searchParams.get("page");
+    const urlSearch = typeof window !== "undefined" ? window.location.search : "";
+    const searchParams = new URLSearchParams(urlSearch);
     const status = searchParams.get("status");
     const site = searchParams.get("site");
 
@@ -376,12 +375,20 @@ export default function ApplicantsTableSection() {
 
     function search_status(value) {
         router.visit(
-            "?page=1" + "&status=" + (value || "null") + "&site=" + site,
+            "?page=1" +
+                "&status=" +
+                (value || "null") +
+                "&site=" +
+                (site ?? "null"),
         );
     }
     function search_site(value) {
         router.visit(
-            "?page=1" + "&status=" + status + "&site=" + (value || "null"),
+            "?page=1" +
+                "&status=" +
+                (status ?? "null") +
+                "&site=" +
+                (value || "null"),
         );
     }
 
@@ -418,7 +425,14 @@ export default function ApplicantsTableSection() {
                 await store.dispatch(
                     create_job_offer_thunk({
                         ...bulkForm,
-                        ...row,
+                        app_id: row.app_id,
+                        fname: row.fname,
+                        lname: row.lname,
+                        mname: row.mname,
+                        email: row.email,
+                        phone: row.phone,
+                        site: row.site,
+                        applying_for: row.applying_for,
                         status: "Pending",
                     }),
                 );
@@ -691,24 +705,28 @@ export default function ApplicantsTableSection() {
         },
     ];
 
-    const url = window.location.pathname + window.location.search;
+    const url =
+        typeof window !== "undefined"
+            ? window.location.pathname + window.location.search
+            : "";
 
-    const getQueryParam = (url, paramName) => {
-        const searchParams = new URLSearchParams(url.split("?")[1]);
-        return searchParams.get(paramName);
+    const getQueryParam = (u, paramName) => {
+        const qs = u.includes("?") ? u.split("?")[1] : "";
+        return new URLSearchParams(qs).get(paramName);
     };
 
-    const page = getQueryParam(url, "page");
-    const categories = getQueryParam(url, "categories");
+    const page = getQueryParam(url, "page") ?? "1";
 
     const paginationConfig = {
-        current: page,
+        current: Number(page) || 1,
         pageSize: pageSize,
-        total: applicants.last_page * pageSize,
+        total: (applicants.last_page ?? 1) * pageSize,
         onChange: (newPage, newPageSize) => {
+            const pathname =
+                typeof window !== "undefined" ? window.location.pathname : "";
             router.visit(
-                window.location.pathname +
-                    `?page=${newPage}&status=${status}&site=${site}`,
+                pathname +
+                    `?page=${newPage}&status=${status ?? "null"}&site=${site ?? "null"}`,
             );
             setCurrent(newPage);
             setPageSize(newPageSize);
@@ -765,9 +783,9 @@ export default function ApplicantsTableSection() {
             )}
 
             <div className="w-full">
-                {applicants.total > 0
-                    ? `Showing ${(page - 1) * pageSize + 1} to ${Math.min(
-                          page * pageSize,
+                {(applicants.total ?? 0) > 0
+                    ? `Showing ${(Number(page) - 1) * pageSize + 1} to ${Math.min(
+                          Number(page) * pageSize,
                           applicants.total,
                       )} of ${applicants.total} entries`
                     : "No entries available"}

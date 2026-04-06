@@ -92,33 +92,63 @@ export default function EmployeeHandbookSection() {
 
     if (hasAcknowledged && existingAck) {
         return (
-            <div className="w-full mt-8 p-6 bg-white rounded-lg shadow-md border border-green-200">
-                <div className="flex items-center justify-center mb-4">
-                    <img className="w-48" src="/images/newlogo.png" alt="logo" />
-                </div>
-                <div className="text-center mb-6">
-                    <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold text-sm mb-3">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        Acknowledged
+            <div className="w-full mb-10 px-4">
+                <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
+                    {/* Header */}
+                    <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
+                        <img className="w-28" src="/images/newlogo.png" alt="logo" />
+                        <div className="text-right">
+                            <h2 className="text-base font-bold text-gray-800">Employee Handbook</h2>
+                            <div className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold mt-1">
+                                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                </svg>
+                                Signed &amp; Acknowledged
+                            </div>
+                        </div>
                     </div>
-                    <h2 className="text-xl font-bold text-gray-800">Employee Handbook</h2>
-                    <p className="text-sm text-gray-500 mt-1">
-                        Acknowledged by <span className="font-semibold">{existingAck.emp_name}</span> on{" "}
-                        {new Date(existingAck.acknowledged_at).toLocaleDateString("en-US", {
-                            year: "numeric", month: "long", day: "numeric",
-                        })}
-                    </p>
-                </div>
-                <div className="flex justify-center">
-                    <div className="border border-gray-300 rounded p-2 bg-gray-50">
-                        <p className="text-xs text-gray-400 text-center mb-1">E-Signature</p>
-                        <img
-                            src={existingAck.signature}
-                            alt="E-Signature"
-                            className="max-h-24 object-contain"
+
+                    {/* PDF Viewer */}
+                    <div className="border-b border-gray-200">
+                        <iframe
+                            src="/documents/employee-handbook.pdf"
+                            title="Employee Handbook"
+                            className="w-full"
+                            style={{ height: "1500px" }}
                         />
+                    </div>
+
+                    {/* Signature Block */}
+                    <div className="px-6 py-6 bg-gray-50">
+                        <p className="text-xs text-gray-400 uppercase tracking-wide font-semibold mb-4">
+                            Acknowledgment Record
+                        </p>
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
+                            <div className="flex-1">
+                                <p className="text-sm text-gray-600">
+                                    I hereby confirm that I have read and understood this document.
+                                </p>
+                                <p className="text-sm text-gray-800 font-semibold mt-2">
+                                    {existingAck.emp_name}
+                                </p>
+                                <p className="text-xs text-gray-500 mt-0.5">
+                                    {new Date(existingAck.acknowledged_at).toLocaleDateString("en-US", {
+                                        year: "numeric", month: "long", day: "numeric",
+                                    })}
+                                </p>
+                            </div>
+                            <div className="border border-gray-300 rounded-lg p-3 bg-white flex flex-col items-center min-w-[180px]">
+                                <p className="text-xs text-gray-400 mb-2 uppercase tracking-wide">E-Signature</p>
+                                <img
+                                    src={existingAck.signature}
+                                    alt="E-Signature"
+                                    className="max-h-20 max-w-[200px] object-contain"
+                                />
+                                <div className="mt-2 w-full border-t border-gray-300 pt-1 text-center">
+                                    <p className="text-xs text-gray-500">{existingAck.emp_name}</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

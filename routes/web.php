@@ -600,6 +600,14 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         Route::get('/{id}', function () {
             return Inertia::render('admin/acknowledgments/id/page');
         });
+        
+        // Route::get('/{id}', function () {
+        //     return Inertia::render('admin/acknowledgments/id/page');
+        // });
+        Route::get('/{id}/view/{employee_id}', function () {
+            return Inertia::render('admin/acknowledgments/view/page');
+        });
+
     });
 
     Route::get('/profile', function () {

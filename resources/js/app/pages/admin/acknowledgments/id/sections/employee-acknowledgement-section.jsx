@@ -56,30 +56,38 @@ export default function EmployeeAcknowledgementSection() {
                     <span className="text-gray-400">—</span>
                 ),
         },
-        // {
-        //     title: "Action",
-        //     dataIndex: "action",
-        //     key: "action",
-        //     render: (_, record, i) => {
-        //         return (
-        //             <div key={i}>
-        //                 <button
-        //                     onClick={() => {
-        //                         window.open(
-        //                             `/admin/acknowledgments/${record.emp_id}`,
-        //                             "_blank",
-        //                         );
-        //                     }}
-        //                     className="bg-amber-400 hover:bg-amber-500 text-white p-2 px-4 rounded-md"
-        //                 >
-        //                     <Tooltip title="View Document">
-        //                         <EyeIcon className="h-5" />
-        //                     </Tooltip>
-        //                 </button>
-        //             </div>
-        //         );
-        //     },
-        // },
+        {
+            title: "Action",
+            dataIndex: "action",
+            key: "action",
+            render: (_, record, i) => {
+                const hasAcknowledged = !!record.data;
+                return (
+                    <div key={i}>
+                        <Tooltip title={hasAcknowledged ? "View Signed Document" : "Not yet acknowledged"}>
+                            <button
+                                onClick={() => {
+                                    if (hasAcknowledged) {
+                                        window.open(
+                                            `/admin/acknowledgments/${record.key}/view/${acknowledgment?.emp_id}`,
+                                            "_blank",
+                                        );
+                                    }
+                                }}
+                                disabled={!hasAcknowledged}
+                                className={
+                                    hasAcknowledged
+                                        ? "bg-amber-400 hover:bg-amber-500 text-white p-2 px-4 rounded-md"
+                                        : "bg-gray-200 text-gray-400 p-2 px-4 rounded-md cursor-not-allowed"
+                                }
+                            >
+                                <EyeIcon className="h-5" />
+                            </button>
+                        </Tooltip>
+                    </div>
+                );
+            },
+        },
     ];
 
     const employeeName = acknowledgment?.applicant

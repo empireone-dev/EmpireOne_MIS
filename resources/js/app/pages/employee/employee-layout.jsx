@@ -39,6 +39,7 @@ const { Header, Sider, Content } = Layout;
 const EmployeeLayout = ({ children }) => {
     const { url } = usePage();
     const [collapsed, setCollapsed] = useState(false);
+    const [isMobile, setIsMobile] = useState(false);
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
@@ -317,6 +318,24 @@ const EmployeeLayout = ({ children }) => {
                     trigger={null}
                     collapsible
                     collapsed={collapsed}
+                    collapsedWidth={isMobile ? 0 : 80}
+                    breakpoint="lg"
+                    onBreakpoint={(broken) => {
+                        setIsMobile(broken);
+                        setCollapsed(broken);
+                    }}
+                    style={
+                        isMobile
+                            ? {
+                                  position: "fixed",
+                                  height: "100vh",
+                                  zIndex: 999,
+                                  left: 0,
+                                  top: 0,
+                                  overflow: "auto",
+                              }
+                            : {}
+                    }
                 >
                     <img src="/images/logo.png" />
                     <div className="flex items-center justify-between px-5 py-5">
@@ -377,7 +396,7 @@ const EmployeeLayout = ({ children }) => {
                                     }}
                                 />
                             </div>
-                            <div className="flex flex-auto justify-end mr-5">
+                            <div className="flex flex-auto justify-end mr-3 sm:mr-5 relative">
                                 <button onClick={toggleDropdown}>
                                     <SettingOutlined className="text-2xl" />
                                 </button>
@@ -386,7 +405,7 @@ const EmployeeLayout = ({ children }) => {
                                     id="dropdown"
                                     className={`z-10 ${
                                         isOpen ? "block" : "hidden"
-                                    } absolute w-auto p-3 px-5 bg-white rounded-lg shadow-lg  mt-4`}
+                                    } absolute top-full right-0 w-56 sm:w-auto p-3 px-4 sm:px-5 bg-white rounded-lg shadow-lg mt-2`}
                                 >
                                     <h6 className="mb-3 text-sm font-medium ">
                                         Account Controls
@@ -456,7 +475,7 @@ const EmployeeLayout = ({ children }) => {
                                     onCancel={() =>
                                         setUpdateProfileModalOpen(false)
                                     }
-                                    width={1200}
+                                    width={isMobile ? "95vw" : 1200}
                                     footer={null}
                                 >
                                     <li className="bg-gray-300 h-0.5"></li>
@@ -753,10 +772,8 @@ const EmployeeLayout = ({ children }) => {
                         </div>
                     </Header>
                     <Content
-                        className="overflow-auto"
+                        className="overflow-auto p-3 sm:p-6"
                         style={{
-                            // margin: '24px 16px',
-                            padding: 24,
                             minHeight: 280,
                             background: colorBgContainer,
                             borderRadius: borderRadiusLG,
@@ -767,6 +784,12 @@ const EmployeeLayout = ({ children }) => {
                     <AdminFooterComponents />
                 </Layout>
             </Layout>
+            {isMobile && !collapsed && (
+                <div
+                    className="fixed inset-0 bg-black bg-opacity-50 z-[998]"
+                    onClick={() => setCollapsed(true)}
+                />
+            )}
         </div>
     );
 };

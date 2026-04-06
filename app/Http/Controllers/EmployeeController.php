@@ -282,7 +282,6 @@ class EmployeeController extends Controller
             'attrition',
             'applicant',
             'user',
-            'dept',
             'cocd_acknowledges',
             'ethics_acknowledges',
             'handbook_acknowledges'

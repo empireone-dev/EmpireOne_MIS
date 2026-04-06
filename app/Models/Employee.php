@@ -54,9 +54,9 @@ class Employee extends Model
     }
 
 
-    public function department(): BelongsTo
+    public function department(): HasOne
     {
-        return $this->BelongsTo(Department::class, "dept", "dept");
+        return $this->hasOne(Department::class, "dept", "dept");
     }
     public function dept_user(): BelongsTo
     {

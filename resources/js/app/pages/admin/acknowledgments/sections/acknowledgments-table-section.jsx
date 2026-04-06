@@ -209,9 +209,9 @@ export default function AcknowledgmentsTableSection() {
             title: "Department",
             dataIndex: "department",
             key: "department",
-            // ...getColumnSearchProps("department"),
             render: (_, record, i) => {
-                return <div key={i}>{record?.dept?.dept || "N/A"}</div>;
+                console.log("recordss", record);
+                return <div key={i}>{record?.dept || "N/A"}</div>;
             },
         },
         {

@@ -25,17 +25,9 @@ import { ai_interview_service, get_guide_questions_for_ai_service } from "@/app/
 
 export function get_applicant_thunk() {
     return async function (dispatch, getState) {
-        try {
-            const result = await get_applicant_service();
-            if (result && result.data) {
-                dispatch(applicantSlice.actions.setApplicants(result.data));
-            }
-            if (result && result.interviewer) {
-                dispatch(applicantSlice.actions.setInterviewer(result.interviewer));
-            }
-        } catch (error) {
-            console.error('get_applicant_thunk error:', error);
-        }
+        const result = await get_applicant_service();
+        dispatch(applicantSlice.actions.setApplicants(result.data));
+        dispatch(applicantSlice.actions.setInterviewer(result.interviewer));
     };
 }
 

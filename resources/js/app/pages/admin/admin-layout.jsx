@@ -53,6 +53,7 @@ const AdminLayout = ({ children }) => {
     });
     const [passwordErrors, setPasswordErrors] = useState({});
     const [passwordLoading, setPasswordLoading] = useState(false);
+    const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0, url: "" });
     const { user } = useSelector((state) => state.app);
 
     const {
@@ -67,6 +68,18 @@ const AdminLayout = ({ children }) => {
         loadData();
     }, [user.id]);
 
+    const menuLabel = (label, url) => (
+        <span
+            onContextMenu={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setContextMenu({ visible: true, x: e.clientX, y: e.clientY, url });
+            }}
+        >
+            {label}
+        </span>
+    );
+
     // Special menu items for role_id == 10 (ERF users)
     const erfUserItems = [
         {
@@ -77,7 +90,7 @@ const AdminLayout = ({ children }) => {
                 {
                     key: "erf_record",
                     icon: <HolderOutlined />,
-                    label: "ERF Record",
+                    label: menuLabel("ERF Record", "/employee/erf_record"),
                     onClick: () => router.visit("/employee/erf_record"),
                 },
             ],
@@ -85,19 +98,19 @@ const AdminLayout = ({ children }) => {
         {
             key: "employee_handbook",
             icon: <IdcardOutlined />,
-            label: "Employee Handbook",
+            label: menuLabel("Employee Handbook", "/employee/employee_handbook"),
             onClick: () => router.visit("/employee/employee_handbook"),
         },
         {
             key: "code_of_ethics",
             icon: <BankOutlined />,
-            label: "Code of Ethics",
+            label: menuLabel("Code of Ethics", "/employee/code_of_ethics"),
             onClick: () => router.visit("/employee/code_of_ethics"),
         },
         {
             key: "cocd",
             icon: <FileProtectOutlined />,
-            label: "Code of Discipline",
+            label: menuLabel("Code of Discipline", "/employee/cocd"),
             onClick: () => router.visit("/employee/cocd"),
         },
     ];
@@ -107,7 +120,7 @@ const AdminLayout = ({ children }) => {
         {
             key: "dashboard",
             icon: <DashboardOutlined />,
-            label: "Dashboard",
+            label: menuLabel("Dashboard", "/admin/dashboard"),
             onClick: () => router.visit("/admin/dashboard"),
         },
         {
@@ -118,26 +131,26 @@ const AdminLayout = ({ children }) => {
                 {
                     key: "account",
                     icon: <HolderOutlined />,
-                    label: "Accounts",
+                    label: menuLabel("Accounts", "/admin/sourcing/account"),
                     onClick: () => router.visit("/admin/sourcing/account"),
                 },
                 {
                     key: "department",
                     icon: <HolderOutlined />,
-                    label: "Department",
+                    label: menuLabel("Department", "/admin/sourcing/department"),
                     onClick: () => router.visit("/admin/sourcing/department"),
                 },
                 {
                     key: "job_title_section",
                     icon: <HolderOutlined />,
-                    label: "Job Title Section",
+                    label: menuLabel("Job Title Section", "/admin/sourcing/job_title_section"),
                     onClick: () =>
                         router.visit("/admin/sourcing/job_title_section"),
                 },
                 {
                     key: "erf_record",
                     icon: <HolderOutlined />,
-                    label: "ERF Record",
+                    label: menuLabel("ERF Record", "/admin/sourcing/erf_record"),
                     onClick: () => router.visit("/admin/sourcing/erf_record"),
                 },
             ],
@@ -150,7 +163,7 @@ const AdminLayout = ({ children }) => {
                 {
                     key: "guide_question",
                     icon: <QuestionOutlined />,
-                    label: "Guide Questions",
+                    label: menuLabel("Guide Questions", "/admin/recruitment/guide_question"),
                     onClick: () =>
                         router.visit("/admin/recruitment/guide_question"),
                 },
@@ -178,7 +191,7 @@ const AdminLayout = ({ children }) => {
                         {
                             key: "applicant_recordss",
                             icon: <HolderOutlined />,
-                            label: "All Records",
+                            label: menuLabel("All Records", "/admin/recruitment/applicant_records?page=1"),
                             onClick: () =>
                                 router.visit(
                                     "/admin/recruitment/applicant_records?page=1",
@@ -187,7 +200,7 @@ const AdminLayout = ({ children }) => {
                         {
                             key: "pending",
                             icon: <HolderOutlined />,
-                            label: "Pending",
+                            label: menuLabel("Pending", "/admin/recruitment/applicant_records?page=1&status=Pending&site=null"),
                             onClick: () =>
                                 router.visit(
                                     "/admin/recruitment/applicant_records?page=1&status=Pending&site=null",
@@ -196,7 +209,7 @@ const AdminLayout = ({ children }) => {
                         {
                             key: "initial_phase",
                             icon: <HolderOutlined />,
-                            label: "Initial Phase",
+                            label: menuLabel("Initial Phase", "/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null"),
                             onClick: () =>
                                 router.visit(
                                     "/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null",
@@ -205,7 +218,7 @@ const AdminLayout = ({ children }) => {
                         {
                             key: "for_final_phase",
                             icon: <HolderOutlined />,
-                            label: "For Final Phase",
+                            label: menuLabel("For Final Phase", "/admin/recruitment/applicant_records?page=1&status=For%20Final%20Phase&site=null"),
                             onClick: () =>
                                 router.visit(
                                     "/admin/recruitment/applicant_records?page=1&status=For%20Final%20Phase&site=null",
@@ -214,7 +227,7 @@ const AdminLayout = ({ children }) => {
                         {
                             key: "final_phase",
                             icon: <HolderOutlined />,
-                            label: "Final Phase",
+                            label: menuLabel("Final Phase", "/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null"),
                             onClick: () =>
                                 router.visit(
                                     "/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null",
@@ -223,7 +236,7 @@ const AdminLayout = ({ children }) => {
                         {
                             key: "failed",
                             icon: <HolderOutlined />,
-                            label: "Failed",
+                            label: menuLabel("Failed", "/admin/recruitment/applicant_records?page=1&status=Failed&site=null"),
                             onClick: () =>
                                 router.visit(
                                     "/admin/recruitment/applicant_records?page=1&status=Failed&site=null",
@@ -232,7 +245,7 @@ const AdminLayout = ({ children }) => {
                         {
                             key: "send_failed",
                             icon: <HolderOutlined />,
-                            label: "Send Failed",
+                            label: menuLabel("Send Failed", "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null"),
                             onClick: () =>
                                 router.visit(
                                     "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null",
@@ -241,7 +254,7 @@ const AdminLayout = ({ children }) => {
                         {
                             key: "passed",
                             icon: <HolderOutlined />,
-                            label: "Passed",
+                            label: menuLabel("Passed", "/admin/recruitment/applicant_records?page=1&status=Passed&site=null"),
                             onClick: () =>
                                 router.visit(
                                     "/admin/recruitment/applicant_records?page=1&status=Passed&site=null",
@@ -250,7 +263,7 @@ const AdminLayout = ({ children }) => {
                         {
                             key: "pooling",
                             icon: <HolderOutlined />,
-                            label: "Pooling",
+                            label: menuLabel("Pooling", "/admin/recruitment/applicant_records?page=1&status=Pooling&site=null"),
                             onClick: () =>
                                 router.visit(
                                     "/admin/recruitment/applicant_records?page=1&status=Pooling&site=null",
@@ -274,13 +287,13 @@ const AdminLayout = ({ children }) => {
                 {
                     key: "pre_employment",
                     icon: <HolderOutlined />,
-                    label: "Pre-Employment ",
+                    label: menuLabel("Pre-Employment", "/admin/hiring/pre_employment"),
                     onClick: () => router.visit("/admin/hiring/pre_employment"),
                 },
                 {
                     key: "hiring_section",
                     icon: <HolderOutlined />,
-                    label: "Hiring Section",
+                    label: menuLabel("Hiring Section", "/admin/hiring/hiring_section"),
                     onClick: () => router.visit("/admin/hiring/hiring_section"),
                 },
             ],
@@ -293,7 +306,7 @@ const AdminLayout = ({ children }) => {
                 {
                     key: "onboarding_docu",
                     icon: <HolderOutlined />,
-                    label: "Documents",
+                    label: menuLabel("Documents", "/admin/onboarding/onboarding_docu"),
                     onClick: () =>
                         router.visit("/admin/onboarding/onboarding_docu"),
                 },
@@ -314,7 +327,7 @@ const AdminLayout = ({ children }) => {
                 {
                     key: "employee_section",
                     icon: <HolderOutlined />,
-                    label: "Employee Section",
+                    label: menuLabel("Employee Section", "/admin/employee_relation/employee_section?page=1"),
                     onClick: () =>
                         router.visit(
                             "/admin/employee_relation/employee_section?page=1",
@@ -337,7 +350,7 @@ const AdminLayout = ({ children }) => {
                 {
                     key: "attrition_section",
                     icon: <HolderOutlined />,
-                    label: "Attrition Section",
+                    label: menuLabel("Attrition Section", "/admin/attrition/attrition_section"),
                     onClick: () =>
                         router.visit("/admin/attrition/attrition_section"),
                 },
@@ -346,31 +359,31 @@ const AdminLayout = ({ children }) => {
         {
             key: "compliance_training",
             icon: <AuditOutlined />,
-            label: "Compliance Training",
+            label: menuLabel("Compliance Training", "/admin/compliance"),
             onClick: () => router.visit("/admin/compliance"),
         },
         {
             key: "acknowledgments",
             icon: <LikeOutlined />,
-            label: "Acknowledgments",
+            label: menuLabel("Acknowledgments", "/admin/acknowledgments"),
             onClick: () => router.visit("/admin/acknowledgments"),
         },
         {
             key: "employee_handbook",
             icon: <IdcardOutlined />,
-            label: "Employee Handbook",
+            label: menuLabel("Employee Handbook", "/admin/employee_handbook"),
             onClick: () => router.visit("/admin/employee_handbook"),
         },
         {
             key: "code_of_ethics",
             icon: <BankOutlined />,
-            label: "Code of Ethics",
+            label: menuLabel("Code of Ethics", "/admin/code_of_ethics"),
             onClick: () => router.visit("/admin/code_of_ethics"),
         },
         {
             key: "cocd",
             icon: <FileProtectOutlined />,
-            label: "Code of Discipline",
+            label: menuLabel("Code of Discipline", "/admin/cocd"),
             onClick: () => router.visit("/admin/cocd"),
         },
         // {
@@ -477,6 +490,13 @@ const AdminLayout = ({ children }) => {
         return () => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
+    }, []);
+
+    useEffect(() => {
+        const handleClick = () =>
+            setContextMenu((prev) => ({ ...prev, visible: false }));
+        document.addEventListener("click", handleClick);
+        return () => document.removeEventListener("click", handleClick);
     }, []);
 
     const toggleDropdown = () => {
@@ -1072,6 +1092,31 @@ const AdminLayout = ({ children }) => {
                     <AdminFooterComponents />
                 </Layout>
             </Layout>
+            {contextMenu.visible && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: contextMenu.y,
+                        left: contextMenu.x,
+                        zIndex: 9999,
+                    }}
+                    className="bg-white shadow-lg rounded border border-gray-200 py-1 min-w-[160px]"
+                >
+                    <button
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            window.open(contextMenu.url, "_blank");
+                            setContextMenu((prev) => ({
+                                ...prev,
+                                visible: false,
+                            }));
+                        }}
+                    >
+                        Open in new tab
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

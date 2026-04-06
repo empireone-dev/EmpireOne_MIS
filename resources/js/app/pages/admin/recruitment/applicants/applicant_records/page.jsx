@@ -14,18 +14,11 @@ import CreateApplicantSection from "./sections/create-applicant-section";
 export default function ApplicantRecords() {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(true);
-    const [loadError, setLoadError] = useState(false);
     useEffect(() => {
         async function loadData() {
-            try {
-                await store.dispatch(get_applicant_thunk());
-                await store.dispatch(get_job_position_thunk());
-            } catch (e) {
-                console.error("Failed to load applicant data:", e);
-                setLoadError(true);
-            } finally {
-                setLoading(false);
-            }
+            await store.dispatch(get_applicant_thunk());
+            await store.dispatch(get_job_position_thunk());
+            setLoading(false);
         }
         loadData();
     }, []);
@@ -34,17 +27,6 @@ export default function ApplicantRecords() {
             {loading ? (
                 <div>
                     <Skeleton />
-                </div>
-            ) : loadError ? (
-                <div className="flex flex-col items-center justify-center py-20 text-gray-500">
-                    <p className="text-lg font-semibold">Failed to load applicant records.</p>
-                    <p className="text-sm mt-1">Please refresh the page or contact support if the issue persists.</p>
-                    <button
-                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
-                        onClick={() => window.location.reload()}
-                    >
-                        Retry
-                    </button>
                 </div>
             ) : (
                 !loading && (

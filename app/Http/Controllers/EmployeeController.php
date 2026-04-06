@@ -277,6 +277,7 @@ class EmployeeController extends Controller
     {
         $perPage = (int) request()->get('per_page', 10);
         $perPage = min($perPage, 10000); // cap to prevent abuse
+        $searching = request()->get('searching');
 
         $employees = Employee::with([
             'attrition',
@@ -291,18 +292,22 @@ class EmployeeController extends Controller
                     ->orWhereHas('ethics_acknowledges')
                     ->orWhereHas('handbook_acknowledges');
             })
+            ->when($searching, function ($query) use ($searching) {
+                $query->where(function ($q) use ($searching) {
+                    $q->where('emp_id', 'like', "%{$searching}%")
+                      ->orWhere('eogs', 'like', "%{$searching}%")
+                      ->orWhereHas('applicant', function ($aq) use ($searching) {
+                          $aq->where('fname', 'like', "%{$searching}%")
+                            ->orWhere('lname', 'like', "%{$searching}%")
+                            ->orWhere('mname', 'like', "%{$searching}%");
+                      });
+                });
+            })
             ->paginate($perPage);
 
-        if ($employees->isNotEmpty()) {
-            return response()->json([
-                'data' => $employees
-            ], 200);
-        } else {
-            return response()->json([
-                'error' => 'No employees found',
-                'message' => 'No employees with acknowledgments found'
-            ], 404);
-        }
+        return response()->json([
+            'data' => $employees
+        ], 200);
     }
 
     public function showForQR($id)

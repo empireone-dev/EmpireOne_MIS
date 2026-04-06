@@ -13,9 +13,14 @@ export function get_employee_thunk() {
 
 export function get_employee_with_acknowledgment_thunk() {
   return async function (dispatch, getState) {
-    const result = (await get_employee_with_acknowledgment_service()).data
-    dispatch(employeeSlice.actions.setEmployeesWithAcknowledgment(result?.data ?? []));
-    dispatch(employeeSlice.actions.setEmployeesWithAcknowledgmentTotal(result?.total ?? 0));
+    try {
+      const result = (await get_employee_with_acknowledgment_service()).data
+      dispatch(employeeSlice.actions.setEmployeesWithAcknowledgment(result?.data ?? []));
+      dispatch(employeeSlice.actions.setEmployeesWithAcknowledgmentTotal(result?.total ?? 0));
+    } catch {
+      dispatch(employeeSlice.actions.setEmployeesWithAcknowledgment([]));
+      dispatch(employeeSlice.actions.setEmployeesWithAcknowledgmentTotal(0));
+    }
   };
 }
 

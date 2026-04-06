@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
+use App\Http\Controllers\Auth\ForgotPasswordOtpController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
@@ -33,6 +34,15 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
+
+    // OTP-based forgot password (uses employee_id instead of email)
+    Route::post('otp/send', [ForgotPasswordOtpController::class, 'sendOtp'])
+                ->middleware('throttle:5,1')
+                ->name('otp.send');
+
+    Route::post('otp/reset', [ForgotPasswordOtpController::class, 'resetPassword'])
+                ->middleware('throttle:10,1')
+                ->name('otp.reset');
 });
 
 Route::middleware('auth')->group(function () {

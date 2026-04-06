@@ -46,7 +46,7 @@ export default function ApplicantPhoneStatusComponent({ record, open, setOpen })
                 }`}>
                 {record.phone}
             </span>
-            {/* <div>
+            <div>
                 <Tooltip title="Contact Status">
                     <button type="button" onClick={() => setOpen(true)}>
                         <PhoneFilled />
@@ -90,7 +90,7 @@ export default function ApplicantPhoneStatusComponent({ record, open, setOpen })
                         </form>
                     </div>
                 </Modal>
-            </div> */}
+            </div>
         </div>
     )
 }

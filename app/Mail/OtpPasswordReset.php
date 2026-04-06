@@ -20,7 +20,7 @@ class OtpPasswordReset extends Mailable
     public function build()
     {
         return $this->from('hrisempireone@gmail.com', 'No Reply')
-            ->subject('EmpireOne - Password Reset OTP')
+            ->subject('EmpireOne HRIS Employee Portal - Password Reset OTP')
             ->markdown('mail.otp_password_reset.email')
             ->with($this->data);
     }

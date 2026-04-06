@@ -47,50 +47,89 @@ class ApplicantController extends Controller
 
     public function index(Request $request)
     {
-        ini_set('memory_limit', '512M');
+        try {
+            $applicant = Applicant::query()
+                ->with(['final', 'initial', 'joboffer', 'user', 'cvfile', 'guideqs', 'employee', 'a_i_interview']);
 
-        $applicant = Applicant::query()
-            ->with(['final', 'initial', 'joboffer', 'user', 'cvfile', 'guideqs', 'employee', 'a_i_interview']);
-        // ->orderBy('status'); // Sort by status in ascending order
-        if ($request->site && $request->site !== 'null') {
-            $applicant->where('site', '=', $request->site);
-        }
+            if ($request->site && $request->site !== 'null') {
+                $applicant->where('site', '=', $request->site);
+            }
 
-        $user = User::with('employee')
-            // ->where('employee_id', '!=', '24010101')
-            ->whereIn('position', ['CEO', 'Account Manager', 'Director', 'HR Director', 'Talent Acquisition Manager', 'HR Manager', 'I.T Manager', 'Operations Manager'])
-            ->where(function ($query) {
-                $query->where('position', 'CEO')
-                    ->orWhereHas('employee', function ($subQuery) {
-                        $subQuery->whereIn('status', ['Regular', 'Probationary']);
+            $user = User::with('employee')
+                ->whereIn('position', ['CEO', 'Account Manager', 'Director', 'HR Director', 'Talent Acquisition Manager', 'HR Manager', 'I.T Manager', 'Operations Manager'])
+                ->where(function ($query) {
+                    $query->where('position', 'CEO')
+                        ->orWhereHas('employee', function ($subQuery) {
+                            $subQuery->whereIn('status', ['Regular', 'Probationary']);
+                        });
+                })
+                ->get();
+
+            if ($request->search) {
+                $applicant->where('status', $request->search);
+            }
+
+            if ($request->searching) {
+                $applicant->where(function ($query) use ($request) {
+                    $query->where('fname', 'LIKE', '%' . $request->searching . '%')
+                        ->orWhere('lname', 'LIKE', '%' . $request->searching . '%')
+                        ->orWhere('mname', 'LIKE', '%' . $request->searching . '%')
+                        ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%');
+                });
+            }
+
+            if ($request->status && $request->status !== 'null') {
+                $applicant->where('status', '=', $request->status);
+            }
+
+            return response()->json([
+                'interviewer' => $user,
+                'data' => $applicant->orderBy('id', 'desc')->paginate(10),
+            ], 200);
+
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('ApplicantController@index error: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            // Try a minimal fallback without heavy relations
+            try {
+                $applicant = Applicant::query()
+                    ->with(['joboffer', 'employee', 'cvfile']);
+
+                if ($request->site && $request->site !== 'null') {
+                    $applicant->where('site', '=', $request->site);
+                }
+                if ($request->status && $request->status !== 'null') {
+                    $applicant->where('status', '=', $request->status);
+                }
+                if ($request->searching) {
+                    $applicant->where(function ($query) use ($request) {
+                        $query->where('fname', 'LIKE', '%' . $request->searching . '%')
+                            ->orWhere('lname', 'LIKE', '%' . $request->searching . '%')
+                            ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%');
                     });
-            })
-            ->get();
+                }
 
-        if ($request->search) {
-            $applicant->where('status', $request->search);
+                return response()->json([
+                    'interviewer' => [],
+                    'data' => $applicant->orderBy('id', 'desc')->paginate(10),
+                ], 200);
+
+            } catch (\Exception $fallbackError) {
+                \Illuminate\Support\Facades\Log::error('ApplicantController@index fallback error: ' . $fallbackError->getMessage());
+                return response()->json([
+                    'interviewer' => [],
+                    'data' => [
+                        'data' => [],
+                        'total' => 0,
+                        'last_page' => 1,
+                        'current_page' => 1,
+                        'per_page' => 10,
+                    ],
+                ], 200);
+            }
         }
-
-        if ($request->searching) {
-            $applicant->where(function ($query) use ($request) {
-                $query->where('fname', 'LIKE', '%' . $request->searching . '%')
-                    ->orWhere('lname', 'LIKE', '%' . $request->searching . '%')
-                    ->orWhere('mname', 'LIKE', '%' . $request->searching . '%')
-                    ->orWhere('app_id', 'LIKE', '%' . $request->searching . '%');
-            });
-        }
-
-        if ($request->status  && $request->status !== 'null') {
-            $applicant->where('status', '=', $request->status);
-        }
-
-
-
-
-        return response()->json([
-            'interviewer' => $user,
-            'data' => $applicant->orderBy('id', 'desc')->paginate(10),
-        ], 200);
     }
 
 

@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-import { Select, Table, Tag, Tooltip, Modal, Button } from "antd";
+import React, { useRef, useState, useEffect } from "react";
+import { Select, Table, Tag, Tooltip, Modal, Button, message } from "antd";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { router } from "@inertiajs/react";
@@ -7,11 +7,16 @@ import ApplicantMenuSection from "./applicant-menu-section";
 import ApplicantSearchSection from "./applicant-search-section";
 import CreateApplicantSection from "./create-applicant-section";
 import ApplicantPhoneStatusComponent from "../../components/applicant-phone-status-component";
-import { FileFilled } from "@ant-design/icons";
+import { FileFilled, LoadingOutlined } from "@ant-design/icons";
 import { NewspaperIcon } from "@heroicons/react/24/outline";
 import ApplicantCvFileComponent from "../../components/applicant-cv-file-component";
 import ApplicantDetaillsComponent from "../../components/applicant-detaills-component";
 import ApplicantAiInterviewComponent from "../../components/applicant-ai-interview-component";
+import store from "@/app/store/store";
+import { create_job_offer_thunk } from "@/app/pages/admin/hiring/hiring_section/redux/hiring-thunk";
+import { get_applicant_thunk } from "../redux/applicant-thunk";
+import { get_department_thunk } from "@/app/pages/admin/sourcing/department/redux/department-thunk";
+import { get_account_thunk } from "@/app/pages/admin/employee_relation/employee_section/redux/account-thunk";
 
 // ContactCell component to handle modal state properly
 const ContactCell = ({ record }) => {
@@ -311,13 +316,55 @@ const ApplicationIdCell = ({ record }) => {
     );
 };
 
+const BULK_SELECTION_KEY = "bulk_job_offer_selection";
+
+function loadSelection() {
+    try {
+        const saved = sessionStorage.getItem(BULK_SELECTION_KEY);
+        return saved ? JSON.parse(saved) : { keys: [], rows: [] };
+    } catch {
+        return { keys: [], rows: [] };
+    }
+}
+
+function saveSelection(keys, rows) {
+    try {
+        sessionStorage.setItem(
+            BULK_SELECTION_KEY,
+            JSON.stringify({ keys, rows }),
+        );
+    } catch {}
+}
+
+function clearSelection() {
+    sessionStorage.removeItem(BULK_SELECTION_KEY);
+}
+
 export default function ApplicantsTableSection() {
     // const [filteredDatas, setFilteredDatas] = useState([]);
     const [current, setCurrent] = useState(1);
     const [pageSize, setPageSize] = useState(10);
+    const [selectedRowKeys, setSelectedRowKeys] = useState(
+        () => loadSelection().keys,
+    );
+    const [selectedRows, setSelectedRows] = useState(
+        () => loadSelection().rows,
+    );
+    const [bulkModalOpen, setBulkModalOpen] = useState(false);
+    const [bulkForm, setBulkForm] = useState({ allowance: "" });
+    const [bulkLoading, setBulkLoading] = useState(false);
+
     const { applicants, interviewer } = useSelector(
         (state) => state.applicants,
     );
+    const { job_positions } = useSelector((state) => state.job_positions);
+    const { departments } = useSelector((state) => state.departments);
+    const { accounts } = useSelector((state) => state.accounts);
+
+    useEffect(() => {
+        store.dispatch(get_department_thunk());
+        store.dispatch(get_account_thunk());
+    }, []);
 
     const urls = new URL(window.location.href);
     const searchParams = new URLSearchParams(urls.search);
@@ -337,6 +384,61 @@ export default function ApplicantsTableSection() {
             "?page=1" + "&status=" + status + "&site=" + (value || "null"),
         );
     }
+
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: (newKeys, newRows) => {
+            // Preserve selections from other pages
+            const currentPageKeys = filteredDatas.map((row) => row.app_id);
+            const prevKeysFromOtherPages = selectedRowKeys.filter(
+                (key) => !currentPageKeys.includes(key),
+            );
+            const prevRowsFromOtherPages = selectedRows.filter(
+                (row) => !currentPageKeys.includes(row.app_id),
+            );
+            const mergedKeys = [...prevKeysFromOtherPages, ...newKeys];
+            const mergedRows = [...prevRowsFromOtherPages, ...newRows];
+            setSelectedRowKeys(mergedKeys);
+            setSelectedRows(mergedRows);
+            saveSelection(mergedKeys, mergedRows);
+        },
+        getCheckboxProps: (record) => ({
+            disabled: record.status !== "Passed",
+            title:
+                record.status !== "Passed"
+                    ? "Only 'Passed' applicants can be selected for bulk job offer"
+                    : "",
+        }),
+    };
+
+    async function handleBulkJobOffer() {
+        setBulkLoading(true);
+        try {
+            for (const row of selectedRows) {
+                await store.dispatch(
+                    create_job_offer_thunk({
+                        ...bulkForm,
+                        ...row,
+                        status: "Pending",
+                    }),
+                );
+            }
+            message.success(
+                `Job Offer sent to ${selectedRows.length} applicant(s)!`,
+            );
+            setBulkModalOpen(false);
+            setSelectedRowKeys([]);
+            setSelectedRows([]);
+            setBulkForm({ allowance: "" });
+            clearSelection();
+            store.dispatch(get_applicant_thunk());
+        } catch (error) {
+            message.error("Failed to send some job offers.");
+        } finally {
+            setBulkLoading(false);
+        }
+    }
+
     const columns = [
         {
             title: "Application #",
@@ -615,8 +717,46 @@ export default function ApplicantsTableSection() {
 
     return (
         <div>
+            {selectedRowKeys.length > 0 && (
+                <div className="mb-3 flex items-center gap-3 p-3 bg-blue-50 border border-blue-200 rounded-md">
+                    <Tooltip
+                        overlayStyle={{ fontSize: "11px" }}
+                        title={
+                            <ul style={{ margin: 0, padding: 0, listStyle: "none", lineHeight: "1.6" }}>
+                                {selectedRows.map((row) => (
+                                    <li key={row.app_id}>
+                                        #{row.app_id} — {row.fname} {row.lname}
+                                    </li>
+                                ))}
+                            </ul>
+                        }
+                    >
+                        <span className="text-sm font-medium text-blue-700 cursor-default underline decoration-dotted">
+                            {selectedRowKeys.length} applicant(s) selected
+                        </span>
+                    </Tooltip>
+                    <Button
+                        type="primary"
+                        onClick={() => setBulkModalOpen(true)}
+                    >
+                        Send Job Offer
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            setSelectedRowKeys([]);
+                            setSelectedRows([]);
+                            clearSelection();
+                        }}
+                    >
+                        Clear Selection
+                    </Button>
+                </div>
+            )}
+
             {filteredDatas && (
                 <Table
+                    rowSelection={rowSelection}
+                    rowKey="app_id"
                     pagination={paginationConfig}
                     columns={columns}
                     dataSource={filteredDatas}
@@ -632,6 +772,304 @@ export default function ApplicantsTableSection() {
                       )} of ${applicants.total} entries`
                     : "No entries available"}
             </div>
+
+            {/* Bulk Job Offer Modal */}
+            <Modal
+                title={`Send Job Offer to ${selectedRows.length} Applicant(s)`}
+                open={bulkModalOpen}
+                onCancel={() => setBulkModalOpen(false)}
+                footer={null}
+                width={800}
+            >
+                <li className="bg-gray-300 h-0.5 mb-4"></li>
+                <form
+                    onSubmit={(e) => {
+                        e.preventDefault();
+                        handleBulkJobOffer();
+                    }}
+                    className="w-full"
+                >
+                    <div className="flex flex-col -mx-3 mb-3">
+                        <div className="flex flex-1 gap-5 px-2.5">
+                            <div className="w-full">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
+                                    Job Position
+                                </label>
+                                <select
+                                    required
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    onChange={(e) => {
+                                        const selectedJob = job_positions.find(
+                                            (job) =>
+                                                job.jPosition === e.target.value,
+                                        );
+                                        setBulkForm({
+                                            ...bulkForm,
+                                            outsourcing_erf: {
+                                                ...bulkForm.outsourcing_erf,
+                                                department:
+                                                    selectedJob?.outsourcing_erf
+                                                        ?.department || "",
+                                                account:
+                                                    selectedJob?.outsourcing_erf
+                                                        ?.account || "",
+                                            },
+                                            jobPos:
+                                                selectedJob?.jPosition ||
+                                                e.target.value,
+                                        });
+                                    }}
+                                >
+                                    <option value="" disabled>
+                                        Select Job Position
+                                    </option>
+                                    {(job_positions ?? [])
+                                        .filter(
+                                            (job, index, self) =>
+                                                index ===
+                                                self.findIndex(
+                                                    (j) =>
+                                                        j.jPosition ===
+                                                        job.jPosition,
+                                                ),
+                                        )
+                                        .map((res, i) => (
+                                            <option
+                                                value={res.jPosition}
+                                                key={i}
+                                            >
+                                                {res.jPosition}
+                                            </option>
+                                        ))}
+                                </select>
+                            </div>
+                            <div className="w-full">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
+                                    Department
+                                </label>
+                                <select
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    value={
+                                        bulkForm.outsourcing_erf?.department ||
+                                        ""
+                                    }
+                                    onChange={(e) =>
+                                        setBulkForm({
+                                            ...bulkForm,
+                                            outsourcing_erf: {
+                                                ...bulkForm.outsourcing_erf,
+                                                department: e.target.value,
+                                            },
+                                        })
+                                    }
+                                >
+                                    <option value="">Select Department</option>
+                                    {(departments ?? [])
+                                        .filter(
+                                            (res, index, self) =>
+                                                index ===
+                                                self.findIndex(
+                                                    (d) => d.dept === res.dept,
+                                                ),
+                                        )
+                                        .map((res, i) => (
+                                            <option value={res.dept} key={i}>
+                                                {res.dept}
+                                            </option>
+                                        ))}
+                                </select>
+                            </div>
+                            <div className="w-full">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
+                                    Account
+                                </label>
+                                <select
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    value={
+                                        bulkForm.outsourcing_erf?.account || ""
+                                    }
+                                    onChange={(e) =>
+                                        setBulkForm({
+                                            ...bulkForm,
+                                            outsourcing_erf: {
+                                                ...bulkForm.outsourcing_erf,
+                                                account: e.target.value,
+                                            },
+                                        })
+                                    }
+                                >
+                                    <option value="">Select Account</option>
+                                    {(accounts ?? []).map((res, i) => (
+                                        <option value={res.acc} key={i}>
+                                            {res.acc}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="flex flex-1">
+                            <div className="w-3/5 px-2.5">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
+                                    Salary Offer
+                                </label>
+                                <input
+                                    required
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    type="text"
+                                    name="salary"
+                                    value={bulkForm.salary ?? ""}
+                                    onChange={(e) =>
+                                        setBulkForm({
+                                            ...bulkForm,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="w-3/5 px-2.5">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
+                                    Allowance
+                                </label>
+                                <input
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    type="text"
+                                    name="allowance"
+                                    value={bulkForm.allowance ?? ""}
+                                    onChange={(e) =>
+                                        setBulkForm({
+                                            ...bulkForm,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="w-full px-2.5">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
+                                    Type of Allowance
+                                </label>
+                                <select
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    name="typea"
+                                    onChange={(e) =>
+                                        setBulkForm({
+                                            ...bulkForm,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                >
+                                    <option value=""></option>
+                                    <option value="Program Allowance">
+                                        Program Allowance
+                                    </option>
+                                    <option value="Rice and Meal Allowance">
+                                        Rice and Meal Allowance
+                                    </option>
+                                    <option value="Communication Allowance">
+                                        Communication Allowance
+                                    </option>
+                                    <option value="Skill Allowance">
+                                        Skill Allowance
+                                    </option>
+                                    <option value="Interim Allowance">
+                                        Interim Allowance
+                                    </option>
+                                    <option value="Transportation Allowance">
+                                        Transportation Allowance
+                                    </option>
+                                    <option value="Travel Allowance">
+                                        Travel Allowance
+                                    </option>
+                                    <option value="Clothing Allowance">
+                                        Clothing Allowance
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div className="flex flex-1">
+                            <div className="w-full px-2.5">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
+                                    Start Date
+                                </label>
+                                <input
+                                    required
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    type="date"
+                                    name="startDate"
+                                    value={bulkForm.startDate ?? ""}
+                                    onChange={(e) =>
+                                        setBulkForm({
+                                            ...bulkForm,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="w-full px-2.5">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
+                                    Work Location
+                                </label>
+                                <select
+                                    required
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    name="work_location"
+                                    onChange={(e) =>
+                                        setBulkForm({
+                                            ...bulkForm,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                >
+                                    <option value="" disabled>
+                                        Select Work Location
+                                    </option>
+                                    <option value="San Carlos City (On-site)">
+                                        San Carlos City (On-site)
+                                    </option>
+                                    <option value="Carcar City (On-site)">
+                                        Carcar City (On-site)
+                                    </option>
+                                    <option value="Cebu City (On-site)">
+                                        Cebu City (On-site)
+                                    </option>
+                                    <option value="Work From Home Setup">
+                                        Work From Home Setup
+                                    </option>
+                                    <option value="Remote">Remote</option>
+                                    <option value="Hybrid">Hybrid</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="mb-4 px-2.5">
+                        <p className="text-sm text-gray-600 font-medium">
+                            This job offer will be sent to:
+                        </p>
+                        <ul className="list-disc pl-5 text-sm mt-1 max-h-32 overflow-y-auto">
+                            {selectedRows.map((row) => (
+                                <li key={row.app_id}>
+                                    #{row.app_id} &mdash; {row.fname}{" "}
+                                    {row.lname}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <button
+                        type="submit"
+                        disabled={bulkLoading}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full"
+                    >
+                        <div className="flex flex-1 items-center justify-center">
+                            {bulkLoading ? (
+                                <LoadingOutlined spin />
+                            ) : null}
+                            &nbsp;{" "}
+                            {bulkLoading
+                                ? "SENDING..."
+                                : `SEND JOB OFFER TO ${selectedRows.length} APPLICANT(S)`}
+                        </div>
+                    </button>
+                </form>
+            </Modal>
         </div>
     );
 }

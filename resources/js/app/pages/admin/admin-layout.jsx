@@ -124,6 +124,7 @@ const AdminLayout = ({ children }) => {
             label: menuLabel("Dashboard", "/admin/dashboard"),
             onClick: () => router.visit("/admin/dashboard"),
         },
+        ...(user && user.department == "Human Resource" ? [
         {
             key: "sourcing",
             icon: <BookOutlined />,
@@ -357,6 +358,7 @@ const AdminLayout = ({ children }) => {
                 },
             ],
         },
+        ] : []),
         {
             key: "compliance_training",
             icon: <AuditOutlined />,

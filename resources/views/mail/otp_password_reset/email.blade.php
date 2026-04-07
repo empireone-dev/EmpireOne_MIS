@@ -2,7 +2,7 @@
 
 Dear Employee **{{ $data['employee_id'] }}**,
 
-You have requested to reset your password for the **EmpireOne MIS** system.
+You have requested to reset your password for the **EmpireOne HRIS Portal**.
 
 Please use the One-Time Password (OTP) below to proceed:
 

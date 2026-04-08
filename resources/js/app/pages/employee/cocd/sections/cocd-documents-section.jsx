@@ -98,12 +98,28 @@ export default function CocdDocumentsSection() {
                 <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
                     {/* Header */}
                     <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
-                        <img className="w-28" src="/images/newlogo.png" alt="logo" />
+                        <img
+                            className="w-28"
+                            src="/images/newlogo.png"
+                            alt="logo"
+                        />
                         <div className="text-right">
-                            <h2 className="text-base font-bold text-gray-800">Code of Discipline</h2>
+                            <h2 className="text-base font-bold text-gray-800">
+                                Code of Discipline
+                            </h2>
                             <div className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold mt-1">
-                                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                <svg
+                                    className="w-3.5 h-3.5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M5 13l4 4L19 7"
+                                    />
                                 </svg>
                                 Signed &amp; Acknowledged
                             </div>
@@ -128,26 +144,38 @@ export default function CocdDocumentsSection() {
                         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
                             <div className="flex-1">
                                 <p className="text-sm text-gray-600">
-                                    I hereby confirm that I have read and understood this document.
+                                    I hereby confirm that I have read and
+                                    understood this document.
                                 </p>
                                 <p className="text-sm text-gray-800 font-semibold mt-2">
                                     {existingAck.emp_name}
                                 </p>
                                 <p className="text-xs text-gray-500 mt-0.5">
-                                    {new Date(existingAck.acknowledged_at).toLocaleDateString("en-US", {
-                                        year: "numeric", month: "long", day: "numeric",
+                                    {new Date(
+                                        existingAck.acknowledged_at,
+                                    ).toLocaleDateString("en-US", {
+                                        year: "numeric",
+                                        month: "long",
+                                        day: "numeric",
                                     })}
                                 </p>
                             </div>
-                            <div className="border border-gray-300 rounded-lg p-3 bg-white flex flex-col items-center min-w-[180px]">
-                                <p className="text-xs text-gray-400 mb-2 uppercase tracking-wide">E-Signature</p>
-                                <img
-                                    src={existingAck.signature}
-                                    alt="E-Signature"
-                                    className="max-h-20 max-w-[200px] object-contain"
-                                />
-                                <div className="mt-2 w-full border-t border-gray-300 pt-1 text-center">
-                                    <p className="text-xs text-gray-500">{existingAck.emp_name}</p>
+                            <div className="border border-gray-300 rounded-lg p-3 bg-white flex flex-col items-center min-w-[200px]">
+                                <p className="text-xs text-gray-400 mb-2 uppercase tracking-wide">
+                                    E-Signature
+                                </p>
+                                <div className="relative w-full flex flex-col items-center">
+                                    <img
+                                        src={existingAck.signature}
+                                        alt="E-Signature"
+                                        className="max-h-20 max-w-[300px] object-contain relative z-10 -mb-3"
+                                        style={{ mixBlendMode: "multiply" }}
+                                    />
+                                    <div className="w-full border-t border-gray-300 pt-1 text-center">
+                                        <p className="text-xs text-gray-500">
+                                            {existingAck.emp_name}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

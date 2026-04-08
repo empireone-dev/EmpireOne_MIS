@@ -125,15 +125,18 @@ export default function Page() {
                                         {moment(ack.acknowledged_at).format("MMMM D, YYYY [at] h:mm A")}
                                     </p>
                                 </div>
-                                <div className="border border-gray-300 rounded-lg p-3 bg-white flex flex-col items-center min-w-[180px]">
+                                <div className="border border-gray-300 rounded-lg p-3 bg-white flex flex-col items-center min-w-[200px]">
                                     <p className="text-xs text-gray-400 mb-2 uppercase tracking-wide">E-Signature</p>
-                                    <img
-                                        src={ack.signature}
-                                        alt="E-Signature"
-                                        className="max-h-20 max-w-[200px] object-contain"
-                                    />
-                                    <div className="mt-2 w-full border-t border-gray-300 pt-1 text-center">
-                                        <p className="text-xs text-gray-500">{ack.emp_name}</p>
+                                    <div className="relative w-full flex flex-col items-center">
+                                        <img
+                                            src={ack.signature}
+                                            alt="E-Signature"
+                                            className="max-h-20 max-w-[300px] object-contain relative z-10 -mb-3"
+                                            style={{ mixBlendMode: "multiply" }}
+                                        />
+                                        <div className="w-full border-t border-gray-300 pt-1 text-center">
+                                            <p className="text-xs text-gray-500">{ack.emp_name}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

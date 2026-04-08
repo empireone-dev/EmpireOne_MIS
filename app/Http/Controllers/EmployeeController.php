@@ -303,6 +303,13 @@ class EmployeeController extends Controller
                       });
                 });
             })
+            ->orderByRaw('
+                LEAST(
+                    COALESCE((SELECT acknowledged_at FROM cocd_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
+                    COALESCE((SELECT acknowledged_at FROM ethics_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
+                    COALESCE((SELECT acknowledged_at FROM handbook_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31")
+                ) DESC
+            ')
             ->paginate($perPage);
 
         return response()->json([

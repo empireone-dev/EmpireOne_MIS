@@ -29,6 +29,7 @@ class User extends Authenticatable
         'employee_lname',
         'employee_suffix',
         'department',
+        'email',
         'account',
         'sup_id',
         'position',

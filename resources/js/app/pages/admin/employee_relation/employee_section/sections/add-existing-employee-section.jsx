@@ -362,18 +362,33 @@ export default function AddExistingEmployeeSection() {
                     <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                         Personal Information
                     </h1>
-                    <div className="flex-1">
-                        <Input2
-                            register={{
-                                ...register("app_id", {
-                                    required: "Employee ID is required",
-                                }),
-                            }}
-                            errorMessage={errors?.app_id?.message}
-                            name="app_id"
-                            label="Employee ID"
-                            type="text"
-                        />
+                    <div className="flex flex-1 gap-3">
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("app_id", {
+                                        required: "Employee ID is required",
+                                    }),
+                                }}
+                                errorMessage={errors?.app_id?.message}
+                                name="app_id"
+                                label="Employee ID"
+                                type="text"
+                            />
+                        </div>
+                        <div className="flex-1">
+                            <Input2
+                                register={{
+                                    ...register("eogs", {
+                                        required: "Company Email is required",
+                                    }),
+                                }}
+                                errorMessage={errors?.eogs?.message}
+                                name="eogs"
+                                label="Company Email"
+                                type="email"
+                            />
+                        </div>
                     </div>
                     <div className="flex flex-col gap-3 lg:flex-row">
                         <div className="flex-1">
@@ -473,12 +488,12 @@ export default function AddExistingEmployeeSection() {
                             <Input2
                                 register={{
                                     ...register("email", {
-                                        required: "Email is required",
+                                        required: "Personal Email is required",
                                     }),
                                 }}
                                 errorMessage={errors?.email?.message}
                                 name="email"
-                                label="Email"
+                                label="Personal Email"
                                 type="email"
                             />
                         </div>

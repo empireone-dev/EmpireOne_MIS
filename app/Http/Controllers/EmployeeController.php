@@ -100,7 +100,7 @@ class EmployeeController extends Controller
             'sup_id' => $request->sup_id,
             'hired' => $request->hired,
             // 'due' => $request->due,
-            'eogs' => $request->email,
+            'eogs' => $request->eogs,
             'status' => $request->status,
         ]);
 

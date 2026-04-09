@@ -676,7 +676,7 @@ const AdminLayout = ({ children }) => {
 
                     {user && user.role_id && (
                         <Menu
-                            className="text-lg font-sans"
+                            className="text-md font-sans"
                             mode="inline"
                             defaultSelectedKeys={active.split("?")[0]}
                             defaultOpenKeys={path.slice(1 - path.length)}

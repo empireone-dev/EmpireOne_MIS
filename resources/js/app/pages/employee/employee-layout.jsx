@@ -363,7 +363,7 @@ const EmployeeLayout = ({ children }) => {
                     </div>
 
                     <Menu
-                        className="text-lg font-sans"
+                        className="text-md font-sans"
                         mode="inline"
                         selectedKeys={[active]}
                         defaultOpenKeys={path.slice(1 - path.length)}

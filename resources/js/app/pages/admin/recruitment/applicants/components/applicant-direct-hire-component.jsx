@@ -74,6 +74,7 @@ export default function ApplicantDirectHireComponent({ data, item, status }) {
                 centered
                 open={open}
                 onCancel={closeHandler}
+                width={1200}
                 footer={[
                     <Button key="cancel" onClick={closeHandler}>
                         Cancel
@@ -89,11 +90,11 @@ export default function ApplicantDirectHireComponent({ data, item, status }) {
                 ]}
             >
                 <div className="flex flex-col gap-4 mb-7">
-                    <h1 className="text-lg font-semibold">
+                    {/* <h1 className="text-lg font-semibold">
                         Are you sure you want to direct hire this applicant?
-                    </h1>
+                    </h1> */}
                     {data && (
-                        <div className="text-sm text-gray-600">
+                        <div className="text-sm text-gray-600 flex justify-between mt-3">
                             <p>
                                 <strong>Name:</strong>{" "}
                                 {data.fname || data.lname

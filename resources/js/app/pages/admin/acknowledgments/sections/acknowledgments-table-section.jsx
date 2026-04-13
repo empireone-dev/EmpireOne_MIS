@@ -224,6 +224,15 @@ export default function AcknowledgmentsTableSection() {
             },
         },
         {
+            title: "Site",
+            dataIndex: "site",
+            key: "site",
+            // ...getColumnSearchProps("site"),
+            render: (_, record, i) => {
+                return <div key={i}>{record?.applicant?.site || "N/A"}</div>;
+            },
+        },
+        {
             title: "Action",
             dataIndex: "action",
             key: "action",

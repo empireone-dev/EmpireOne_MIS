@@ -66,6 +66,23 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
+        $existingApplicant = Applicant::where('fname', $request->fname)
+            ->where('mname', $request->mname)
+            ->where('lname', $request->lname)
+            ->where('suffix', $request->suffix)
+            ->first();
+
+        if ($existingApplicant) {
+            return response()->json([
+                'error' => 'An applicant with the same full name already exists.',
+            ], 422);
+        }
+
+        if ($request->app_id && Employee::where('emp_id', $request->app_id)->exists()) {
+            return response()->json([
+                'error' => 'An employee with this ID already exists.',
+            ], 422);
+        }
 
         $today = date('Y-m-d');
         $count = Applicant::whereDate('submitted', $today)->count();

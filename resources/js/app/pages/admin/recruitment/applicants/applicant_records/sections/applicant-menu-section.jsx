@@ -323,7 +323,7 @@ export default function ApplicantMenuSection({ data, interviewer }) {
         //               component: (
         //                   <ApplicantDirectHireComponent
         //                       item={{
-        //                           label: "Direct Hired",
+        //                           label: "Direct Hire",
         //                           key: "3",
         //                           icon: <SendOutlined />,
         //                       }}

@@ -140,19 +140,41 @@ export default function Page({ status, canResetPassword }) {
                                                                 data?.employee_id ??
                                                                 ""
                                                             }
-                                                            onChange={(e) =>
+                                                            onChange={(e) => {
+                                                                const onlyNumbers =
+                                                                    e.target.value.replace(
+                                                                        /[^0-9]/g,
+                                                                        "",
+                                                                    );
                                                                 setData({
                                                                     ...data,
                                                                     [e.target
                                                                         .name]:
-                                                                        e.target
-                                                                            .value,
-                                                                })
-                                                            }
-                                                            type={"text"}
+                                                                        onlyNumbers,
+                                                                });
+                                                            }}
+                                                            onKeyDown={(e) => {
+                                                                // Prevent invalid keys like e, +, -, .
+                                                                if (
+                                                                    [
+                                                                        "e",
+                                                                        "E",
+                                                                        "+",
+                                                                        "-",
+                                                                        ".",
+                                                                    ].includes(
+                                                                        e.key,
+                                                                    )
+                                                                ) {
+                                                                    e.preventDefault();
+                                                                }
+                                                            }}
+                                                            type="text"
+                                                            inputMode="numeric"
+                                                            pattern="[0-9]*"
                                                             id="employee_id"
                                                             name="employee_id"
-                                                            className="peer text-black rounded-md placeholder-transparent w-full py-2.5 px-5 border-gray-500 border bg-transparent  bg-white focus-within:outline-none focus-within:border-blue-500"
+                                                            className="peer text-black rounded-md placeholder-transparent w-full py-2.5 px-5 border-gray-500 border bg-transparent bg-white focus-within:outline-none focus-within:border-blue-500"
                                                             placeholder=""
                                                         />
                                                         <label

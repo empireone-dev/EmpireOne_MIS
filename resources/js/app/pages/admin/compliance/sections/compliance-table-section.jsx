@@ -1,6 +1,15 @@
 import React, { useRef, useState } from "react";
 import { EyeOutlined, FilterOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Pagination, Select, Space, Table, Tag, Tooltip } from "antd";
+import {
+    Button,
+    Input,
+    Pagination,
+    Select,
+    Space,
+    Table,
+    Tag,
+    Tooltip,
+} from "antd";
 import Highlighter from "react-highlight-words";
 import { useSelector } from "react-redux";
 import { router } from "@inertiajs/react";
@@ -13,7 +22,7 @@ export default function ComplianceTableSection() {
     const searchInput = useRef(null);
     const { video_quizzes } = useSelector((state) => state.video_quizzes);
 
-    console.log('video_quizzesss', video_quizzes)
+    console.log("video_quizzesss", video_quizzes);
 
     const url = window.location.pathname + window.location.search;
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -140,22 +149,27 @@ export default function ComplianceTableSection() {
 
     const urls = new URL(window.location.href);
     const searchParams = new URLSearchParams(urls.search);
-    const pages = searchParams.get('page');
-    const name = searchParams.get('name');
-    const emp_id = searchParams.get('emp_id');
-    const email = searchParams.get('email');
+    const pages = searchParams.get("page");
+    const name = searchParams.get("name");
+    const emp_id = searchParams.get("emp_id");
+    const email = searchParams.get("email");
     function search_name(value) {
-        router.visit(`?page=1&name=${value || ''}&emp_id=${emp_id || ''}&email=${email || ''}`);
+        router.visit(
+            `?page=1&name=${value || ""}&emp_id=${emp_id || ""}&email=${email || ""}`,
+        );
     }
 
     function search_emp_id(value) {
-        router.visit(`?page=1&name=${name || ''}&emp_id=${value || ''}&email=${email || ''}`);
+        router.visit(
+            `?page=1&name=${name || ""}&emp_id=${value || ""}&email=${email || ""}`,
+        );
     }
 
     function search_email(value) {
-        router.visit(`?page=1&name=${name || ''}&emp_id=${emp_id || ''}&email=${value || ''}`);
+        router.visit(
+            `?page=1&name=${name || ""}&emp_id=${emp_id || ""}&email=${value || ""}`,
+        );
     }
-
 
     const columns = [
         {
@@ -172,11 +186,7 @@ export default function ComplianceTableSection() {
             render: (_, record, i) => {
                 console.log("record", record);
 
-                return (
-                    <div key={i}>
-                        {record?.name}
-                    </div>
-                );
+                return <div key={i}>{record?.name}</div>;
             },
         },
         {
@@ -186,13 +196,28 @@ export default function ComplianceTableSection() {
             // ...getColumnSearchProps("email"),
         },
         {
+            title: "Site",
+            dataIndex: "site",
+            key: "site",
+            render: (_, record, i) => {
+                return <div key={i}>{record?.employees?.applicant?.site || "N/A"}</div>;
+            },
+        },
+        {
             title: "Action",
             dataIndex: "action",
             key: "action",
             render: (_, record, i) => {
                 return (
                     <div key={i}>
-                        <button onClick={() => router.visit(`/admin/compliance/${record.emp_id}`)} className="bg-sky-400 hover:bg-sky-600 text-white p-2 px-4 rounded-md">
+                        <button
+                            onClick={() =>
+                                router.visit(
+                                    `/admin/compliance/${record.emp_id}`,
+                                )
+                            }
+                            className="bg-sky-400 hover:bg-sky-600 text-white p-2 px-4 rounded-md"
+                        >
                             <Tooltip title="Show Trainings Taken">
                                 <EyeIcon className="h-5" />
                             </Tooltip>
@@ -202,7 +227,6 @@ export default function ComplianceTableSection() {
             },
         },
     ];
-
 
     const getQueryParam = (url, paramName) => {
         const searchParams = new URLSearchParams(url.split("?")[1]);
@@ -239,9 +263,11 @@ export default function ComplianceTableSection() {
             <div className="flex">
                 <div className="w-full mt-3.5">
                     {video_quizzes?.total > 0
-                        ? `Showing ${(currentPage - 1) * pageSize + 1
-                        } to ${Math.min(currentPage * pageSize, video_quizzes.total)} of ${video_quizzes.total
-                        } entries`
+                        ? `Showing ${
+                              (currentPage - 1) * pageSize + 1
+                          } to ${Math.min(currentPage * pageSize, video_quizzes.total)} of ${
+                              video_quizzes.total
+                          } entries`
                         : "No entries available"}
                 </div>
                 <div className="flex w-full items-center justify-end mt-2">

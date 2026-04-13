@@ -10,44 +10,31 @@ class VideoQuizController extends Controller
 {
     public function index(Request $request)
     {
-        // First, apply filters
-        $filtered = VideoQuiz::query();
-
-
-
-        // Get latest record per emp_id
-        $latestPerEmp = $filtered
-            ->select('video_quiz.*')
-            ->whereIn('id', function ($query) use ($request) {
-                $sub = DB::table('video_quiz')
+        $query = VideoQuiz::with('employees')
+            ->whereIn('id', function ($sub) {
+                $sub->from('video_quiz')
                     ->selectRaw('MAX(id)')
                     ->groupBy('emp_id');
+            });
 
+        // Apply search AFTER getting latest records
+        if ($request->filled('searching')) {
+            $search = $request->searching;
 
-                if ($request->filled('searching')) {
-                    $sub->where('name', 'LIKE', '%' . $request->searching . '%');
-                    $sub->orWhere('emp_id', 'LIKE', '%' . $request->searching . '%');
-                    $sub->orWhere('email', 'LIKE', '%' . $request->searching . '%');
-                }
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'LIKE', "%{$search}%")
+                    ->orWhere('emp_id', 'LIKE', "%{$search}%")
+                    ->orWhere('email', 'LIKE', "%{$search}%");
+            });
+        }
 
-
-                $query->fromSub($sub, 'latest_ids');
-            })
-            ->orderByDesc('id');
-
-        // Paginate result manually (since it's a collection)
-        $page = $request->get('page', 1);
+        // Use Laravel pagination
         $perPage = $request->get('per_page', 10);
-        $all = $latestPerEmp->get();
-        $pagedData = $all->forPage($page, $perPage)->values();
+
+        $result = $query->orderByDesc('id')->paginate($perPage);
 
         return response()->json([
-            'result' => [
-                'data' => $pagedData,
-                'total' => $all->count(),
-                'current_page' => (int) $page,
-                'per_page' => (int) $perPage,
-            ]
+            'result' => $result
         ], 200);
     }
 

@@ -1,6 +1,7 @@
 import {
     declined_attendance_service,
     delete_applicant_service,
+    direct_hire_applicant_service,
     get_applicant_service,
     get_interview_applicant_service,
     phone_call_status_service,
@@ -145,6 +146,13 @@ export function phone_call_status_thunk(data) {
 export function delete_applicant_thunk(id) {
     return async function (dispatch, getState) {
         const res = await delete_applicant_service(id);
+    };
+}
+
+export function direct_hire_applicant_thunk(data) {
+    return async function (dispatch, getState) {
+        const res = await direct_hire_applicant_service(data);
+        return res;
     };
 }
 

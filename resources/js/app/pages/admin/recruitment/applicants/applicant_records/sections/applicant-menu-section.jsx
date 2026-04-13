@@ -31,6 +31,7 @@ import ApplicantImmediateInitialComponent from "../../components/applicant-immed
 import ApplicantImmediateFinalComponent from "../../components/applicant-immediate-final-component";
 import ApplicantProceedFinalComponent from "../../components/applicant-proceed-final-component";
 import ApplicantDeleteComponent from "../../components/applicant-delete-component";
+import ApplicantDirectHireComponent from "../../components/applicant-direct-hire-component";
 
 export default function ApplicantMenuSection({ data, interviewer }) {
     const items = [
@@ -302,6 +303,29 @@ export default function ApplicantMenuSection({ data, interviewer }) {
                                   icon: (
                                       <BriefcaseIcon className="h-4 mr-0.5" />
                                   ),
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
+            : []),
+
+        ...(data.status == "Pending" ||
+        data.status == "Initial Phase" ||
+        data.status == "Final Phase" ||
+        data.status == "For Final Phase" ||
+        data.status == "Reschedule Initial Phase" ||
+        data.status == "Reschedule Final Phase" ||
+        data.status == "Pooling"
+            ? [
+                  {
+                      component: (
+                          <ApplicantDirectHireComponent
+                              item={{
+                                  label: "Direct Hired",
+                                  key: "3",
+                                  icon: <SendOutlined />,
                               }}
                               data={data}
                           />

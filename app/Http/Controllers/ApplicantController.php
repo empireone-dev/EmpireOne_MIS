@@ -21,6 +21,7 @@ use App\Models\User;
 use App\Models\WorkingExperience;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
@@ -632,5 +633,52 @@ class ApplicantController extends Controller
         return response()->json([
             'result' => $applicant
         ], 200);
+    }
+
+    public function direct_hire_applicant(Request $request, $id)
+    {
+        $applicant = Applicant::find($id);
+
+        if (!$applicant) {
+            return response()->json(['message' => 'Applicant not found.'], 404);
+        }
+
+        $today = date('Y-m-d');
+        $count = Employee::whereDate('created', $today)->count() + 1;
+        $countNumber = str_pad($count, 2, '0', STR_PAD_LEFT);
+        $dateUnique = date('ymd') . $countNumber;
+
+        $applicant->update(['status' => 'Direct Hired']);
+
+        Employee::create([
+            'app_id'   => $applicant->app_id,
+            'emp_id'   => $dateUnique,
+            'position' => $request->position,
+            'dept'     => $request->dept,
+            'account'  => $request->account,
+            'sup_id'   => $request->sup_id,
+            'hired'    => $request->hired ?? date('Y-m-d'),
+            'eogs'     => $applicant->email ?? '',
+            'status'   => trim($request->status ?? 'Probationary'),
+        ]);
+
+        User::create([
+            'role_id'         => '7',
+            'employee_id'     => $dateUnique,
+            'employee_fname'  => $applicant->fname,
+            'employee_mname'  => $applicant->mname ?? '',
+            'employee_lname'  => $applicant->lname ?? '',
+            'employee_suffix' => $applicant->suffix ?? '',
+            'email'           => $applicant->email ?? null,
+            'department'      => $request->dept,
+            'account'         => $request->account,
+            'sup_id'          => $request->sup_id,
+            'position'        => $request->position,
+            'site'            => $applicant->site ?? '',
+            'gender'          => $applicant->gender ?? '',
+            'password'        => Hash::make('Business12'),
+        ]);
+
+        return response()->json(['data' => 'success'], 200);
     }
 }

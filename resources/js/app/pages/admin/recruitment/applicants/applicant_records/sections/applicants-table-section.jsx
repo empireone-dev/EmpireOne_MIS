@@ -609,6 +609,7 @@ export default function ApplicantsTableSection() {
                             { text: "Accepted Offer", value: "Accepted Offer" },
                             { text: "Counter Offer", value: "Counter Offer" },
                             { text: "Declined", value: "Declined" },
+                            { text: "Direct Hired", value: "Direct Hired" },
                             { text: "Failed", value: "Failed" },
                             { text: "Final Phase", value: "Final Phase" },
                             {
@@ -634,6 +635,7 @@ export default function ApplicantsTableSection() {
                 switch (record.status) {
                     case "Failed":
                     case "Send Failed":
+                    case "Direct Hired":
                     case "Dismissal":
                     case "Declined":
                     case "Resigned":

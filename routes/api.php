@@ -89,6 +89,7 @@ Route::put('/update_address/{id}', [ApplicantController::class, 'update_address'
 Route::put('/update_applicant_status/{id}', [ApplicantController::class, 'update_applicant_status']);
 Route::put('/update_applicant_after_confirmation_status/{app_id}', [ApplicantController::class, 'update_applicant_after_confirmation_status']);
 Route::put('/declined_attendance/{app_id}', [ApplicantController::class, 'declined_attendance']);
+Route::post('/direct_hire_applicant/{id}', [ApplicantController::class, 'direct_hire_applicant']);
 
 
 Route::resource('outsourcing_erf', OutSourcingErfController::class);

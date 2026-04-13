@@ -75,3 +75,8 @@ export function delete_applicant_service(id) {
 
     }
 }
+
+export async function direct_hire_applicant_service(data) {
+    const res = await axios.post(`/api/direct_hire_applicant/${data.id}`, data);
+    return res.data;
+}

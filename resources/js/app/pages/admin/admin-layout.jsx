@@ -156,7 +156,7 @@ const AdminLayout = ({ children }) => {
                 },
             ],
         },
-        ...(user && (user.department == "Human Resource" || user.profile == "1") ? [
+        ...(user && (user.department == "Human Resource" || user.department == "Human Resources" || user.profile == "1") ? [
         {
             key: "recruitment",
             icon: <UsergroupAddOutlined />,

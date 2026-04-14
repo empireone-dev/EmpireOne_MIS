@@ -219,10 +219,10 @@ class ApplicantController extends Controller
         if ($base64Files) {
             // First, delete any existing CV files for this applicant to prevent duplicates
             CVFile::where('app_id', $dateUnique)->delete();
-            
+
             foreach ($base64Files as $index => $base64) {
                 $url = $this->uploadBase64File($base64);
-                
+
                 // Only proceed if file upload was successful
                 if ($url && $url !== 'none') {
                     $cvFileData[] = [
@@ -254,7 +254,7 @@ class ApplicantController extends Controller
                     (array) $request->all(),
                     ['submitted' => now()->format('Y-m-d')]
                 ),
-                $fileUrl    
+                $fileUrl
             ));
         } else {
             Mail::to($emailRecipient)->queue(new NewApplication2(
@@ -652,7 +652,8 @@ class ApplicantController extends Controller
 
         Employee::create([
             'app_id'   => $applicant->app_id,
-            'emp_id'   => $dateUnique,
+            'emp_id' => $request->emp_id,
+            // 'emp_id'   => $dateUnique,
             'position' => $request->position,
             'dept'     => $request->dept,
             'account'  => $request->account,

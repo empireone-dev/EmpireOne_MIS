@@ -50,7 +50,7 @@ export default function ApplicantDirectHireComponent({ data, item, status }) {
                     ...formData,
                     id: data.id,
                     app_id: data.app_id,
-                })
+                }),
             );
             await store.dispatch(get_applicant_thunk());
             message.success("Applicant has been direct hired successfully");
@@ -109,6 +109,19 @@ export default function ApplicantDirectHireComponent({ data, item, status }) {
                     <div>
                         <div className="flex flex-1 gap-4">
                             <div className="flex flex-col w-full mb-4">
+                                <div className="mb-4">
+                                    <Input2
+                                        register={{
+                                            ...register("emp_id", {
+                                                required: false,
+                                            }),
+                                        }}
+                                        value={applicantForm.emp_id ?? ""}
+                                        name="emp_id"
+                                        label="Employee ID"
+                                        type="text"
+                                    />
+                                </div>
                                 <div className="flex flex-1 gap-3">
                                     <select
                                         {...register("position", {

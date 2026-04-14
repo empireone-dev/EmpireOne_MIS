@@ -154,10 +154,10 @@ export default function ApplicantDirectHireComponent({ data, item, status }) {
                                             Department
                                         </option>
                                         {departments
-                                            .filter(
-                                                (res) =>
-                                                    res.site === "San Carlos",
-                                            )
+                                            // .filter(
+                                            //     (res) =>
+                                            //         res.site === "San Carlos",
+                                            // )
                                             .map((res, i) => (
                                                 <option
                                                     value={res.dept}

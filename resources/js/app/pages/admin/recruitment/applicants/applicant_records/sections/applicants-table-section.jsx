@@ -635,7 +635,6 @@ export default function ApplicantsTableSection() {
                 switch (record.status) {
                     case "Failed":
                     case "Send Failed":
-                    case "Direct Hired":
                     case "Dismissal":
                     case "Declined":
                     case "Resigned":
@@ -646,6 +645,7 @@ export default function ApplicantsTableSection() {
                         break;
                     case "Passed":
                     case "Accepted Offer":
+                    case "Direct Hired":
                     case "Hired":
                     case "Probationary":
                         color = "green";

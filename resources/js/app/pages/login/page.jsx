@@ -270,10 +270,10 @@ export default function Page({ status, canResetPassword }) {
                                         </form>
                                     </div>
                                 </div>
-                                <div className="text-center mt-3 text-[11px] font-bold tracking-[0.1em]">
-                                    Built with{" "}
+                                <div className="text-center mt-3 text-[11px] tracking-[0.1em]">
+                                    Built by:{" "}
                                     <span className="text-[#1E90FF] font-bold">
-                                        EmpireOne Dev Team
+                                        <u>EmpireOne Dev Team</u>
                                     </span>{" "}
                                     &copy;2024-{new Date().getFullYear()}
                                 </div>

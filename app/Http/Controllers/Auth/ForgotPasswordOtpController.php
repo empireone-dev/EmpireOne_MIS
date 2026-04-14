@@ -32,7 +32,7 @@ class ForgotPasswordOtpController extends Controller
         }
 
         // Traverse User → Employee → Applicant to get the email
-        $email = optional(optional($user->employee)->applicant)->email;
+        $email = optional($user->employee)->eogs;
 
         if (!$email) {
             return response()->json([

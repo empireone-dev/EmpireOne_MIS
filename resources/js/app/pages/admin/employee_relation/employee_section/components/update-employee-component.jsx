@@ -8,10 +8,10 @@ export default function UpdateEmployeeComponent({ data, item }) {
 
     const [modalOpen, setModalOpen] = useState(false);
     function openHandler(params) {
-        window.open(`/admin/employee_relation/employee_section/update_employee/${data.app_id}/${data.emp_id}`, "_blank");
+        window.open(`/admin/employee_relation/employee_section/update_employee/${data?.app_id}/${data?.user_id?.id}`, "_blank");
     }
 
-    console.log('data', data)
+    console.log('datasasdas', data)
     return (
         <>
             <Menu.Item onClick={() => openHandler(true)} icon={item.icon}>

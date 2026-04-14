@@ -362,7 +362,7 @@ class ApplicantController extends Controller
             ]);
         }
 
-        $user = User::where('employee_id', '=', $request->employee_id)->first();
+        $user = User::where('id', '=', $request->user_id)->first();
 
         if ($user) {
             $userData = $request->except(['id']);
@@ -372,6 +372,7 @@ class ApplicantController extends Controller
             $userData['employee_mname'] = $request->mname;
             $userData['employee_lname'] = $request->lname;
             $userData['employee_suffix'] = $request->suffix;
+            $userData['email'] = $request->eogs;
             $user->update($userData);
         }
 
@@ -665,7 +666,7 @@ class ApplicantController extends Controller
 
         User::create([
             'role_id'         => '7',
-            'employee_id'     => $dateUnique,
+            'employee_id'     => $request->emp_id ?? '',
             'employee_fname'  => $applicant->fname,
             'employee_mname'  => $applicant->mname ?? '',
             'employee_lname'  => $applicant->lname ?? '',

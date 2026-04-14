@@ -19,7 +19,7 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         // Start with the base query, eager loading relationships
-        $query = Employee::query()->with(['applicant', 'user', 'department', 'job_offer', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges'])->orderBy('id', 'desc');
+        $query = Employee::query()->with(['applicant', 'user', 'user_id', 'department', 'job_offer', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges'])->orderBy('id', 'desc');
 
         if ($request->site != 'null' && $request->site) {
             // $query->where('site', '=', $request->site);
@@ -128,7 +128,7 @@ class EmployeeController extends Controller
             'employee_mname' => $request->mname,
             'employee_lname' => $request->lname,
             'employee_suffix' => $request->suffix,
-            'email' => $request->eogs ?? $request->mail ,
+            'email' => $request->eogs ?? $request->mail,
             'department' => $request->dept,
             'account' => $request->account,
             'sup_id' => $request->sup_id,
@@ -246,10 +246,10 @@ class EmployeeController extends Controller
             ]);
         }
 
-        $employeeByEmpId = User::where('employee_id', $request->employee_id)->first();
+        $employeeByEmpId = User::where('id', $request->user_id)->first();
         if ($employeeByEmpId) {
             $employeeByEmpId->update([
-                'employee_id' => $request->employee_id,
+                'employee_id' => $request->emp_id ?? '',
             ]);
         }
 
@@ -312,12 +312,12 @@ class EmployeeController extends Controller
             ->when($searching, function ($query) use ($searching) {
                 $query->where(function ($q) use ($searching) {
                     $q->where('emp_id', 'like', "%{$searching}%")
-                      ->orWhere('eogs', 'like', "%{$searching}%")
-                      ->orWhereHas('applicant', function ($aq) use ($searching) {
-                          $aq->where('fname', 'like', "%{$searching}%")
-                            ->orWhere('lname', 'like', "%{$searching}%")
-                            ->orWhere('mname', 'like', "%{$searching}%");
-                      });
+                        ->orWhere('eogs', 'like', "%{$searching}%")
+                        ->orWhereHas('applicant', function ($aq) use ($searching) {
+                            $aq->where('fname', 'like', "%{$searching}%")
+                                ->orWhere('lname', 'like', "%{$searching}%")
+                                ->orWhere('mname', 'like', "%{$searching}%");
+                        });
                 });
             })
             ->orderByRaw('

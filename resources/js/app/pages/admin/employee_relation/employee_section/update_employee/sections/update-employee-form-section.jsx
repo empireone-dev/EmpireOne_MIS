@@ -22,7 +22,7 @@ export default function UpdateEmployeeFormSection() {
     const [loading, setLoading] = useState(null);
     const [form, setForm] = useState({});
     const app_id = window.location.pathname.split("/")[5];
-    const employee_id = window.location.pathname.split("/")[6];
+    const user_id = window.location.pathname.split("/")[6];
 
     useEffect(() => {
         setForm({
@@ -84,11 +84,13 @@ export default function UpdateEmployeeFormSection() {
             await store.dispatch(
                 update_applicant_thunk({
                     ...form,
-                    employee_id: employee_id,
+                    user_id: user_id,
+                    emp_id: form.emp_id,
                     fname: form.fname,
                     mname: form.mname,
                     lname: form.lname,
                     suffix: form.suffix,
+                    eogs: form.eogs,
                 }),
             );
             await store.dispatch(get_applicant_by_app_id_thunk(app_id));

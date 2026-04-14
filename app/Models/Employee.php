@@ -36,10 +36,15 @@ class Employee extends Model
         return $this->hasOne(Department::class, "dept", "dept")->with(['user']);
     }
 
-
-    public function user(): BelongsTo
+    public function user_id(): HasOne
     {
-        return $this->belongsTo(User::class, "sup_id", "id");
+        return $this->hasOne(User::class, "employee_id", "emp_id");
+    }
+
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, "sup_id", "id");
     }
 
     public function attrition(): BelongsTo

@@ -311,28 +311,28 @@ export default function ApplicantMenuSection({ data, interviewer }) {
               ]
             : []),
 
-        // ...(data.status == "Pending" ||
-        // data.status == "Initial Phase" ||
-        // data.status == "Final Phase" ||
-        // data.status == "For Final Phase" ||
-        // data.status == "Reschedule Initial Phase" ||
-        // data.status == "Reschedule Final Phase" ||
-        // data.status == "Pooling"
-        //     ? [
-        //           {
-        //               component: (
-        //                   <ApplicantDirectHireComponent
-        //                       item={{
-        //                           label: "Direct Hire",
-        //                           key: "3",
-        //                           icon: <SendOutlined />,
-        //                       }}
-        //                       data={data}
-        //                   />
-        //               ),
-        //           },
-        //       ]
-        //     : []),
+        ...(data.status == "Pending" ||
+        data.status == "Initial Phase" ||
+        data.status == "Final Phase" ||
+        data.status == "For Final Phase" ||
+        data.status == "Reschedule Initial Phase" ||
+        data.status == "Reschedule Final Phase" ||
+        data.status == "Pooling"
+            ? [
+                  {
+                      component: (
+                          <ApplicantDirectHireComponent
+                              item={{
+                                  label: "Direct Hire",
+                                  key: "3",
+                                  icon: <SendOutlined />,
+                              }}
+                              data={data}
+                          />
+                      ),
+                  },
+              ]
+            : []),
     ];
 
     return (

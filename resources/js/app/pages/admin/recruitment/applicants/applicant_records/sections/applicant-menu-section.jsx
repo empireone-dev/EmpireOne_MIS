@@ -318,7 +318,8 @@ export default function ApplicantMenuSection({ data, interviewer }) {
         data.status == "Reschedule Initial Phase" ||
         data.status == "Reschedule Final Phase" ||
         data.status == "Pooling"||
-        data.status == "Passed"
+        data.status == "Passed" ||
+        data.status == "Accepted Offer"
             ? [
                   {
                       component: (

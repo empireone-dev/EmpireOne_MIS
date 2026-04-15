@@ -157,207 +157,228 @@ const AdminLayout = ({ children }) => {
             ],
         },
         ...(user && (user.department == "Human Resource" || user.department == "Human Resources" || user.profile == "1") ? [
-        {
-            key: "recruitment",
-            icon: <UsergroupAddOutlined />,
-            label: "Recruitment",
-            children: [
-                {
-                    key: "guide_question",
-                    icon: <QuestionOutlined />,
-                    label: menuLabel("Guide Questions", "/admin/recruitment/guide_question"),
-                    onClick: () =>
-                        router.visit("/admin/recruitment/guide_question"),
-                },
-                // {
-                //     key: "applicants",
-                //     icon: <HolderOutlined />,
-                //     label: "Applicants Section",
-                //     children: [
-                //         {
-                //             key: "applicant_records",
-                //             icon: <MoreOutlined />,
-                //             label: "Application Records",
-                //             onClick: () =>
-                //                 router.visit(
-                //                     "/admin/recruitment/applicants/applicant_records?page=1"
-                //                 ),
-                //         },
-                //     ],
-                // },
-                {
-                    key: "applicant_records",
-                    icon: <TeamOutlined />,
-                    label: "Application Records",
-                    children: [
-                        {
-                            key: "applicant_recordss",
-                            icon: <HolderOutlined />,
-                            label: menuLabel("All Records", "/admin/recruitment/applicant_records?page=1"),
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1",
-                                ),
-                        },
-                        {
-                            key: "pending",
-                            icon: <HolderOutlined />,
-                            label: menuLabel("Pending", "/admin/recruitment/applicant_records?page=1&status=Pending&site=null"),
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Pending&site=null",
-                                ),
-                        },
-                        {
-                            key: "initial_phase",
-                            icon: <HolderOutlined />,
-                            label: menuLabel("Initial Phase", "/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null"),
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null",
-                                ),
-                        },
-                        {
-                            key: "for_final_phase",
-                            icon: <HolderOutlined />,
-                            label: menuLabel("For Final Phase", "/admin/recruitment/applicant_records?page=1&status=For%20Final%20Phase&site=null"),
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=For%20Final%20Phase&site=null",
-                                ),
-                        },
-                        {
-                            key: "final_phase",
-                            icon: <HolderOutlined />,
-                            label: menuLabel("Final Phase", "/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null"),
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null",
-                                ),
-                        },
-                        {
-                            key: "failed",
-                            icon: <HolderOutlined />,
-                            label: menuLabel("Failed", "/admin/recruitment/applicant_records?page=1&status=Failed&site=null"),
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Failed&site=null",
-                                ),
-                        },
-                        {
-                            key: "send_failed",
-                            icon: <HolderOutlined />,
-                            label: menuLabel("Send Failed", "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null"),
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null",
-                                ),
-                        },
-                        {
-                            key: "passed",
-                            icon: <HolderOutlined />,
-                            label: menuLabel("Passed", "/admin/recruitment/applicant_records?page=1&status=Passed&site=null"),
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Passed&site=null",
-                                ),
-                        },
-                        {
-                            key: "pooling",
-                            icon: <HolderOutlined />,
-                            label: menuLabel("Pooling", "/admin/recruitment/applicant_records?page=1&status=Pooling&site=null"),
-                            onClick: () =>
-                                router.visit(
-                                    "/admin/recruitment/applicant_records?page=1&status=Pooling&site=null",
-                                ),
-                        },
-                        // {
-                        //     key: "shortlisted",
-                        //     icon: <HolderOutlined />,
-                        //     label: "Short Listed",
-                        //     onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Shortlisted&site=null"),
-                        // },
-                    ],
-                },
-            ],
-        },
-        {
-            key: "hiring",
-            icon: <FileSearchOutlined />,
-            label: "Hiring",
-            children: [
-                {
-                    key: "pre_employment",
-                    icon: <HolderOutlined />,
-                    label: menuLabel("Pre-Employment", "/admin/hiring/pre_employment"),
-                    onClick: () => router.visit("/admin/hiring/pre_employment"),
-                },
-                {
-                    key: "hiring_section",
-                    icon: <HolderOutlined />,
-                    label: menuLabel("Hiring Section", "/admin/hiring/hiring_section"),
-                    onClick: () => router.visit("/admin/hiring/hiring_section"),
-                },
-            ],
-        },
-        {
-            key: "onboarding",
-            icon: <SignatureOutlined />,
-            label: "Onboarding",
-            children: [
-                {
-                    key: "onboarding_docu",
-                    icon: <HolderOutlined />,
-                    label: menuLabel("Documents", "/admin/onboarding/onboarding_docu"),
-                    onClick: () =>
-                        router.visit("/admin/onboarding/onboarding_docu"),
-                },
-                // {
-                //     key: "acknowledgement",
-                //     icon: <HolderOutlined />,
-                //     label: "Acknowledgement",
-                //     onClick: () =>
-                //         router.visit("/admin/onboarding/acknowledgement"),
-                // },
-            ],
-        },
-        {
-            key: "employee_relation",
-            icon: <IdcardOutlined />,
-            label: "Employee Relation",
-            children: [
-                {
-                    key: "employee_section",
-                    icon: <HolderOutlined />,
-                    label: menuLabel("Employee Section", "/admin/employee_relation/employee_section?page=1"),
-                    onClick: () =>
-                        router.visit(
-                            "/admin/employee_relation/employee_section?page=1",
+            {
+                key: "recruitment",
+                icon: <UsergroupAddOutlined />,
+                label: "Recruitment",
+                children: [
+                    {
+                        key: "guide_question",
+                        icon: <QuestionOutlined />,
+                        label: menuLabel("Guide Questions", "/admin/recruitment/guide_question"),
+                        onClick: () =>
+                            router.visit("/admin/recruitment/guide_question"),
+                    },
+                    // {
+                    //     key: "applicants",
+                    //     icon: <HolderOutlined />,
+                    //     label: "Applicants Section",
+                    //     children: [
+                    //         {
+                    //             key: "applicant_records",
+                    //             icon: <MoreOutlined />,
+                    //             label: "Application Records",
+                    //             onClick: () =>
+                    //                 router.visit(
+                    //                     "/admin/recruitment/applicants/applicant_records?page=1"
+                    //                 ),
+                    //         },
+                    //     ],
+                    // },
+                    {
+                        key: "applicant_records",
+                        icon: <TeamOutlined />,
+                        label: "Application Records",
+                        children: [
+                            {
+                                key: "applicant_recordss",
+                                icon: <HolderOutlined />,
+                                label: menuLabel("All Records", "/admin/recruitment/applicant_records?page=1"),
+                                onClick: () =>
+                                    router.visit(
+                                        "/admin/recruitment/applicant_records?page=1",
+                                    ),
+                            },
+                            {
+                                key: "pending",
+                                icon: <HolderOutlined />,
+                                label: menuLabel("Pending", "/admin/recruitment/applicant_records?page=1&status=Pending&site=null"),
+                                onClick: () =>
+                                    router.visit(
+                                        "/admin/recruitment/applicant_records?page=1&status=Pending&site=null",
+                                    ),
+                            },
+                            {
+                                key: "initial_phase",
+                                icon: <HolderOutlined />,
+                                label: menuLabel("Initial Phase", "/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null"),
+                                onClick: () =>
+                                    router.visit(
+                                        "/admin/recruitment/applicant_records?page=1&status=Initial%20Phase&site=null",
+                                    ),
+                            },
+                            {
+                                key: "for_final_phase",
+                                icon: <HolderOutlined />,
+                                label: menuLabel("For Final Phase", "/admin/recruitment/applicant_records?page=1&status=For%20Final%20Phase&site=null"),
+                                onClick: () =>
+                                    router.visit(
+                                        "/admin/recruitment/applicant_records?page=1&status=For%20Final%20Phase&site=null",
+                                    ),
+                            },
+                            {
+                                key: "final_phase",
+                                icon: <HolderOutlined />,
+                                label: menuLabel("Final Phase", "/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null"),
+                                onClick: () =>
+                                    router.visit(
+                                        "/admin/recruitment/applicant_records?page=1&status=Final%20Phase&site=null",
+                                    ),
+                            },
+                            {
+                                key: "failed",
+                                icon: <HolderOutlined />,
+                                label: menuLabel("Failed", "/admin/recruitment/applicant_records?page=1&status=Failed&site=null"),
+                                onClick: () =>
+                                    router.visit(
+                                        "/admin/recruitment/applicant_records?page=1&status=Failed&site=null",
+                                    ),
+                            },
+                            {
+                                key: "send_failed",
+                                icon: <HolderOutlined />,
+                                label: menuLabel("Send Failed", "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null"),
+                                onClick: () =>
+                                    router.visit(
+                                        "/admin/recruitment/applicant_records?page=1&status=Send%20Failed&site=null",
+                                    ),
+                            },
+                            {
+                                key: "passed",
+                                icon: <HolderOutlined />,
+                                label: menuLabel("Passed", "/admin/recruitment/applicant_records?page=1&status=Passed&site=null"),
+                                onClick: () =>
+                                    router.visit(
+                                        "/admin/recruitment/applicant_records?page=1&status=Passed&site=null",
+                                    ),
+                            },
+                            {
+                                key: "pooling",
+                                icon: <HolderOutlined />,
+                                label: menuLabel("Pooling", "/admin/recruitment/applicant_records?page=1&status=Pooling&site=null"),
+                                onClick: () =>
+                                    router.visit(
+                                        "/admin/recruitment/applicant_records?page=1&status=Pooling&site=null",
+                                    ),
+                            },
+                            // {
+                            //     key: "shortlisted",
+                            //     icon: <HolderOutlined />,
+                            //     label: "Short Listed",
+                            //     onClick: () => router.visit("/admin/recruitment/applicant_records?page=1&status=Shortlisted&site=null"),
+                            // },
+                        ],
+                    },
+                ],
+            },
+            {
+                key: "hiring",
+                icon: <FileSearchOutlined />,
+                label: "Hiring",
+                children: [
+                    {
+                        key: "pre_employment",
+                        icon: <HolderOutlined />,
+                        label: menuLabel("Pre-Employment", "/admin/hiring/pre_employment"),
+                        onClick: () => router.visit("/admin/hiring/pre_employment"),
+                    },
+                    {
+                        key: "hiring_section",
+                        icon: <HolderOutlined />,
+                        label: menuLabel("Hiring Section", "/admin/hiring/hiring_section"),
+                        onClick: () => router.visit("/admin/hiring/hiring_section"),
+                    },
+                ],
+            },
+            {
+                key: "onboarding",
+                icon: <SignatureOutlined />,
+                label: "Onboarding",
+                children: [
+                    {
+                        key: "onboarding_docu",
+                        icon: <HolderOutlined />,
+                        label: menuLabel("Documents", "/admin/onboarding/onboarding_docu"),
+                        onClick: () =>
+                            router.visit("/admin/onboarding/onboarding_docu"),
+                    },
+                    // {
+                    //     key: "acknowledgement",
+                    //     icon: <HolderOutlined />,
+                    //     label: "Acknowledgement",
+                    //     onClick: () =>
+                    //         router.visit("/admin/onboarding/acknowledgement"),
+                    // },
+                ],
+            },
+            {
+                key: "employee_relation",
+                icon: <IdcardOutlined />,
+                label: "Employee Relation",
+                children: [
+                    {
+                        key: "employee_section",
+                        icon: <HolderOutlined />,
+                        label: menuLabel("Employee Section", "/admin/employee_relation/employee_section?page=1"),
+                        onClick: () =>
+                            router.visit(
+                                "/admin/employee_relation/employee_section?page=1",
+                            ),
+                    },
+                    // {
+                    //     key: "upload_memo",
+                    //     icon: <HolderOutlined />,
+                    //     label: "Upload Memo",
+                    //     onClick: () =>
+                    //         router.visit("/admin/employee_relation/upload_memo"),
+                    // },
+                ],
+            },
+            {
+                key: "attrition",
+                icon: <UserDeleteOutlined />,
+                label: "Attrition",
+                children: [
+                    {
+                        key: "attrition_section",
+                        icon: <HolderOutlined />,
+                        label: menuLabel("Attrition Section", "/admin/attrition/attrition_section"),
+                        onClick: () =>
+                            router.visit("/admin/attrition/attrition_section"),
+                    },
+                ],
+            },
+        ] : []),
+        ...(user && user.role_id == "2" ? [
+            {
+                key: "employee_relation",
+                icon: <IdcardOutlined />,
+                label: "Employee Relation",
+                children: [
+                    {
+                        key: "employee_section",
+                        icon: <HolderOutlined />,
+                        label: menuLabel(
+                            "Employee Section",
+                            "/admin/employee_relation/employee_section?page=1"
                         ),
-                },
-                // {
-                //     key: "upload_memo",
-                //     icon: <HolderOutlined />,
-                //     label: "Upload Memo",
-                //     onClick: () =>
-                //         router.visit("/admin/employee_relation/upload_memo"),
-                // },
-            ],
-        },
-        {
-            key: "attrition",
-            icon: <UserDeleteOutlined />,
-            label: "Attrition",
-            children: [
-                {
-                    key: "attrition_section",
-                    icon: <HolderOutlined />,
-                    label: menuLabel("Attrition Section", "/admin/attrition/attrition_section"),
-                    onClick: () =>
-                        router.visit("/admin/attrition/attrition_section"),
-                },
-            ],
-        },
+                        onClick: () =>
+                            router.visit(
+                                "/admin/employee_relation/employee_section?page=1"
+                            ),
+                    },
+                ],
+            },
         ] : []),
         {
             key: "compliance_training",
@@ -468,8 +489,8 @@ const AdminLayout = ({ children }) => {
         user && user.role_id == "10"
             ? erfUserItems
             : user && user.role_id
-              ? adminItems
-              : [];
+                ? adminItems
+                : [];
 
     const dropdownRef = useRef(null);
 
@@ -637,13 +658,13 @@ const AdminLayout = ({ children }) => {
                     style={
                         isMobile
                             ? {
-                                  position: "fixed",
-                                  height: "100vh",
-                                  zIndex: 999,
-                                  left: 0,
-                                  top: 0,
-                                  overflow: "auto",
-                              }
+                                position: "fixed",
+                                height: "100vh",
+                                zIndex: 999,
+                                left: 0,
+                                top: 0,
+                                overflow: "auto",
+                            }
                             : {}
                     }
                 >
@@ -717,9 +738,8 @@ const AdminLayout = ({ children }) => {
                                 <div
                                     ref={dropdownRef}
                                     id="dropdown"
-                                    className={`z-10 ${
-                                        isOpen ? "block" : "hidden"
-                                    } absolute top-full right-0 w-56 sm:w-auto p-3 px-4 sm:px-5 bg-white rounded-lg shadow-lg mt-2`}
+                                    className={`z-10 ${isOpen ? "block" : "hidden"
+                                        } absolute top-full right-0 w-56 sm:w-auto p-3 px-4 sm:px-5 bg-white rounded-lg shadow-lg mt-2`}
                                 >
                                     <h6 className="mb-3 text-sm font-medium ">
                                         Account Controls
@@ -998,11 +1018,10 @@ const AdminLayout = ({ children }) => {
                                                         Current Password
                                                     </label>
                                                     <input
-                                                        className={`appearance-none block w-full border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white ${
-                                                            passwordErrors.current_password
+                                                        className={`appearance-none block w-full border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white ${passwordErrors.current_password
                                                                 ? "border-red-500"
                                                                 : "border-gray-400 focus:border-gray-500"
-                                                        }`}
+                                                            }`}
                                                         type="password"
                                                         name="current_password"
                                                         value={
@@ -1026,11 +1045,10 @@ const AdminLayout = ({ children }) => {
                                                         New Password
                                                     </label>
                                                     <input
-                                                        className={`appearance-none block w-full border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white ${
-                                                            passwordErrors.password
+                                                        className={`appearance-none block w-full border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white ${passwordErrors.password
                                                                 ? "border-red-500"
                                                                 : "border-gray-400 focus:border-gray-500"
-                                                        }`}
+                                                            }`}
                                                         type="password"
                                                         name="password"
                                                         value={
@@ -1054,11 +1072,10 @@ const AdminLayout = ({ children }) => {
                                                         Confirm Password
                                                     </label>
                                                     <input
-                                                        className={`appearance-none block w-full border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white ${
-                                                            passwordErrors.password_confirmation
+                                                        className={`appearance-none block w-full border rounded py-3 px-4 mb-1 leading-tight focus:outline-none focus:bg-white ${passwordErrors.password_confirmation
                                                                 ? "border-red-500"
                                                                 : "border-gray-400 focus:border-gray-500"
-                                                        }`}
+                                                            }`}
                                                         type="password"
                                                         name="password_confirmation"
                                                         value={
@@ -1081,11 +1098,10 @@ const AdminLayout = ({ children }) => {
                                             <button
                                                 type="submit"
                                                 disabled={passwordLoading}
-                                                className={`w-full text-white font-bold py-2 px-4 rounded-lg ${
-                                                    passwordLoading
+                                                className={`w-full text-white font-bold py-2 px-4 rounded-lg ${passwordLoading
                                                         ? "bg-gray-400 cursor-not-allowed"
                                                         : "bg-blue-500 hover:bg-blue-700"
-                                                }`}
+                                                    }`}
                                             >
                                                 <CheckCircleFilled />
                                                 {passwordLoading

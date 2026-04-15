@@ -359,7 +359,7 @@ const AdminLayout = ({ children }) => {
                 ],
             },
         ] : []),
-        ...(user && user.role_id == "2" ? [
+        ...((user.department != "Human Resources" && user.department != "Human Resource") && user.role_id == "2" ? [
             {
                 key: "employee_relation",
                 icon: <IdcardOutlined />,

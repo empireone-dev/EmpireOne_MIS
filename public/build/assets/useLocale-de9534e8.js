@@ -1,0 +1,5 @@
+<<<<<<< HEAD:public/build/assets/useLocale-4d17df5e.js
+import{r as s}from"./store-9b7b15ad.js";import{L as i,d as n}from"./index-9bdfc207.js";const d=(t,c)=>{const o=s.useContext(i),a=s.useMemo(()=>{var e;const l=c||n[t],u=(e=o==null?void 0:o[t])!==null&&e!==void 0?e:{};return Object.assign(Object.assign({},typeof l=="function"?l():l),u||{})},[t,c,o]),r=s.useMemo(()=>{const e=o==null?void 0:o.locale;return o!=null&&o.exist&&!e?n.locale:e},[o]);return[a,r]},f=d;export{f as u};
+=======
+import{r as s}from"./store-9b7b15ad.js";import{L as i,d as n}from"./index-61e3b563.js";const d=(t,c)=>{const o=s.useContext(i),a=s.useMemo(()=>{var e;const l=c||n[t],u=(e=o==null?void 0:o[t])!==null&&e!==void 0?e:{};return Object.assign(Object.assign({},typeof l=="function"?l():l),u||{})},[t,c,o]),r=s.useMemo(()=>{const e=o==null?void 0:o.locale;return o!=null&&o.exist&&!e?n.locale:e},[o]);return[a,r]},f=d;export{f as u};
+>>>>>>> 38c199c3ffee84131ef7a6ffd1412310305e3b04:public/build/assets/useLocale-de9534e8.js

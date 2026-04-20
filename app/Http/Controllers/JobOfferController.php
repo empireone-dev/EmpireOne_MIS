@@ -12,6 +12,7 @@ use App\Models\JobOffer;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 
 class JobOfferController extends Controller
@@ -59,25 +60,23 @@ class JobOfferController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        $department = $request->input('outsourcing_erf.department');
-        $account = $request->input('outsourcing_erf.account');
-        $jo = JobOffer::create(array_merge($data, [
-            'department' => $department,
-            'account' => $account,
-            'work_location' => $request->input('work_location'),
-        ]));
-        Mail::to($request->email)->send(new MailJobOffer(array_merge(
-            $request->all(),
-            [
-                'id' => $jo->id,
-                'department' => $department,
-                'account' => $account,
-                'work_location' => $request->input('work_location'),
-            ]
-        )));
+        $scriptUrl = "https://script.google.com/macros/s/AKfycbxYUJBE_DcL6hqqdqFLgVLHkQ7AodUmKoKjbgaTtPmt88X3bSemq74BIQavMkXMnR50/exec";
 
+        $response = Http::withOptions([
+            'follow_redirects' => true, // Apps Script requires following redirects
+        ])->post($scriptUrl, $data);
+
+        dd($response->json());
+        // Check the response
+        if ($response->successful()) {
+            return response()->json([
+                'message' => 'Successfully pushed to Google Script',
+                'google_response' => $response->json()
+            ]);
+        }
         return response()->json([
-            $jo,
+            // $jo,
+            $data,
             'data' => 'success'
         ], 200);
     }

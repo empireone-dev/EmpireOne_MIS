@@ -586,6 +586,9 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::get('/cocd', function () {
         return Inertia::render('admin/cocd/page');
     });
+    Route::get('/hmo', function () {
+        return Inertia::render('admin/hmo/page');
+    });
     Route::get('/employee_handbook', function () {
         return Inertia::render('admin/employee_handbook/page');
     });
@@ -600,14 +603,13 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         Route::get('/{id}', function () {
             return Inertia::render('admin/acknowledgments/id/page');
         });
-        
+
         // Route::get('/{id}', function () {
         //     return Inertia::render('admin/acknowledgments/id/page');
         // });
         Route::get('/{id}/view/{employee_id}', function () {
             return Inertia::render('admin/acknowledgments/view/page');
         });
-
     });
 
     Route::get('/profile', function () {
@@ -677,6 +679,9 @@ Route::middleware('auth:sanctum')->prefix('employee')->group(function () {
     });
     Route::get('/code_of_ethics', function () {
         return Inertia::render('employee/code_of_ethics/page');
+    });
+    Route::get('/hmo', function () {
+        return Inertia::render('employee/hmo/page');
     });
     Route::get('/dashboard', function () {
         return Inertia::render('employee/dashboard/page');

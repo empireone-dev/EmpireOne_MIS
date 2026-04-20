@@ -22,6 +22,7 @@ import {
     FileTextOutlined,
     BankOutlined,
     FileProtectOutlined,
+    SisternodeOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal, Badge, message } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
@@ -160,6 +161,12 @@ const EmployeeLayout = ({ children }) => {
             icon: <FileProtectOutlined />,
             label: "Code of Discipline",
             onClick: () => router.visit("/employee/cocd"),
+        },
+        {
+            key: "hmo",
+            icon: <SisternodeOutlined />,
+            label: "(HMO) Health Maintenance Organization",
+            onClick: () => router.visit("/employee/hmo"),
         },
     ];
 

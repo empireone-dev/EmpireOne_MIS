@@ -1,4 +1,5 @@
 import React from "react";
+import AcknowledgeHmoSection from "./acknowledge-hmo-section";
 
 export default function HmoVideoSection() {
     return (

@@ -414,15 +414,9 @@ export default function ApplicantsTableSection() {
     async function handleBulkJobOffer() {
         setBulkLoading(true);
         try {
-            for (const row of selectedRows) {
-                await store.dispatch(
-                    create_job_offer_thunk({
-                        ...bulkForm,
-                        ...row,
-                        status: "Pending",
-                    }),
+             await store.dispatch(
+                    create_job_offer_thunk(selectedRows),
                 );
-            }
             message.success(
                 `Job Offer sent to ${selectedRows.length} applicant(s)!`,
             );

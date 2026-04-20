@@ -8,7 +8,7 @@ export default function HmoVideoSection() {
                 <iframe
                     width="100%"
                     height="800"
-                    src="/images/icare.mp4"
+                    src="/images/design.mp4"
                     title="YouTube video player"
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

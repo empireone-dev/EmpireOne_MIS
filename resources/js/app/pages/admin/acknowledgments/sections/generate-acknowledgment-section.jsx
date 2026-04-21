@@ -44,6 +44,7 @@ export default function GenerateAcknowledgmentSection() {
                 { key: "cocd_acknowledges",     label: "Code of Conduct (COCD)" },
                 { key: "ethics_acknowledges",    label: "Ethics" },
                 { key: "handbook_acknowledges",  label: "Employee Handbook" },
+                { key: "hmo_acknowledges",       label: "HMO Acknowledgment" },
             ];
 
             let rowNumber = 0;

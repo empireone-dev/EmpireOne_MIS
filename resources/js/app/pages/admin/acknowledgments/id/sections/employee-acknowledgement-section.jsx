@@ -2,7 +2,10 @@ import React from "react";
 import { Table, Tag, Tooltip } from "antd";
 import { useSelector } from "react-redux";
 import moment from "moment";
-import { ClipboardDocumentCheckIcon, EyeIcon } from "@heroicons/react/24/outline";
+import {
+    ClipboardDocumentCheckIcon,
+    EyeIcon,
+} from "@heroicons/react/24/outline";
 
 export default function EmployeeAcknowledgementSection() {
     const { employee } = useSelector((state) => state.employees);
@@ -26,6 +29,11 @@ export default function EmployeeAcknowledgementSection() {
             key: "ethics",
             type: "Code of Ethics",
             data: acknowledgment?.ethics_acknowledges,
+        },
+        {
+            key: "hmo",
+            type: "HMO Acknowledgment",
+            data: acknowledgment?.hmo_acknowledges,
         },
     ];
 
@@ -64,7 +72,13 @@ export default function EmployeeAcknowledgementSection() {
                 const hasAcknowledged = !!record.data;
                 return (
                     <div key={i}>
-                        <Tooltip title={hasAcknowledged ? "View Signed Document" : "Not yet acknowledged"}>
+                        <Tooltip
+                            title={
+                                hasAcknowledged
+                                    ? "View Signed Document"
+                                    : "Not yet acknowledged"
+                            }
+                        >
                             <button
                                 onClick={() => {
                                     if (hasAcknowledged) {

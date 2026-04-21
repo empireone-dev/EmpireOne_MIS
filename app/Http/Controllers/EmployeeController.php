@@ -277,7 +277,7 @@ class EmployeeController extends Controller
 
     public function get_employee_acknowledgment($id)
     {
-        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges'])->first();
+        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges', 'hmo_acknowledges'])->first();
         if ($employee) {
             return response()->json([
                 'data' => $employee
@@ -302,12 +302,14 @@ class EmployeeController extends Controller
             'user',
             'cocd_acknowledges',
             'ethics_acknowledges',
-            'handbook_acknowledges'
+            'handbook_acknowledges',
+            'hmo_acknowledges'
         ])
             ->where(function ($query) {
                 $query->whereHas('cocd_acknowledges')
                     ->orWhereHas('ethics_acknowledges')
-                    ->orWhereHas('handbook_acknowledges');
+                    ->orWhereHas('handbook_acknowledges')
+                    ->orWhereHas('hmo_acknowledges');
             })
             ->when($searching, function ($query) use ($searching) {
                 $query->where(function ($q) use ($searching) {
@@ -324,8 +326,9 @@ class EmployeeController extends Controller
                 LEAST(
                     COALESCE((SELECT acknowledged_at FROM cocd_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
                     COALESCE((SELECT acknowledged_at FROM ethics_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
-                    COALESCE((SELECT acknowledged_at FROM handbook_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31")
-                ) DESC
+                    COALESCE((SELECT acknowledged_at FROM handbook_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
+                    COALESCE((SELECT acknowledged_at FROM hmo_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31")
+                )DESC
             ')
             ->paginate($perPage);
 

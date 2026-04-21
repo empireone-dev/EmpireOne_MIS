@@ -92,4 +92,9 @@ class Employee extends Model
     {
         return $this->hasOne(HandbookAcknowledge::class, "emp_id", "emp_id");
     }
+
+    public function hmo_acknowledges(): HasOne
+    {
+        return $this->hasOne(HmoAcknowledge::class, "emp_id", "emp_id");
+    }
 }

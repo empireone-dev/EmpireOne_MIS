@@ -128,11 +128,15 @@ const DepartmentCreateSection = () => {
                                         "Director, Quality & Training",
                                         "Facilities Manager",
                                         "WFM and Data Analytics Manager",
-                                    ].includes(res.position) 
-                                    &&
-                                    !["Resigned", "AWOL", "End of Contract", "Terminated", "Trainee Fallout"].includes(
-                                        res?.employee?.status,
-                                    )
+                                        "Learning Leadership and Development Specialist",
+                                    ].includes(res.position) &&
+                                    ![
+                                        "Resigned",
+                                        "AWOL",
+                                        "End of Contract",
+                                        "Terminated",
+                                        "Trainee Fallout",
+                                    ].includes(res?.employee?.status)
                                 );
                             })
                             .sort((a, b) => {

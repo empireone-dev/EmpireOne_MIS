@@ -663,7 +663,8 @@ export default function ExistingPositionFormSection() {
                                     res.position == "Director of Operations" ||
                                     res.position == "Operations Manager" ||
                                     res.position == "Site Director" ||
-                                    res.position == "Site Manager",
+                                    res.position == "Site Manager" ||
+                                    res.profile == "1",
                             )
                             .sort((a, b) =>
                                 a.employee_fname.localeCompare(

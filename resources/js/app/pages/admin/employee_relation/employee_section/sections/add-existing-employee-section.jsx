@@ -775,6 +775,7 @@ export default function AddExistingEmployeeSection() {
                                                     "Director, Quality & Training",
                                                     "Facilities Manager",
                                                     "WFM and Data Analytics Manager",
+                                                    "Learning Leadership and Development Specialist",
                                                 ].includes(res.position) &&
                                                 ![
                                                     "Resigned",

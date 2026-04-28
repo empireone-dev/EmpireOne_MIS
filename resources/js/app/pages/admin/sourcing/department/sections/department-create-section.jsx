@@ -26,7 +26,7 @@ const DepartmentCreateSection = () => {
         }));
         setIsModalOpen(true);
     };
-    console.log("users", users);
+    // console.log("users", users);
     const handleOk = async () => {
         setLoading(true);
         try {
@@ -96,7 +96,7 @@ const DepartmentCreateSection = () => {
                         </option>
                         {users
                             .filter((res) => {
-                                console.log("resss", res);
+                                // console.log("resss", res);
                                 return (
                                     (!user?.site ||
                                         res.site === user.site ||

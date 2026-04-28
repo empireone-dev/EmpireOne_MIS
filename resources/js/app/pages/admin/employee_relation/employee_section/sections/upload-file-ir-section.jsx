@@ -17,7 +17,7 @@ export default function UploadFileIRSection() {
     const handleOk = async () => {
         setIsModalOpen(false);
         const fd = new FormData()
-        console.log('fileList', fileList)
+        // console.log('fileList', fileList)
         fd.append('file', fileList.originFileObj)
         fd.append('status', 'Uploaded')
         fd.append('reqs', reqs)
@@ -25,7 +25,7 @@ export default function UploadFileIRSection() {
         fd.append('app_id', window.location.pathname.split('/')[2])
         if (fileList.status == 'done') {
             const result = await store_pre_employment_file_service(fd)
-            console.log('result', result)
+            // console.log('result', result)
         }
     };
     const handleCancel = () => {

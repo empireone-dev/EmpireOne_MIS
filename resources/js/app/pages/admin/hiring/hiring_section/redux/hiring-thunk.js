@@ -5,7 +5,7 @@ import { create_new_job_offer_service } from "@/app/pages/services/new-job-offer
 export function get_job_offer_thunk() {
   return async function (dispatch, getState) {
     const result = (await get_job_offer_service()).data
-    console.log('result',result)
+    // console.log('result',result)
     dispatch(jobOfferSlice.actions.setJobOffers(result));
   };
 }
@@ -13,7 +13,7 @@ export function get_job_offer_thunk() {
 export function create_job_offer_thunk(data) {
   return async function (dispatch, getState) {
     const result = await create_job_offer_service(data)
-    console.log('result',data)
+    // console.log('result',data)
     // console.log('result',result)
     // dispatch(jobOfferSlice.actions.setJobOffers(result));
   };
@@ -23,7 +23,7 @@ export function create_job_offer_thunk(data) {
 export function create_new_job_offer_thunk(data) {
   return async function (dispatch, getState) {
     const result = await create_new_job_offer_service(data)
-    console.log('result',data)
+    // console.log('result',data)
     // console.log('result',result)
     // dispatch(jobOfferSlice.actions.setJobOffers(result));
   };

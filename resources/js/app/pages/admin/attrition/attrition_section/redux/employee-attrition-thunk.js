@@ -16,7 +16,7 @@ import { store_attrition_service } from "@/app/pages/services/attrition-service"
 export function get_employee_attrition_thunk() {
     return async function (dispatch, getState) {
         const result = (await get_employee_attrition_service()).data;
-        console.log("result", result);
+        // console.log("result", result);
         dispatch(employeeAttritionSlice.actions.setEmployeeAttritions(result));
     };
 }
@@ -62,7 +62,7 @@ export function get_employee_attrition_by_emp_id_thunk(emp_id) {
             const result = await get_employee_attrition_by_emp_id_service(
                 emp_id
             );
-            console.log("Employee attrition by emp_id:", result);
+            // console.log("Employee attrition by emp_id:", result);
             // Set as an array with single item so existing components work
             dispatch(
                 employeeAttritionSlice.actions.setEmployeeAttritions(

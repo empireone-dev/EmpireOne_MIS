@@ -16,7 +16,7 @@ export default function NewJobOfferSection({ data, setIsModalVisible }) {
     });
     const [loading, setLoading] = useState(false);
 
-    console.log('data', data)
+    // console.log('data', data)
 
     async function send_job_offer(e) {
         e.preventDefault();

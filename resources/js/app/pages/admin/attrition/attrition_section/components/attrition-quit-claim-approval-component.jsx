@@ -29,7 +29,7 @@ export default function AttritionQuitClaimApprovalComponent({ data, item }) {
     //     (state) => state.applicants
     // );
 
-    console.log("daasdadta", data);
+    // console.log("daasdadta", data);
 
     function openHandler(params) {
         setStatusModalOpen(true);

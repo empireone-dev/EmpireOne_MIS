@@ -28,7 +28,7 @@ export default function AttritionSendExitInterviewComponents({ data, item }) {
         setStatusModalOpen(false);
     }
 
-    console.log("user", user);
+    // console.log("user", user);
 
     async function handleSendExitInterview(e) {
         e.preventDefault();
@@ -49,7 +49,7 @@ export default function AttritionSendExitInterviewComponents({ data, item }) {
         }
     }
 
-    console.log("data", data);
+    // // console.log("data", data);
 
     return (
         <>

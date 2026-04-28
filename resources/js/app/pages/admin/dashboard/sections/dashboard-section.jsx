@@ -32,7 +32,7 @@ export default function DashboardSection() {
     greeting = 'Good evening';
   }
 
-  console.log('data', data)
+  // console.log('data', data)
   return (
     <div>
       <div className="flex justify-between items-center">

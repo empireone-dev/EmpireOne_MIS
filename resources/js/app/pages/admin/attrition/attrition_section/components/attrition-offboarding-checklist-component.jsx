@@ -32,7 +32,7 @@ export default function AttritionOffboardingChecklistComponent({ data, item }) {
     //     (state) => state.applicants
     // );
 
-    console.log("daasdadta", data);
+    // console.log("daasdadta", data);
 
     async function send_offboarding_checklist(e) {
         e.preventDefault();

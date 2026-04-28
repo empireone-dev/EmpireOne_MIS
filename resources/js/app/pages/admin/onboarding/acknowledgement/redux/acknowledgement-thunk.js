@@ -6,7 +6,7 @@ import { onboardingDocuSlice } from "../../onboarding_docu/redux/onboarding-docu
 export function get_job_offer_thunk() {
   return async function (dispatch, getState) {
     const result = (await get_job_offer_service()).data
-    console.log('result',result)
+    // console.log('result',result)
     dispatch(jobOfferSlice.actions.setJobOffers(result));
   };
 }

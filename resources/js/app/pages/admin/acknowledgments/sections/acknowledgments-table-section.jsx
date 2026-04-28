@@ -29,7 +29,7 @@ export default function AcknowledgmentsTableSection() {
         useSelector((state) => state.employees);
     const { employees } = useSelector((state) => state.employees);
 
-    console.log("employeesWithAcknowledgment", employeesWithAcknowledgment);
+    // console.log("employeesWithAcknowledgment", employeesWithAcknowledgment);
 
     const url = window.location.pathname + window.location.search;
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -210,7 +210,7 @@ export default function AcknowledgmentsTableSection() {
             dataIndex: "department",
             key: "department",
             render: (_, record, i) => {
-                console.log("recordss", record);
+                // console.log("recordss", record);
                 return <div key={i}>{record?.dept || "N/A"}</div>;
             },
         },

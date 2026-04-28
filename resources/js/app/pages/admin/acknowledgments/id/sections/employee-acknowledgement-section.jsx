@@ -11,8 +11,8 @@ export default function EmployeeAcknowledgementSection() {
     const { employee } = useSelector((state) => state.employees);
     const { acknowledgment } = useSelector((state) => state.employees);
 
-    console.log("employee: ", employee);
-    console.log("acknowledgment: ", acknowledgment);
+    // console.log("employee: ", employee);
+    // console.log("acknowledgment: ", acknowledgment);
 
     const tableData = [
         {

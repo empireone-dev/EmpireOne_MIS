@@ -168,7 +168,7 @@ export default function AcknowledgementTableSection() {
             key: "app_name",
             ...getColumnSearchProps("app_name"),
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 return (
                     <div key={i}>
@@ -216,7 +216,7 @@ export default function AcknowledgementTableSection() {
             dataIndex: "status",
             key: "status",
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
                 let color = "";
                 switch (record.status) {
                     case "Contract Signing":

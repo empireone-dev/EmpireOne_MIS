@@ -33,7 +33,7 @@ export default function DepartmentUpdateSection({ data }) {
         setIsModalOpen(true);
     };
 
-    console.log("datsssa", data);
+    // console.log("datsssa", data);
     async function update_department(e) {
         e.preventDefault();
         setLoading(true);
@@ -111,7 +111,7 @@ export default function DepartmentUpdateSection({ data }) {
                             </option>
                             {users
                                 .filter((res) => {
-                                    console.log("resss", res);
+                                    // console.log("resss", res);
                                     return (
                                         (!user?.site ||
                                             res.site === user.site ||

@@ -12,7 +12,7 @@ import { jobPositionSlice } from './job-title-slice';
 export function get_job_position_thunk() {
   return async function (dispatch, getState) {
     const result = (await get_job_position_service()).data
-    console.log('result',result)
+    // console.log('result',result)
     dispatch(jobPositionSlice.actions.setJobPositions(result));
   };
 }

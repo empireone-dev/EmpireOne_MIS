@@ -15,7 +15,7 @@ export default function VirtualContractSection() {
         (res) => res.status == "Contract Signing"
     );
     const job_offer_id = window.location.pathname.split("/")[3];
-    console.log("file", file);
+    // console.log("file", file);
     async function upload_contract(e) {
         e.preventDefault();
         setLoading(true);
@@ -40,7 +40,7 @@ export default function VirtualContractSection() {
         }
     }
 
-    console.log("jo", jo);
+    // console.log("jo", jo);
     return (
         <div>
             <div className="h-screen overflow-hidden">

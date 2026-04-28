@@ -25,7 +25,7 @@ export default function AttritionLastPayProofComponent({ data, item }) {
     //     (state) => state.applicants
     // );
 
-    console.log("daasdadta", data);
+    // console.log("daasdadta", data);
 
     async function send_quit_claim(e) {
         e.preventDefault();

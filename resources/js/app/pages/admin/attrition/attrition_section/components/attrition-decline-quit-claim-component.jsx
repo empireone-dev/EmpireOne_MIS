@@ -32,7 +32,7 @@ export default function AttritionDeclineQuitClaimComponent({
     //     (state) => state.applicants
     // );
 
-    console.log("daasdadta", data);
+    // console.log("daasdadta", data);
 
     async function decline_quit_claim(e) {
         e.preventDefault();

@@ -38,7 +38,7 @@ export default function AttritionBankLastPayComponent({
     //     (state) => state.applicants
     // );
 
-    console.log("daasdadta", data);
+    // console.log("daasdadta", data);
 
     async function approve_quit_claim(e) {
         e.preventDefault();

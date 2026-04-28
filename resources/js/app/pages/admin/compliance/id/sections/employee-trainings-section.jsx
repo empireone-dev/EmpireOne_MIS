@@ -21,7 +21,7 @@ export default function EmployeeTrainingsSection() {
             key: "type",
             // ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
-                console.log("record", record);
+                // // console.log("record", record);
 
                 return (
                     <div key={i}>
@@ -45,7 +45,7 @@ export default function EmployeeTrainingsSection() {
             key: "created_at",
             // ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 return (
                     <div key={i}>

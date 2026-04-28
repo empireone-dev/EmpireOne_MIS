@@ -390,7 +390,7 @@ export default function ErfRecordsTableSection() {
             key: "fullname",
             ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 return (
                     <div key={i}>
@@ -459,7 +459,7 @@ export default function ErfRecordsTableSection() {
             dataIndex: "status",
             key: "status",
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 return (
                     <Tag

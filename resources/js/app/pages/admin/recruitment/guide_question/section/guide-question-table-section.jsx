@@ -12,7 +12,7 @@ export default function JobTitleTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const { guideqs } = useSelector((state) => state.guideqs)
-    console.log('guideq', guideqs)
+    // console.log('guideq', guideqs)
 
     const searchInput = useRef(null);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {

@@ -18,7 +18,7 @@ export default function InitialResultSection() {
         store.dispatch(get_applicant_by_app_id_thunk(app_id))
     }, [])
 
-    console.log('applicant', applicant)
+    // console.log('applicant', applicant)
     return (
         <div className='font-sans'>
             <div className='flex text-xl items-center justify-center mb-1'>

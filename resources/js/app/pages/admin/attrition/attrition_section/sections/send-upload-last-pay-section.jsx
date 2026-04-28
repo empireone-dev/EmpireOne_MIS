@@ -18,7 +18,7 @@ export default function SendUploadLastPaySection({
         }
     };
 
-    console.log("uploadedFile", uploadedFile);
+    // console.log("uploadedFile", uploadedFile);
 
     const handleFileInputChange = (e) => {
         const file = e.target.files[0];
@@ -41,7 +41,7 @@ export default function SendUploadLastPaySection({
         setUploadedFile(null);
         setFile(null);
     };
-    console.log("uploadedFile", uploadedFile);
+    // console.log("uploadedFile", uploadedFile);
     return (
         <div className="px-3 mb-2">
             <h1 className="block uppercase tracking-wide  text-xs font-bold mb-3">

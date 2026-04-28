@@ -54,8 +54,8 @@ export default function QuitClaimUploadSection() {
             // Convert file to base64
             const base64File = await convertFileToBase64(file);
 
-            console.log("File to upload:", file.name);
-            console.log("Base64 file size:", base64File.length);
+            // console.log("File to upload:", file.name);
+            // console.log("Base64 file size:", base64File.length);
 
             const result = await store.dispatch(
                 upload_quit_claim_thunk({
@@ -106,8 +106,8 @@ export default function QuitClaimUploadSection() {
         });
     };
 
-    console.log("attrition", employee_attrition);
-    console.log("attritions", employee_attritions);
+    // console.log("attrition", employee_attrition);
+    // console.log("attritions", employee_attritions);
     return (
         <div>
             <div className="h-screen overflow-hidden">

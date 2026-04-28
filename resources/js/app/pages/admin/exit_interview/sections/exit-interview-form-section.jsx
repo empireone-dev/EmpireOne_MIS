@@ -55,7 +55,7 @@ export default function ExitInterviewFormSection() {
         );
     }
 
-    console.log('employee', employee)
+    // console.log('employee', employee)
 
     async function submitExitInt(e) {
         e.preventDefault();

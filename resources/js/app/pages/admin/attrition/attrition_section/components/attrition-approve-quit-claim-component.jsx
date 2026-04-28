@@ -38,7 +38,7 @@ export default function AttritionapproveQuitClaimComponent({
     //     (state) => state.applicants
     // );
 
-    console.log("daasdadta", data);
+    // console.log("daasdadta", data);
 
     function openHandler(params) {
         setPayDetailsModalOpen(true);

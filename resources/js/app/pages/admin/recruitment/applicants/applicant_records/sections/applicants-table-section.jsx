@@ -448,7 +448,7 @@ export default function ApplicantsTableSection() {
             key: "fullname",
             // ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 const capitalizeFirstLetter = (str) => {
                     if (!str) return str;
@@ -582,7 +582,7 @@ export default function ApplicantsTableSection() {
             dataIndex: "site",
             key: "site",
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 return <div key={i}>{record?.site}</div>;
             },

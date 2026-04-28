@@ -67,7 +67,7 @@ export function get_acknowledgment_by_emp_id_thunk() {
     return async function (dispatch) {
         try {
             const res = await get_acknowledgment_by_emp_id_service();
-            console.log("resres", res.data);
+            // console.log("resres", res.data);
             dispatch(appSlice.actions.setAcknowledgment(res.data));
         } catch (error) {
             console.error("Error fetching acknowledgment:", error);

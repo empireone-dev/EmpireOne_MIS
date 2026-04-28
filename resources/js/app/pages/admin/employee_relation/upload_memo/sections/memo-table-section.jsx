@@ -11,7 +11,7 @@ export default function MemoTableSection() {
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
     const { emp_memos } = useSelector((state) => state.emp_memos)
-    console.log('emp_memos',emp_memos)
+    // console.log('emp_memos',emp_memos)
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();

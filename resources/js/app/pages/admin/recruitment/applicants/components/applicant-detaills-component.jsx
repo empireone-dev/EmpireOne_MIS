@@ -56,7 +56,7 @@ export default function ApplicantDetaillsComponent({ data, item }) {
         }
     };
 
-    console.log("data", data);
+    // console.log("data", data);
 
     try {
         return (

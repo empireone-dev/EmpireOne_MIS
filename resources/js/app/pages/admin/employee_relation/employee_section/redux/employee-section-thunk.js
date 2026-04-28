@@ -43,7 +43,7 @@ export function get_employee_acknowledgment_by_emp_id_thunk(emp_id) {
 export function get_hired_applicant_thunk() {
   return async function (dispatch, getState) {
     const result = (await get_hired_applicant_service()).data
-    console.log('sss', result)
+    // console.log('sss', result)
     dispatch(employeeSlice.actions.setHiredApplicants(result));
   };
 }

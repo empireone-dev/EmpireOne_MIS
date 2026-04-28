@@ -26,7 +26,7 @@ export default function AttritionUploadQuitClaimComponent({ data, item }) {
     //     (state) => state.applicants
     // );
 
-    console.log("daasdadta", data);
+    // console.log("daasdadta", data);
 
     async function upload_quit_claim(e) {
         e.preventDefault();

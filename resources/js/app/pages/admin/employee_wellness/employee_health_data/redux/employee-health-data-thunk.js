@@ -4,7 +4,7 @@ import { employeeSlice } from "../../../employee_relation/employee_section/redux
 export function get_employee_thunk() {
     return async function (dispatch, getState) {
         const result = (await get_employee_service()).data
-        console.log('result', result)
+        // console.log('result', result)
         dispatch(employeeSlice.actions.setEmployees(result));
     };
 }

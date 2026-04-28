@@ -123,7 +123,7 @@ export default function GenerateQrComponent({ data, item }) {
         window.open('/admin/employee-qr-scan', '_blank');
     };
 
-    console.log("data", data);
+    // // console.log("data", data);
 
     return (
         <>

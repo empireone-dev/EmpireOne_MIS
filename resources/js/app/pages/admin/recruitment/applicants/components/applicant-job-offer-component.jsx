@@ -50,7 +50,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
         }
     }
 
-    console.log("job_positions", job_positions);
+    // console.log("job_positions", job_positions);
     return (
         <>
             <Menu.Item onClick={() => openHandler(true)} icon={item.icon}>

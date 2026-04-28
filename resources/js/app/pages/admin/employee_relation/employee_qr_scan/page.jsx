@@ -47,9 +47,9 @@ export default function EmployeeQRScanPage() {
             try {
                 if (empId) {
                     // Fetch employee data from backend using employee ID
-                    console.log('Fetching employee data for ID:', empId);
+                    // console.log('Fetching employee data for ID:', empId);
                     const response = await axios.get(`/api/employee/${empId}`);
-                    console.log('API Response:', response.data);
+                    // console.log('API Response:', response.data);
                     const employee = response.data.data;
 
                     if (employee && employee.applicant) {

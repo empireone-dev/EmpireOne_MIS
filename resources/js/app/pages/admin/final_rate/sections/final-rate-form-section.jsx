@@ -50,7 +50,7 @@ export default function FinalRateFormSection() {
         router.visit('/admin/recruitment/applicant_records?searching=' + app_id)
     }
 
-    console.log(finalRate, "finalRate");
+    // console.log(finalRate, "finalRate");
 
     return (
         <div className="font-sans">

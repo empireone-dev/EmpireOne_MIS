@@ -48,7 +48,7 @@ export default function AddAttritionSection() {
                 ...form
             }));
             if (res.status == 'success') {
-                console.log('ressss', res.status)
+                // console.log('ressss', res.status)
                 await store.dispatch(get_employee_attrition_thunk())
                 message.success('Successfully Added')
                 setLoading(false)
@@ -70,7 +70,7 @@ export default function AddAttritionSection() {
     }
 
     const new_applicants = applicants.filter(applicant => applicant.employee !== null && applicant.employee !== 0)
-    console.log('employeesasda', applicant)
+    // console.log('employeesasda', applicant)
 
     return (
         <div className="my-2">

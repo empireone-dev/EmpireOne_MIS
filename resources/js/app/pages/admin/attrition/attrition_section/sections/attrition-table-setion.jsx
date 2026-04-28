@@ -35,7 +35,7 @@ export default function AttritionTableSection() {
     const { employee_attritions } = useSelector(
         (state) => state.employee_attritions,
     );
-    console.log("attrition", employee_attritions);
+    // console.log("attrition", employee_attritions);
 
     const url = window.location.pathname + window.location.search;
 

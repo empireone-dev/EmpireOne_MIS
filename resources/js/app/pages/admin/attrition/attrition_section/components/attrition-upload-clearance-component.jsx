@@ -84,8 +84,8 @@ export default function AttritionUploadClearanceComponent({ data, item }) {
             // Extract just the base64 strings from the files array
             const base64FilesArray = files.map(fileObj => fileObj.files);
 
-            console.log('Files to upload:', base64FilesArray);
-            console.log('Sample base64 string:', base64FilesArray[0]?.substring(0, 50));
+            // console.log('Files to upload:', base64FilesArray);
+            // console.log('Sample base64 string:', base64FilesArray[0]?.substring(0, 50));
 
             await store.dispatch(
                 upload_exit_clearance_thunk({

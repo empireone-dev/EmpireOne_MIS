@@ -61,7 +61,7 @@ export default function Page() {
         e.target.value = "";
     };
 
-    console.log("usssser", user);
+    // console.log("usssser", user);
 
     async function update_user(e) {
         e.preventDefault();

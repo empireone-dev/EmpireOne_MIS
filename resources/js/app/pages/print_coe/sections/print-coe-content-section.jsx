@@ -74,7 +74,7 @@ export default function PrintCOEContentSection() {
         }
     }
 
-    console.log('employee', employee)
+    // // console.log('employee', employee)
     return (
         <div>
             <div className="mt-7" ref={certificateRef}>

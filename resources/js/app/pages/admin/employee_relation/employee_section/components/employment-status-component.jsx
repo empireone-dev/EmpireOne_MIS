@@ -28,7 +28,7 @@ export default function EmploymentStatusComponent({ data, item }) {
     const { users } = useSelector((state) => state.app);
     const { user } = useSelector((state) => state.app);
 
-    console.log("departmeqweqeqwnt", data);
+    // console.log("departmeqweqeqwnt", data);
 
     function openHandler(params) {
         setStatusModalOpen(true);
@@ -75,7 +75,7 @@ export default function EmploymentStatusComponent({ data, item }) {
     //     });
     // };
 
-    console.log("data", data);
+    // // console.log("data", data);
     return (
         <>
             <Menu.Item onClick={() => openHandler(true)} icon={item.icon}>

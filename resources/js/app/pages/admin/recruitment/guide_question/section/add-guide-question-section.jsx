@@ -10,7 +10,7 @@ export default function AddGuideQuestionSection() {
     const [open, setOpen] = useState(false);
 
     const { guideqForm } = useSelector((state) => state.guideqs)
-    console.log("guideq", guideqForm)
+    // console.log("guideq", guideqForm)
     const dispatch = useDispatch()
     const closeModal = () => {
         setOpen(false);

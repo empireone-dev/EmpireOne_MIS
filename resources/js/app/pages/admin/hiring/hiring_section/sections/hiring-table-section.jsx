@@ -209,7 +209,7 @@ export default function HiringTableSection() {
             dataIndex: "app_name",
             key: "app_name",
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
                 const fullName = `${record?.applicant?.fname || ""} ${
                     record?.applicant?.mname || ""
                 } ${record?.applicant?.lname || ""}`.trim();
@@ -374,7 +374,7 @@ export default function HiringTableSection() {
             dataIndex: "status",
             key: "status",
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
                 let color = "";
                 switch (record.status) {
                     case "Contract Signing":

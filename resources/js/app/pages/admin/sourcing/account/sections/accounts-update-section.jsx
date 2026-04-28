@@ -24,7 +24,7 @@ export default function AccountsUpdateSection({ data }) {
     };
 
 
-    console.log('datsssa', data)
+    // console.log('datsssa', data)
     async function update_account(e) {
         e.preventDefault();
         setLoading(true);

@@ -22,7 +22,7 @@ export function get_video_quiz_by_emp_id_thunk() {
   return async function (dispatch) {
     try {
       const res = await get_video_quiz_by_emp_id_service();
-      console.log('resres', res.data);
+      // console.log('resres', res.data);
       dispatch(videoQuizSlice.actions.setVideoQuizzes(res.data));
     } catch (error) {
       console.error("Error fetching video quiz:", error);

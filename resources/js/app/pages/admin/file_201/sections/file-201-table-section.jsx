@@ -172,7 +172,7 @@ export default function File201TableSection() {
             dataIndex: "status",
             key: "status",
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 const statusText =
                     record.status === "Declined"
@@ -250,7 +250,7 @@ export default function File201TableSection() {
             dataIndex: "status",
             key: "status",
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 const statusText =
                     record?.status === "Declined"

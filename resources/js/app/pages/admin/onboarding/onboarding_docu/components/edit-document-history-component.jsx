@@ -31,7 +31,7 @@ export default function EditDocumentHistoryComponent({ data, item, status }) {
             setLoading(false);
         }
     }
-    console.log('dataaaaaa', data);
+    // console.log('dataaaaaa', data);
 
     return (
         <>

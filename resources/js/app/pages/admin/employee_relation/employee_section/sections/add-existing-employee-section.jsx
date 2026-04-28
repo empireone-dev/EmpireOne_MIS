@@ -106,10 +106,10 @@ export default function AddExistingEmployeeSection() {
             );
         }
     }
-    console.log("query", applicantForm);
+    // console.log("query", applicantForm);
 
     async function submitApplicant(data) {
-        console.log("aaaaaaaaaaaaaaaaa", data);
+        // console.log("aaaaaaaaaaaaaaaaa", data);
         // const fd = new FormData()
         // fd.append('files', uploadedFile)
         // fd.append('site', user.site ?? "")
@@ -183,7 +183,7 @@ export default function AddExistingEmployeeSection() {
             setFiles([]);
             setOpen(false);
         } catch (error) {
-            console.log("bbbbbb", error);
+            // console.log("bbbbbb", error);
             message.error("Employee failed to saved");
         }
     }

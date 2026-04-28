@@ -150,7 +150,7 @@ export default function ApplicantAiInterviewComponent({ data, item }) {
         return `${mb.toFixed(2)} MB`;
     };
 
-    console.log("data", data);
+    // console.log("data", data);
 
     try {
         return (

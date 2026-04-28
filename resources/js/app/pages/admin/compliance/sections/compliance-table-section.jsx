@@ -184,7 +184,7 @@ export default function ComplianceTableSection() {
             key: "fullname",
             // ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 return <div key={i}>{record?.name}</div>;
             },

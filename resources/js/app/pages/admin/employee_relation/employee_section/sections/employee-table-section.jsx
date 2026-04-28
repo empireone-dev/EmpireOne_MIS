@@ -197,7 +197,7 @@ export default function EmployeeTableSection() {
             key: "fullname",
             // ...getColumnSearchProps("fullname"),
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 return (
                     <div key={i}>
@@ -260,7 +260,7 @@ export default function EmployeeTableSection() {
             key: "contact",
             // ...getColumnSearchProps("contact"),
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 return <div key={i}>{record?.applicant?.phone}</div>;
             },
@@ -291,7 +291,7 @@ export default function EmployeeTableSection() {
             dataIndex: "site",
             key: "site",
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 return <div key={i}>{record?.applicant?.site}</div>;
             },

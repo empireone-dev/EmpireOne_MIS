@@ -6,7 +6,7 @@ import { setExitInterviewForm } from '../../redux/exit-interview-slice';
 export default function RateJobSection({ data }) {
     const { exitInterviewForm } = useSelector((state) => state.exit_int);
     const dispatch = useDispatch();
-    console.log('data', data);
+    // console.log('data', data);
     
     const handleRadioChange = (e) => {
         const { name, value } = e.target;

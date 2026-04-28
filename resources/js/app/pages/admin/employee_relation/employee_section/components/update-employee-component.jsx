@@ -11,7 +11,7 @@ export default function UpdateEmployeeComponent({ data, item }) {
         window.open(`/admin/employee_relation/employee_section/update_employee/${data?.app_id}/${data?.user_id?.id}`, "_blank");
     }
 
-    console.log('datasasdas', data)
+    // console.log('datasasdas', data)
     return (
         <>
             <Menu.Item onClick={() => openHandler(true)} icon={item.icon}>

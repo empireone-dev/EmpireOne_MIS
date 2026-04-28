@@ -128,7 +128,7 @@ export default function EmployeeHealthDataTableSection() {
             key: 'fullname',
             ...getColumnSearchProps('fullname'),
             render: (_, record, i) => {
-                console.log('record', record)
+                // // console.log('record', record)
 
                 return (
                     <div key={i}>
@@ -162,7 +162,7 @@ export default function EmployeeHealthDataTableSection() {
             key: 'contact',
             ...getColumnSearchProps('contact'),
             render: (_, record, i) => {
-                console.log('record', record)
+                // console.log('record', record)
 
                 return (
                     <div key={i}>
@@ -177,7 +177,7 @@ export default function EmployeeHealthDataTableSection() {
             dataIndex: 'status',
             key: 'status',
             render: (_, record, i) => {
-                console.log('record', record)
+                // console.log('record', record)
 
                 return (
                     <Tag color={'orange'} key={i}>

@@ -199,7 +199,7 @@ export default function PreEmploymentTableSection() {
             dataIndex: "status",
             key: "status",
             render: (_, record, i) => {
-                console.log('record', record);
+                // console.log('record', record);
 
                 const statusText = record.status === 'Declined'
                     ? `${record.status} - ${record.reas}`

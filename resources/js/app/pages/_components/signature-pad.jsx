@@ -92,7 +92,7 @@ const SignaturePad = () => {
                 }),
             );
             setLoading(false);
-            console.log("Signature Value:", signatureData);
+            // console.log("Signature Value:", signatureData);
         } catch (error) {}
     };
 

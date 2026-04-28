@@ -14,7 +14,7 @@ export default function EditDocumentSection() {
     const id = window.location.pathname.split('/')[5]
     const { user } = useSelector((state) => state.app);
 
-    console.log('asdasdasdasd', user)
+    // console.log('asdasdasdasd', user)
     async function update_onboarding_doc() {
         setLoading(true);
 
@@ -44,9 +44,9 @@ export default function EditDocumentSection() {
     }
 
 
-    console.log('onboarding_asdasdasdasdoc', onboarding_doc?.data)
+    // console.log('onboarding_asdasdasdasdoc', onboarding_doc?.data)
 
-    console.log()
+    // console.log()
     return (
         <div className=''>
             <div>

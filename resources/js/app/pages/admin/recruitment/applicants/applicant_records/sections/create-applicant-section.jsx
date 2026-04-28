@@ -174,7 +174,7 @@ export default function CreateApplicantSection() {
             });
         }
     }
-    console.log("eeee", errors?.fname?.message);
+    // console.log("eeee", errors?.fname?.message);
     return (
         <>
             <div class="inline-flex rounded-md shadow-sm" role="group">

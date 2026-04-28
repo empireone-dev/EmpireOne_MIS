@@ -30,7 +30,7 @@ export default function JobAnalysisFormSection() {
         }
     }
 
-    console.log('erf',erf)
+    // console.log('erf',erf)
 
     return (
         <div>

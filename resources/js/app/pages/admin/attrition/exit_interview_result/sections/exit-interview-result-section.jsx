@@ -20,7 +20,7 @@ export default function ExitInterviewResultSection() {
     const emp_id = window.location.pathname.split("/")[4];
     const [loading, setLoading] = useState(false);
 
-    console.log('employee', employee);
+    // // console.log('employee', employee);
     useEffect(() => {
         dispatch(
             setExitInterviewForm({
@@ -54,7 +54,7 @@ export default function ExitInterviewResultSection() {
         );
     }
 
-    console.log('employee', employee)
+    // // console.log('employee', employee)
 
     async function submitExitInt(e) {
         e.preventDefault();

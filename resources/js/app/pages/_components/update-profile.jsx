@@ -18,7 +18,7 @@ export default function UpdateProfile({ user }) {
         gender: "",
     });
 
-    console.log("formsssss", form);
+    // console.log("formsssss", form);
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
@@ -70,7 +70,7 @@ export default function UpdateProfile({ user }) {
         }
     }
 
-    console.log("user", user);
+    // console.log("user", user);
     return (
         <div>
             <button

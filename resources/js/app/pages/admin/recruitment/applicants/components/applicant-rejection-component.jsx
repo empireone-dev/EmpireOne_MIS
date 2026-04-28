@@ -28,7 +28,7 @@ export default function ApplicantRejectionComponent({ data, item }) {
         (() => setOpen(false));
     }
 
-    console.log('data', data)
+    // console.log('data', data)
     return (
         <>
             <Menu.Item onClick={() => openHandler(true)} icon={item.icon}>

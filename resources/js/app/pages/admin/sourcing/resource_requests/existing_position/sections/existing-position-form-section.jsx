@@ -122,7 +122,7 @@ export default function ExistingPositionFormSection() {
                 ...prevForm,
                 account: selectedAccount,
             };
-            console.log("Updated form state:", updatedForm);
+            // console.log("Updated form state:", updatedForm);
             return updatedForm;
         });
     };
@@ -213,8 +213,8 @@ export default function ExistingPositionFormSection() {
         setLoading(true);
 
         // Debug: Check form data before submission
-        console.log("Form state before submission:", form);
-        console.log("User object:", user);
+        // console.log("Form state before submission:", form);
+        // console.log("User object:", user);
 
         try {
             // Create the submit data object carefully to ensure account is not overridden
@@ -240,7 +240,7 @@ export default function ExistingPositionFormSection() {
                 interview_time: form.interview_time,
             };
 
-            console.log("Final data being sent to thunk:", submitData);
+            // console.log("Final data being sent to thunk:", submitData);
 
             await store.dispatch(create_outsourcing_erf_thunk(submitData));
             message.success("Successfully Added!");

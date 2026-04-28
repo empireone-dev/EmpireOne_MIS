@@ -75,7 +75,7 @@ export default function UpdateEmployeeFormSection() {
         });
     }, [applicant, employee]);
 
-    console.log("emploeesss", applicant);
+    // console.log("emploeesss", applicant);
 
     async function edit_information(e) {
         e.preventDefault();
@@ -103,7 +103,7 @@ export default function UpdateEmployeeFormSection() {
         }
     }
 
-    console.log("applicant", applicant);
+    // console.log("applicant", applicant);
     return (
         <div>
             <div className="flex text-2xl items-center justify-center">

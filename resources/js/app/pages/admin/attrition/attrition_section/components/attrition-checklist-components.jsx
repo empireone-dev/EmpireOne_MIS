@@ -8,7 +8,7 @@ export default function AttritionChecklistComponents({ data, item }) {
         setStatusModalOpen(true);
     }
 
-    console.log("data", data);
+    // // console.log("data", data);
 
     return (
         <>

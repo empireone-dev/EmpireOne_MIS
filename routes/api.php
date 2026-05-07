@@ -70,6 +70,8 @@ Route::post('/user/{id}', [UserController::class, 'update']);
 Route::get('/employee-qr/{emp_id}', [EmployeeController::class, 'showForQR']);
 Route::get('/get_employee_acknowledgment/{emp_id}', [EmployeeController::class, 'get_employee_acknowledgment']);
 Route::get('/get_employee_with_acknowledgment', [EmployeeController::class, 'get_employee_with_acknowledgment']);
+Route::get('/get_employee_policy_acknowledgment/{emp_id}', [EmployeeController::class, 'get_employee_policy_acknowledgment']);
+Route::get('/get_employee_with_policy_acknowledgment', [EmployeeController::class, 'get_employee_with_policy_acknowledgment']);
 
 Route::post('/search_applicant', [ApplicantController::class, 'search_applicant']);
 Route::resource('applicant', ApplicantController::class);

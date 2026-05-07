@@ -8,8 +8,11 @@ export const employeeSlice = createSlice({
         employeeForm: {},
         hiredApplicants: [],
         acknowledgment: {},
-          employeesWithAcknowledgment: [],
-          employeesWithAcknowledgmentTotal: 0,
+        policyAcknowledgment: {},
+        employeesWithAcknowledgment: [],
+        employeesWithAcknowledgmentTotal: 0,
+        employeesWithPolicyAcknowledgment: [],
+        employeesWithPolicyAcknowledgmentTotal: 0,
     },
     reducers: {
         setEmployees: (state, action) => {
@@ -30,11 +33,20 @@ export const employeeSlice = createSlice({
         setEmployeeAcknowledgment: (state, action) => {
             state.acknowledgment = action.payload;
         },
+        setEmployeePolicyAcknowledgment: (state, action) => {
+            state.policyAcknowledgment = action.payload;
+        },
         setEmployeesWithAcknowledgment: (state, action) => {
             state.employeesWithAcknowledgment = action.payload;
         },
         setEmployeesWithAcknowledgmentTotal: (state, action) => {
             state.employeesWithAcknowledgmentTotal = action.payload;
+        },
+        setEmployeesWithPolicyAcknowledgment: (state, action) => {
+            state.employeesWithPolicyAcknowledgment = action.payload;
+        },
+        setEmployeesWithPolicyAcknowledgmentTotal: (state, action) => {
+            state.employeesWithPolicyAcknowledgmentTotal = action.payload;
         },
     },
 });
@@ -45,8 +57,11 @@ export const {
     setHiredApplicants,
     setEmployee,
     setEmployeeAcknowledgment,
+    setEmployeePolicyAcknowledgment,
     setEmployeesWithAcknowledgment,
     setEmployeesWithAcknowledgmentTotal,
+    setEmployeesWithPolicyAcknowledgment,
+    setEmployeesWithPolicyAcknowledgmentTotal,
 } = employeeSlice.actions;
 
 export default employeeSlice.reducer;

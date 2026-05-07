@@ -612,6 +612,22 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         });
     });
 
+    // Route::prefix('policy_acknowledgments')->group(function () {
+    //     Route::get('/', function () {
+    //         return Inertia::render('admin/policy_acknowledgments/page');
+    //     });
+    //     Route::get('/{id}', function () {
+    //         return Inertia::render('admin/policy_acknowledgments/id/page');
+    //     });
+
+    //     // Route::get('/{id}', function () {
+    //     //     return Inertia::render('admin/policy_acknowledgments/id/page');
+    //     // });
+    //     Route::get('/{id}/view/{employee_id}', function () {
+    //         return Inertia::render('admin/policy_acknowledgments/view/page');
+    //     });
+    // });
+
     Route::prefix('policy')->group(function () {
         Route::get('/schedule_policy', function () {
             return Inertia::render('admin/policy/schedule_policy/page');

@@ -138,6 +138,23 @@ const AdminLayout = ({ children }) => {
             ),
             onClick: () => router.visit("/employee/hmo"),
         },
+        {
+            key: "company_policies",
+            icon: <FileTextOutlined />,
+            label: "Company Policies",
+            children: [
+                {
+                    key: "schedule_policy",
+                    icon: <HolderOutlined />,
+                    label: menuLabel(
+                        "Schedule Policy",
+                        "/employee/policy/schedule_policy",
+                    ),
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+            ],
+        },
     ];
 
     // Full admin menu items for other roles

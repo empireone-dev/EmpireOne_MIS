@@ -303,13 +303,15 @@ class EmployeeController extends Controller
             'cocd_acknowledges',
             'ethics_acknowledges',
             'handbook_acknowledges',
-            'hmo_acknowledges'
+            'hmo_acknowledges',
+            'schedule_policy_acknowledges'
         ])
             ->where(function ($query) {
                 $query->whereHas('cocd_acknowledges')
                     ->orWhereHas('ethics_acknowledges')
                     ->orWhereHas('handbook_acknowledges')
-                    ->orWhereHas('hmo_acknowledges');
+                    ->orWhereHas('hmo_acknowledges')
+                    ->orWhereHas('schedule_policy_acknowledges');
             })
             ->when($searching, function ($query) use ($searching) {
                 $query->where(function ($q) use ($searching) {
@@ -327,7 +329,61 @@ class EmployeeController extends Controller
                     COALESCE((SELECT acknowledged_at FROM cocd_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
                     COALESCE((SELECT acknowledged_at FROM ethics_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
                     COALESCE((SELECT acknowledged_at FROM handbook_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
-                    COALESCE((SELECT acknowledged_at FROM hmo_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31")
+                    COALESCE((SELECT acknowledged_at FROM hmo_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
+                    COALESCE((SELECT acknowledged_at FROM schedule_policy_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31")
+                )DESC
+            ')
+            ->paginate($perPage);
+
+        return response()->json([
+            'data' => $employees
+        ], 200);
+    }
+
+    public function get_employee_policy_acknowledgment($id)
+    {
+        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'dept', 'schedule_policy_acknowledges'])->first();
+        if ($employee) {
+            return response()->json([
+                'data' => $employee
+            ], 200);
+        } else {
+            return response()->json([
+                'error' => 'Employee not found',
+                'message' => 'No employee found with the provided employee ID'
+            ], 404);
+        }
+    }
+
+    public function get_employee_with_policy_acknowledgment()
+    {
+        $perPage = (int) request()->get('per_page', 10);
+        $perPage = min($perPage, 10000); // cap to prevent abuse
+        $searching = request()->get('searching');
+
+        $employees = Employee::with([
+            'attrition',
+            'applicant',
+            'user',
+            'schedule_policy_acknowledges'
+        ])
+            ->where(function ($query) {
+                $query->whereHas('schedule_policy_acknowledges');
+            })
+            ->when($searching, function ($query) use ($searching) {
+                $query->where(function ($q) use ($searching) {
+                    $q->where('emp_id', 'like', "%{$searching}%")
+                        ->orWhere('eogs', 'like', "%{$searching}%")
+                        ->orWhereHas('applicant', function ($aq) use ($searching) {
+                            $aq->where('fname', 'like', "%{$searching}%")
+                                ->orWhere('lname', 'like', "%{$searching}%")
+                                ->orWhere('mname', 'like', "%{$searching}%");
+                        });
+                });
+            })
+            ->orderByRaw('
+                LEAST(
+                    COALESCE((SELECT acknowledged_at FROM schedule_policy_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31")
                 )DESC
             ')
             ->paginate($perPage);

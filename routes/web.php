@@ -612,6 +612,12 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         });
     });
 
+    Route::prefix('policy')->group(function () {
+        Route::get('/schedule_policy', function () {
+            return Inertia::render('admin/policy/schedule_policy/page');
+        });
+    });
+
     Route::get('/profile', function () {
         return Inertia::render('admin/profile/page');
     });

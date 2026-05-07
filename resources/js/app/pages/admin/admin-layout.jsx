@@ -27,6 +27,7 @@ import {
     FileProtectOutlined,
     LikeOutlined,
     SisternodeOutlined,
+    FileTextOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal, message } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
@@ -512,6 +513,23 @@ const AdminLayout = ({ children }) => {
                 "/admin/hmo",
             ),
             onClick: () => router.visit("/admin/hmo"),
+        },
+        {
+            key: "company_policies",
+            icon: <FileTextOutlined />,
+            label: "Company Policies",
+            children: [
+                {
+                    key: "schedule_policy",
+                    icon: <HolderOutlined />,
+                    label: menuLabel(
+                        "Schedule Policy",
+                        "/admin/policy/schedule_policy",
+                    ),
+                    onClick: () =>
+                        router.visit("/admin/policy/schedule_policy"),
+                },
+            ],
         },
         // {
         //     key: "coaching_logs",

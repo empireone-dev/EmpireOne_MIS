@@ -29,6 +29,7 @@ use App\Http\Controllers\CocdAcknowledgeController;
 use App\Http\Controllers\HandbookAcknowledgeController;
 use App\Http\Controllers\EthicsAcknowledgeController;
 use App\Http\Controllers\HmoAcknowledgeController;
+use App\Http\Controllers\SchedulePolicyAcknowledgeController;
 use App\Http\Controllers\OnboardingAckController;
 use App\Http\Controllers\OnboardingDocController;
 use App\Http\Controllers\OpenAIController;
@@ -112,6 +113,8 @@ Route::post('/ethics_acknowledge', [EthicsAcknowledgeController::class, 'store']
 Route::get('/ethics_acknowledge/{emp_id}', [EthicsAcknowledgeController::class, 'show']);
 Route::post('/hmo_acknowledge', [HmoAcknowledgeController::class, 'store']);
 Route::get('/hmo_acknowledge/{emp_id}', [HmoAcknowledgeController::class, 'show']);
+Route::post('/schedule_policy_acknowledge', [SchedulePolicyAcknowledgeController::class, 'store']);
+Route::get('/schedule_policy_acknowledge/{emp_id}', [SchedulePolicyAcknowledgeController::class, 'show']);
 
 
 Route::resource('/incident_report', IncidentReportController::class);

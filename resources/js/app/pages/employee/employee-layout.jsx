@@ -168,6 +168,20 @@ const EmployeeLayout = ({ children }) => {
             label: "(HMO) Health Maintenance Organization",
             onClick: () => router.visit("/employee/hmo"),
         },
+        {
+            key: "Company_Policies",
+            icon: <FileTextOutlined />,
+            label: "Company Policies",
+            children: [
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+            ],
+        },
     ];
 
     const [isOpen, setIsOpen] = useState(false);

@@ -695,6 +695,13 @@ Route::middleware('auth:sanctum')->prefix('employee')->group(function () {
     Route::get('/list_memo', function () {
         return Inertia::render('employee/list_memo/page');
     });
+
+    Route::prefix('policy')->group(function () {
+        Route::get('/schedule_policy', function () {
+            return Inertia::render('employee/policy/schedule_policy/page');
+        });
+    });
+
     Route::get('/engagement', function () {
         return Inertia::render('employee/engagement/page');
     });

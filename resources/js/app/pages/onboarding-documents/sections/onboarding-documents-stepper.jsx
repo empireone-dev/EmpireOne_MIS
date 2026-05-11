@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Stepper, Step, Button } from "@material-tailwind/react";
-import Wysiwyg from "../../_components/wysiwyg";
 import { useSelector } from "react-redux";
 import {
     create_onboarding_ack_service,
@@ -238,7 +237,7 @@ export function OnboardingDocsStepper() {
                                     <Step
                                         key={`step-${i}-${res.id || i}`}
                                         onClick={() => {
-                                            if (!isReadOnly) handleStepClick(i);
+                                            if (!isReadOnly && i <= agree.length) handleStepClick(i);
                                         }}
                                         className="p-1 sm:p-2 w-8 sm:w-10 !bg-blue-gray-50 cursor-pointer items-center justify-center text-xs sm:text-sm"
                                         activeClassName="ring-0 !bg-blue-600 text-white"
@@ -255,16 +254,24 @@ export function OnboardingDocsStepper() {
                             if (i === activeStep) {
                                 return (
                                     <div key={`content-${i}-${res.id || i}`}>
-                                        {/* Important Reminders Section */}
-
-                                        <div
-                                            key={i}
-                                            dangerouslySetInnerHTML={{
-                                                __html: res.onboarding_doc
-                                                    ?.doc_content,
-                                            }}
-                                            className="mb-4 sm:mb-7 text-sm sm:text-base overflow-x-auto"
-                                        />
+                                        {(() => {
+                                            const rawPath = res.onboarding_doc?.doc_content ?? null;
+                                            const fileUrl = rawPath
+                                                ? rawPath.startsWith('http') || rawPath.startsWith('/storage')
+                                                    ? rawPath
+                                                    : `/storage/${rawPath}`
+                                                : null;
+                                            return fileUrl ? (
+                                                <iframe
+                                                    src={fileUrl}
+                                                    title={res.onboarding_doc?.doc_name ?? 'Onboarding Document'}
+                                                    className="w-full border border-gray-300 rounded mb-4 sm:mb-7"
+                                                    style={{ height: '70vh' }}
+                                                />
+                                            ) : (
+                                                <p className="text-gray-500 text-sm mb-4 sm:mb-7">No document available.</p>
+                                            );
+                                        })()}
                                         <div className="overflow-x-auto">
                                             <Stepper
                                                 activeStep={activeStep}
@@ -286,7 +293,8 @@ export function OnboardingDocsStepper() {
                                                                 }`}
                                                                 onClick={() => {
                                                                     if (
-                                                                        !isReadOnly
+                                                                        !isReadOnly &&
+                                                                        i <= agree.length
                                                                     )
                                                                         handleStepClick(
                                                                             i

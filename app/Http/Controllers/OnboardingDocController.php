@@ -26,15 +26,19 @@ class OnboardingDocController extends Controller
 
     public function store(Request $request)
     {
+        $path = null;
+        if ($request->hasFile('doc_content')) {
+            $path = $request->file('doc_content')->store('onboarding_docs', 'public');
+        }
 
         $erf = OnboardingDoc::create([
             'doc_name' => $request->doc_name,
-            'doc_content' => $request->doc_content,
+            'doc_content' => $path,
             'site' => $request->site,
         ]);
 
         return response()->json([
-            'data' => $request->all()
+            'data' => $erf
         ], 200);
     }
 

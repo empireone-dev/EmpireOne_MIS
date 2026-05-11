@@ -1,8 +1,7 @@
-import Summernote from "@/app/pages/_components/summernote";
 import store from "@/app/store/store";
-import { FileAddOutlined, PlusSquareTwoTone } from "@ant-design/icons";
+import { FileAddOutlined } from "@ant-design/icons";
 import { message, Modal } from "antd";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { create_onboarding_docu_thunk, get_onboarding_docu_thunk } from "../redux/onboarding-docu-thunk";
 
@@ -10,34 +9,48 @@ export default function AddOnboardingDocuSection() {
     const [open, setOpen] = useState(false);
     const { user } = useSelector((state) => state.app);
     const [loading, setLoading] = useState(false);
-    const [newForm,setNewForm]=useState({
-        site:user?.site??''
-    })
-    const [form, setForm] = useState({
-        doc_content: '',
+    const fileInputRef = useRef(null);
+    const [newForm, setNewForm] = useState({
+        site: user?.site ?? '',
+        doc_name: '',
     });
+    const [docFile, setDocFile] = useState(null);
+
+    const resetForm = () => {
+        setNewForm({ site: user?.site ?? '', doc_name: '' });
+        setDocFile(null);
+        if (fileInputRef.current) fileInputRef.current.value = '';
+    };
 
     const submitOnboardingDocu = async () => {
+        if (!newForm.doc_name?.trim()) {
+            message.warning("Please enter the document name.");
+            return;
+        }
+        if (!docFile) {
+            message.warning("Please select a PDF file.");
+            return;
+        }
         setLoading(true);
         try {
             await store.dispatch(
                 create_onboarding_docu_thunk({
                     ...newForm,
-                    ...form,
-                    ...user,
+                    doc_content: docFile,
                 })
             );
             await store.dispatch(get_onboarding_docu_thunk());
             message.success("Successfully Added!");
-            setLoading(false);
+            resetForm();
             setOpen(false);
         } catch (error) {
-            console.error("Error submitting ERF:", error);
+            console.error("Error submitting onboarding document:", error);
+            message.error("Failed to add document. Please try again.");
+        } finally {
             setLoading(false);
-            setOpen(false);
         }
     };
-console.log('formform',form)
+
     return (
         <div className="my-2">
             <div className="inline-flex rounded-md shadow-sm" role="group">
@@ -54,20 +67,20 @@ console.log('formform',form)
                 title="New Onboarding Documents"
                 open={open}
                 onOk={submitOnboardingDocu}
-                onCancel={() => setOpen(false)}
+                onCancel={() => { setOpen(false); resetForm(); }}
                 width={1000}
                 okText="Save"
                 cancelText="Cancel"
                 confirmLoading={loading}
             >
-                <form className="w-full" onSubmit={submitOnboardingDocu}>
+                <form className="w-full" onSubmit={(e) => { e.preventDefault(); submitOnboardingDocu(); }}>
                     <div className="flex flex-wrap -mx-3 mb-6">
                         <div className="w-full px-3">
                             <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
                                 Document's Name
                             </label>
                             <input
-                                value={form.doc_name}
+                                value={newForm.doc_name}
                                 onChange={(e) => setNewForm({ ...newForm, doc_name: e.target.value })}
                                 className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                 name="doc_name"
@@ -76,11 +89,19 @@ console.log('formform',form)
                         </div>
                         <div className="mb-8 w-full px-3">
                             <label htmlFor="doc_content" className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
-                                Document's Content
+                                Document's File (PDF)
                             </label>
-                            {/* Pass setForm with current form state to Summernote */}
-                            <Summernote
-                            form={form} setForm={setForm} />
+                            <input
+                                ref={fileInputRef}
+                                id="doc_content"
+                                type="file"
+                                accept="application/pdf"
+                                onChange={(e) => setDocFile(e.target.files[0] ?? null)}
+                                className="block w-full text-sm text-gray-700 border border-gray-400 rounded py-2 px-3 leading-tight focus:outline-none focus:border-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-600 hover:file:bg-blue-100"
+                            />
+                            {docFile && (
+                                <p className="mt-1 text-xs text-gray-500">{docFile.name}</p>
+                            )}
                         </div>
                     </div>
                 </form>

@@ -55,6 +55,7 @@ class OnboardingAckController extends Controller
                 'app_id' => $request->app_id,
                 'doc_name' => $od['doc_name'],
                 'doc_id' => $od['id'],
+                'doc_content' => $od['doc_content'],
                 'status' => 'Sent'
             ]);
         }

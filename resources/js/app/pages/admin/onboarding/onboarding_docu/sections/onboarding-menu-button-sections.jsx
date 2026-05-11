@@ -14,18 +14,18 @@ import EditDocumentHistoryComponent from "../components/edit-document-history-co
 
 export default function OnboardingMenuButtonSection({ data, interviewer }) {
     const items = [
-        {
-            component: (
-                <EditOnboardingDocumentComponent
-                    item={{
-                        label: "Edit Document",
-                        key: "1",
-                        icon: <EditOutlined />,
-                    }}
-                    data={data}
-                />
-            ),
-        },
+        // {
+        //     component: (
+        //         <EditOnboardingDocumentComponent
+        //             item={{
+        //                 label: "Edit Document",
+        //                 key: "1",
+        //                 icon: <EditOutlined />,
+        //             }}
+        //             data={data}
+        //         />
+        //     ),
+        // },
         {
             component: (
                 <RemoveDocumentComponent
@@ -50,18 +50,18 @@ export default function OnboardingMenuButtonSection({ data, interviewer }) {
                 />
             ),
         },
-        {
-            component: (
-                <EditDocumentHistoryComponent
-                    item={{
-                        label: "Edit History",
-                        key: "2",
-                        icon: <HistoryOutlined />,
-                    }}
-                    data={data}
-                />
-            ),
-        },
+        // {
+        //     component: (
+        //         <EditDocumentHistoryComponent
+        //             item={{
+        //                 label: "Edit History",
+        //                 key: "2",
+        //                 icon: <HistoryOutlined />,
+        //             }}
+        //             data={data}
+        //         />
+        //     ),
+        // },
     ];
 
     return (

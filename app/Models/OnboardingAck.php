@@ -15,6 +15,7 @@ class OnboardingAck extends Model
         'app_id',
         'doc_name',
         'doc_id',
+        'doc_content',
         'status',
         // 'site',
     ];

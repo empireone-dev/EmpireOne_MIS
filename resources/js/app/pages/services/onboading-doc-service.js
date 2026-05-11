@@ -13,7 +13,13 @@ export async function get_onboarding_doc_by_id_service(id) {
 
 
 export async function create_onboarding_doc_service(data) {
-    const res = await axios.post('/api/onboarding_doc', data)
+    const formData = new FormData();
+    formData.append('doc_name', data.doc_name ?? '');
+    formData.append('doc_content', data.doc_content);
+    formData.append('site', data.site ?? '');
+    const res = await axios.post('/api/onboarding_doc', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+    });
     return res.data
 }
 

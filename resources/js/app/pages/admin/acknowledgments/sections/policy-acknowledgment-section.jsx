@@ -75,7 +75,7 @@ export default function PolicyAcknowledgmentSection() {
                     <button
                         onClick={() => {
                             window.open(
-                                `/admin/acknowledgments/${record.emp_id}`,
+                                `/admin/acknowledgments/policy_acknowledgment/${record.emp_id}`,
                                 "_blank",
                             );
                         }}

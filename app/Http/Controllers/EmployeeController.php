@@ -382,9 +382,7 @@ class EmployeeController extends Controller
                 });
             })
             ->orderByRaw('
-                LEAST(
-                    COALESCE((SELECT acknowledged_at FROM schedule_policy_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31")
-                )DESC
+                COALESCE((SELECT acknowledged_at FROM schedule_policy_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31") DESC
             ')
             ->paginate($perPage);
 

@@ -27,8 +27,12 @@ export default function AcknowledgmentsTableSection() {
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
 
-    const { employeesWithAcknowledgment, employeesWithAcknowledgmentTotal } =
-        useSelector((state) => state.employees);
+    const {
+        employeesWithAcknowledgment,
+        employeesWithAcknowledgmentTotal,
+        employeesWithPolicyAcknowledgment,
+        employeesWithPolicyAcknowledgmentTotal,
+    } = useSelector((state) => state.employees);
     const { employees } = useSelector((state) => state.employees);
 
     // console.log("employeesWithAcknowledgment", employeesWithAcknowledgment);
@@ -352,15 +356,21 @@ export default function AcknowledgmentsTableSection() {
 
             <div className="flex">
                 <div className="w-full mt-3.5">
-                    {employeesWithAcknowledgment?.length > 0
-                        ? `Showing ${Math.min((currentPage - 1) * pageSize + 1, employeesWithAcknowledgmentTotal)} to ${Math.min(currentPage * pageSize, employeesWithAcknowledgmentTotal)} of ${employeesWithAcknowledgmentTotal} entries`
-                        : "No entries available"}
+                    {activeTab === "company_policy" ? (
+                        employeesWithPolicyAcknowledgment?.length > 0
+                            ? `Showing ${Math.min((currentPage - 1) * pageSize + 1, employeesWithPolicyAcknowledgmentTotal)} to ${Math.min(currentPage * pageSize, employeesWithPolicyAcknowledgmentTotal)} of ${employeesWithPolicyAcknowledgmentTotal} entries`
+                            : "No entries available"
+                    ) : (
+                        employeesWithAcknowledgment?.length > 0
+                            ? `Showing ${Math.min((currentPage - 1) * pageSize + 1, employeesWithAcknowledgmentTotal)} to ${Math.min(currentPage * pageSize, employeesWithAcknowledgmentTotal)} of ${employeesWithAcknowledgmentTotal} entries`
+                            : "No entries available"
+                    )}
                 </div>
                 <div className="flex w-full items-center justify-end mt-2">
                     <Pagination
                         onChange={onChangePaginate}
                         current={currentPage}
-                        total={employeesWithAcknowledgmentTotal}
+                        total={activeTab === "company_policy" ? employeesWithPolicyAcknowledgmentTotal : employeesWithAcknowledgmentTotal}
                         pageSize={pageSize}
                         showSizeChanger={false}
                     />

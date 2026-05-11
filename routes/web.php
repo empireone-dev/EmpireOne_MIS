@@ -603,6 +603,9 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         Route::get('/{id}', function () {
             return Inertia::render('admin/acknowledgments/id/page');
         });
+        Route::get('/policy_acknowledgment/{id}', function () {
+            return Inertia::render('admin/acknowledgments/policy_acknowledgment/page');
+        });
 
         // Route::get('/{id}', function () {
         //     return Inertia::render('admin/acknowledgments/id/page');

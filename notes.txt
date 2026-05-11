@@ -1,0 +1,13 @@
+-open wamp Server
+-go to mysql > console
+-type this:
+USE curtis;
+
+-copy as path mysql download file:
+
+SOURCE C:\Users\Manager-PC\Downloads\empireone_hris_db.sql
+
+
+
+
+

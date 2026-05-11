@@ -6,6 +6,7 @@ use App\Models\OnboardingAck;
 use App\Models\OnboardingDoc;
 use App\Models\OnboardingDocEditLogs;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class OnboardingDocController extends Controller
 {
@@ -28,7 +29,8 @@ class OnboardingDocController extends Controller
     {
         $path = null;
         if ($request->hasFile('doc_content')) {
-            $path = $request->file('doc_content')->store('onboarding_docs', 'public');
+            $storedPath = $request->file('doc_content')->store('onboarding_docs', 'public');
+            $path = Storage::disk('public')->url($storedPath);
         }
 
         $erf = OnboardingDoc::create([
@@ -50,6 +52,11 @@ class OnboardingDocController extends Controller
             return response()->json([
                 'message' => 'Document not found'
             ], 404);
+        }
+
+        // Resolve raw relative paths to full URLs (handles legacy records)
+        if ($res->doc_content && !str_starts_with($res->doc_content, 'http')) {
+            $res->doc_content = Storage::disk('public')->url($res->doc_content);
         }
 
         return response()->json([

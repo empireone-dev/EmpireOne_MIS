@@ -1,1 +1,0 @@
-import{a}from"./store-19d01ea0.js";async function o(e){return(await a.post("/api/schedule_policy_acknowledge",e)).data}async function t(e){return(await a.get("/api/schedule_policy_acknowledge/"+e)).data}export{t as g,o as s};

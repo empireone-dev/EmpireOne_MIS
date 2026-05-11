@@ -1,18 +1,17 @@
-
-import React, { useRef, useState } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tag } from 'antd';
-import Highlighter from 'react-highlight-words';
-import ButtonComponents from '../components/button-components';
-import { useSelector } from 'react-redux';
-import moment from 'moment';
-import AddOnboardingDocuSection from './add-onboarding-docu-section';
-import OnboardingMenuButtonSection from './onboarding-menu-button-sections';
+import React, { useRef, useState } from "react";
+import { SearchOutlined } from "@ant-design/icons";
+import { Button, Input, Space, Table, Tag } from "antd";
+import Highlighter from "react-highlight-words";
+import ButtonComponents from "../components/button-components";
+import { useSelector } from "react-redux";
+import moment from "moment";
+import AddOnboardingDocuSection from "./add-onboarding-docu-section";
+import OnboardingMenuButtonSection from "./onboarding-menu-button-sections";
 
 export default function OnboardingDocuTableSection() {
-    const [searchText, setSearchText] = useState('');
-    const [searchedColumn, setSearchedColumn] = useState('');
-    const { onboarding_docs } = useSelector((state) => state.onboarding_docs)
+    const [searchText, setSearchText] = useState("");
+    const [searchedColumn, setSearchedColumn] = useState("");
+    const { onboarding_docs } = useSelector((state) => state.onboarding_docs);
     const searchInput = useRef(null);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -21,11 +20,17 @@ export default function OnboardingDocuTableSection() {
     };
     const handleReset = (clearFilters) => {
         clearFilters();
-        setSearchText('');
+        setSearchText("");
     };
 
     const getColumnSearchProps = (dataIndex) => ({
-        filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+        filterDropdown: ({
+            setSelectedKeys,
+            selectedKeys,
+            confirm,
+            clearFilters,
+            close,
+        }) => (
             <div
                 style={{
                     padding: 8,
@@ -36,17 +41,23 @@ export default function OnboardingDocuTableSection() {
                     ref={searchInput}
                     placeholder={`Search ${dataIndex}`}
                     value={selectedKeys[0]}
-                    onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    onChange={(e) =>
+                        setSelectedKeys(e.target.value ? [e.target.value] : [])
+                    }
+                    onPressEnter={() =>
+                        handleSearch(selectedKeys, confirm, dataIndex)
+                    }
                     style={{
                         marginBottom: 8,
-                        display: 'block',
+                        display: "block",
                     }}
                 />
                 <Space>
                     <Button
                         type="primary"
-                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        onClick={() =>
+                            handleSearch(selectedKeys, confirm, dataIndex)
+                        }
                         icon={<SearchOutlined />}
                         size="small"
                         style={{
@@ -56,7 +67,9 @@ export default function OnboardingDocuTableSection() {
                         Search
                     </Button>
                     <Button
-                        onClick={() => clearFilters && handleReset(clearFilters)}
+                        onClick={() =>
+                            clearFilters && handleReset(clearFilters)
+                        }
                         size="small"
                         style={{
                             width: 90,
@@ -92,12 +105,15 @@ export default function OnboardingDocuTableSection() {
         filterIcon: (filtered) => (
             <SearchOutlined
                 style={{
-                    color: filtered ? '#1677ff' : undefined,
+                    color: filtered ? "#1677ff" : undefined,
                 }}
             />
         ),
         onFilter: (value, record) =>
-            record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+            record[dataIndex]
+                .toString()
+                .toLowerCase()
+                .includes(value.toLowerCase()),
         onFilterDropdownOpenChange: (visible) => {
             if (visible) {
                 setTimeout(() => searchInput.current?.select(), 100);
@@ -107,12 +123,12 @@ export default function OnboardingDocuTableSection() {
             searchedColumn === dataIndex ? (
                 <Highlighter
                     highlightStyle={{
-                        backgroundColor: '#ffc069',
+                        backgroundColor: "#ffc069",
                         padding: 0,
                     }}
                     searchWords={[searchText]}
                     autoEscape
-                    textToHighlight={text ? text.toString() : ''}
+                    textToHighlight={text ? text.toString() : ""}
                 />
             ) : (
                 text
@@ -120,31 +136,33 @@ export default function OnboardingDocuTableSection() {
     });
 
     const columns = [
+        // {
+        //     title: 'ID #',
+        //     dataIndex: 'id',
+        //     key: 'emp_id',
+        //     ...getColumnSearchProps('emp_id'),
+        // },
         {
-            title: 'ID #',
-            dataIndex: 'id',
-            key: 'emp_id',
-            ...getColumnSearchProps('emp_id'),
+            title: "Document Name",
+            dataIndex: "doc_name",
+            key: "doc_name",
+            // ...getColumnSearchProps("doc_name"),
+            render: (_, record) => {
+                return <div className="font-semibold">{record.doc_name}</div>;
+            },
         },
         {
-            title: 'Document Name',
-            dataIndex: 'doc_name',
-            key: 'doc_name',
-            ...getColumnSearchProps('doc_name'),
-        },
-        {
-            title: 'Date Created',
-            dataIndex: 'created',
-            key: 'created',
-            ...getColumnSearchProps('created'),
+            title: "Date Created",
+            dataIndex: "created",
+            key: "created",
+            ...getColumnSearchProps("created"),
             render: (_, record) => {
                 return (
                     <div className="gap-1.5 flex">
-                        {moment(record.created).format('LLL')}
+                        {moment(record.created).format("LLL")}
                     </div>
                 );
             },
-
         },
         // {
         //     title: 'Site',
@@ -153,13 +171,11 @@ export default function OnboardingDocuTableSection() {
         //     ...getColumnSearchProps('site'),
         // },
         {
-            title: 'Action',
-            dataIndex: 'action',
+            title: "Action",
+            dataIndex: "action",
             render: (_, record) => {
-                return (
-                    <OnboardingMenuButtonSection data={record} />
-                )
-            }
+                return <OnboardingMenuButtonSection data={record} />;
+            },
         },
     ];
 
@@ -176,4 +192,4 @@ export default function OnboardingDocuTableSection() {
             <Table columns={columns} dataSource={onboarding_docs} />;
         </div>
     );
-};
+}

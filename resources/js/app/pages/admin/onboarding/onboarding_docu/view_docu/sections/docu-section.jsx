@@ -5,9 +5,9 @@ export default function DocuSection() {
   const { onboarding_doc } = useSelector((state) => state.onboarding_docs);
   const rawPath = onboarding_doc?.data?.doc_content ?? null;
   const fileUrl = rawPath
-    ? rawPath.startsWith('http') || rawPath.startsWith('/storage')
+    ? rawPath.startsWith('http')
       ? rawPath
-      : `/storage/${rawPath}`
+      : `/api/storage-file/${rawPath}`
     : null;
 
   return (

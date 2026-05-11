@@ -29,8 +29,7 @@ class OnboardingDocController extends Controller
     {
         $path = null;
         if ($request->hasFile('doc_content')) {
-            $storedPath = $request->file('doc_content')->store('onboarding_docs', 'public');
-            $path = Storage::disk('public')->url($storedPath);
+            $path = $request->file('doc_content')->store('onboarding_docs', 'public');
         }
 
         $erf = OnboardingDoc::create([
@@ -54,9 +53,13 @@ class OnboardingDocController extends Controller
             ], 404);
         }
 
-        // Resolve raw relative paths to full URLs (handles legacy records)
-        if ($res->doc_content && !str_starts_with($res->doc_content, 'http')) {
-            $res->doc_content = Storage::disk('public')->url($res->doc_content);
+        // Normalize to relative path so frontend can use the storage-file serve route.
+        // Handles: full URLs (https://domain.com/storage/x), /storage/x, or already-relative x
+        if ($res->doc_content) {
+            $pos = strpos($res->doc_content, '/storage/');
+            if ($pos !== false) {
+                $res->doc_content = substr($res->doc_content, $pos + strlen('/storage/'));
+            }
         }
 
         return response()->json([

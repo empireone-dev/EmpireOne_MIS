@@ -13,6 +13,18 @@ Route::get('/api/proxy-image', [ImageProxyController::class, 'proxyImage']);
 Route::get('/api/image-to-base64', [ImageProxyController::class, 'imageToBase64']);
 Route::get('/api/download-file', [ImageProxyController::class, 'downloadFile']);
 
+// Serve public storage files without relying on storage symlink (Plesk-compatible)
+Route::get('/api/storage-file/{path}', function (string $path) {
+    if (!Storage::disk('public')->exists($path)) {
+        abort(404);
+    }
+    $mime = Storage::disk('public')->mimeType($path);
+    $content = Storage::disk('public')->get($path);
+    return response($content, 200)
+        ->header('Content-Type', $mime)
+        ->header('Content-Disposition', 'inline; filename="' . basename($path) . '"');
+})->where('path', '.*');
+
 // Debug route to check file upload configuration (remove in production)
 Route::post('/debug/file-upload', function (\Illuminate\Http\Request $request) {
     return response()->json([

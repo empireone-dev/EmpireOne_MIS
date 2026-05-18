@@ -103,6 +103,46 @@ export default function UpdateEmployeeFormSection() {
         }
     }
 
+    const allowedPositions = [
+        "Manager",
+        "Account Manager",
+        "Supervisor",
+        "Team Leader",
+        "Director",
+        "CEO",
+        "HR Lead",
+        "Accounting Head",
+        "TQA Manager",
+        "TQA Director",
+        "IT Manager",
+        "I.T Manager",
+        "IT Lead",
+        "I.T Lead",
+        "Compliance Officer",
+        "Site Admin",
+        "Talent Acquisition Manager",
+        "HR Director",
+        "Director of Operations",
+        "Operations Manager",
+        "Site Director",
+        "Site Manager",
+        "Director, Learning Leadership & Development",
+        "Director, Accounting & Finance",
+        "Director, Marketing & Communications",
+        "Director, Quality & Training",
+        "Facilities Manager",
+        "WFM and Data Analytics Manager",
+        "Learning Leadership and Development Specialist",
+    ];
+
+    const inactiveStatuses = [
+        "Resigned",
+        "AWOL",
+        "End of Contract",
+        "Terminated",
+        "Trainee Fallout",
+    ];
+
     // console.log("applicant", applicant);
     return (
         <div>
@@ -577,50 +617,13 @@ export default function UpdateEmployeeFormSection() {
                                     className="border p-2 rounded  w-full"
                                 >
                                     <option value="">Select Supervisor</option>
-                                    {users
+                                     {users
                                         .filter(
                                             (res) =>
-                                                (!user?.site ||
-                                                    res.site === user.site ||
-                                                    !res.site) &&
-                                                [
-                                                    "Manager",
-                                                    "Account Manager",
-                                                    "Supervisor",
-                                                    "Team Leader",
-                                                    "Director",
-                                                    "CEO",
-                                                    "HR Lead",
-                                                    "Accounting Head",
-                                                    "TQA Manager",
-                                                    "TQA Director",
-                                                    "IT Manager",
-                                                    "I.T Manager",
-                                                    "IT Lead",
-                                                    "I.T Lead",
-                                                    "Compliance Officer",
-                                                    "Site Admin",
-                                                    "Talent Acquisition Manager",
-                                                    "HR Director",
-                                                    "Director of Operations",
-                                                    "Operations Manager",
-                                                    "Site Director",
-                                                    "Site Manager",
-                                                    "Director, Learning Leadership & Development",
-                                                    "Director, Accounting & Finance",
-                                                    "Director, Marketing & Communications",
-                                                    "Director, Quality & Training",
-                                                    "Facilities Manager",
-                                                    "WFM and Data Analytics Manager",
-                                                    "Learning Leadership and Development Specialist",
-                                                ].includes(res.position) &&
-                                                ![
-                                                    "Resigned",
-                                                    "AWOL",
-                                                    "End of Contract",
-                                                    "Terminated",
-                                                    "Trainee Fallout",
-                                                ].includes(
+                                                allowedPositions.includes(
+                                                    res.position,
+                                                ) &&
+                                                !inactiveStatuses.includes(
                                                     res?.employee?.status,
                                                 ),
                                         )
@@ -629,6 +632,7 @@ export default function UpdateEmployeeFormSection() {
                                                 `${a.employee_fname} ${a.employee_lname}`.toLowerCase();
                                             const nameB =
                                                 `${b.employee_fname} ${b.employee_lname}`.toLowerCase();
+
                                             return nameA.localeCompare(nameB);
                                         })
                                         .map((res) => (
@@ -637,7 +641,6 @@ export default function UpdateEmployeeFormSection() {
                                                 {res.employee_lname}
                                             </option>
                                         ))}
-
                                     {/* {
                                     departments
                                         .filter(res => user?.role_id === 1 || (res.site === user?.site && res.role_id === user?.role_id))

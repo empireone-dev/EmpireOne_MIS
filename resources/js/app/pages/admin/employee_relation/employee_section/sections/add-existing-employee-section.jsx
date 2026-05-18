@@ -311,6 +311,47 @@ export default function AddExistingEmployeeSection() {
         // },
     };
     // console.log("ssssssssss", users);
+
+    const allowedPositions = [
+        "Manager",
+        "Account Manager",
+        "Supervisor",
+        "Team Leader",
+        "Director",
+        "CEO",
+        "HR Lead",
+        "Accounting Head",
+        "TQA Manager",
+        "TQA Director",
+        "IT Manager",
+        "I.T Manager",
+        "IT Lead",
+        "I.T Lead",
+        "Compliance Officer",
+        "Site Admin",
+        "Talent Acquisition Manager",
+        "HR Director",
+        "Director of Operations",
+        "Operations Manager",
+        "Site Director",
+        "Site Manager",
+        "Director, Learning Leadership & Development",
+        "Director, Accounting & Finance",
+        "Director, Marketing & Communications",
+        "Director, Quality & Training",
+        "Facilities Manager",
+        "WFM and Data Analytics Manager",
+        "Learning Leadership and Development Specialist",
+    ];
+
+    const inactiveStatuses = [
+        "Resigned",
+        "AWOL",
+        "End of Contract",
+        "Terminated",
+        "Trainee Fallout",
+    ];
+
     return (
         <div className="my-2">
             <div class="inline-flex rounded-md shadow-sm" role="group">
@@ -743,47 +784,10 @@ export default function AddExistingEmployeeSection() {
                                     {users
                                         .filter(
                                             (res) =>
-                                                (!user?.site ||
-                                                    res.site === user.site ||
-                                                    !res.site) &&
-                                                [
-                                                    "Manager",
-                                                    "Account Manager",
-                                                    "Supervisor",
-                                                    "Team Leader",
-                                                    "Director",
-                                                    "CEO",
-                                                    "HR Lead",
-                                                    "Accounting Head",
-                                                    "TQA Manager",
-                                                    "TQA Director",
-                                                    "IT Manager",
-                                                    "I.T Manager",
-                                                    "IT Lead",
-                                                    "I.T Lead",
-                                                    "Compliance Officer",
-                                                    "Site Admin",
-                                                    "Talent Acquisition Manager",
-                                                    "HR Director",
-                                                    "Director of Operations",
-                                                    "Operations Manager",
-                                                    "Site Director",
-                                                    "Site Manager",
-                                                    "Director, Learning Leadership & Development",
-                                                    "Director, Accounting & Finance",
-                                                    "Director, Marketing & Communications",
-                                                    "Director, Quality & Training",
-                                                    "Facilities Manager",
-                                                    "WFM and Data Analytics Manager",
-                                                    "Learning Leadership and Development Specialist",
-                                                ].includes(res.position) &&
-                                                ![
-                                                    "Resigned",
-                                                    "AWOL",
-                                                    "End of Contract",
-                                                    "Terminated",
-                                                    "Trainee Fallout",
-                                                ].includes(
+                                                allowedPositions.includes(
+                                                    res.position,
+                                                ) &&
+                                                !inactiveStatuses.includes(
                                                     res?.employee?.status,
                                                 ),
                                         )
@@ -792,6 +796,7 @@ export default function AddExistingEmployeeSection() {
                                                 `${a.employee_fname} ${a.employee_lname}`.toLowerCase();
                                             const nameB =
                                                 `${b.employee_fname} ${b.employee_lname}`.toLowerCase();
+
                                             return nameA.localeCompare(nameB);
                                         })
                                         .map((res) => (

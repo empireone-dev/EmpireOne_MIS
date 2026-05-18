@@ -180,6 +180,139 @@ const EmployeeLayout = ({ children }) => {
                     onClick: () =>
                         router.visit("/employee/policy/schedule_policy"),
                 },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
+                {
+                    key: "schedule_policies",
+                    icon: <HolderOutlined />,
+                    label: "Schedule Policy",
+                    onClick: () =>
+                        router.visit("/employee/policy/schedule_policy"),
+                },
             ],
         },
     ];

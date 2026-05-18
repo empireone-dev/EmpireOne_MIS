@@ -130,6 +130,7 @@ export default function UpdateEmployeeFormSection() {
         "Director, Accounting & Finance",
         "Director, Marketing & Communications",
         "Director, Quality & Training",
+        "Director, Workforce Management and Analytics",
         "Facilities Manager",
         "WFM and Data Analytics Manager",
         "Learning Leadership and Development Specialist",
@@ -617,7 +618,7 @@ export default function UpdateEmployeeFormSection() {
                                     className="border p-2 rounded  w-full"
                                 >
                                     <option value="">Select Supervisor</option>
-                                     {users
+                                    {users
                                         .filter(
                                             (res) =>
                                                 allowedPositions.includes(

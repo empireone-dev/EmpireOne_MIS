@@ -647,6 +647,9 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         Route::get('/schedule_policy', function () {
             return Inertia::render('admin/policy/schedule_policy/page');
         });
+        Route::get('/other_policy', function () {
+            return Inertia::render('admin/policy/other_policy/page');
+        });
     });
 
     Route::get('/profile', function () {
@@ -736,6 +739,9 @@ Route::middleware('auth:sanctum')->prefix('employee')->group(function () {
     Route::prefix('policy')->group(function () {
         Route::get('/schedule_policy', function () {
             return Inertia::render('employee/policy/schedule_policy/page');
+        });
+        Route::get('/other_policy', function () {
+            return Inertia::render('employee/policy/other_policy/page');
         });
     });
 

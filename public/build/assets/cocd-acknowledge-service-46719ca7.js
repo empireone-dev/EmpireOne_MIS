@@ -1,1 +1,0 @@
-import{a as e}from"./store-19d01ea0.js";async function s(a){return(await e.post("/api/cocd_acknowledge",a)).data}async function t(a){return(await e.get("/api/cocd_acknowledge/"+a)).data}export{t as g,s};

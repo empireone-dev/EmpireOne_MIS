@@ -153,6 +153,16 @@ const AdminLayout = ({ children }) => {
                     onClick: () =>
                         router.visit("/employee/policy/schedule_policy"),
                 },
+                {
+                    key: "other_policy",
+                    icon: <HolderOutlined />,
+                    label: menuLabel(
+                        "Other Policy",
+                        "/employee/policy/other_policy",
+                    ),
+                    onClick: () =>
+                        router.visit("/employee/policy/other_policy"),
+                },
             ],
         },
     ];
@@ -545,6 +555,15 @@ const AdminLayout = ({ children }) => {
                     ),
                     onClick: () =>
                         router.visit("/admin/policy/schedule_policy"),
+                },
+                {
+                    key: "other_policy",
+                    icon: <HolderOutlined />,
+                    label: menuLabel(
+                        "Other Policy",
+                        "/admin/policy/other_policy",
+                    ),
+                    onClick: () => router.visit("/admin/policy/other_policy"),
                 },
             ],
         },

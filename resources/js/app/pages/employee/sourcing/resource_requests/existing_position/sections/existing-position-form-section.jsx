@@ -650,6 +650,10 @@ export default function ExistingPositionFormSection() {
                                         "Director, Quality & Training" ||
                                     res.position ==
                                         "Director, Learning Leadership & Development" ||
+                                    res.position ==
+                                        "Director, Workforce Management and Analytics" ||
+                                    res.position ==
+                                        "Executive Director & Head, CX Growth & Strategy" ||
                                     res.position == "HR Director" ||
                                     res.position == "Manager" ||
                                     res.position == "Account Manager" ||

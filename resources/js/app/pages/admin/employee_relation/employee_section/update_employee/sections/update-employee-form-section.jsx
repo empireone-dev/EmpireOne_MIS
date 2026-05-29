@@ -131,6 +131,7 @@ export default function UpdateEmployeeFormSection() {
         "Director, Marketing & Communications",
         "Director, Quality & Training",
         "Director, Workforce Management and Analytics",
+        "Executive Director & Head, CX Growth & Strategy",
         "Facilities Manager",
         "WFM and Data Analytics Manager",
         "Learning Leadership and Development Specialist",

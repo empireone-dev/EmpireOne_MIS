@@ -121,6 +121,8 @@ export default function UpdateEmployeeFormSection() {
         "Compliance Officer",
         "Site Admin",
         "Talent Acquisition Manager",
+        "Talent Acquisition Head",
+        "Talent Acquisition Lead",
         "HR Director",
         "Director of Operations",
         "Operations Manager",

@@ -664,6 +664,8 @@ export default function ExistingPositionFormSection() {
                                     res.position == "Site Admin" ||
                                     res.position ==
                                         "Talent Acquisition Manager" ||
+                                    res.position == "Talent Acquisition Lead" ||
+                                    res.position == "Talent Acquisition Head" ||
                                     res.position == "Director of Operations" ||
                                     res.position == "Operations Manager" ||
                                     res.position == "Site Director" ||

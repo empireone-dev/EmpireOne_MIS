@@ -132,6 +132,8 @@ export default function DepartmentUpdateSection({ data }) {
                                             "Compliance Officer",
                                             "Site Admin",
                                             "Talent Acquisition Manager",
+                                            "Talent Acquisition Head",
+                                            "Talent Acquisition Lead",
                                             "HR Director",
                                             "Director of Operations",
                                             "Operations Manager",

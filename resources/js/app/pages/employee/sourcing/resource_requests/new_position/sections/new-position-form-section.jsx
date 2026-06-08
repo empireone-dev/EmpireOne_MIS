@@ -717,6 +717,10 @@ export default function NewPositionFormSection() {
                                             res.position ==
                                                 "Talent Acquisition Manager" ||
                                             res.position ==
+                                                "Talent Acquisition Head" ||
+                                            res.position ==
+                                                "Talent Acquisition Lead" ||
+                                            res.position ==
                                                 "Director of Operations" ||
                                             res.position ==
                                                 "Operations Manager" ||

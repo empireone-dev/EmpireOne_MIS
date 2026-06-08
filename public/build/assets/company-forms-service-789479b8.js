@@ -1,0 +1,1 @@
+import{a as e}from"./store-1e12880b.js";async function o(){return(await e.get("/api/company_form")).data}async function n(a){return(await e.post("/api/company_form",a,{headers:{"Content-Type":"multipart/form-data"}})).data}async function s(a){return(await e.delete(`/api/company_form/${a}`)).data}export{s as d,o as g,n as u};

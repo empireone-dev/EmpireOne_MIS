@@ -22,6 +22,7 @@ import accountSlice from "../pages/admin/employee_relation/employee_section/redu
 import exitInterviewSlice from "../pages/exit_interview/redux/exit-interview-slice";
 import videoQuizSlice from "../pages/video_quiz/redux/video-quiz-slice";
 import onboardingAckDocSlice from "../pages/admin/file_201/redux/file-201-slice";
+import companyFormsSlice from "../pages/admin/forms/redux/company-forms-slice";
 const store = configureStore({
     reducer: {
         app: appSlice,
@@ -47,6 +48,7 @@ const store = configureStore({
         accounts: accountSlice,
         exit_int: exitInterviewSlice,
         video_quizzes: videoQuizSlice,
+        company_forms: companyFormsSlice,
     },
 });
 

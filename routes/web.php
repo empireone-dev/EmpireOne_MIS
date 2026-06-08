@@ -652,6 +652,11 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
         });
     });
 
+
+    Route::get('/forms', function () {
+        return Inertia::render('admin/forms/page');
+    });
+
     Route::get('/profile', function () {
         return Inertia::render('admin/profile/page');
     });

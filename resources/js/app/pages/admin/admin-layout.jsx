@@ -567,6 +567,12 @@ const AdminLayout = ({ children }) => {
                 },
             ],
         },
+        {
+            key: "forms",
+            icon: <FileTextOutlined />,
+            label: menuLabel("Company Forms", "/admin/forms"),
+            onClick: () => router.visit("/admin/forms"),
+        },
         // {
         //     key: "coaching_logs",
         //     icon: <FieldTimeOutlined />,

@@ -28,6 +28,7 @@ import {
     LikeOutlined,
     SisternodeOutlined,
     FileTextOutlined,
+    FilePdfOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal, message } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
@@ -569,7 +570,7 @@ const AdminLayout = ({ children }) => {
         },
         {
             key: "forms",
-            icon: <FileTextOutlined />,
+            icon: <FilePdfOutlined />,
             label: menuLabel("Company Forms", "/admin/forms"),
             onClick: () => router.visit("/admin/forms"),
         },

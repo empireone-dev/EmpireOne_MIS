@@ -1,4 +1,4 @@
-import { FilePdfOutlined } from "@ant-design/icons";
+import { FilePdfOutlined, FileExcelOutlined, FileWordOutlined, FileImageOutlined, FileOutlined } from "@ant-design/icons";
 import { Button, Modal, message } from "antd";
 import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -25,9 +25,29 @@ export default function UploadFormSection({ open, onClose }) {
         onClose();
     };
 
+    const ACCEPTED_TYPES = [
+        "application/pdf",
+        "application/vnd.ms-excel",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "image/png",
+        "image/jpeg",
+    ];
+
+    const getFileIcon = (f) => {
+        if (!f) return <FileOutlined className="flex items-center justify-center text-4xl" />;
+        const { type } = f;
+        if (type === "application/pdf") return <FilePdfOutlined className="flex items-center justify-center text-4xl text-red-500" />;
+        if (type.includes("excel") || type.includes("spreadsheet")) return <FileExcelOutlined className="flex items-center justify-center text-4xl text-green-600" />;
+        if (type.includes("word") || type.includes("wordprocessing")) return <FileWordOutlined className="flex items-center justify-center text-4xl text-blue-600" />;
+        if (type.startsWith("image/")) return <FileImageOutlined className="flex items-center justify-center text-4xl text-purple-500" />;
+        return <FileOutlined className="flex items-center justify-center text-4xl" />;
+    };
+
     const handleFileSelect = (selected) => {
-        if (!selected || selected.type !== "application/pdf") {
-            message.error("Only PDF files are accepted.");
+        if (!selected || !ACCEPTED_TYPES.includes(selected.type)) {
+            message.error("Accepted formats: PDF, Excel, Word, PNG, JPG.");
             return;
         }
         setFile(selected);
@@ -94,9 +114,9 @@ export default function UploadFormSection({ open, onClose }) {
                     onClick={() => inputRef.current?.click()}
                 >
                     <div className="grid gap-1">
-                        <FilePdfOutlined className="flex items-center justify-center text-4xl" />
+                        {getFileIcon(file)}
                         <h2 className="text-center text-gray-400 text-xs leading-4">
-                            PDF File only
+                            PDF, Excel, Word, PNG, JPG
                         </h2>
                     </div>
                     <div className="grid gap-2">
@@ -117,7 +137,7 @@ export default function UploadFormSection({ open, onClose }) {
                     <input
                         ref={inputRef}
                         type="file"
-                        accept="application/pdf"
+                        accept="application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/png,image/jpeg"
                         hidden
                         onChange={handleInputChange}
                         onClick={(e) => e.stopPropagation()}

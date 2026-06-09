@@ -6,9 +6,7 @@ export async function get_company_forms_service() {
 }
 
 export async function upload_company_form_service(formData) {
-    const res = await axios.post("/api/company_form", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-    });
+    const res = await axios.post("/api/company_form", formData);
     return res.data;
 }
 

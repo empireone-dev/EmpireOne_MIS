@@ -1,15 +1,17 @@
 import { FilePdfOutlined, FileExcelOutlined, FileWordOutlined, FileImageOutlined, FileOutlined } from "@ant-design/icons";
-import { Button, Modal, message } from "antd";
+import { Button, Modal, Select, message } from "antd";
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { addCompanyForm } from "../redux/company-forms-slice";
-import { upload_company_form_service } from "@/app/pages/services/company-forms-service";
+import { useDispatch, useSelector } from "react-redux";
+import { addCompanyForm, setCompanyForms } from "../redux/company-forms-slice";
+import { get_company_forms_service, upload_company_form_service } from "@/app/pages/services/company-forms-service";
 
 export default function UploadFormSection({ open, onClose }) {
     const dispatch = useDispatch();
+    const { folders } = useSelector((state) => state.company_forms);
     const [file, setFile] = useState(null);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const [folderId, setFolderId] = useState(null);
     const [loading, setLoading] = useState(false);
     const inputRef = useRef(null);
 
@@ -17,6 +19,7 @@ export default function UploadFormSection({ open, onClose }) {
         setFile(null);
         setTitle("");
         setDescription("");
+        setFolderId(null);
         if (inputRef.current) inputRef.current.value = "";
     };
 
@@ -77,11 +80,13 @@ export default function UploadFormSection({ open, onClose }) {
         formData.append("file", file);
         formData.append("title", title.trim());
         formData.append("description", description.trim());
+        if (folderId) formData.append("folder_id", folderId);
 
         setLoading(true);
         try {
-            const res = await upload_company_form_service(formData);
-            dispatch(addCompanyForm(res.data));
+            await upload_company_form_service(formData);
+            const formsRes = await get_company_forms_service();
+            dispatch(setCompanyForms(formsRes.data));
             message.success("Form uploaded successfully.");
             resetForm();
             onClose();
@@ -169,6 +174,21 @@ export default function UploadFormSection({ open, onClose }) {
                         placeholder="Optional description..."
                         rows={3}
                         className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
+                    />
+                </div>
+
+                {/* Folder */}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Folder
+                    </label>
+                    <Select
+                        allowClear
+                        placeholder="Select a folder (optional)"
+                        className="w-full"
+                        value={folderId}
+                        onChange={(val) => setFolderId(val ?? null)}
+                        options={folders.map((f) => ({ label: f.name, value: f.id }))}
                     />
                 </div>
 

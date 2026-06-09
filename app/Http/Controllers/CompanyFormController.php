@@ -6,6 +6,8 @@ use App\Models\CompanyForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 
 class CompanyFormController extends Controller
 {
@@ -57,8 +59,10 @@ class CompanyFormController extends Controller
             ], 422);
         }
 
-        $fileName = $file->getClientOriginalName();
-        $path     = $file->store('company_forms', 'public');
+        $fileName  = $file->getClientOriginalName();
+        $extension = $file->getClientOriginalExtension();
+        $unique    = Str::random(40) . ($extension ? '.' . $extension : '');
+        $path      = Storage::disk('public')->putFileAs('company_forms', $file, $unique);
 
         $form = CompanyForm::create([
             'title'       => $request->title,
@@ -66,6 +70,7 @@ class CompanyFormController extends Controller
             'file_path'   => $path,
             'file_name'   => $fileName,
             'uploaded_by' => $request->uploaded_by,
+            'folder_id'   => $request->folder_id ?: null,
         ]);
 
         return response()->json([
@@ -82,6 +87,22 @@ class CompanyFormController extends Controller
 
         return response()->json([
             'message' => 'Form deleted successfully.',
+        ], 200);
+    }
+
+    public function updateFolder(Request $request, $id)
+    {
+        $request->validate([
+            'folder_id' => 'nullable|exists:company_form_folders,id',
+        ]);
+
+        $form = CompanyForm::findOrFail($id);
+        $form->folder_id = $request->folder_id ?: null;
+        $form->save();
+
+        return response()->json([
+            'data'    => $form,
+            'message' => 'Form moved successfully.',
         ], 200);
     }
 }

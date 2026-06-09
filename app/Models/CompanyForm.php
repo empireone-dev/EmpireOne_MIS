@@ -17,5 +17,11 @@ class CompanyForm extends Model
         'file_path',
         'file_name',
         'uploaded_by',
+        'folder_id',
     ];
+
+    public function folder()
+    {
+        return $this->belongsTo(CompanyFormFolder::class, 'folder_id');
+    }
 }

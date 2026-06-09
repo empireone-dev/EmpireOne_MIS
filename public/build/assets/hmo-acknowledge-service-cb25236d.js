@@ -1,1 +1,0 @@
-import{a as e}from"./store-1e12880b.js";async function t(a){return(await e.post("/api/hmo_acknowledge",a)).data}async function n(a){return(await e.get("/api/hmo_acknowledge/"+a)).data}export{n as g,t as s};

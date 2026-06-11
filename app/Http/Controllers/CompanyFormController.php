@@ -21,13 +21,10 @@ class CompanyFormController extends Controller
 
     public function store(Request $request)
     {
-        // Only validate non-file fields — keeping 'file' out of validate() prevents
-        // Laravel's implicit `uploaded` rule from firing when isValid() is false.
         $request->validate([
             'title' => 'required|string|max:255',
         ]);
 
-        // Access the file directly from the raw files bag to bypass hasFile/isValid checks.
         $file = $request->files->get('file');
 
         Log::info('CompanyForm upload attempt', [
@@ -45,32 +42,32 @@ class CompanyFormController extends Controller
         }
 
         if (!$file->isValid()) {
-            Log::error('CompanyForm file upload PHP error', ['error_code' => $file->getError()]);
+            Log::error('CompanyForm file upload PHP error', [
+                'error_code' => $file->getError()
+            ]);
+
             return response()->json([
-                'message' => 'The file could not be processed. Please try again.',
-                'errors'  => ['file' => ['The file could not be processed. Please try again.']],
+                'message' => 'The file could not be processed.',
+                'errors'  => ['file' => ['The file could not be processed.']],
             ], 422);
         }
 
-        if ($file->getSize() > 104857600) {
+        if ($file->getSize() > 104857600) { // 100MB
             return response()->json([
                 'message' => 'The file size cannot exceed 100MB.',
                 'errors'  => ['file' => ['The file size cannot exceed 100MB.']],
             ], 422);
         }
 
-        $fileName  = $file->getClientOriginalName();
-        $extension = $file->getClientOriginalExtension();
-        $unique    = Str::random(40) . ($extension ? '.' . $extension : '');
-        $path      = Storage::disk('public')->putFileAs('company_forms', $file, $unique);
-
         $form = CompanyForm::create([
-            'title'       => $request->title,
-            'description' => $request->description,
-            'file_path'   => $path,
-            'file_name'   => $fileName,
-            'uploaded_by' => $request->uploaded_by,
-            'folder_id'   => $request->folder_id ?: null,
+            'title'          => $request->title,
+            'description'    => $request->description,
+            'file_name'      => $file->getClientOriginalName(),
+            'file_type'      => $file->getMimeType(),
+            'file_size'      => $file->getSize(),
+            'file_data'      => file_get_contents($file->getRealPath()),
+            'uploaded_by'    => $request->uploaded_by,
+            'folder_id'      => $request->folder_id ?: null,
         ]);
 
         return response()->json([

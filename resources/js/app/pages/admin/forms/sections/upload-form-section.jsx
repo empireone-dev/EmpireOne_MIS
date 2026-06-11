@@ -1,32 +1,33 @@
-import { FilePdfOutlined, FileExcelOutlined, FileWordOutlined, FileImageOutlined, FileOutlined } from "@ant-design/icons";
+import {
+    FilePdfOutlined,
+    FileExcelOutlined,
+    FileWordOutlined,
+    FileImageOutlined,
+    FileOutlined,
+} from "@ant-design/icons";
+
 import { Button, Modal, Select, message } from "antd";
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addCompanyForm, setCompanyForms } from "../redux/company-forms-slice";
-import { get_company_forms_service, upload_company_form_service } from "@/app/pages/services/company-forms-service";
+import { setCompanyForms } from "../redux/company-forms-slice";
+import {
+    get_company_forms_service,
+    upload_company_form_service,
+} from "@/app/pages/services/company-forms-service";
 
 export default function UploadFormSection({ open, onClose }) {
     const dispatch = useDispatch();
     const { folders } = useSelector((state) => state.company_forms);
-    const [file, setFile] = useState(null);
-    const [title, setTitle] = useState("");
-    const [description, setDescription] = useState("");
-    const [folderId, setFolderId] = useState(null);
-    const [loading, setLoading] = useState(false);
+
     const inputRef = useRef(null);
 
-    const resetForm = () => {
-        setFile(null);
-        setTitle("");
-        setDescription("");
-        setFolderId(null);
-        if (inputRef.current) inputRef.current.value = "";
-    };
-
-    const handleClose = () => {
-        resetForm();
-        onClose();
-    };
+    const [state, setState] = useState({
+        file: null,
+        title: "",
+        description: "",
+        folderId: null,
+        loading: false,
+    });
 
     const ACCEPTED_TYPES = [
         "application/pdf",
@@ -38,68 +39,105 @@ export default function UploadFormSection({ open, onClose }) {
         "image/jpeg",
     ];
 
-    const getFileIcon = (f) => {
-        if (!f) return <FileOutlined className="flex items-center justify-center text-4xl" />;
-        const { type } = f;
-        if (type === "application/pdf") return <FilePdfOutlined className="flex items-center justify-center text-4xl text-red-500" />;
-        if (type.includes("excel") || type.includes("spreadsheet")) return <FileExcelOutlined className="flex items-center justify-center text-4xl text-green-600" />;
-        if (type.includes("word") || type.includes("wordprocessing")) return <FileWordOutlined className="flex items-center justify-center text-4xl text-blue-600" />;
-        if (type.startsWith("image/")) return <FileImageOutlined className="flex items-center justify-center text-4xl text-purple-500" />;
-        return <FileOutlined className="flex items-center justify-center text-4xl" />;
+    const MAX_SIZE = 100 * 1024 * 1024; // 100MB
+
+    const resetForm = () => {
+        setState({
+            file: null,
+            title: "",
+            description: "",
+            folderId: null,
+            loading: false,
+        });
+
+        if (inputRef.current) inputRef.current.value = "";
     };
 
-    const handleFileSelect = (selected) => {
-        if (!selected || !ACCEPTED_TYPES.includes(selected.type)) {
-            message.error("Accepted formats: PDF, Excel, Word, PNG, JPG.");
+    const handleClose = () => {
+        resetForm();
+        onClose();
+    };
+
+    const getFileIcon = (file) => {
+        if (!file) return <FileOutlined className="text-4xl" />;
+
+        const type = file.type;
+
+        if (type === "application/pdf")
+            return <FilePdfOutlined className="text-4xl text-red-500" />;
+
+        if (type.includes("excel") || type.includes("spreadsheet"))
+            return <FileExcelOutlined className="text-4xl text-green-600" />;
+
+        if (type.includes("word"))
+            return <FileWordOutlined className="text-4xl text-blue-600" />;
+
+        if (type.startsWith("image/"))
+            return <FileImageOutlined className="text-4xl text-purple-500" />;
+
+        return <FileOutlined className="text-4xl" />;
+    };
+
+    const validateFile = (file) => {
+        if (!file) return "No file selected.";
+
+        if (!ACCEPTED_TYPES.includes(file.type)) {
+            return "Invalid file type. Please upload PDF, Excel, Word, PNG, or JPG.";
+        }
+
+        if (file.size > MAX_SIZE) {
+            return "File exceeds 100MB limit.";
+        }
+
+        return null;
+    };
+
+    const handleFile = (file) => {
+        const error = validateFile(file);
+        if (error) {
+            message.error(error);
             return;
         }
-        setFile(selected);
-    };
 
-    const handleInputChange = (e) => handleFileSelect(e.target.files[0]);
-
-    const handleDragOver = (e) => e.preventDefault();
-
-    const handleDrop = (e) => {
-        e.preventDefault();
-        handleFileSelect(e.dataTransfer.files[0]);
+        setState((prev) => ({ ...prev, file }));
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!file) {
-            message.error("Please select a PDF file.");
-            return;
-        }
-        if (!title.trim()) {
-            message.error("Please enter a title.");
-            return;
-        }
+
+        const { file, title, description, folderId } = state;
+
+        if (!file) return message.error("Please select a file.");
+        if (!title.trim()) return message.error("Title is required.");
 
         const formData = new FormData();
         formData.append("file", file);
         formData.append("title", title.trim());
         formData.append("description", description.trim());
+
         if (folderId) formData.append("folder_id", folderId);
 
-        setLoading(true);
         try {
+            setState((prev) => ({ ...prev, loading: true }));
+
             await upload_company_form_service(formData);
-            const formsRes = await get_company_forms_service();
-            dispatch(setCompanyForms(formsRes.data));
+
+            const res = await get_company_forms_service();
+            dispatch(setCompanyForms(res.data));
+
             message.success("Form uploaded successfully.");
-            resetForm();
-            onClose();
+            handleClose();
         } catch (err) {
-            const msg =
+            message.error(
                 err?.response?.data?.message ||
-                err?.response?.data?.errors?.file?.[0] ||
-                "Upload failed. Please try again.";
-            message.error(msg);
+                    "Upload failed. Please try again.",
+            );
         } finally {
-            setLoading(false);
+            setState((prev) => ({ ...prev, loading: false }));
         }
     };
+
+    const { file, title, description, folderId, loading } = state;
 
     return (
         <Modal
@@ -111,101 +149,93 @@ export default function UploadFormSection({ open, onClose }) {
             destroyOnClose
         >
             <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-                {/* Drop zone */}
+                {/* DROPZONE */}
                 <div
-                    className="w-full py-9 bg-gray-50 rounded-2xl border border-gray-300 gap-3 grid border-dashed cursor-pointer"
-                    onDragOver={handleDragOver}
-                    onDrop={handleDrop}
+                    className="w-full py-9 bg-gray-50 rounded-2xl border border-dashed border-gray-300 cursor-pointer grid gap-3"
                     onClick={() => inputRef.current?.click()}
+                    onDragOver={(e) => e.preventDefault()}
+                    onDrop={(e) => {
+                        e.preventDefault();
+                        handleFile(e.dataTransfer.files[0]);
+                    }}
                 >
-                    <div className="grid gap-1">
+                    <div className="flex flex-col items-center">
                         {getFileIcon(file)}
-                        <h2 className="text-center text-gray-400 text-xs leading-4">
-                            PDF, Excel, Word, PNG, JPG
-                        </h2>
+                        <p className="text-xs text-gray-400 mt-2">
+                            PDF, Excel, Word, PNG, JPG (Max 100MB)
+                        </p>
                     </div>
-                    <div className="grid gap-2">
-                        <h4 className="text-center text-gray-900 text-sm font-medium leading-snug">
-                            Drag and Drop your file here or
-                        </h4>
-                        <div className="flex items-center justify-center">
-                            <div className="flex w-28 h-9 px-2 flex-col bg-green-600 rounded-full shadow text-white text-xs font-semibold leading-4 items-center justify-center">
-                                Choose File
-                            </div>
-                        </div>
+
+                    <div className="text-center">
+                        <p className="text-sm font-medium">
+                            Drag & drop or click to upload
+                        </p>
+
                         {file && (
-                            <p className="text-center text-green-700 text-xs font-medium">
+                            <p className="text-green-600 text-xs mt-1">
                                 {file.name}
                             </p>
                         )}
                     </div>
+
                     <input
                         ref={inputRef}
                         type="file"
-                        accept="application/pdf,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,image/png,image/jpeg"
                         hidden
-                        onChange={handleInputChange}
-                        onClick={(e) => e.stopPropagation()}
+                        accept={ACCEPTED_TYPES.join(",")}
+                        onChange={(e) => handleFile(e.target.files[0])}
                     />
                 </div>
 
-                {/* Title */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Title <span className="text-red-500">*</span>
-                    </label>
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                        placeholder="e.g. Leave Request Form"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-                    />
-                </div>
+                {/* TITLE */}
+                <input
+                    value={title}
+                    onChange={(e) =>
+                        setState((p) => ({ ...p, title: e.target.value }))
+                    }
+                    placeholder="Title"
+                    className="w-full border rounded-lg px-3 py-2 text-sm"
+                />
 
-                {/* Description */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Description
-                    </label>
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        placeholder="Optional description..."
-                        rows={3}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500 resize-none"
-                    />
-                </div>
+                {/* DESCRIPTION */}
+                <textarea
+                    value={description}
+                    onChange={(e) =>
+                        setState((p) => ({ ...p, description: e.target.value }))
+                    }
+                    placeholder="Description (optional)"
+                    className="w-full border rounded-lg px-3 py-2 text-sm"
+                    rows={3}
+                />
 
-                {/* Folder */}
-                <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Folder
-                    </label>
-                    <Select
-                        allowClear
-                        placeholder="Select a folder (optional)"
-                        className="w-full"
-                        value={folderId}
-                        onChange={(val) => setFolderId(val ?? null)}
-                        options={folders.map((f) => ({ label: f.name, value: f.id }))}
-                    />
-                </div>
+                {/* FOLDER */}
+                <Select
+                    allowClear
+                    className="w-full"
+                    placeholder="Select folder"
+                    value={folderId}
+                    onChange={(val) =>
+                        setState((p) => ({ ...p, folderId: val }))
+                    }
+                    options={folders.map((f) => ({
+                        label: f.name,
+                        value: f.id,
+                    }))}
+                />
 
-                <div className="flex justify-end gap-2 pt-2">
-                    <Button onClick={handleClose} disabled={loading}>
-                        Cancel
-                    </Button>
+                {/* ACTIONS */}
+                <div className="flex justify-end gap-2">
+                    <Button onClick={handleClose}>Cancel</Button>
+
                     <button
                         type="submit"
                         disabled={loading}
-                        className="flex h-9 px-5 flex-col bg-green-600 rounded-full shadow text-white text-sm font-semibold items-center justify-center disabled:opacity-60 disabled:cursor-not-allowed"
+                        className="bg-green-600 text-white px-5 h-9 rounded-full disabled:opacity-60"
                     >
-                        {loading ? "Uploading..." : "Upload Form"}
+                        {loading ? "Uploading..." : "Upload"}
                     </button>
                 </div>
             </form>
         </Modal>
     );
 }
-

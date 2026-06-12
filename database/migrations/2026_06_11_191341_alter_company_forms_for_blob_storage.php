@@ -12,11 +12,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('company_forms', function (Blueprint $table) {
-            $table->string('file_type')->nullable()->after('file_name');
-            $table->unsignedBigInteger('file_size')->nullable()->after('file_type');
-            $table->longBlob('file_data')->nullable()->after('file_size');
-
-            $table->dropColumn('file_path');
+            if (!Schema::hasColumn('company_forms', 'file_type')) {
+                $table->string('file_type')->nullable()->after('file_name');
+            }
+            if (!Schema::hasColumn('company_forms', 'file_size')) {
+                $table->unsignedBigInteger('file_size')->nullable()->after('file_type');
+            }
+            if (!Schema::hasColumn('company_forms', 'file_data')) {
+                $table->binary('file_data')->nullable()->after('file_size');
+            }
+            if (Schema::hasColumn('company_forms', 'file_path')) {
+                $table->dropColumn('file_path');
+            }
         });
     }
 

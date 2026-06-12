@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\CompanyForm;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class CompanyFormController extends Controller
@@ -76,10 +74,19 @@ class CompanyFormController extends Controller
         ], 201);
     }
 
+    public function view($id)
+    {
+        $form = CompanyForm::findOrFail($id);
+
+        return response($form->file_data, 200)
+            ->header('Content-Type', $form->file_type ?: 'application/octet-stream')
+            ->header('Content-Disposition', 'inline; filename="' . addslashes($form->file_name) . '"')
+            ->header('Cache-Control', 'private, max-age=3600');
+    }
+
     public function destroy($id)
     {
         $form = CompanyForm::findOrFail($id);
-        Storage::disk('public')->delete($form->file_path);
         $form->delete();
 
         return response()->json([

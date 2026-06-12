@@ -11,14 +11,27 @@ class CompanyForm extends Model
 
     protected $table = 'company_forms';
 
-    protected $fillable = [
+    // protected $fillable = [
+    //     'title',
+    //     'description',
+    //     'file_path',
+    //     'file_name',
+    //     'uploaded_by',
+    //     'folder_id',
+    // ];
+
+      protected $fillable = [
         'title',
         'description',
-        'file_path',
+        'file_type',
+        'file_size',
+        'file_data',
         'file_name',
         'uploaded_by',
         'folder_id',
     ];
+
+    protected $hidden = ['file_data'];
 
     public function folder()
     {

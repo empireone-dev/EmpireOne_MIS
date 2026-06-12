@@ -149,6 +149,7 @@ Route::resource('employee_attrition', EmployeeAttritionController::class);
 Route::get('get_employee_attrition_by_emp_id/{emp_id}', [EmployeeAttritionController::class, 'getByEmpId']);
 Route::resource('emp_memo', UploadMemoController::class);
 Route::resource('company_form', CompanyFormController::class)->only(['index', 'store', 'destroy']);
+Route::get('company_form/{id}/view', [CompanyFormController::class, 'view']);
 Route::patch('company_form/{id}/folder', [CompanyFormController::class, 'updateFolder']);
 Route::resource('company_form_folder', CompanyFormFolderController::class)->only(['index', 'store', 'destroy']);
 Route::resource('engagement', EmployeeEngagementController::class);

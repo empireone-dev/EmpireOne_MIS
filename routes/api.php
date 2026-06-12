@@ -152,6 +152,8 @@ Route::resource('company_form', CompanyFormController::class)->only(['index', 's
 Route::get('company_form/{id}/view', [CompanyFormController::class, 'view']);
 Route::patch('company_form/{id}/folder', [CompanyFormController::class, 'updateFolder']);
 Route::resource('company_form_folder', CompanyFormFolderController::class)->only(['index', 'store', 'destroy']);
+Route::post('policy_document/upload', [\App\Http\Controllers\PolicyDocumentController::class, 'upload']);
+Route::delete('policy_document/delete', [\App\Http\Controllers\PolicyDocumentController::class, 'destroy']);
 Route::resource('engagement', EmployeeEngagementController::class);
 Route::resource('initial_rate', InitialRateController::class);
 Route::resource('final_rate', FinalRateController::class);

@@ -345,7 +345,7 @@ export default function page() {
                             />
                         </svg>
                         Upload Policy PDF
-                    </button>
+                    </button> 
                 )}
             </div>
             <div className="flex-1 overflow-y-auto py-2">

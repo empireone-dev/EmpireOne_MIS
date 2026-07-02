@@ -464,6 +464,10 @@ export default function ApplicationFormSection() {
                                                         label: "Cebu",
                                                         value: "Cebu",
                                                     },
+                                                    {
+                                                        label: "Columbia",
+                                                        value: "Columbia",
+                                                    },
                                                 ]}
                                                 errorMessage={
                                                     errors?.site?.message

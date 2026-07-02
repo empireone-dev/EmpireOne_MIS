@@ -376,10 +376,19 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                     <option value="" disabled>
                                         Select Work Location
                                     </option>
-                                    <option value="San Carlos City (On-site)">San Carlos City (On-site)</option>
-                                    <option value="Carcar City (On-site)">Carcar City (On-site)</option>
-                                    <option value="Cebu City (On-site)">Cebu City (On-site)</option>
-                                    <option value="Work From Home Setup">Work From Home Setup</option>
+                                    <option value="San Carlos City (On-site)">
+                                        San Carlos City (On-site)
+                                    </option>
+                                    <option value="Carcar City (On-site)">
+                                        Carcar City (On-site)
+                                    </option>
+                                    <option value="Cebu City (On-site)">
+                                        Cebu City (On-site)
+                                    </option>
+                                    <option value="Columbia">Columbia</option>
+                                    <option value="Work From Home Setup">
+                                        Work From Home Setup
+                                    </option>
                                     <option value="Remote">Remote</option>
                                     <option value="Hybrid">Hybrid</option>
                                 </select>

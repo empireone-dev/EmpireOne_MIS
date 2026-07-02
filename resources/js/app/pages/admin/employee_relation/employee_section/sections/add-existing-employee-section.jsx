@@ -398,6 +398,7 @@ export default function AddExistingEmployeeSection() {
                                 { label: "San Carlos", value: "San Carlos" },
                                 { label: "Carcar", value: "Carcar" },
                                 { label: "Cebu", value: "Cebu" },
+                                { label: "Columbia", value: "Columbia" },
                             ]}
                             errorMessage={errors?.site?.message}
                             label="Site"

@@ -181,6 +181,7 @@ export default function UpdateEmployeeFormSection() {
                             <option value="San Carlos"> San Carlos</option>
                             <option value="Carcar"> Carcar</option>
                             <option value="Cebu"> Cebu</option>
+                            <option value="Columbia"> Columbia</option>
                         </select>
                     </div>
                 </div>

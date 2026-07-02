@@ -284,6 +284,7 @@ export default function EmployeeTableSection() {
                             { text: "San Carlos", value: "San Carlos" },
                             { text: "Carcar", value: "Carcar" },
                             { text: "Cebu", value: "Cebu" },
+                            { text: "Columbia", value: "Columbia" },
                         ]}
                     />
                 </div>

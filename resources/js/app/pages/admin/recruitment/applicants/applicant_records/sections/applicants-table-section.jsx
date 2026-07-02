@@ -575,6 +575,7 @@ export default function ApplicantsTableSection() {
                             { text: "San Carlos", value: "San Carlos" },
                             { text: "Carcar", value: "Carcar" },
                             { text: "Cebu", value: "Cebu" },
+                            { text: "Columbia", value: "Columbia" },
                         ]}
                     />
                 </div>
@@ -1026,6 +1027,9 @@ export default function ApplicantsTableSection() {
                                     </option>
                                     <option value="Cebu City (On-site)">
                                         Cebu City (On-site)
+                                    </option>
+                                    <option value="Columbia">
+                                        Columbia
                                     </option>
                                     <option value="Work From Home Setup">
                                         Work From Home Setup

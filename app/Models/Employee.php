@@ -102,4 +102,9 @@ class Employee extends Model
     {
         return $this->hasOne(SchedulePolicyAcknowledge::class, "emp_id", "emp_id");
     }
+
+    public function nda_acknowledges(): HasOne
+    {
+        return $this->hasOne(NdaAcknowledge::class, "emp_id", "emp_id");
+    }
 }

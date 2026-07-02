@@ -289,6 +289,11 @@ export default function AcknowledgmentsTableSection() {
             key: "hmo",
             render: (_, record) => renderStatus(record?.hmo_acknowledges),
         },
+        {
+            title: "NDA",
+            key: "nda",
+            render: (_, record) => renderStatus(record?.nda_acknowledges),
+        },
         actionColumn,
     ];
 

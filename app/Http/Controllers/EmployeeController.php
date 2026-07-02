@@ -304,14 +304,16 @@ class EmployeeController extends Controller
             'ethics_acknowledges',
             'handbook_acknowledges',
             'hmo_acknowledges',
-            'schedule_policy_acknowledges'
+            'schedule_policy_acknowledges',
+            'nda_acknowledges',
         ])
             ->where(function ($query) {
                 $query->whereHas('cocd_acknowledges')
                     ->orWhereHas('ethics_acknowledges')
                     ->orWhereHas('handbook_acknowledges')
                     ->orWhereHas('hmo_acknowledges')
-                    ->orWhereHas('schedule_policy_acknowledges');
+                    ->orWhereHas('schedule_policy_acknowledges')
+                    ->orWhereHas('nda_acknowledges');
             })
             ->when($searching, function ($query) use ($searching) {
                 $query->where(function ($q) use ($searching) {
@@ -330,7 +332,8 @@ class EmployeeController extends Controller
                     COALESCE((SELECT acknowledged_at FROM ethics_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
                     COALESCE((SELECT acknowledged_at FROM handbook_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
                     COALESCE((SELECT acknowledged_at FROM hmo_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
-                    COALESCE((SELECT acknowledged_at FROM schedule_policy_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31")
+                    COALESCE((SELECT acknowledged_at FROM schedule_policy_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
+                    COALESCE((SELECT acknowledged_at FROM nda_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31")
                 )DESC
             ')
             ->paginate($perPage);

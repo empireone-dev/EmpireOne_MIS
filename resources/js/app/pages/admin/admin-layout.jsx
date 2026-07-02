@@ -140,6 +140,12 @@ const AdminLayout = ({ children }) => {
             onClick: () => router.visit("/employee/hmo"),
         },
         {
+            key: "nda",
+            icon: <FileTextOutlined />,
+            label: menuLabel("Non-Disclosure Agreement", "/employee/nda"),
+            onClick: () => router.visit("/employee/nda"),
+        },
+        {
             key: "company_policies",
             icon: <FileTextOutlined />,
             label: "Company Policies",
@@ -541,6 +547,12 @@ const AdminLayout = ({ children }) => {
                 "/admin/hmo",
             ),
             onClick: () => router.visit("/admin/hmo"),
+        },
+        {
+            key: "Non-Disclosure Agreement (NDA)",
+            icon: <FileTextOutlined />,
+            label: menuLabel("Non-Disclosure Agreement (NDA)", "/admin/nda"),
+            onClick: () => router.visit("/admin/nda"),
         },
         {
             key: "company_policies",

@@ -169,6 +169,12 @@ const EmployeeLayout = ({ children }) => {
             onClick: () => router.visit("/employee/hmo"),
         },
         {
+            key: "nda",
+            icon: <FileTextOutlined />,
+            label: "Non-Disclosure Agreement",
+            onClick: () => router.visit("/employee/nda"),
+        },
+        {
             key: "Company_Policies",
             icon: <FileTextOutlined />,
             label: "Company Policies",

@@ -23,6 +23,7 @@ import {
     BankOutlined,
     FileProtectOutlined,
     SisternodeOutlined,
+    FolderOpenOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal, Badge, message } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
@@ -194,6 +195,18 @@ const EmployeeLayout = ({ children }) => {
                         router.visit("/employee/policy/other_policy"),
                 },
             ],
+        },
+        {
+            key: "company_forms",
+            icon: <FileTextOutlined />,
+            label: "Company Forms",
+            onClick: () => router.visit("/employee/forms"),
+        },
+        {
+            key: "resource-hub",
+            icon: <FolderOpenOutlined />,
+            label: "Resource Hub",
+            onClick: () => router.visit("/employee/resource-hub"),
         },
     ];
 

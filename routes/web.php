@@ -826,9 +826,9 @@ Route::middleware(['auth:sanctum', 'role:10'])->prefix('employee')->group(functi
         });
     });
 
-    // Route::get('/update_profile', function () {
-    //     return Inertia::render('employee/profile/page');
-    // });
+    Route::get('/forms', function () {
+        return Inertia::render('employee/forms/page');
+    });
 
     Route::get('/profile', function () {
         return Inertia::render('employee/profile/page');

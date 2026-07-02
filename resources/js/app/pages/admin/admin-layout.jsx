@@ -172,6 +172,18 @@ const AdminLayout = ({ children }) => {
                 },
             ],
         },
+        {
+            key: "forms",
+            icon: <FileTextOutlined />,
+            label: menuLabel("Company Forms", "/employee/forms"),
+            onClick: () => router.visit("/employee/forms"),
+        },
+        {
+            key: "resource-hub",
+            icon: <BookOutlined />,
+            label: menuLabel("Resource Hub", "/employee/resource-hub"),
+            onClick: () => router.visit("/employee/resource-hub"),
+        },
     ];
 
     // Full admin menu items for other roles

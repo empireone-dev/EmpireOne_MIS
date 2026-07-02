@@ -51,6 +51,7 @@ export default function ApplicationFormSection() {
 
     // Watch the source field to conditionally show referred_by field
     const selectedSource = watch("source");
+    const selectedCountry = watch("country");
 
     const { fields, append, remove } = useFieldArray({
         control,
@@ -175,9 +176,9 @@ export default function ApplicationFormSection() {
             const result = await store.dispatch(
                 store_applicant_thunk({
                     ...data,
-                    province: JSON.parse(data?.province).name,
-                    city: JSON.parse(data?.city).name,
-                    region: JSON.parse(data?.region).name,
+                    province: data?.country === "Columbia" ? (data?.columbia_state || "") : JSON.parse(data?.province).name,
+                    city: data?.country === "Columbia" ? (data?.columbia_city || "") : JSON.parse(data?.city).name,
+                    region: data?.country === "Columbia" ? "" : JSON.parse(data?.region).name,
                     files: files.map((res) => res.files),
                     is_experience: hasExperience,
                     agreed: "true",
@@ -903,155 +904,285 @@ export default function ApplicationFormSection() {
                                     Address Information
                                 </h1>
                                 <div className="flex flex-col gap-3 lg:flex-row">
-                                    <div className="flex-1">
-                                        <Select
+                                    <div className="flex-1 lg:max-w-xl w-full">
+                                        <Select2
                                             register={{
-                                                ...register("region", {
+                                                ...register("country", {
                                                     required:
-                                                        "Please Select Region",
+                                                        "Country is required",
                                                 }),
                                             }}
-                                            onChange={(event) =>
-                                                data_handler(event)
+                                            onChange={(value) =>
+                                                setValue("country", value)
                                             }
-                                            options={region.map((res) => ({
-                                                label: res.region_name,
-                                                value: JSON.stringify({
-                                                    name: res.region_name,
-                                                    region_code:
-                                                        res.region_code,
-                                                }),
-                                            }))}
-                                            // value={address.region}
+                                            options={[
+                                                {
+                                                    label: "Philippines",
+                                                    value: "Philippines",
+                                                },
+                                                {
+                                                    label: "Columbia",
+                                                    value: "Columbia",
+                                                },
+                                            ]}
                                             errorMessage={
-                                                errors?.region?.message
+                                                errors?.country?.message
                                             }
                                             label={
                                                 <>
-                                                    Region{" "}
+                                                    Country{" "}
                                                     <span className="text-red-500">
                                                         *
                                                     </span>
                                                 </>
                                             }
-                                            name="region"
-                                        />
-                                    </div>
-                                    <div className="flex-1">
-                                        <Select
-                                            register={{
-                                                ...register("province", {
-                                                    required:
-                                                        "Please Select Province",
-                                                }),
-                                            }}
-                                            onChange={(event) =>
-                                                data_handler(event)
-                                            }
-                                            options={newProvince.map((res) => ({
-                                                label: res.province_name,
-                                                value: JSON.stringify({
-                                                    name: res.province_name,
-                                                    province_code:
-                                                        res.province_code,
-                                                }),
-                                            }))}
-                                            errorMessage={
-                                                errors?.province?.message
-                                            }
-                                            label={
-                                                <>
-                                                    Province{" "}
-                                                    <span className="text-red-500">
-                                                        *
-                                                    </span>
-                                                </>
-                                            }
-                                            name="province"
-                                        />
-                                    </div>
-                                    <div className="flex-1">
-                                        <Select
-                                            register={{
-                                                ...register("city", {
-                                                    required:
-                                                        "Please Select City",
-                                                }),
-                                            }}
-                                            onChange={(event) =>
-                                                data_handler(event)
-                                            }
-                                            options={newCity.map((res) => ({
-                                                label: res.city_name,
-                                                value: JSON.stringify({
-                                                    name: res.city_name,
-                                                    city_code: res.city_code,
-                                                }),
-                                            }))}
-                                            errorMessage={errors?.city?.message}
-                                            name="city"
-                                            label={
-                                                <>
-                                                    City/Municipality{" "}
-                                                    <span className="text-red-500">
-                                                        *
-                                                    </span>
-                                                </>
-                                            }
+                                            name="country"
                                         />
                                     </div>
                                 </div>
-                                <div className="flex flex-col gap-3 lg:flex-row">
-                                    <div className="flex-1">
-                                        <Select
-                                            register={{
-                                                ...register("brgy", {
-                                                    required:
-                                                        "Please Select Barangay",
-                                                }),
-                                            }}
-                                            onChange={(event) =>
-                                                data_handler(event)
-                                            }
-                                            options={newBarangay.map((res) => ({
-                                                label: res.brgy_name,
-                                                value: res.brgy_name,
-                                            }))}
-                                            errorMessage={errors?.brgy?.message}
-                                            name="brgy"
-                                            label={
-                                                <>
-                                                    Barangay{" "}
-                                                    <span className="text-red-500">
-                                                        *
-                                                    </span>
-                                                </>
-                                            }
-                                        />
-                                    </div>
-                                    <div className="flex-1">
-                                        <Input2
-                                            register={{
-                                                ...register("lot", {
-                                                    required:
-                                                        "House/Lot No., Street, Purok/Sitio is required",
-                                                }),
-                                            }}
-                                            errorMessage={errors?.lot?.message}
-                                            name="lot"
-                                            label={
-                                                <>
-                                                    House/Lot No., Street,
-                                                    Purok/Sitio{" "}
-                                                    <span className="text-red-500">
-                                                        *
-                                                    </span>
-                                                </>
-                                            }
-                                            type="text"
-                                        />
-                                    </div>
-                                </div>
+                                {selectedCountry !== "Columbia" && (
+                                    <>
+                                        <div className="flex flex-col gap-3 lg:flex-row">
+                                            <div className="flex-1">
+                                                <Select
+                                                    register={{
+                                                        ...register("region", {
+                                                            required:
+                                                                selectedCountry !== "Columbia"
+                                                                    ? "Please Select Region"
+                                                                    : false,
+                                                        }),
+                                                    }}
+                                                    onChange={(event) =>
+                                                        data_handler(event)
+                                                    }
+                                                    options={region.map((res) => ({
+                                                        label: res.region_name,
+                                                        value: JSON.stringify({
+                                                            name: res.region_name,
+                                                            region_code:
+                                                                res.region_code,
+                                                        }),
+                                                    }))}
+                                                    // value={address.region}
+                                                    errorMessage={
+                                                        errors?.region?.message
+                                                    }
+                                                    label={
+                                                        <>
+                                                            Region{" "}
+                                                            <span className="text-red-500">
+                                                                *
+                                                            </span>
+                                                        </>
+                                                    }
+                                                    name="region"
+                                                />
+                                            </div>
+                                            <div className="flex-1">
+                                                <Select
+                                                    register={{
+                                                        ...register("province", {
+                                                            required:
+                                                                selectedCountry !== "Columbia"
+                                                                    ? "Please Select Province"
+                                                                    : false,
+                                                        }),
+                                                    }}
+                                                    onChange={(event) =>
+                                                        data_handler(event)
+                                                    }
+                                                    options={newProvince.map((res) => ({
+                                                        label: res.province_name,
+                                                        value: JSON.stringify({
+                                                            name: res.province_name,
+                                                            province_code:
+                                                                res.province_code,
+                                                        }),
+                                                    }))}
+                                                    errorMessage={
+                                                        errors?.province?.message
+                                                    }
+                                                    label={
+                                                        <>
+                                                            Province{" "}
+                                                            <span className="text-red-500">
+                                                                *
+                                                            </span>
+                                                        </>
+                                                    }
+                                                    name="province"
+                                                />
+                                            </div>
+                                            <div className="flex-1">
+                                                <Select
+                                                    register={{
+                                                        ...register("city", {
+                                                            required:
+                                                                selectedCountry !== "Columbia"
+                                                                    ? "Please Select City"
+                                                                    : false,
+                                                        }),
+                                                    }}
+                                                    onChange={(event) =>
+                                                        data_handler(event)
+                                                    }
+                                                    options={newCity.map((res) => ({
+                                                        label: res.city_name,
+                                                        value: JSON.stringify({
+                                                            name: res.city_name,
+                                                            city_code: res.city_code,
+                                                        }),
+                                                    }))}
+                                                    errorMessage={errors?.city?.message}
+                                                    name="city"
+                                                    label={
+                                                        <>
+                                                            City/Municipality{" "}
+                                                            <span className="text-red-500">
+                                                                *
+                                                            </span>
+                                                        </>
+                                                    }
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col gap-3 lg:flex-row">
+                                            <div className="flex-1">
+                                                <Select
+                                                    register={{
+                                                        ...register("brgy", {
+                                                            required:
+                                                                selectedCountry !== "Columbia"
+                                                                    ? "Please Select Barangay"
+                                                                    : false,
+                                                        }),
+                                                    }}
+                                                    onChange={(event) =>
+                                                        data_handler(event)
+                                                    }
+                                                    options={newBarangay.map((res) => ({
+                                                        label: res.brgy_name,
+                                                        value: res.brgy_name,
+                                                    }))}
+                                                    errorMessage={errors?.brgy?.message}
+                                                    name="brgy"
+                                                    label={
+                                                        <>
+                                                            Barangay{" "}
+                                                            <span className="text-red-500">
+                                                                *
+                                                            </span>
+                                                        </>
+                                                    }
+                                                />
+                                            </div>
+                                            <div className="flex-1">
+                                                <Input2
+                                                    register={{
+                                                        ...register("lot", {
+                                                            required:
+                                                                selectedCountry !== "Columbia"
+                                                                    ? "House/Lot No., Street, Purok/Sitio is required"
+                                                                    : false,
+                                                        }),
+                                                    }}
+                                                    errorMessage={errors?.lot?.message}
+                                                    name="lot"
+                                                    label={
+                                                        <>
+                                                            House/Lot No., Street,
+                                                            Purok/Sitio{" "}
+                                                            <span className="text-red-500">
+                                                                *
+                                                            </span>
+                                                        </>
+                                                    }
+                                                    type="text"
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
+                                {selectedCountry === "Columbia" && (
+                                    <>
+                                        <div className="flex flex-col gap-3 lg:flex-row">
+                                            <div className="flex-1">
+                                                <Input2
+                                                    register={{
+                                                        ...register("columbia_street", {
+                                                            required:
+                                                                "House/Street Address is required",
+                                                        }),
+                                                    }}
+                                                    errorMessage={
+                                                        errors?.columbia_street?.message
+                                                    }
+                                                    name="columbia_street"
+                                                    label={
+                                                        <>
+                                                            House/Street Address{" "}
+                                                            <span className="text-red-500">
+                                                                *
+                                                            </span>
+                                                        </>
+                                                    }
+                                                    type="text"
+                                                />
+                                            </div>
+                                            <div className="flex-1">
+                                                <Input2
+                                                    register={{
+                                                        ...register("columbia_city", {
+                                                            required: "City is required",
+                                                        }),
+                                                    }}
+                                                    errorMessage={
+                                                        errors?.columbia_city?.message
+                                                    }
+                                                    name="columbia_city"
+                                                    label={
+                                                        <>
+                                                            City{" "}
+                                                            <span className="text-red-500">
+                                                                *
+                                                            </span>
+                                                        </>
+                                                    }
+                                                    type="text"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col gap-3 lg:flex-row">
+                                            <div className="flex-1">
+                                                <Input2
+                                                    register={{
+                                                        ...register(
+                                                            "columbia_state",
+                                                            { required: false },
+                                                        ),
+                                                    }}
+                                                    name="columbia_state"
+                                                    label="State/Province"
+                                                    type="text"
+                                                />
+                                            </div>
+                                            <div className="flex-1">
+                                                <Input2
+                                                    register={{
+                                                        ...register(
+                                                            "columbia_zip",
+                                                            { required: false },
+                                                        ),
+                                                    }}
+                                                    name="columbia_zip"
+                                                    label="Zip Code"
+                                                    type="text"
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
+                                )}
                                 <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                                     Government ID Information
                                 </h1>

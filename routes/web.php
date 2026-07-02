@@ -740,6 +740,9 @@ Route::middleware('auth:sanctum')->prefix('employee')->group(function () {
     Route::get('/resource-hub', function () {
         return Inertia::render('employee/resource-hub/page');
     });
+       Route::get('/forms', function () {
+        return Inertia::render('employee/forms/page');
+    });
     Route::get('/dashboard', function () {
         return Inertia::render('employee/dashboard/page');
     });
@@ -826,9 +829,7 @@ Route::middleware(['auth:sanctum', 'role:10'])->prefix('employee')->group(functi
         });
     });
 
-    Route::get('/forms', function () {
-        return Inertia::render('employee/forms/page');
-    });
+ 
 
     Route::get('/profile', function () {
         return Inertia::render('employee/profile/page');

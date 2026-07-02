@@ -3,40 +3,17 @@ import {
     SearchOutlined,
     DownloadOutlined,
     EyeOutlined,
-    DeleteOutlined,
     FolderOutlined,
     FolderOpenOutlined,
-    PlusOutlined,
-    FolderAddOutlined,
 } from "@ant-design/icons";
-import {
-    Button,
-    Input,
-    Modal,
-    Popconfirm,
-    Select,
-    Space,
-    Table,
-    message,
-} from "antd";
+import { Button, Input, Modal, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
+import { setCompanyForms, setFolders } from "../redux/company-forms-slice";
 import {
-    setCompanyForms,
-    removeCompanyForm,
-    updateFormFolder,
-    setFolders,
-    addFolder,
-    removeFolder,
-} from "../redux/company-forms-slice";
-import {
-    delete_company_form_service,
     get_company_forms_service,
-    move_form_to_folder_service,
     get_folders_service,
-    create_folder_service,
-    delete_folder_service,
 } from "@/app/pages/services/company-forms-service";
 
 export default function FormsTableSection() {
@@ -57,18 +34,6 @@ export default function FormsTableSection() {
     // Folder navigation
     const [selectedFolderId, setSelectedFolderId] = useState(null); // null = All Files
 
-    // Create folder modal
-    const [newFolderOpen, setNewFolderOpen] = useState(false);
-    const [newFolderName, setNewFolderName] = useState("");
-    const [newFolderDesc, setNewFolderDesc] = useState("");
-    const [creatingFolder, setCreatingFolder] = useState(false);
-
-    // Move to folder modal
-    const [moveModalOpen, setMoveModalOpen] = useState(false);
-    const [moveRecord, setMoveRecord] = useState(null);
-    const [moveFolderId, setMoveFolderId] = useState(undefined);
-    const [moving, setMoving] = useState(false);
-
     useEffect(() => {
         Promise.all([get_company_forms_service(), get_folders_service()]).then(
             ([formsRes, foldersRes]) => {
@@ -77,43 +42,6 @@ export default function FormsTableSection() {
             },
         );
     }, [dispatch]);
-
-    // ---- Folder handlers ----
-    const handleCreateFolder = async () => {
-        if (!newFolderName.trim()) {
-            message.error("Folder name is required.");
-            return;
-        }
-        setCreatingFolder(true);
-        try {
-            const res = await create_folder_service({
-                name: newFolderName.trim(),
-                description: newFolderDesc.trim(),
-            });
-            dispatch(addFolder(res.data));
-            message.success("Folder created.");
-            setNewFolderOpen(false);
-            setNewFolderName("");
-            setNewFolderDesc("");
-        } catch (err) {
-            const msg =
-                err?.response?.data?.message || "Failed to create folder.";
-            message.error(msg);
-        } finally {
-            setCreatingFolder(false);
-        }
-    };
-
-    const handleDeleteFolder = async (id) => {
-        try {
-            await delete_folder_service(id);
-            dispatch(removeFolder(id));
-            if (selectedFolderId === id) setSelectedFolderId(null);
-            message.success("Folder deleted. Files moved to unassigned.");
-        } catch {
-            message.error("Failed to delete folder.");
-        }
-    };
 
     // ---- File handlers ----
     const handleView = (record) => {
@@ -130,46 +58,6 @@ export default function FormsTableSection() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-    };
-
-    const handleDelete = async (id) => {
-        try {
-            await delete_company_form_service(id);
-            dispatch(removeCompanyForm(id));
-            message.success("Form deleted.");
-        } catch {
-            message.error("Failed to delete form.");
-        }
-    };
-
-    const openMoveModal = (record) => {
-        setMoveRecord(record);
-        setMoveFolderId(record.folder_id ?? undefined);
-        setMoveModalOpen(true);
-    };
-
-    const handleMove = async () => {
-        if (!moveRecord) return;
-        setMoving(true);
-        try {
-            await move_form_to_folder_service(
-                moveRecord.id,
-                moveFolderId ?? null,
-            );
-            dispatch(
-                updateFormFolder({
-                    id: moveRecord.id,
-                    folder_id: moveFolderId ?? null,
-                }),
-            );
-            message.success("Form moved successfully.");
-            setMoveModalOpen(false);
-            setMoveRecord(null);
-        } catch {
-            message.error("Failed to move form.");
-        } finally {
-            setMoving(false);
-        }
     };
 
     // ---- Search helpers ----
@@ -457,8 +345,6 @@ export default function FormsTableSection() {
                     />
                 )}
             </Modal>
-
-
         </div>
     );
 }

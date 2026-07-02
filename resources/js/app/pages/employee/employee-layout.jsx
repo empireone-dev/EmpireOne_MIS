@@ -204,7 +204,7 @@ const EmployeeLayout = ({ children }) => {
         },
         {
             key: "resource-hub",
-            icon: <FolderOpenOutlined />,
+            icon: <BookOutlined />,
             label: "Resource Hub",
             onClick: () => router.visit("/employee/resource-hub"),
         },

@@ -44,3 +44,21 @@
   background: transparent !important;
 }
 
+/* Minimal scrollbar for sidebar */
+.ant-layout-sider::-webkit-scrollbar {
+  width: 1px;
+}
+
+.ant-layout-sider::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ant-layout-sider::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+.ant-layout-sider::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
+}
+

@@ -586,6 +586,12 @@ const AdminLayout = ({ children }) => {
             label: menuLabel("Company Forms", "/admin/forms"),
             onClick: () => router.visit("/admin/forms"),
         },
+        {
+            key: "resource-hub",
+            icon: <BookOutlined />,
+            label: menuLabel("Resource Hub", "/admin/resource-hub"),
+            onClick: () => router.visit("/admin/resource-hub"),
+        },
         // {
         //     key: "coaching_logs",
         //     icon: <FieldTimeOutlined />,
@@ -841,7 +847,10 @@ const AdminLayout = ({ children }) => {
                                   top: 0,
                                   overflow: "auto",
                               }
-                            : {}
+                            : {
+                                  height: "100vh",
+                                  overflow: "auto",
+                              }
                     }
                 >
                     <img className="p-3" src="/images/logo.png" />

@@ -11,6 +11,7 @@ use App\Mail\NewApplication2;
 use App\Mail\PoolingEmail;
 use App\Mail\Rescheduled;
 use App\Models\Applicant;
+use App\Models\ColumbiaID;
 use App\Models\CVFile;
 use App\Models\Employee;
 use App\Models\FinalRate;
@@ -165,6 +166,13 @@ class ApplicantController extends Controller
             'referred_by'   => 'nullable|string|max:255',
             'with_bpo'      => 'nullable|string|max:255',
             'submitted'     => 'nullable|date',
+            'col_id_type'      => 'nullable|string|max:255',
+            'col_id_number'    => 'nullable|string|max:255',
+            'country'          => 'nullable|string|max:255',
+            'columbia_street'  => 'nullable|string|max:255',
+            'columbia_city'    => 'nullable|string|max:255',
+            'columbia_state'   => 'nullable|string|max:255',
+            'columbia_zip'     => 'nullable|string|max:20',
         ]);
 
         $experiences = $request->work_experience ?? [];
@@ -181,7 +189,14 @@ class ApplicantController extends Controller
             ], 422);
         }
 
-        $data['caddress'] = trim("{$request->lot}, {$request->brgy}, {$request->city}, {$request->province}");
+        $data['caddress'] = $request->country === 'Columbia'
+            ? trim(implode(', ', array_filter([
+                $request->columbia_street,
+                $request->columbia_city,
+                $request->columbia_state,
+                $request->columbia_zip,
+            ])))
+            : trim("{$request->lot}, {$request->brgy}, {$request->city}, {$request->province}");
 
         // Generate unique application ID more efficiently
         $today = date('Y-m-d');
@@ -194,6 +209,15 @@ class ApplicantController extends Controller
 
         // Create applicant record with all data including app_id and status
         Applicant::create($data);
+
+        // Save Colombia government ID if country is Columbia
+        if ($request->country === 'Columbia' && $request->col_id_type && $request->col_id_number) {
+            ColumbiaID::create([
+                'app_id'    => $dateUnique,
+                'govt_id'   => $request->col_id_type,
+                'id_number' => $request->col_id_number,
+            ]);
+        }
 
         // Save work experience records efficiently
         if ($experiences && !empty($experiences)) {

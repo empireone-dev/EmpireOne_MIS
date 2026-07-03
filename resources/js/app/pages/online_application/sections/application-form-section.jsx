@@ -1186,51 +1186,125 @@ export default function ApplicationFormSection() {
                                 <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                                     Government ID Information
                                 </h1>
-                                <div className="flex flex-col gap-3 lg:flex-row">
-                                    <div className="flex-1">
-                                        <Input2
-                                            register={{
-                                                ...register("sss", {}),
-                                            }}
-                                            name="sss"
-                                            label="SSS"
-                                            type="number"
-                                        />
+                                {selectedCountry !== "Columbia" ? (
+                                    <>
+                                        <div className="flex flex-col gap-3 lg:flex-row">
+                                            <div className="flex-1">
+                                                <Input2
+                                                    register={{
+                                                        ...register("sss", {}),
+                                                    }}
+                                                    name="sss"
+                                                    label="SSS"
+                                                    type="number"
+                                                />
+                                            </div>
+                                            <div className="flex-1">
+                                                <Input2
+                                                    register={{
+                                                        ...register("pagibig", {}),
+                                                    }}
+                                                    name="pagibig"
+                                                    label="Pagibig"
+                                                    type="number"
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col gap-3 lg:flex-row">
+                                            <div className="flex-1">
+                                                <Input2
+                                                    register={{
+                                                        ...register("tin", {}),
+                                                    }}
+                                                    name="tin"
+                                                    label="Tin"
+                                                    type="number"
+                                                />
+                                            </div>
+                                            <div className="flex-1">
+                                                <Input2
+                                                    register={{
+                                                        ...register("philh", {}),
+                                                    }}
+                                                    name="philh"
+                                                    label="Philhealth No."
+                                                    type="number"
+                                                />
+                                            </div>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="flex flex-col gap-3 lg:flex-row">
+                                        <div className="flex-1">
+                                            <Select2
+                                                register={{
+                                                    ...register("col_id_type", {
+                                                        required: "ID Type is required",
+                                                    }),
+                                                }}
+                                                onChange={(value) =>
+                                                    setValue("col_id_type", value)
+                                                }
+                                                options={[
+                                                    {
+                                                        label: "Cédula de Ciudadanía (CC)",
+                                                        value: "Cédula de Ciudadanía (CC)",
+                                                    },
+                                                    {
+                                                        label: "Tarjeta de Identidad (TI)",
+                                                        value: "Tarjeta de Identidad (TI)",
+                                                    },
+                                                    {
+                                                        label: "Cédula de Extranjería (CE)",
+                                                        value: "Cédula de Extranjería (CE)",
+                                                    },
+                                                    {
+                                                        label: "Pasaporte",
+                                                        value: "Pasaporte",
+                                                    },
+                                                    {
+                                                        label: "NIT (Número de Identificación Tributaria)",
+                                                        value: "NIT (Número de Identificación Tributaria)",
+                                                    },
+                                                    {
+                                                        label: "NUIP (Número Único de Identificación Personal)",
+                                                        value: "NUIP (Número Único de Identificación Personal)",
+                                                    },
+                                                ]}
+                                                errorMessage={errors?.col_id_type?.message}
+                                                label={
+                                                    <>
+                                                        ID Type{" "}
+                                                        <span className="text-red-500">
+                                                            *
+                                                        </span>
+                                                    </>
+                                                }
+                                                name="col_id_type"
+                                            />
+                                        </div>
+                                        <div className="flex-1">
+                                            <Input2
+                                                register={{
+                                                    ...register("col_id_number", {
+                                                        required: "ID Number is required",
+                                                    }),
+                                                }}
+                                                errorMessage={errors?.col_id_number?.message}
+                                                name="col_id_number"
+                                                label={
+                                                    <>
+                                                        ID Number{" "}
+                                                        <span className="text-red-500">
+                                                            *
+                                                        </span>
+                                                    </>
+                                                }
+                                                type="text"
+                                            />
+                                        </div>
                                     </div>
-                                    <div className="flex-1">
-                                        <Input2
-                                            register={{
-                                                ...register("pagibig", {}),
-                                            }}
-                                            name="pagibig"
-                                            label="Pagibig"
-                                            type="number"
-                                        />
-                                    </div>
-                                </div>
-
-                                <div className="flex flex-col gap-3 lg:flex-row">
-                                    <div className="flex-1">
-                                        <Input2
-                                            register={{
-                                                ...register("tin", {}),
-                                            }}
-                                            name="tin"
-                                            label="Tin"
-                                            type="number"
-                                        />
-                                    </div>
-                                    <div className="flex-1">
-                                        <Input2
-                                            register={{
-                                                ...register("philh", {}),
-                                            }}
-                                            name="philh"
-                                            label="Philhealth No."
-                                            type="number"
-                                        />
-                                    </div>
-                                </div>
+                                )}
                                 <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                                     Working Experience
                                 </h1>

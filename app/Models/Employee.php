@@ -63,14 +63,14 @@ class Employee extends Model
     {
         return $this->hasOne(Department::class, "dept", "dept");
     }
-    public function dept_user(): BelongsTo
+    public function dept_user(): HasOne
     {
-        return $this->BelongsTo(Department::class, "depthead", "app_id");
+        return $this->hasOne(Department::class, "depthead", "app_id");
     }
 
-    public function e_signature(): BelongsTo
+    public function e_signature(): HasOne
     {
-        return $this->BelongsTo(ESignature::class, "emp_id", "emp_id");
+        return $this->hasOne(ESignature::class, "emp_id", "emp_id");
     }
 
     public function job_offer(): HasMany

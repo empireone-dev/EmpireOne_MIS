@@ -69,9 +69,9 @@ class Applicant extends Model
     {
         return $this->hasMany(PreEmploymentFile::class, "app_id", "app_id")->orderBy('id', 'desc');
     }
-    public function employee(): BelongsTo
+    public function employee(): HasOne
     {
-        return $this->belongsTo(Employee::class, "app_id", "app_id")->with('user');
+        return $this->hasOne(Employee::class, "app_id", "app_id")->with('user_id');
     }
     public function user(): BelongsTo
     {

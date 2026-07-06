@@ -261,7 +261,7 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $employee = Employee::where('app_id', $id)->with(['attrition', 'applicant', 'user', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges'])->first();
+        $employee = Employee::where('app_id', $id)->with(['attrition', 'applicant', 'user', 'user_id', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges'])->first();
         if ($employee) {
             return response()->json([
                 'data' => $employee
@@ -277,7 +277,7 @@ class EmployeeController extends Controller
 
     public function get_employee_acknowledgment($id)
     {
-        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges', 'hmo_acknowledges'])->first();
+        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'user_id', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges', 'hmo_acknowledges'])->first();
         if ($employee) {
             return response()->json([
                 'data' => $employee
@@ -345,7 +345,7 @@ class EmployeeController extends Controller
 
     public function get_employee_policy_acknowledgment($id)
     {
-        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'dept', 'schedule_policy_acknowledges'])->first();
+        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'user_id', 'dept', 'schedule_policy_acknowledges'])->first();
         if ($employee) {
             return response()->json([
                 'data' => $employee
@@ -368,6 +368,7 @@ class EmployeeController extends Controller
             'attrition',
             'applicant',
             'user',
+            'user_id',
             'schedule_policy_acknowledges'
         ])
             ->where(function ($query) {

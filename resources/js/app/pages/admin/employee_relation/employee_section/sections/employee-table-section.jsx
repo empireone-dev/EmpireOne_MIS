@@ -16,7 +16,7 @@ export default function EmployeeTableSection() {
     const { employees } = useSelector((state) => state.employees);
     const { accounts } = useSelector((state) => state.accounts);
 
-    // console.log("employsssees", employees);
+    console.log("employsssees", employees);
 
     const url = window.location.pathname + window.location.search;
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -284,7 +284,7 @@ export default function EmployeeTableSection() {
                             { text: "San Carlos", value: "San Carlos" },
                             { text: "Carcar", value: "Carcar" },
                             { text: "Cebu", value: "Cebu" },
-                            { text: "Columbia", value: "Columbia" },
+                            { text: "Colombia", value: "Colombia" },
                         ]}
                     />
                 </div>
@@ -292,7 +292,7 @@ export default function EmployeeTableSection() {
             dataIndex: "site",
             key: "site",
             render: (_, record, i) => {
-                console.log("record", record);
+                // console.log("record", record);
 
                 return <div key={i}>{record?.applicant?.site}</div>;
             },

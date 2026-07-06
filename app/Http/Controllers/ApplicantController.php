@@ -11,7 +11,7 @@ use App\Mail\NewApplication2;
 use App\Mail\PoolingEmail;
 use App\Mail\Rescheduled;
 use App\Models\Applicant;
-use App\Models\ColumbiaID;
+use App\Models\ColombiaID;
 use App\Models\CVFile;
 use App\Models\Employee;
 use App\Models\FinalRate;
@@ -169,10 +169,10 @@ class ApplicantController extends Controller
             'col_id_type'      => 'nullable|string|max:255',
             'col_id_number'    => 'nullable|string|max:255',
             'country'          => 'nullable|string|max:255',
-            'columbia_street'  => 'nullable|string|max:255',
-            'columbia_city'    => 'nullable|string|max:255',
-            'columbia_state'   => 'nullable|string|max:255',
-            'columbia_zip'     => 'nullable|string|max:20',
+            'Colombia_street'  => 'nullable|string|max:255',
+            'Colombia_city'    => 'nullable|string|max:255',
+            'Colombia_state'   => 'nullable|string|max:255',
+            'Colombia_zip'     => 'nullable|string|max:20',
         ]);
 
         $experiences = $request->work_experience ?? [];
@@ -189,12 +189,12 @@ class ApplicantController extends Controller
             ], 422);
         }
 
-        $data['caddress'] = $request->country === 'Columbia'
+        $data['caddress'] = $request->country === 'Colombia'
             ? trim(implode(', ', array_filter([
-                $request->columbia_street,
-                $request->columbia_city,
-                $request->columbia_state,
-                $request->columbia_zip,
+                $request->Colombia_street,
+                $request->Colombia_city,
+                $request->Colombia_state,
+                $request->Colombia_zip,
             ])))
             : trim("{$request->lot}, {$request->brgy}, {$request->city}, {$request->province}");
 
@@ -210,9 +210,9 @@ class ApplicantController extends Controller
         // Create applicant record with all data including app_id and status
         Applicant::create($data);
 
-        // Save Colombia government ID if country is Columbia
-        if ($request->country === 'Columbia' && $request->col_id_type && $request->col_id_number) {
-            ColumbiaID::create([
+        // Save Colombia government ID if country is Colombia
+        if ($request->country === 'Colombia' && $request->col_id_type && $request->col_id_number) {
+            ColombiaID::create([
                 'app_id'    => $dateUnique,
                 'govt_id'   => $request->col_id_type,
                 'id_number' => $request->col_id_number,
@@ -267,7 +267,7 @@ class ApplicantController extends Controller
         $fileUrl = $uploadedFiles[0] ?? null;
 
         // Determine email recipient based on site
-        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu', 'Columbia'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu', 'Colombia'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
 
         // $emailRecipient = 'quicklydeguzman@gmail.com';
 
@@ -486,7 +486,7 @@ class ApplicantController extends Controller
             'meet_link' => $decodedMeetLink,
         ];
 
-        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu', 'Columbia'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu', 'Colombia'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
         // $emailRecipient = 'quicklydeguzman@gmail.com';
 
         if ($decodedMeetLink) {
@@ -529,7 +529,7 @@ class ApplicantController extends Controller
             'reason' => $request->reason,
         ];
 
-        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu', 'Columbia'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu', 'Colombia'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
         // $emailRecipient = 'quicklydeguzman@gmail.com';
 
         if (strtolower($request->reschedule) === "yes") {

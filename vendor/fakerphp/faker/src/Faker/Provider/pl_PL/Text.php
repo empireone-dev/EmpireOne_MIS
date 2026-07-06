@@ -2637,7 +2637,7 @@ EOT;
 
     As of February, 2002, contributions are being solicited from people
     and organizations in: Alabama, Alaska, Arkansas, Connecticut,
-    Delaware, District of Columbia, Florida, Georgia, Hawaii, Illinois,
+    Delaware, District of Colombia, Florida, Georgia, Hawaii, Illinois,
     Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Massachusetts,
     Michigan, Mississippi, Missouri, Montana, Nebraska, Nevada, New
     Hampshire, New Jersey, New Mexico, New York, North Carolina, Ohio,

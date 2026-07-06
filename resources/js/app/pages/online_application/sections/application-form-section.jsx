@@ -176,9 +176,9 @@ export default function ApplicationFormSection() {
             const result = await store.dispatch(
                 store_applicant_thunk({
                     ...data,
-                    province: data?.country === "Columbia" ? (data?.columbia_state || "") : JSON.parse(data?.province).name,
-                    city: data?.country === "Columbia" ? (data?.columbia_city || "") : JSON.parse(data?.city).name,
-                    region: data?.country === "Columbia" ? "" : JSON.parse(data?.region).name,
+                    province: data?.country === "Colombia" ? (data?.Colombia_state || "") : JSON.parse(data?.province).name,
+                    city: data?.country === "Colombia" ? (data?.Colombia_city || "") : JSON.parse(data?.city).name,
+                    region: data?.country === "Colombia" ? "" : JSON.parse(data?.region).name,
                     files: files.map((res) => res.files),
                     is_experience: hasExperience,
                     agreed: "true",
@@ -466,8 +466,8 @@ export default function ApplicationFormSection() {
                                                         value: "Cebu",
                                                     },
                                                     {
-                                                        label: "Columbia",
-                                                        value: "Columbia",
+                                                        label: "Colombia",
+                                                        value: "Colombia",
                                                     },
                                                 ]}
                                                 errorMessage={
@@ -921,8 +921,8 @@ export default function ApplicationFormSection() {
                                                     value: "Philippines",
                                                 },
                                                 {
-                                                    label: "Columbia",
-                                                    value: "Columbia",
+                                                    label: "Colombia",
+                                                    value: "Colombia",
                                                 },
                                             ]}
                                             errorMessage={
@@ -940,7 +940,7 @@ export default function ApplicationFormSection() {
                                         />
                                     </div>
                                 </div>
-                                {selectedCountry !== "Columbia" && (
+                                {selectedCountry !== "Colombia" && (
                                     <>
                                         <div className="flex flex-col gap-3 lg:flex-row">
                                             <div className="flex-1">
@@ -948,7 +948,7 @@ export default function ApplicationFormSection() {
                                                     register={{
                                                         ...register("region", {
                                                             required:
-                                                                selectedCountry !== "Columbia"
+                                                                selectedCountry !== "Colombia"
                                                                     ? "Please Select Region"
                                                                     : false,
                                                         }),
@@ -984,7 +984,7 @@ export default function ApplicationFormSection() {
                                                     register={{
                                                         ...register("province", {
                                                             required:
-                                                                selectedCountry !== "Columbia"
+                                                                selectedCountry !== "Colombia"
                                                                     ? "Please Select Province"
                                                                     : false,
                                                         }),
@@ -1019,7 +1019,7 @@ export default function ApplicationFormSection() {
                                                     register={{
                                                         ...register("city", {
                                                             required:
-                                                                selectedCountry !== "Columbia"
+                                                                selectedCountry !== "Colombia"
                                                                     ? "Please Select City"
                                                                     : false,
                                                         }),
@@ -1053,7 +1053,7 @@ export default function ApplicationFormSection() {
                                                     register={{
                                                         ...register("brgy", {
                                                             required:
-                                                                selectedCountry !== "Columbia"
+                                                                selectedCountry !== "Colombia"
                                                                     ? "Please Select Barangay"
                                                                     : false,
                                                         }),
@@ -1082,7 +1082,7 @@ export default function ApplicationFormSection() {
                                                     register={{
                                                         ...register("lot", {
                                                             required:
-                                                                selectedCountry !== "Columbia"
+                                                                selectedCountry !== "Colombia"
                                                                     ? "House/Lot No., Street, Purok/Sitio is required"
                                                                     : false,
                                                         }),
@@ -1104,21 +1104,21 @@ export default function ApplicationFormSection() {
                                         </div>
                                     </>
                                 )}
-                                {selectedCountry === "Columbia" && (
+                                {selectedCountry === "Colombia" && (
                                     <>
                                         <div className="flex flex-col gap-3 lg:flex-row">
                                             <div className="flex-1">
                                                 <Input2
                                                     register={{
-                                                        ...register("columbia_street", {
+                                                        ...register("Colombia_street", {
                                                             required:
                                                                 "House/Street Address is required",
                                                         }),
                                                     }}
                                                     errorMessage={
-                                                        errors?.columbia_street?.message
+                                                        errors?.Colombia_street?.message
                                                     }
-                                                    name="columbia_street"
+                                                    name="Colombia_street"
                                                     label={
                                                         <>
                                                             House/Street Address{" "}
@@ -1133,14 +1133,14 @@ export default function ApplicationFormSection() {
                                             <div className="flex-1">
                                                 <Input2
                                                     register={{
-                                                        ...register("columbia_city", {
+                                                        ...register("Colombia_city", {
                                                             required: "City is required",
                                                         }),
                                                     }}
                                                     errorMessage={
-                                                        errors?.columbia_city?.message
+                                                        errors?.Colombia_city?.message
                                                     }
-                                                    name="columbia_city"
+                                                    name="Colombia_city"
                                                     label={
                                                         <>
                                                             City{" "}
@@ -1158,11 +1158,11 @@ export default function ApplicationFormSection() {
                                                 <Input2
                                                     register={{
                                                         ...register(
-                                                            "columbia_state",
+                                                            "Colombia_state",
                                                             { required: false },
                                                         ),
                                                     }}
-                                                    name="columbia_state"
+                                                    name="Colombia_state"
                                                     label="State/Province"
                                                     type="text"
                                                 />
@@ -1171,11 +1171,11 @@ export default function ApplicationFormSection() {
                                                 <Input2
                                                     register={{
                                                         ...register(
-                                                            "columbia_zip",
+                                                            "Colombia_zip",
                                                             { required: false },
                                                         ),
                                                     }}
-                                                    name="columbia_zip"
+                                                    name="Colombia_zip"
                                                     label="Zip Code"
                                                     type="text"
                                                 />
@@ -1186,7 +1186,7 @@ export default function ApplicationFormSection() {
                                 <h1 className="text-xl font-semibold mb-3 text-gray-900 ">
                                     Government ID Information
                                 </h1>
-                                {selectedCountry !== "Columbia" ? (
+                                {selectedCountry !== "Colombia" ? (
                                     <>
                                         <div className="flex flex-col gap-3 lg:flex-row">
                                             <div className="flex-1">

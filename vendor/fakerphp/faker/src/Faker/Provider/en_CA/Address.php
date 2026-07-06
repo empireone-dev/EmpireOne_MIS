@@ -13,7 +13,7 @@ class Address extends \Faker\Provider\en_US\Address
 
     protected static $province = [
         'Alberta',
-        'British Columbia',
+        'British Colombia',
         'Manitoba',
         'New Brunswick', 'Newfoundland and Labrador', 'Northwest Territories', 'Nova Scotia', 'Nunavut',
         'Ontario',

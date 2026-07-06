@@ -1,7 +1,7 @@
 -open wamp Server
 -go to mysql > console
 -type this:
-USE curtis;
+USE hris;
 
 -copy as path mysql download file:
 

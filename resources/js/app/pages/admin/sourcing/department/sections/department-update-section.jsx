@@ -188,7 +188,7 @@ export default function DepartmentUpdateSection({ data }) {
                             <option value="San Carlos">San Carlos</option>
                             <option value="Carcar">Carcar</option>
                             <option value="Cebu">Cebu</option>
-                            <option value="Columbia">Columbia</option>
+                            <option value="Colombia">Colombia</option>
                         </select>
                     </div>
                 </form>

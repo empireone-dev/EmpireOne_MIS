@@ -202,12 +202,12 @@ const EmployeeLayout = ({ children }) => {
             label: "Company Forms",
             onClick: () => router.visit("/employee/forms"),
         },
-        {
-            key: "resource-hub",
-            icon: <BookOutlined />,
-            label: "Resource Hub",
-            onClick: () => router.visit("/employee/resource-hub"),
-        },
+        // {
+        //     key: "resource-hub",
+        //     icon: <BookOutlined />,
+        //     label: "Resource Hub",
+        //     onClick: () => router.visit("/employee/resource-hub"),
+        // },
     ];
 
     const [isOpen, setIsOpen] = useState(false);

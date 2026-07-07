@@ -498,7 +498,8 @@ const AdminLayout = ({ children }) => {
             : []),
         ...(user.department != "Human Resources" &&
         user.department != "Human Resource" &&
-        user.role_id == "2"
+        user.role_id == "2" &&
+        user.profile != "1"
             ? [
                   {
                       key: "employee_relation",

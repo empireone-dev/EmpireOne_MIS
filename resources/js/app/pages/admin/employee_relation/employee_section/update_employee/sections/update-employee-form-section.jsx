@@ -72,6 +72,10 @@ export default function UpdateEmployeeFormSection() {
             eaddress: applicant?.eaddress || "",
             relationship: applicant?.relationship || "",
             ephone: applicant?.ephone || "",
+            role_id:
+                employee?.user_id?.role_id ||
+                applicant?.employee?.user_id?.role_id ||
+                "",
         });
     }, [applicant, employee]);
 
@@ -860,6 +864,49 @@ export default function UpdateEmployeeFormSection() {
                         />
                     </div>
                 </div>
+                <div className="mb-4">
+                    <label>
+                        <b>Role</b>
+                    </label>
+                    <div className="flex flex-wrap gap-4 mt-1">
+                        {[
+                            { label: "Employee", value: 7 },
+                            { label: "Leads/Manager", value: 10 },
+                            {
+                                label: "HR Staff",
+                                value: 2,
+                                dept: "Human Resource",
+                            },
+                            { label: "Compliance", value: 2 },
+                            { label: "Admin", value: 1 },
+                        ].map((role) => (
+                            <label
+                                key={role.value + role.label}
+                                className="flex items-center gap-2 cursor-pointer"
+                            >
+                                <input
+                                    type="radio"
+                                    name="role_id"
+                                    value={role.value}
+                                    checked={
+                                        Number(form?.role_id) == role.value
+                                    }
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            role_id: Number(e.target.value),
+                                            ...(role.dept
+                                                ? { dept: role.dept }
+                                                : {}),
+                                        })
+                                    }
+                                />
+                                {role.label}
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
                 <div className="flex gap-2 justify-end items-center mt-6">
                     <button
                         type="submit"

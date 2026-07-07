@@ -398,6 +398,8 @@ class ApplicantController extends Controller
             $userData['employee_lname'] = $request->lname;
             $userData['employee_suffix'] = $request->suffix;
             $userData['email'] = $request->eogs;
+            $userData['role_id'] = $request->role_id;
+            $userData['department'] = $request->dept;
             $user->update($userData);
         }
 

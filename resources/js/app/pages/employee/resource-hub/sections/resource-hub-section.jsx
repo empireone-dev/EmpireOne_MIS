@@ -8,7 +8,6 @@ import {
 } from "@heroicons/react/24/outline";
 import AddResourceHubSection from "./add-resource-hub-section";
 import { message } from "antd";
-import { useSelector } from "react-redux";
 
 const colorMap = {
     blue: {
@@ -54,7 +53,6 @@ export default function ResourceHubSection() {
     const [resourceList, setResourceList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [addModalOpen, setAddModalOpen] = useState(false);
-    const { user } = useSelector((state) => state.app);
 
     // Group flat API records into { category, color, items[] }
     const groupItems = (flat) => {
@@ -200,53 +198,7 @@ export default function ResourceHubSection() {
                                             className={`group relative bg-white rounded-xl border ${colors.border} shadow-sm hover:shadow-md transition-all duration-200 p-4 flex flex-col gap-2`}
                                         >
                                             <a
-                                                href={(() => {
-                                                    const isErfLink =
-                                                        item.url &&
-                                                        (item.url.includes(
-                                                            "erf_record",
-                                                        ) ||
-                                                            item.url.includes(
-                                                                "/admin/sourcing/",
-                                                            ));
-                                                    if (isErfLink) {
-                                                        // role 10: redirect to employee ERF page
-                                                        if (
-                                                            user.role_id == 10
-                                                        ) {
-                                                            return item.url.replace(
-                                                                "/admin/sourcing/",
-                                                                "/employee/",
-                                                            );
-                                                        }
-                                                        // role 7 (employee): block
-                                                        if (
-                                                            user.role_id == 7
-                                                        ) {
-                                                            return "#";
-                                                        }
-                                                    }
-                                                    return item.url;
-                                                })()}
-                                                onClick={(e) => {
-                                                    const isErfLink =
-                                                        item.url &&
-                                                        (item.url.includes(
-                                                            "erf_record",
-                                                        ) ||
-                                                            item.url.includes(
-                                                                "/admin/sourcing/",
-                                                            ));
-                                                    if (
-                                                        isErfLink &&
-                                                        user.role_id == 7
-                                                    ) {
-                                                        e.preventDefault();
-                                                        message.warning(
-                                                            "You don't have permission to create ERF.",
-                                                        );
-                                                    }
-                                                }}
+                                                href={item.url}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="flex flex-col gap-2 flex-1"

@@ -9,7 +9,7 @@ class AccountController extends Controller
 {
     public function index()
     {
-        $account = Account::orderBy('id', 'desc')->get();
+        $account = Account::orderBy('acc', 'asc')->get();
         return response()->json([
             'result' => $account
         ], 200);

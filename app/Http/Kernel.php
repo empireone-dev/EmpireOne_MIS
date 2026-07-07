@@ -61,6 +61,8 @@ class Kernel extends HttpKernel
     protected $middlewareAliases = [
         'redirectBasedOnRole' => \App\Http\Middleware\RedirectBasedOnRole::class,
         'role' => \App\Http\Middleware\RoleMiddleware::class,
+        'ensureAdminRole' => \App\Http\Middleware\EnsureAdminRole::class,
+        'ensureEmployeeRole' => \App\Http\Middleware\EnsureEmployeeRole::class,
         'fileUpload' => \App\Http\Middleware\FileUploadMiddleware::class,
         'auth' => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,

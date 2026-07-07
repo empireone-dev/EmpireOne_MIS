@@ -303,7 +303,7 @@ Route::get('/admin/employee-qr-scan/{emp_id}', function ($emp_id) {
 });
 
 // admin = 1
-Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
+Route::middleware(['auth:sanctum', 'ensureAdminRole'])->prefix('admin')->group(function () {
     Route::get('/initial_rate/{app_id}', function () {
         return Inertia::render('admin/initial_rate/page');
     });
@@ -604,9 +604,9 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::get('/nda', function () {
         return Inertia::render('admin/nda/page');
     });
-    // Route::get('/resource-hub', function () {
-    //     return Inertia::render('admin/resource-hub/page');
-    // });
+    Route::get('/resource-hub', function () {
+        return Inertia::render('admin/resource-hub/page');
+    });
     Route::get('/employee_handbook', function () {
         return Inertia::render('admin/employee_handbook/page');
     });
@@ -717,7 +717,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
 //     });
 // });
 // employee = 7
-Route::middleware('auth:sanctum')->prefix('employee')->group(function () {
+Route::middleware(['auth:sanctum', 'ensureEmployeeRole'])->prefix('employee')->group(function () {
 
     Route::get('/update_profile', function () {
         return Inertia::render('employee/profile/page');
@@ -737,9 +737,9 @@ Route::middleware('auth:sanctum')->prefix('employee')->group(function () {
     Route::get('/nda', function () {
         return Inertia::render('employee/nda/page');
     });
-    // Route::get('/resource-hub', function () {
-    //     return Inertia::render('employee/resource-hub/page');
-    // });
+    Route::get('/resource-hub', function () {
+        return Inertia::render('employee/resource-hub/page');
+    });
        Route::get('/forms', function () {
         return Inertia::render('employee/forms/page');
     });
@@ -784,7 +784,7 @@ Route::middleware('auth:sanctum')->prefix('employee')->group(function () {
     });
 });
 
-Route::middleware(['auth:sanctum', 'role:10'])->prefix('employee')->group(function () {
+Route::middleware(['auth:sanctum', 'ensureEmployeeRole', 'role:10'])->prefix('employee')->group(function () {
     Route::prefix('sourcing')->group(function () {
         Route::prefix('resource_requests')->group(function () {
             Route::get('/erf_record', function () {

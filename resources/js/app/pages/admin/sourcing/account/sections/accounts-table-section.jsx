@@ -14,25 +14,25 @@ const AccountsTableSection = () => {
         return <div>No data available</div>;
     }
 
-    // Filter accounts by user's site
-    const filteredAccounts = user.role_id === 1
-        ? accounts // Show all accounts for admin users
-        : accounts?.filter((acct) => acct.site === user.site);
+    // // Filter accounts by user's site
+    // const filteredAccounts = user.role_id === 1
+    //     ? accounts // Show all accounts for admin users
+    //     : accounts?.filter((acct) => acct.site === user.site);
 
-    // Prepare the data for the table
-    const data = filteredAccounts?.map((res) => ({
-        account: res?.acc,
-        accountManager: `${res?.user?.employee_fname ?? ''} ${res?.user?.employee_lname ?? ''}`,
-        site: res?.site,
-        action: res,
-    }));
+    // // Prepare the data for the table
+    // const data = filteredAccounts?.map((res) => ({
+    //     account: res?.acc,
+    //     accountManager: `${res?.user?.employee_fname ?? ''} ${res?.user?.employee_lname ?? ''}`,
+    //     site: res?.site,
+    //     action: res,
+    // }));
 
     // Define table columns
     const columns = [
         {
             title: "Account Name",
-            dataIndex: "account",
-            key: "account",
+            dataIndex: "acc",
+            key: "acc",
             render: (text) => <a>{text}</a>,
         },
         // {
@@ -73,7 +73,7 @@ const AccountsTableSection = () => {
     ];
 
     // Return the table
-    return <Table columns={columns} dataSource={data} />;
+    return <Table columns={columns} dataSource={accounts} />;
 };
 
 export default AccountsTableSection;

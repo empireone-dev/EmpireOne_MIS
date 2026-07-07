@@ -200,29 +200,54 @@ export default function ResourceHubSection() {
                                             className={`group relative bg-white rounded-xl border ${colors.border} shadow-sm hover:shadow-md transition-all duration-200 p-4 flex flex-col gap-2`}
                                         >
                                             <a
-                                                href={
-                                                    user.role_id === "1"
-                                                        ? item.url
-                                                        : user.role_id === "10"
-                                                          ? item.url.replace(
+                                                href={(() => {
+                                                    const isErfLink =
+                                                        item.url &&
+                                                        (item.url.includes(
+                                                            "erf_record",
+                                                        ) ||
+                                                            item.url.includes(
+                                                                "/admin/sourcing/",
+                                                            ));
+                                                    if (isErfLink) {
+                                                        // role 10: redirect to employee ERF page
+                                                        if (
+                                                            user.role_id == 10
+                                                        ) {
+                                                            return item.url.replace(
                                                                 "/admin/sourcing/",
                                                                 "/employee/",
-                                                            )
-                                                          : "#"
-                                                }
+                                                            );
+                                                        }
+                                                        // role 7 (employee): block
+                                                        if (
+                                                            user.role_id == 7
+                                                        ) {
+                                                            return "#";
+                                                        }
+                                                    }
+                                                    return item.url;
+                                                })()}
                                                 onClick={(e) => {
-                                                    if (user.role_id === "7") {
+                                                    const isErfLink =
+                                                        item.url &&
+                                                        (item.url.includes(
+                                                            "erf_record",
+                                                        ) ||
+                                                            item.url.includes(
+                                                                "/admin/sourcing/",
+                                                            ));
+                                                    if (
+                                                        isErfLink &&
+                                                        user.role_id == 7
+                                                    ) {
                                                         e.preventDefault();
-                                                        alert(
-                                                            "You do not have access.",
+                                                        message.warning(
+                                                            "You don't have permission to create ERF.",
                                                         );
                                                     }
                                                 }}
-                                                target={
-                                                    user.role_id === "7"
-                                                        ? "_self"
-                                                        : "_blank"
-                                                }
+                                                target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="flex flex-col gap-2 flex-1"
                                             >

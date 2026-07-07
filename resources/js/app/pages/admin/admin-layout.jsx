@@ -178,12 +178,12 @@ const AdminLayout = ({ children }) => {
             label: menuLabel("Company Forms", "/employee/forms"),
             onClick: () => router.visit("/employee/forms"),
         },
-        // {
-        //     key: "resource-hub",
-        //     icon: <BookOutlined />,
-        //     label: menuLabel("Resource Hub", "/employee/resource-hub"),
-        //     onClick: () => router.visit("/employee/resource-hub"),
-        // },
+        {
+            key: "resource-hub",
+            icon: <BookOutlined />,
+            label: menuLabel("Resource Hub", "/employee/resource-hub"),
+            onClick: () => router.visit("/employee/resource-hub"),
+        },
     ];
 
     // Full admin menu items for other roles
@@ -598,12 +598,12 @@ const AdminLayout = ({ children }) => {
             label: menuLabel("Company Forms", "/admin/forms"),
             onClick: () => router.visit("/admin/forms"),
         },
-        // {
-        //     key: "resource-hub",
-        //     icon: <BookOutlined />,
-        //     label: menuLabel("Resource Hub", "/admin/resource-hub"),
-        //     onClick: () => router.visit("/admin/resource-hub"),
-        // },
+        {
+            key: "resource-hub",
+            icon: <BookOutlined />,
+            label: menuLabel("Resource Hub", "/admin/resource-hub"),
+            onClick: () => router.visit("/admin/resource-hub"),
+        },
         // {
         //     key: "coaching_logs",
         //     icon: <FieldTimeOutlined />,

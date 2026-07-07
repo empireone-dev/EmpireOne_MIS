@@ -8,6 +8,7 @@ import {
 } from "@heroicons/react/24/outline";
 import AddResourceHubSection from "./add-resource-hub-section";
 import { message } from "antd";
+import { useSelector } from "react-redux";
 
 const colorMap = {
     blue: {
@@ -53,6 +54,7 @@ export default function ResourceHubSection() {
     const [resourceList, setResourceList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [addModalOpen, setAddModalOpen] = useState(false);
+    const { user } = useSelector((state) => state.app);
 
     // Group flat API records into { category, color, items[] }
     const groupItems = (flat) => {
@@ -198,8 +200,29 @@ export default function ResourceHubSection() {
                                             className={`group relative bg-white rounded-xl border ${colors.border} shadow-sm hover:shadow-md transition-all duration-200 p-4 flex flex-col gap-2`}
                                         >
                                             <a
-                                                href={item.url}
-                                                target="_blank"
+                                                href={
+                                                    user.role_id === "1"
+                                                        ? item.url
+                                                        : user.role_id === "10"
+                                                          ? item.url.replace(
+                                                                "/admin/sourcing/",
+                                                                "/employee/",
+                                                            )
+                                                          : "#"
+                                                }
+                                                onClick={(e) => {
+                                                    if (user.role_id === "7") {
+                                                        e.preventDefault();
+                                                        alert(
+                                                            "You do not have access.",
+                                                        );
+                                                    }
+                                                }}
+                                                target={
+                                                    user.role_id === "7"
+                                                        ? "_self"
+                                                        : "_blank"
+                                                }
                                                 rel="noopener noreferrer"
                                                 className="flex flex-col gap-2 flex-1"
                                             >

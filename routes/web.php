@@ -604,7 +604,7 @@ Route::middleware('auth:sanctum')->prefix('admin')->group(function () {
     Route::get('/nda', function () {
         return Inertia::render('admin/nda/page');
     });
-    Route::get('/resource-hub', function () {
+    Route::middleware('not.employee')->get('/resource-hub', function () {
         return Inertia::render('admin/resource-hub/page');
     });
     Route::get('/employee_handbook', function () {

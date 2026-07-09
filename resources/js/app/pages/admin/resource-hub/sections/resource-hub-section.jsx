@@ -8,14 +8,45 @@ import {
 } from "@heroicons/react/24/outline";
 import AddResourceHubSection from "./add-resource-hub-section";
 import { message } from "antd";
+import { useSelector } from "react-redux";
 
 const colorMap = {
-    blue: { badge: "bg-blue-100 text-blue-700", icon: "text-blue-500", border: "border-blue-200", dot: "bg-blue-500" },
-    green: { badge: "bg-green-100 text-green-700", icon: "text-green-500", border: "border-green-200", dot: "bg-green-500" },
-    purple: { badge: "bg-purple-100 text-purple-700", icon: "text-purple-500", border: "border-purple-200", dot: "bg-purple-500" },
-    red: { badge: "bg-red-100 text-red-700", icon: "text-red-500", border: "border-red-200", dot: "bg-red-500" },
-    orange: { badge: "bg-orange-100 text-orange-700", icon: "text-orange-500", border: "border-orange-200", dot: "bg-orange-500" },
-    teal: { badge: "bg-teal-100 text-teal-700", icon: "text-teal-500", border: "border-teal-200", dot: "bg-teal-500" },
+    blue: {
+        badge: "bg-blue-100 text-blue-700",
+        icon: "text-blue-500",
+        border: "border-blue-200",
+        dot: "bg-blue-500",
+    },
+    green: {
+        badge: "bg-green-100 text-green-700",
+        icon: "text-green-500",
+        border: "border-green-200",
+        dot: "bg-green-500",
+    },
+    purple: {
+        badge: "bg-purple-100 text-purple-700",
+        icon: "text-purple-500",
+        border: "border-purple-200",
+        dot: "bg-purple-500",
+    },
+    red: {
+        badge: "bg-red-100 text-red-700",
+        icon: "text-red-500",
+        border: "border-red-200",
+        dot: "bg-red-500",
+    },
+    orange: {
+        badge: "bg-orange-100 text-orange-700",
+        icon: "text-orange-500",
+        border: "border-orange-200",
+        dot: "bg-orange-500",
+    },
+    teal: {
+        badge: "bg-teal-100 text-teal-700",
+        icon: "text-teal-500",
+        border: "border-teal-200",
+        dot: "bg-teal-500",
+    },
 };
 
 export default function ResourceHubSection() {
@@ -23,13 +54,18 @@ export default function ResourceHubSection() {
     const [resourceList, setResourceList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [addModalOpen, setAddModalOpen] = useState(false);
+    const { user } = useSelector((state) => state.app);
 
     // Group flat API records into { category, color, items[] }
     const groupItems = (flat) => {
         const map = {};
         flat.forEach((item) => {
             if (!map[item.category]) {
-                map[item.category] = { category: item.category, color: item.color, items: [] };
+                map[item.category] = {
+                    category: item.category,
+                    color: item.color,
+                    items: [],
+                };
             }
             map[item.category].items.push(item);
         });
@@ -37,7 +73,8 @@ export default function ResourceHubSection() {
     };
 
     useEffect(() => {
-        axios.get("/api/resource_hub")
+        axios
+            .get("/api/resource_hub")
             .then((res) => setResourceList(groupItems(res.data.data)))
             .catch(() => message.error("Failed to load resources."))
             .finally(() => setLoading(false));
@@ -75,7 +112,10 @@ export default function ResourceHubSection() {
                 prev
                     .map((c) =>
                         c.category === category
-                            ? { ...c, items: c.items.filter((i) => i.id !== itemId) }
+                            ? {
+                                  ...c,
+                                  items: c.items.filter((i) => i.id !== itemId),
+                              }
                             : c,
                     )
                     .filter((c) => c.items.length > 0),
@@ -115,25 +155,26 @@ export default function ResourceHubSection() {
 
             {/* Search + Add */}
             <div className="flex items-center gap-3 mb-8">
-            <div className="relative max-w-md flex-1">
-                <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
-                <input
-                    type="text"
-                    placeholder="Search resources..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300 bg-white"
-                />
+                <div className="relative max-w-md flex-1">
+                    <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <input
+                        type="text"
+                        placeholder="Search resources..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="w-full pl-9 pr-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-blue-300 bg-white"
+                    />
+                </div>
+                {user?.role_id === "1" && (
+                    <button
+                        onClick={() => setAddModalOpen(true)}
+                        className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors flex-shrink-0"
+                    >
+                        <PlusIcon className="h-4 w-4" />
+                        Add Resource
+                    </button>
+                )}
             </div>
-            <button
-                onClick={() => setAddModalOpen(true)}
-                className="flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-colors flex-shrink-0"
-            >
-                <PlusIcon className="h-4 w-4" />
-                Add Resource
-            </button>
-            </div>
-
             <AddResourceHubSection
                 open={addModalOpen}
                 onClose={() => setAddModalOpen(false)}
@@ -146,11 +187,15 @@ export default function ResourceHubSection() {
 
             {/* Categories */}
             {loading ? (
-                <div className="text-center py-16 text-gray-400 text-sm">Loading resources...</div>
+                <div className="text-center py-16 text-gray-400 text-sm">
+                    Loading resources...
+                </div>
             ) : filtered.length === 0 ? (
                 <div className="text-center py-16 text-gray-400">
                     <p className="text-base">
-                        {search ? `No resources found for "${search}"` : "No resources yet. Click \"Add Resource\" to get started."}
+                        {search
+                            ? `No resources found for "${search}"`
+                            : 'No resources yet. Click "Add Resource" to get started.'}
                     </p>
                 </div>
             ) : (
@@ -174,13 +219,20 @@ export default function ResourceHubSection() {
                                             className={`group relative bg-white rounded-xl border ${colors.border} shadow-sm hover:shadow-md transition-all duration-200 p-4 flex flex-col gap-2`}
                                         >
                                             {/* Delete button */}
-                                            <button
-                                                onClick={() => handleDelete(item.id, cat.category)}
-                                                className="absolute top-2 right-2 p-1 rounded-md text-gray-300 hover:text-red-500 hover:bg-red-50 opacity-0 group-hover:opacity-100 transition-all"
-                                                title="Remove resource"
-                                            >
-                                                <TrashIcon className="h-3.5 w-3.5" />
-                                            </button>
+                                            {user?.role_id === "1" && (
+                                                <button
+                                                    onClick={() =>
+                                                        handleDelete(
+                                                            item.id,
+                                                            cat.category,
+                                                        )
+                                                    }
+                                                    className="absolute top-2 right-2 p-1 rounded-md text-gray-300 hover:text-red-500 hover:bg-red-50 opacity-0 group-hover:opacity-100 transition-all"
+                                                    title="Remove resource"
+                                                >
+                                                    <TrashIcon className="h-3.5 w-3.5" />
+                                                </button>
+                                            )}
 
                                             <a
                                                 href={item.url}

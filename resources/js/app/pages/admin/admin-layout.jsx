@@ -29,6 +29,8 @@ import {
     SisternodeOutlined,
     FileTextOutlined,
     FilePdfOutlined,
+    PlaySquareOutlined,
+    SolutionOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal, message } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
@@ -131,14 +133,31 @@ const AdminLayout = ({ children }) => {
             onClick: () => router.visit("/employee/cocd"),
         },
         {
-            key: "hmo",
-            icon: <SisternodeOutlined />,
-            label: menuLabel(
-                "(HMO) Health Maintenance Organization",
-                "/employee/hmo",
-            ),
-            onClick: () => router.visit("/employee/hmo"),
+            key: "orientation_videos",
+            icon: <PlaySquareOutlined />,
+            label: "Orientation Videos",
+            children: [
+                {
+                    key: "hmo",
+                    icon: <SisternodeOutlined />,
+                    label: menuLabel(
+                        "(HMO) Health Maintenance Organization",
+                        "/employee/hmo",
+                    ),
+                    onClick: () => router.visit("/employee/hmo"),
+                },
+                {
+                    key: "sss",
+                    icon: <SolutionOutlined />,
+                    label: menuLabel(
+                        "SSS Seminar Refresher",
+                        "/employee/sss     ",
+                    ),
+                    onClick: () => router.visit("/employee/sss     "),
+                },
+            ],
         },
+
         {
             key: "nda",
             icon: <FileTextOutlined />,
@@ -553,13 +572,26 @@ const AdminLayout = ({ children }) => {
             onClick: () => router.visit("/admin/cocd"),
         },
         {
-            key: "hmo",
-            icon: <SisternodeOutlined />,
-            label: menuLabel(
-                "(HMO) Health Maintenance Organization",
-                "/admin/hmo",
-            ),
-            onClick: () => router.visit("/admin/hmo"),
+            key: "orientation_videos",
+            icon: <PlaySquareOutlined />,
+            label: "Orientation Videos",
+            children: [
+                {
+                    key: "hmo",
+                    icon: <SisternodeOutlined />,
+                    label: menuLabel(
+                        "(HMO) Health Maintenance Organization",
+                        "/admin/hmo",
+                    ),
+                    onClick: () => router.visit("/admin/hmo"),
+                },
+                {
+                    key: "sss",
+                    icon: <SolutionOutlined />,
+                    label: menuLabel("SSS Seminar Refresher", "/admin/sss"),
+                    onClick: () => router.visit("/admin/sss"),
+                },
+            ],
         },
         {
             key: "Non-Disclosure Agreement (NDA)",

@@ -601,6 +601,9 @@ Route::middleware(['auth:sanctum', 'ensureAdminRole'])->prefix('admin')->group(f
     Route::get('/hmo', function () {
         return Inertia::render('admin/hmo/page');
     });
+      Route::get('/sss', function () {
+        return Inertia::render('admin/sss/page');
+    });
     Route::get('/nda', function () {
         return Inertia::render('admin/nda/page');
     });
@@ -734,13 +737,16 @@ Route::middleware(['auth:sanctum', 'ensureEmployeeRole'])->prefix('employee')->g
     Route::get('/hmo', function () {
         return Inertia::render('employee/hmo/page');
     });
+    Route::get('/sss', function () {
+        return Inertia::render('employee/sss/page');
+    });
     Route::get('/nda', function () {
         return Inertia::render('employee/nda/page');
     });
     Route::get('/resource-hub', function () {
         return Inertia::render('employee/resource-hub/page');
     });
-       Route::get('/forms', function () {
+    Route::get('/forms', function () {
         return Inertia::render('employee/forms/page');
     });
     Route::get('/dashboard', function () {
@@ -829,7 +835,7 @@ Route::middleware(['auth:sanctum', 'ensureEmployeeRole', 'role:10'])->prefix('em
         });
     });
 
- 
+
 
     Route::get('/profile', function () {
         return Inertia::render('employee/profile/page');

@@ -7,7 +7,8 @@ import {
     TrashIcon,
 } from "@heroicons/react/24/outline";
 import AddResourceHubSection from "./add-resource-hub-section";
-import { message } from "antd";
+import { message, Modal } from "antd";
+import { useSelector } from "react-redux";
 
 const colorMap = {
     blue: {
@@ -53,6 +54,18 @@ export default function ResourceHubSection() {
     const [resourceList, setResourceList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [addModalOpen, setAddModalOpen] = useState(false);
+    const { user } = useSelector((state) => state.app);
+
+    const handleItemClick = (e, item) => {
+        if (item.url && item.url.includes("erf_record") && user && user.role_id == 7) {
+            e.preventDefault();
+            Modal.warning({
+                title: "Access Restricted",
+                content: "You do not have permission to create an ERF (Employee Requisition Form). Please contact your manager.",
+                okText: "Understood",
+            });
+        }
+    };
 
     // Group flat API records into { category, color, items[] }
     const groupItems = (flat) => {
@@ -202,6 +215,7 @@ export default function ResourceHubSection() {
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="flex flex-col gap-2 flex-1"
+                                                onClick={(e) => handleItemClick(e, item)}
                                             >
                                                 <div className="flex items-start justify-between pr-2">
                                                     <span className="text-sm font-semibold text-gray-800 group-hover:text-blue-600 transition-colors leading-tight">

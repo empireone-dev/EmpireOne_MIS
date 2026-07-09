@@ -16,7 +16,7 @@ class EnsureAdminRole
     {
         $user = $request->user();
 
-        if ($user && ($user->role_id == 7 || $user->role_id == 10 )) {
+        if ($user && ($user->role_id == 7)) {
             return redirect('/employee/dashboard');
         }
 

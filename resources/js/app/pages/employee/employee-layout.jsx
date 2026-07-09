@@ -49,11 +49,42 @@ const EmployeeLayout = ({ children }) => {
     } = theme.useToken();
     const { user } = useSelector((state) => state.app);
 
+    const [contextMenu, setContextMenu] = useState({
+        visible: false,
+        x: 0,
+        y: 0,
+        url: "",
+    });
+
     useEffect(() => {
         store.dispatch(get_users_thunk());
         console.log("waaaa", user);
         store.dispatch(get_user_thunk());
     }, [user.id]);
+
+    useEffect(() => {
+        const handleClick = () =>
+            setContextMenu((prev) => ({ ...prev, visible: false }));
+        document.addEventListener("click", handleClick);
+        return () => document.removeEventListener("click", handleClick);
+    }, []);
+
+    const menuLabel = (label, url) => (
+        <span
+            onContextMenu={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setContextMenu({
+                    visible: true,
+                    x: e.clientX,
+                    y: e.clientY,
+                    url,
+                });
+            }}
+        >
+            {label}
+        </span>
+    );
 
     const items = [
         // {
@@ -182,10 +213,7 @@ const EmployeeLayout = ({ children }) => {
                 {
                     key: "sss",
                     icon: <SolutionOutlined />,
-                    label: menuLabel(
-                        "SSS Seminar Refresher",
-                        "/employee/sss",
-                    ),
+                    label: menuLabel("SSS Seminar Refresher", "/employee/sss"),
                     onClick: () => router.visit("/employee/sss"),
                 },
             ],
@@ -857,6 +885,31 @@ const EmployeeLayout = ({ children }) => {
                     className="fixed inset-0 bg-black bg-opacity-50 z-[998]"
                     onClick={() => setCollapsed(true)}
                 />
+            )}
+            {contextMenu.visible && (
+                <div
+                    style={{
+                        position: "fixed",
+                        top: contextMenu.y,
+                        left: contextMenu.x,
+                        zIndex: 9999,
+                    }}
+                    className="bg-white shadow-lg rounded border border-gray-200 py-1 min-w-[160px]"
+                >
+                    <button
+                        className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            window.open(contextMenu.url, "_blank");
+                            setContextMenu((prev) => ({
+                                ...prev,
+                                visible: false,
+                            }));
+                        }}
+                    >
+                        Open in new tab
+                    </button>
+                </div>
             )}
         </div>
     );

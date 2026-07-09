@@ -164,10 +164,29 @@ const EmployeeLayout = ({ children }) => {
             onClick: () => router.visit("/employee/cocd"),
         },
         {
-            key: "hmo",
-            icon: <SisternodeOutlined />,
-            label: "(HMO) Health Maintenance Organization",
-            onClick: () => router.visit("/employee/hmo"),
+            key: "orientation_videos",
+            icon: <PlaySquareOutlined />,
+            label: "Orientation Videos",
+            children: [
+                {
+                    key: "hmo",
+                    icon: <SisternodeOutlined />,
+                    label: menuLabel(
+                        "(HMO) Health Maintenance Organization",
+                        "/employee/hmo",
+                    ),
+                    onClick: () => router.visit("/employee/hmo"),
+                },
+                {
+                    key: "sss",
+                    icon: <SolutionOutlined />,
+                    label: menuLabel(
+                        "SSS Seminar Refresher",
+                        "/employee/sss",
+                    ),
+                    onClick: () => router.visit("/employee/sss"),
+                },
+            ],
         },
         {
             key: "nda",

@@ -20,6 +20,10 @@ class EnsureAdminRole
             return redirect('/employee/dashboard');
         }
 
+        if ($user && ($user->role_id == 10)) {
+            return redirect('/employee/erf_record');
+        }
+
         return $next($request);
     }
 }

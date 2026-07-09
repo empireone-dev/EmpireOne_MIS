@@ -24,6 +24,8 @@ import {
     FileProtectOutlined,
     SisternodeOutlined,
     FolderOpenOutlined,
+    PlaySquareOutlined,
+    SolutionOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal, Badge, message } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";

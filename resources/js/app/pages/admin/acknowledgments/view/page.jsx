@@ -4,23 +4,27 @@ import moment from "moment";
 import { get_cocd_acknowledge_service } from "@/app/pages/services/cocd-acknowledge-service";
 import { get_handbook_acknowledge_service } from "@/app/pages/services/handbook-acknowledge-service";
 import { get_ethics_acknowledge_service } from "@/app/pages/services/ethics-acknowledge-service";
+import { get_nda_acknowledge_service } from "@/app/pages/services/nda-acknowledge-service";
 
 const DOC_LABELS = {
     cocd: "Code of Conduct (COCD)",
     handbook: "Employee Handbook",
     ethics: "Code of Ethics",
+    nda: "Non-Disclosure Agreement (NDA)",
 };
 
 const DOC_PDF_PATHS = {
     cocd: "/documents/code-of-discipline.pdf",
     handbook: "/documents/employee-handbook.pdf",
     ethics: "/documents/code-of-ethics.pdf",
+    nda: "/documents/nda.pdf",
 };
 
 const DOC_SERVICES = {
     cocd: get_cocd_acknowledge_service,
     handbook: get_handbook_acknowledge_service,
     ethics: get_ethics_acknowledge_service,
+    nda: get_nda_acknowledge_service,
 };
 
 export default function Page() {
@@ -46,7 +50,9 @@ export default function Page() {
                 if (res?.data) {
                     setAck(res.data);
                 } else {
-                    setError("No acknowledgment record found for this employee.");
+                    setError(
+                        "No acknowledgment record found for this employee.",
+                    );
                 }
             })
             .catch(() => setError("Failed to load acknowledgment data."))
@@ -60,8 +66,18 @@ export default function Page() {
                     onClick={() => window.history.back()}
                     className="mb-6 flex items-center gap-2 text-sm text-gray-500 hover:text-gray-700"
                 >
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M15 19l-7-7 7-7"
+                        />
                     </svg>
                     Back
                 </button>
@@ -83,15 +99,29 @@ export default function Page() {
                         {/* Header */}
                         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
                             <div className="flex items-center gap-3">
-                                <img className="w-28" src="/images/newlogo.png" alt="logo" />
+                                <img
+                                    className="w-28"
+                                    src="/images/newlogo.png"
+                                    alt="logo"
+                                />
                             </div>
                             <div className="text-right">
                                 <h2 className="text-base font-bold text-gray-800">
                                     {DOC_LABELS[docType] ?? docType}
                                 </h2>
                                 <div className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold mt-1">
-                                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                    <svg
+                                        className="w-3.5 h-3.5"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        viewBox="0 0 24 24"
+                                    >
+                                        <path
+                                            strokeLinecap="round"
+                                            strokeLinejoin="round"
+                                            strokeWidth={2}
+                                            d="M5 13l4 4L19 7"
+                                        />
                                     </svg>
                                     Signed &amp; Acknowledged
                                 </div>
@@ -116,17 +146,22 @@ export default function Page() {
                             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
                                 <div className="flex-1">
                                     <p className="text-sm text-gray-600">
-                                        I hereby confirm that I have read and understood this document.
+                                        I hereby confirm that I have read and
+                                        understood this document.
                                     </p>
                                     <p className="text-sm text-gray-800 font-semibold mt-2">
                                         {ack.emp_name}
                                     </p>
                                     <p className="text-xs text-gray-500 mt-0.5">
-                                        {moment(ack.acknowledged_at).format("MMMM D, YYYY [at] h:mm A")}
+                                        {moment(ack.acknowledged_at).format(
+                                            "MMMM D, YYYY [at] h:mm A",
+                                        )}
                                     </p>
                                 </div>
                                 <div className="border border-gray-300 rounded-lg p-3 bg-white flex flex-col items-center min-w-[200px]">
-                                    <p className="text-xs text-gray-400 mb-2 uppercase tracking-wide">E-Signature</p>
+                                    <p className="text-xs text-gray-400 mb-2 uppercase tracking-wide">
+                                        E-Signature
+                                    </p>
                                     <div className="relative w-full flex flex-col items-center">
                                         <img
                                             src={ack.signature}
@@ -135,7 +170,9 @@ export default function Page() {
                                             style={{ mixBlendMode: "multiply" }}
                                         />
                                         <div className="w-full border-t border-gray-300 pt-1 text-center">
-                                            <p className="text-xs text-gray-500">{ack.emp_name}</p>
+                                            <p className="text-xs text-gray-500">
+                                                {ack.emp_name}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

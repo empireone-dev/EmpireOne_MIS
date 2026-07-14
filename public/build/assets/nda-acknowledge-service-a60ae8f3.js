@@ -1,0 +1,1 @@
+import{a as e}from"./store-ebaed07e.js";async function t(a){return(await e.post("/api/nda_acknowledge",a)).data}async function o(a){return(await e.get("/api/nda_acknowledge/"+a)).data}export{o as g,t as s};

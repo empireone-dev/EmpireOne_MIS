@@ -1,0 +1,1 @@
+import{j as e}from"./store-ebaed07e.js";function t(){return e.jsx(e.Fragment,{children:e.jsx("div",{children:e.jsx("iframe",{width:"100%",height:"800",src:"/images/sss.mp4",title:"YouTube video player",frameBorder:"0",allow:"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",allowFullScreen:!0,className:"px-4"})})})}export{t as default};

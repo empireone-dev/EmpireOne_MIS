@@ -9,7 +9,9 @@ import { get_all_employees_with_acknowledgment_service } from "@/app/pages/servi
 
 export default function GenerateAcknowledgmentSection() {
     const [loading, setLoading] = useState(false);
-    const { employeesWithAcknowledgment } = useSelector((state) => state.employees);
+    const { employeesWithAcknowledgment } = useSelector(
+        (state) => state.employees,
+    );
 
     const generateExcel = async () => {
         try {
@@ -19,13 +21,20 @@ export default function GenerateAcknowledgmentSection() {
 
             // Try to fetch all employees with acknowledgment first, fall back to current page data
             try {
-                const allEmployeesResponse = await get_all_employees_with_acknowledgment_service();
-                const payload = allEmployeesResponse.data ?? allEmployeesResponse;
+                const allEmployeesResponse =
+                    await get_all_employees_with_acknowledgment_service();
+                const payload =
+                    allEmployeesResponse.data ?? allEmployeesResponse;
                 employeeData = payload?.data ?? payload;
             } catch (error) {
                 // Fallback to current loaded page data
-                if (!employeesWithAcknowledgment || employeesWithAcknowledgment.length === 0) {
-                    message.warning("No acknowledgment data available to export");
+                if (
+                    !employeesWithAcknowledgment ||
+                    employeesWithAcknowledgment.length === 0
+                ) {
+                    message.warning(
+                        "No acknowledgment data available to export",
+                    );
                     return;
                 }
                 employeeData = employeesWithAcknowledgment;
@@ -41,10 +50,11 @@ export default function GenerateAcknowledgmentSection() {
 
             // Prepare data for Excel — one row per acknowledged document
             const acknowledgmentTypes = [
-                { key: "cocd_acknowledges",     label: "Code of Conduct (COCD)" },
-                { key: "ethics_acknowledges",    label: "Ethics" },
-                { key: "handbook_acknowledges",  label: "Employee Handbook" },
-                { key: "hmo_acknowledges",       label: "HMO Acknowledgment" },
+                { key: "cocd_acknowledges", label: "Code of Conduct (COCD)" },
+                { key: "ethics_acknowledges", label: "Code of Ethics" },
+                { key: "handbook_acknowledges", label: "Employee Handbook" },
+                { key: "hmo_acknowledges", label: "HMO Acknowledgment" },
+                { key: "nda_acknowledges", label: "Non-Disclosure Agreement (NDA)" },
             ];
 
             let rowNumber = 0;
@@ -72,7 +82,9 @@ export default function GenerateAcknowledgmentSection() {
                             "No.": rowNumber,
                             ...baseInfo,
                             "Document Type": label,
-                            "Acknowledged At": moment(ack.acknowledged_at).format("LLL"),
+                            "Acknowledged At": moment(
+                                ack.acknowledged_at,
+                            ).format("LLL"),
                         });
                     }
                 });
@@ -89,7 +101,8 @@ export default function GenerateAcknowledgmentSection() {
                 const headers = Object.keys(excelData[0]);
                 const colWidths = headers.map((header) => {
                     const maxDataLen = excelData.reduce((max, row) => {
-                        const cellVal = row[header] != null ? String(row[header]) : "";
+                        const cellVal =
+                            row[header] != null ? String(row[header]) : "";
                         return Math.max(max, cellVal.length);
                     }, 0);
                     return { wch: Math.max(header.length, maxDataLen) };
@@ -115,7 +128,7 @@ export default function GenerateAcknowledgmentSection() {
         } finally {
             setLoading(false);
         }
-    };
+    };  
     return (
         <div className="mt-4">
             <Button

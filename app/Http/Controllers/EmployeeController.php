@@ -277,7 +277,7 @@ class EmployeeController extends Controller
 
     public function get_employee_acknowledgment($id)
     {
-        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'user_id', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges', 'hmo_acknowledges'])->first();
+        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'user_id', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges', 'hmo_acknowledges', 'nda_acknowledges'])->first();
         if ($employee) {
             return response()->json([
                 'data' => $employee

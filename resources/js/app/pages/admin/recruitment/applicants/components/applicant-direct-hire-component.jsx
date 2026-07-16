@@ -306,7 +306,7 @@ export default function ApplicantDirectHireComponent({ data, item, status }) {
                                         <option> Probationary</option>
                                         <option> Regular</option>
                                         <option> Contractual</option>
-                                        <option> Trainee Fallout</option>
+                                        <option> Trainee</option>
                                     </select>
                                 </div>
                             </div>

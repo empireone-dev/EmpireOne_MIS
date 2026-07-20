@@ -54,7 +54,11 @@ export default function GenerateAcknowledgmentSection() {
                 { key: "ethics_acknowledges", label: "Code of Ethics" },
                 { key: "handbook_acknowledges", label: "Employee Handbook" },
                 { key: "hmo_acknowledges", label: "HMO Acknowledgment" },
-                { key: "nda_acknowledges", label: "Non-Disclosure Agreement (NDA)" },
+                { key: "sss_acknowledges", label: "SSS Acknowledgment" },
+                {
+                    key: "nda_acknowledges",
+                    label: "Non-Disclosure Agreement (NDA)",
+                },
             ];
 
             let rowNumber = 0;
@@ -128,7 +132,7 @@ export default function GenerateAcknowledgmentSection() {
         } finally {
             setLoading(false);
         }
-    };  
+    };
     return (
         <div className="mt-4">
             <Button

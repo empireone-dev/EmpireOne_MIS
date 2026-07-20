@@ -277,7 +277,7 @@ class EmployeeController extends Controller
 
     public function get_employee_acknowledgment($id)
     {
-        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'user_id', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges', 'hmo_acknowledges', 'nda_acknowledges'])->first();
+        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'user_id', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges', 'hmo_acknowledges', 'nda_acknowledges', 'sss_acknowledges'])->first();
         if ($employee) {
             return response()->json([
                 'data' => $employee
@@ -304,6 +304,7 @@ class EmployeeController extends Controller
             'ethics_acknowledges',
             'handbook_acknowledges',
             'hmo_acknowledges',
+            'sss_acknowledges',
             'schedule_policy_acknowledges',
             'nda_acknowledges',
         ])
@@ -312,6 +313,7 @@ class EmployeeController extends Controller
                     ->orWhereHas('ethics_acknowledges')
                     ->orWhereHas('handbook_acknowledges')
                     ->orWhereHas('hmo_acknowledges')
+                    ->orWhereHas('sss_acknowledges')
                     ->orWhereHas('schedule_policy_acknowledges')
                     ->orWhereHas('nda_acknowledges');
             })
@@ -332,6 +334,7 @@ class EmployeeController extends Controller
                     COALESCE((SELECT acknowledged_at FROM ethics_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
                     COALESCE((SELECT acknowledged_at FROM handbook_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
                     COALESCE((SELECT acknowledged_at FROM hmo_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
+                    COALESCE((SELECT acknowledged_at FROM sss_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
                     COALESCE((SELECT acknowledged_at FROM schedule_policy_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
                     COALESCE((SELECT acknowledged_at FROM nda_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31")
                 )DESC

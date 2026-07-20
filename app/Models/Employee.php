@@ -98,6 +98,11 @@ class Employee extends Model
         return $this->hasOne(HmoAcknowledge::class, "emp_id", "emp_id");
     }
 
+    public function sss_acknowledges(): HasOne
+    {
+        return $this->hasOne(SssAcknowledge::class, "emp_id", "emp_id");
+    }
+
     public function schedule_policy_acknowledges(): HasOne
     {
         return $this->hasOne(SchedulePolicyAcknowledge::class, "emp_id", "emp_id");

@@ -290,6 +290,11 @@ export default function AcknowledgmentsTableSection() {
             render: (_, record) => renderStatus(record?.hmo_acknowledges),
         },
         {
+            title: "SSS Acknowledgment",
+            key: "sss",
+            render: (_, record) => renderStatus(record?.sss_acknowledges),
+        },
+        {
             title: "NDA",
             key: "nda",
             render: (_, record) => renderStatus(record?.nda_acknowledges),
@@ -361,21 +366,23 @@ export default function AcknowledgmentsTableSection() {
 
             <div className="flex">
                 <div className="w-full mt-3.5">
-                    {activeTab === "company_policy" ? (
-                        employeesWithPolicyAcknowledgment?.length > 0
+                    {activeTab === "company_policy"
+                        ? employeesWithPolicyAcknowledgment?.length > 0
                             ? `Showing ${Math.min((currentPage - 1) * pageSize + 1, employeesWithPolicyAcknowledgmentTotal)} to ${Math.min(currentPage * pageSize, employeesWithPolicyAcknowledgmentTotal)} of ${employeesWithPolicyAcknowledgmentTotal} entries`
                             : "No entries available"
-                    ) : (
-                        employeesWithAcknowledgment?.length > 0
-                            ? `Showing ${Math.min((currentPage - 1) * pageSize + 1, employeesWithAcknowledgmentTotal)} to ${Math.min(currentPage * pageSize, employeesWithAcknowledgmentTotal)} of ${employeesWithAcknowledgmentTotal} entries`
-                            : "No entries available"
-                    )}
+                        : employeesWithAcknowledgment?.length > 0
+                          ? `Showing ${Math.min((currentPage - 1) * pageSize + 1, employeesWithAcknowledgmentTotal)} to ${Math.min(currentPage * pageSize, employeesWithAcknowledgmentTotal)} of ${employeesWithAcknowledgmentTotal} entries`
+                          : "No entries available"}
                 </div>
                 <div className="flex w-full items-center justify-end mt-2">
                     <Pagination
                         onChange={onChangePaginate}
                         current={currentPage}
-                        total={activeTab === "company_policy" ? employeesWithPolicyAcknowledgmentTotal : employeesWithAcknowledgmentTotal}
+                        total={
+                            activeTab === "company_policy"
+                                ? employeesWithPolicyAcknowledgmentTotal
+                                : employeesWithAcknowledgmentTotal
+                        }
                         pageSize={pageSize}
                         showSizeChanger={false}
                     />

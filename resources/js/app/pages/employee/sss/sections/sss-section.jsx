@@ -1,5 +1,5 @@
 import React from "react";
-
+import AcknowledgeSSSSection from "./acknowledge-sss-section";
 export default function SssSection() {
     return (
         <>
@@ -15,6 +15,7 @@ export default function SssSection() {
                     className="px-4"
                 ></iframe>
             </div>
+            <AcknowledgeSSSSection />
         </>
     );
 }

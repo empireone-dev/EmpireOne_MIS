@@ -26,6 +26,7 @@ class Attrition extends Model
         'reas',
         'eogs',
         'separation',
+        'eligible',
         'exitc',
         'created',
     ];

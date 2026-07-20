@@ -84,6 +84,7 @@ class AttritionController extends Controller
                 'estatus' => 'Pending',
                 'reas' => $request->reason,
                 'separation' => $request->separation,
+                'eligible' => $request->eligible,
             ]);
 
             // Update Employee status

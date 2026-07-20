@@ -291,6 +291,20 @@ export default function AttritionTableSection() {
             dataIndex: "emp_id",
             key: "emp_id",
             ...getColumnSearchProps("emp_id"),
+            render: (_, record, i) => {
+                return (
+                    <div key={i}>
+                        {record.eligible === "Yes" && (
+                            <Tooltip title="Eligible for Rehire">
+                                <span className="text-green-600 text-sm">
+                                    ✓
+                                </span>{" "}
+                            </Tooltip>
+                        )}
+                        {record?.emp_id}
+                    </div>
+                );
+            },
         },
         {
             title: "Employee Name",
@@ -582,7 +596,7 @@ export default function AttritionTableSection() {
                                 value: "Termination - Absconding/ AWOL",
                             },
                             { label: "Redundancy", value: "Redundancy" },
-                            { 
+                            {
                                 label: "End of Contract (Fixed Term)",
                                 value: "End of Contract (Fixed Term)",
                             },

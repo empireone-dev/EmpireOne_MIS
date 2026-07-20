@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('estatus')->nullable();
             $table->string('reas')->nullable();
             $table->string('separation')->nullable();
+            $table->string('eligible')->nullable();
             $table->string('exitc')->nullable();
             $table->timestamps();
         });

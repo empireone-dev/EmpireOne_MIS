@@ -436,6 +436,40 @@ export default function AddAttritionSection() {
                                 )}
                             </div>
                         </div>
+
+                        <div class="w-full px-3">
+                            <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
+                                Eligible for Rehire?
+                            </label>
+                            <input
+                                type="radio"
+                                className="mr-2"
+                                name="eligible"
+                                value="Yes"
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        eligible: e.target.value,
+                                    })
+                                }
+                                checked={form.eligible === "Yes"}
+                            />
+                            Yes
+                            <input
+                                type="radio"
+                                className="ml-4 mr-2"
+                                name="eligible"
+                                value="No"
+                                onChange={(e) =>
+                                    setForm({
+                                        ...form,
+                                        eligible: e.target.value,
+                                    })
+                                }
+                                checked={form.eligible === "No"}
+                            />
+                            No
+                        </div>
                         {form.reason === "Resignation" && (
                             <div className="w-full px-3" id="resignationReason">
                                 <label

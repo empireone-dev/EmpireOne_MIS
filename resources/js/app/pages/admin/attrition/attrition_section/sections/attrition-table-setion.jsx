@@ -582,7 +582,7 @@ export default function AttritionTableSection() {
                                 value: "Termination - Absconding/ AWOL",
                             },
                             { label: "Redundancy", value: "Redundancy" },
-                            {
+                            { 
                                 label: "End of Contract (Fixed Term)",
                                 value: "End of Contract (Fixed Term)",
                             },

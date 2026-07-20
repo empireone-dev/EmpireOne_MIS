@@ -501,6 +501,91 @@ export default function AttritionTableSection() {
                                 value: "End of Contract",
                             },
                             { label: "EOPE", value: "EOPE" },
+                            {
+                                label: "Personal",
+                                value: "Resignation - Personal",
+                            },
+                            {
+                                label: "Better Opportunity",
+                                value: "Resignation - Better Opportunity",
+                            },
+                            {
+                                label: "Career Change",
+                                value: "Resignation - Career Change",
+                            },
+                            {
+                                label: "Medical",
+                                value: "Resignation - Medical",
+                            },
+                            {
+                                label: "Education",
+                                value: "Resignation - Education",
+                            },
+                            {
+                                label: "Relocation",
+                                value: "Resignation - Relocation",
+                            },
+                            {
+                                label: "Compensation",
+                                value: "Resignation - Compensation",
+                            },
+                            {
+                                label: "Management",
+                                value: "Resignation - Management",
+                            },
+                            {
+                                label: "Culture",
+                                value: "Resignation - Culture",
+                            },
+                            {
+                                label: "Schedule",
+                                value: "Resignation - Schedule",
+                            },
+                            {
+                                label: "Job Misfit",
+                                value: "Resignation - Job Misfit",
+                            },
+                            {
+                                label: "Attendance",
+                                value: "Termination - Attendance",
+                            },
+                            {
+                                label: "Behavior",
+                                value: "Termination - Behavior",
+                            },
+                            {
+                                label: "Performance",
+                                value: "Termination - Performance",
+                            },
+                            {
+                                label: "Company Policy Violation",
+                                value: "Termination - Company Policy Violation",
+                            },
+                            {
+                                label: "Training Fall-Out (Language Training)",
+                                value: "Termination - Training Fall-Out (Language Training)",
+                            },
+                            {
+                                label: "Training Fall-Out (Process Training)",
+                                value: "Termination - Training Fall-Out (Process Training)",
+                            },
+                            {
+                                label: "Training Fall-Out (On-The-Job Training)",
+                                value: "Termination - Training Fall-Out (On-The-Job Training)",
+                            },
+                            {
+                                label: "Non-Regularization",
+                                value: "Termination - Non-Regularization",
+                            },
+                            {
+                                label: "Absconding/ AWOL",
+                                value: "Termination - Absconding/ AWOL",
+                            },
+                            { label: "Redundancy", value: "Redundancy" },
+                            {
+                                label: "End of Contract (Fixed Term)",
+                                value: "End of Contract (Fixed Term)",
+                            },
                         ]}
                     />
                 </div>
@@ -610,10 +695,10 @@ export default function AttritionTableSection() {
         if (newPageSize) {
             setPageSize(newPageSize);
         }
-        
+
         router.visit(
             window.location.pathname +
-                `?page=${newPage}&status=${status || 'null'}&dept=${dept || 'null'}&position=${position || 'null'}&estatus=${estatus || 'null'}&reas=${reas || 'null'}&site=${site || 'null'}`,
+                `?page=${newPage}&status=${status || "null"}&dept=${dept || "null"}&position=${position || "null"}&estatus=${estatus || "null"}&reas=${reas || "null"}&site=${site || "null"}`,
         );
     };
 
@@ -624,7 +709,7 @@ export default function AttritionTableSection() {
         onChange: onChangePaginate,
         showSizeChanger: true,
         showQuickJumper: true,
-        showTotal: (total, range) => 
+        showTotal: (total, range) =>
             `${range[0]}-${range[1]} of ${total} items`,
     };
 

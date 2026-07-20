@@ -1,1 +1,0 @@
-import{a}from"./store-a752346c.js";async function n(s){return(await a.post("/api/sss_acknowledge",s)).data}async function o(s){return(await a.get("/api/sss_acknowledge/"+s)).data}export{o as g,n as s};

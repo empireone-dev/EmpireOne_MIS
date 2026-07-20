@@ -12,7 +12,10 @@ import { useSelector } from "react-redux";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import store from "@/app/store/store";
-import { get_employee_attrition_thunk, store_attrition_thunk } from "../redux/employee-attrition-thunk";
+import {
+    get_employee_attrition_thunk,
+    store_attrition_thunk,
+} from "../redux/employee-attrition-thunk";
 
 export default function AddAttritionSection() {
     const [open, setOpen] = useState(false);
@@ -22,14 +25,25 @@ export default function AddAttritionSection() {
     const [applicants, setApplicants] = useState([]);
     const [applicant, setApplicant] = useState({});
     const { users } = useSelector((state) => state.app);
-    const [error, setError] = useState({})
-    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState({});
+    const [loading, setLoading] = useState(false);
 
-    const [form, setForm] = useState({ reason: '', resignationReasonSelect: '', dismissalReasonSelect: '', emp_id: applicant?.employee?.emp_id || '', separation: '' });
+    const [form, setForm] = useState({
+        reason: "",
+        resignationReasonSelect: "",
+        dismissalReasonSelect: "",
+        emp_id: applicant?.employee?.emp_id || "",
+        separation: "",
+    });
 
     const handleReasonChange = (e) => {
         const { value } = e.target;
-        setForm({ ...form, reason: value, resignationReasonSelect: '', dismissalReasonSelect: '' });
+        setForm({
+            ...form,
+            reason: value,
+            resignationReasonSelect: "",
+            dismissalReasonSelect: "",
+        });
     };
 
     async function search_applicant(e) {
@@ -41,35 +55,40 @@ export default function AddAttritionSection() {
     }
 
     async function submit_attrition(params) {
-        setLoading(true)
+        setLoading(true);
         try {
-            const res = await store.dispatch(store_attrition_thunk({
-                ...applicant,
-                ...form
-            }));
-            if (res.status == 'success') {
+            const res = await store.dispatch(
+                store_attrition_thunk({
+                    ...applicant,
+                    ...form,
+                }),
+            );
+            if (res.status == "success") {
                 // console.log('ressss', res.status)
-                await store.dispatch(get_employee_attrition_thunk())
-                message.success('Successfully Added')
-                setLoading(false)
-                setOpen(false)
+                await store.dispatch(get_employee_attrition_thunk());
+                message.success("Successfully Added");
+                setLoading(false);
+                setOpen(false);
             } else {
-                message.error('Employee has been already added to Attrition Records')
-                setLoading(false)
-                setOpen(false)
+                message.error(
+                    "Employee has been already added to Attrition Records",
+                );
+                setLoading(false);
+                setOpen(false);
             }
-
         } catch (error) {
             if (error?.response?.data?.errors) {
                 setError(error.response.data.errors);
             } else {
-                message.error('An error occurred. Please try again later.');
+                message.error("An error occurred. Please try again later.");
             }
             setLoading(false);
         }
     }
 
-    const new_applicants = applicants.filter(applicant => applicant.employee !== null && applicant.employee !== 0)
+    const new_applicants = applicants.filter(
+        (applicant) => applicant.employee !== null && applicant.employee !== 0,
+    );
     // console.log('employeesasda', applicant)
 
     return (
@@ -168,10 +187,7 @@ export default function AddAttritionSection() {
                 <form class="w-full h-full">
                     <div class="flex flex-col -mx-3 mb-6">
                         <div class="w-full px-3">
-                            <label
-                                class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-
-                            >
+                            <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
                                 Employee No.
                             </label>
                             <input
@@ -186,10 +202,7 @@ export default function AddAttritionSection() {
 
                         <div className="flex flex-1 ">
                             <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-
-                                >
+                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
                                     job Position
                                 </label>
                                 <input
@@ -202,10 +215,7 @@ export default function AddAttritionSection() {
                                 />
                             </div>
                             <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-
-                                >
+                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
                                     Department
                                 </label>
                                 <input
@@ -218,10 +228,7 @@ export default function AddAttritionSection() {
                                 />
                             </div>
                             <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-
-                                >
+                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
                                     Account <i>(If Applicable)</i>
                                 </label>
                                 <input
@@ -237,14 +244,17 @@ export default function AddAttritionSection() {
 
                         <div className="flex flex-1">
                             <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-
-                                >
+                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
                                     Supervisor
                                 </label>
                                 <input
-                                    value={(applicant?.employee?.user?.employee_fname ?? "") + " " + (applicant?.employee?.user?.employee_lname ?? "")}
+                                    value={
+                                        (applicant?.employee?.user
+                                            ?.employee_fname ?? "") +
+                                        " " +
+                                        (applicant?.employee?.user
+                                            ?.employee_lname ?? "")
+                                    }
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                                     id="grid-text"
                                     type="text"
@@ -253,10 +263,7 @@ export default function AddAttritionSection() {
                                 />
                             </div>
                             <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-
-                                >
+                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
                                     EOGS Email
                                 </label>
                                 <input
@@ -272,10 +279,7 @@ export default function AddAttritionSection() {
 
                         <div className="flex flex-1">
                             <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-
-                                >
+                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
                                     Hired Date
                                 </label>
                                 <input
@@ -288,10 +292,7 @@ export default function AddAttritionSection() {
                                 />
                             </div>
                             <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-
-                                >
+                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
                                     Status
                                 </label>
                                 <input
@@ -307,10 +308,7 @@ export default function AddAttritionSection() {
 
                         <div className="flex flex-1">
                             <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-
-                                >
+                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
                                     Separation Date
                                 </label>
                                 <input
@@ -320,9 +318,9 @@ export default function AddAttritionSection() {
                                             [e.target.name]: e.target.value,
                                         })
                                     }
-                                    value={form.separation || ''}
+                                    value={form.separation || ""}
                                     name="separation"
-                                    className={`appearance-none block w-full border py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${error?.separation ? 'border-red-500' : 'border-gray-400'} rounded focus:border-gray-500`}
+                                    className={`appearance-none block w-full border py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${error?.separation ? "border-red-500" : "border-gray-400"} rounded focus:border-gray-500`}
                                     id="grid-text"
                                     type="date"
                                     placeholder=""
@@ -335,10 +333,7 @@ export default function AddAttritionSection() {
                                 )}
                             </div>
                             <div class="w-full px-3">
-                                <label
-                                    class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2"
-
-                                >
+                                <label class="block uppercase tracking-wide  text-xs font-bold mb-1 mt-2">
                                     Reason for Separation
                                 </label>
                                 <select
@@ -349,18 +344,81 @@ export default function AddAttritionSection() {
                                     //     })
                                     // }
                                     onChange={handleReasonChange}
-                                    className={`appearance-none block w-full border py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${error?.reason ? 'border-red-500' : 'border-gray-400'} rounded focus:border-gray-500`}
+                                    className={`appearance-none block w-full border py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white ${error?.reason ? "border-red-500" : "border-gray-400"} rounded focus:border-gray-500`}
                                     name="reason"
-                                    value={form.reason || ''}
+                                    value={form.reason || ""}
                                     required
                                 >
                                     <option value=""></option>
-                                    <option value="Resigned">Resignation</option>
-                                    <option value="Dismissal">Dismissal</option>
-                                    <option value="Terminated">Terminated</option>
-                                    <option value="End of Contract">End of Contract</option>
-                                    <option value="EOPE">EOPE (End of Probationary Employment)</option>
-                                    <option value="AWOL">AWOL (Absent Without Official Leave)</option>
+                                    <option value="Resignation - Personal">
+                                        Resignation - Personal
+                                    </option>
+                                    <option value="Resignation - Better Opportunity">
+                                        Resignation - Better Opportunity
+                                    </option>
+                                    <option value="Resignation - Career Change">
+                                        Resignation - Career Change
+                                    </option>
+                                    <option value="Resignation - Medical">
+                                        Resignation - Medical
+                                    </option>
+                                    <option value="Resignation - Education">
+                                        Resignation - Education
+                                    </option>
+                                    <option value="Resignation - Relocation">
+                                        Resignation - Relocation
+                                    </option>
+                                    <option value="Resignation - Compensation">
+                                        Resignation - Compensation
+                                    </option>
+                                    <option value="Resignation - Management">
+                                        Resignation - Management
+                                    </option>
+                                    <option value="Resignation - Culture">
+                                        Resignation - Culture
+                                    </option>
+                                    <option value="Resignation - Schedule">
+                                        Resignation - Schedule
+                                    </option>
+                                    <option value="Resignation - Job Misfit">
+                                        Resignation - Job Misfit
+                                    </option>
+                                    <option value="Termination - Attendance">
+                                        Termination - Attendance
+                                    </option>
+                                    <option value="Termination - Behavior">
+                                        Termination - Behavior
+                                    </option>
+                                    <option value="Termination - Performance">
+                                        Termination - Performance
+                                    </option>
+                                    <option value="Termination - Company Policy Violation">
+                                        Termination - Company Policy Violation
+                                    </option>
+                                    <option value="Termination - Training Fall-Out (Language Training)">
+                                        Termination - Training Fall-Out
+                                        (Language Training)
+                                    </option>
+                                    <option value="Termination - Training Fall-Out (Process Training)">
+                                        Termination - Training Fall-Out (Process
+                                        Training)
+                                    </option>
+                                    <option value="Termination - Training Fall-Out (On-The-Job Training)">
+                                        Termination - Training Fall-Out
+                                        (On-The-Job Training)
+                                    </option>
+                                    <option value="Termination - Non-Regularization">
+                                        Termination - Non-Regularization
+                                    </option>
+                                    <option value="Termination - Absconding/ AWOL">
+                                        Termination - Absconding/ AWOL
+                                    </option>
+                                    <option value="Redundancy">
+                                        Redundancy
+                                    </option>
+                                    <option value="End of Contract (Fixed Term)">
+                                        End of Contract (Fixed Term)
+                                    </option>
                                     {/* 
                                     { text: "Probationary", value: "Probationary" },
                         { text: "Regular", value: "Regular" },
@@ -378,16 +436,25 @@ export default function AddAttritionSection() {
                                 )}
                             </div>
                         </div>
-                        {form.reason === 'Resignation' && (
+                        {form.reason === "Resignation" && (
                             <div className="w-full px-3" id="resignationReason">
-                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="resignationReasonSelect">
+                                <label
+                                    className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2"
+                                    htmlFor="resignationReasonSelect"
+                                >
                                     Reason for Resignation:
                                 </label>
                                 <select
                                     name="resignationReasonSelect"
                                     id="resignationReasonSelect"
                                     className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    onChange={(e) => setForm({ ...form, resignationReasonSelect: e.target.value })}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            resignationReasonSelect:
+                                                e.target.value,
+                                        })
+                                    }
                                 >
                                     <option value=""></option>
                                     <option>Shift Career Path</option>
@@ -402,17 +469,29 @@ export default function AddAttritionSection() {
                             </div>
                         )}
 
-                        {form.reason === 'Dismissal' && (
+                        {form.reason === "Dismissal" && (
                             <>
-                                <div className="w-full px-3" id="dismissalReason">
-                                    <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="dismissalReasonSelect">
+                                <div
+                                    className="w-full px-3"
+                                    id="dismissalReason"
+                                >
+                                    <label
+                                        className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2"
+                                        htmlFor="dismissalReasonSelect"
+                                    >
                                         Reason for Dismissal:
                                     </label>
                                     <select
                                         name="dismissalReasonSelect"
                                         id="dismissalReasonSelect"
                                         className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                        onChange={(e) => setForm({ ...form, dismissalReasonSelect: e.target.value })}
+                                        onChange={(e) =>
+                                            setForm({
+                                                ...form,
+                                                dismissalReasonSelect:
+                                                    e.target.value,
+                                            })
+                                        }
                                     >
                                         <option value=""></option>
                                         <option>Policy Violations</option>
@@ -421,8 +500,14 @@ export default function AddAttritionSection() {
                                     </select>
                                 </div>
 
-                                <div className="w-full px-3" id="TerminationReport">
-                                    <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2" htmlFor="TerminationReportSelect">
+                                <div
+                                    className="w-full px-3"
+                                    id="TerminationReport"
+                                >
+                                    <label
+                                        className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2"
+                                        htmlFor="TerminationReportSelect"
+                                    >
                                         Upload Termination Report:
                                     </label>
                                     <input

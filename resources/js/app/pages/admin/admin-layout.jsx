@@ -983,9 +983,17 @@ const AdminLayout = ({ children }) => {
                                             <button
                                                 className="flex flex-1"
                                                 onClick={() => {
-                                                    router.visit(
-                                                        "/admin/update_profile",
-                                                    );
+                                                    const profileRoute =
+                                                        user.role_id === 1
+                                                            ? "/admin/update_profile"
+                                                            : user.role_id ===
+                                                                    2 ||
+                                                                user.role_id ===
+                                                                    10
+                                                              ? "/employee/update_profile"
+                                                              : "/";
+
+                                                    router.visit(profileRoute);
                                                     setIsOpen(false);
                                                 }}
                                             >

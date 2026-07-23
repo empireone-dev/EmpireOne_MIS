@@ -11,7 +11,7 @@ export default function PreEmploymentTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
-    const { checklists } = useSelector((state) => state.checklists) 
+    const { checklists } = useSelector((state) => state.checklists);
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -134,7 +134,6 @@ export default function PreEmploymentTableSection() {
             ),
     });
 
-
     const columns = [
         {
             title: "Requirement Name",
@@ -156,7 +155,7 @@ export default function PreEmploymentTableSection() {
             render: (_, record) => {
                 return (
                     <div className="gap-1.5 flex">
-                      {moment(record.created).format('LLL')}
+                        {moment(record.created).format("LLL")}
                     </div>
                 );
             },
@@ -172,7 +171,7 @@ export default function PreEmploymentTableSection() {
                     </h2>
                 </div>
             </div>
-            <AddPreEmploymentSection/>
+            <AddPreEmploymentSection />
             <Table columns={columns} dataSource={checklists} />;
         </div>
     );

@@ -424,7 +424,7 @@ const AdminLayout = ({ children }) => {
                               key: "pre_employment",
                               icon: <HolderOutlined />,
                               label: menuLabel(
-                                  "Pre-Employment",
+                                  "Pre-Employment Checklist",
                                   "/admin/hiring/pre_employment",
                               ),
                               onClick: () =>

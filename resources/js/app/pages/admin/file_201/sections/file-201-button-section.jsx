@@ -13,7 +13,7 @@ export default function File201ButtonSection({data}) {
     return (
         <div className="my-2">
             <div class="inline-flex rounded-md shadow-sm" role="group">
-                <File201ChecklistButtonSection data={data}/>
+                {/* <File201ChecklistButtonSection data={data}/> */}
                 <File201UploadReqsButtonSection data={data}/>
             </div>
         </div>

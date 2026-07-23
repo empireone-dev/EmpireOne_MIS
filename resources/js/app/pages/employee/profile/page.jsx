@@ -4,7 +4,11 @@ import { message } from "antd";
 import { useSelector } from "react-redux";
 import SignatureCanvas from "react-signature-canvas";
 import store from "@/app/store/store";
-import { get_user_thunk, get_users_thunk, update_user_thunk } from "../../redux/app-thunk";
+import {
+    get_user_thunk,
+    get_users_thunk,
+    update_user_thunk,
+} from "../../redux/app-thunk";
 import EmployeeLayout from "../employee-layout";
 
 export default function Page() {
@@ -17,6 +21,7 @@ export default function Page() {
         employee_lname: "",
         employee_suffix: "",
         gender: "",
+        email: "",
     });
     const [loading, setLoading] = useState(false);
     const [canvasEmpty, setCanvasEmpty] = useState(true);
@@ -39,6 +44,7 @@ export default function Page() {
                 employee_suffix: user?.employee_suffix || "",
                 gender: user?.gender || "",
                 app_id: user?.employee?.applicant?.app_id || "",
+                email: user?.email || "",
             });
         }
     }, [user]);
@@ -70,10 +76,14 @@ export default function Page() {
             const signatureData = uploadedSignature
                 ? uploadedSignature
                 : sigCanvasRef.current && !sigCanvasRef.current.isEmpty()
-                ? sigCanvasRef.current.toDataURL("image/png")
-                : null;
+                  ? sigCanvasRef.current.toDataURL("image/png")
+                  : null;
             await store.dispatch(
-                update_user_thunk({ ...form, signature: signatureData, app_id: user?.employee?.applicant?.app_id || "" }),
+                update_user_thunk({
+                    ...form,
+                    signature: signatureData,
+                    app_id: user?.employee?.applicant?.app_id || "",
+                }),
             );
             await store.dispatch(get_user_thunk());
             setCanvasEmpty(true);
@@ -100,11 +110,11 @@ export default function Page() {
                     <div className="flex flex-col -mx-3 mb-3 mt-3">
                         <div className="w-full px-2.5">
                             <label className="block uppercase tracking-wide text-xs font-bold mb-1">
-                                Employee's ID
+                                Employee ID
                             </label>
                             <input
                                 className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                type="number"
+                                type="text"
                                 value={user?.employee_id ?? ""}
                                 readOnly
                             />
@@ -113,7 +123,7 @@ export default function Page() {
                         <div className="flex flex-1">
                             <div className="w-full px-2.5">
                                 <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
-                                    Employee's Firstname
+                                    Firstname
                                 </label>
                                 <input
                                     className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -129,7 +139,7 @@ export default function Page() {
                             </div>
                             <div className="w-full px-2.5">
                                 <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
-                                    Employee's Middlename
+                                    Middlename
                                 </label>
                                 <input
                                     className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -145,7 +155,7 @@ export default function Page() {
                             </div>
                             <div className="w-full px-2.5">
                                 <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
-                                    Employee's Lastname
+                                    Lastname
                                 </label>
                                 <input
                                     className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -161,7 +171,7 @@ export default function Page() {
                             </div>
                             <div className="w-full px-2.5">
                                 <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
-                                    Employee's Suffix
+                                    Suffix
                                 </label>
                                 <select
                                     className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -192,7 +202,7 @@ export default function Page() {
                         <div className="flex flex-1">
                             <div className="w-full px-2.5">
                                 <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
-                                    Employee's Gender
+                                    Gender
                                 </label>
                                 <select
                                     className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
@@ -208,6 +218,22 @@ export default function Page() {
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                 </select>
+                            </div>
+                            <div className="w-full px-2.5">
+                                <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
+                                    Email
+                                </label>
+                                <input
+                                    className="appearance-none block w-full border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                                    type="text"
+                                    value={form?.email ?? ""}
+                                    onChange={(e) =>
+                                        setForm({
+                                            ...form,
+                                            email: e.target.value,
+                                        })
+                                    }
+                                />
                             </div>
                             <div className="w-full px-2.5">
                                 <label className="block uppercase tracking-wide text-xs font-bold mb-1 mt-2">
@@ -238,7 +264,10 @@ export default function Page() {
                                 Signature
                             </label>
                             {uploadedSignature ? (
-                                <div className="border border-gray-400 rounded overflow-hidden mb-2" style={{ width: "100%", height: 300 }}>
+                                <div
+                                    className="border border-gray-400 rounded overflow-hidden mb-2"
+                                    style={{ width: "100%", height: 300 }}
+                                >
                                     <img
                                         src={uploadedSignature}
                                         alt="Uploaded Signature"
@@ -246,7 +275,10 @@ export default function Page() {
                                     />
                                 </div>
                             ) : user?.e_signature?.signature && canvasEmpty ? (
-                                <div className="border border-gray-400 rounded overflow-hidden mb-2" style={{ width: "100%", height: 300 }}>
+                                <div
+                                    className="border border-gray-400 rounded overflow-hidden mb-2"
+                                    style={{ width: "100%", height: 300 }}
+                                >
                                     <img
                                         src={user.e_signature.signature}
                                         alt="Current Signature"
@@ -258,11 +290,12 @@ export default function Page() {
                                     className="relative border border-gray-400 rounded overflow-hidden"
                                     style={{ width: "100%", height: 300 }}
                                 >
-                                    {canvasEmpty && !user?.e_signature?.signature && (
-                                        <div className="pointer-events-none absolute inset-0 flex items-center justify-center text-gray-400 text-sm select-none">
-                                            Upload a Signature
-                                        </div>
-                                    )}
+                                    {canvasEmpty &&
+                                        !user?.e_signature?.signature && (
+                                            <div className="pointer-events-none absolute inset-0 flex items-center justify-center text-gray-400 text-sm select-none">
+                                                Upload a Signature
+                                            </div>
+                                        )}
                                     <SignatureCanvas
                                         ref={sigCanvasRef}
                                         penColor="black"
@@ -287,18 +320,24 @@ export default function Page() {
                                 >
                                     Clear Signature
                                 </button>
-                                {user?.e_signature?.signature && canvasEmpty && !uploadedSignature && (
-                                    <button
-                                        type="button"
-                                        onClick={() => setCanvasEmpty(false)}
-                                        className="text-sm text-blue-500 hover:text-blue-700 underline"
-                                    >
-                                        Draw Signature
-                                    </button>
-                                )}
+                                {user?.e_signature?.signature &&
+                                    canvasEmpty &&
+                                    !uploadedSignature && (
+                                        <button
+                                            type="button"
+                                            onClick={() =>
+                                                setCanvasEmpty(false)
+                                            }
+                                            className="text-sm text-blue-500 hover:text-blue-700 underline"
+                                        >
+                                            Draw Signature
+                                        </button>
+                                    )}
                                 <button
                                     type="button"
-                                    onClick={() => fileInputRef.current?.click()}
+                                    onClick={() =>
+                                        fileInputRef.current?.click()
+                                    }
                                     className="text-sm text-green-600 hover:text-green-800 underline"
                                 >
                                     Upload Image
@@ -318,7 +357,8 @@ export default function Page() {
                         disabled={loading}
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full disabled:opacity-50"
                     >
-                        <CheckCircleFilled /> {loading ? "Saving..." : "Save Changes"}
+                        <CheckCircleFilled />{" "}
+                        {loading ? "Saving..." : "Save Changes"}
                     </button>
                 </form>
             </div>

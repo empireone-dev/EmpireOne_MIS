@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Applicant;
+use App\Models\Employee;
 use App\Models\ESignature;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -40,6 +41,16 @@ class UserController extends Controller
                     'lname' => $request->employee_lname,
                     'suffix' => $request->employee_suffix,
                     'gender' => $request->gender,
+                ]);
+            }
+        }
+
+
+        if ($request->email) {
+            $employee = Employee::where('emp_id', $request->employee_id)->first();
+            if ($employee) {
+                $employee->update([
+                    'eogs' => $request->email,
                 ]);
             }
         }

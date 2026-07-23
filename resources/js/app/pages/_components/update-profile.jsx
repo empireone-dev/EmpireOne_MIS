@@ -108,7 +108,7 @@ export default function UpdateProfile({ user }) {
                                 </label>
                                 <input
                                     class="appearance-none block w-full   border border-gray-400 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                                    type="number"
+                                    type="text"
                                     value={user?.employee_id ?? ""}
                                     readOnly
                                 />

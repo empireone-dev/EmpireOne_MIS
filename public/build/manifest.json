@@ -4928,7 +4928,7 @@
     "src": "resources/js/app/pages/admin/attrition/exit_interview_result/components/checkbox-input-component.jsx"
   },
   "resources/js/app/pages/admin/attrition/exit_interview_result/components/exit-rate-mark-component.jsx": {
-    "file": "assets/exit-rate-mark-component-e0a1deaa.js",
+    "file": "assets/exit-rate-mark-component-9883fa0c.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -9522,7 +9522,7 @@
     "src": "resources/js/app/pages/admin/exit_interview/components/checkbox-input-component.jsx"
   },
   "resources/js/app/pages/admin/exit_interview/components/exit-rate-mark-component.jsx": {
-    "file": "assets/exit-rate-mark-component-9883fa0c.js",
+    "file": "assets/exit-rate-mark-component-2a4bbb1f.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -9530,7 +9530,7 @@
     "src": "resources/js/app/pages/admin/exit_interview/components/exit-rate-mark-component.jsx"
   },
   "resources/js/app/pages/admin/exit_interview/components/table-row-component.jsx": {
-    "file": "assets/table-row-component-8def8586.js",
+    "file": "assets/table-row-component-d824fe61.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -13581,7 +13581,7 @@
     "src": "resources/js/app/pages/admin/policy/other_policy/page.jsx"
   },
   "resources/js/app/pages/admin/policy/other_policy/sections/anti-discrimination-section.jsx": {
-    "file": "assets/anti-discrimination-section-7fe14996.js",
+    "file": "assets/anti-discrimination-section-47f7140d.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -13613,7 +13613,7 @@
     "src": "resources/js/app/pages/admin/policy/other_policy/sections/dress-code-section.jsx"
   },
   "resources/js/app/pages/admin/policy/other_policy/sections/employment-status-conversion-section.jsx": {
-    "file": "assets/employment-status-conversion-section-9c76a0f4.js",
+    "file": "assets/employment-status-conversion-section-ba4f5cae.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -13621,7 +13621,7 @@
     "src": "resources/js/app/pages/admin/policy/other_policy/sections/employment-status-conversion-section.jsx"
   },
   "resources/js/app/pages/admin/policy/other_policy/sections/grievance-disciplinary-section.jsx": {
-    "file": "assets/grievance-disciplinary-section-041a5868.js",
+    "file": "assets/grievance-disciplinary-section-a498174d.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -13629,7 +13629,7 @@
     "src": "resources/js/app/pages/admin/policy/other_policy/sections/grievance-disciplinary-section.jsx"
   },
   "resources/js/app/pages/admin/policy/other_policy/sections/internet-usage-section.jsx": {
-    "file": "assets/internet-usage-section-f2659822.js",
+    "file": "assets/internet-usage-section-4c54942a.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -13645,7 +13645,7 @@
     "src": "resources/js/app/pages/admin/policy/other_policy/sections/leave-administration-section.jsx"
   },
   "resources/js/app/pages/admin/policy/other_policy/sections/non-certification-training-section.jsx": {
-    "file": "assets/non-certification-training-section-9fea15ae.js",
+    "file": "assets/non-certification-training-section-ced18353.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -13653,7 +13653,7 @@
     "src": "resources/js/app/pages/admin/policy/other_policy/sections/non-certification-training-section.jsx"
   },
   "resources/js/app/pages/admin/policy/other_policy/sections/official-business-travel-section.jsx": {
-    "file": "assets/official-business-travel-section-99425f98.js",
+    "file": "assets/official-business-travel-section-b78dad6d.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -13677,7 +13677,7 @@
     "src": "resources/js/app/pages/admin/policy/other_policy/sections/peme-section.jsx"
   },
   "resources/js/app/pages/admin/policy/other_policy/sections/pip-section.jsx": {
-    "file": "assets/pip-section-2d4b60d3.js",
+    "file": "assets/pip-section-1a6bc7ce.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -13685,7 +13685,7 @@
     "src": "resources/js/app/pages/admin/policy/other_policy/sections/pip-section.jsx"
   },
   "resources/js/app/pages/admin/policy/other_policy/sections/probationary-regularization-section.jsx": {
-    "file": "assets/probationary-regularization-section-24b5fe53.js",
+    "file": "assets/probationary-regularization-section-51a22e36.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -13709,7 +13709,7 @@
     "src": "resources/js/app/pages/admin/policy/other_policy/sections/resignation-termination-section.jsx"
   },
   "resources/js/app/pages/admin/policy/other_policy/sections/shift-changes-ot-compliance-section.jsx": {
-    "file": "assets/shift-changes-ot-compliance-section-b581ea0b.js",
+    "file": "assets/shift-changes-ot-compliance-section-45492eca.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -13725,7 +13725,7 @@
     "src": "resources/js/app/pages/admin/policy/other_policy/sections/social-media-section.jsx"
   },
   "resources/js/app/pages/admin/policy/other_policy/sections/working-hours-ot-rest-days-section.jsx": {
-    "file": "assets/working-hours-ot-rest-days-section-622bc739.js",
+    "file": "assets/working-hours-ot-rest-days-section-b7bdee3b.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -13889,146 +13889,19 @@
     "src": "resources/js/app/pages/admin/profile/page.jsx"
   },
   "resources/js/app/pages/admin/recruitment/applicants/applicant_records/page.jsx": {
-    "file": "assets/page-33192bc1.js",
+    "file": "assets/page-a381e7cb.js",
     "imports": [
       "_store-a752346c.js",
-      "resources/js/app/pages/admin/admin-layout.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/applicant_records/sections/applicants-table-section.jsx",
-      "_applicant-thunk-5eb9fa18.js",
-      "_job-title-thunk-bec9c015.js",
-      "resources/js/app/pages/_components/skeleton.jsx",
-      "resources/js/app.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/applicant_records/sections/applicant-search-section.jsx",
-      "resources/js/app/pages/admin/_components/admin-footer-components.jsx",
+      "_index-4c755958.js",
+      "_moment-a9aaa855.js",
+      "_html2canvas.esm-f6cf70dc.js",
       "_objectWithoutProperties-b8ddaaad.js",
-      "_AntdIcon-857e4417.js",
-      "_warning-cb164bb8.js",
-      "_defineProperty-83f36300.js",
+      "_createSuper-cd69a035.js",
       "_toPropertyKey-d8419463.js",
       "_typeof-7fd5df1e.js",
-      "_app-thunk-147ff4eb.js",
-      "_user-service-866acbd0.js",
-      "_index-4c755958.js",
-      "_createSuper-cd69a035.js",
-      "_index-2b9d0ce2.js",
-      "_KeyIcon-7bc52a90.js",
-      "_index-58c80f6f.js",
-      "_Compact-7fa43d09.js",
-      "_index-ec5cdb57.js",
-      "_index-b2eaf32c.js",
-      "_Overflow-581d9c08.js",
-      "_useId-9c68184a.js",
-      "_index-f4c5c4cf.js",
-      "_KeyCode-cb2dce3c.js",
-      "_RightOutlined-3b5d9c4f.js",
-      "_index-e1ce291e.js",
-      "_ContextIsolator-131d8fce.js",
-      "_regeneratorRuntime-92fa3873.js",
-      "_asyncToGenerator-8c72b493.js",
-      "_useZIndex-2f89d6b7.js",
-      "_collapse-97de76d4.js",
-      "_HolderOutlined-94f8cd3e.js",
-      "_UsergroupAddOutlined-b25cf38c.js",
-      "_TeamOutlined-37ccb198.js",
-      "_FileSearchOutlined-9d46deea.js",
-      "_SignatureOutlined-fac72390.js",
-      "_UserDeleteOutlined-87d3fa97.js",
-      "_BankOutlined-9d71e06f.js",
-      "_SolutionOutlined-a9eb2afd.js",
-      "_FileTextOutlined-3cb5043d.js",
-      "_FilePdfOutlined-462d246f.js",
-      "_button-e765f5db.js",
-      "_UnstableContext-a1f70a26.js",
-      "_index-d2680af7.js",
-      "_CheckCircleFilled-b10203d5.js",
-      "_CloseCircleFilled-62abe36a.js",
-      "_InfoCircleFilled-34a6a621.js",
-      "_CloseOutlined-54b2e65d.js",
-      "_index-92ff9f64.js",
-      "_pickAttrs-30d4c90f.js",
-      "_index-80e47969.js",
-      "_fade-034b0044.js",
-      "_useClosable-c23e8dbc.js",
-      "_Skeleton-346bdba9.js",
-      "_useLocale-d48624a0.js",
-      "_PurePanel-9f19da8a.js",
-      "_index-0847d77b.js",
-      "_UserOutlined-85585207.js",
-      "_moment-a9aaa855.js",
-      "resources/js/app/pages/admin/recruitment/applicants/applicant_records/sections/applicant-menu-section.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-proceed-inital-phase-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-initial-rating-scale.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-final-rating-scale-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-results-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-job-offer-component.jsx",
-      "_hiring-thunk-680157a9.js",
-      "_job-offer-service-f18ae676.js",
-      "_department-thunk-3d5c0b7c.js",
-      "_department-service-de97c0c2.js",
-      "_erf-record-service-64939a32.js",
-      "_account-thunk-543793a8.js",
-      "_account-service-616e5286.js",
-      "_BriefcaseIcon-67c23a20.js",
-      "_html2canvas.esm-f6cf70dc.js",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-set-schedule-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-choose-interview-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-virtual-schedule-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-f2f-schedule-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-pooling-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-rejection-component.jsx",
-      "_SendOutlined-5743a4c8.js",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-set-reschedule-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-immediate-initial-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-immediate-final-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-proceed-final-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-delete-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-direct-hire-component.jsx",
-      "_index.esm-664dd061.js",
-      "resources/js/app/pages/_components/input2.jsx",
-      "_DeleteOutlined-b0f168a2.js",
-      "_CalendarOutlined-2ffcd6f4.js",
-      "_index-1c2bc9ad.js",
-      "_Dropdown-75d6b3e5.js",
-      "_move-a0e2116d.js",
-      "_index-baa71aa9.js",
-      "_DownOutlined-be4da804.js",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-phone-status-component.jsx",
-      "resources/js/app/pages/_components/modal.jsx",
-      "_transition-2a754511.js",
-      "_use-server-handoff-complete-9349cccd.js",
-      "_dialog-7d1e70a7.js",
-      "_portal-c8a3e70b.js",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-cv-file-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-detaills-component.jsx",
-      "resources/js/app/pages/admin/recruitment/applicants/components/applicant-ai-interview-component.jsx",
-      "_open-ai-service-fd97777a.js",
-      "_index-50ab89c1.js",
-      "_index-fa1c406a.js",
-      "_index-22ff0a4b.js",
-      "_index-3a68e9be.js",
-      "_index-ae81d144.js",
-      "_PlusOutlined-3d2e8b0d.js",
-      "_useVariants-9001296f.js",
-      "_row-5d521b2b.js",
-      "_responsiveObserver-1f4375e1.js",
-      "_ClockCircleOutlined-25a1aa04.js",
-      "_FileOutlined-23548cd6.js",
-      "_DownloadOutlined-02f87b09.js",
-      "_Table-9fce122a.js",
-      "_styleChecker-3bb74c26.js",
-      "_addEventListener-a006aab6.js",
-      "_index-a65e8a1b.js",
-      "_statusUtils-0138abdb.js",
-      "_CheckOutlined-f5abecc6.js",
-      "_useBreakpoint-130c9af5.js",
-      "_useForceUpdate-a1548b52.js",
-      "_Input-6e4cb6ea.js",
-      "_FolderOpenOutlined-34061541.js",
-      "_applicant-record-service-019b0470.js",
-      "_applicant-final-service-783dc1ef.js",
-      "_job-title-service-e508bdb6.js"
+      "_index-2b9d0ce2.js"
     ],
-    "isDynamicEntry": true,
+    "isEntry": true,
     "src": "resources/js/app/pages/admin/recruitment/applicants/applicant_records/page.jsx"
   },
   "resources/js/app/pages/admin/recruitment/applicants/applicant_records/sections/applicant-menu-section.jsx": {
@@ -19454,7 +19327,7 @@
     "src": "resources/js/app/pages/employee/policy/other_policy/page.jsx"
   },
   "resources/js/app/pages/employee/policy/other_policy/sections/anti-discrimination-section.jsx": {
-    "file": "assets/anti-discrimination-section-47f7140d.js",
+    "file": "assets/anti-discrimination-section-7fe14996.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -19486,7 +19359,7 @@
     "src": "resources/js/app/pages/employee/policy/other_policy/sections/dress-code-section.jsx"
   },
   "resources/js/app/pages/employee/policy/other_policy/sections/employment-status-conversion-section.jsx": {
-    "file": "assets/employment-status-conversion-section-ba4f5cae.js",
+    "file": "assets/employment-status-conversion-section-9c76a0f4.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -19494,7 +19367,7 @@
     "src": "resources/js/app/pages/employee/policy/other_policy/sections/employment-status-conversion-section.jsx"
   },
   "resources/js/app/pages/employee/policy/other_policy/sections/grievance-disciplinary-section.jsx": {
-    "file": "assets/grievance-disciplinary-section-a498174d.js",
+    "file": "assets/grievance-disciplinary-section-041a5868.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -19502,7 +19375,7 @@
     "src": "resources/js/app/pages/employee/policy/other_policy/sections/grievance-disciplinary-section.jsx"
   },
   "resources/js/app/pages/employee/policy/other_policy/sections/internet-usage-section.jsx": {
-    "file": "assets/internet-usage-section-4c54942a.js",
+    "file": "assets/internet-usage-section-f2659822.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -19518,7 +19391,7 @@
     "src": "resources/js/app/pages/employee/policy/other_policy/sections/leave-administration-section.jsx"
   },
   "resources/js/app/pages/employee/policy/other_policy/sections/non-certification-training-section.jsx": {
-    "file": "assets/non-certification-training-section-ced18353.js",
+    "file": "assets/non-certification-training-section-9fea15ae.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -19526,7 +19399,7 @@
     "src": "resources/js/app/pages/employee/policy/other_policy/sections/non-certification-training-section.jsx"
   },
   "resources/js/app/pages/employee/policy/other_policy/sections/official-business-travel-section.jsx": {
-    "file": "assets/official-business-travel-section-b78dad6d.js",
+    "file": "assets/official-business-travel-section-99425f98.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -19550,7 +19423,7 @@
     "src": "resources/js/app/pages/employee/policy/other_policy/sections/peme-section.jsx"
   },
   "resources/js/app/pages/employee/policy/other_policy/sections/pip-section.jsx": {
-    "file": "assets/pip-section-1a6bc7ce.js",
+    "file": "assets/pip-section-2d4b60d3.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -19558,7 +19431,7 @@
     "src": "resources/js/app/pages/employee/policy/other_policy/sections/pip-section.jsx"
   },
   "resources/js/app/pages/employee/policy/other_policy/sections/probationary-regularization-section.jsx": {
-    "file": "assets/probationary-regularization-section-51a22e36.js",
+    "file": "assets/probationary-regularization-section-24b5fe53.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -19582,7 +19455,7 @@
     "src": "resources/js/app/pages/employee/policy/other_policy/sections/resignation-termination-section.jsx"
   },
   "resources/js/app/pages/employee/policy/other_policy/sections/shift-changes-ot-compliance-section.jsx": {
-    "file": "assets/shift-changes-ot-compliance-section-45492eca.js",
+    "file": "assets/shift-changes-ot-compliance-section-b581ea0b.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -19598,7 +19471,7 @@
     "src": "resources/js/app/pages/employee/policy/other_policy/sections/social-media-section.jsx"
   },
   "resources/js/app/pages/employee/policy/other_policy/sections/working-hours-ot-rest-days-section.jsx": {
-    "file": "assets/working-hours-ot-rest-days-section-b7bdee3b.js",
+    "file": "assets/working-hours-ot-rest-days-section-622bc739.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -19606,7 +19479,7 @@
     "src": "resources/js/app/pages/employee/policy/other_policy/sections/working-hours-ot-rest-days-section.jsx"
   },
   "resources/js/app/pages/employee/policy/page.jsx": {
-    "file": "assets/page-9ebd6c4f.js",
+    "file": "assets/page-605eee8b.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -21955,7 +21828,7 @@
     "src": "resources/js/app/pages/erf/erf_details/page.jsx"
   },
   "resources/js/app/pages/erf/page.jsx": {
-    "file": "assets/page-605eee8b.js",
+    "file": "assets/page-9ebd6c4f.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -21988,7 +21861,7 @@
     "src": "resources/js/app/pages/exit_interview/components/checkbox-input-component.jsx"
   },
   "resources/js/app/pages/exit_interview/components/exit-rate-mark-component.jsx": {
-    "file": "assets/exit-rate-mark-component-63595bb5.js",
+    "file": "assets/exit-rate-mark-component-e0a1deaa.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -21996,7 +21869,7 @@
     "src": "resources/js/app/pages/exit_interview/components/exit-rate-mark-component.jsx"
   },
   "resources/js/app/pages/exit_interview/components/table-row-component.jsx": {
-    "file": "assets/table-row-component-d824fe61.js",
+    "file": "assets/table-row-component-8def8586.js",
     "imports": [
       "_store-a752346c.js"
     ],
@@ -22012,7 +21885,7 @@
     "src": "resources/js/app/pages/exit_interview/exit_interview_result/components/checkbox-input-component.jsx"
   },
   "resources/js/app/pages/exit_interview/exit_interview_result/components/exit-rate-mark-component.jsx": {
-    "file": "assets/exit-rate-mark-component-2a4bbb1f.js",
+    "file": "assets/exit-rate-mark-component-63595bb5.js",
     "imports": [
       "_store-a752346c.js"
     ],

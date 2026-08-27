@@ -129,7 +129,10 @@ const AdminLayout = ({ children }) => {
                 {
                     key: "code_of_ethics",
                     icon: <BankOutlined />,
-                    label: menuLabel("Code of Ethics", "/employee/code_of_ethics"),
+                    label: menuLabel(
+                        "Code of Ethics",
+                        "/employee/code_of_ethics",
+                    ),
                     onClick: () => router.visit("/employee/code_of_ethics"),
                 },
 
@@ -147,6 +150,16 @@ const AdminLayout = ({ children }) => {
                         "/employee/nda",
                     ),
                     onClick: () => router.visit("/employee/nda"),
+                },
+                {
+                    key: "Government Mandated Document",
+                    icon: <FileTextOutlined />,
+                    label: menuLabel(
+                        "Government Mandated Document",
+                        "/employee/government_mandated",
+                    ),
+                    onClick: () =>
+                        router.visit("/employee/government_mandated"),
                 },
             ],
         },
@@ -600,6 +613,16 @@ const AdminLayout = ({ children }) => {
                         "/admin/nda",
                     ),
                     onClick: () => router.visit("/admin/nda"),
+                },
+                {
+                    key: "Government Mandated Document",
+                    icon: <FileTextOutlined />,
+                    label: menuLabel(
+                        "Government Mandated Document",
+                        "/admin/government_mandated",
+                    ),
+                    onClick: () =>
+                        router.visit("/admin/government_mandated"),
                 },
             ],
         },

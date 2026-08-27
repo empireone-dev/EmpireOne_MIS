@@ -112,4 +112,9 @@ class Employee extends Model
     {
         return $this->hasOne(NdaAcknowledge::class, "emp_id", "emp_id");
     }
+
+    public function government_acknowledges(): HasOne
+    {
+        return $this->hasOne(GovernmentAcknowledge::class, "emp_id", "emp_id");
+    }
 }

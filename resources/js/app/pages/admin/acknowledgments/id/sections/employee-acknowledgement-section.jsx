@@ -35,11 +35,17 @@ export default function EmployeeAcknowledgementSection() {
             type: "HMO Acknowledgment",
             data: acknowledgment?.hmo_acknowledges,
         },
-        
+
         {
             key: "nda",
             type: "Non-Disclosure Agreement (NDA)",
             data: acknowledgment?.nda_acknowledges,
+        },
+
+        {
+            key: "government",
+            type: "Government Mandated",
+            data: acknowledgment?.government_acknowledges,
         },
     ];
 

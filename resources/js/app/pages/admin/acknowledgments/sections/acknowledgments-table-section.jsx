@@ -26,6 +26,29 @@ export default function AcknowledgmentsTableSection() {
     const [searchText, setSearchText] = useState("");
     const [searchedColumn, setSearchedColumn] = useState("");
     const searchInput = useRef(null);
+    const tableScrollRef = useRef(null);
+
+    const onDragMouseDown = (e) => {
+        const scroller =
+            tableScrollRef.current?.querySelector(".ant-table-content") ??
+            tableScrollRef.current?.querySelector(".ant-table-body");
+        if (!scroller) return;
+
+        const startX = e.pageX;
+        const startScrollLeft = scroller.scrollLeft;
+
+        // closures share the same reference so removeEventListener works
+        const onMove = (ev) => {
+            scroller.scrollLeft = startScrollLeft - (ev.pageX - startX);
+        };
+        const onUp = () => {
+            document.removeEventListener("mousemove", onMove);
+            document.removeEventListener("mouseup", onUp);
+        };
+
+        document.addEventListener("mousemove", onMove);
+        document.addEventListener("mouseup", onUp);
+    };
 
     const {
         employeesWithAcknowledgment,
@@ -190,11 +213,15 @@ export default function AcknowledgmentsTableSection() {
             title: "Employee #",
             dataIndex: "emp_id",
             key: "emp_id",
+            fixed: "left",
+            width: 110,
         },
         {
             title: "Fullname",
             dataIndex: "fullname",
             key: "fullname",
+            fixed: "left",
+            width: 160,
             render: (_, record, i) => {
                 return (
                     <div key={i}>
@@ -208,11 +235,15 @@ export default function AcknowledgmentsTableSection() {
             title: "Email",
             dataIndex: "eogs",
             key: "email",
+            fixed: "left",
+            width: 200,
         },
         {
             title: "Department",
             dataIndex: "department",
             key: "department",
+            fixed: "left",
+            width: 160,
             render: (_, record, i) => {
                 return <div key={i}>{record?.dept || "N/A"}</div>;
             },
@@ -221,6 +252,8 @@ export default function AcknowledgmentsTableSection() {
             title: "Account",
             dataIndex: "account",
             key: "account",
+            fixed: "left",
+            width: 110,
             render: (_, record, i) => {
                 return <div key={i}>{record?.account || "N/A"}</div>;
             },
@@ -229,6 +262,8 @@ export default function AcknowledgmentsTableSection() {
             title: "Site",
             dataIndex: "site",
             key: "site",
+            fixed: "left",
+            width: 100,
             render: (_, record, i) => {
                 return <div key={i}>{record?.applicant?.site || "N/A"}</div>;
             },
@@ -239,6 +274,8 @@ export default function AcknowledgmentsTableSection() {
         title: "Action",
         dataIndex: "action",
         key: "action",
+        fixed: "right",
+        width: 80,
         render: (_, record, i) => {
             return (
                 <div key={i}>
@@ -299,6 +336,11 @@ export default function AcknowledgmentsTableSection() {
             key: "nda",
             render: (_, record) => renderStatus(record?.nda_acknowledges),
         },
+        {
+            title: "Government Mandated",
+            key: "government_mandated",
+            render: (_, record) => renderStatus(record?.government_acknowledges),
+        },
         actionColumn,
     ];
 
@@ -348,12 +390,19 @@ export default function AcknowledgmentsTableSection() {
                         key: "general_documents",
                         label: "General Documents",
                         children: (
-                            <Table
-                                pagination={false}
-                                columns={generalDocumentsColumns}
-                                dataSource={employeesWithAcknowledgment ?? []}
-                                rowKey="emp_id"
-                            />
+                            <div
+                                ref={tableScrollRef}
+                                onMouseDown={onDragMouseDown}
+                                style={{ cursor: "grab" }}
+                            >
+                                <Table
+                                    pagination={false}
+                                    columns={generalDocumentsColumns}
+                                    dataSource={employeesWithAcknowledgment ?? []}
+                                    rowKey="emp_id"
+                                    scroll={{ x: "max-content" }}
+                                />
+                            </div>
                         ),
                     },
                     {

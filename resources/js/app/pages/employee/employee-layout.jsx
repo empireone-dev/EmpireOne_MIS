@@ -196,7 +196,10 @@ const EmployeeLayout = ({ children }) => {
                 {
                     key: "code_of_ethics",
                     icon: <BankOutlined />,
-                    label: menuLabel("Code of Ethics", "/employee/code_of_ethics"),
+                    label: menuLabel(
+                        "Code of Ethics",
+                        "/employee/code_of_ethics",
+                    ),
                     onClick: () => router.visit("/employee/code_of_ethics"),
                 },
 
@@ -214,6 +217,15 @@ const EmployeeLayout = ({ children }) => {
                         "/employee/nda",
                     ),
                     onClick: () => router.visit("/employee/nda"),
+                },
+                {
+                    key: "Government Mandated Benefits and Leave Guide",
+                    icon: <FileTextOutlined />,
+                    label: menuLabel(
+                        "Government Mandated Benefits and Leave Guide",
+                        "/employee/government_mandated",
+                    ),
+                    onClick: () => router.visit("/employee/government_mandated"),
                 },
             ],
         },

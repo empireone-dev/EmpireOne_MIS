@@ -40,6 +40,7 @@ use App\Http\Controllers\UploadMemoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyFormController;
 use App\Http\Controllers\CompanyFormFolderController;
+use App\Http\Controllers\GovernmentMandatedAcknowledgeController;
 use App\Http\Controllers\VideoQuizController;
 use App\Http\Controllers\ResourceHubController;
 use App\Http\Controllers\SssAcknowledgeController;
@@ -126,6 +127,8 @@ Route::post('/schedule_policy_acknowledge', [SchedulePolicyAcknowledgeController
 Route::get('/schedule_policy_acknowledge/{emp_id}', [SchedulePolicyAcknowledgeController::class, 'show']);
 Route::post('/nda_acknowledge', [NdaAcknowledgeController::class, 'store']);
 Route::get('/nda_acknowledge/{emp_id}', [NdaAcknowledgeController::class, 'show']);
+Route::post('/government_acknowledge', [GovernmentMandatedAcknowledgeController::class, 'store']);
+Route::get('/government_acknowledge/{emp_id}', [GovernmentMandatedAcknowledgeController::class, 'show']);
 
 
 Route::resource('/incident_report', IncidentReportController::class);

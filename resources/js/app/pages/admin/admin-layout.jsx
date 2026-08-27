@@ -112,25 +112,43 @@ const AdminLayout = ({ children }) => {
             ],
         },
         {
-            key: "employee_handbook",
-            icon: <IdcardOutlined />,
-            label: menuLabel(
-                "Employee Handbook",
-                "/employee/employee_handbook",
-            ),
-            onClick: () => router.visit("/employee/employee_handbook"),
-        },
-        {
-            key: "code_of_ethics",
-            icon: <BankOutlined />,
-            label: menuLabel("Code of Ethics", "/employee/code_of_ethics"),
-            onClick: () => router.visit("/employee/code_of_ethics"),
-        },
-        {
-            key: "cocd",
+            key: "for_acknowledgment",
             icon: <FileProtectOutlined />,
-            label: menuLabel("Code of Discipline", "/employee/cocd"),
-            onClick: () => router.visit("/employee/cocd"),
+            label: "For Acknowledgments",
+            children: [
+                {
+                    key: "employee_handbook",
+                    icon: <IdcardOutlined />,
+                    label: menuLabel(
+                        "Employee Handbook",
+                        "/employee/employee_handbook",
+                    ),
+                    onClick: () => router.visit("/employee/employee_handbook"),
+                },
+
+                {
+                    key: "code_of_ethics",
+                    icon: <BankOutlined />,
+                    label: menuLabel("Code of Ethics", "/employee/code_of_ethics"),
+                    onClick: () => router.visit("/employee/code_of_ethics"),
+                },
+
+                {
+                    key: "cocd",
+                    icon: <FileProtectOutlined />,
+                    label: menuLabel("Code of Discipline", "/employee/cocd"),
+                    onClick: () => router.visit("/employee/cocd"),
+                },
+                {
+                    key: "Non-Disclosure Agreement (NDA)",
+                    icon: <FileTextOutlined />,
+                    label: menuLabel(
+                        "Non-Disclosure Agreement (NDA)",
+                        "/employee/nda",
+                    ),
+                    onClick: () => router.visit("/employee/nda"),
+                },
+            ],
         },
         {
             key: "orientation_videos",
@@ -156,13 +174,6 @@ const AdminLayout = ({ children }) => {
                     onClick: () => router.visit("/employee/sss     "),
                 },
             ],
-        },
-
-        {
-            key: "nda",
-            icon: <FileTextOutlined />,
-            label: menuLabel("Non-Disclosure Agreement", "/employee/nda"),
-            onClick: () => router.visit("/employee/nda"),
         },
         {
             key: "company_policies",
@@ -554,23 +565,45 @@ const AdminLayout = ({ children }) => {
             onClick: () => router.visit("/admin/acknowledgments"),
         },
         {
-            key: "employee_handbook",
-            icon: <IdcardOutlined />,
-            label: menuLabel("Employee Handbook", "/admin/employee_handbook"),
-            onClick: () => router.visit("/admin/employee_handbook"),
-        },
-        {
-            key: "code_of_ethics",
-            icon: <BankOutlined />,
-            label: menuLabel("Code of Ethics", "/admin/code_of_ethics"),
-            onClick: () => router.visit("/admin/code_of_ethics"),
-        },
-        {
-            key: "cocd",
+            key: "for_acknowledgment",
             icon: <FileProtectOutlined />,
-            label: menuLabel("Code of Discipline", "/admin/cocd"),
-            onClick: () => router.visit("/admin/cocd"),
+            label: "For Acknowledgments",
+            children: [
+                {
+                    key: "employee_handbook",
+                    icon: <IdcardOutlined />,
+                    label: menuLabel(
+                        "Employee Handbook",
+                        "/admin/employee_handbook",
+                    ),
+                    onClick: () => router.visit("/admin/employee_handbook"),
+                },
+
+                {
+                    key: "code_of_ethics",
+                    icon: <BankOutlined />,
+                    label: menuLabel("Code of Ethics", "/admin/code_of_ethics"),
+                    onClick: () => router.visit("/admin/code_of_ethics"),
+                },
+
+                {
+                    key: "cocd",
+                    icon: <FileProtectOutlined />,
+                    label: menuLabel("Code of Discipline", "/admin/cocd"),
+                    onClick: () => router.visit("/admin/cocd"),
+                },
+                {
+                    key: "Non-Disclosure Agreement (NDA)",
+                    icon: <FileTextOutlined />,
+                    label: menuLabel(
+                        "Non-Disclosure Agreement (NDA)",
+                        "/admin/nda",
+                    ),
+                    onClick: () => router.visit("/admin/nda"),
+                },
+            ],
         },
+
         {
             key: "orientation_videos",
             icon: <PlaySquareOutlined />,
@@ -593,12 +626,7 @@ const AdminLayout = ({ children }) => {
                 },
             ],
         },
-        {
-            key: "Non-Disclosure Agreement (NDA)",
-            icon: <FileTextOutlined />,
-            label: menuLabel("Non-Disclosure Agreement (NDA)", "/admin/nda"),
-            onClick: () => router.visit("/admin/nda"),
-        },
+
         {
             key: "company_policies",
             icon: <FileTextOutlined />,

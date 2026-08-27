@@ -179,22 +179,43 @@ const EmployeeLayout = ({ children }) => {
               ]
             : []),
         {
-            key: "employee_handbook",
-            icon: <IdcardOutlined />,
-            label: "Employee Handbook",
-            onClick: () => router.visit("/employee/employee_handbook"),
-        },
-        {
-            key: "code_of_ethics",
-            icon: <BankOutlined />,
-            label: "Code of Ethics",
-            onClick: () => router.visit("/employee/code_of_ethics"),
-        },
-        {
-            key: "cocd",
+            key: "for_acknowledgment",
             icon: <FileProtectOutlined />,
-            label: "Code of Discipline",
-            onClick: () => router.visit("/employee/cocd"),
+            label: "For Acknowledgments",
+            children: [
+                {
+                    key: "employee_handbook",
+                    icon: <IdcardOutlined />,
+                    label: menuLabel(
+                        "Employee Handbook",
+                        "/employee/employee_handbook",
+                    ),
+                    onClick: () => router.visit("/employee/employee_handbook"),
+                },
+
+                {
+                    key: "code_of_ethics",
+                    icon: <BankOutlined />,
+                    label: menuLabel("Code of Ethics", "/employee/code_of_ethics"),
+                    onClick: () => router.visit("/employee/code_of_ethics"),
+                },
+
+                {
+                    key: "cocd",
+                    icon: <FileProtectOutlined />,
+                    label: menuLabel("Code of Discipline", "/employee/cocd"),
+                    onClick: () => router.visit("/employee/cocd"),
+                },
+                {
+                    key: "Non-Disclosure Agreement (NDA)",
+                    icon: <FileTextOutlined />,
+                    label: menuLabel(
+                        "Non-Disclosure Agreement (NDA)",
+                        "/employee/nda",
+                    ),
+                    onClick: () => router.visit("/employee/nda"),
+                },
+            ],
         },
         {
             key: "orientation_videos",
@@ -217,12 +238,6 @@ const EmployeeLayout = ({ children }) => {
                     onClick: () => router.visit("/employee/sss"),
                 },
             ],
-        },
-        {
-            key: "nda",
-            icon: <FileTextOutlined />,
-            label: "Non-Disclosure Agreement",
-            onClick: () => router.visit("/employee/nda"),
         },
         {
             key: "Company_Policies",

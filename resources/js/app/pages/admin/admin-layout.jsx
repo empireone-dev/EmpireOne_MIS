@@ -161,6 +161,15 @@ const AdminLayout = ({ children }) => {
                     onClick: () =>
                         router.visit("/employee/government_mandated"),
                 },
+                {
+                    key: "payroll_101",
+                    icon: <FileTextOutlined />,
+                    label: menuLabel(
+                        "Payroll 101 Document",
+                        "/employee/payroll_101",
+                    ),
+                    onClick: () => router.visit("/employee/payroll_101"),
+                },
             ],
         },
         {
@@ -621,8 +630,16 @@ const AdminLayout = ({ children }) => {
                         "Government Mandated Document",
                         "/admin/government_mandated",
                     ),
-                    onClick: () =>
-                        router.visit("/admin/government_mandated"),
+                    onClick: () => router.visit("/admin/government_mandated"),
+                },
+                {
+                    key: "payroll_101",
+                    icon: <FileTextOutlined />,
+                    label: menuLabel(
+                        "Payroll 101 Document",
+                        "/admin/payroll_101",
+                    ),
+                    onClick: () => router.visit("/admin/payroll_101"),
                 },
             ],
         },

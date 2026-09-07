@@ -610,6 +610,9 @@ Route::middleware(['auth:sanctum', 'ensureAdminRole'])->prefix('admin')->group(f
     Route::get('/government_mandated', function () {
         return Inertia::render('admin/government_mandated/page');
     });
+    Route::get('/payroll_101', function () {
+        return Inertia::render('admin/payroll_101/page');
+    });
     Route::get('/resource-hub', function () {
         return Inertia::render('admin/resource-hub/page');
     });
@@ -748,6 +751,9 @@ Route::middleware(['auth:sanctum', 'ensureEmployeeRole'])->prefix('employee')->g
     });
     Route::get('/government_mandated', function () {
         return Inertia::render('employee/government_mandated/page');
+    });
+    Route::get('/payroll_101', function () {
+        return Inertia::render('employee/payroll_101/page');
     });
     Route::get('/resource-hub', function () {
         return Inertia::render('employee/resource-hub/page');

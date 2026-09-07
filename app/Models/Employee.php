@@ -117,4 +117,8 @@ class Employee extends Model
     {
         return $this->hasOne(GovernmentAcknowledge::class, "emp_id", "emp_id");
     }
+    public function payroll101s(): HasOne
+    {
+        return $this->hasOne(Payroll101::class, "emp_id", "emp_id");
+    }
 }

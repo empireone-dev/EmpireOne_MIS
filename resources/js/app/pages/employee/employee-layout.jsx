@@ -225,7 +225,14 @@ const EmployeeLayout = ({ children }) => {
                         "Government Mandated Benefits and Leave Guide",
                         "/employee/government_mandated",
                     ),
-                    onClick: () => router.visit("/employee/government_mandated"),
+                    onClick: () =>
+                        router.visit("/employee/government_mandated"),
+                },
+                {
+                    key: "payroll_101",
+                    icon: <FileTextOutlined />,
+                    label: menuLabel("Payroll 101", "/employee/payroll_101"),
+                    onClick: () => router.visit("/employee/payroll_101"),
                 },
             ],
         },

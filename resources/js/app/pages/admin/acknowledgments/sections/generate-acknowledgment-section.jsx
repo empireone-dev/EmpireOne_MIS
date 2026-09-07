@@ -59,6 +59,8 @@ export default function GenerateAcknowledgmentSection() {
                     key: "nda_acknowledges",
                     label: "Non-Disclosure Agreement (NDA)",
                 },
+                { key: "government_acknowledges", label: "Government Mandated" },
+                { key: "payroll101s", label: "Payroll 101" },
             ];
 
             let rowNumber = 0;

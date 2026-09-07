@@ -47,6 +47,11 @@ export default function EmployeeAcknowledgementSection() {
             type: "Government Mandated",
             data: acknowledgment?.government_acknowledges,
         },
+        {
+            key: "payroll_101",
+            type: "Payroll 101",
+            data: acknowledgment?.payroll101s,
+        },
     ];
 
     const columns = [

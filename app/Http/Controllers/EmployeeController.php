@@ -261,7 +261,7 @@ class EmployeeController extends Controller
 
     public function show($id)
     {
-        $employee = Employee::where('app_id', $id)->with(['attrition', 'applicant', 'user', 'user_id', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges'])->first();
+        $employee = Employee::where('app_id', $id)->with(['attrition', 'applicant', 'user', 'user_id', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges', 'hmo_acknowledges', 'nda_acknowledges', 'sss_acknowledges', 'government_acknowledges', 'payroll101s'])->first();
         if ($employee) {
             return response()->json([
                 'data' => $employee
@@ -277,7 +277,7 @@ class EmployeeController extends Controller
 
     public function get_employee_acknowledgment($id)
     {
-        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'user_id', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges', 'hmo_acknowledges', 'nda_acknowledges', 'sss_acknowledges', 'government_acknowledges'])->first();
+        $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'user_id', 'dept', 'cocd_acknowledges', 'ethics_acknowledges', 'handbook_acknowledges', 'hmo_acknowledges', 'nda_acknowledges', 'sss_acknowledges', 'government_acknowledges', 'payroll101s'])->first();
         if ($employee) {
             return response()->json([
                 'data' => $employee
@@ -307,7 +307,8 @@ class EmployeeController extends Controller
             'sss_acknowledges',
             'schedule_policy_acknowledges',
             'nda_acknowledges',
-            'government_acknowledges'
+            'government_acknowledges',
+            'payroll101s'
         ])
             ->where(function ($query) {
                 $query->whereHas('cocd_acknowledges')
@@ -317,7 +318,8 @@ class EmployeeController extends Controller
                     ->orWhereHas('sss_acknowledges')
                     ->orWhereHas('schedule_policy_acknowledges')
                     ->orWhereHas('nda_acknowledges')
-                    ->orWhereHas('government_acknowledges');
+                    ->orWhereHas('government_acknowledges')
+                    ->orWhereHas('payroll101s');
             })
             ->when($searching, function ($query) use ($searching) {
                 $query->where(function ($q) use ($searching) {
@@ -339,7 +341,8 @@ class EmployeeController extends Controller
                     COALESCE((SELECT acknowledged_at FROM sss_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
                     COALESCE((SELECT acknowledged_at FROM schedule_policy_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
                     COALESCE((SELECT acknowledged_at FROM nda_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
-                    COALESCE((SELECT acknowledged_at FROM government_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31")
+                    COALESCE((SELECT acknowledged_at FROM government_acknowledges WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31"),
+                    COALESCE((SELECT acknowledged_at FROM payroll101s WHERE emp_id = employee.emp_id LIMIT 1), "9999-12-31")
                 )DESC
             ')
             ->paginate($perPage);

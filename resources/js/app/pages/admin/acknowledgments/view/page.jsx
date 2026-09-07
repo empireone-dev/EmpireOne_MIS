@@ -6,6 +6,7 @@ import { get_handbook_acknowledge_service } from "@/app/pages/services/handbook-
 import { get_ethics_acknowledge_service } from "@/app/pages/services/ethics-acknowledge-service";
 import { get_nda_acknowledge_service } from "@/app/pages/services/nda-acknowledge-service";
 import { get_government_mandated_acknowledge_service } from "@/app/pages/services/government-mandated-acknowledge-service";
+import { get_payroll_101_acknowledge_service } from "@/app/pages/services/payroll-101-acknowledge-service";
 
 const DOC_LABELS = {
     cocd: "Code of Conduct (COCD)",
@@ -13,6 +14,7 @@ const DOC_LABELS = {
     ethics: "Code of Ethics",
     nda: "Non-Disclosure Agreement (NDA)",
     government: "Government Mandated",
+    payroll_101: "Payroll 101",
 };
 
 const DOC_PDF_PATHS = {
@@ -21,6 +23,7 @@ const DOC_PDF_PATHS = {
     ethics: "/documents/code-of-ethics.pdf",
     nda: "/documents/nda.pdf",
     government: "/documents/government-mandated.pdf",
+    payroll_101: "/documents/payroll_101_2026.pdf",
 };
 
 const DOC_SERVICES = {
@@ -29,6 +32,7 @@ const DOC_SERVICES = {
     ethics: get_ethics_acknowledge_service,
     nda: get_nda_acknowledge_service,
     government: get_government_mandated_acknowledge_service,
+    payroll_101: get_payroll_101_acknowledge_service,
 };
 
 export default function Page() {

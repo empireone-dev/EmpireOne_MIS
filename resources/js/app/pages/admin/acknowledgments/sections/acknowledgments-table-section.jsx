@@ -339,7 +339,14 @@ export default function AcknowledgmentsTableSection() {
         {
             title: "Government Mandated",
             key: "government_mandated",
-            render: (_, record) => renderStatus(record?.government_acknowledges),
+            render: (_, record) =>
+                renderStatus(record?.government_acknowledges),
+        },
+        {
+            title: "Payroll 101",
+            key: "payroll_101",
+            render: (_, record) =>
+                renderStatus(record?.payroll101s),
         },
         actionColumn,
     ];
@@ -398,7 +405,9 @@ export default function AcknowledgmentsTableSection() {
                                 <Table
                                     pagination={false}
                                     columns={generalDocumentsColumns}
-                                    dataSource={employeesWithAcknowledgment ?? []}
+                                    dataSource={
+                                        employeesWithAcknowledgment ?? []
+                                    }
                                     rowKey="emp_id"
                                     scroll={{ x: "max-content" }}
                                 />

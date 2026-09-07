@@ -26,6 +26,8 @@ import {
     FolderOpenOutlined,
     PlaySquareOutlined,
     SolutionOutlined,
+    FilePptOutlined,
+    AuditOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal, Badge, message } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
@@ -220,7 +222,7 @@ const EmployeeLayout = ({ children }) => {
                 },
                 {
                     key: "Government Mandated Benefits and Leave Guide",
-                    icon: <FileTextOutlined />,
+                    icon: <AuditOutlined />,
                     label: menuLabel(
                         "Government Mandated Benefits and Leave Guide",
                         "/employee/government_mandated",
@@ -230,7 +232,7 @@ const EmployeeLayout = ({ children }) => {
                 },
                 {
                     key: "payroll_101",
-                    icon: <FileTextOutlined />,
+                    icon: <FilePptOutlined />,
                     label: menuLabel("Payroll 101", "/employee/payroll_101"),
                     onClick: () => router.visit("/employee/payroll_101"),
                 },

@@ -31,6 +31,7 @@ import {
     FilePdfOutlined,
     PlaySquareOutlined,
     SolutionOutlined,
+    FilePptOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Button, theme, Modal, message } from "antd";
 import { Link, router, usePage } from "@inertiajs/react";
@@ -153,7 +154,7 @@ const AdminLayout = ({ children }) => {
                 },
                 {
                     key: "Government Mandated Document",
-                    icon: <FileTextOutlined />,
+                    icon: <AuditOutlined />,
                     label: menuLabel(
                         "Government Mandated Document",
                         "/employee/government_mandated",
@@ -163,7 +164,7 @@ const AdminLayout = ({ children }) => {
                 },
                 {
                     key: "payroll_101",
-                    icon: <FileTextOutlined />,
+                    icon: <FilePptOutlined />,
                     label: menuLabel(
                         "Payroll 101 Document",
                         "/employee/payroll_101",
@@ -625,7 +626,7 @@ const AdminLayout = ({ children }) => {
                 },
                 {
                     key: "Government Mandated Document",
-                    icon: <FileTextOutlined />,
+                    icon: <AuditOutlined />,
                     label: menuLabel(
                         "Government Mandated Document",
                         "/admin/government_mandated",
@@ -634,7 +635,7 @@ const AdminLayout = ({ children }) => {
                 },
                 {
                     key: "payroll_101",
-                    icon: <FileTextOutlined />,
+                    icon: <FilePptOutlined />,
                     label: menuLabel(
                         "Payroll 101 Document",
                         "/admin/payroll_101",

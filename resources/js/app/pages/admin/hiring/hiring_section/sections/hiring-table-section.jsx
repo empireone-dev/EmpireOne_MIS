@@ -420,7 +420,8 @@ export default function HiringTableSection() {
                                   { label: "San Carlos", value: "San Carlos" },
                                   { label: "Carcar", value: "Carcar" },
                                   { label: "Cebu", value: "Cebu" },
-                                    { label: "Colombia", value: "Colombia" },
+                                  { label: "Colombia", value: "Colombia" },
+                                  { label: "Urdaneta", value: "Urdaneta" },
                               ]}
                           />
                       ),

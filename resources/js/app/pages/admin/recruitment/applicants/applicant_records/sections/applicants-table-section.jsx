@@ -414,9 +414,7 @@ export default function ApplicantsTableSection() {
     async function handleBulkJobOffer() {
         setBulkLoading(true);
         try {
-             await store.dispatch(
-                    create_job_offer_thunk(selectedRows),
-                );
+            await store.dispatch(create_job_offer_thunk(selectedRows));
             message.success(
                 `Job Offer sent to ${selectedRows.length} applicant(s)!`,
             );
@@ -576,6 +574,7 @@ export default function ApplicantsTableSection() {
                             { text: "Carcar", value: "Carcar" },
                             { text: "Cebu", value: "Cebu" },
                             { text: "Colombia", value: "Colombia" },
+                            { text: "Urdaneta", value: "Urdaneta" },
                         ]}
                     />
                 </div>
@@ -719,7 +718,14 @@ export default function ApplicantsTableSection() {
                     <Tooltip
                         overlayStyle={{ fontSize: "11px" }}
                         title={
-                            <ul style={{ margin: 0, padding: 0, listStyle: "none", lineHeight: "1.6" }}>
+                            <ul
+                                style={{
+                                    margin: 0,
+                                    padding: 0,
+                                    listStyle: "none",
+                                    lineHeight: "1.6",
+                                }}
+                            >
                                 {selectedRows.map((row) => (
                                     <li key={row.app_id}>
                                         #{row.app_id} — {row.fname} {row.lname}
@@ -798,7 +804,8 @@ export default function ApplicantsTableSection() {
                                     onChange={(e) => {
                                         const selectedJob = job_positions.find(
                                             (job) =>
-                                                job.jPosition === e.target.value,
+                                                job.jPosition ===
+                                                e.target.value,
                                         );
                                         setBulkForm({
                                             ...bulkForm,
@@ -1028,9 +1035,8 @@ export default function ApplicantsTableSection() {
                                     <option value="Cebu City (On-site)">
                                         Cebu City (On-site)
                                     </option>
-                                    <option value="Colombia">
-                                        Colombia
-                                    </option>
+                                    <option value="Colombia">Colombia</option>
+                                    <option value="Urdaneta">Urdaneta</option>
                                     <option value="Work From Home Setup">
                                         Work From Home Setup
                                     </option>
@@ -1059,9 +1065,7 @@ export default function ApplicantsTableSection() {
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg w-full"
                     >
                         <div className="flex flex-1 items-center justify-center">
-                            {bulkLoading ? (
-                                <LoadingOutlined spin />
-                            ) : null}
+                            {bulkLoading ? <LoadingOutlined spin /> : null}
                             &nbsp;{" "}
                             {bulkLoading
                                 ? "SENDING..."

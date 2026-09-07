@@ -438,6 +438,7 @@ export default function AttritionTableSection() {
                             { label: "Carcar", value: "Carcar" },
                             { label: "Cebu", value: "Cebu" },
                             { label: "Colombia", value: "Colombia" },
+                            { label: "Urdaneta", value: "Urdaneta" },
                         ]}
                     />
                 </div>

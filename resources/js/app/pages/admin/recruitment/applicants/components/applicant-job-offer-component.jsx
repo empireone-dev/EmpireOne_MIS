@@ -386,6 +386,7 @@ export default function ApplicantJobOfferComponent({ data, item }) {
                                         Cebu City (On-site)
                                     </option>
                                     <option value="Colombia">Colombia</option>
+                                    <option value="Urdaneta">Urdaneta</option>
                                     <option value="Work From Home Setup">
                                         Work From Home Setup
                                     </option>

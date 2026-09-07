@@ -267,7 +267,7 @@ class ApplicantController extends Controller
         $fileUrl = $uploadedFiles[0] ?? null;
 
         // Determine email recipient based on site
-        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu', 'Colombia'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu', 'Colombia', 'Urdaneta'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
 
         // $emailRecipient = 'quicklydeguzman@gmail.com';
 
@@ -488,7 +488,7 @@ class ApplicantController extends Controller
             'meet_link' => $decodedMeetLink,
         ];
 
-        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu', 'Colombia'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu', 'Colombia', 'Urdaneta'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
         // $emailRecipient = 'quicklydeguzman@gmail.com';
 
         if ($decodedMeetLink) {
@@ -531,7 +531,7 @@ class ApplicantController extends Controller
             'reason' => $request->reason,
         ];
 
-        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu', 'Colombia'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
+        $emailRecipient = (in_array($request->site, ['Carcar', 'Cebu', 'Colombia', 'Urdaneta'])) ? 'career@empireonegroup.com' : 'hiring@empireonegroup.com';
         // $emailRecipient = 'quicklydeguzman@gmail.com';
 
         if (strtolower($request->reschedule) === "yes") {

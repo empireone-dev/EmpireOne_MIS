@@ -288,6 +288,7 @@ export default function NewPositionFormSection() {
                                     <option value="Carcar">Carcar City</option>
                                     <option value="Cebu">Cebu City</option>
                                     <option value="Colombia">Colombia</option>
+                                    <option value="Urdaneta">Urdaneta</option>
                                 </select>
                                 {errors.site && (
                                     <span className="text-red-500 text-sm mt-1">

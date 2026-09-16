@@ -141,6 +141,7 @@ export default function UpdateEmployeeFormSection() {
         "Facilities Manager",
         "WFM and Data Analytics Manager",
         "Learning Leadership and Development Specialist",
+        "Learning Leadership and Development Manager",
     ];
 
     const inactiveStatuses = [

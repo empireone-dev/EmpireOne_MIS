@@ -148,6 +148,7 @@ export default function DepartmentUpdateSection({ data }) {
                                             "Facilities Manager",
                                             "WFM and Data Analytics Manager",
                                             "Learning Leadership and Development Specialist",
+                                            "Learning Leadership and Development Manager",
                                         ].includes(res.position) &&
                                         ![
                                             "Resigned",

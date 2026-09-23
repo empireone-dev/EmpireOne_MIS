@@ -304,7 +304,7 @@ export default function page() {
                             </div>
                             <img
                                 className="w-16 sm:w-24 flex-shrink-0 ml-3"
-                                src="/images/newlogo.png"
+                                src="/images/E1CXlogo.png"
                                 alt="logo"
                             />
                         </div>

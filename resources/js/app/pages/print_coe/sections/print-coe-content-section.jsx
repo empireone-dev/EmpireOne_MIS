@@ -92,7 +92,7 @@ export default function PrintCOEContentSection() {
                         <div className="flex items-center justify-center">
                             <img
                                 className="w-96"
-                                src="/images/newlogo.png"
+                                src="/images/E1CXlogo.png"
                                 alt="EmpireOne BPO"
                                 crossOrigin="anonymous"
                             />

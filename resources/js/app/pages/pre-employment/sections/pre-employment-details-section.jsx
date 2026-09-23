@@ -37,7 +37,7 @@ export default function PreEmploymentDetailsSection() {
                     <div className="container mx-auto flex justify-center px-4 sm:px-6 lg:px-8">
                         <div className="bg-white shadow-2xl shadow-black rounded-lg p-3 sm:p-6 mt-6 sm:mt-12 w-full max-w-6xl">
                             <div className="flex items-center justify-center p-2 sm:p-3">
-                                <img className="w-40 sm:w-52 md:w-60" src="/images/newlogo.png" alt="logo" />
+                                <img className="w-40 sm:w-52 md:w-60" src="/images/E1CXlogo.png" alt="logo" />
                             </div>
                             <div className='flex text-lg sm:text-xl md:text-2xl items-center justify-center'>
                                 <h1><b>APPLICATION DETAILS</b></h1>

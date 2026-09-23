@@ -967,7 +967,7 @@ const AdminLayout = ({ children }) => {
                               }
                     }
                 >
-                    <img className="p-3" src="/images/logo.png" />
+                    <img className="p-3" src="/images/E1CXlogo.png" />
                     <div className="flex items-center justify-between px-5 py-5">
                         <div className="flex items-center mr-5">
                             <div className="mr-5">

@@ -80,7 +80,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <img src="https://empireone-hris.com/images/newlogo.png" alt="EmpireOne Logo" class="logo">
+            <img src="https://empireone-hris.com/images/E1CXlogo.png" alt="EmpireOne Logo" class="logo">
             <h2 style="margin: 15px 0 0 0; color: #007bff;">Job Offer</h2>
         </div>
 

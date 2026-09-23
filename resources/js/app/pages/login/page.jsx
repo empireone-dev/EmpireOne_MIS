@@ -118,11 +118,11 @@ export default function Page({ status, canResetPassword }) {
                                 <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl">
                                     <a
                                         href="#"
-                                        className="flex items-center justify-center p-3"
+                                        className="flex items-center justify-center p-6"
                                     >
                                         <img
-                                            className="w-full"
-                                            src="images/newlogo.png"
+                                            className="w-full px-10"
+                                            src="images/E1CXlogo.png"
                                             alt="logo"
                                         />
                                     </a>
@@ -255,10 +255,10 @@ export default function Page({ status, canResetPassword }) {
                                 </div>
                                 <div className="text-center mt-3 text-[11px] tracking-[0.1em]">
                                     Built by:{" "}
-                                    <span className="text-[#1E90FF] font-bold">
+                                    <span className="text-violet-600 font-bold">
                                         <u>EmpireOne Dev Team</u>
                                     </span>{" "}
-                                    &copy;2024-{new Date().getFullYear()}
+                                    &copy;{new Date().getFullYear()}
                                 </div>
                             </div>
                         </section>

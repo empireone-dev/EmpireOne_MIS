@@ -86,7 +86,7 @@
   <div class="container">
     <div class="content">
       <div class="center">
-        <img src="https://empireone-hris.com/images/newlogo.png" alt="EmpireOne Logo" style="max-width: 200px;">
+        <img src="https://empireone-hris.com/images/E1CXlogo.png" alt="EmpireOne Logo" style="max-width: 200px;">
       </div>
 
       <div class="header-info">

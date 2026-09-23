@@ -53,7 +53,7 @@
 
   <div class="container">
     <div class="content">
-      <div style="text-align: center;"><img src="https://empireone-hris.com/images/newlogo.png" alt="EmpireOne Logo" style="max-width: 200px;"></div>
+      <div style="text-align: center;"><img src="https://empireone-hris.com/images/E1CXlogo.png" alt="EmpireOne Logo" style="max-width: 200px;"></div>
       <p>Dear Mr./Ms. <b>{{$data['fname']}} {{$data['lname']}}</b>,</p>
 
       <p> Thank you for your interest in EmpireOne BPO Solutions Inc. We’d like to offer you the position of <b>{{$data['jobPos']}}</b>. Below is our Job Offer: .

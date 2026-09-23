@@ -54,7 +54,7 @@
     <div class="container">
         <div class="content">
             <div style="text-align: center;">
-                <img src="https://empireone-hris.com/images/newlogo.png" alt="EmpireOne Logo" style="max-width: 200px;">
+                <img src="https://empireone-hris.com/images/E1CXlogo.png" alt="EmpireOne Logo" style="max-width: 200px;">
             </div>
 
             <p>Dear <b>{{$data['fname']}} {{$data['lname']}}</b>,</p>

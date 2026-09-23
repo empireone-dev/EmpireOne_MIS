@@ -75,7 +75,7 @@ export default function File201ChecklistButtonSection({ data }) {
                     <div className="flex items-center justify-center p-3">
                         <img
                             className="w-48"
-                            src="/images/newlogo.png"
+                            src="/images/E1CXlogo.png"
                             alt="logo"
                         />
                     </div>

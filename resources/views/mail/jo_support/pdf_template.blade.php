@@ -157,7 +157,7 @@
         <div class="content">
             <div class="center">
                 <!-- Option 2: If you have a new logo URL, replace the src below -->
-                <div style="text-align: center;"><img src="images/newlogo.png" alt="EmpireOne Logo" style="max-width: 200px;"></div>
+                <div style="text-align: center;"><img src="images/E1CXlogo.png" alt="EmpireOne Logo" style="max-width: 200px;"></div>
             </div>
 
             <div class="header-info">

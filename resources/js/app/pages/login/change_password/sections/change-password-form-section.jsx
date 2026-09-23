@@ -42,7 +42,7 @@ export default function ChangePasswordFormSection({ status, canResetPassword }) 
                             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                                 <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl">
                                     <a href="#" className="flex items-center justify-center p-3">
-                                        <img className="w-full" src="/images/newlogo.png" alt="logo" />
+                                        <img className="w-full" src="/images/E1CXlogo.png" alt="logo" />
                                     </a>
                                     <div className="px-8 pt-2 pb-8 md:px-10">
                                         <h1 className="text-2xl font-bold leading-tight tracking-tight text-center md:text-3xl flex items-center justify-center">

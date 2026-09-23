@@ -90,7 +90,7 @@ export default function ExitInterviewResultSection() {
     return (
         <div className="bg-white shadow-2xl shadow-black rounded-lg p-6 mt-12 w-full">
             <div className="flex items-center justify-center p-3">
-                <img className="w-60" src="/images/newlogo.png" alt="logo" />
+                <img className="w-60" src="/images/E1CXlogo.png" alt="logo" />
             </div>
             <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
                 <strong>Note:</strong> This employee has already completed an

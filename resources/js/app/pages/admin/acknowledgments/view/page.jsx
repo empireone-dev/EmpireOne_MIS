@@ -109,7 +109,7 @@ export default function Page() {
                             <div className="flex items-center gap-3">
                                 <img
                                     className="w-28"
-                                    src="/images/newlogo.png"
+                                    src="/images/E1CXlogo.png"
                                     alt="logo"
                                 />
                             </div>

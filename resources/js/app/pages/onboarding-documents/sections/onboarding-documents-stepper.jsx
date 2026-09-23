@@ -30,7 +30,7 @@ export function OnboardingDocsStepper() {
                     <div className="flex items-center justify-center p-3 mb-6">
                         <img
                             className="w-48 sm:w-64 md:w-72"
-                            src="/images/newlogo.png"
+                            src="/images/E1CXlogo.png"
                             alt="logo"
                         />
                     </div>
@@ -103,7 +103,7 @@ export function OnboardingDocsStepper() {
                     <div className="flex items-center justify-center p-3 mb-6 animate-[fadeIn_1.2s_ease-out_0.3s] opacity-0 [animation-fill-mode:forwards]">
                         <img
                             className="w-48 sm:w-64 md:w-72"
-                            src="/images/newlogo.png"
+                            src="/images/E1CXlogo.png"
                             alt="logo"
                         />
                     </div>
@@ -131,7 +131,7 @@ export function OnboardingDocsStepper() {
                     <div className="flex items-center justify-center p-3 mb-6 animate-[fadeIn_1.2s_ease-out_0.3s] opacity-0 [animation-fill-mode:forwards]">
                         <img
                             className="w-48 sm:w-64 md:w-72"
-                            src="/images/newlogo.png"
+                            src="/images/E1CXlogo.png"
                             alt="logo"
                         />
                     </div>
@@ -163,7 +163,7 @@ export function OnboardingDocsStepper() {
                     <div className="flex items-center justify-center p-2 sm:p-3 mb-4 sm:mb-6">
                         <img
                             className="w-40 sm:w-56 md:w-72"
-                            src="/images/newlogo.png"
+                            src="/images/E1CXlogo.png"
                             alt="logo"
                         />
                     </div>

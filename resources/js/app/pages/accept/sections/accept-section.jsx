@@ -61,7 +61,7 @@ export default function AcceptSection() {
             <div className="bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center">
                 <div className="mb-6">
                     <img
-                        src="https://empireone-hris.com/images/newlogo.png"
+                        src="https://empireone-hris.com/images/E1CXlogo.png"
                         alt="EmpireOne Logo"
                         className="max-w-48 mx-auto mb-4"
                     />

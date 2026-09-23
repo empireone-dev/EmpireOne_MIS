@@ -48,7 +48,7 @@ export default function JobOfferDocumentSection() {
                 <div className="flex items-center justify-center">
                     <img
                         className="w-60"
-                        src="/images/newlogo.png"
+                        src="/images/E1CXlogo.png"
                         alt="logo"
                     />
                 </div>

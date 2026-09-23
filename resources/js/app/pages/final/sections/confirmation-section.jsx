@@ -65,7 +65,7 @@ export default function ConfirmationSection() {
                 <div className="flex items-center justify-center p-3">
                     <img
                         className="w-40 sm:w-48 md:w-60"
-                        src="/images/newlogo.png"
+                        src="/images/E1CXlogo.png"
                         alt="logo"
                     />
                 </div>

@@ -98,7 +98,7 @@ export default function Payroll101Section() {
                 <div className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden">
                     {/* Header */}
                     <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-gray-50">
-                        <img className="w-28" src="/images/newlogo.png" alt="logo" />
+                        <img className="w-28" src="/images/E1CXlogo.png" alt="logo" />
                         <div className="text-right">
                             <h2 className="text-base font-bold text-gray-800">Government Mandated Document</h2>
                             <div className="inline-flex items-center gap-1 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold mt-1">

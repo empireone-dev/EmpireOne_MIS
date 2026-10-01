@@ -21,6 +21,7 @@ import {
 import AcknowledgmentsSearchSection from "./acknowledgments-search-section";
 import GenerateAcknowledgmentSection from "./generate-acknowledgment-section";
 import PolicyAcknowledgmentSection from "./policy-acknowledgment-section";
+import ExtractNoAcknowldgementSection from "./extract-no-acknowldgement-section";
 
 export default function AcknowledgmentsTableSection() {
     const [searchText, setSearchText] = useState("");
@@ -345,8 +346,7 @@ export default function AcknowledgmentsTableSection() {
         {
             title: "Payroll 101",
             key: "payroll_101",
-            render: (_, record) =>
-                renderStatus(record?.payroll101s),
+            render: (_, record) => renderStatus(record?.payroll101s),
         },
         actionColumn,
     ];
@@ -387,7 +387,10 @@ export default function AcknowledgmentsTableSection() {
             </div>
             <div className="flex flex-1 justify-between">
                 <AcknowledgmentsSearchSection />
-                <GenerateAcknowledgmentSection />
+                <div className="flex gap-2">
+                    <ExtractNoAcknowldgementSection />
+                    <GenerateAcknowledgmentSection />
+                </div>
             </div>
             <Tabs
                 activeKey={activeTab}

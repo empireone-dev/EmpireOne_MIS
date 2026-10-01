@@ -352,6 +352,57 @@ class EmployeeController extends Controller
         ], 200);
     }
 
+    public function get_employees_with_no_acknowledgment()
+    {
+        $perPage = (int) request()->get('per_page', 10);
+        $perPage = min($perPage, 10000); // cap to prevent abuse
+        $searching = request()->get('searching');
+        // status is overwritten with a free-text reason once attrition is filed,
+        // so match on keywords instead of an exact list of status values
+        $offboardKeywords = ['resign', 'terminat', 'dismiss', 'awol', 'end of contract', 'eope', 'fallout', 'fall-out', 'fall out', 'separation', 'cleared', 'offboard'];
+
+        $employees = Employee::with([
+            'attrition',
+            'applicant',
+            'user',
+            'dept',
+        ])
+            ->where(function ($query) use ($offboardKeywords) {
+                foreach ($offboardKeywords as $keyword) {
+                    $query->where('status', 'not like', "%{$keyword}%");
+                }
+            })
+            // filing an attrition request overwrites status with the free-text reason,
+            // so any employee with an attrition record is offboarded/exiting
+            ->whereDoesntHave('attrition')
+            ->whereDoesntHave('cocd_acknowledges')
+            ->whereDoesntHave('ethics_acknowledges')
+            ->whereDoesntHave('handbook_acknowledges')
+            ->whereDoesntHave('hmo_acknowledges')
+            ->whereDoesntHave('sss_acknowledges')
+            ->whereDoesntHave('schedule_policy_acknowledges')
+            ->whereDoesntHave('nda_acknowledges')
+            ->whereDoesntHave('government_acknowledges')
+            ->whereDoesntHave('payroll101s')
+            ->when($searching, function ($query) use ($searching) {
+                $query->where(function ($q) use ($searching) {
+                    $q->where('emp_id', 'like', "%{$searching}%")
+                        ->orWhere('eogs', 'like', "%{$searching}%")
+                        ->orWhereHas('applicant', function ($aq) use ($searching) {
+                            $aq->where('fname', 'like', "%{$searching}%")
+                                ->orWhere('lname', 'like', "%{$searching}%")
+                                ->orWhere('mname', 'like', "%{$searching}%");
+                        });
+                });
+            })
+            ->orderBy('emp_id', 'desc')
+            ->paginate($perPage);
+
+        return response()->json([
+            'data' => $employees
+        ], 200);
+    }
+
     public function get_employee_policy_acknowledgment($id)
     {
         $employee = Employee::where('emp_id', $id)->with(['attrition', 'applicant', 'user', 'user_id', 'dept', 'schedule_policy_acknowledges'])->first();

@@ -35,6 +35,13 @@ export async function get_all_employees_with_acknowledgment_service() {
     return res.data;
 }
 
+export async function get_all_employees_with_no_acknowledgment_service() {
+    const res = await axios.get(
+        "/api/get_employees_with_no_acknowledgment?per_page=10000",
+    );
+    return res.data;
+}
+
 export async function get_all_employees_with_policy_acknowledgment_service() {
     const res = await axios.get(
         "/api/get_employee_with_policy_acknowledgment?per_page=10000",

@@ -77,6 +77,7 @@ Route::post('/user/{id}', [UserController::class, 'update']);
 Route::get('/employee-qr/{emp_id}', [EmployeeController::class, 'showForQR']);
 Route::get('/get_employee_acknowledgment/{emp_id}', [EmployeeController::class, 'get_employee_acknowledgment']);
 Route::get('/get_employee_with_acknowledgment', [EmployeeController::class, 'get_employee_with_acknowledgment']);
+Route::get('/get_employees_with_no_acknowledgment', [EmployeeController::class, 'get_employees_with_no_acknowledgment']);
 Route::get('/get_employee_policy_acknowledgment/{emp_id}', [EmployeeController::class, 'get_employee_policy_acknowledgment']);
 Route::get('/get_employee_with_policy_acknowledgment', [EmployeeController::class, 'get_employee_with_policy_acknowledgment']);
 

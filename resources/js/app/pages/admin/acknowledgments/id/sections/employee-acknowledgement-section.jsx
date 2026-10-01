@@ -1,4 +1,5 @@
 import React from "react";
+import DownloadDocumentSection from "./download-document-section";
 import { Table, Tag, Tooltip } from "antd";
 import { useSelector } from "react-redux";
 import moment from "moment";
@@ -54,6 +55,10 @@ export default function EmployeeAcknowledgementSection() {
         },
     ];
 
+    const employeeName = acknowledgment?.applicant
+        ? `${acknowledgment.applicant.fname ?? ""} ${acknowledgment.applicant.lname ?? ""}`.trim()
+        : "";
+
     const columns = [
         {
             title: "Type of Acknowledgment",
@@ -88,7 +93,7 @@ export default function EmployeeAcknowledgementSection() {
             render: (_, record, i) => {
                 const hasAcknowledged = !!record.data;
                 return (
-                    <div key={i}>
+                    <div className="flex gap-2" key={i}>
                         <Tooltip
                             title={
                                 hasAcknowledged
@@ -108,22 +113,24 @@ export default function EmployeeAcknowledgementSection() {
                                 disabled={!hasAcknowledged}
                                 className={
                                     hasAcknowledged
-                                        ? "bg-amber-400 hover:bg-amber-500 text-white p-2 px-4 rounded-md"
+                                        ? "bg-blue-400 hover:bg-blue-500 text-white p-2 px-4 rounded-md"
                                         : "bg-gray-200 text-gray-400 p-2 px-4 rounded-md cursor-not-allowed"
                                 }
                             >
                                 <EyeIcon className="h-5" />
                             </button>
                         </Tooltip>
+                        <DownloadDocumentSection
+                            docType={record.key}
+                            docLabel={record.type}
+                            ack={record.data}
+                            employeeName={employeeName}
+                        />
                     </div>
                 );
             },
         },
     ];
-
-    const employeeName = acknowledgment?.applicant
-        ? `${acknowledgment.applicant.fname ?? ""} ${acknowledgment.applicant.lname ?? ""}`.trim()
-        : "";
 
     return (
         <div>

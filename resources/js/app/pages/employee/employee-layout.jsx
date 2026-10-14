@@ -258,6 +258,15 @@ const EmployeeLayout = ({ children }) => {
                     label: menuLabel("SSS Seminar Refresher", "/employee/sss"),
                     onClick: () => router.visit("/employee/sss"),
                 },
+                {
+                    key: "orientation",
+                    icon: <SolutionOutlined />,
+                    label: menuLabel(
+                        "EmpireOne Orientation",
+                        "/employee/orientation",
+                    ),
+                    onClick: () => router.visit("/employee/orientation"),
+                },
             ],
         },
         {

@@ -196,6 +196,15 @@ const AdminLayout = ({ children }) => {
                     ),
                     onClick: () => router.visit("/employee/sss     "),
                 },
+                {
+                    key: "orientation",
+                    icon: <SolutionOutlined />,
+                    label: menuLabel(
+                        "EmpireOne Orientation",
+                        "/employee/orientation",
+                    ),
+                    onClick: () => router.visit("/employee/orientation"),
+                },
             ],
         },
         {
@@ -664,6 +673,15 @@ const AdminLayout = ({ children }) => {
                     icon: <SolutionOutlined />,
                     label: menuLabel("SSS Seminar Refresher", "/admin/sss"),
                     onClick: () => router.visit("/admin/sss"),
+                },
+                {
+                    key: "orientation",
+                    icon: <SolutionOutlined />,
+                    label: menuLabel(
+                        "EmpireOne Orientation",
+                        "/admin/orientation",
+                    ),
+                    onClick: () => router.visit("/admin/orientation"),
                 },
             ],
         },

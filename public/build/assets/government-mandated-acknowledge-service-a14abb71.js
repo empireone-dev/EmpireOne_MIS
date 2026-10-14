@@ -1,0 +1,1 @@
+import{a}from"./store-a752346c.js";async function o(e){return(await a.post("/api/government_acknowledge",e)).data}async function r(e){return(await a.get("/api/government_acknowledge/"+e)).data}export{r as g,o as s};

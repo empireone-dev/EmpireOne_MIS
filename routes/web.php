@@ -604,6 +604,9 @@ Route::middleware(['auth:sanctum', 'ensureAdminRole'])->prefix('admin')->group(f
     Route::get('/sss', function () {
         return Inertia::render('admin/sss/page');
     });
+    Route::get('/orientation', function () {
+        return Inertia::render('admin/orientation/page');
+    });
     Route::get('/nda', function () {
         return Inertia::render('admin/nda/page');
     });
@@ -745,6 +748,9 @@ Route::middleware(['auth:sanctum', 'ensureEmployeeRole'])->prefix('employee')->g
     });
     Route::get('/sss', function () {
         return Inertia::render('employee/sss/page');
+    });
+    Route::get('/orientation', function () {
+        return Inertia::render('employee/orientation/page');
     });
     Route::get('/nda', function () {
         return Inertia::render('employee/nda/page');

@@ -1,0 +1,1 @@
+import{j as e}from"./store-a752346c.js";function r(){return e.jsx("div",{className:"w-full",children:e.jsx("iframe",{src:"/documents/empireone-presentation.pdf#toolbar=0&navpanes=0",title:"EmpireOne Orientation",className:"w-full h-[800px] border-0"})})}export{r as default};
